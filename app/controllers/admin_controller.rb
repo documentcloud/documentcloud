@@ -43,15 +43,25 @@ class AdminController < ApplicationController
           :accounts         => [],
         }
         if params[:accounts]
-          @accounts[:accounts]                    = Account.all
+          @response[:accounts]                    = Account.all
           @response[:stats][:public_per_account]  = DC::Statistics.public_documents_per_account
           @response[:stats][:private_per_account] = DC::Statistics.private_documents_per_account
           @response[:stats][:pages_per_account]   = DC::Statistics.pages_per_account
         end
-        cache_page json_response
+        cache_page @response.to_json
+        json_response
       end
       
       format.html{ render }
+    end
+  end
+  
+  def expire_stats
+    respond_to do |format|
+      format.any do
+        expire_page "/admin/index.json"
+        json_response
+      end
     end
   end
 
