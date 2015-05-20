@@ -6,6 +6,7 @@ class ImportController < ApplicationController
 
   skip_before_action :verify_authenticity_token, :only => [:cloud_crowd, :update_access]
 
+  before_action :secure_only,    :only => [:upload_document]
   before_action :login_required, :only => [:upload_document]
 
   # Internal document upload, called from the workspace.
