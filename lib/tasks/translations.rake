@@ -49,13 +49,13 @@ namespace :translations do
       "https://spreadsheets.google.com/feeds/"
     ]
     auth.redirect_uri = "https://dev.dcloud.org/util/google_oauth_code"
-    print("For us to download translations, you have to:\n\n")
-    print("1. Go to a special Google authorization page\n")
-    print("2. Log in (if not already logged in)\n")
-    print("3. Grant us access permissions\n")
-    print("4. Copy an authorization code\n")
-    print("5. Bring it back here\n\n")
-    print("Ready? Open this long URL in a browser: %s\n" % auth.authorization_uri)
+    puts "For us to download translations, you have to:\n\n"
+    puts "1. Go to a special Google authorization page\n"
+    puts "2. Log in  if not already logged in\n"
+    puts "3. Grant us access permissions\n"
+    puts "4. Copy an authorization code\n"
+    puts "5. Bring it back here\n\n"
+    puts "Ready? Open this long URL in a browser: #{auth.authorization_uri}\n"
     auth.code = ask("Enter the provided authorization code: ") { |q| q.echo = true }
     auth.fetch_access_token!
     access_token = auth.access_token
