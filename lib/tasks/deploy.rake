@@ -69,8 +69,8 @@ namespace :deploy do
         upload_attributes = { :acl => :public_read }
 
         # attempt to identify the mimetype for this file.
-        mimetype = MIME::Types.type_for(File.extname(file)).first
-        upload_attributes[:content_type] = mimetype.content_type if mimetype
+        mimetype = Mime::Type.lookup_by_extension(File.extname(file).remove(/^\./))
+        upload_attributes[:content_type] = mimetype.to_s if mimetype
 
         destination_path = destination_root + file.gsub(source_path_filter, '')
         destination = bucket.objects[destination_path]
@@ -81,15 +81,15 @@ namespace :deploy do
   end
 
   def upload_template( template_path, destination_path )
-    upload_attributes = { :acl=> :public_read }
+    upload_attributes = { :acl => :public_read }
     contents = render_template(template_path)
     puts "uploading #{template_path} to #{destination_path} and #{destination_path+'.gz'}"
 
     destination = bucket.objects[ destination_path ]
-    destination.write( contents, upload_attributes.merge(:content_type=>'application/javascript') )
+    destination.write( contents, upload_attributes.merge(:content_type => 'application/javascript') )
 
     zipped_destination = bucket.objects[ destination_path + '.gz' ]
-    zipped_destination.write( gzip_string(contents), upload_attributes.merge(:content_type=>MIME::Types.type_for('.gz').first.to_s) )
+    zipped_destination.write( gzip_string(contents), upload_attributes.merge(:content_type => Mime::Type.lookup_by_extension('gz').to_s) )
   end
   
   def gzip_string(contents)
