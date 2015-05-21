@@ -142,11 +142,11 @@ module DC
       end
       
       def copy_text(source, destination, access)
-        bucket.objects[source.full_text_path].copy_to(destination.full_text_path, :acl => ACCESS_TO_ACL[access])
+        options = {:acl => ACCESS_TO_ACL[access], :content_type => content_type(destination.full_text_path)}
+        bucket.objects[source.full_text_path].copy_to(destination.full_text_path, options)
         source.pages.each do |page|
           num = page.page_number
           source_object = bucket.objects[source.page_text_path(num)]
-          options = {:acl => ACCESS_TO_ACL[access], :content_type => content_type(source.page_text_path(num))}
           source_object.copy_to(destination.page_text_path(num), options)
         end
         true
