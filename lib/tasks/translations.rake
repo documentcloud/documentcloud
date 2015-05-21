@@ -29,14 +29,38 @@ namespace :translations do
   desc "Compile Javascript version of translation strings"
   task :download do
 
-    require "google_drive_v0"
+    require "google_drive"
     require 'highline/import'
     require 'yaml'
 
-    username = ask("[translations download] Enter your username:  ") { |q| q.echo = true }
-    password = ask("[translations download] Enter your password:  ") { |q| q.echo = "*" }
+    CLIENT_ID       = DC::SECRETS['google_client_id']
+    CLIENT_SECRET   = DC::SECRETS['google_client_secret']
     SPREADSHEET_KEY = '1niK_gv0wsFPF2l3WvXprb6JVs6fZzFSERhTtrk42Ys4'
-    session = GoogleDriveV0.login( username, password )
+
+    client = Google::APIClient.new(
+      :application_name => 'DocumentCloud Translations',
+      :application_version => '0.1',
+    )
+    auth = client.authorization
+    auth.client_id = CLIENT_ID
+    auth.client_secret = CLIENT_SECRET
+    auth.scope = [
+      "https://www.googleapis.com/auth/drive",
+      "https://spreadsheets.google.com/feeds/"
+    ]
+    auth.redirect_uri = "https://dev.dcloud.org/util/google_oauth_code"
+    puts "For us to download translations, you have to:\n\n"
+    puts "1. Go to a special Google authorization page\n"
+    puts "2. Log in  if not already logged in\n"
+    puts "3. Grant us access permissions\n"
+    puts "4. Copy an authorization code\n"
+    puts "5. Bring it back here\n\n"
+    puts "Ready? Open this long URL in a browser: #{auth.authorization_uri}\n"
+    auth.code = ask("Enter the provided authorization code: ") { |q| q.echo = true }
+    auth.fetch_access_token!
+    access_token = auth.access_token
+    session = GoogleDrive.login_with_oauth(access_token)
+
     sheets = session.spreadsheet_by_key(SPREADSHEET_KEY).worksheets
 
     languages = {
