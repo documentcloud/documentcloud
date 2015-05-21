@@ -1,3 +1,5 @@
+require 'zlib'
+
 namespace :deploy do
   DEPLOYABLE_ENV = %w(production staging)
 
@@ -79,10 +81,31 @@ namespace :deploy do
   end
 
   def upload_template( template_path, destination_path )
+    upload_attributes = { :acl=> :public_read }
     contents = render_template(template_path)
-    puts "uploading #{template_path} to #{destination_path}"
+    puts "uploading #{template_path} to #{destination_path} and #{destination_path+'.gz'}"
 
     destination = bucket.objects[ destination_path ]
-    destination.write( contents, { :acl=> :public_read, :content_type=>'application/javascript' })
+    destination.write( contents, upload_attributes.merge(:content_type=>'application/javascript') )
+
+    zipped_destination = bucket.objects[ destination_path + '.gz' ]
+    zipped_destination.write( gzip_string(contents), upload_attributes.merge(:content_type=>MIME::Types.type_for('.gz').first.to_s) )
+  end
+  
+  def gzip_string(contents)
+    # Create a pipe with an input IO and an output IO
+    IO.pipe do |zip_out, zip_in|
+      # make sure they're configured to take arbitrary binary data
+      zip_in.binmode
+      zip_out.binmode
+      # attach a gzip compressor as a funnel into the pipe.
+      # add the contents to the funnel.
+      # and then close off the top of the pipe.
+      Zlib::GzipWriter.new(zip_in, Zlib::BEST_COMPRESSION) do |zipper|
+        zipper.write(contents)
+      end.close
+      # retrieve the compressed contents out of the bottom of the pipe.
+      zip_out.read
+    end
   end
 end
