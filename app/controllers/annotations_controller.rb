@@ -22,7 +22,7 @@ class AnnotationsController < ApplicationController
         render :js => js
       end
       format.html do
-        redirect_to current_annotation.permalink_url
+        render
       end
     end
   end
