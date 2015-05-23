@@ -53,6 +53,7 @@ libbz2-dev
 libfreetype6-dev
 libfreeimage-dev
 make
+ntp
 '
 
 RUBY_DEPENDENCIES='
