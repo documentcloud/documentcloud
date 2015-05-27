@@ -70,7 +70,7 @@ class DocumentImport < DocumentAction
   end
 
   def process_images
-    if duplicate = document.duplicates.first
+    if duplicate = document.duplicates.first and not options['images_only']
       asset_store.copy_images( duplicate, document, access )
     else
       Docsplit.extract_images(@pdf, :format => :gif, :size => Page::IMAGE_SIZES.values, :rolling => true, :output => 'images')
