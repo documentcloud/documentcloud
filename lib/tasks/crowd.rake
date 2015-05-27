@@ -68,6 +68,8 @@ def crowd_folder
       'reindex'
     when File.exists?('API')
       'api'
+    when File.exists?('GM')
+      'gm'
     else
       RAILS_ENV
   end
