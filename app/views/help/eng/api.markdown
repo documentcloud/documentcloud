@@ -127,38 +127,51 @@ Using Ruby's RestClient library you could do:
 <a name="get-document"></a>
 ## GET /api/documents/[id].json
 
-Retrieve the canonical JSON representation of a particular document, as specified by the document id (usually something like: **218-madoff-sec-report**).
+Retrieve the canonical JSON representation of a particular document, as specified by the document id (usually something like: **1659580-economic-analysis-of-the-south-pole-traverse**).
 
 ### Example Response
 
     {"document":{
-      "id":"207-american-academy-v-napolitano",
-      "title":"American Academy v. Napolitano",
-      "pages":52,
+      "id":"1659580-economic-analysis-of-the-south-pole-traverse",
+      "title":"Economic Analysis of the South Pole Traverse",
+      "access":"public"
+      "pages":38,
+      "description":"The South Pole Traverse is a highway of compacted snow built to provide an overland supply route between McMurdo Station on the Antarctic coast and the Amundsen–Scott South Pole Station.  This report provides an account of the logistical costs associated with transport across the Traverse compared with air transport via LC-130 Hercules aircraft.",
+      "source":"http://www.dtic.mil/cgi-bin/GetTRDoc?AD=ADA602402",
+      "created_at":"Wed, 11 Feb 2015 18:30:58 +0000",
+      "updated_at":"Sun, 08 Mar 2015 15:23:02 +0000",
+      "canonical_url":"https://www.documentcloud.org/documents/1659580-economic-analysis-of-the-south-pole-traverse.html",
       "language":"eng",
+      "file_hash":"c07f7b640c4df2132bacb8dbfac1dcb65f978418",
+      "contributor":"Ted Han",
+      "contributor_organization":"DocumentCloud",
       "display_language":"eng",
-      "description":"Appeal from the judgment of the United States District Court, granting summary judgment...",
-      "created_at":"Fri Dec 10 03:43:23 +0000 2010",
-      "updated_at":"Fri Jan 14 14:49:11 +0000 2011",
       "resources":{
-        "pdf":"http://s3.documentcloud.org/documents/207/american-academy-v-napolitano.pdf",
-        "text":"http://s3.documentcloud.org/documents/207/american-academy-v-napolitano.txt",
-        "thumbnail":"http://s3.documentcloud.org/documents/207/pages/american-academy-v-napolitano-p1-thumbnail.gif",
-        "search":"http://s3.documentcloud.org/207/search.json?q={query}",
+        "pdf":"https://s3.amazonaws.com/s3.documentcloud.org/documents/1659580/economic-analysis-of-the-south-pole-traverse.pdf",
+        "text":"https://s3.amazonaws.com/s3.documentcloud.org/documents/1659580/economic-analysis-of-the-south-pole-traverse.txt",
+        "thumbnail":"https://s3.amazonaws.com/s3.documentcloud.org/documents/1659580/pages/economic-analysis-of-the-south-pole-traverse-p1-thumbnail.gif",
+        "search":"https://www.documentcloud.org/documents/1659580/search.json?q={query}",
+        "print_annotations":"https://www.documentcloud.org/notes/print?docs[]=1659580",
+        "translations_url":"https://www.documentcloud.org/translations/{realm}/{language}",
         "page":{
-          "text":"http://s3.documentcloud.org/documents/207/pages/american-academy-v-napolitano-p{page}.txt",
-          "image":"http://s3.documentcloud.org/asset_store/documents/207/pages/american-academy-v-napolitano-p{page}-{size}.gif"
-        },
-        "related_article":"http://example.com/article.html"
+          "image":"https://s3.amazonaws.com/s3.documentcloud.org/documents/1659580/pages/economic-analysis-of-the-south-pole-traverse-p{page}-{size}.gif",
+          "text":"https://www.documentcloud.org/documents/1659580/pages/economic-analysis-of-the-south-pole-traverse-p{page}.txt"
+          },
+        "annotations_url":"https://www.documentcloud.org/documents/1659580/annotations"
       },
       "sections":[],
+      "data":{},
       "annotations":[]
     }}
+
+### Tips
+
+ * **Security note:** For fidelity with the source document, the extracted text (available via the URLs provided in `document.resources.text` and the `document.resources.page.text` page iteration pattern) is not sanitized. **You should always escape document and page text before insertion into the DOM.**
 
 <a name="update-document"></a>
 ## PUT /api/documents/[id].json
 
-Update a document's **title**, **source**, **description**, **related article**, **access level**, or **data** with this method. Reference your document by its id (usually something like: **218-madoff-sec-report**).
+Update a document's **title**, **source**, **description**, **related article**, **access level**, or **data** with this method. Reference your document by its id (usually something like: **1659580-economic-analysis-of-the-south-pole-traverse**).
 
 Parameter     | Description           |  Example
 --------------|-----------------------|--------------
@@ -188,7 +201,7 @@ Delete a document from DocumentCloud. You must be authenticated as the owner of 
 <a name="get-entities"></a>
 ## GET /api/documents/[id]/entities.json
 
-Retrieve the JSON for all of the entities that a particular document contains, specified by the document id (usually something like: **218-madoff-sec-report**). Entities are ordered by their relevance to the document as determined by OpenCalais.
+Retrieve the JSON for all of the entities that a particular document contains, specified by the document id (usually something like: **1659580-economic-analysis-of-the-south-pole-traverse**). Entities are ordered by their relevance to the document as determined by OpenCalais.
 
 ### Example Response
 

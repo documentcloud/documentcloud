@@ -126,39 +126,51 @@ Usando biblioteca RestClient de Ruby podría hacerlo siguiente:
 <a name="get-document"></a>
 ## GET /api/documents/[id].json
 
-Recupere la representación canónica JSON de un documento en particular, según especificado por el identificador del documento (normalmente algo como: **218-madoff-sec-report**).
+Recupere la representación canónica JSON de un documento en particular, según especificado por el identificador del documento (normalmente algo como: **1659580-economic-analysis-of-the-south-pole-traverse**).
 
 ## Ejemplo de respuesta
 
     {"document":{
-      "id":"207-american-academy-v-napolitano",
-      "title":"American Academy v. Napolitano",
-      "pages":52,
+      "id":"1659580-economic-analysis-of-the-south-pole-traverse",
+      "title":"Economic Analysis of the South Pole Traverse",
+      "access":"public"
+      "pages":38,
+      "description":"The South Pole Traverse is a highway of compacted snow built to provide an overland supply route between McMurdo Station on the Antarctic coast and the Amundsen–Scott South Pole Station.  This report provides an account of the logistical costs associated with transport across the Traverse compared with air transport via LC-130 Hercules aircraft.",
+      "source":"http://www.dtic.mil/cgi-bin/GetTRDoc?AD=ADA602402",
+      "created_at":"Wed, 11 Feb 2015 18:30:58 +0000",
+      "updated_at":"Sun, 08 Mar 2015 15:23:02 +0000",
+      "canonical_url":"https://www.documentcloud.org/documents/1659580-economic-analysis-of-the-south-pole-traverse.html",
       "language":"eng",
-      "file_hash":"1c877b02d23dd1f49b55b9854e93a31c2df7e99d",
+      "file_hash":"c07f7b640c4df2132bacb8dbfac1dcb65f978418",
+      "contributor":"Ted Han",
+      "contributor_organization":"DocumentCloud",
       "display_language":"eng",
-      "description":"Appeal from the judgment of the United States District Court, granting summary judgment...",
-      "created_at":"Fri Dec 10 03:43:23 +0000 2010",
-      "updated_at":"Fri Jan 14 14:49:11 +0000 2011",
       "resources":{
-        "pdf":"http://s3.documentcloud.org/documents/207/american-academy-v-napolitano.pdf",
-        "text":"http://s3.documentcloud.org/documents/207/american-academy-v-napolitano.txt",
-        "thumbnail":"http://s3.documentcloud.org/documents/207/pages/american-academy-v-napolitano-p1-thumbnail.gif",
-        "search":"http://s3.documentcloud.org/207/search.json?q={query}",
+        "pdf":"https://s3.amazonaws.com/s3.documentcloud.org/documents/1659580/economic-analysis-of-the-south-pole-traverse.pdf",
+        "text":"https://s3.amazonaws.com/s3.documentcloud.org/documents/1659580/economic-analysis-of-the-south-pole-traverse.txt",
+        "thumbnail":"https://s3.amazonaws.com/s3.documentcloud.org/documents/1659580/pages/economic-analysis-of-the-south-pole-traverse-p1-thumbnail.gif",
+        "search":"https://www.documentcloud.org/documents/1659580/search.json?q={query}",
+        "print_annotations":"https://www.documentcloud.org/notes/print?docs[]=1659580",
+        "translations_url":"https://www.documentcloud.org/translations/{realm}/{language}",
         "page":{
-          "text":"http://s3.documentcloud.org/documents/207/pages/american-academy-v-napolitano-p{page}.txt",
-          "image":"http://s3.documentcloud.org/asset_store/documents/207/pages/american-academy-v-napolitano-p{page}-{size}.gif"
-        },
-        "related_article":"http://example.com/article.html"
+          "image":"https://s3.amazonaws.com/s3.documentcloud.org/documents/1659580/pages/economic-analysis-of-the-south-pole-traverse-p{page}-{size}.gif",
+          "text":"https://www.documentcloud.org/documents/1659580/pages/economic-analysis-of-the-south-pole-traverse-p{page}.txt"
+          },
+        "annotations_url":"https://www.documentcloud.org/documents/1659580/annotations"
       },
       "sections":[],
+      "data":{},
       "annotations":[]
     }}
+
+### Tips
+
+ * **Nota de seguridad:** Por fidelidad con el documento de origen, el texto extraído (disponible a través de las direcciones URL proporcionadas en `document.resources.text` y `document.resources.page.text` modelo paginación iteración) no es verificada. Siempre debe escapar de documentos y páginas de texto antes de la inserción en el DOM.
 
 <a name="update-document"></a>
 ## PUT /api/documents/[id].json
 
-Actualice el **título**, **fuente**, **descripción**, **artículo relacionado**, **nivel de acceso**, o los datos de un documento, con este método. Refiérase a su documento por su ID (normalmente algo como: **218-madoff-sec-report**).
+Actualice el **título**, **fuente**, **descripción**, **artículo relacionado**, **nivel de acceso**, o los datos de un documento, con este método. Refiérase a su documento por su ID (normalmente algo como: **1659580-economic-analysis-of-the-south-pole-traverse**).
 
 Parámetro 	|	Descripción 					|	Ejemplo
 ------------|-----------------------------------|------------
@@ -190,7 +202,7 @@ Consejos
 <a name="get-entities"></a>
 ## GET/api/documents/[id]/entities.json
 
-Recupere el JSON de todas las entidades que un determinado documento contiene, especificado por el ID del documento (normalmente algo como: **218-madoff-sec-report**). Las entidades son ordenadas por su relevancia al  el documento según es determinado por OpenCalais.
+Recupere el JSON de todas las entidades que un determinado documento contiene, especificado por el ID del documento (normalmente algo como: **1659580-economic-analysis-of-the-south-pole-traverse**). Las entidades son ordenadas por su relevancia al  el documento según es determinado por OpenCalais.
 
 ### Ejemplo de respuesta
 
