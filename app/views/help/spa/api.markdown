@@ -163,9 +163,9 @@ Recupere la representación canónica JSON de un documento en particular, según
       "annotations":[]
     }}
 
-### Tips
+### Consejos
 
- * **Nota de seguridad:** Por fidelidad con el documento de origen, el texto extraído (disponible a través de las direcciones URL proporcionadas en `document.resources.text` y `document.resources.page.text` modelo paginación iteración) no es verificada. Siempre debe escapar de documentos y páginas de texto antes de la inserción en el DOM.
+ * **Nota de seguridad:** Por fidelidad con el documento de origen, el texto extraído (disponible a través de las direcciones URL proporcionadas en `document.resources.text` y `document.resources.page.text` modelo paginación iteración) no es verificada. Siempre debe escape de documentos y páginas de texto antes de la inserción en el DOM.
 
 <a name="update-document"></a>
 ## PUT /api/documents/[id].json
