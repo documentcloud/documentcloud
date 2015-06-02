@@ -55,6 +55,8 @@ contributors:
      - http://www.statesman.com/
    - - Australian Broadcasting Corporation
      - http://www.abc.net.au/
+   - - The Baltimore Sun
+     - http://www.baltimoresun.com/
    - - The Bay Citizen
      - http://www.baycitizen.org/
    - - The Bellingham Herald
@@ -81,6 +83,8 @@ contributors:
      - http://www.burrillreport.com/
    - - Business Green
      - http://www.businessgreen.com
+   - - BuzzFeed
+     - http://www.buzzfeed.com/ 
    - - California Watch
      - http://californiawatch.org
    - - Carbon Brief
@@ -93,6 +97,8 @@ contributors:
      - http://opencrs.com
    - - Center for Investigative Reporting
      - http://centerforinvestigativereporting.org
+   - - Center for Media and Democracy
+     - http://www.prwatch.org/
    - - Center for Public Integrity
      - http://publicintegrity.org
    - - Centre for Investigative Journalism, City University London
@@ -219,6 +225,8 @@ contributors:
      - http://firedoglake.com
    - - Florida Center for Investigative Reporting
      - http://fcir.org
+   - - The Florida Times-Union
+     - http://jacksonville.com/
    - - Florida Today
      - http://www.floridatoday.com/
    - - American Way of Eating
@@ -231,6 +239,8 @@ contributors:
      - http://freegovinfo.info/
    - - The Free Press
      - http://www.mankatofreepress.com
+   - - The Frontier
+     - http://www.tulsafrontier.com/
    - - Frontline
      - http://www.pbs.org/wgbh/pages/frontline
    - - The Gadsden Times
@@ -239,6 +249,8 @@ contributors:
      - http://www.gainesville.com
    - - Gapers Block
      - http://gapersblock.com
+   - - Gawker.com
+     - http://gawker.com/
    - - The Georgia Straight
      - http://www.straight.com/
    - - Gizmodo
@@ -317,6 +329,8 @@ contributors:
      - http://www.king5.com/
    - - Knoxville News Sentinel
      - http://www.knoxnews.com/
+   - - The Korea Center for Investigative Journalism
+     - http://welcome.newstapa.org/
    - - The Komisar Scoop
      - http://thekomisarscoop.com
    - - KPTV
@@ -343,6 +357,8 @@ contributors:
      - http://www.lgcplus.com/
    - - Longview News-Journal
      - http://news-journal.com/
+   - - Los Angeles News Group
+     - http://losangelesnewsgroup.com/
    - - Los Angeles Times
      - http://latimes.com
    - - Los Angeles Times Community News
@@ -395,13 +411,19 @@ contributors:
      - http://gwu.edu/~nsarchiv
    - - National Security Journalism Initiative (Medill)
      - http://medillnsj.org/
+   - - NBC 7 San Diego
+     - http://www.nbcsandiego.com/
+   - - NBC 4 Southern California
+     - http://www.nbclosangeles.com/
    - - NEast Philly
      - http://neastphilly.com/
    - - The Nerve (South Carolina Policy Council)
      - http://www.thenerve.org
    - - NET Nebraska
      - http://www.netnebraska.org
-   - - New York Times
+   - - New York Daily News
+     - http://www.nydailynews.com/
+   - - The New York Times
      - http://nytimes.com
    - - The New Yorker
      - http://newyorker.com
@@ -451,6 +473,8 @@ contributors:
      - http://www.ky3.com/
    - - Ozarks Unbound
      - http://www.ozarksunbound.com/
+   - - Pacific Daily News
+     - http://www.guampdn.com/
    - - Pacific Northwest Inlander
      - http://www.inlander.com/
    - - Página/12
@@ -483,6 +507,8 @@ contributors:
      - http://www.easttexasnews.com/Enterprise/News/Main/enterprise_main.htm
    - - Post Star
      - http://poststar.com/
+   - - Postimees
+     - http://www.postimees.ee/
    - - Poughkeepsie Journal
      - http://www.poughkeepsiejournal.com/
    - - POV
@@ -581,8 +607,8 @@ contributors:
      - http://spinwatch.org
    - - The Spokesman-Review
      - http://www.spokesman.com/
-   - - Spot.us
-     - http://spot.us/
+   - - The St. Augustine Record
+     - http://staugustine.com/
    - - St. Cloud Times
      - http://stcloudtimes.com
    - - St. Louis Post-Dispatch
@@ -645,6 +671,8 @@ contributors:
      - http://www.tcpalm.com/
    - - Tucson Sentinel
      - http://www.tucsonsentinel.com/
+   - - Tulsa World
+     - http://www.tulsaworld.com/
    - - Two Circles
      - http://www.TwoCircles.net
    - - UBC School of Journalism
@@ -655,7 +683,7 @@ contributors:
      - http://www.ukings.ns.ca/journalism
    - - US Local News Network
      - http://www.uslnn.com
-   - - USA Today
+   - - USA TODAY
      - http://www.usatoday.com
    - - Valerie Brown Writer
      - http://www.valeriebrownwriter.com
@@ -673,8 +701,12 @@ contributors:
      - http://voiceofsandiego.org
    - - Voices of Montana
      - http://www.northernbroadcasting.com
+   - - VTDigger
+     - http://vtdigger.org/
    - - WA Today
      - http://www.watoday.com.au
+   - - The Wall Street Journal
+     - http://www.wsj.com/
    - - Washington Post
      - http://wpost.com
    - - The Washington Times
@@ -707,6 +739,8 @@ contributors:
      - http://host.madison.com/wsj/
    - - WNYC Radio
      - http://wnyc.org
+   - - WRAL-TV 
+     - http://www.wral.com/
    - - WSHU Public Radio
      - http://www.wshunews.org
    - - WTVF NewsChannel 5
