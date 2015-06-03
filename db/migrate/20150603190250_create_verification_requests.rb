@@ -1,5 +1,5 @@
 class CreateVerificationRequests < ActiveRecord::Migration
-  def change
+  def up
     create_table :verification_requests do |t|
       
       t.timestamps
@@ -23,5 +23,9 @@ class CreateVerificationRequests < ActiveRecord::Migration
       t.string  "signup_key",                              :null => false
       t.integer "account_id" 
     end
+  end
+  
+  def down
+    drop_table :verification_requests
   end
 end
