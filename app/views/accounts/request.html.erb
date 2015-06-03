@@ -1,0 +1,96 @@
+<%
+  @title = "Request a DocumentCloud account"
+%>
+
+<%= form_for @verification_request do |f| %>
+
+  <div class="dataset">
+    <%= f.label :requester_first_name %>
+    <%= f.text_field :requester_first_name %>
+  </div>
+  
+  <div class="dataset">
+    <%= f.label :requester_last_name %>
+    <%= f.text_field :requester_last_name %>
+  </div>
+  
+  <div class="dataset">
+    <%= f.label :requester_email %>
+    <%= f.email_field :requester_email %>
+  </div>
+  
+  <div class="dataset">
+    <%= f.label :organization_name %>
+    <%= f.text_field :organization_name %>
+  </div>
+  
+  <div class="dataset">
+    <%= f.label :organization_url %>
+    <%= f.url_field :organization_url %>
+  </div>
+  
+  <div class="dataset">
+    <%= f.label :country %>
+    <%= f.select :country, @country_options %>
+  </div>
+  
+  <div class="dataset">
+    <%= f.label :display_language %>
+    <%= f.select :display_language, @display_language_options %>
+  </div>
+  
+  <div class="dataset">
+    <%= f.label :document_language %>
+    <%= f.select :document_language, @document_language_options %>
+  </div>
+  
+  <div class="dataset">
+    <%= f.label :requester_notes %>
+    <%= f.text_area :requester_notes %>
+  </div>
+
+  <div class="dataset">
+    <%= f.label :agreed_to_terms %>
+    <%= f.check_box :agreed_to_terms %>
+  </div>
+
+  <!-- TODO: Toggle between info/approval based on whether requester *is* approver -->
+
+  <div id="approver_info_section">
+    <div class="dataset">
+      <%= f.label :approver_first_name %>
+      <%= f.text_field :approver_first_name %>
+    </div>
+    <div class="dataset">
+      <%= f.label :approver_last_name %>
+      <%= f.text_field :approver_last_name %>
+    </div>
+    <div class="dataset">
+      <%= f.label :approver_email %>
+      <%= f.email_field :approver_email %>
+    </div>
+  </div>
+
+  <div id="approver_approval_section">
+    <div class="dataset">
+      <%= f.label :authorized_posting %>
+      <%= f.check_box :authorized_posting %>
+    </div>
+  </div>
+
+  <% if @admin %>
+    <div id="admin_signup_section">
+      <div class="dataset">
+        <%= f.label :verification_notes %>
+        <%= f.text_area :verification_notes %>
+      </div>
+      <div class="dataset">
+        <%= f.label :status %>
+        <%= f.select :status, @status_options %>
+      </div>
+    </div>
+  <% else %>
+    <%= f.submit %>
+  <% end %>
+
+<% end %>

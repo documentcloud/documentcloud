@@ -4,8 +4,14 @@ class AccountsController < ApplicationController
   layout 'workspace'
 
   before_action :secure_only, :only => [:enable, :reset]
-  before_action :login_required, :except => [:enable, :reset, :logged_in]
+  before_action :login_required, :except => [:enable, :reset, :logged_in, :request_account]
   before_action :bouncer, :only => [:enable, :reset] if Rails.env.staging?
+
+  def request_account
+    # @verification_request ||= VerificationRequest.find_by_signup_key(params[:key])
+    @verification_request = VerificationRequest.new
+    render :template => 'accounts/request', :layout => 'home'
+  end
 
   # Enabling an account continues the second half of the signup process,
   # allowing the journalist to set their password, and logging them in.
