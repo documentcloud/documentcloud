@@ -1,2 +1,2 @@
-class VerficationRequest < ActiveRecord::Base
+class VerificationRequest < ActiveRecord::Base
 end

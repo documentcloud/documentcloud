@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class VerficationRequestTest < ActiveSupport::TestCase
+class VerificationRequestTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end
