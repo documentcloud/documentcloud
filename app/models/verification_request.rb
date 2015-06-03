@@ -14,12 +14,12 @@ class VerificationRequest < ActiveRecord::Base
   
   belongs_to :account
   
-  validates :requester_email, :approver_email
+  validates :requester_email, :approver_email,
     presence: true, 
     format: { :with => DC::Validators::EMAIL }
-  
-  validates_presence :requester_first_name, :requester_last_name, :approver_first_name, :approver_last_name,
-                     :organization_name,
+    
+  validates :requester_first_name, :requester_last_name, :approver_first_name, :approver_last_name,
+            :organization_name,
     presence: true
   
   validates :display_language, :inclusion=>{ :in => DC::Language::USER,
