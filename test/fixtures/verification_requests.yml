@@ -4,7 +4,21 @@
 # model remove the '{}' from the fixture names and add the columns immediately
 # below each fixture, per the syntax in the comments below
 #
-one: {}
+dc: {
+  "requester_email"      => "ted@documentcloud.org",
+  "requester_first_name" => "Ted",
+  "requester_last_name"  => "Han",
+  "organization_name"    => "DocumentCloud",
+  "approver_email"       => "mark@documentcloud.org",
+  "approver_first_name"  => "Mark",
+  "approver_last_name"   => "Horvit",
+  "display_language"     => "eng",
+  "document_language"    => "eng",
+  "status"               => 1,
+  "agreed_to_terms"      => false,
+  "authorized_posting"   => false,
+}
+
 # column: value
 #
 two: {}

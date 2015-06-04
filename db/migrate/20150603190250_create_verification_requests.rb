@@ -7,8 +7,8 @@ class CreateVerificationRequests < ActiveRecord::Migration
       t.string  "requester_first_name",                    :null => false
       t.string  "requester_last_name",                     :null => false
       t.string  "requester_notes",      :length => 255
-      t.string  "organization_name",    :length => 255,    :null => false
-      t.string  "organization_slug",    :length => 255,    :null => false
+      t.string  "organization_name",    :length => 100,    :null => false
+      t.string  "organization_slug",    :length => 100,    :null => false
       t.string  "organization_url",     :length => 255     
       t.string  "approver_email",       :length => 255,    :null => false
       t.string  "approver_first_name",                     :null => false
