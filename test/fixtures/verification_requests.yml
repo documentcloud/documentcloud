@@ -19,7 +19,18 @@ dc: {
   "authorized_posting"   => false,
 }
 
-# column: value
-#
-two: {}
-#  column: value
+amt: {
+  "requester_email"      => "scrisplock@amtimes.disc",
+  "requester_first_name" => "Sacharissa",
+  "requester_last_name"  => "Cripslock",
+  "organization_name"    => "The Ankh-Morpork Times",
+  "approver_email"       => "wdeworde@amtimes.disc",
+  "approver_first_name"  => "William",
+  "approver_last_name"   => "de Worde",
+  "display_language"     => "spa",
+  "document_language"    => "spa",
+  "status"               => 1,
+  "agreed_to_terms"      => false,
+  "authorized_posting"   => false,
+}
+
