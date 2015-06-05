@@ -13,7 +13,7 @@ class VerificationRequest < ActiveRecord::Base
   STATUS_NAMES = STATUS_MAP.invert
   
   belongs_to :account
-  
+
   validates :requester_email, :approver_email,
     presence: true, 
     format: { :with => DC::Validators::EMAIL }
@@ -26,5 +26,5 @@ class VerificationRequest < ActiveRecord::Base
     :message => "must be one of: (#{DC::Language::USER.join(', ')})" }
   validates :document_language,  :inclusion=>{ :in => DC::Language::SUPPORTED,
     :message => "must be one of: (#{DC::Language::SUPPORTED.join(', ')})" }
-    
+
 end

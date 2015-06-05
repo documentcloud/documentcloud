@@ -1,0 +1,111 @@
+<%
+  @title  = "Request a DocumentCloud account"
+  @header = "Request a DocumentCloud account"
+%>
+
+<div id="content">
+
+<%= form_for @verification_request do |f| %>
+
+  <div class="inputset inputset-2">
+    <%= f.label :requester_first_name, 'Name' %>
+    <%= f.text_field :requester_first_name, :placeholder => 'First' %>
+    <%= f.text_field :requester_last_name, :placeholder => 'Last' %>
+  </div>
+
+  <div class="inputset">
+    <%= f.label :requester_email, 'Email' %>
+    <%= f.email_field :requester_email %>
+  </div>
+  
+  <div class="inputset">
+    <%= f.label :organization_name %>
+    <%= f.text_field :organization_name %>
+  </div>
+  
+  <div class="inputset">
+    <%= f.label :organization_url, 'Organization URL' %>
+    <%= f.url_field :organization_url %>
+  </div>
+  
+  <div class="inputset">
+    <%= f.label :country %>
+    <%= f.select :country, @country_options %>
+  </div>
+  
+  <div class="inputset">
+    <%= f.label :display_language %>
+    <%= f.select :display_language, @display_language_options %>
+  </div>
+  
+  <div class="inputset">
+    <%= f.label :document_language %>
+    <%= f.select :document_language, @document_language_options %>
+  </div>
+  
+  <div class="inputset">
+    <%= f.label :requester_notes, 'Comments' %>
+    <%= f.text_area :requester_notes %>
+  </div>
+
+  <div id="approval_toggler" style="display:none">
+    Do you have authorization to approve DocumentCloud to host documents on behalf of your organization? (If you're a reporter, this will usually be your editor or producer.)
+    <div class="radioset">
+      <div class="radio">
+        <%= radio_button_tag :approver_self, 'yes' %>
+        <%= label_tag :approver_self_yes, 'Yes' %>
+      </div>
+      <div class="radio">
+        <%= radio_button_tag :approver_self, 'no' %>
+        <%= label_tag :approver_self_no, 'No (or I don’t know)' %>
+      </div>
+    </div>
+  </div>
+
+  <div id="approver_info_section">
+    <div class="inputset inputset-2">
+      <%= f.label :approver_first_name, 'Approver’s name' %>
+      <%= f.text_field :approver_first_name, :placeholder => 'First' %>
+      <%= f.text_field :approver_last_name, :placeholder => 'Last' %>
+    </div>
+    <div class="inputset">
+      <%= f.label :approver_email %>
+      <%= f.email_field :approver_email %>
+    </div>
+  </div>
+
+  <div id="approver_approval_section" style="display:none">
+    <div class="checkset">
+      <%= label_tag :authorization, 'Authorization', :class => 'setlabel' %>
+      <%= f.check_box :authorized_posting %>
+      <%= f.label :authorized_posting, 'I authorize DocumentCloud to post documents on behalf of my organization' %>
+    </div>
+  </div>
+
+  <div class="checkset">
+    <%= label_tag :terms, 'Terms', :class => 'setlabel' %>
+    <%= f.check_box :agreed_to_terms %>
+    <%= f.label :agreed_to_terms, 'I agree to the Terms of Service' %>
+  </div>
+
+  <% if @admin %>
+    <div id="admin_signup_section">
+      <div class="inputset">
+        <%= f.label :verification_notes %>
+        <%= f.text_area :verification_notes %>
+      </div>
+      <div class="inputset">
+        <%= f.label :status %>
+        <%= f.select :status, @status_options %>
+      </div>
+    </div>
+    <%= f.submit 'Update request' %>
+  <% else %>
+    <div class="inputset">
+      <%= f.submit 'Submit request' %>
+    </div>
+  <% end %>
+
+<% end %>
+
+</div>
