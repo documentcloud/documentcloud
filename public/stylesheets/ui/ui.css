@@ -177,9 +177,14 @@ input.hidden_submit {
   margin-right: 0;
 }
 
-.checkset {
+.checkset,
+.submitset {
   padding-left: 25%;
   position: relative;
+}
+
+.submitset {
+  margin-top: 1em;
 }
 
 .checkset .setlabel {
@@ -191,6 +196,24 @@ input.hidden_submit {
 
 .checkset label {
   width: 78%;
+}
+
+.inputset .field_with_errors textarea,
+.inputset .field_with_errors input[type=text],
+.inputset .field_with_errors input[type=email],
+.inputset .field_with_errors input[type=url] {
+  border-color: rgb(200, 50, 50);
+}
+
+.inputset .field_with_errors textarea:focus,
+.inputset .field_with_errors input[type=text]:focus,
+.inputset .field_with_errors input[type=email]:focus,
+.inputset .field_with_errors input[type=url]:focus {
+  box-shadow: 0 0 4px rgb(200, 50, 50);
+}
+
+.inputset .field_with_errors select {
+  border-color: rgb(200, 50, 50);
 }
 
 /*------------------------------ Text Inputs ---------------------------------*/

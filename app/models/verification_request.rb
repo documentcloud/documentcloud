@@ -22,9 +22,9 @@ class VerificationRequest < ActiveRecord::Base
             :organization_name,
     presence: true
   
-  validates :display_language, :inclusion=>{ :in => DC::Language::USER,
+  validates :display_language, :inclusion => { :in => DC::Language::USER,
     :message => "must be one of: (#{DC::Language::USER.join(', ')})" }
-  validates :document_language,  :inclusion=>{ :in => DC::Language::SUPPORTED,
+  validates :document_language, :inclusion => { :in => DC::Language::SUPPORTED,
     :message => "must be one of: (#{DC::Language::SUPPORTED.join(', ')})" }
 
 end

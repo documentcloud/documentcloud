@@ -29,6 +29,7 @@ gem 'actionpack-page_caching'
 gem 'jammit',                 :github=>'documentcloud/jammit', :branch=>'rails4'
 gem 'nokogiri',               '~> 1.6.0'
 gem 'net-ssh-shell'
+gem 'country_select',         '~> 2.2.0'
 
 group :development, :test do
   gem 'guard-bundler'

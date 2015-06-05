@@ -120,7 +120,6 @@ DC::Application.routes.draw do
   get '/download/*args.zip' => 'download#bulk_download', :as => :bulk_download
 
   # Accounts and account management.
-  resources :verification_requests
   resources :accounts do
     collection {
       get :logged_in

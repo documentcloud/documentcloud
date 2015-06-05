@@ -5,7 +5,19 @@
 
 <div id="content">
 
-<%= form_for @verification_request do |f| %>
+<%= form_for @verification_request, :url => {:controller => 'signup', :action => 'create_request'} do |f| %>
+
+  <% if @verification_request.errors.any? %>
+    <div class="alert error">
+      <b>Couldn’t create your request.</b> Please fix these and try again:
+      <ul>
+      <% @verification_request.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
 
   <div class="inputset inputset-2">
     <%= f.label :requester_first_name, 'Name' %>
@@ -30,17 +42,18 @@
   
   <div class="inputset">
     <%= f.label :country %>
-    <%= f.select :country, @country_options %>
+    <%= f.country_select :country, priority_countries: ['US'], prompt: 'Select a country…' %>
+    <%#= f.select :country, @country_options %>
   </div>
   
   <div class="inputset">
     <%= f.label :display_language %>
-    <%= f.select :display_language, @display_language_options %>
+    <%= f.select :display_language, @display_language_options, selected: 'eng' %>
   </div>
   
   <div class="inputset">
     <%= f.label :document_language %>
-    <%= f.select :document_language, @document_language_options %>
+    <%= f.select :document_language, @document_language_options, selected: 'eng' %>
   </div>
   
   <div class="inputset">
@@ -99,9 +112,11 @@
         <%= f.select :status, @status_options %>
       </div>
     </div>
-    <%= f.submit 'Update request' %>
+    <div class="submitset">
+      <%= f.submit 'Update request' %>
+    </div>
   <% else %>
-    <div class="inputset">
+    <div class="submitset">
       <%= f.submit 'Submit request' %>
     </div>
   <% end %>

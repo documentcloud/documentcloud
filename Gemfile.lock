@@ -74,8 +74,15 @@ GEM
       sinatra
       thin (>= 1.2.4)
     coderay (1.1.0)
+    countries (0.11.4)
+      currencies (~> 0.4.2)
+      i18n_data (~> 0.7.0)
+    country_select (2.2.0)
+      countries (~> 0.11.0)
+      sort_alphabetical (~> 1.0)
     cssmin (1.0.3)
     curb (0.8.6)
+    currencies (0.4.2)
     daemons (1.1.9)
     docsplit (0.8.0.alpha1)
     erubis (2.7.0)
@@ -123,6 +130,7 @@ GEM
     hike (1.2.3)
     hitimes (1.2.2)
     i18n (0.7.0)
+    i18n_data (0.7.0)
     iconv (1.0.4)
     jsmin (1.0.1)
     json (1.8.2)
@@ -240,6 +248,8 @@ GEM
       rack-protection (~> 1.4)
       tilt (~> 1.3, >= 1.3.4)
     slop (3.6.0)
+    sort_alphabetical (1.0.1)
+      unicode_utils (>= 1.2.2)
     spring (1.3.3)
     sprockets (2.12.3)
       hike (~> 1.2)
@@ -270,6 +280,7 @@ GEM
       hitimes
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
+    unicode_utils (1.4.0)
 
 PLATFORMS
   ruby
@@ -281,6 +292,7 @@ DEPENDENCIES
   calais (~> 0.0.13)!
   closure-compiler
   cloud-crowd (~> 0.7.3)
+  country_select (~> 2.2.0)
   curb (~> 0.8.4)
   docsplit (= 0.8.0.alpha1)
   google_drive (~> 1.0.0)
