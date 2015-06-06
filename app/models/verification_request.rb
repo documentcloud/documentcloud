@@ -22,6 +22,8 @@ class VerificationRequest < ActiveRecord::Base
             :organization_name,
     presence: true
   
+  validates :agreed_to_terms, :presence => { :message => 'must be checked' }
+  
   validates :display_language, :inclusion => { :in => DC::Language::USER,
     :message => "must be one of: (#{DC::Language::USER.join(', ')})" }
   validates :document_language, :inclusion => { :in => DC::Language::SUPPORTED,

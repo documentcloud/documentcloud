@@ -9,7 +9,7 @@
 
   <% if @verification_request.errors.any? %>
     <div class="alert error">
-      <b>Couldn’t create your request.</b> Please fix these and try again:
+      <b>Sorry, we couldn’t create your request.</b> Please fix these and try again:
       <ul>
       <% @verification_request.errors.full_messages.each do |msg| %>
         <li><%= msg %></li>
@@ -18,19 +18,24 @@
     </div>
   <% end %>
 
+  <p>DocumentCloud accounts are available to people who report on primary source documents. To get setup with an account, fill out the form below with your information. If your organization already exists, we’ll email you with the name of your administrator so they can setup your account.</p>
 
-  <div class="inputset inputset-2">
+  <p>Once we‘ve finished setting up your account, we’ll send you a welcome email with login instructions.</p>
+
+  <p>For help with the process, email <a href="mailto:support@documentcloud.org">support@documentcloud.org</a>.</p>
+
+  <div class="inputset inputset-2 required">
     <%= f.label :requester_first_name, 'Name' %>
     <%= f.text_field :requester_first_name, :placeholder => 'First' %>
     <%= f.text_field :requester_last_name, :placeholder => 'Last' %>
   </div>
 
-  <div class="inputset">
+  <div class="inputset required">
     <%= f.label :requester_email, 'Email' %>
     <%= f.email_field :requester_email %>
   </div>
   
-  <div class="inputset">
+  <div class="inputset required">
     <%= f.label :organization_name %>
     <%= f.text_field :organization_name %>
   </div>
@@ -40,18 +45,18 @@
     <%= f.url_field :organization_url %>
   </div>
   
-  <div class="inputset">
+  <div class="inputset required">
     <%= f.label :country %>
-    <%= f.country_select :country, priority_countries: ['US'], prompt: 'Select a country…' %>
+    <%= f.country_select :country, priority_countries: ['US'], prompt: '' %>
     <%#= f.select :country, @country_options %>
   </div>
   
-  <div class="inputset">
+  <div class="inputset required">
     <%= f.label :display_language %>
     <%= f.select :display_language, @display_language_options, selected: 'eng' %>
   </div>
   
-  <div class="inputset">
+  <div class="inputset required">
     <%= f.label :document_language %>
     <%= f.select :document_language, @document_language_options, selected: 'eng' %>
   </div>
@@ -59,6 +64,12 @@
   <div class="inputset">
     <%= f.label :requester_notes, 'Comments' %>
     <%= f.text_area :requester_notes %>
+  </div>
+
+  <div class="checkset required">
+    <%= f.label :agreed_to_terms, 'Terms', :class => 'setlabel' %>
+    <%= f.check_box :agreed_to_terms %>
+    <%= f.label :agreed_to_terms, 'I agree to the <a href="/terms" target="_blank">Terms of Service</a>'.html_safe %>
   </div>
 
   <div id="approval_toggler" style="display:none">
@@ -76,12 +87,16 @@
   </div>
 
   <div id="approver_info_section">
-    <div class="inputset inputset-2">
+    <div class="submitset">
+      <p>We also need the name and email of someone at your organization (usually an editor or producer) who can authorize us to host content on your organization’s behalf. We’ll send them an email to verify the authorization. If you are the authority, enter your own information again.</p>
+    </div>
+
+    <div class="inputset inputset-2 required">
       <%= f.label :approver_first_name, 'Approver’s name' %>
       <%= f.text_field :approver_first_name, :placeholder => 'First' %>
       <%= f.text_field :approver_last_name, :placeholder => 'Last' %>
     </div>
-    <div class="inputset">
+    <div class="inputset required">
       <%= f.label :approver_email %>
       <%= f.email_field :approver_email %>
     </div>
@@ -93,12 +108,6 @@
       <%= f.check_box :authorized_posting %>
       <%= f.label :authorized_posting, 'I authorize DocumentCloud to post documents on behalf of my organization' %>
     </div>
-  </div>
-
-  <div class="checkset">
-    <%= label_tag :terms, 'Terms', :class => 'setlabel' %>
-    <%= f.check_box :agreed_to_terms %>
-    <%= f.label :agreed_to_terms, 'I agree to the Terms of Service' %>
   </div>
 
   <% if @admin %>

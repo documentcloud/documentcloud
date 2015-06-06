@@ -133,13 +133,6 @@ input.hidden_submit {
   text-align: right;
 }
 
-.inputset textarea:focus,
-.inputset input[type=text]:focus,
-.inputset input[type=email]:focus,
-.inputset input[type=url]:focus {
-  box-shadow: 0 0 4px rgb(90, 118, 160);
-}
-
 .inputset textarea,
 .inputset input[type=text],
 .inputset input[type=email],
@@ -151,6 +144,13 @@ input.hidden_submit {
   border: 1px solid #999;
   border-radius: 2px;
   padding: 3px;
+}
+
+.inputset textarea:focus,
+.inputset input[type=text]:focus,
+.inputset input[type=email]:focus,
+.inputset input[type=url]:focus {
+  box-shadow: 0 0 4px rgb(90, 118, 160);
 }
 
 .inputset select {
@@ -170,16 +170,16 @@ input.hidden_submit {
   margin-right: 1%;
 }
 
-.inputset.inputset-2 textarea:last-child,
-.inputset.inputset-2 input[type=text]:last-child,
-.inputset.inputset-2 input[type=email]:last-child,
-.inputset.inputset-2 input[type=url]:last-child {
+.inputset.inputset-2 > textarea:last-child,
+.inputset.inputset-2 > input[type=text]:last-child,
+.inputset.inputset-2 > input[type=email]:last-child,
+.inputset.inputset-2 > input[type=url]:last-child {
   margin-right: 0;
 }
 
 .checkset,
 .submitset {
-  padding-left: 25%;
+  padding-left: 26%;
   position: relative;
 }
 
@@ -188,7 +188,7 @@ input.hidden_submit {
 }
 
 .checkset .setlabel {
-  width: 24%;
+  width: 25%;
   text-align: right;
   position: absolute;
   left: 0;
@@ -196,6 +196,16 @@ input.hidden_submit {
 
 .checkset label {
   width: 78%;
+}
+
+.field_with_errors {
+  display: inline;
+}
+
+.inputset.required label:after,
+.checkset.required .setlabel:after
+{
+  content: ' *';
 }
 
 .inputset .field_with_errors textarea,
@@ -214,6 +224,29 @@ input.hidden_submit {
 
 .inputset .field_with_errors select {
   border-color: rgb(200, 50, 50);
+}
+
+.inputset .field_with_errors label,
+.checkset .field_with_errors .setlabel {
+  color: rgb(180, 80, 80);
+}
+
+.alert {
+  margin: 1em 0;
+}
+
+.alert ul {
+  list-style-type: disc;
+  margin-left: 1em;
+  padding-left: 1em;
+}
+
+.alert.error {
+  color: #844;
+  background-color: #fcc;
+  border: 1px solid #aa7766;
+  border-radius: 3px;
+  padding: 0.5em;
 }
 
 /*------------------------------ Text Inputs ---------------------------------*/
