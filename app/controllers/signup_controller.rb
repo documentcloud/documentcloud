@@ -1,6 +1,8 @@
 class SignupController < ApplicationController
   layout 'home'
 
+  before_action :secure_only
+
   def index
     populate_options
     @verification_request ||= VerificationRequest.new
