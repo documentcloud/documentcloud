@@ -1,11 +1,12 @@
 <%
-  @title  = "Request a DocumentCloud account"
-  @header = "Request a DocumentCloud account"
+  @title  = "Apply"
+  @header = "Apply for a DocumentCloud account"
 %>
 
 <div id="content">
 
-<%= form_for @verification_request, :url => {:controller => 'signup', :action => 'create_request'} do |f| %>
+
+<%= form_for @verification_request, :url => {:controller => 'signup', :action => 'create_request'}, :html => { :class => 'form_v2' } do |f| %>
 
   <% if @verification_request.errors.any? %>
     <div class="alert error">
@@ -18,117 +19,116 @@
     </div>
   <% end %>
 
-  <p>DocumentCloud accounts are available to people who report on primary source documents. To get setup with an account, fill out the form below with your information. If your organization already exists, we’ll email you with the name of your administrator so they can setup your account.</p>
+  <p>Fill out this application and we’ll be in touch, usually within a day or two. For help with the process, email <a href="mailto:support@documentcloud.org">support@documentcloud.org</a>.</p>
 
-  <p>Once we‘ve finished setting up your account, we’ll send you a welcome email with login instructions.</p>
+  <fieldset class="fieldrow has3">
+    <div class="fieldwrap required">
+      <input id="requester_first_name" name="requester_first_name" type="text" class="field">
+      <label class="fieldlabel" for="requester_first_name">
+        <span class="fieldlabel_content" data-content="First name">First name</span>
+      </label>
+    </div>
+    <div class="fieldwrap required">
+      <input id="requester_last_name" name="requester_last_name" type="text" class="field">
+      <label class="fieldlabel" for="requester_last_name">
+        <span class="fieldlabel_content" data-content="Last name">Last name</span>
+      </label>
+    </div>
+    <div class="fieldwrap required">
+      <input id="requester_email" name="requester_email" type="email" class="field">
+      <label class="fieldlabel" for="requester_email">
+        <span class="fieldlabel_content" data-content="Email">Email</span>
+      </label>
+    </div>
+  </fieldset>
 
-  <p>For help with the process, email <a href="mailto:support@documentcloud.org">support@documentcloud.org</a>.</p>
+  <fieldset class="fieldrow has3">
+    <div class="fieldwrap required">
+      <input id="organization_name" name="organization_name" type="text" class="field">
+      <label class="fieldlabel" for="organization_name">
+        <span class="fieldlabel_content" data-content="Organization">Organization</span>
+      </label>
+    </div>
+    <div class="fieldwrap">
+      <input id="organization_url" name="organization_url" type="url" class="field">
+      <label class="fieldlabel" for="organization_url">
+        <span class="fieldlabel_content" data-content="Organization URL">Organization URL</span>
+      </label>
+    </div>
+    <div class="fieldwrap required">
+      <%= f.country_select :country, {priority_countries: ['US'], prompt: ''}, :class => 'field' %>
+      <label class="fieldlabel" for="country">
+        <span class="fieldlabel_content" data-content="Country ⬇︎">Country &rarr;</span>
+      </label>
+    </div>
+  </fieldset>
 
-  <div class="inputset inputset-2 required">
-    <%= f.label :requester_first_name, 'Name' %>
-    <%= f.text_field :requester_first_name, :placeholder => 'First' %>
-    <%= f.text_field :requester_last_name, :placeholder => 'Last' %>
-  </div>
-
-  <div class="inputset required">
-    <%= f.label :requester_email, 'Email' %>
-    <%= f.email_field :requester_email %>
-  </div>
-  
-  <div class="inputset required">
-    <%= f.label :organization_name %>
-    <%= f.text_field :organization_name %>
-  </div>
-  
-  <div class="inputset">
-    <%= f.label :organization_url, 'Organization URL' %>
-    <%= f.url_field :organization_url %>
-  </div>
-  
-  <div class="inputset required">
-    <%= f.label :country %>
-    <%= f.country_select :country, priority_countries: ['US'], prompt: '' %>
-    <%#= f.select :country, @country_options %>
-  </div>
-  
-  <div class="inputset required">
-    <%= f.label :display_language %>
-    <%= f.select :display_language, @display_language_options, selected: 'eng' %>
-  </div>
-  
-  <div class="inputset required">
-    <%= f.label :document_language %>
-    <%= f.select :document_language, @document_language_options, selected: 'eng' %>
-  </div>
-  
-  <div class="inputset">
-    <%= f.label :requester_notes, 'Comments' %>
-    <%= f.text_area :requester_notes %>
-  </div>
-
-  <div class="checkset required">
-    <%= f.label :agreed_to_terms, 'Terms', :class => 'setlabel' %>
-    <%= f.check_box :agreed_to_terms %>
-    <%= f.label :agreed_to_terms, 'I agree to the <a href="/terms" target="_blank">Terms of Service</a>'.html_safe %>
+  <div id="journalism_toggler">
+    Are you a <b>journalist</b> working with <b>primary source documents</b>?
+    <a href="#">Yes</a>
+    <a href="#">No / Unsure</a>
   </div>
 
-  <div id="approval_toggler" style="display:none">
-    Do you have authorization to approve DocumentCloud to host documents on behalf of your organization? (If you're a reporter, this will usually be your editor or producer.)
-    <div class="radioset">
-      <div class="radio">
-        <%= radio_button_tag :approver_self, 'yes' %>
-        <%= label_tag :approver_self_yes, 'Yes' %>
+  <fieldset id="journalism_fields">
+    <fieldset class="radioset">
+      <label class="radioset_label">We need someone – usually your editor or producer – to authorize us to post documents on your behalf.</label>
+      <div class="radiowrap">
+        <input id="approver_other" name="approver" value="other" type="radio">
+        <label for="approver_other">
+          Contact
+          <input id="approver_first_name" name="approver_first_name" class="field_inline" type="text" placeholder="First name">
+          <input id="approver_last_name" name="approver_last_name" class="field_inline" type="text" placeholder="Last name">
+          at <input id="approver_email" name="approver_email" class="field_inline" type="email" placeholder="Email">
+          for authorization
+        </label>
       </div>
-      <div class="radio">
-        <%= radio_button_tag :approver_self, 'no' %>
-        <%= label_tag :approver_self_no, 'No (or I don’t know)' %>
+      <div class="radiowrap">
+        <input id="approver_self" name="approver" value="self" type="radio">
+        <label for="approver_self">
+          I myself authorize you to post documents on my organization's behalf
+        </label>
       </div>
+    </fieldset>
+  </fieldset>
+
+  <fieldset id="nonjournalism_fields">
+    <div class="fieldwrap">
+      <input id="industry" name="industry" type="text" class="field">
+      <label class="fieldlabel" for="industry">
+        <span class="fieldlabel_content" data-content="What industry do you work in?">What industry do you work in?</span>
+      </label>
     </div>
+    <div class="fieldwrap">
+      <textarea id="nonjournalism_requester_notes" name="nonjournalism_requester_notes" class="field"></textarea>
+      <label class="fieldlabel" for="nonjournalism_requester_notes">
+        <span class="fieldlabel_content" data-content="How would you like to use DocumentCloud?">How would you like to use DocumentCloud?</span>
+      </label>
+    </div>
+  </fieldset>
+
+  <div class="fieldwrap">
+    <textarea id="requester_notes" name="requester_notes" class="field"></textarea>
+    <label class="fieldlabel" for="requester_notes">
+      <span class="fieldlabel_content" data-content="Additional comments">Additional comments (if you have any)</span>
+    </label>
   </div>
 
-  <div id="approver_info_section">
-    <div class="submitset">
-      <p>We also need the name and email of someone at your organization (usually an editor or producer) who can authorize us to host content on your organization’s behalf. We’ll send them an email to verify the authorization. If you are the authority, enter your own information again.</p>
+  <fieldset class="checkset">
+    <div class="checkwrap">
+      <label for="agreed_to_terms">
+        <input id="agreed_to_terms" name="agreed_to_terms" value="1" type="checkbox">
+        I agree to the <a href="/terms" target="_blank">DocumentCloud terms of service</a>
+      </label>
+      <label for="marketing_optin">
+        <input id="marketing_optin" name="marketing_optin" value="1" type="checkbox">
+        Email me updates about new DocumentCloud features and services
+      </label>
     </div>
+  </fieldset>
 
-    <div class="inputset inputset-2 required">
-      <%= f.label :approver_first_name, 'Approver’s name' %>
-      <%= f.text_field :approver_first_name, :placeholder => 'First' %>
-      <%= f.text_field :approver_last_name, :placeholder => 'Last' %>
-    </div>
-    <div class="inputset required">
-      <%= f.label :approver_email %>
-      <%= f.email_field :approver_email %>
-    </div>
+  <div class="submitset">
+    <button type="submit">Submit application</button>
   </div>
-
-  <div id="approver_approval_section" style="display:none">
-    <div class="checkset">
-      <%= label_tag :authorization, 'Authorization', :class => 'setlabel' %>
-      <%= f.check_box :authorized_posting %>
-      <%= f.label :authorized_posting, 'I authorize DocumentCloud to post documents on behalf of my organization' %>
-    </div>
-  </div>
-
-  <% if @admin %>
-    <div id="admin_signup_section">
-      <div class="inputset">
-        <%= f.label :verification_notes %>
-        <%= f.text_area :verification_notes %>
-      </div>
-      <div class="inputset">
-        <%= f.label :status %>
-        <%= f.select :status, @status_options %>
-      </div>
-    </div>
-    <div class="submitset">
-      <%= f.submit 'Update request' %>
-    </div>
-  <% else %>
-    <div class="submitset">
-      <%= f.submit 'Submit request' %>
-    </div>
-  <% end %>
 
 <% end %>
 
