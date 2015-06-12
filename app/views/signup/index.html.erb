@@ -67,12 +67,12 @@
     <fieldset class="radioset">
       <label class="radioset_label">Are you a <b>journalist</b> working with <b>primary source documents</b>?</label>
       <div class="radiowrap inline">
-        <input id="is_journalism_yes" name="is_journalism" value="yes" type="radio">
-        <label for="is_journalism_yes">Yes</label>
+        <input id="is_journalist_yes" name="is_journalist" value="yes" type="radio">
+        <label for="is_journalist_yes">Yes</label>
       </div>
       <div class="radiowrap inline">
-        <input id="is_journalism_no" name="is_journalism" value="no" type="radio">
-        <label for="is_journalism_no">No (or I’m not sure)</label>
+        <input id="is_journalist_no" name="is_journalist" value="no" type="radio">
+        <label for="is_journalist_no">No (or I’m not sure)</label>
       </div>
     </fieldset>
   </div>
@@ -80,7 +80,7 @@
   <div class="togglewrap">
     <fieldset id="journalism_fields" class="togglebox closed">
       <fieldset class="radioset">
-        <label class="radioset_label">We need someone – usually your editor or producer – to authorize us to post documents on your organization’s behalf.</label>
+        <label class="radioset_label">We need someone – usually your editor or producer – to <b>authorize us</b> to post documents on your organization’s behalf.</label>
         <div class="radiowrap">
           <input id="approver_other" name="approver" value="other" type="radio">
           <label for="approver_other">
@@ -114,6 +114,12 @@
           </label>
         </div>
       </fieldset>
+      <div class="fieldwrap">
+        <textarea id="reference_links" name="reference_links" class="field"></textarea>
+        <label class="fieldlabel" for="reference_links">
+          <span class="fieldlabel_content" data-content="Links to some of your work">Links to some of your work</span>
+        </label>
+      </div>
     </fieldset>
 
     <fieldset id="nonjournalism_fields" class="togglebox closed">
@@ -124,8 +130,8 @@
         </label>
       </div>
       <div class="fieldwrap">
-        <textarea id="nonjournalism_requester_notes" name="nonjournalism_requester_notes" class="field"></textarea>
-        <label class="fieldlabel" for="nonjournalism_requester_notes">
+        <textarea id="use_case" name="use_case" class="field"></textarea>
+        <label class="fieldlabel" for="use_case">
           <span class="fieldlabel_content" data-content="How would you like to use DocumentCloud?">How would you like to use DocumentCloud?</span>
         </label>
       </div>
@@ -135,7 +141,7 @@
   <div class="fieldwrap">
     <textarea id="requester_notes" name="requester_notes" class="field"></textarea>
     <label class="fieldlabel" for="requester_notes">
-      <span class="fieldlabel_content" data-content="Additional comments">Additional comments (if you have any)</span>
+      <span class="fieldlabel_content" data-content="Anything else you want to tell us?">Anything else you want to tell us?</span>
     </label>
   </div>
 

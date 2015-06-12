@@ -1,59 +1,83 @@
 // Place all the behaviors and hooks related to the matching controller here.
 // All this logic will automatically be available in application.js.
 
-$(function() {
+SignupFormView = Backbone.View.extend({
+  
+  events: {
+    'focus .field':                       'enableFieldFocus',
+    'change .field':                      'checkForUserInput',
+    'blur .field':                        'checkForUserInput',
+    'change input[name="is_journalist"]': 'checkIsJournalist',
+    'change input[name="approver"]':      'checkIsApprover',
+  },
+  
+  initialize: function(options) {
+    this.model = options.model;
+  },
+  
+  render: function(){
+    
+  },
+  
+  enableFieldFocus: function(event) {
+    var $target = $(event.target);
+    $target.closest('.fieldwrap').addClass('filled');
+  },
 
-  // This is a terrible function that only exists because there's no good way
-  // of observing browser autofill.
-  setInterval(function() {
-    $('.form_v2 .field:not(:focus)').each(function() {
-      var $elem = $(this);
-      var value = $elem.val();
-      if (value && value != '') {
-        $elem.trigger('blur')
-      };
-    })
-  }, 250);
-
-  $('input[name="is_journalism"]').on('change', function(){
-    if ($(this).val() == 'yes') {
-      var $on  = $('#journalism_fields');
-      var $off = $('#nonjournalism_fields');
+  checkForUserInput: function(event) {
+    var $target = $(event.target);
+    var value   = $target.val();
+    // TODO: Figure out why our Backbone won't allow simply `set(key, val)`
+    var attrs = {};
+    attrs[$target.attr('name')] = value;
+    this.model.set(attrs);
+    if (!value || $.trim(value) == '') {
+      $target.closest('.fieldwrap').removeClass('filled');
     } else {
-      var $on  = $('#nonjournalism_fields');
-      var $off = $('#journalism_fields');
+      $target.closest('.fieldwrap').addClass('filled');
+    }
+  },
+
+  validateUserInput: function(event) {
+    var $target = $(event.target);
+    var value   = $target.val();
+    if (value) {
+      $target.closest('.fieldwrap').addClass('valid').removeClass('invalid');
+    } else {
+      $target.closest('.fieldwrap').addClass('invalid').removeClass('valid');
+    }
+  },
+
+  checkIsJournalist: function(event) {
+    var $target = $(event.target);
+    var $journo_fields    = $('#journalism_fields');
+    var $nonjourno_fields = $('#nonjournalism_fields');
+
+    if ($target.val() == 'yes') {
+      var $on  = $journo_fields;
+      var $off = $nonjourno_fields;
+    } else {
+      var $on  = $nonjourno_fields;
+      var $off = $journo_fields;
     }
     $on.removeClass('closed').addClass('open').find('input').removeAttr('tabindex');
     $off.removeClass('open').addClass('closed').find('input').attr('tabindex', '-1');;
-  });
+  },
 
-  $('input[name="approver"]').on('change', function(){
-    $inputs = $('label[for="approver_other"]').find('input');
-    if ($(this).val() == 'other') {
+  checkIsApprover: function(event) {
+    var $target = $(event.target);
+
+    var $inputs = this.$el.find('label[for="approver_other"]').find('.field');
+    if ($target.val() == 'other') {
       $inputs.prop('disabled', false);
       $inputs.first().focus();
     } else {
-      $inputs.prop('disabled', true);
+      $inputs.prop('disabled', true).trigger('blur');
     }
-  });
+  },
+});
 
-  $('.form_v2 .field').on('focus', function() {
-    $(this).closest('.fieldwrap').addClass('filled');
-  });
-
-  $('.form_v2 .field').on('blur', function() {
-    var $elem = $(this);
-    var value = $elem.val();
-    if (!value || $.trim(value) == '') {
-      $elem.closest('.fieldwrap').removeClass('filled valid');
-    } else {
-      $elem.closest('.fieldwrap').addClass('filled valid').removeClass('invalid');
-    }
-  });
-
-  window.SignupPage = Backbone.View.extend({
-  });
-
-  window.signupPage = new SignupPage();
-
+$(function() {
+  window.signupModel = new Backbone.Model({});
+  window.signup = new SignupFormView({ model: signupModel, el: $('#new_verification_request') });
 });
