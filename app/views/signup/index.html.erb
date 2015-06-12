@@ -63,64 +63,74 @@
     </div>
   </fieldset>
 
-  <div id="journalism_toggler" style="display:none">
-    Are you a <b>journalist</b> working with <b>primary source documents</b>?
-    <a href="#">Yes</a>
-    <a href="#">No / Unsure</a>
+  <div id="journalism_toggler">
+    <fieldset class="radioset">
+      <label class="radioset_label">Are you a <b>journalist</b> working with <b>primary source documents</b>?</label>
+      <div class="radiowrap inline">
+        <input id="is_journalism_yes" name="is_journalism" value="yes" type="radio">
+        <label for="is_journalism_yes">Yes</label>
+      </div>
+      <div class="radiowrap inline">
+        <input id="is_journalism_no" name="is_journalism" value="no" type="radio">
+        <label for="is_journalism_no">No (or I’m not sure)</label>
+      </div>
+    </fieldset>
   </div>
 
-  <fieldset id="journalism_fields">
-    <fieldset class="radioset">
-      <label class="radioset_label">We need someone – usually your editor or producer – to authorize us to post documents on your behalf.</label>
-      <div class="radiowrap">
-        <input id="approver_other" name="approver" value="other" type="radio">
-        <label for="approver_other">
-          Contact
-          <div class="fieldwrap inline">
-            <input id="approver_first_name" name="approver_first_name" type="text" class="field">
-            <label class="fieldlabel" for="approver_first_name">
-              <span class="fieldlabel_content" data-content="first name">first name</span>
-            </label>
-          </div>
-          <div class="fieldwrap inline">
-            <input id="approver_last_name" name="approver_last_name" type="text" class="field">
-            <label class="fieldlabel" for="approver_last_name">
-              <span class="fieldlabel_content" data-content="last name">last name</span>
-            </label>
-          </div>
-          at
-          <div class="fieldwrap inline">
-            <input id="approver_email" name="approver_email" type="text" class="field">
-            <label class="fieldlabel" for="approver_email">
-              <span class="fieldlabel_content" data-content="email">email</span>
-            </label>
-          </div>
-          for authorization
+  <div class="togglewrap">
+    <fieldset id="journalism_fields" class="togglebox closed">
+      <fieldset class="radioset">
+        <label class="radioset_label">We need someone – usually your editor or producer – to authorize us to post documents on your organization’s behalf.</label>
+        <div class="radiowrap">
+          <input id="approver_other" name="approver" value="other" type="radio">
+          <label for="approver_other">
+            Contact
+            <div class="fieldwrap inline">
+              <input id="approver_first_name" name="approver_first_name" type="text" class="field" disabled>
+              <label class="fieldlabel" for="approver_first_name">
+                <span class="fieldlabel_content" data-content="first name">first name</span>
+              </label>
+            </div>
+            <div class="fieldwrap inline">
+              <input id="approver_last_name" name="approver_last_name" type="text" class="field" disabled>
+              <label class="fieldlabel" for="approver_last_name">
+                <span class="fieldlabel_content" data-content="last name">last name</span>
+              </label>
+            </div>
+            at
+            <div class="fieldwrap inline">
+              <input id="approver_email" name="approver_email" type="text" class="field" disabled>
+              <label class="fieldlabel" for="approver_email">
+                <span class="fieldlabel_content" data-content="email">email</span>
+              </label>
+            </div>
+            for authorization
+          </label>
+        </div>
+        <div class="radiowrap">
+          <input id="approver_self" name="approver" value="self" type="radio">
+          <label for="approver_self">
+            I myself authorize you to post documents on my organization's behalf
+          </label>
+        </div>
+      </fieldset>
+    </fieldset>
+
+    <fieldset id="nonjournalism_fields" class="togglebox closed">
+      <div class="fieldwrap">
+        <input id="industry" name="industry" type="text" class="field">
+        <label class="fieldlabel" for="industry">
+          <span class="fieldlabel_content" data-content="What industry do you work in?">What industry do you work in?</span>
         </label>
       </div>
-      <div class="radiowrap">
-        <input id="approver_self" name="approver" value="self" type="radio">
-        <label for="approver_self">
-          I myself authorize you to post documents on my organization's behalf
+      <div class="fieldwrap">
+        <textarea id="nonjournalism_requester_notes" name="nonjournalism_requester_notes" class="field"></textarea>
+        <label class="fieldlabel" for="nonjournalism_requester_notes">
+          <span class="fieldlabel_content" data-content="How would you like to use DocumentCloud?">How would you like to use DocumentCloud?</span>
         </label>
       </div>
     </fieldset>
-  </fieldset>
-
-  <fieldset id="nonjournalism_fields">
-    <div class="fieldwrap">
-      <input id="industry" name="industry" type="text" class="field">
-      <label class="fieldlabel" for="industry">
-        <span class="fieldlabel_content" data-content="What industry do you work in?">What industry do you work in?</span>
-      </label>
-    </div>
-    <div class="fieldwrap">
-      <textarea id="nonjournalism_requester_notes" name="nonjournalism_requester_notes" class="field"></textarea>
-      <label class="fieldlabel" for="nonjournalism_requester_notes">
-        <span class="fieldlabel_content" data-content="How would you like to use DocumentCloud?">How would you like to use DocumentCloud?</span>
-      </label>
-    </div>
-  </fieldset>
+  </div>
 
   <div class="fieldwrap">
     <textarea id="requester_notes" name="requester_notes" class="field"></textarea>
@@ -145,7 +155,7 @@
   </fieldset>
 
   <div class="submitset">
-    <button type="submit">Submit application</button>
+    <button type="submit" disabled>Submit application</button>
   </div>
 
 <% end %>
