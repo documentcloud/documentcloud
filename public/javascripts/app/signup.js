@@ -19,10 +19,6 @@ $(function() {
     $(this).closest('.fieldwrap').addClass('filled');
   });
 
-  $('.form_v2 .field_inline').on('focus', function() {
-    $(this).addClass('filled');
-  });
-
   $('.form_v2 .field').on('blur', function() {
     var $elem = $(this);
     var value = $elem.val();
