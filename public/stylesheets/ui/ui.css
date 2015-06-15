@@ -778,6 +778,10 @@ iframe.hidden_iframe {
   color: #8c8e8e;
 }
 
+.form_v2 button[type=submit] {
+  cursor: pointer;
+}
+
 .form_v2 button[type=submit]:disabled {
   background-color: #d0d1d0;
   color: #8c8e8e;
@@ -999,7 +1003,9 @@ iframe.hidden_iframe {
 .form_v2 .valid .fieldlabel_content {
 	color: #87d37c;
 }
-.form_v2 .invalid .fieldlabel_content {
+.form_v2 .invalid .fieldlabel_content,
+.form_v2 .invalid .radioset_label,
+.form_v2 .invalid.checkwrap > label {
   color: #df5454;
 }
 

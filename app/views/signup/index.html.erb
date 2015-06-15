@@ -5,7 +5,6 @@
 
 <div id="content">
 
-
 <%= form_for @verification_request, :url => {:controller => 'signup', :action => 'create_request'}, :html => { :class => 'form_v2' } do |f| %>
 
   <% if @verification_request.errors.any? %>
@@ -52,11 +51,11 @@
     <div class="fieldwrap">
       <input id="organization_url" name="organization_url" type="url" class="field">
       <label class="fieldlabel" for="organization_url">
-        <span class="fieldlabel_content" data-content="Organization URL">Organization URL</span>
+        <span class="fieldlabel_content" data-content="Organization URL">Organization URL (optional)</span>
       </label>
     </div>
     <div class="fieldwrap required">
-      <%= f.country_select :country, {priority_countries: ['US'], prompt: ''}, :class => 'field' %>
+      <%= f.country_select :country, {priority_countries: ['US'], prompt: ''}, :class => 'field', :name => 'country' %>
       <label class="fieldlabel" for="country">
         <span class="fieldlabel_content" data-content="Country ⬇︎">Country &rarr;</span>
       </label>
@@ -66,11 +65,11 @@
   <div id="journalism_toggler">
     <fieldset class="radioset">
       <label class="radioset_label">Are you a <b>journalist</b> working with <b>primary source documents</b>?</label>
-      <div class="radiowrap inline">
+      <div class="radiowrap">
         <input id="is_journalist_yes" name="is_journalist" value="yes" type="radio">
         <label for="is_journalist_yes">Yes</label>
       </div>
-      <div class="radiowrap inline">
+      <div class="radiowrap">
         <input id="is_journalist_no" name="is_journalist" value="no" type="radio">
         <label for="is_journalist_no">No (or I’m not sure)</label>
       </div>
@@ -161,7 +160,7 @@
   </fieldset>
 
   <div class="submitset">
-    <button type="submit" disabled>Submit application</button>
+    <button type="submit">Submit application</button>
   </div>
 
 <% end %>
