@@ -120,7 +120,7 @@ SignupFormView = Backbone.View.extend({
     var $target = this.$(event.target);
     var value   = $target.val();
     if ($target.is(':focus') || value) {
-      $target.closest('.w').addClass('filled');
+      $target.closest('.fieldwrap').addClass('filled');
     } else {
       $target.closest('.fieldwrap').removeClass('filled');
     }
