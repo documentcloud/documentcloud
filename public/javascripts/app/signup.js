@@ -112,6 +112,7 @@ SignupFormView = Backbone.View.extend({
 
   displayValidationErrors: function() {
     _.each(this.model.validationError, function(messages, attr) {
+      // TODO: The `closest()` list is inefficient. Stop.
       this.$('[name="' + attr + '"]').closest('.fieldwrap, .checkwrap, .radioset').addClass('invalid');
     }, this);
   },
@@ -140,11 +141,18 @@ SignupFormView = Backbone.View.extend({
       attrs[$target.attr('name')] = value;
       this.model.set(attrs, { validate: true, only: attr });
 
+      // TODO: The `closest()` list is inefficient. Stop.
       var $fieldwrap = $target.closest('.fieldwrap, .checkwrap, .radioset');
+
       if (this.model.validationError) {
         $fieldwrap.addClass('invalid').removeClass('valid');
       } else {
-        $fieldwrap.addClass('valid').removeClass('invalid');
+        $fieldwrap.removeClass('invalid');
+        if (value) {
+          $fieldwrap.addClass('valid');
+        } else {
+          $fieldwrap.removeClass('valid');
+        }
       }
     }
   },
