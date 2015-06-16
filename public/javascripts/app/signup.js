@@ -16,6 +16,7 @@ SignupFormModel = Backbone.Model.extend({
     },
   },
 
+  // TODO: Rewrite this to be properly declarative and take function conditions
   VALIDATIONS: {
     'requester_email':      ['isEmail'],
     'requester_first_name': ['isntBlank'],
@@ -116,6 +117,7 @@ SignupFormView = Backbone.View.extend({
   
   initialize: function(options) {
     this.model = options.model;
+    _.bindAll(this, 'saveSuccess', 'saveError');
   },
   
   render: function(){
@@ -125,28 +127,52 @@ SignupFormView = Backbone.View.extend({
   submit: function(event){
     event.preventDefault();
 
-    // TODO: Disable form before XHR
+    this.disableForm();
 
     var saveForm = this.model.save({}, {
-      success: function() {
-        // Validation succeeded and XHR worked
-        // TODO: Move on to thanks page
-        console.log('Server happy');
-      },
-      error: function() {
-        // Validation succeeded but XHR failed
-        // TODO: Display global error/instrux
-        console.log('Server sad');
-      },
+      success: this.saveSuccess,
+      error: this.saveError,
     });
 
-    // TODO: Re-enable form after XHR
-
+    // Validation failure, XHR never run
     if (!saveForm) {
-      // Validation failure, XHR (was) halted
+      this.enableForm();
       this.displayValidationErrors();
       this.scrollToFirstError();
     }
+  },
+
+  saveSuccess: function(model, response) {
+    console.log('Server happy');
+    // TODO: Move on to thanks page
+  },
+
+  saveError: function(model, response) {
+    // Validation succeeded but XHR failed
+    console.log('Server sad');
+    this.enableForm();
+    console.log(m);
+    console.log(response);
+    // TODO: Display global error/instrux
+  },
+
+  disableForm: function() {
+    this.$('input, textarea, select, button').each(function(){
+      var $this = $(this);
+      $this.data('disabled', $this.prop('disabled')).prop('disabled', true);
+    });
+  },
+
+  enableForm: function() {
+    this.$('input, textarea, select, button').each(function(){
+      var $this = $(this);
+      var storedDisabled = $this.data('disabled');
+      if (storedDisabled) {
+        $this.prop('disabled', storedDisabled).removeData('disabled');
+      } else {
+        $this.prop('disabled', false);
+      }
+    });
   },
 
   displayValidationErrors: function() {
