@@ -220,7 +220,7 @@ SignupFormView = Backbone.View.extend({
       $inputs.prop('disabled', false);
       $inputs.first().focus();
     } else {
-      $inputs.prop('disabled', true).trigger('blur');
+      $inputs.prop('disabled', true).trigger('blur').closest('.fieldwrap').removeClass('valid invalid');
     }
   },
 });
