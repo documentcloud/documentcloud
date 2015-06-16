@@ -144,7 +144,6 @@ SignupFormView = Backbone.View.extend({
 
     if (!saveForm) {
       // Validation failure, XHR (was) halted
-      // console.log(this.model.validationError);
       this.displayValidationErrors();
       this.scrollToFirstError();
     }
@@ -205,18 +204,18 @@ SignupFormView = Backbone.View.extend({
 
   checkIsJournalist: function(event) {
     var $target = this.$(event.target);
-    var $journo_fields    = this.$('#journalism_fields');
-    var $nonjourno_fields = this.$('#nonjournalism_fields');
 
     if ($target.val() == 'yes') {
-      var $on  = $journo_fields;
-      var $off = $nonjourno_fields;
+      this.$('#journalism_fields').removeClass('closed').addClass('open')
+          .find('input[type="radio"], textarea').prop('disabled', false);
+      this.$('#nonjournalism_fields').removeClass('open').addClass('closed')
+          .find('.field, textarea').prop('disabled', true);
     } else {
-      var $on  = $nonjourno_fields;
-      var $off = $journo_fields;
+      this.$('#journalism_fields').removeClass('open').addClass('closed')
+          .find('input[type="radio"], textarea').prop('disabled', true);
+      this.$('#nonjournalism_fields').removeClass('closed').addClass('open')
+          .find('.field, textarea').prop('disabled', false);
     }
-    $on.removeClass('closed').addClass('open').find('input, textarea').prop('disabled', false);
-    $off.removeClass('open').addClass('closed').find('input, textarea').prop('disabled', true);
   },
 
   checkIsApprover: function(event) {
