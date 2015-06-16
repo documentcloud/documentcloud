@@ -69,7 +69,10 @@ SignupFormModel = Backbone.Model.extend({
       var value = options.only ? attrs[attr] : this.get(attr);
       validators = _.isArray(validators) ? validators : ([]).push(validators);
       _.each(validators, function(validator) {
-        if (typeof validator === 'object') {
+        if (typeof validator === 'string') {
+          var valid = this.VALIDATORS[validator](value);
+          if (valid !== true) { (errors[attr] = (errors[attr] || [])).push(valid); }
+        } else {
           var conditions_passed = true;
           _.each(validator.conditions, function(condition_val, condition_key) {
             if (this.get(condition_key) != condition_val) { conditions_passed = false; }
@@ -81,9 +84,6 @@ SignupFormModel = Backbone.Model.extend({
               if (valid !== true) { (errors[attr] = (errors[attr] || [])).push(valid); }
             }, this);
           }
-        } else {
-          var valid = this.VALIDATORS[validator](value);
-          if (valid !== true) { (errors[attr] = (errors[attr] || [])).push(valid); }
         }
       }, this);
     }, this);
