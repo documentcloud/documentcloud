@@ -81,7 +81,7 @@
       <fieldset class="radioset">
         <label class="radioset_label">We need someone – usually your editor or producer – to grant permission for us to <b>add your newsroom</b> to our public list of document contributors and <b>confirm</b> that they understand you'll be contributing documents to a <b>public catalog</b></label>
         <div class="radiowrap">
-          <input id="approver_other" name="approver" value="other" type="radio">
+          <input id="approver_other" name="approver" value="other" type="radio" disabled>
           <label for="approver_other">
             Contact
             <div class="fieldwrap inline">
@@ -107,14 +107,14 @@
           </label>
         </div>
         <div class="radiowrap">
-          <input id="approver_self" name="approver" value="self" type="radio">
+          <input id="approver_self" name="approver" value="self" type="radio" disabled>
           <label for="approver_self">
             I’m a manager or other supervisor and grant permission to add our newsroom to the list of contributors and acknowledge that we are contributing documents to a public catalog
           </label>
         </div>
       </fieldset>
       <div class="fieldwrap">
-        <textarea id="reference_links" name="reference_links" class="field"></textarea>
+        <textarea id="reference_links" name="reference_links" class="field" disabled></textarea>
         <label class="fieldlabel" for="reference_links">
           <span class="fieldlabel_content" data-content="Links to some of your work">Links to some of your work</span>
         </label>
@@ -123,13 +123,13 @@
 
     <fieldset id="nonjournalism_fields" class="togglebox closed">
       <div class="fieldwrap">
-        <input id="industry" name="industry" type="text" class="field">
+        <input id="industry" name="industry" type="text" class="field" disabled>
         <label class="fieldlabel" for="industry">
           <span class="fieldlabel_content" data-content="What industry do you work in?">What industry do you work in?</span>
         </label>
       </div>
       <div class="fieldwrap">
-        <textarea id="use_case" name="use_case" class="field"></textarea>
+        <textarea id="use_case" name="use_case" class="field" disabled></textarea>
         <label class="fieldlabel" for="use_case">
           <span class="fieldlabel_content" data-content="How would you like to use DocumentCloud?">How would you like to use DocumentCloud?</span>
         </label>
@@ -162,7 +162,7 @@
   <div class="submitset">
     <button type="submit">Submit application</button>
   </div>
-
+  
 <% end %>
 
 </div>

@@ -179,8 +179,8 @@ SignupFormView = Backbone.View.extend({
       var $on  = $nonjourno_fields;
       var $off = $journo_fields;
     }
-    $on.removeClass('closed').addClass('open').find('input').removeAttr('tabindex');
-    $off.removeClass('open').addClass('closed').find('input').attr('tabindex', '-1');;
+    $on.removeClass('closed').addClass('open').find('input, textarea').prop('disabled', false);
+    $off.removeClass('open').addClass('closed').find('input, textarea').prop('disabled', true);
   },
 
   checkIsApprover: function(event) {
