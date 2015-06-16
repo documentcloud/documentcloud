@@ -144,8 +144,9 @@ SignupFormView = Backbone.View.extend({
 
     if (!saveForm) {
       // Validation failure, XHR (was) halted
-      console.log(this.model.validationError);
+      // console.log(this.model.validationError);
       this.displayValidationErrors();
+      this.scrollToFirstError();
     }
   },
 
@@ -154,6 +155,12 @@ SignupFormView = Backbone.View.extend({
       // TODO: The `closest()` list is inefficient. Stop.
       this.$('[name="' + attr + '"]').closest('.fieldwrap, .checkwrap, .radioset').addClass('invalid');
     }, this);
+  },
+  
+  scrollToFirstError: function() {
+    var firstInvalidOffset = this.$('.invalid').first().offset();
+    var scrollToPos = (firstInvalidOffset.top - 50) < 0 ? 0 : (firstInvalidOffset.top - 50); 
+    Backbone.$('html, body').animate({ scrollTop: scrollToPos + 'px' });
   },
   
   toggleFieldFocus: function(event) {
