@@ -145,14 +145,14 @@ SignupFormView = Backbone.View.extend({
   saveSuccess: function(model, response) {
     console.log('Server happy');
     // TODO: Move on to thanks page
+    alert("Validation succeeded and XHR succeeded… which is weird because it's not wired up yet.");
   },
 
   saveError: function(model, response) {
     // Validation succeeded but XHR failed
     console.log('Server sad');
     this.enableForm();
-    console.log(m);
-    console.log(response);
+    alert("Validation succeeded but XHR failed because it's not wired up yet.");
     // TODO: Display global error/instrux
   },
 
