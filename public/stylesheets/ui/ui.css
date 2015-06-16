@@ -993,11 +993,11 @@ iframe.hidden_iframe {
 	-webkit-transition-timing-function: ease-in-out;
 	transition-timing-function: ease-in-out;
 }
-.form_v2 .valid .fieldlabel_content {
+.form_v2 .valid > .fieldlabel > .fieldlabel_content {
 	color: #87d37c;
 }
-.form_v2 .invalid .fieldlabel_content,
-.form_v2 .invalid .radioset_label,
+.form_v2 .invalid > .fieldlabel > .fieldlabel_content,
+.form_v2 .invalid > .radioset_label,
 .form_v2 .invalid.checkwrap > label {
   color: #df5454;
 }
@@ -1014,10 +1014,10 @@ iframe.hidden_iframe {
   letter-spacing: 1px;
   font-size: 0.8em;
 }
-.form_v2 .valid .fieldlabel_content::after {
+.form_v2 .valid > .fieldlabel > .fieldlabel_content::after {
   content: attr(data-content) " ✓";
 }
-.form_v2 .invalid .fieldlabel_content::after {
+.form_v2 .invalid > .fieldlabel > .fieldlabel_content::after {
   content: attr(data-content) " ×";
 }
 
@@ -1039,11 +1039,11 @@ iframe.hidden_iframe {
   border-color: #7d7f7f;
 }
 
-.form_v2 .valid .field {
+.form_v2 .valid > .field {
   border-color: #87d37c;
 }
 
-.form_v2 .invalid .field {
+.form_v2 .invalid > .field {
   border-color: #df5454;
 }
 

@@ -1,6 +1,3 @@
-// Place all the behaviors and hooks related to the matching controller here.
-// All this logic will automatically be available in application.js.
-
 SignupFormModel = Backbone.Model.extend({
 
   VALIDATORS: {
@@ -27,29 +24,69 @@ SignupFormModel = Backbone.Model.extend({
     'country':              ['isntBlank'],
     'is_journalist':        ['isTrue'],
     'agreed_to_terms':      ['isTrue'],
+    'industry':             [{
+      'validators': ['isntBlank'],
+      'conditions': { 'is_journalist': 'no' },
+    }],
+    'use_case':             [{
+      'validators': ['isntBlank'],
+      'conditions': { 'is_journalist': 'no' },
+    }],
+    'approver':             [{
+      'validators': ['isTrue'],
+      'conditions': { 'is_journalist': 'yes' },
+    }],
+    'approver_first_name':  [{
+      'validators': ['isntBlank'],
+      'conditions': { 'approver': 'other' },
+    }],
+    'approver_last_name':   [{
+      'validators': ['isntBlank'],
+      'conditions': { 'approver': 'other' },
+    }],
+    'approver_email':       [{
+      'validators': ['isEmail'],
+      'conditions': { 'approver': 'other' },
+    }],
+    'reference_links':      [{
+      'validators': ['isntBlank'],
+      'conditions': { 'is_journalist': 'yes' },
+    }],
   },
 
-  validateField: function(model, fieldName, value){
-    
-  },
-
+  // Validates model attributes against validation rules. When run against 
+  // entire model (default), it validates actual model attributes with `get()`. 
+  // When passed a single model attribute name via `options.only`, it validates 
+  // the value passed in via `attrs`, since single-attribute validation is run 
+  // during `set()` before the model is actually modified. However, even 
+  // single-attribute validation checks the model via `get()` for any of its 
+  // conditional validations.
   validate: function(attrs, options) {
     var errors = {};
 
-    if (options.only) {
-      var attr = options.only;
-      _.each(this.VALIDATIONS[attr], function(validator) {
-        var valid = this.VALIDATORS[validator](attrs[attr]);
-        if (valid !== true) { (errors[attr] = (errors[attr] || [])).push(valid); }
-      }, this);
-    } else {
-      _.each(this.VALIDATIONS, function(validators, attr) {
-        _.each(validators, function(validator) {
-          var valid = this.VALIDATORS[validator](this.get(attr));
+    var validations = options.only ? _.pick(this.VALIDATIONS, options.only) : this.VALIDATIONS;
+    _.each(validations, function(validators, attr) {
+      var value = options.only ? attrs[attr] : this.get(attr);
+      validators = _.isArray(validators) ? validators : ([]).push(validators);
+      _.each(validators, function(validator) {
+        if (typeof validator === 'object') {
+          var conditions_passed = true;
+          _.each(validator.conditions, function(condition_val, condition_key) {
+            if (this.get(condition_key) != condition_val) { conditions_passed = false; }
+          }, this);
+          if (conditions_passed) {
+            var conditional_validators = _.isArray(validator['validators']) ? validator['validators'] : ([]).push(validator['validators']);
+            _.each(conditional_validators, function(conditional_validator) {
+              var valid = this.VALIDATORS[conditional_validator](value);
+              if (valid !== true) { (errors[attr] = (errors[attr] || [])).push(valid); }
+            }, this);
+          }
+        } else {
+          var valid = this.VALIDATORS[validator](value);
           if (valid !== true) { (errors[attr] = (errors[attr] || [])).push(valid); }
-        }, this);
+        }
       }, this);
-    }
+    }, this);
 
     if (!_.isEmpty(errors)) {
       return errors;
@@ -70,6 +107,8 @@ SignupFormView = Backbone.View.extend({
     'focus .field':                       'toggleFieldFocus',
     'blur .field':                        'toggleFieldFocus',
     'change .field':                      'checkForUserInput',
+    'change input[type="radio"]':         'checkForUserInput',
+    'change input[type="checkbox"]':      'checkForUserInput',
     'change input[name="is_journalist"]': 'checkIsJournalist',
     'change input[name="approver"]':      'checkIsApprover',
     'submit':                             'submit',
@@ -156,16 +195,6 @@ SignupFormView = Backbone.View.extend({
       }
     }
   },
-
-  // validateUserInput: function(event) {
-  //   var $target = this.$(event.target);
-  //   var value   = $target.val();
-  //   if (value) {
-  //     $target.closest('.fieldwrap').addClass('valid').removeClass('invalid');
-  //   } else {
-  //     $target.closest('.fieldwrap').addClass('invalid').removeClass('valid');
-  //   }
-  // },
 
   checkIsJournalist: function(event) {
     var $target = this.$(event.target);
