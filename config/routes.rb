@@ -128,8 +128,10 @@ DC::Application.routes.draw do
       post :resend_welcome
     }
   end
-  match '/accounts/enable/:key' => 'accounts#enable', :via=>[:get,:post], :as => :enable_account
-  match '/reset_password' => 'accounts#reset', :via=>[:get,:post], :as => :reset_password
+  match '/accounts/enable/:key' => 'accounts#enable', :via => [:get, :post], :as => :enable_account
+  match '/reset_password' => 'accounts#reset', :via => [:get, :post], :as => :reset_password
+  get '/apply' => 'signup#index', :as => :apply
+  get '/signup' => 'redirect#index', :url => '/apply'
 
   # Organizations management
   resources :organizations, :only=>:update
