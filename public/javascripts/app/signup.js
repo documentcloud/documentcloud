@@ -23,19 +23,19 @@ SignupFormModel = Backbone.Model.extend({
     'requester_last_name':  ['isntBlank'],
     'organization_name':    ['isntBlank'],
     'country':              ['isntBlank'],
-    'is_journalist':        ['isTrue'],
+    'in_market':            ['isTrue'],
     'agreed_to_terms':      ['isTrue'],
     'industry':             [{
       'validators': ['isntBlank'],
-      'conditions': { 'is_journalist': 'no' },
+      'conditions': { 'in_market': 0 },
     }],
     'use_case':             [{
       'validators': ['isntBlank'],
-      'conditions': { 'is_journalist': 'no' },
+      'conditions': { 'in_market': 0 },
     }],
     'approver':             [{
       'validators': ['isTrue'],
-      'conditions': { 'is_journalist': 'yes' },
+      'conditions': { 'in_market': 1 },
     }],
     'approver_first_name':  [{
       'validators': ['isntBlank'],
@@ -51,7 +51,7 @@ SignupFormModel = Backbone.Model.extend({
     }],
     'reference_links':      [{
       'validators': ['isntBlank'],
-      'conditions': { 'is_journalist': 'yes' },
+      'conditions': { 'in_market': 1 },
     }],
   },
 
@@ -95,7 +95,7 @@ SignupFormModel = Backbone.Model.extend({
   },
 
   url: function() {
-    return '/signup';
+    return '/apply';
   },
 
   initialize: function() {
@@ -105,14 +105,14 @@ SignupFormModel = Backbone.Model.extend({
 SignupFormView = Backbone.View.extend({
   
   events: {
-    'focus .field':                       'toggleFieldFocus',
-    'blur .field':                        'toggleFieldFocus',
-    'change .field':                      'checkForUserInput',
-    'change input[type="radio"]':         'checkForUserInput',
-    'change input[type="checkbox"]':      'checkForUserInput',
-    'change input[name="is_journalist"]': 'checkIsJournalist',
-    'change input[name="approver"]':      'checkIsApprover',
-    'submit':                             'submit',
+    'focus .field':                            'toggleFieldFocus',
+    'blur .field':                             'toggleFieldFocus',
+    'change .field':                           'checkForUserInput',
+    'change input[type="radio"]':              'checkForUserInput',
+    'change input[type="checkbox"]':           'checkForUserInput',
+    'change input[name="in_market"]':          'checkIsInMarket',
+    'change input[name="approver"]':           'checkIsApprover',
+    'submit':                                  'submit',
   },
   
   initialize: function(options) {
@@ -126,6 +126,15 @@ SignupFormView = Backbone.View.extend({
   
   submit: function(event){
     event.preventDefault();
+
+    if (this.model.get('approver') == 'self') {
+      this.model.set({
+        approver_first_name: this.model.get('requester_first_name'),
+        approver_last_name: this.model.get('requester_last_name'),
+        approver_email: this.model.get('requester_email'),
+        authorized_posting: true,
+      });
+    }
 
     this.disableForm();
 
@@ -145,14 +154,14 @@ SignupFormView = Backbone.View.extend({
   saveSuccess: function(model, response) {
     console.log('Server happy');
     // TODO: Move on to thanks page
-    alert("Validation succeeded and XHR succeeded… which is weird because it's not wired up yet.");
+    alert("That worked. Now Justin needs to write the thank you copy…");
   },
 
   saveError: function(model, response) {
     // Validation succeeded but XHR failed
     console.log('Server sad');
     this.enableForm();
-    alert("Validation succeeded but XHR failed because it's not wired up yet.");
+    alert("Validation succeeded but XHR failed. Justin needs to handle the errors.");
     // TODO: Display global error/instrux
   },
 
@@ -228,18 +237,18 @@ SignupFormView = Backbone.View.extend({
     }
   },
 
-  checkIsJournalist: function(event) {
+  checkIsInMarket: function(event) {
     var $target = this.$(event.target);
 
-    if ($target.val() == 'yes') {
-      this.$('#journalism_fields').removeClass('closed').addClass('open')
+    if ($target.val() == 1) {
+      this.$('#in_market_fields').removeClass('closed').addClass('open')
           .find('input[type="radio"], textarea').prop('disabled', false);
-      this.$('#nonjournalism_fields').removeClass('open').addClass('closed')
+      this.$('#non_in_market_fields').removeClass('open').addClass('closed')
           .find('.field, textarea').prop('disabled', true);
     } else {
-      this.$('#journalism_fields').removeClass('open').addClass('closed')
+      this.$('#in_market_fields').removeClass('open').addClass('closed')
           .find('input[type="radio"], textarea').prop('disabled', true);
-      this.$('#nonjournalism_fields').removeClass('closed').addClass('open')
+      this.$('#non_in_market_fields').removeClass('closed').addClass('open')
           .find('.field, textarea').prop('disabled', false);
     }
   },

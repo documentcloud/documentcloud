@@ -7,7 +7,7 @@ class ModifyVerificationRequestFields < ActiveRecord::Migration
       t.string  :industry,         :length => 255
       t.string  :use_case,         :null => true
       t.string  :reference_links,  :null => true
-      t.boolean :marketing_optin, :default => false
+      t.boolean :marketing_optin,  :default => false
     end
   end
 
