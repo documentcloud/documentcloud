@@ -152,17 +152,55 @@ SignupFormView = Backbone.View.extend({
   },
 
   saveSuccess: function(model, response) {
-    console.log('Server happy');
-    // TODO: Move on to thanks page
-    alert("That worked. Now Justin needs to write the thank you copy…");
+    this.replaceWithAlert('<h2 style="margin-top:0"><b>Thanks!</b> We’ll be in touch.</h2>');
   },
 
   saveError: function(model, response) {
     // Validation succeeded but XHR failed
-    console.log('Server sad');
     this.enableForm();
-    alert("Validation succeeded but XHR failed. Justin needs to handle the errors.");
-    // TODO: Display global error/instrux
+    this.alert('<h2><b>Clonk</b>, that didn’t work. Can you check everything and try again?</h2>', { type: 'error', prepend: true });
+  },
+
+  replaceWithAlert: function(message, opts) {
+    var _alert = this.makeAlert(message, opts);
+    this.$el.animate({
+      height:  'toggle',
+      opacity: 'toggle',
+    }, 250, function() {
+      $(this).html(_alert).animate({
+        height:  'toggle',
+        opacity: 'toggle',
+      });
+    });
+  },
+
+  makeAlert: function(message, opts) {
+    if (this.$currentAlert) { this.$currentAlert.remove(); }
+    this.$currentAlert = Backbone.$('<div class="alert"></div>').html(message);
+    if (_.has(opts, 'type')) { this.$currentAlert.addClass(opts.type); }
+    return this.$currentAlert;
+  },
+
+  alert: function(message, opts) {
+    opts = opts || {};
+
+    this.makeAlert(message, opts);
+
+    var positions = ['before', 'after', 'prepend', 'append'];
+    var position  = _.find(positions, function(pos) { return _.has(opts, pos); });
+
+    // Default to prepending within `this.$el` if nothing sent
+    if (_.isUndefined(position)) {
+      position = 'prepend';
+      opts.prepend = true;
+    }
+
+    if (_.isBoolean(opts[position])) {
+      this.$el[position](this.$currentAlert);
+    } else {
+      Backbone.$(opts[position])[position](this.$currentAlert);
+    }
+
   },
 
   disableForm: function() {

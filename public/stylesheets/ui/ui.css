@@ -769,8 +769,10 @@ iframe.hidden_iframe {
   border: none;
 }
 
-.form_v2 .field:disabled {
-  background-color: #d0d1d0;
+.form_v2 .field:disabled,
+.form_v2 .radiowrap input[type="radio"]:disabled + label::before,
+.form_v2 .checkwrap input[type="checkbox"]:disabled + label::before {
+  background-color: #d0d1d0 !important;
 }
 
 .form_v2 .field:disabled + .fieldlabel,
