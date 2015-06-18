@@ -1,7 +1,7 @@
 <%= @account.full_name %>,
 
 <% if @admin -%>
-Hej! <%= @admin.full_name %> hhar tilføjet dig til <%= @account.organization.name %>'s DocumentCloud konto.
+Hej! <%= @admin.full_name %> har tilføjet dig til <%= @account.organization.name %>'s DocumentCloud konto.
 <% else -%>
 Hej! En DocumentCloud konto er blevet oprettet for dig og <%= @account.organization.name %>.
 <% end -%>
