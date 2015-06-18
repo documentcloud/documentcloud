@@ -175,6 +175,6 @@ DC::Application.routes.draw do
   
   # Standard fallback routes
   match '/:controller(/:action(/:id))', :via=>[:get,:post]
-  get ':controller/:action.:format' => '#index'
+  get ':controller/:action.:format'
 
 end
