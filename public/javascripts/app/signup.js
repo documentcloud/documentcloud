@@ -3,16 +3,20 @@ SignupFormModel = Backbone.Model.extend({
   VALIDATORS: {
     isntBlank: function(val) {
       var valid = Backbone.$.trim(val) != '';
-      return valid || "Please enter a value.";
+      return valid || "Please enter a value";
+    },
+    hasSelection: function(val) {
+      var valid = Backbone.$.trim(val) != '';
+      return valid || "Please choose an option";
     },
     isEmail: function(val) {
       var pattern = dc.app.validator.email;
       var valid = pattern.test(val);
-      return valid || "Please enter a valid email.";
+      return valid || "Please enter a valid email";
     },
     isTrue: function(val) {
       var valid = !!val;
-      return valid || "Must be selected.";
+      return valid || "Must be selected";
     },
   },
 
@@ -22,8 +26,12 @@ SignupFormModel = Backbone.Model.extend({
     'requester_first_name': ['isntBlank'],
     'requester_last_name':  ['isntBlank'],
     'organization_name':    ['isntBlank'],
-    'country':              ['isntBlank'],
+    'country':              ['hasSelection'],
     'in_market':            ['isTrue'],
+    // TODO: This doesn't actually work. It "works" if the user never clicks 
+    // agree, because then the model has an undefined attr, but once clicked, 
+    // `val()` provides a value whether checked or not. We'd need to look at 
+    // the `checked` property. :|
     'agreed_to_terms':      ['isTrue'],
     'industry':             [{
       'validators': ['isntBlank'],
@@ -127,6 +135,7 @@ SignupFormView = Backbone.View.extend({
   submit: function(event){
     event.preventDefault();
 
+    // When self is the approver, force all approver* fields to be requester.
     if (this.model.get('approver') == 'self') {
       this.model.set({
         approver_first_name: this.model.get('requester_first_name'),
@@ -147,18 +156,19 @@ SignupFormView = Backbone.View.extend({
     if (!saveForm) {
       this.enableForm();
       this.displayValidationErrors();
-      this.scrollToFirstError();
+      this.scrollTo(this.$('.invalid').first());
     }
   },
 
   saveSuccess: function(model, response) {
-    this.replaceWithAlert('<h2 style="margin-top:0"><b>Thanks!</b> We’ll be in touch.</h2>');
+    this.replaceWithAlert('<b>Thanks!</b> We’ll be in touch.', { type: 'success' });
   },
 
   saveError: function(model, response) {
     // Validation succeeded but XHR failed
     this.enableForm();
-    this.alert('<h2><b>Clonk</b>, that didn’t work. Can you check everything and try again?</h2>', { type: 'error', prepend: true });
+    this.alert('<b>Clonk</b>, that didn’t work. Can you check everything and try again?', { type: 'error' });
+    this.scrollTo(this.$currentAlert);
   },
 
   replaceWithAlert: function(message, opts) {
@@ -176,7 +186,7 @@ SignupFormView = Backbone.View.extend({
 
   makeAlert: function(message, opts) {
     if (this.$currentAlert) { this.$currentAlert.remove(); }
-    this.$currentAlert = Backbone.$('<div class="alert"></div>').html(message);
+    this.$currentAlert = Backbone.$('<div class="alert_v2"></div>').html(message);
     if (_.has(opts, 'type')) { this.$currentAlert.addClass(opts.type); }
     return this.$currentAlert;
   },
@@ -189,12 +199,15 @@ SignupFormView = Backbone.View.extend({
     var positions = ['before', 'after', 'prepend', 'append'];
     var position  = _.find(positions, function(pos) { return _.has(opts, pos); });
 
-    // Default to prepending within `this.$el` if nothing sent
+    // Default to prepending within `this.$el` if nothing specified
     if (_.isUndefined(position)) {
       position = 'prepend';
       opts.prepend = true;
     }
 
+    // If position is indicated as a boolean (`prepend: true`), it positions 
+    // relative to the view's element. Otherwise, it assumes we're passing in a 
+    // string selector or jQuery object (`prepend: '#alert-wrapper'`).
     if (_.isBoolean(opts[position])) {
       this.$el[position](this.$currentAlert);
     } else {
@@ -203,6 +216,8 @@ SignupFormView = Backbone.View.extend({
 
   },
 
+  // Saves current `disabled` property to a data attribute so the form can be
+  // re-enabled to its previous state.
   disableForm: function() {
     this.$('input, textarea, select, button').each(function(){
       var $this = $(this);
@@ -210,28 +225,44 @@ SignupFormView = Backbone.View.extend({
     });
   },
 
+  // Restores a form to its state prior to being disabled via `disableForm()`
   enableForm: function() {
     this.$('input, textarea, select, button').each(function(){
       var $this = $(this);
-      var storedDisabled = $this.data('disabled');
-      if (storedDisabled) {
-        $this.prop('disabled', storedDisabled).removeData('disabled');
-      } else {
-        $this.prop('disabled', false);
-      }
+      $this.prop('disabled', !!$this.data('disabled')).removeData('disabled');
     });
   },
 
   displayValidationErrors: function() {
     _.each(this.model.validationError, function(messages, attr) {
-      // TODO: The `closest()` list is inefficient. Stop.
-      this.$('[name="' + attr + '"]').closest('.fieldwrap, .checkwrap, .radioset').addClass('invalid');
+      var $element = this.$('[name="' + attr + '"]');
+
+      if ($element.hasClass('field')) {
+        var $fieldwrap = $element.closest('.fieldwrap').addClass('invalid').removeClass('valid');
+        $fieldwrap.find('.fieldalert').remove()
+        var $fieldalert = $('<ul class="fieldalert"><li>' + messages.join('</li><li>') + '</li></ul>');
+        $fieldwrap.append($fieldalert);
+      } else if ($element.is('[type="checkbox"]')) {
+        var $fieldwrap = $element.closest('.checkwrap').addClass('invalid').removeClass('valid')
+        $fieldwrap.find('.fieldalert').remove()
+        var $fieldalert = $('<span class="fieldalert"> (' + messages.join(' and ') + ')</span>');
+        $fieldwrap.find('> label').append($fieldalert);
+      } else if ($element.is('[type="radio"]')) {
+        var $fieldwrap = $element.closest('.radioset').addClass('invalid').removeClass('valid')
+        $fieldwrap.find('.fieldalert').remove()
+        var $fieldalert = $('<span class="fieldalert"> (' + messages.join(' and ') + ')</span>');
+        $fieldwrap.find('.radioset_label').append($fieldalert);
+      }
     }, this);
   },
   
-  scrollToFirstError: function() {
-    var firstInvalidOffset = this.$('.invalid').first().offset();
-    var scrollToPos = (firstInvalidOffset.top - 50) < 0 ? 0 : (firstInvalidOffset.top - 50); 
+  // Accepts either a string or an (assumed) jQuery object and scrolls the 
+  // viewport to 50px above it (or top, if we're less than 50 from the top).
+  scrollTo: function(target) {
+    if (target.length < 1) { return; }
+    $target = _.isString(target) ? Backbone.$(target) : target;
+    var offset = $target.offset();
+    var scrollToPos = (offset.top - 50) < 0 ? 0 : (offset.top - 50); 
     Backbone.$('html, body').animate({ scrollTop: scrollToPos + 'px' });
   },
   
@@ -263,9 +294,9 @@ SignupFormView = Backbone.View.extend({
       var $fieldwrap = $target.closest('.fieldwrap, .checkwrap, .radioset');
 
       if (this.model.validationError) {
-        $fieldwrap.addClass('invalid').removeClass('valid');
+        this.displayValidationErrors();
       } else {
-        $fieldwrap.removeClass('invalid');
+        $fieldwrap.removeClass('invalid').find('.fieldalert').remove();
         if (value) {
           $fieldwrap.addClass('valid');
         } else {

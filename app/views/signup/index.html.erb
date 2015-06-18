@@ -5,9 +5,9 @@
 
 <div id="content">
 
-<%= form_for @verification_request, :url => :apply_create, :html => { :class => 'form_v2' } do |f| %>
+<%= form_for @verification_request, :url => :apply_create, :html => { :class => 'form_v2', :novalidate => true } do |f| %>
 
-  <p>Fill out this application and we’ll be in touch, usually within a day or two. For help with the process, email <a href="mailto:support@documentcloud.org">support@documentcloud.org</a>.</p>
+  <p>Fill out this application and we’ll be in touch, usually within a day or two. For help with the process, email <a href="mailto:support@documentcloud.org?subject=Help%20applying%20for%20a%20DocumentCloud%20account">support@documentcloud.org</a>.</p>
 
   <fieldset class="fieldrow has3">
     <div class="fieldwrap required">
@@ -148,7 +148,7 @@
     </div>
   </fieldset>
 
-  <div class="submitset">
+  <div class="submitwrap">
     <button type="submit">Submit application</button>
   </div>
   

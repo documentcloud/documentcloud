@@ -721,7 +721,7 @@ iframe.hidden_iframe {
       margin-bottom: 7px;
     }
 
-/*--------------------------------- v2 Forms ------------------------------------*/
+/*-------------------------------- v2 Forms ----------------------------------*/
 
 /* Forms inspired by http://tympanus.net/Development/TextInputEffects/index2.html */
 
@@ -730,7 +730,7 @@ iframe.hidden_iframe {
   font-weight: 400;
 }
 
-.form_v2 .submitset {
+.form_v2 .submitwrap {
   margin: 2em 0 0.5em 0;
 }
 
@@ -747,16 +747,15 @@ iframe.hidden_iframe {
   vertical-align: middle;
   background-image: none;
   white-space: nowrap;
-  -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
-
   border-radius: 5px;
   border: none;
   border-bottom: 2px solid #56ba47;
   color: white;
   background-color: #87d37c;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
 }
 
 .form_v2 button:focus {
@@ -890,6 +889,43 @@ iframe.hidden_iframe {
   margin-right: 0;
 }
 
+.form_v2 .fieldwrap .fieldalert {
+  position: absolute;
+  top: 100%;
+  z-index: 1000;
+  max-height: 0;
+  overflow: hidden;
+  width: 100%;
+
+	-webkit-transition: opacity 0.25s, max-height 0.25s ease-out;
+	transition: opacity 0.25s, max-height 0.25s ease-out;
+
+  margin: -3px 0 0 0;
+  padding: 0 1em;
+  list-style-type: none;
+
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  font-size: 0.9em;
+  font-weight: 600;
+}
+.form_v2 .fieldalert > li {
+  margin: 0.5em 0;
+}
+
+.form_v2 .field:focus ~ .fieldalert {
+  max-height: 150px;
+
+	-webkit-transition: opacity 0.25s, max-height 0.25s ease-in;
+	transition: opacity 0.25s, max-height 0.25s ease-in;
+}
+
+.form_v2 .fieldwrap.invalid .fieldalert {
+  background-color: #df5454;
+  color: white;
+  -webkit-font-smoothing: antialiased;
+}
+
 .form_v2 .fieldwrap,
 .form_v2 .fieldwrap:after,
 .form_v2 .fieldwrap:before,
@@ -899,7 +935,6 @@ iframe.hidden_iframe {
 
 .form_v2 .fieldwrap {
   position: relative;
-  z-index: 1;
   display: inline-block;
   width: 100%;
   margin: 2em 0 0.5em 0;
@@ -909,6 +944,11 @@ iframe.hidden_iframe {
 .form_v2 .fieldwrap.inline {
   width: 7em;
   margin: 0;
+}
+
+.form_v2 .fieldwrap.inline .fieldalert {
+  font-size: 0.8em;
+  line-height: 1.2em;
 }
 
 .form_v2 .field {
@@ -933,7 +973,6 @@ iframe.hidden_iframe {
 
 .form_v2 .field:focus {
   outline: none;
-  border-bottom-style: dotted;
 }
 
 .form_v2 .inline .field {
@@ -1020,7 +1059,7 @@ iframe.hidden_iframe {
   content: attr(data-content) " ✓";
 }
 .form_v2 .invalid > .fieldlabel > .fieldlabel_content::after {
-  content: attr(data-content) " ×";
+  content: attr(data-content) " ✘";
 }
 
 .form_v2 .field:focus + .fieldlabel,
@@ -1054,7 +1093,6 @@ iframe.hidden_iframe {
 }
 
 .form_v2 .togglebox {
-  overflow: hidden;
 	-webkit-transition: opacity 0.5s;
 	transition: opacity 0.5s;
 }
@@ -1064,6 +1102,7 @@ iframe.hidden_iframe {
   height: 0;
   z-index: 0;
   opacity: 0;
+  overflow: hidden;
 }
 
 .form_v2 .togglebox.open {
@@ -1072,3 +1111,47 @@ iframe.hidden_iframe {
   z-index: 1;
   opacity: 1;  
 }
+
+/*--------------------------------- v2 Alerts --------------------------------*/
+
+.alert_v2 {
+  margin: 1.5em 0;
+  padding: 1em 1em 1em 2.5em;
+
+  font: 22px/1.5em Gotham, 'Proxima Nova', 'Avenir Next', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-weight: 400;
+
+  background-color: #b5d8f4;
+  color: #333;
+}
+.alert_v2:first-child {
+  margin-top: 0;
+}
+
+.alert_v2::before {
+  content: '✱';
+  position: absolute;
+  left: 0.4em;
+  font-size: 1.5em;
+  min-width: 1em;
+  text-align: center;
+}
+
+.alert_v2.error {
+  background-color: #d85157;
+  color: white;
+  -webkit-font-smoothing: antialiased;
+}
+.alert_v2.error::before {
+  content: '✘';
+}
+
+.alert_v2.success {
+  background-color: #78bb6e;
+  color: white;
+  -webkit-font-smoothing: antialiased;
+}
+.alert_v2.success::before {
+  content: '✔︎';
+}
+
