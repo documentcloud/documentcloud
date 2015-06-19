@@ -1110,21 +1110,23 @@ iframe.hidden_iframe {
 }
 
 .form_v2 .togglebox {
-	-webkit-transition: opacity 0.5s;
-	transition: opacity 0.5s;
+	-webkit-transition: opacity 0.5s, max-height 0.5s ease-out;
+	transition: opacity 0.5s, max-height 0.5s ease-out;
 }
 
 .form_v2 .togglebox.closed {
   position: absolute;
-  height: 0;
   z-index: 0;
   opacity: 0;
+  max-height: 0;
   overflow: hidden;
+	-webkit-transition: max-height 0.5s ease-in;
+	transition: max-height 0.5s ease-in;
 }
 
 .form_v2 .togglebox.open {
   position: relative;
-  height: 100%;
+  max-height: 1000px; /* This would need customizing for longer toggleboxes. */
   z-index: 1;
   opacity: 1;  
 }
