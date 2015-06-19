@@ -904,6 +904,7 @@ iframe.hidden_iframe {
   background-color: #df5454;
   color: white;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 .form_v2 .fieldwrap .fieldalert {
@@ -1016,8 +1017,6 @@ iframe.hidden_iframe {
 	font-weight: 500;
 	font-size: 0.9em;
   line-height: 1em;
-	-webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
 	-webkit-touch-callout: none;
 	-webkit-user-select: none;
 	-khtml-user-select: none;
@@ -1166,6 +1165,7 @@ iframe.hidden_iframe {
   background-color: #d85157;
   color: white;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 .alert_v2.error:before {
   content: '✘';
@@ -1175,6 +1175,7 @@ iframe.hidden_iframe {
   background-color: #78bb6e;
   color: white;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 .alert_v2.success:before {
   content: '✔︎';
