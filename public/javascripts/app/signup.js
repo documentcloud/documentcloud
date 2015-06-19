@@ -1,22 +1,27 @@
 SignupFormModel = Backbone.Model.extend({
 
+  // TODO: Extract to validation library
+
   VALIDATORS: {
     isntBlank: function(val) {
       var valid = Backbone.$.trim(val) != '';
-      return valid || "Please enter a value";
-    },
-    hasSelection: function(val) {
-      var valid = Backbone.$.trim(val) != '';
-      return valid || "Please choose an option";
+      return valid || "We need this info.";
     },
     isEmail: function(val) {
       var pattern = dc.app.validator.email;
       var valid = pattern.test(val);
-      return valid || "Please enter a valid email";
+      return valid || "We need a valid email.";
     },
-    isTrue: function(val) {
+    isChosen: function(val) {
       var valid = !!val;
-      return valid || "Must be selected";
+      return valid || "Please choose one.";
+    },
+    // For this to actually work, you have to manually be providing the model 
+    // attribute with `$field.prop('checked')` instead of `$field.val()` before 
+    // running the validation.
+    isChecked: function(val) {
+      var valid = !!val;
+      return valid || "We require this.";
     },
   },
 
@@ -26,13 +31,9 @@ SignupFormModel = Backbone.Model.extend({
     'requester_first_name': ['isntBlank'],
     'requester_last_name':  ['isntBlank'],
     'organization_name':    ['isntBlank'],
-    'country':              ['hasSelection'],
-    'in_market':            ['isTrue'],
-    // TODO: This doesn't actually work. It "works" if the user never clicks 
-    // agree, because then the model has an undefined attr, but once clicked, 
-    // `val()` provides a value whether checked or not. We'd need to look at 
-    // the `checked` property. :|
-    'agreed_to_terms':      ['isTrue'],
+    'country':              ['isChosen'],
+    'in_market':            ['isChosen'],
+    'agreed_to_terms':      ['isChecked'],
     'industry':             [{
       'validators': ['isntBlank'],
       'conditions': { 'in_market': 0 },
@@ -42,7 +43,7 @@ SignupFormModel = Backbone.Model.extend({
       'conditions': { 'in_market': 0 },
     }],
     'approver':             [{
-      'validators': ['isTrue'],
+      'validators': ['isChosen'],
       'conditions': { 'in_market': 1 },
     }],
     'approver_first_name':  [{
@@ -108,6 +109,18 @@ SignupFormModel = Backbone.Model.extend({
 
   initialize: function() {
   },
+
+  maybeSelfApprove: function() {
+    if (this.get('approver') == 'self') {
+      this.set({
+        approver_first_name: this.get('requester_first_name'),
+        approver_last_name: this.get('requester_last_name'),
+        approver_email: this.get('requester_email'),
+        authorized_posting: true,
+      });
+    }
+  },
+
 });
 
 SignupFormView = Backbone.View.extend({
@@ -135,18 +148,10 @@ SignupFormView = Backbone.View.extend({
   submit: function(event){
     event.preventDefault();
 
-    // When self is the approver, force all approver* fields to be requester.
-    if (this.model.get('approver') == 'self') {
-      this.model.set({
-        approver_first_name: this.model.get('requester_first_name'),
-        approver_last_name: this.model.get('requester_last_name'),
-        approver_email: this.model.get('requester_email'),
-        authorized_posting: true,
-      });
-    }
+    this.setCheckboxValues();
+    this.model.maybeSelfApprove();
 
     this.disableForm();
-
     var saveForm = this.model.save({}, {
       success: this.saveSuccess,
       error: this.saveError,
@@ -160,6 +165,18 @@ SignupFormView = Backbone.View.extend({
     }
   },
 
+  // `.val()` on checkboxes returns `on` instead of useful information about 
+  // checked state. Fill model with boolean based on `.prop('checked')` instead.
+  // On view instead of model for scoping by view.
+  setCheckboxValues: function() {
+    var checkboxes    = {};
+    var checkbox_keys = ['agreed_to_terms'];
+    _.each(checkbox_keys, function(key) {
+      checkboxes[key] = this.$('[type="checkbox"][name="' + key + '"]').is(':checked');
+    }, this);
+    this.model.set(checkboxes);
+  },
+
   saveSuccess: function(model, response) {
     this.replaceWithAlert('<b>Thanks!</b> We’ll be in touch.', { type: 'success' });
   },
@@ -167,9 +184,39 @@ SignupFormView = Backbone.View.extend({
   saveError: function(model, response) {
     // Validation succeeded but XHR failed
     this.enableForm();
-    this.alert('<b>Clonk</b>, that didn’t work. Can you check everything and try again?', { type: 'error' });
+    this.alert('<b>Clonk</b>, that didn’t work. Check everything and try again?', { type: 'error' });
     this.scrollTo(this.$currentAlert);
   },
+
+  checkIsInMarket: function(event) {
+    var $target = this.$(event.target);
+
+    if ($target.val() == 1) {
+      this.$('#in_market_fields').removeClass('closed').addClass('open')
+          .find('input[type="radio"], textarea').prop('disabled', false);
+      this.$('#non_in_market_fields').removeClass('open').addClass('closed')
+          .find('.field, textarea').prop('disabled', true);
+    } else {
+      this.$('#in_market_fields').removeClass('open').addClass('closed')
+          .find('input[type="radio"], textarea').prop('disabled', true);
+      this.$('#non_in_market_fields').removeClass('closed').addClass('open')
+          .find('.field, textarea').prop('disabled', false);
+    }
+  },
+
+  checkIsApprover: function(event) {
+    var $target = this.$(event.target);
+
+    var $inputs = this.$('label[for="approver_other"]').find('.field');
+    if ($target.val() == 'other') {
+      $inputs.prop('disabled', false);
+      $inputs.first().focus();
+    } else {
+      $inputs.prop('disabled', true).trigger('blur').closest('.fieldwrap').removeClass('valid invalid');
+    }
+  },
+
+  // TODO: Extract to alert library
 
   replaceWithAlert: function(message, opts) {
     var _alert = this.makeAlert(message, opts);
@@ -216,6 +263,20 @@ SignupFormView = Backbone.View.extend({
 
   },
 
+  // TODO: Extract to utility library?
+
+  // Accepts either a string or an (assumed) jQuery object and scrolls the 
+  // viewport to 50px above it (or top, if we're less than 50 from the top).
+  scrollTo: function(target) {
+    if (target.length < 1) { return; }
+    $target = _.isString(target) ? Backbone.$(target) : target;
+    var offset = $target.offset();
+    var scrollToPos = (offset.top - 50) < 0 ? 0 : (offset.top - 50); 
+    Backbone.$('html, body').animate({ scrollTop: scrollToPos + 'px' });
+  },
+  
+  // TODO: Extract to form library
+
   // Saves current `disabled` property to a data attribute so the form can be
   // re-enabled to its previous state.
   disableForm: function() {
@@ -245,25 +306,15 @@ SignupFormView = Backbone.View.extend({
       } else if ($element.is('[type="checkbox"]')) {
         var $fieldwrap = $element.closest('.checkwrap').addClass('invalid').removeClass('valid')
         $fieldwrap.find('.fieldalert').remove()
-        var $fieldalert = $('<span class="fieldalert"> (' + messages.join(' and ') + ')</span>');
+        var $fieldalert = $('<span class="fieldalert">' + messages.join(' ') + '</span>');
         $fieldwrap.find('> label').append($fieldalert);
       } else if ($element.is('[type="radio"]')) {
         var $fieldwrap = $element.closest('.radioset').addClass('invalid').removeClass('valid')
         $fieldwrap.find('.fieldalert').remove()
-        var $fieldalert = $('<span class="fieldalert"> (' + messages.join(' and ') + ')</span>');
+        var $fieldalert = $('<span class="fieldalert">' + messages.join(' ') + '</span>');
         $fieldwrap.find('.radioset_label').append($fieldalert);
       }
     }, this);
-  },
-  
-  // Accepts either a string or an (assumed) jQuery object and scrolls the 
-  // viewport to 50px above it (or top, if we're less than 50 from the top).
-  scrollTo: function(target) {
-    if (target.length < 1) { return; }
-    $target = _.isString(target) ? Backbone.$(target) : target;
-    var offset = $target.offset();
-    var scrollToPos = (offset.top - 50) < 0 ? 0 : (offset.top - 50); 
-    Backbone.$('html, body').animate({ scrollTop: scrollToPos + 'px' });
   },
   
   toggleFieldFocus: function(event) {
@@ -279,7 +330,7 @@ SignupFormView = Backbone.View.extend({
   checkForUserInput: function(event) {
     var $target = this.$(event.target);
     var attr    = $target.attr('name');
-    var value   = $target.val();
+    var value   = $target.is('[type="checkbox"]') ? $target.prop('checked') : $target.val();
 
     this.toggleFieldFocus(event);
 
@@ -290,7 +341,6 @@ SignupFormView = Backbone.View.extend({
       attrs[$target.attr('name')] = value;
       this.model.set(attrs, { validate: true, only: attr });
 
-      // TODO: The `closest()` list is inefficient. Stop.
       var $fieldwrap = $target.closest('.fieldwrap, .checkwrap, .radioset');
 
       if (this.model.validationError) {
@@ -303,34 +353,6 @@ SignupFormView = Backbone.View.extend({
           $fieldwrap.removeClass('valid');
         }
       }
-    }
-  },
-
-  checkIsInMarket: function(event) {
-    var $target = this.$(event.target);
-
-    if ($target.val() == 1) {
-      this.$('#in_market_fields').removeClass('closed').addClass('open')
-          .find('input[type="radio"], textarea').prop('disabled', false);
-      this.$('#non_in_market_fields').removeClass('open').addClass('closed')
-          .find('.field, textarea').prop('disabled', true);
-    } else {
-      this.$('#in_market_fields').removeClass('open').addClass('closed')
-          .find('input[type="radio"], textarea').prop('disabled', true);
-      this.$('#non_in_market_fields').removeClass('closed').addClass('open')
-          .find('.field, textarea').prop('disabled', false);
-    }
-  },
-
-  checkIsApprover: function(event) {
-    var $target = this.$(event.target);
-
-    var $inputs = this.$('label[for="approver_other"]').find('.field');
-    if ($target.val() == 'other') {
-      $inputs.prop('disabled', false);
-      $inputs.first().focus();
-    } else {
-      $inputs.prop('disabled', true).trigger('blur').closest('.fieldwrap').removeClass('valid invalid');
     }
   },
 });
