@@ -14,7 +14,10 @@ class SignupController < ApplicationController
       :requester_notes, :agreed_to_terms, :authorized_posting, :industry,
       :use_case, :reference_links, :marketing_optin, :in_market)
     @verification_request = VerificationRequest.new(request_attrs)
-    @verification_request.save
+    
+    if @verification_request.save
+      LifecycleMailer.verification_request_notification(@verification_request).deliver
+    end
     json @verification_request
   end
 

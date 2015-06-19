@@ -34,4 +34,16 @@ class VerificationRequest < ActiveRecord::Base
       presence: true
   end
 
+  def requester_full_name
+    "#{requester_first_name} #{requester_last_name}"
+  end
+
+  def approver_full_name
+    "#{approver_first_name} #{approver_last_name}"
+  end
+
+  def requester_is_approver?
+    requester_full_name == approver_full_name && requester_email == approver_email
+  end
+
 end
