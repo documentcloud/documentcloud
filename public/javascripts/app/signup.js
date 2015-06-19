@@ -179,6 +179,7 @@ SignupFormView = Backbone.View.extend({
 
   saveSuccess: function(model, response) {
     this.replaceWithAlert('<b>Thanks!</b> We’ll be in touch.', { type: 'success' });
+    this.scrollTo(this.$el);
   },
 
   saveError: function(model, response) {
