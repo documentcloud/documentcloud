@@ -1,5 +1,5 @@
 class SignupController < ApplicationController
-  layout 'home'
+  layout 'empty'
 
   before_action :secure_only
 

@@ -3,11 +3,16 @@
   @header = "Apply for a DocumentCloud account"
 %>
 
-<div id="content">
+<div id="return_to_v1">
+  <%= link_to '⬅︎ Return to main site', :home, id: 'return_to_v1_text' %>
+  <a id="return_to_v1_logo" href="/home"><img src="/images/common/document_cloud_logo_white@2x.png" width="150" height="32"></a>
+</div>
+
+<h1><%= @header %></h1>
 
 <%= form_for @verification_request, :url => :apply_create, :html => { :class => 'form_v2', :novalidate => true } do |f| %>
 
-  <p>Fill out this application and we’ll be in touch, usually within a day or two. For help with the process, email <a href="mailto:support@documentcloud.org?subject=Help%20applying%20for%20a%20DocumentCloud%20account">support@documentcloud.org</a>.</p>
+  <p>Fill out this application and we’ll be in touch, usually within a day or two. For help with the process, feel free to <%= link_to 'contact us', :contact %>.</p>
 
   <fieldset class="fieldrow has3">
     <div class="fieldwrap">
@@ -153,5 +158,3 @@
   </div>
   
 <% end %>
-
-</div>
