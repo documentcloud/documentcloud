@@ -10,19 +10,19 @@
   <p>Fill out this application and we’ll be in touch, usually within a day or two. For help with the process, email <a href="mailto:support@documentcloud.org?subject=Help%20applying%20for%20a%20DocumentCloud%20account">support@documentcloud.org</a>.</p>
 
   <fieldset class="fieldrow has3">
-    <div class="fieldwrap required">
+    <div class="fieldwrap">
       <input id="requester_first_name" name="requester_first_name" type="text" class="field">
       <label class="fieldlabel" for="requester_first_name">
         <span class="fieldlabel_content" data-content="First name">First name</span>
       </label>
     </div>
-    <div class="fieldwrap required">
+    <div class="fieldwrap">
       <input id="requester_last_name" name="requester_last_name" type="text" class="field">
       <label class="fieldlabel" for="requester_last_name">
         <span class="fieldlabel_content" data-content="Last name">Last name</span>
       </label>
     </div>
-    <div class="fieldwrap required">
+    <div class="fieldwrap">
       <input id="requester_email" name="requester_email" type="email" class="field">
       <label class="fieldlabel" for="requester_email">
         <span class="fieldlabel_content" data-content="Email">Email</span>
@@ -31,7 +31,7 @@
   </fieldset>
 
   <fieldset class="fieldrow has3">
-    <div class="fieldwrap required">
+    <div class="fieldwrap">
       <input id="organization_name" name="organization_name" type="text" class="field">
       <label class="fieldlabel" for="organization_name">
         <span class="fieldlabel_content" data-content="Organization">Organization</span>
@@ -43,7 +43,7 @@
         <span class="fieldlabel_content" data-content="Organization URL">Organization URL</span>
       </label>
     </div>
-    <div class="fieldwrap required">
+    <div class="fieldwrap">
       <%= f.country_select :country, {priority_countries: ['US'], prompt: ''}, :class => 'field', :name => 'country' %>
       <label class="fieldlabel" for="country">
         <span class="fieldlabel_content" data-content="Country ⬇︎">Country &rarr;</span>
