@@ -16,9 +16,24 @@ class SignupController < ApplicationController
     @verification_request = VerificationRequest.new(request_attrs)
     
     if @verification_request.save
-      LifecycleMailer.verification_request_notification(@verification_request).deliver
+      notify_support_email
+      notify_slack
     end
+
     json @verification_request
+  end
+
+  private
+
+  def notify_support_email
+    LifecycleMailer.verification_request_notification(@verification_request).deliver
+  end
+
+  def notify_slack
+    hook_url = DC::SECRETS['slack_webhook']
+    text = "New account request from #{@verification_request.requester_full_name} (#{@verification_request.organization_name})"
+    data = {:payload => {:text => text, :username => "docbot", :icon_emoji => ":doccloud:"}.to_json}
+    RestClient.post(hook_url, data)
   end
 
 end
