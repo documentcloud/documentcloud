@@ -15,7 +15,7 @@ class SignupController < ApplicationController
       :use_case, :reference_links, :marketing_optin, :in_market)
     @verification_request = VerificationRequest.new(request_attrs)
     
-    if @verification_request.save
+    if @verification_request.save and not Rails.env.development?
       notify_support_email
       notify_slack
     end
@@ -31,7 +31,7 @@ class SignupController < ApplicationController
 
   def notify_slack
     hook_url = DC::SECRETS['slack_webhook']
-    text = "New account request from #{@verification_request.requester_full_name} (#{@verification_request.organization_name})"
+    text = "New account request from #{@verification_request.requester_full_name} (#{@verification_request.organization_name}) in #{Rails.env}"
     data = {:payload => {:text => text, :username => "docbot", :icon_emoji => ":doccloud:"}.to_json}
     RestClient.post(hook_url, data)
   end

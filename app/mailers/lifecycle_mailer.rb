@@ -72,7 +72,7 @@ class LifecycleMailer < ActionMailer::Base
   def verification_request_notification(verification_request)
     @request = verification_request
     mail({
-        :subject  => "New DocumentCloud account request from #{verification_request.requester_full_name} (#{verification_request.organization_name})",
+        :subject  => "New DocumentCloud account request from #{verification_request.requester_full_name} (#{verification_request.organization_name}) in #{Rails.env}",
         :from     => NO_REPLY,
         :reply_to => verification_request.requester_email,
         :to       => SUPPORT
