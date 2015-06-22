@@ -10,9 +10,10 @@ class LifecycleMailer < ActionMailer::Base
 
   # Mail instructions for a new account, with a secure link to activate,
   # set their password, and log in.
-  def login_instructions(account, admin=nil)
+  def login_instructions(account, organization, admin=nil)
     @admin   = admin
     @account = account
+    @organization = organization
     options = {
       :subject       => DC.t(account, 'welcome_to_document_cloud'),
       :to            => @account.email,

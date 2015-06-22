@@ -257,9 +257,9 @@ class Account < ActiveRecord::Base
 
   # When an account is created by a third party, send an email with a secure
   # key to set the password.
-  def send_login_instructions(admin=nil)
+  def send_login_instructions(organization=self.organization, admin=nil)
     ensure_security_key!
-    LifecycleMailer.login_instructions(self, admin).deliver
+    LifecycleMailer.login_instructions(self, organization, admin).deliver
   end
 
   def ensure_security_key!

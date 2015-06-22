@@ -3,7 +3,7 @@ require 'test_helper'
 class LifecycleMailerTest < ActionMailer::TestCase
 
   def test_login_instructions
-    email = LifecycleMailer.login_instructions(louis).deliver
+    email = LifecycleMailer.login_instructions(louis, louis.organization).deliver
     assert !ActionMailer::Base.deliveries.empty?
     assert_equal [ louis.email ], email.to
     @key=louis.security_key.key

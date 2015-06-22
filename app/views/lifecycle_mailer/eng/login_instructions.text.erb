@@ -1,9 +1,9 @@
 <%= @account.full_name %>,
 
 <% if @admin -%>
-Hello! <%= @admin.full_name %> has added you to <%= @account.organization.name %>'s DocumentCloud account.
+Hello! <%= @admin.full_name %> has added you to <%= @organization.name %>'s DocumentCloud account.
 <% else -%>
-Hello! A DocumentCloud account has been created for you and <%= @account.organization.name %>.
+Hello! A DocumentCloud account has been created for you and <%= @organization.name %>.
 <% end -%>
 
 Set your password and get started at:
