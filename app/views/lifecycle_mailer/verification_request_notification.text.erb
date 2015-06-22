@@ -1,4 +1,4 @@
-We've received a new application request from someone <%= 'not' unless @request.in_market? %> in our current target market.
+We've received a new application request om <%= Rails.env %> from someone<%= ' not' unless @request.in_market? %> in our current target market.
 
 Requester: <%= @request.requester_full_name %>
 Email: <%= @request.requester_email %>
