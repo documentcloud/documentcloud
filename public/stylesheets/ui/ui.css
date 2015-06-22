@@ -747,6 +747,8 @@ iframe.hidden_iframe {
   font-weight: 700;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  margin-left: -1.3em;
+  margin-right: -1.3em;
 }
 
 #return_to_v1 a:link,
