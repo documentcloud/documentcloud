@@ -1,26 +1,23 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
   <%= render :partial => 'common/meta_tags' %>
-  <title>DocumentCloud</title>
-  <% css = [:ui, :empty] + (@stylesheets || []) + [{:media => 'all'}] %>
-  <%= include_stylesheets *css %>
+  <title><%= @title ? "#{@title} - " : '' %>DocumentCloud</title>
+  <%= include_stylesheets :ui %>
   <!--[if lt IE 9]>
     <%= include_stylesheets :ie_only, :embed_assets => false %>
   <![endif]-->
   <%= include_javascripts :core %>
   <%= csrf_meta_tag %> 
 </head>
-<body class="empty">
+<body class="v2">
 
-  <div id="container">
-
-    <div id="content">
-      <%= yield %>
-    </div>
-
+  <div class="container">
+    <%= yield %>
   </div>
 
+<% if Rails.env.production? %>
+  <%= render :partial => 'common/google' %>
+<% end %>
 </body>
 </html>
