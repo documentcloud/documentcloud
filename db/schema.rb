@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 1) do
+ActiveRecord::Schema.define(version: 20150612202649) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -228,6 +228,31 @@ ActiveRecord::Schema.define(version: 1) do
     t.string  "securable_type", limit: 40, null: false
     t.integer "securable_id",              null: false
     t.string  "key",            limit: 40
+  end
+
+  create_table "verification_requests", force: true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "requester_email"
+    t.string   "requester_first_name"
+    t.string   "requester_last_name"
+    t.string   "requester_notes"
+    t.string   "organization_name"
+    t.string   "organization_url"
+    t.string   "approver_email"
+    t.string   "approver_first_name"
+    t.string   "approver_last_name"
+    t.string   "country"
+    t.string   "verification_notes"
+    t.integer  "status",               default: 1
+    t.boolean  "agreed_to_terms",      default: false
+    t.boolean  "authorized_posting",   default: false
+    t.string   "signup_key"
+    t.integer  "account_id"
+    t.string   "industry"
+    t.string   "use_case"
+    t.string   "reference_links"
+    t.boolean  "marketing_optin",      default: false
   end
 
 end

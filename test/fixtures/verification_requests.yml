@@ -1,0 +1,36 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+# This model initially had no columns defined.  If you add columns to the
+# model remove the '{}' from the fixture names and add the columns immediately
+# below each fixture, per the syntax in the comments below
+#
+dc: {
+  "requester_email"      => "ted@documentcloud.org",
+  "requester_first_name" => "Ted",
+  "requester_last_name"  => "Han",
+  "organization_name"    => "DocumentCloud",
+  "approver_email"       => "mark@documentcloud.org",
+  "approver_first_name"  => "Mark",
+  "approver_last_name"   => "Horvit",
+  "display_language"     => "eng",
+  "document_language"    => "eng",
+  "status"               => 1,
+  "agreed_to_terms"      => false,
+  "authorized_posting"   => false,
+}
+
+amt: {
+  "requester_email"      => "scrisplock@amtimes.disc",
+  "requester_first_name" => "Sacharissa",
+  "requester_last_name"  => "Cripslock",
+  "organization_name"    => "The Ankh-Morpork Times",
+  "approver_email"       => "wdeworde@amtimes.disc",
+  "approver_first_name"  => "William",
+  "approver_last_name"   => "de Worde",
+  "display_language"     => "spa",
+  "document_language"    => "spa",
+  "status"               => 1,
+  "agreed_to_terms"      => false,
+  "authorized_posting"   => false,
+}
+

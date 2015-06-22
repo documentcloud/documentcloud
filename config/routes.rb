@@ -22,7 +22,6 @@ DC::Application.routes.draw do
 
   # login / logout
   scope( controller: 'authentication' ) do
-    get '/signup',                        action: 'signup_info'
     match '/login',                       action: 'login', :via=>[:get,:post]
     get '/logout',                        action: 'logout'
     get '/auth/remote_data/:document_id', action: 'remote_data'
@@ -66,7 +65,6 @@ DC::Application.routes.draw do
   resources :featured do
     collection { post :present_order }
   end
-
 
   resources :documents do
 
