@@ -80,11 +80,10 @@ class AccountsController < ApplicationController
         :document_language=>current_organization.document_language
     })
     account = Account.lookup(account_attributes[:email]) || Account.create(account_attributes)
-    unless account.valid?
-      return json({:errors => account.errors.full_messages}, 409)
-    end
+    return json({:errors => account.errors.full_messages}, 409) unless account.valid?
     # Find role for account in organization if it exists.
     membership_attributes = pick(params, :role, :concealed)
+    return json({:errors => "Role is required" }, 400) unless Account::ROLES.include? membership_attributes[:role]
     membership = current_organization.role_of(account)
 
     # Create a membership if account has no existing role
