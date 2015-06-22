@@ -152,10 +152,10 @@ class ApplicationController < ActionController::Base
     forbidden
   end
 
-  def bad_request
+  def bad_request(message="Bad Request")
     respond_to do |format|
-      format.js  { json({:error=>"Bad Request"}, 400) }
-      format.json{ json({:error=>"Bad Request"}, 400) }
+      format.js  { json({:error=>message}, 400) }
+      format.json{ json({:error=>message}, 400) }
       format.any { render :file => "#{Rails.root}/public/400.html", :status => 400 }
     end
     false
