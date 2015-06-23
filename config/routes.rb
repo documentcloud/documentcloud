@@ -33,7 +33,7 @@ DC::Application.routes.draw do
   end
 
   # Public search.
-  get '/public/search' => 'public#index'
+  get '/public/search' => 'public#index', :as => :public_search
   get '/public/search/:query' => 'public#index', :query => /.*/
 
   # API.

@@ -73,7 +73,7 @@
   <div class="togglewrap">
     <fieldset id="in_market_fields" class="togglebox closed">
       <fieldset class="radioset">
-        <label class="radioset_label">We need someone – usually your editor or producer – to grant permission for us to <b>add your newsroom</b> to our <%= link_to 'public list of document contributors', :contributors, target: '_blank' %> and <b>confirm</b> that they understand you'll be contributing documents to a <b>public catalog</b>.</label>
+        <label class="radioset_label">We need someone – usually your editor or producer – to <strong>grant permission</strong> for us to add your newsroom to our <%= link_to 'public list of document contributors', :contributors, target: '_blank' %> and <strong>confirm that they understand</strong> that documents you make public will appear in our <%= link_to 'public catalog', :public_search, target: '_blank' %>.</label>
         <div class="radiowrap">
           <input id="approver_other" name="approver" value="other" type="radio" disabled>
           <label for="approver_other">
@@ -103,7 +103,7 @@
         <div class="radiowrap">
           <input id="approver_self" name="approver" value="self" type="radio" disabled>
           <label for="approver_self">
-            I’m a manager or other supervisor and grant permission to add our newsroom to the <%= link_to 'list of contributors', :contributors, target: '_blank' %> and acknowledge that we are contributing documents to a public catalog
+            I’m a manager or other supervisor and grant permission to add our newsroom to the <%= link_to 'public list of contributors', :contributors, target: '_blank' %> and acknowledge that documents we make public will appear in the <%= link_to 'public catalog', :public_search, target: '_blank' %>
           </label>
         </div>
       </fieldset>
