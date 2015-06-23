@@ -201,11 +201,13 @@ class DocumentsController < ApplicationController
   end
 
   def send_full_text
+    maybe_set_cors_headers
     return not_found unless current_document(true)
     redirect_to current_document.full_text_url(:direct)
   end
 
   def send_page_text
+    maybe_set_cors_headers
     return not_found unless current_page
     @response = current_page.text
     return if jsonp_request?
