@@ -69,6 +69,10 @@ GEM
     aws-sdk-v1 (1.64.0)
       json (~> 1.4)
       nokogiri (>= 1.4.4)
+    axiom-types (0.1.1)
+      descendants_tracker (~> 0.0.4)
+      ice_nine (~> 0.11.0)
+      thread_safe (~> 0.3, >= 0.3.1)
     bcrypt (3.1.10)
     builder (3.2.2)
     celluloid (0.16.0)
@@ -83,6 +87,8 @@ GEM
       sinatra
       thin (>= 1.2.4)
     coderay (1.1.0)
+    coercible (1.0.0)
+      descendants_tracker (~> 0.0.1)
     countries (0.11.4)
       currencies (~> 0.4.2)
       i18n_data (~> 0.7.0)
@@ -93,9 +99,31 @@ GEM
     curb (0.8.8)
     currencies (0.4.2)
     daemons (1.2.2)
+    descendants_tracker (0.0.4)
+      thread_safe (~> 0.3, >= 0.3.1)
     docsplit (0.8.0.alpha1)
     domain_name (0.5.24)
       unf (>= 0.0.5, < 1.0.0)
+    elasticsearch (1.0.12)
+      elasticsearch-api (= 1.0.12)
+      elasticsearch-transport (= 1.0.12)
+    elasticsearch-api (1.0.12)
+      multi_json
+    elasticsearch-model (0.1.7)
+      activesupport (> 3)
+      elasticsearch (> 0.4)
+      hashie
+    elasticsearch-persistence (0.1.7)
+      activemodel (> 3)
+      activesupport (> 3)
+      elasticsearch (> 0.4)
+      elasticsearch-model (>= 0.1)
+      hashie
+      virtus
+    elasticsearch-transport (1.0.12)
+      faraday
+      multi_json
+    equalizer (0.0.11)
     erubis (2.7.0)
     eventmachine (1.0.7)
     extlib (0.9.16)
@@ -153,6 +181,7 @@ GEM
       domain_name (~> 0.5)
     i18n (0.7.0)
     i18n_data (0.7.0)
+    ice_nine (0.11.1)
     iconv (1.0.4)
     jsmin (1.0.1)
     json (1.8.3)
@@ -318,6 +347,11 @@ GEM
       unf_ext
     unf_ext (0.0.7.1)
     unicode_utils (1.4.0)
+    virtus (1.0.5)
+      axiom-types (~> 0.1)
+      coercible (~> 1.0)
+      descendants_tracker (~> 0.0, >= 0.0.3)
+      equalizer (~> 0.0, >= 0.0.9)
 
 PLATFORMS
   ruby
@@ -332,6 +366,8 @@ DEPENDENCIES
   country_select (~> 2.2.0)
   curb (~> 0.8.4)
   docsplit (= 0.8.0.alpha1)
+  elasticsearch (~> 1.0.12)
+  elasticsearch-persistence (~> 0.1.7)
   google_drive (~> 1.0.0)
   growl
   guard-bundler

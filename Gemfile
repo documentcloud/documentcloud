@@ -31,6 +31,9 @@ gem 'nokogiri',               '~> 1.6.0'
 gem 'net-ssh-shell'
 gem 'country_select',         '~> 2.2.0'
 
+gem 'elasticsearch',          '~>1.0.12'
+gem 'elasticsearch-persistence', '~>0.1.7'
+
 group :development, :test do
   gem 'guard-bundler'
   gem 'growl'
