@@ -105,7 +105,7 @@ class Annotation < ActiveRecord::Base
         :full_name         => author ? "#{author['first_name']} #{author['last_name']}" : "Unattributed",
         :account_id        => note.account_id,
         :owns_note         => current_account && current_account.id == note.account_id,
-        :organization_name => author['organization_name']
+        :organization_name => author ? author['organization_name'] : nil
       }
     end
   end
