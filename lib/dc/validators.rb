@@ -2,8 +2,8 @@ module DC
 
   module Validators
 
-    # Forgiving Domain Name validator (the longest TLD is .museum at the moment)
-    DOMAIN = /\A((?:[a-z0-9\-_]+\.)+[a-z]{2,6})\Z/i
+    # Forgiving Domain Name validator
+    DOMAIN = /\A((?:[a-z0-9\-_]+\.)+[a-z]{2,63})\Z/i
 
     # We're not talking full domains, just (prefix).documentcloud.org
     SUBDOMAIN = /\A[0-9a-z\-_]+\Z/i
@@ -19,8 +19,7 @@ module DC
     IP = /\A(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\Z/
 
     # Email validator.
-    # The longest TLD is .museum at the moment.
-    EMAIL = /\A([\w\.\-\+\=]+)@((?:[a-z0-9\-_]+\.)+[a-z]{2,6})\Z/i
+    EMAIL = /\A([\w\.\-\+\=]+)@((?:[a-z0-9\-_]+\.)+[a-z]{2,63})\Z/i
 
     # Login must start with a letter, and only contain lowercase alphanumerics, '.' or '_' thereafter
     LOGIN = /\A[a-z][a-z0-9\._]*\Z/
