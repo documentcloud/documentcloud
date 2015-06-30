@@ -16,7 +16,8 @@ javascripts:
     - public/javascripts/vendor/jquery-ui/ui/menu.js
     - public/javascripts/vendor/backbone/backbone.js
     - public/javascripts/vendor/sprintf.js
-    - public/javascripts/vendor/visualsearch-*.js
+    - public/javascripts/vendor/visualsearch/build-min/visualsearch_templates.js
+    - public/javascripts/vendor/visualsearch/build-min/visualsearch.js
     - public/javascripts/vendor/blueimp-file-upload/js/jquery.fileupload.js
     - public/javascripts/vendor/blueimp-file-upload/js/jquery.iframe-transport.js
     - public/javascripts/vendor/flot/jquery.flot.js
@@ -56,6 +57,7 @@ stylesheets:
     - public/stylesheets/ui/ui.css
     - public/stylesheets/ui/*.css
     - public/stylesheets/vendor/*.css
+    - public/javascripts/vendor/visualsearch/build-min/visualsearch-datauri.css
   authentication:
     - public/stylesheets/pages/workspace.css
   workspace:
