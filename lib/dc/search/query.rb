@@ -320,12 +320,9 @@ module DC
               @sql << '(docdata.data -> ?) is null'
               @interpolations << datum.kind
             else
-              hash[datum.kind] = datum.value
+              @sql << '(docdata.data -> ?) LIKE ?'
+              @interpolations += [datum.kind, datum.value.gsub('*', '%')]
             end
-          end
-          unless hash.empty?
-            @sql << 'docdata.data @> ?'
-            @interpolations << Query.to_hash_query(hash)
           end
           @joins << 'inner join docdata ON documents.id = docdata.document_id'
         end
