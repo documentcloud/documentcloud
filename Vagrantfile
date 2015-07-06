@@ -3,9 +3,17 @@ Vagrant.configure("2") do |config|
   config.vm.provider "virtualbox" do |v|
     v.name = "documentcloud"
     v.memory = 2048
+    # https://www.virtualbox.org/ticket/13002
+    # https://github.com/mitchellh/vagrant/issues/1807
+    v.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
+    v.customize ["modifyvm", :id, "--natdnsproxy1", "on"]
+    v.customize ["modifyvm", :id, "--nictype1", "virtio"]
   end
   config.vm.network :private_network, ip: "192.168.33.10"
+  config.vm.synced_folder '.', '/vagrant', nfs: true
+  
   config.vm.provision "shell", inline: %Q{
+  # Is thhis apt-get redundant?
   sudo apt-get -y update
   cd /home/vagrant
   ln -s /vagrant documentcloud

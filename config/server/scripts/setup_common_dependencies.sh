@@ -32,7 +32,6 @@ PACKAGES='
 postgresql-client-9.3
 libpq-dev
 git-core
-postfix
 sqlite3
 libsqlite3-dev
 libcurl4-openssl-dev
@@ -188,7 +187,7 @@ grep -q '^UseDNS no' /etc/ssh/sshd_config || echo 'UseDNS no' >> /etc/ssh/sshd_c
 service ssh reload
 
 # postfix configuration
-perl -pi -e 's/smtpd_use_tls=yes/smtpd_use_tls=no/' /etc/postfix/main.cf
+#perl -pi -e 's/smtpd_use_tls=yes/smtpd_use_tls=no/' /etc/postfix/main.cf
 
 # load chruby (and thereby the current stable ruby)
 source /etc/profile.d/chruby.sh
