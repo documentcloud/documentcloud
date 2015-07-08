@@ -6,12 +6,12 @@ set -e
 
 # Requirest two arguments to be passed in.  First is environment, second is database password.
 USERNAME=ubuntu
-ENV_ARG=$1
+CLI_ARG=$1
 PASSWORD_ARG=$2
-RAILS_ENVIRONMENT=${RAILS_ENV:-"$ENV_ARG"} 
-# If environment is not set exit script.  Make Command line priority.  Consider username
+RAILS_ENVIRONMENT=${CLI_ARG:-"$RAILS_ENV"} 
+# If environment is not set exit script.  Make Command line priority.
 if [ ! -n "$RAILS_ENVIRONMENT" ]; then 
-  echo "environment must be set in RAILS_ENV or passed as first argument. RAILS_ENV will be priority" >&2; exit 1;
+  echo "environment must be set in RAILS_ENV or passed as first argument. CLI will be priority" >&2; exit 1;
 fi
 
 if [ ! -n "$PASSWORD_ARG" ]; then 

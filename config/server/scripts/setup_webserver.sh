@@ -7,8 +7,8 @@ set -e
 # This script needs to be run as root for permission purposes
 test $USER = 'root' || { echo run this as root >&2; exit 1; }
 
-USERNAME=vagrant
-RAILS_ENV=development
+USERNAME=ubuntu
+RAILS_ENVIRONMENT=${CLI_ARG:-"$RAILS_ENV"}
 
 apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 561F9B9CAC40B2F7
 apt-get install apt-transport-https ca-certificates
@@ -40,12 +40,12 @@ test -e /etc/nginx/sites-enabled/default && rm /etc/nginx/sites-enabled/default
 
 cp ./config/server/files/nginx/{nginx,documentcloud,passenger}.conf /etc/nginx/
 cp ./config/server/files/nginx/{staging,production}.conf /etc/nginx/sites-available/
-ln -s /etc/nginx/sites-available/$RAILS_ENV.conf /etc/nginx/sites-enabled/documentcloud-$RAILS_ENV.conf
+ln -s /etc/nginx/sites-available/$RAILS_ENVIRONMENT.conf /etc/nginx/sites-enabled/documentcloud-$RAILS_ENVIRONMENT.conf
 ln -s /var/log/nginx /etc/nginx/logs
 
 mkdir /usr/share/nginx/logs
 
 service nginx restart
-rake $RAILS_ENV ping:start
+rake $RAILS_ENVIRONMENT ping:start
 
 echo WEBSERVER SETUP COMPLETED SUCCESSFULLY
