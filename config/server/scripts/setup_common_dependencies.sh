@@ -182,9 +182,10 @@ chown $USERNAME.$USERNAME /home/$USERNAME/.gemrc
 # SYSTEM CONFIG
 #################################
 
+# CS 7.6.15 disabling for development purposes
 # disable ssh dns to avoid long pause before login
-grep -q '^UseDNS no' /etc/ssh/sshd_config || echo 'UseDNS no' >> /etc/ssh/sshd_config
-service ssh reload
+#grep -q '^UseDNS no' /etc/ssh/sshd_config || echo 'UseDNS no' >> /etc/ssh/sshd_config
+#service ssh reload
 
 # postfix configuration
 #perl -pi -e 's/smtpd_use_tls=yes/smtpd_use_tls=no/' /etc/postfix/main.cf
