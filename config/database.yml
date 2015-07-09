@@ -19,6 +19,10 @@ staging:
 production:
   <<: *defaults
   database: dcloud_production
+  
+elasticsearch:
+  <<: *defaults
+  database: dcloud_elastic
 
 test:
   <<: *defaults
