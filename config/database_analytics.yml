@@ -24,3 +24,8 @@ production:
 test:
   <<: *defaults
   database: dcloud_analytics_test
+
+elastic:
+  <<: *defaults
+  host: <%= DC::SECRETS['db_host'] %>
+  database: dcloud_analytics_production

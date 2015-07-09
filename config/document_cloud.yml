@@ -26,3 +26,6 @@ production:
 
 test:
   <<: *defaults
+
+elastic:
+  <<: *defaults
