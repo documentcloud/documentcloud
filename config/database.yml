@@ -20,7 +20,7 @@ production:
   <<: *defaults
   database: dcloud_production
   
-elasticsearch:
+elastic:
   <<: *defaults
   database: dcloud_elastic
 
