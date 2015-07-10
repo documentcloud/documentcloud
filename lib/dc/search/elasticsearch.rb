@@ -3,7 +3,7 @@ require 'elasticsearch/persistence'
 module DC
   module Search
     def self.repository
-      @@repository ||= Elasticsearch::Persistence::Repository.new
+      @@repository ||= Elasticsearch::Persistence::Repository.new(hosts: DC::SECRETS['elasticsearch_hosts'])
     end
     
     module ElasticSearch
