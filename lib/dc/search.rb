@@ -1,5 +1,3 @@
-Dir[File.dirname(__FILE__) + '/search/*.rb'].each {|file| require file }
-
 module DC
 
   # The Search module takes in a raw query string, processes it, queries
@@ -27,3 +25,5 @@ module DC
   end
 
 end
+
+Dir[File.dirname(__FILE__) + '/search/*.rb'].each {|file| require file }
