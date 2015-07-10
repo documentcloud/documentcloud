@@ -157,27 +157,6 @@ class Document < ActiveRecord::Base
 
   end
   
-  def to_hash
-    {
-      :title              => @title,
-      :source             => @source,
-      :description        => @description,
-      :full_text          => DC::Search.clean_text(self.combined_page_text),
-      :language           => @language,
-      :created_at         => @created_at,
-      :published          => @published,
-      :id                 => @id,
-      :account_id         => @account_id,
-      :organization_id    => @organization_id,
-      :access             => @access,
-      :page_count         => @page_count,
-      :hit_count          => @hit_count,
-      :public_note_count  => @public_note_count,
-      :project_ids        => self.project_memberships.map {|m| m.project_id },
-      :data               => self.docdata ? self.docdata.data.symbolize_keys : {}
-    }
-  end
-
   # Main document search method -- handles queries.
   def self.search(query, options={})
     query = DC::Search::Parser.new.parse(query) if query.is_a? String
