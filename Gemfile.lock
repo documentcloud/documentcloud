@@ -1,7 +1,6 @@
 GIT
   remote: git://github.com/documentcloud/jammit.git
-  revision: 72e32c357177ec3bdfabf653122c970fd0a89a8b
-  branch: rails4
+  revision: b3e17e12e57a0d639762e819d5e33f8f9395dd8d
   specs:
     jammit (0.6.6)
       cssmin (>= 1.0.3)
