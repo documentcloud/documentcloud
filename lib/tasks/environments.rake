@@ -1,4 +1,4 @@
-%w[development production staging test].each do |env|
+%w[development production staging test elastic].each do |env|
   desc "Runs the following task in the #{env} environment"
   task env do
     # While it appears to do so, this doesn't actually set the environment.
