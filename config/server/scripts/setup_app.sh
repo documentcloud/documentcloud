@@ -19,13 +19,13 @@ sudo apt-get install libfreeimage-dev libfreetype6-dev
 
 # approve github ssh host key
 # run as ubuntu user so that we don't need to change permissions
+# Make sure you have your github keys authorized, installed, and chmod to 600!
 sudo su -l ubuntu <<EOF
 sudo grep -q github /home/$USERNAME/.ssh/known_hosts 2>/dev/null || sudo ssh-keyscan -t rsa github.com > /home/$USERNAME/.ssh/known_hosts
-EOF
-# Make sure you have your github keys authorized, installed, and chmod to 600!
-
 test -e /home/$USERNAME/documentcloud || git clone git@github.com:documentcloud/documentcloud.git documentcloud
+EOF
 
+# Install bundler and install gems
 sudo su -l ubuntu <<EOF
 cd /home/$USERNAME/documentcloud
 gem install bundler

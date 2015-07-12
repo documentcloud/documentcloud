@@ -8,8 +8,14 @@ set -e
 test $USER = 'root' || { echo run this as root >&2; exit 1; }
 
 USERNAME=ubuntu
+CLI_ARG=$1
 RAILS_ENVIRONMENT=${CLI_ARG:-"$RAILS_ENV"}
 
+# Make sure we have env set
+# If environment is not set exit script.  Make Command line priority.
+if [ ! -n "$RAILS_ENVIRONMENT" ]; then 
+  echo "environment must be set in RAILS_ENV or passed as first argument. CLI will be priority" >&2; exit 1;
+fi
 apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 561F9B9CAC40B2F7
 apt-get install apt-transport-https ca-certificates
 
@@ -33,19 +39,31 @@ cd /home/$USERNAME
 
 test -e pixel-ping || su -c "git clone git://github.com/documentcloud/pixel-ping.git pixel-ping" $USERNAME
 
-cd /home/$USERNAME/documentcloud
+#cd /home/$USERNAME/documentcloud
 
 test -e /etc/nginx/nginx.conf && mv /etc/nginx/nginx.conf /etc/nginx/nginx.default.conf
 test -e /etc/nginx/sites-enabled/default && rm /etc/nginx/sites-enabled/default
 
-cp ./config/server/files/nginx/{nginx,documentcloud,passenger}.conf /etc/nginx/
-cp ./config/server/files/nginx/{staging,production}.conf /etc/nginx/sites-available/
-ln -s /etc/nginx/sites-available/$RAILS_ENVIRONMENT.conf /etc/nginx/sites-enabled/documentcloud-$RAILS_ENVIRONMENT.conf
-ln -s /var/log/nginx /etc/nginx/logs
+# Needed to remove
+sudo cp /home/$USERNAME/documentcloud/config/server/files/nginx/nginx.conf /etc/nginx/
+sudo cp /home/$USERNAME/documentcloud/config/server/files/nginx/documentcloud.conf /etc/nginx/
+sudo cp /home/$USERNAME/documentcloud/config/server/files/nginx/passenger.conf /etc/nginx/
+sudo cp /home/$USERNAME/documentcloud/config/server/files/nginx/staging.conf /etc/nginx/sites-available/
+sudo cp /home/$USERNAME/documentcloud/config/server/files/nginx/production.conf /etc/nginx/sites-available/
 
-mkdir /usr/share/nginx/logs
+ln -fs /etc/nginx/sites-available/$RAILS_ENVIRONMENT.conf /etc/nginx/sites-enabled/documentcloud-$RAILS_ENVIRONMENT.conf
+ln -fs /var/log/nginx /etc/nginx/logs
 
-service nginx restart
-rake $RAILS_ENVIRONMENT ping:start
+! test -e /usr/share/nginx/logs && mkdir /usr/share/nginx/logs
+! test -e /home/$USERNAME/documentcloud/log && mkdir /home/$USERNAME/documentcloud/log
+# touch -f /home/$USERNAME/documentcloud/log/pixel_ping.pid
+# touch -f /home/$USERNAME/documentcloud/log/pixel_ping.log
+
+sudo service nginx restart
+
+sudo su -l $USERNAME <<EOF
+echo $RAILS_ENVIRONMENT
+cd /home/$USERNAME/documentcloud && rake $RAILS_ENVIRONMENT ping:start
+EOF
 
 echo WEBSERVER SETUP COMPLETED SUCCESSFULLY
