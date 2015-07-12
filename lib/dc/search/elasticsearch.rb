@@ -17,7 +17,7 @@ module DC
           attributes = document.attributes.clone.merge({
             :full_text   => DC::Search.clean_text(document.combined_page_text),
             :project_ids => document.project_memberships.map {|m| m.project_id },
-            :data        => document.docdata ? self.docdata.data.symbolize_keys : {}
+            :data        => document.docdata ? document.docdata.data.symbolize_keys : {}
           })
         end
         
