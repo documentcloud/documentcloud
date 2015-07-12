@@ -32,7 +32,7 @@
 # to keep all resulting files on S3 private. If so, you'll receive authenticated
 # S3 URLs as job output, good for 24 hours. If left public, you'll get the
 # straight URLs to the files on S3.
-:s3_bucket:           dcloud_crowd_production
+:s3_bucket:           dcloud_crowd_elastic
 :s3_authentication:   no
 
 # If you're using the 'filesystem' storage, perhaps with an NFS share or
