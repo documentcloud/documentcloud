@@ -44,6 +44,10 @@ module DC
 
         klass ::Page
         index "page_#{Rails.env}"
+        
+        def serialize(page)
+          page.attributes
+        end
       end
       
       class Note
@@ -52,6 +56,10 @@ module DC
 
         klass ::Annotation
         index "note_#{Rails.env}"
+        
+        def serialize(note)
+          note.attributes
+        end
       end
     end
     

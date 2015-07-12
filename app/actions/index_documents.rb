@@ -3,7 +3,13 @@ require File.dirname(__FILE__) + '/support/setup'
 class IndexDocuments < CloudCrowd::Action
   
   def process
-    Document.where(id: input).each{ |doc| DC::Search.repository(doc.class).save(doc) }
+    Document.where(id: input).includes(:pages, :annotations).find_in_batches do |batch|
+      batch.each do |doc|
+        DC::Search.repository(doc.class).save(doc)
+        doc.pages.each{ |page| DC::Search.repository(page.class).save(page) }
+        doc.annotations.each{ |note| DC::Search.repository(note.class).save(note) }
+      end
+    end
     true
   end
 end
