@@ -5,7 +5,7 @@ module DC
     module Repository
       class Document
         include Elasticsearch::Persistence::Repository
-        client Elasticsearch::Client.new hosts: DC::SECRETS['elasticsearch_hosts'], log: true
+        client Elasticsearch::Client.new hosts: DC::SECRETS['elasticsearch_hosts'], log: false
         klass ::Document
         index "document_#{Rails.env}"
         
@@ -40,7 +40,7 @@ module DC
 
       class Page
         include Elasticsearch::Persistence::Repository
-        client Elasticsearch::Client.new hosts: DC::SECRETS['elasticsearch_hosts'], log: true
+        client Elasticsearch::Client.new hosts: DC::SECRETS['elasticsearch_hosts'], log: false
 
         klass ::Page
         index "page_#{Rails.env}"
@@ -48,7 +48,7 @@ module DC
       
       class Note
         include Elasticsearch::Persistence::Repository
-        client Elasticsearch::Client.new hosts: DC::SECRETS['elasticsearch_hosts'], log: true
+        client Elasticsearch::Client.new hosts: DC::SECRETS['elasticsearch_hosts'], log: false
 
         klass ::Annotation
         index "note_#{Rails.env}"
