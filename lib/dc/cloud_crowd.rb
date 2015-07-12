@@ -5,6 +5,7 @@ module CloudCrowd
     attr_accessor :nodes, :threads
 
     def initialize(options = {})
+      @pattern         = options[:pattern]  || DEFAULT_WORKER_MATCHER
       @user            = options[:user]     || "ubuntu"
       @key_path        = options[:key_path] || "secrets/keys/documentcloud.pem"
       @script_dir_path = options[:script_dir_path] || File.join(File.dirname(__FILE__), '..', '..', 'secrets', 'scripts', 'cloud_crowd')
@@ -29,8 +30,8 @@ module CloudCrowd
     def get_hosts_named(pattern=DEFAULT_WORKER_MATCHER)
       ec2 = AWS::EC2.new
       puts "Fetching worker host names"
-      instances = ec2.instances.select{ |i| i.status == :running && i.tags["Name"] =~ pattern }
-      return instances.map{ |i| i.dns_name }
+      instances = ec2.instances.select{ |i| i.status == :running && i.tags["Name"] =~ @pattern }
+      return instances.map{ |i| i.ip_address }
     end
 
     def run_on_workers(script, pattern=DEFAULT_WORKER_MATCHER)
