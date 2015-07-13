@@ -1143,6 +1143,9 @@ iframe.hidden_iframe {
 
   color: #6e6f6f;
   line-height: 1.3em;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
 	-webkit-transition: -webkit-transform 0.25s, color 0.25s;
 	transition: transform 0.25s, color 0.25s;
 	-webkit-transition-timing-function: ease-in-out;
