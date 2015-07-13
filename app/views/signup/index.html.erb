@@ -103,7 +103,14 @@
         <div class="radiowrap">
           <input id="approver_self" name="approver" value="self" type="radio" disabled>
           <label for="approver_self">
-            I’m a manager or other supervisor and grant permission to add our newsroom to the <%= link_to 'public list of contributors', :contributors, target: '_blank' %> and acknowledge that documents we make public will appear in the <%= link_to 'public catalog', :public_search, target: '_blank' %>
+            I’m a
+            <div class="fieldwrap inline">
+              <input id="requester_position" name="requester_position" type="text" class="field" disabled>
+              <label class="fieldlabel" for="requester_position">
+                <span class="fieldlabel_content" data-content="title/position">title/position</span>
+              </label>
+            </div>
+            and I grant permission to add our newsroom to the <%= link_to 'public list of contributors', :contributors, target: '_blank' %> and acknowledge that documents we make public will appear in the <%= link_to 'public catalog', :public_search, target: '_blank' %>
           </label>
         </div>
       </fieldset>

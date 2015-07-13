@@ -904,6 +904,14 @@ iframe.hidden_iframe {
   padding-left: 2.5em;
 }
 
+#in_market_fields .radiowrap {
+  margin-bottom: 1.5em;
+}
+
+#in_market_fields .radiowrap:last-child {
+  margin-bottom: 0.5em;
+}
+
 .form_v2 .radiowrap input[type="radio"],
 .form_v2 .checkwrap input[type="checkbox"] {
   position: absolute;
@@ -1057,7 +1065,7 @@ iframe.hidden_iframe {
 }
 
 .form_v2 .fieldwrap.inline {
-  width: 7em;
+  width: 8em;
   margin: 0;
 }
 
