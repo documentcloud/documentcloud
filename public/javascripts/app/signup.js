@@ -58,6 +58,10 @@ SignupFormModel = Backbone.Model.extend({
       'validators': ['isEmail'],
       'conditions': { 'approver': 'other' },
     }],
+    'requester_position': [{
+      'validators': ['isntBlank'],
+      'conditions': { 'approver': 'self' },
+    }],
     'reference_links':      [{
       'validators': ['isntBlank'],
       'conditions': { 'in_market': 1 },
@@ -208,12 +212,18 @@ SignupFormView = Backbone.View.extend({
   checkIsApprover: function(event) {
     var $target = this.$(event.target);
 
-    var $inputs = this.$('label[for="approver_other"]').find('.field');
+    var $other_inputs = this.$('label[for="approver_other"]').find('.field');
+    var $self_inputs  = this.$('label[for="approver_self"]').find('.field');
     if ($target.val() == 'other') {
-      $inputs.prop('disabled', false);
-      $inputs.first().focus();
+      $other_inputs.prop('disabled', false);
+      $other_inputs.first().focus();
+      $self_inputs.prop('disabled', true).trigger('blur')
+                  .closest('.fieldwrap').removeClass('valid invalid');
     } else {
-      $inputs.prop('disabled', true).trigger('blur').closest('.fieldwrap').removeClass('valid invalid');
+      $self_inputs.prop('disabled', false);
+      $self_inputs.first().focus();
+      $other_inputs.prop('disabled', true).trigger('blur')
+                   .closest('.fieldwrap').removeClass('valid invalid');
     }
   },
 

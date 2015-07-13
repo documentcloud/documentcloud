@@ -21,6 +21,8 @@ class VerificationRequest < ActiveRecord::Base
   validates :requester_first_name, :requester_last_name, :organization_name, :agreed_to_terms,
     presence: true
 
+  validates :requester_position, presence: true, if: :requester_is_approver?
+
   with_options if: :in_market? do |target|
     target.validates :approver_first_name, :approver_last_name, :reference_links,
       presence: true

@@ -11,9 +11,10 @@ Marketing Opt-In: <%= @request.marketing_optin ? 'Yes' : 'No' %>
 Journalist working with primary source docs: <%= @request.in_market? ? 'Yes' : 'No' %>
 <%- if @request.in_market? -%>
 <%- if @request.authorized_posting? && @request.requester_is_approver? -%>
-Approver: Self, and requester gave approval
+Approver: Self, and approval given
+Position: <%= @request.requester_position %>
 <%- else -%>
-Approver: <%= @request.approver_full_name  %>
+Approver: <%= @request.approver_full_name %>
 Email: <%= @request.approver_email %>
 <%- end -%>
 Reference Links: <%= @request.reference_links %>
