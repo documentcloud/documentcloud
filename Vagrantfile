@@ -25,14 +25,16 @@ Vagrant.configure("2") do |config|
     v.customize ["modifyvm", :id, "--natdnsproxy1", "on"]
     v.customize ["modifyvm", :id, "--nictype1", "virtio"]
     #v.gui = true
+
   end
+  #config.vm.network :forwarded_port, guest: 80, host: 4567
   config.vm.network :private_network, ip: "192.168.33.10"
   #config.vm.synced_folder '.', '/vagrant', nfs: true
   config.vm.synced_folder ".", "/home/ubuntu/documentcloud", owner: "ubuntu", group: "ubuntu"
   config.vm.provision "shell", inline: %Q{
   sudo apt-get -y update
   cd /home/ubuntu
-  ln -s /vagrant documentcloud
+  #ln -s /vagrant documentcloud
   sudo documentcloud/config/server/scripts/setup_common_dependencies.sh
   }
 end

@@ -11,6 +11,7 @@ USERNAME=ubuntu
 CLI_ARG=$1
 RAILS_ENVIRONMENT=${CLI_ARG:-"$RAILS_ENV"} 
 
+
 # Install pdfium https://github.com/documentcloud/pdfshaver
 # TODO Should we allow user to specifiy pdfium version?
 cd /home/$USERNAME && sudo wget 'http://s3.documentcloud.org.s3.amazonaws.com/pdfium/libpdfium-dev_0.1%2Bgit20150311-1_amd64.deb'

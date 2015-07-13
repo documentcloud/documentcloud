@@ -48,6 +48,6 @@ cd /home/$USERNAME/documentcloud
 sudo -u postgres psql -f db/development_structure.sql dcloud_$RAILS_ENVIRONMENT 2>&1|grep ERROR
 sudo -u postgres psql -f db/analytics_structure.sql dcloud_analytics_$RAILS_ENVIRONMENT 2>&1|grep ERROR
 # Execute rake command as vagrant user http://stackoverflow.com/questions/17758235/how-to-execute-a-group-of-commands-as-another-user-in-bash
-sudo su -l vagrant <<'EOF'
+sudo su -l ubuntu <<'EOF'
 cd /home/ubuntu/documentcloud && rake development db:migrate
 EOF

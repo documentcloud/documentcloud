@@ -11,6 +11,9 @@ USERNAME=ubuntu
 CLI_ARG=$1
 RAILS_ENVIRONMENT=${CLI_ARG:-"$RAILS_ENV"}
 
+# Set the RAILS ENV
+source ~/.bashrc && [ -z "$RAILS_ENV" ] && echo "export RAILS_ENV=$RAILS_ENVIRONMENT" >> ~/.bashrc
+
 # Make sure we have env set
 # If environment is not set exit script.  Make Command line priority.
 if [ ! -n "$RAILS_ENVIRONMENT" ]; then 
@@ -50,6 +53,7 @@ sudo cp /home/$USERNAME/documentcloud/config/server/files/nginx/documentcloud.co
 sudo cp /home/$USERNAME/documentcloud/config/server/files/nginx/passenger.conf /etc/nginx/
 sudo cp /home/$USERNAME/documentcloud/config/server/files/nginx/staging.conf /etc/nginx/sites-available/
 sudo cp /home/$USERNAME/documentcloud/config/server/files/nginx/production.conf /etc/nginx/sites-available/
+sudo cp /home/$USERNAME/documentcloud/config/server/files/nginx/development.conf /etc/nginx/sites-available/
 
 ln -fs /etc/nginx/sites-available/$RAILS_ENVIRONMENT.conf /etc/nginx/sites-enabled/documentcloud-$RAILS_ENVIRONMENT.conf
 ln -fs /var/log/nginx /etc/nginx/logs
