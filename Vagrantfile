@@ -34,7 +34,9 @@ Vagrant.configure("2") do |config|
   config.vm.provision "shell", inline: %Q{
   sudo apt-get -y update
   cd /home/ubuntu
-  #ln -s /vagrant documentcloud
   sudo documentcloud/config/server/scripts/setup_common_dependencies.sh
+  sudo su ubuntu -c 'sh /home/ubuntu/documentcloud/config/server/scripts/setup_app.sh'
+  sudo sh /home/ubuntu/documentcloud/config/server/scripts/setup_database.sh development pennysaver
+  sudo sh /home/ubuntu/documentcloud/config/server/scripts/setup_webserver.sh development
   }
 end

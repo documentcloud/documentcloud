@@ -47,7 +47,7 @@ test -e pixel-ping || su -c "git clone git://github.com/documentcloud/pixel-ping
 test -e /etc/nginx/nginx.conf && mv /etc/nginx/nginx.conf /etc/nginx/nginx.default.conf
 test -e /etc/nginx/sites-enabled/default && rm /etc/nginx/sites-enabled/default
 
-# Needed to remove
+# Needed to remove variable expansion using { } as it was causing script to fail. 
 sudo cp /home/$USERNAME/documentcloud/config/server/files/nginx/nginx.conf /etc/nginx/
 sudo cp /home/$USERNAME/documentcloud/config/server/files/nginx/documentcloud.conf /etc/nginx/
 sudo cp /home/$USERNAME/documentcloud/config/server/files/nginx/passenger.conf /etc/nginx/
