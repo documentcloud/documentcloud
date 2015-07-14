@@ -12,7 +12,7 @@ CLI_ARG=$1
 RAILS_ENVIRONMENT=${CLI_ARG:-"$RAILS_ENV"}
 
 # Set the RAILS ENV
-source ~/.bashrc && [ -z "$RAILS_ENV" ] && echo "export RAILS_ENV=$RAILS_ENVIRONMENT" >> ~/.bashrc
+#source ~/.bashrc && [ -z "$RAILS_ENV" ] && echo "export RAILS_ENV=$RAILS_ENVIRONMENT" >> ~/.bashrc
 
 # Make sure we have env set
 # If environment is not set exit script.  Make Command line priority.
