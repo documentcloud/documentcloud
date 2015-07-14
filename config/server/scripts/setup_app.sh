@@ -33,6 +33,12 @@ gem install bundler
 bundle
 EOF
 
+# # Set password in environment.
+# sudo su -l ubuntu <<EOF
+# cd /home/ubuntu/documentcloud && rails runner "ENV['PASSWORD']='hi'"
+# EOF
+
+
 # Don't forget to download your secrets file into documentcloud/secrets!
 
 #./bin/rails runner -e production 'puts "You already have #{Document.count} documents"'
