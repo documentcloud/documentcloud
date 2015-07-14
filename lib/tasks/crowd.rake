@@ -7,6 +7,10 @@ namespace :crowd do
   task :console do
     sh "./bin/crowd -c config/cloud_crowd/#{RAILS_ENV} -e #{RAILS_ENV} console"
   end
+  
+  task :load_schema do
+    sh "./bin/crowd -c config/cloud_crowd/#{crowd_folder} -e #{RAILS_ENV} load_schema"
+  end
 
   [:server, :node].each do |resource|
     namespace resource do
