@@ -20,7 +20,7 @@ if [ ! -n "$RAILS_ENVIRONMENT" ]; then
   echo "environment must be set in RAILS_ENV or passed as first argument. CLI will be priority" >&2; exit 1;
 fi
 apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 561F9B9CAC40B2F7
-apt-get install apt-transport-https ca-certificates
+apt-get install apt-transport-https ca-certificates -y
 
 echo "deb https://oss-binaries.phusionpassenger.com/apt/passenger trusty main" | tee /etc/apt/sources.list.d/passenger.list
 gpg --keyserver keyserver.ubuntu.com --recv-keys 561F9B9CAC40B2F7
