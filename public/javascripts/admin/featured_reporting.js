@@ -100,6 +100,7 @@ dc.ui.FeaturedReporting = Backbone.View.extend({
       return el.getAttribute('data-id');
     });
     $.ajax( this.collection.url + '/present_order', {
+      method: 'POST',
       data: { order: ids }
     } );
   },
