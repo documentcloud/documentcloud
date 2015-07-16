@@ -235,6 +235,57 @@ class Document < ActiveRecord::Base
     counts = Annotation.counts_for_documents(account, docs)
     docs.each {|doc| doc.annotation_count = counts[doc.id] }
   end
+  
+  # Produce a time series of uploaded documents for organization
+  def self.upload_statistics(type, id)
+    # ensure we only inject the organization id as integer into the following raw SQL query.
+    raise ArgumentError unless id.kind_of? Integer
+  
+    condition = case type
+    when :organization
+      "organization_id = #{id}"
+    when :account
+      "account_id = #{id}"
+    else
+      raise ArgumentError, "type must be :organization or :account"
+    end
+
+    # N.B. if the desire to expand this query grows,
+    # please seek an alternative structure for ensuring
+    # the safety and viability of this query
+    #
+    # gather total document, page, and file size counts
+    # segmented by month and access level
+    query = <<-QUERY
+  select date_trunc('month', created_at) as month, access, count(id) as c, sum(page_count) as p, sum(file_size) as s 
+    from documents 
+    where #{condition}
+    group by date_trunc('month', created_at), access
+  QUERY
+    # run the query and collect the returned tuples
+    rows = self.connection.execute(query).map do |row|
+      tuple_array = row.map do |key,string_value|
+        # and coerce string values returned by ActiveRecord into dates or integers.
+        value = key == "month" ? DateTime.parse(string_value) : string_value.to_i
+        [key, value]
+      end
+      Hash[tuple_array]
+    end
+
+    # agglutinate the tuples into a nested set of buckets
+    # first with months as the top level dimension
+    months = rows.group_by{ |row| row['month'] }
+    data = months.map do |month, rows|
+      # and then with access level as the secondary dimension
+      access_bins = rows.map do |row|
+        # and for tersness's sake, filter out the now redundant month & access values in the tuples.
+        filtered = row.reject{ |k,v| ['month', 'access'].include? k }
+        [row['access'], filtered]
+      end
+      [month, Hash[access_bins]]
+    end
+    Hash[data]
+  end
 
   # Ensure that titles are stripped of trailing whitespace.
   def title=(title="Untitled Document")

@@ -156,6 +156,45 @@ class AdminController < ApplicationController
       end
     end
   end
+  
+  def organization_statistics
+    org = case
+    when params[:slug]
+      Organization.find_by_slug(params[:slug])
+    when params[:id]
+      Organization.find(params[:id])
+    end
+    return not_found unless org
+    
+    respond_to do |format|
+      format.json do
+        @response = Document.upload_statistics(:organization, org.id)
+        json_response
+      end
+      format.any do
+        render
+      end
+    end
+  end
+  
+  def account_statistics
+    account = case
+    when params[:email]
+      Account.lookup(params[:email])
+    when
+      Account.find(params[:id])
+    end
+    return not_found unless account
+    respond_to do |format|
+      format.json do
+        @response = Document.upload_statistics(:account, account.id)
+        json_response
+      end
+      format.any do
+        render
+      end
+    end
+  end
 
   def manage_organization
     query = if params[:slug]
