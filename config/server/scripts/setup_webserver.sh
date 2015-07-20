@@ -70,4 +70,26 @@ echo $RAILS_ENVIRONMENT
 cd /home/$USERNAME/documentcloud && rake $RAILS_ENVIRONMENT ping:start
 EOF
 
+# Rails command for vagrant
+echo "
+function vrails() {
+ sudo su -l ubuntu -c \"cd /home/ubuntu/documentcloud && rails \$1 \$2 \$3\"
+}
+" >> ~/.bashrc
+
+# Rake commands for vagrant
+echo "
+function vrake() {
+  sudo su -l ubuntu -c \"cd /home/ubuntu/documentcloud && rake \$1 \$2 \$3\"
+}
+" >> ~/.bashrc
+
+# Bundler access interface for vagrant
+echo "
+function vbundle() {
+ sudo su -l ubuntu -c \"cd /home/ubuntu/documentcloud && bundle \$1 \$2 \$3\"
+}
+" >> ~/.bashrc
+
+
 echo WEBSERVER SETUP COMPLETED SUCCESSFULLY

@@ -1,6 +1,5 @@
 Vagrant.configure("2") do |config|
   config.vm.box = "ubuntu/trusty64"
-
   config.vm.provider "virtualbox" do |v|
     v.name = "documentcloud"
     host = RbConfig::CONFIG['host_os']
@@ -27,7 +26,6 @@ Vagrant.configure("2") do |config|
     #v.gui = true
 
   end
-  #config.vm.network :forwarded_port, guest: 80, host: 4567
   config.vm.network :private_network, ip: "192.168.33.10"
   #config.vm.synced_folder '.', '/vagrant', nfs: true
   config.vm.synced_folder ".", "/home/ubuntu/documentcloud", owner: "ubuntu", group: "ubuntu"
@@ -36,7 +34,8 @@ Vagrant.configure("2") do |config|
   cd /home/ubuntu
   sudo documentcloud/config/server/scripts/setup_common_dependencies.sh
   sudo su ubuntu -c 'sh /home/ubuntu/documentcloud/config/server/scripts/setup_app.sh'
-  sudo sh /home/ubuntu/documentcloud/config/server/scripts/setup_database.sh development $PASSWORD
+  sudo sh /home/ubuntu/documentcloud/config/server/scripts/setup_database.sh development pennysaver
   sudo sh /home/ubuntu/documentcloud/config/server/scripts/setup_webserver.sh development
+  sudo su ubuntu -c 'cd /home/ubuntu/documentcloud && rake development crowd:server:start'
   }
 end

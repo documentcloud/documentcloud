@@ -19,7 +19,7 @@ reporter_joe:
   email: reports@tribune.org
   first_name: Joe
   last_name: Reporting
-  hashed_password: $2a$08$FR1MWbwlC7qqdVfmF/C/8uHRHzZDjV97pkVd6M5ixbigq/3nhcNtm
+  hashed_password: <%= BCrypt::Password.create('password', :cost => 8) %>
   document_language: spa
   language: spa
 
