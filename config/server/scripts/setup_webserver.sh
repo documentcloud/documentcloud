@@ -75,21 +75,21 @@ echo "
 function vrails() {
  sudo su -l ubuntu -c \"cd /home/ubuntu/documentcloud && rails \$1 \$2 \$3\"
 }
-" >> ~/.bashrc
+" >> /home/vagrant/.bashrc
 
 # Rake commands for vagrant
 echo "
 function vrake() {
   sudo su -l ubuntu -c \"cd /home/ubuntu/documentcloud && rake \$1 \$2 \$3\"
 }
-" >> ~/.bashrc
+" >> /home/vagrant/.bashrc
 
 # Bundler access interface for vagrant
 echo "
 function vbundle() {
  sudo su -l ubuntu -c \"cd /home/ubuntu/documentcloud && bundle \$1 \$2 \$3\"
 }
-" >> ~/.bashrc
+" >> /home/vagrant/.bashrc
 
 
 echo WEBSERVER SETUP COMPLETED SUCCESSFULLY

@@ -13,3 +13,4 @@
 :password: <%= secrets['db_password'] %>
 :allow_concurrency: true
 :database: dcloud_crowd_development
+:host:     dev.dcloud.org

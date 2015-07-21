@@ -31,9 +31,11 @@ sudo su -l ubuntu <<EOF
 cd /home/$USERNAME/documentcloud
 gem install bundler
 bundle
-npm install -g bower
-bower install --no-interactive
 EOF
+
+# Install bower
+sudo npm install -g bower
+bower install --no-interactive
 
 # # Set password in environment.
 # sudo su -l ubuntu <<EOF

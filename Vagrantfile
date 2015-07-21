@@ -20,8 +20,8 @@ Vagrant.configure("2") do |config|
     v.cpus = cpus
     # https://www.virtualbox.org/ticket/13002
     # https://github.com/mitchellh/vagrant/issues/1807
-    v.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
-    v.customize ["modifyvm", :id, "--natdnsproxy1", "on"]
+    v.customize ["modifyvm", :id, "--natdnshostresolver1", "off"]
+    v.customize ["modifyvm", :id, "--natdnsproxy1", "off"]
     v.customize ["modifyvm", :id, "--nictype1", "virtio"]
     #v.gui = true
 
@@ -36,6 +36,10 @@ Vagrant.configure("2") do |config|
   sudo su ubuntu -c 'sh /home/ubuntu/documentcloud/config/server/scripts/setup_app.sh'
   sudo sh /home/ubuntu/documentcloud/config/server/scripts/setup_database.sh development #{ENV['VAGRANT_DCLOUD_DB_PASSWORD']}
   sudo sh /home/ubuntu/documentcloud/config/server/scripts/setup_webserver.sh development
+  sudo su - ubuntu -c 'cd /home/ubuntu/documentcloud && rake db:fixtures:load'
+  sudo su - ubuntu -c 'cd /home/ubuntu/documentcloud && rake sunspot:solr:start'
+  sudo su - root -c 'echo "127.0.0.1 dev.dcloud.org" >> /etc/hosts'
+  sudo su - ubuntu -c "cd /home/ubuntu/documentcloud && crowd -c config/cloud_crowd/development -e development load_schema"
   sudo su - ubuntu -c 'cd /home/ubuntu/documentcloud && rake development crowd:server:start'
   }
 end
