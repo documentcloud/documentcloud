@@ -38,7 +38,7 @@ Vagrant.configure("2") do |config|
   username = "ubuntu" # IF YOU WANT TO SETUP ENVIRONMENT WITH A DIFFERENT USERNAME, CHANGE IT HERE
 
   config.vm.synced_folder ".", "/home/#{username}/documentcloud", owner: username, group: username
-  
+
   if db_password == nil || db_password == "" then throw "No database password found!  Be sure to import DocumentCloud Secrets" end
   if username == nil || username == "" then throw "No global username was set! Do this in the Vagrantfile by setting the username variable." end
 
@@ -56,5 +56,6 @@ Vagrant.configure("2") do |config|
   sudo su - root -c 'echo "127.0.0.1 dev.dcloud.org" >> /etc/hosts'
   sudo su - $username -c "cd /home/$username/documentcloud && crowd -c config/cloud_crowd/development -e development load_schema"
   sudo su - $username -c "cd /home/$username/documentcloud && rake development crowd:server:start"
+  sudo su - $username -c "cd /home/$username/documentcloud && rake development crowd:node:start"
   }
 end
