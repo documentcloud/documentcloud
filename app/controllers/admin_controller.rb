@@ -66,7 +66,7 @@ class AdminController < ApplicationController
   end
 
   def hits_on_documents
-    json RemoteUrl.top_documents(365, :limit => 1000).to_json
+    json RemoteUrl.top_documents(365).to_json
   end
 
   def all_accounts
