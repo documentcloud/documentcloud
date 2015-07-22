@@ -27,19 +27,34 @@ Vagrant.configure("2") do |config|
 
   end
   config.vm.network :private_network, ip: "192.168.33.10"
-  #config.vm.synced_folder '.', '/vagrant', nfs: true
-  config.vm.synced_folder ".", "/home/ubuntu/documentcloud", owner: "ubuntu", group: "ubuntu"
-  config.vm.provision "shell", inline: %Q{
+  #################################################################################
+  # Extract global username & database password for environment
+  # TODO Extract environment
+  # TODO Pass username to all child scripts
+  #################################################################################
+  require 'yaml'
+  secrets = YAML.load_file('secrets/secrets.yml')['development']
+  db_password = secrets['db_password']
+  username = "ubuntu" # IF YOU WANT TO SETUP ENVIRONMENT WITH A DIFFERENT USERNAME, CHANGE IT HERE
+
+  config.vm.synced_folder ".", "/home/#{username}/documentcloud", owner: username, group: username
+  
+  if db_password == nil || db_password == "" then throw "No database password found!  Be sure to import DocumentCloud Secrets" end
+  if username == nil || username == "" then throw "No global username was set! Do this in the Vagrantfile by setting the username variable." end
+
+  config.vm.provision "shell", args: ["#{username}", "#{db_password}"], inline: %Q{
   sudo apt-get -y update
-  cd /home/ubuntu
+  username=$1
+  password=$2
+  cd /home/$username
   sudo documentcloud/config/server/scripts/setup_common_dependencies.sh
-  sudo su ubuntu -c 'sh /home/ubuntu/documentcloud/config/server/scripts/setup_app.sh'
-  sudo sh /home/ubuntu/documentcloud/config/server/scripts/setup_database.sh development #{ENV['VAGRANT_DCLOUD_DB_PASSWORD']}
-  sudo sh /home/ubuntu/documentcloud/config/server/scripts/setup_webserver.sh development
-  sudo su - ubuntu -c 'cd /home/ubuntu/documentcloud && rake db:fixtures:load'
-  sudo su - ubuntu -c 'cd /home/ubuntu/documentcloud && rake sunspot:solr:start'
+  sudo su $username -c "sh /home/$username/documentcloud/config/server/scripts/setup_app.sh"
+  sudo sh /home/$username/documentcloud/config/server/scripts/setup_database.sh development $password
+  sudo sh /home/$username/documentcloud/config/server/scripts/setup_webserver.sh development
+  sudo su - $username -c "cd /home/$username/documentcloud && rake db:fixtures:load"
+  sudo su - $username -c "cd /home/$username/documentcloud && rake sunspot:solr:start"
   sudo su - root -c 'echo "127.0.0.1 dev.dcloud.org" >> /etc/hosts'
-  sudo su - ubuntu -c "cd /home/ubuntu/documentcloud && crowd -c config/cloud_crowd/development -e development load_schema"
-  sudo su - ubuntu -c 'cd /home/ubuntu/documentcloud && rake development crowd:server:start'
+  sudo su - $username -c "cd /home/$username/documentcloud && crowd -c config/cloud_crowd/development -e development load_schema"
+  sudo su - $username -c "cd /home/$username/documentcloud && rake development crowd:server:start"
   }
 end
