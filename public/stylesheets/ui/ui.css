@@ -326,6 +326,12 @@ textarea.text_area {
     line-height: 11px;
   }
 
+  button.minibutton {
+    -webkit-box-sizing: content-box;
+       -moz-box-sizing: content-box;
+            box-sizing: content-box;
+  }
+
 
 /*--------------------------------- Menus ------------------------------------*/
 .minibutton.menu {
