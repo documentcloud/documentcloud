@@ -8,8 +8,6 @@ set -e
 test $USER != 'root' || { echo do NOT run as root >&2; exit 1; }
 
 USERNAME=ubuntu
-CLI_ARG=$1
-RAILS_ENVIRONMENT=${CLI_ARG:-"$RAILS_ENV"} 
 
 # approve github ssh host key
 # run as ubuntu user so that we don't need to change permissions
