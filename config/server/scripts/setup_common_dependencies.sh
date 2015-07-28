@@ -29,7 +29,7 @@ apt-get update
 
 # List all the common system dependencies that all of our machines need.
 PACKAGES='
-postgresql-client-9.3
+postgresql-client-9.4
 libpq-dev
 git-core
 sqlite3
