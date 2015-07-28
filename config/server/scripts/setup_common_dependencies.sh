@@ -12,6 +12,7 @@ set -e
 test $USER = 'root' || { echo run this as root >&2; exit 1; }
 # but the user we actually care about is the default ubuntu user.
 USERNAME=ubuntu
+DISTRO_NAME=trusty
 
 #################################
 # INSTALL SYSTEM DEPENDENCIES
@@ -21,10 +22,17 @@ USERNAME=ubuntu
 DEBIAN_FRONTEND=noninteractive
 
 # Always make sure that we have up to date postgres packages by adding their apt repository.
-echo "deb http://apt.postgresql.org/pub/repos/apt/ utopic-pgdg main" > /etc/apt/sources.list.d/pgdg.list
+echo "deb http://apt.postgresql.org/pub/repos/apt/ $DISTRO_NAME-pgdg main" > /etc/apt/sources.list.d/pgdg.list
 
 # and make sure that we have the key to verify their repository
 wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add -
+
+NODE_VERSION=0.12
+add-apt-repository -y -r ppa:chris-lea/node.js
+curl -s https://deb.nodesource.com/gpgkey/nodesource.gpg.key | apt-key add -
+echo "deb https://deb.nodesource.com/node_$NODE_VERSION $DISTRO_NAME main" > /etc/apt/sources.list.d/nodesource.list
+echo "deb-src https://deb.nodesource.com/node_$NODE_VERSION $DISTRO_NAME main" >> /etc/apt/sources.list.d/nodesource.list
+
 apt-get update
 
 # List all the common system dependencies that all of our machines need.
@@ -52,6 +60,7 @@ libbz2-dev
 libfreetype6-dev
 libfreeimage-dev
 make
+nodejs
 '
 
 RUBY_DEPENDENCIES='
