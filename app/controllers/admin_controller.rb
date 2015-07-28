@@ -171,9 +171,8 @@ class AdminController < ApplicationController
         @response = Document.upload_statistics(:organization, org.id)
         json_response
       end
-      format.any do
-        render
-      end
+      format.html{ render }
+      format.any{ redirect_to :format => :html, :params => pick(params, :id, :slug) }
     end
   end
   
@@ -190,9 +189,8 @@ class AdminController < ApplicationController
         @response = Document.upload_statistics(:account, account.id)
         json_response
       end
-      format.any do
-        render
-      end
+      format.html{ render }
+      format.any{ redirect_to :format => :html, :params => pick(params, :id, :slug) }
     end
   end
 
