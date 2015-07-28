@@ -193,6 +193,14 @@ module DC
         csv << keys.map {|key| record[key] }
       end
     end
+    
+    def self.new_accounts_since(from, to=Time.now)
+      Account.joins(:memberships, :organizations).where('accounts.created_at >= ? and accounts.created_at <= ?', from, to)
+    end
+    
+    def self.new_organizations_since(from, to=Time.now)
+      Organization.where('created_at >= ? and created_at <= ?', from, to)
+    end
 
     # To Do: set up a general notifier.
     # Should take a webhook url and a json payload to send.
