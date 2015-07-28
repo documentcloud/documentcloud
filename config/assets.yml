@@ -1,4 +1,5 @@
 javascript_compressor: closure
+css_compressor: sass
 template_function: _.template
 embed_assets: datauri
 
@@ -58,6 +59,11 @@ stylesheets:
     - public/stylesheets/ui/*.css
     - public/stylesheets/vendor/*.css
     - public/javascripts/vendor/visualsearch/build-min/visualsearch-datauri.css
+  ui_v2:
+    - public/stylesheets/common/reset.css
+    - public/stylesheets/v2/common.css
+    - public/stylesheets/v2/ui/forms.css
+    - public/stylesheets/v2/ui/alerts.css
   authentication:
     - public/stylesheets/pages/workspace.css
   workspace:
