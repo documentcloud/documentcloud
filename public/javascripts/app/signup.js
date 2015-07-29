@@ -130,8 +130,8 @@ SignupFormModel = Backbone.Model.extend({
 SignupFormView = Backbone.View.extend({
   
   events: {
-    'focus .field':                            'toggleFieldFocus',
-    'blur .field':                             'toggleFieldFocus',
+    'focus .field':                            'toggleFocusFilledState',
+    'blur .field':                             'toggleFocusFilledState',
     'change .field':                           'checkForUserInput',
     'change input[type="radio"]':              'checkForUserInput',
     'change input[type="checkbox"]':           'checkForUserInput',
@@ -328,7 +328,7 @@ SignupFormView = Backbone.View.extend({
     }, this);
   },
   
-  toggleFieldFocus: function(event) {
+  toggleFocusFilledState: function(event) {
     var $target = this.$(event.target);
     var value   = $target.val();
     if ($target.is(':focus') || value) {
@@ -343,7 +343,7 @@ SignupFormView = Backbone.View.extend({
     var attr    = $target.attr('name');
     var value   = $target.is('[type="checkbox"]') ? $target.prop('checked') : $target.val();
 
-    this.toggleFieldFocus(event);
+    this.toggleFocusFilledState(event);
 
     // Don't set the model if we're just tabbing through
     if (value || this.model.get(attr)) {
