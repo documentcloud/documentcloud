@@ -29,3 +29,4 @@ vendor/solr-4.0.0/solr-webapp/webapp/*
 public/javascripts/vendor/*/
 .vagrant
 .tm_properties
+Vagrantfile
