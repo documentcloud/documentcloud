@@ -70,6 +70,8 @@ GEM
       nokogiri (>= 1.4.4)
     bcrypt (3.1.10)
     builder (3.2.2)
+    byebug (5.0.0)
+      columnize (= 0.9.0)
     closure-compiler (1.1.11)
     cloud-crowd (0.7.5)
       active_model_serializers
@@ -80,6 +82,7 @@ GEM
       sinatra
       thin (>= 1.2.4)
     coderay (1.1.0)
+    columnize (0.9.0)
     countries (0.11.5)
       currencies (~> 0.4.2)
       i18n_data (~> 0.7.0)
@@ -265,6 +268,7 @@ GEM
     retriable (1.4.1)
     rsolr (1.0.12)
       builder (>= 2.1.2)
+    ruby-debug-passenger (0.2.0)
     rubyzip (1.1.7)
     sanitize (2.0.6)
       nokogiri (>= 1.4.4)
@@ -292,7 +296,7 @@ GEM
     sunspot (2.1.1)
       pr_geohash (~> 1.0)
       rsolr (~> 1.0.7)
-    sunspot_matchers (2.2.0.1)
+    sunspot_matchers (2.2.0.2)
     sunspot_rails (2.1.1)
       nokogiri
       rails (>= 3)
@@ -319,6 +323,7 @@ DEPENDENCIES
   actionpack-page_caching
   aws-sdk (~> 1.30)
   bcrypt (~> 3.1.1)
+  byebug
   calais (~> 0.0.13)!
   closure-compiler
   cloud-crowd (~> 0.7.3)
@@ -349,6 +354,7 @@ DEPENDENCIES
   rake
   rdiscount (~> 2.1.6)
   rest-client (~> 1.8.0)
+  ruby-debug-passenger
   rubyzip (~> 1.1.0)
   sanitize (~> 2.0.6)
   spring

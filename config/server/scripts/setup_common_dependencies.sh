@@ -12,6 +12,7 @@ set -e
 test $USER = 'root' || { echo run this as root >&2; exit 1; }
 # but the user we actually care about is the default ubuntu user.
 USERNAME=ubuntu
+DISTRO_NAME=trusty
 
 #################################
 # INSTALL SYSTEM DEPENDENCIES
@@ -21,18 +22,24 @@ USERNAME=ubuntu
 DEBIAN_FRONTEND=noninteractive
 
 # Always make sure that we have up to date postgres packages by adding their apt repository.
-echo "deb http://apt.postgresql.org/pub/repos/apt/ utopic-pgdg main" > /etc/apt/sources.list.d/pgdg.list
+echo "deb http://apt.postgresql.org/pub/repos/apt/ $DISTRO_NAME-pgdg main" > /etc/apt/sources.list.d/pgdg.list
 
 # and make sure that we have the key to verify their repository
 wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add -
+
+NODE_VERSION=0.12
+add-apt-repository -y -r ppa:chris-lea/node.js
+curl -s https://deb.nodesource.com/gpgkey/nodesource.gpg.key | apt-key add -
+echo "deb https://deb.nodesource.com/node_$NODE_VERSION $DISTRO_NAME main" > /etc/apt/sources.list.d/nodesource.list
+echo "deb-src https://deb.nodesource.com/node_$NODE_VERSION $DISTRO_NAME main" >> /etc/apt/sources.list.d/nodesource.list
+
 apt-get update
 
 # List all the common system dependencies that all of our machines need.
 PACKAGES='
-postgresql-client-9.3
+postgresql-client-9.4
 libpq-dev
 git-core
-postfix
 sqlite3
 libsqlite3-dev
 libcurl4-openssl-dev
@@ -54,6 +61,7 @@ libfreetype6-dev
 libfreeimage-dev
 make
 ntp
+nodejs
 '
 
 RUBY_DEPENDENCIES='
@@ -87,6 +95,11 @@ ttf-baekmuk
 
 # install all system dependencies
 echo $PACKAGES $TESSERACT_LANGUAGES $RUBY_DEPENDENCIES $FONT_PACKAGES | xargs apt-get install -y
+
+# Install pdfium https://github.com/documentcloud/pdfshaver
+# TODO Should we allow user to specifiy pdfium version?
+wget 'http://s3.documentcloud.org.s3.amazonaws.com/pdfium/libpdfium-dev_0.1%2Bgit20150311-1_amd64.deb'
+dpkg -i libpdfium-dev_0.1+git20150311-1_amd64.deb
 
 #################################
 # INSTALL RUBY SWITCHER
@@ -147,12 +160,13 @@ chown $USERNAME.$USERNAME /home/$USERNAME/.gemrc
 # SYSTEM CONFIG
 #################################
 
+# CS 7.6.15 disabling for development purposes
 # disable ssh dns to avoid long pause before login
-grep -q '^UseDNS no' /etc/ssh/sshd_config || echo 'UseDNS no' >> /etc/ssh/sshd_config
-service ssh reload
+#grep -q '^UseDNS no' /etc/ssh/sshd_config || echo 'UseDNS no' >> /etc/ssh/sshd_config
+#service ssh reload
 
 # postfix configuration
-perl -pi -e 's/smtpd_use_tls=yes/smtpd_use_tls=no/' /etc/postfix/main.cf
+#perl -pi -e 's/smtpd_use_tls=yes/smtpd_use_tls=no/' /etc/postfix/main.cf
 
 # load chruby (and thereby the current stable ruby)
 source /etc/profile.d/chruby.sh

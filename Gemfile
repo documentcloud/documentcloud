@@ -44,4 +44,6 @@ group :development, :test do
   # securely ask for username/password for access to translation spreadsheet
   gem 'highline'
   gem "pry"
+  gem "byebug" # Debugger
+  gem "ruby-debug-passenger"
 end

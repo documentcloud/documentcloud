@@ -7,7 +7,8 @@ class InitialMigration < ActiveRecord::Migration
 
     # These are extensions that must be enabled in order to support this database
     enable_extension "plpgsql"
-    enable_extension "hstore"
+    # hstore extension creation being dozne in setup_database.sh
+    #enable_extension "hstore"
 
     create_table "accounts", force: true do |t|
       t.string   "first_name",        limit: 40
