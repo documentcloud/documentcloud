@@ -21,6 +21,7 @@ module DC
           extract_entities(document, chunk, i)
         end
         document.entities = @entities.values
+        byebug
         document.save
       end
 

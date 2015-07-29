@@ -3,6 +3,7 @@ gem 'iconv'
 gem 'rails',                  '~>4.2.0'
 gem 'curb',                   '~>0.8.4'
 gem 'calais',                 '~> 0.0.13', :github=>'nathanstitt/calais', :branch=>'newer_nokogiri'
+gem 'open_calais'
 gem 'rest-client',            '~> 1.8.0'
 gem 'bcrypt',                 '~> 3.1.1', :require => 'bcrypt'
 gem 'rubyzip',                '~> 1.1.0' #0.9.9'
@@ -45,5 +46,8 @@ group :development, :test do
   gem 'highline'
   gem "pry"
   gem "byebug" # Debugger
+  gem "vcr" # Replay HTTP requests
+  gem "webmock" # Needed for VCR
+  gem 'factory_girl_rails' # Mocking out objects
   gem "ruby-debug-passenger"
 end
