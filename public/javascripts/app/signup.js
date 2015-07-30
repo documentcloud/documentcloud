@@ -165,7 +165,7 @@ SignupFormView = Backbone.View.extend({
     if (!saveForm) {
       this.enableForm();
       this.displayValidationErrors();
-      this.scrollTo(this.$('.invalid').first());
+      this.$('.invalid').scrollTo();
     }
   },
 
@@ -183,14 +183,14 @@ SignupFormView = Backbone.View.extend({
 
   saveSuccess: function(model, response) {
     this.replaceWithAlert('<b>Thanks!</b> We’ll be in touch.', { type: 'success' });
-    this.scrollTo(this.$el);
+    this.$el.scrollTo();
   },
 
   saveError: function(model, response) {
     // Validation succeeded but XHR failed
     this.enableForm();
     this.alert('<b>Clonk</b>, that didn’t work. Check everything and try again?', { type: 'error' });
-    this.scrollTo(this.$currentAlert);
+    this.$currentAlert.scrollTo();
   },
 
   checkIsInMarket: function(event) {
@@ -274,18 +274,6 @@ SignupFormView = Backbone.View.extend({
 
   },
 
-  // TODO: Extract to utility library?
-
-  // Accepts either a string or an (assumed) jQuery object and scrolls the 
-  // viewport to 50px above it (or top, if we're less than 50 from the top).
-  scrollTo: function(target) {
-    if (target.length < 1) { return; }
-    $target = _.isString(target) ? Backbone.$(target) : target;
-    var offset = $target.offset();
-    var scrollToPos = (offset.top - 50) < 0 ? 0 : (offset.top - 50); 
-    Backbone.$('html, body').animate({ scrollTop: scrollToPos + 'px' });
-  },
-  
   // TODO: Extract to form library
 
   // Saves current `disabled` property to a data attribute so the form can be
