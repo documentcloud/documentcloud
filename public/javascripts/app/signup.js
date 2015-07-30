@@ -1,31 +1,5 @@
-SignupFormModel = Backbone.Model.extend({
+SignupFormModel = dc.ui.FormModel.extend({
 
-  // TODO: Extract to validation library
-
-  VALIDATORS: {
-    isntBlank: function(val) {
-      var valid = Backbone.$.trim(val) != '';
-      return valid || "We need this info.";
-    },
-    isEmail: function(val) {
-      var pattern = dc.app.validator.email;
-      var valid = pattern.test(val);
-      return valid || "We need a valid email.";
-    },
-    isChosen: function(val) {
-      var valid = !!val;
-      return valid || "Please choose one.";
-    },
-    // For this to actually work, you have to manually be providing the model 
-    // attribute with `$field.prop('checked')` instead of `$field.val()` before 
-    // running the validation.
-    isChecked: function(val) {
-      var valid = !!val;
-      return valid || "We require this.";
-    },
-  },
-
-  // TODO: Rewrite this to be properly declarative and take function conditions
   VALIDATIONS: {
     'requester_email':      ['isEmail'],
     'requester_first_name': ['isntBlank'],
@@ -68,50 +42,12 @@ SignupFormModel = Backbone.Model.extend({
     }],
   },
 
-  // Validates model attributes against validation rules. When run against 
-  // entire model (default), it validates actual model attributes with `get()`. 
-  // When passed a single model attribute name via `options.only`, it validates 
-  // the value passed in via `attrs`, since single-attribute validation is run 
-  // during `set()` before the model is actually modified. However, even 
-  // single-attribute validation checks the model via `get()` for any of its 
-  // conditional validations.
-  validate: function(attrs, options) {
-    var errors = {};
-
-    var validations = options.only ? _.pick(this.VALIDATIONS, options.only) : this.VALIDATIONS;
-    _.each(validations, function(validators, attr) {
-      var value = options.only ? attrs[attr] : this.get(attr);
-      validators = _.isArray(validators) ? validators : ([]).push(validators);
-      _.each(validators, function(validator) {
-        if (typeof validator === 'string') {
-          var valid = this.VALIDATORS[validator](value);
-          if (valid !== true) { (errors[attr] = (errors[attr] || [])).push(valid); }
-        } else {
-          var conditions_passed = true;
-          _.each(validator.conditions, function(condition_val, condition_key) {
-            if (this.get(condition_key) != condition_val) { conditions_passed = false; }
-          }, this);
-          if (conditions_passed) {
-            var conditional_validators = _.isArray(validator['validators']) ? validator['validators'] : ([]).push(validator['validators']);
-            _.each(conditional_validators, function(conditional_validator) {
-              var valid = this.VALIDATORS[conditional_validator](value);
-              if (valid !== true) { (errors[attr] = (errors[attr] || [])).push(valid); }
-            }, this);
-          }
-        }
-      }, this);
-    }, this);
-
-    if (!_.isEmpty(errors)) {
-      return errors;
-    }
+  initialize: function() {
+    dc.ui.FormModel.prototype.initialize.call(this);
   },
 
   url: function() {
     return '/apply';
-  },
-
-  initialize: function() {
   },
 
   maybeSelfApprove: function() {
@@ -127,26 +63,21 @@ SignupFormModel = Backbone.Model.extend({
 
 });
 
-SignupFormView = Backbone.View.extend({
+SignupFormView = dc.ui.FormView.extend({
   
-  events: {
-    'focus .field':                            'toggleFocusFilledState',
-    'blur .field':                             'toggleFocusFilledState',
-    'change .field':                           'checkForUserInput',
-    'change input[type="radio"]':              'checkForUserInput',
-    'change input[type="checkbox"]':           'checkForUserInput',
-    'change input[name="in_market"]':          'checkIsInMarket',
-    'change input[name="approver"]':           'checkIsApprover',
-    'submit':                                  'submit',
+  signupFormEvents: {
+    'change input[name="in_market"]': 'checkIsInMarket',
+    'change input[name="approver"]':  'checkIsApprover',
+    'submit':                         'submit',
   },
-  
+
   initialize: function(options) {
-    this.model = options.model;
+    dc.ui.FormView.prototype.initialize.call(this, options);
+    this.events = _.extend({}, this.events, this.signupFormEvents);
     _.bindAll(this, 'saveSuccess', 'saveError');
   },
   
   render: function(){
-    
   },
   
   submit: function(event){
@@ -167,18 +98,6 @@ SignupFormView = Backbone.View.extend({
       this.displayValidationErrors();
       this.$('.invalid').scrollTo();
     }
-  },
-
-  // `.val()` on checkboxes returns `on` instead of useful information about 
-  // checked state. Fill model with boolean based on `.prop('checked')` instead.
-  // On view instead of model for scoping by view.
-  setCheckboxValues: function() {
-    var checkboxes    = {};
-    var checkbox_keys = ['agreed_to_terms'];
-    _.each(checkbox_keys, function(key) {
-      checkboxes[key] = this.$('[type="checkbox"][name="' + key + '"]').is(':checked');
-    }, this);
-    this.model.set(checkboxes);
   },
 
   saveSuccess: function(model, response) {
@@ -274,86 +193,6 @@ SignupFormView = Backbone.View.extend({
 
   },
 
-  // TODO: Extract to form library
-
-  // Saves current `disabled` property to a data attribute so the form can be
-  // re-enabled to its previous state.
-  disableForm: function() {
-    this.$('input, textarea, select, button').each(function(){
-      var $this = $(this);
-      $this.data('disabled', $this.prop('disabled')).prop('disabled', true);
-    });
-  },
-
-  // Restores a form to its state prior to being disabled via `disableForm()`
-  enableForm: function() {
-    this.$('input, textarea, select, button').each(function(){
-      var $this = $(this);
-      $this.prop('disabled', !!$this.data('disabled')).removeData('disabled');
-    });
-  },
-
-  displayValidationErrors: function() {
-    _.each(this.model.validationError, function(messages, attr) {
-      var $element = this.$('[name="' + attr + '"]');
-
-      if ($element.hasClass('field')) {
-        var $fieldwrap = $element.closest('.fieldwrap').addClass('invalid').removeClass('valid');
-        $fieldwrap.find('.fieldalert').remove()
-        var $fieldalert = $('<ul class="fieldalert"><li>' + messages.join('</li><li>') + '</li></ul>');
-        $fieldwrap.append($fieldalert);
-      } else if ($element.is('[type="checkbox"]')) {
-        var $fieldwrap = $element.closest('.checkwrap').addClass('invalid').removeClass('valid')
-        $fieldwrap.find('.fieldalert').remove()
-        var $fieldalert = $('<span class="fieldalert">' + messages.join(' ') + '</span>');
-        $fieldwrap.find('> label').append($fieldalert);
-      } else if ($element.is('[type="radio"]')) {
-        var $fieldwrap = $element.closest('.radioset').addClass('invalid').removeClass('valid')
-        $fieldwrap.find('.fieldalert').remove()
-        var $fieldalert = $('<span class="fieldalert">' + messages.join(' ') + '</span>');
-        $fieldwrap.find('.radioset_label').append($fieldalert);
-      }
-    }, this);
-  },
-  
-  toggleFocusFilledState: function(event) {
-    var $target = this.$(event.target);
-    var value   = $target.val();
-    if ($target.is(':focus') || value) {
-      $target.closest('.fieldwrap').addClass('filled');
-    } else {
-      $target.closest('.fieldwrap').removeClass('filled');
-    }
-  },
-
-  checkForUserInput: function(event) {
-    var $target = this.$(event.target);
-    var attr    = $target.attr('name');
-    var value   = $target.is('[type="checkbox"]') ? $target.prop('checked') : $target.val();
-
-    this.toggleFocusFilledState(event);
-
-    // Don't set the model if we're just tabbing through
-    if (value || this.model.get(attr)) {
-      // TODO: Figure out why our Backbone won't allow simply `set(key, val)`
-      var attrs = {};
-      attrs[$target.attr('name')] = value;
-      this.model.set(attrs, { validate: true, only: attr });
-
-      var $fieldwrap = $target.closest('.fieldwrap, .checkwrap, .radioset');
-
-      if (this.model.validationError) {
-        this.displayValidationErrors();
-      } else {
-        $fieldwrap.removeClass('invalid').find('.fieldalert').remove();
-        if (value) {
-          $fieldwrap.addClass('valid');
-        } else {
-          $fieldwrap.removeClass('valid');
-        }
-      }
-    }
-  },
 });
 
 $(function() {
