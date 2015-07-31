@@ -48,7 +48,7 @@ javascripts:
     - public/javascripts/home/*.js
   embedded_login:
     - public/javascripts/vendor/json2.js
-    - public/javascripts/vendor/jquery-*.js
+    - public/javascripts/vendor/jquery/dist/jquery.js
     - public/javascripts/embed/easy_xdm.js
     - public/javascripts/embed/embedded_login.js
 
