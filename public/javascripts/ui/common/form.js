@@ -1,7 +1,3 @@
-dc.ui.EmptyFormModel = Backbone.Model.extend({
-  initialize: function() {}
-});
-
 dc.ui.FormModel = Backbone.Model.extend({
 
   VALIDATORS: {
@@ -92,7 +88,7 @@ dc.ui.FormView = Backbone.View.extend({
   },
 
   initialize: function(options) {
-    this.model = options.model || new dc.ui.EmptyFormModel({});
+    this.model = options.model || new dc.ui.FormModel({});
   },
 
   // Saves current `disabled` property to a data attribute so the form can be
