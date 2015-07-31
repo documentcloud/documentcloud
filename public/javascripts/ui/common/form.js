@@ -10,6 +10,21 @@ dc.ui.FormModel = Backbone.Model.extend({
       var valid   = pattern.test(val);
       return valid || "We need a valid email.";
     },
+    isInteger: function(val) {
+      var pattern = /^[0-9]+$/;
+      var valid   = pattern.test(val);
+      return valid || "Enter numbers only.";
+    },
+    isCurrency: function(val) {
+      var pattern = /^[0-9]+(\.[0-9]{1,2})?$/;
+      var valid   = pattern.test(val);
+      return valid || "Enter a valid dollar amount.";
+    },
+    isMMYY: function(val) {
+      var pattern = /^[0-9]{2}\/[0-9]{2}$/;
+      var valid   = pattern.test(val);
+      return valid || "Enter date as MM/YY.";
+    },
     isChosen: function(val) {
       var valid = !!val;
       return valid || "Please choose one.";

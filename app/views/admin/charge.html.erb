@@ -59,15 +59,3 @@
   </div>
   
 </form>
-
-<script>
-$(document).ready(function(){
-  $('#test_payment_form .field').on('blur', function() {
-    if ($(this).val()) {
-      $(this).closest('.fieldwrap').addClass('filled');
-    } else {
-      $(this).closest('.fieldwrap').removeClass('filled');
-    }
-  });
-});
-</script>
