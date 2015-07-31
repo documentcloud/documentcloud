@@ -32,7 +32,7 @@ SignupFormModel = dc.ui.FormModel.extend({
       'validators': ['isEmail'],
       'conditions': { 'approver': 'other' },
     }],
-    'requester_position': [{
+    'requester_position':   [{
       'validators': ['isntBlank'],
       'conditions': { 'approver': 'self' },
     }],
@@ -54,9 +54,9 @@ SignupFormModel = dc.ui.FormModel.extend({
     if (this.get('approver') == 'self') {
       this.set({
         approver_first_name: this.get('requester_first_name'),
-        approver_last_name: this.get('requester_last_name'),
-        approver_email: this.get('requester_email'),
-        authorized_posting: true,
+        approver_last_name:  this.get('requester_last_name'),
+        approver_email:      this.get('requester_email'),
+        authorized_posting:  true,
       });
     }
   },
@@ -77,8 +77,7 @@ SignupFormView = dc.ui.FormView.extend({
     _.bindAll(this, 'saveSuccess', 'saveError');
   },
   
-  render: function(){
-  },
+  render: function(){},
   
   submit: function(event){
     event.preventDefault();
@@ -89,7 +88,7 @@ SignupFormView = dc.ui.FormView.extend({
     this.disableForm();
     var saveForm = this.model.save({}, {
       success: this.saveSuccess,
-      error: this.saveError,
+      error:   this.saveError,
     });
 
     // Validation failure, XHR never run
@@ -178,7 +177,7 @@ SignupFormView = dc.ui.FormView.extend({
 
     // Default to prepending within `this.$el` if nothing specified
     if (_.isUndefined(position)) {
-      position = 'prepend';
+      position     = 'prepend';
       opts.prepend = true;
     }
 
@@ -197,5 +196,5 @@ SignupFormView = dc.ui.FormView.extend({
 
 $(function() {
   window.signupModel = new SignupFormModel({});
-  window.signup = new SignupFormView({ model: signupModel, el: $('#new_verification_request') });
+  window.signup      = new SignupFormView({ model: signupModel, el: $('#new_verification_request') });
 });

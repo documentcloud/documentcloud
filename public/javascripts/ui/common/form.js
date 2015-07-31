@@ -7,7 +7,7 @@ dc.ui.FormModel = Backbone.Model.extend({
     },
     isEmail: function(val) {
       var pattern = dc.app.validator.email;
-      var valid = pattern.test(val);
+      var valid   = pattern.test(val);
       return valid || "We need a valid email.";
     },
     isChosen: function(val) {
@@ -80,11 +80,11 @@ dc.ui.FormModel = Backbone.Model.extend({
 dc.ui.FormView = Backbone.View.extend({
 
   events: {
-    'focus  .field':                           'toggleFocusFilledState',
-    'blur   .field':                           'toggleFocusFilledState',
-    'change .field':                           'checkForUserInput',
-    'change input[type="radio"]':              'checkForUserInput',
-    'change input[type="checkbox"]':           'checkForUserInput',
+    'focus  .field':                 'toggleFocusFilledState',
+    'blur   .field':                 'toggleFocusFilledState',
+    'change .field':                 'checkForUserInput',
+    'change input[type="radio"]':    'checkForUserInput',
+    'change input[type="checkbox"]': 'checkForUserInput',
   },
 
   initialize: function(options) {
@@ -156,7 +156,7 @@ dc.ui.FormView = Backbone.View.extend({
 
     // Don't set the model if we're just tabbing through
     if (value || this.model.get(attr)) {
-      var attrs = {};
+      var attrs   = {};
       attrs[attr] = value;
       // We set this despite validation because we want the model in sync with
       // what the user is seeing.
@@ -182,7 +182,7 @@ dc.ui.FormView = Backbone.View.extend({
   // checked state. Fill model with boolean based on `.prop('checked')` instead.
   // On view instead of model because we have to interact with the DOM.
   setCheckboxValues: function() {
-    var checkboxes    = {};
+    var checkboxes = {};
     this.$('[type="checkbox"]').each(function(i, checkbox) {
       var $checkbox = $(checkbox);
       checkboxes[$checkbox.attr('name')] = $checkbox.prop('checked');
