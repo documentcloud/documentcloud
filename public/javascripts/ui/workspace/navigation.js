@@ -42,6 +42,4 @@ dc.ui.Navigation = Backbone.View.extend({
     _.defer(dc.app.scroller.check);
   }
 
-});
-
-_.extend(dc.ui.Navigation.prototype, Backbone.Events);
+}, Backbone.Events);
