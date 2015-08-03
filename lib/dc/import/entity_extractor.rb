@@ -10,6 +10,11 @@ module DC
 
       MAX_TEXT_SIZE = CalaisFetcher::MAX_TEXT_SIZE
 
+      def initialize
+        super
+        @entities = {}
+      end
+
       # Public API: Pass in a document, either with full_text or rdf already
       # attached.
       def extract(document, text)
@@ -21,7 +26,6 @@ module DC
           extract_entities(document, chunk, i)
         end
         document.entities = @entities.values
-        byebug
         document.save
       end
 
