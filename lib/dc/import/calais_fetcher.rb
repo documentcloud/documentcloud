@@ -37,16 +37,19 @@ module DC
         # equivalent length before uploading.
         text.gsub!(/<\/?[^>]*>/) {|m| ' ' * m.length }
         retry_calais_errors do
-          client = Calais::Client.new(
-            :content                        => text,
-            :content_type                   => :raw,
-            :license_id                     => DC::SECRETS['calais_license'],
-            :allow_distribution             => false,
-            :allow_search                   => false,
-            :submitter                      => "DocumentCloud (#{Rails.env})",
-            :omit_outputting_original_text  => true
-          )
-          Calais::Response.new(client.enlighten)
+          client = OpenCalais::Client.new(:api_key=>DC::SECRETS['calais_license_v2'])
+
+          # client = Calais::Client.new(
+          #   :content                        => text,
+          #   :content_type                   => :raw,
+          #   :license_id                     => DC::SECRETS['calais_license'],
+          #   :allow_distribution             => false,
+          #   :allow_search                   => false,
+          #   :submitter                      => "DocumentCloud (#{Rails.env})",
+          #   :omit_outputting_original_text  => true
+          # )
+          # # test = Calais::Response.new(client.enlighten)
+          client.enrich(text)
         end
       end
 
