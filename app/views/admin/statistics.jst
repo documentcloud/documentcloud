@@ -199,11 +199,6 @@
             <td></td>
           </thead>
           <tbody>
-            <tr><td colspan="4">CURRENTLY DISABLED (see 
-              <a href="https://github.com/documentcloud/documentcloud/blob/master/app/controllers/admin_controller.rb">app/controllers/admin_controller.rb</a>, 
-              <a href="https://github.com/documentcloud/documentcloud/blob/master/public/javascripts/admin/admin.js">public/javascripts/admin/admin.js</a>, and 
-              <a href="https://github.com/documentcloud/documentcloud/blob/master/app/views/admin/index.html.erb">app/views/admin/index.html.erb</a>)</td></tr>
-            
             <% _.each(stats.instances, function(instance) { %>
               <% var id = instance.aws_instance_id; %>
               <tr>

@@ -14,13 +14,16 @@ dc.ui.Admin = Backbone.View.extend({
 
   // Quick tags for the instances we know about. Purely for convenience.
   INSTANCE_TAGS : {
-    'i-0d4e9065': 'staging',
-    'i-a3466ecb': 'app01',
-    'i-4752792f': 'db01',
-    'i-c47d78b9': 'worker01',
-    'i-c41216b9': 'worker02',
-    'i-c61216bb': 'worker03',
-    'i-c01216bd': 'worker04'
+    'i-21bbe0c0': 'staging',
+    'i-5512ccb9': 'app01',
+    'i-ed2a2cbd': 'db01',
+    'i-0fa8af25': 'solr01',
+    'i-4e593ae2': 'worker01',
+    'i-4f593ae3': 'worker02',
+    'i-48593ae4': 'worker03',
+    'i-3e65c9c0': 'worker04',
+    'i-49593ae5': 'worker05',
+    'i-4a593ae6': 'worker06'
   },
 
   id        : 'statistics',
