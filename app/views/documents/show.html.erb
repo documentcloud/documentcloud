@@ -5,7 +5,7 @@
   <%= render :partial => 'common/meta_tags' %>
   <meta http-equiv="ClearType" content="true">
   <title><%= @current_document && @current_document.title %></title>
-  <%= render :partial=>'accounts/language_settings' if @edits_enabled %>
+  <%= render :partial => 'accounts/language_settings' if @edits_enabled %>
 
   <% if @current_document %>
     <link rel="alternate" type="application/json+oembed" href="<%= @current_document.oembed_url %>" title="<%= @current_document.title %>" />
