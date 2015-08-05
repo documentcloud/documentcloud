@@ -7,7 +7,7 @@ If you open a project before you begin uploading, your new documents will be add
 There are two ways to upload one or more documents:
 
 * Drag and drop the documents onto the workspace. *Note: Microsoft's new Windows 10 browser, Edge, does not support drag and drop currently.*
-* Alternately, click the "New Documents" button in the sidebar and select the files you'd like to upload. In Windows, Hold down the `ctrl` key to select more than one document. On a Mac, hold down `command`. *Note: multiple document upload is not supported in older versions of Internet Explorer.*
+* Alternately, click the "New Documents" button in the sidebar and select the files you'd like to upload. In Windows, hold down the `ctrl` key to select more than one document. On a Mac, hold down `command`. *Note: multiple document upload is not supported in older versions of Internet Explorer.*
 
 <img src="/images/help/upload_dialog.png" class="full_line" />
 
