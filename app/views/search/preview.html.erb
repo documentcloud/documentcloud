@@ -2,9 +2,8 @@
 
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <%= render :partial => 'common/meta_tags' %>
   <meta http-equiv="ClearType" content="true">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <title><%= @query %></title>
 
   <% if Rails.env.production? %>

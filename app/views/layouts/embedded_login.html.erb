@@ -2,7 +2,7 @@
 
 <html lang="en">
   <head>
-    <meta charset="UTF-8">
+    <%= render :partial => 'common/meta_tags' %>
     <title><%= @title ? @title + ' - ' : '' %>DocumentCloud</title>
     <%= include_javascripts 'embedded_login' %>
     <%= include_stylesheets 'ui','workspace','embedded_login' %>
