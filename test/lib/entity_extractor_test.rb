@@ -28,7 +28,7 @@ class EntityExtractorTest < ActiveSupport::TestCase
     VCR.use_cassette "open_calais/rdf_extract" do
       document = FactoryGirl.create(:document)
       extract_entities = DC::Import::EntityExtractor.new.extract(document, @text)
-      assert extract_entities 
+      assert extract_entities.present?
     end
   end
 end

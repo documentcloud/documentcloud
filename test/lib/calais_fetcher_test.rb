@@ -7,7 +7,7 @@ class CalaisFetcherTest < ActiveSupport::TestCase
     @text = "Fair use is a limitation and exception to the exclusive right granted by copyright law to the author of a creative work. In United States copyright law, fair use is a doctrine that permits limited use of copyrighted material without acquiring permission from the rights holders."
   end
 
-  test "Can split text over max text size" do
+  test "Can split text over text size into the correct chunks" do
     small_split = DC::Import::CalaisFetcher.new.split_text("z" * 94000)
     medium_split = DC::Import::CalaisFetcher.new.split_text("z" * 95001)
     huge_split = DC::Import::CalaisFetcher.new.split_text("z" * 200000)
