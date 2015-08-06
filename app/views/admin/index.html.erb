@@ -1,8 +1,5 @@
 <%
   @title = "Admin Dashboard"
-  @stylesheets = [:admin]
-  @javascripts = [:admin]
-  @bodyclass   = 'admin'
 %>
 
 <script type="text/javascript">
@@ -28,7 +25,7 @@
           note.document = new dc.model.Document(note.get('document'));
         });
 
-        $('#content').append((new dc.ui.Admin()).render().el);
+        $('#content').append((new dc.ui.AdminStatistics()).render().el);
       }
     });
   });

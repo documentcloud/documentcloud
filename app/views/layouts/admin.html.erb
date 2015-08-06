@@ -4,13 +4,13 @@
 <head>
   <%= render :partial => 'common/meta_tags' %>
   <title><%= @title ? @title + ' - ' : '' %>DocumentCloud</title>
-  <% css = [:ui, :workspace] + (@stylesheets || []) + [{:media => 'all'}] %>
-  <% js  = [:core] + (@javascripts || []) %>
+  <% css = [:ui, :workspace, :admin] + (@stylesheets || []) + [{:media => 'all'}] %>
+  <% js  = [:core, :admin] + (@javascripts || []) %>
   <%= include_stylesheets *css %>
   <%= include_javascripts *js %>
   <%= csrf_meta_tag %> 
 </head>
-<body class="<%= @bodyclass %>">
+<body class="admin <%= @bodyclass %>">
 
   <div id="container">
     <div id="topbar" class="header gradient_mid">
