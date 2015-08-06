@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <%= render :partial => 'common/meta_tags' %>
-  <title><%= @title ? "#{@title} - " : '' %>DocumentCloud</title>
+  <title><%= compose_title(@title) %></title>
   <%= include_stylesheets :ui_v2 %>
   <!--[if lt IE 9]>
     <%= include_stylesheets :ie_only, :embed_assets => false %>
