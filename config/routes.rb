@@ -1,6 +1,5 @@
 DC::Application.routes.draw do
 
-
   # homepage
   get '/' => 'workspace#index'
 
@@ -180,3 +179,5 @@ DC::Application.routes.draw do
   get ':controller/:action.:format'
 
 end
+
+DC::Application.load_additional_routes

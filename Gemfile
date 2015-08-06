@@ -1,4 +1,13 @@
 source 'https://rubygems.org'
+
+def you_are_documentcloud?
+  File.exists? File.join(File.dirname(__FILE__), "secrets", "documentcloud.yep")
+end
+
+if you_are_documentcloud?
+  gem "bull_proof_china_shop", :git => "git@github.com:documentcloud/bull_proof_china_shop"
+end
+
 gem 'iconv'
 gem 'rails',                  '~>4.2.0'
 gem 'curb',                   '~>0.8.4'

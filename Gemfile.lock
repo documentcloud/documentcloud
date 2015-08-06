@@ -15,6 +15,17 @@ GIT
       json (>= 1.1.3)
       nokogiri (>= 1.3.3)
 
+GIT
+  remote: git@github.com:documentcloud/bull_proof_china_shop
+  revision: 88bef6307926d57717ec1f66c2986a79e9973b53
+  specs:
+
+PATH
+  remote: ../bull_proof_china_shop
+  specs:
+    bull_proof_china_shop (0.0.1)
+      rails (~> 4.2.3)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -323,6 +334,7 @@ DEPENDENCIES
   actionpack-page_caching
   aws-sdk (~> 1.30)
   bcrypt (~> 3.1.1)
+  bull_proof_china_shop!
   byebug
   calais (~> 0.0.13)!
   closure-compiler
