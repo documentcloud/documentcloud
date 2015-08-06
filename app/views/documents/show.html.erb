@@ -2,11 +2,10 @@
 
 <html lang="en">
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <meta http-equiv="ClearType" content="true" />
-  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <%= render :partial => 'common/meta_tags' %>
+  <meta http-equiv="ClearType" content="true">
   <title><%= @current_document && @current_document.title %></title>
-  <%= render :partial=>'accounts/language_settings' if @edits_enabled %>
+  <%= render :partial => 'accounts/language_settings' if @edits_enabled %>
 
   <% if @current_document %>
     <link rel="alternate" type="application/json+oembed" href="<%= @current_document.oembed_url %>" title="<%= @current_document.title %>" />

@@ -2,8 +2,7 @@
 
 <html lang="en">
 <head>
-  <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
-  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <%= render :partial => 'common/meta_tags' %>
   <title>Please Upgrade Your Browser</title>
 
   <style>
@@ -43,9 +42,6 @@
       .browser img {
         clear: both;
       }
-    .frame {
-      margin-top: 20px;
-    }
   </style>
 </head>
 <body>
@@ -56,25 +52,21 @@
     </div>
     <div class="browsers">
       <div class="browser">
-        <a href="http://www.google.com/chrome">
-          <img src="/images/home/browsers/chrome.gif" alt="" /><br />Chrome
+        <a href="http://www.google.com/chrome/">
+          <img src="/images/home/browsers/chrome.gif" alt="Chrome logo" /><br />Chrome
         </a>
       </div>
       <div class="browser">
-        <a href="http://www.apple.com/safari/download/">
-          <img src="/images/home/browsers/safari.gif" alt="" /><br />Safari
+        <a href="http://www.apple.com/safari/">
+          <img src="/images/home/browsers/safari.gif" alt="Safari logo" /><br />Safari
         </a>
       </div>
       <div class="browser">
-        <a href="http://www.mozilla.com/en-US/firefox/firefox.html">
-          <img src="/images/home/browsers/firefox.gif" alt="" /><br />Firefox
+        <a href="https://www.mozilla.org/en-US/firefox/new/">
+          <img src="/images/home/browsers/firefox.gif" alt="Firefox logo" /><br />Firefox
         </a>
       </div>
       <br style="clear:both;" />
-    </div>
-    <div class="frame">
-      Or, if you'd like to continue using Internet Explorer 6,<br /> you can
-      <a href="http://www.google.com/chromeframe">install Google Chrome Frame</a>.
     </div>
   </div>
 

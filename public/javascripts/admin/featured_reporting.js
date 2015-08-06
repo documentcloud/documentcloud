@@ -1,4 +1,3 @@
-
 dc.ui.FeaturedReport = Backbone.View.extend({
 
   attributes: {
@@ -83,7 +82,6 @@ dc.ui.FeaturedReporting = Backbone.View.extend({
   },
 
   events: {
-    'click .toAdmin' : 'visitAdmin',
     'click .reload'  : 'reload',
     'click .add'     : 'addReport'
   },
@@ -135,9 +133,5 @@ dc.ui.FeaturedReporting = Backbone.View.extend({
   reload: function() {
     this.collection.fetch();
   },
-
-  visitAdmin: function() {
-    window.location = '/admin/';
-  }
 
 });
