@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
   <%= render :partial => 'common/meta_tags' %>
-  <title><%= @title ? @title + ' - ' : '' %>DocumentCloud</title>
+  <title><%= compose_title(@title) %></title>
   <% css = [:ui, :workspace, :admin] + (@stylesheets || []) + [{:media => 'all'}] %>
   <% js  = [:core, :admin] + (@javascripts || []) %>
   <%= include_stylesheets *css %>
