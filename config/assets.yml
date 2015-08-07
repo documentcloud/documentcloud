@@ -41,8 +41,8 @@ javascripts:
   admin:
     - public/javascripts/admin/*.js
     - app/views/admin/*.jst
-  ie_only:
-    - public/javascripts/ie/*.js
+  lt_ie_9:
+    - public/javascripts/ie/excanvas.js
   dev_only:
     - public/javascripts/dev/*.js
   home:
@@ -81,5 +81,5 @@ stylesheets:
     - public/stylesheets/pages/embedded_login.css
   viewer_editing:
     - public/stylesheets/pages/viewer_editing.css
-  ie_only:
-    - public/stylesheets/common/ie.css
+  lt_ie_9:
+    - public/stylesheets/common/lt_ie_9.css
