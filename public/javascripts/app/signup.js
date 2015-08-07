@@ -66,9 +66,9 @@ SignupFormModel = dc.ui.FormModel.extend({
 SignupFormView = dc.ui.FormView.extend({
   
   signupFormEvents: {
-    'change input[name="in_market"]': 'checkIsInMarket',
-    'change input[name="approver"]':  'checkIsApprover',
-    'submit':                         'submit',
+    'change.signupForm input[name="in_market"]': 'checkIsInMarket',
+    'change.signupForm input[name="approver"]':  'checkIsApprover',
+    'submit.signupForm':                         'submit',
   },
 
   initialize: function(options) {
