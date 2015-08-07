@@ -182,6 +182,7 @@
 .form_v2 .fieldalert {
   font-size: 0.9em;
   font-weight: 600;
+  line-height: 1.5em;
 }
 
 .form_v2 .invalid .fieldalert {
