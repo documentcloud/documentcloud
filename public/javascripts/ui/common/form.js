@@ -97,6 +97,7 @@ dc.ui.FormView = Backbone.View.extend({
   events: {
     'focus.dcForm  .field':                 'toggleFocusFilledState',
     'blur.dcForm   .field':                 'toggleFocusFilledState',
+    'keyup.dcForm  .field':                 'checkForUserInputLive',
     'change.dcForm .field':                 'checkForUserInput',
     'change.dcForm input[type="radio"]':    'checkForUserInput',
     'change.dcForm input[type="checkbox"]': 'checkForUserInput',
@@ -121,6 +122,12 @@ dc.ui.FormView = Backbone.View.extend({
       var $this = $(this);
       $this.prop('disabled', !!$this.data('disabled')).removeData('disabled');
     });
+  },
+
+  // Turn on live, keyup-triggered validation; we turn this on upon a form 
+  // submission.
+  enableLiveValidation: function() {
+    this.$('.field').data('validate-live', true);
   },
 
   displayValidationErrors: function() {
@@ -169,6 +176,9 @@ dc.ui.FormView = Backbone.View.extend({
 
     this.toggleFocusFilledState(event);
 
+    // For `checkForUserInputLive()`
+    $target.data('validate-live', true);
+
     // Don't set the model if we're just tabbing through
     if (value || this.model.get(attr)) {
       var attrs   = {};
@@ -190,6 +200,15 @@ dc.ui.FormView = Backbone.View.extend({
           $fieldwrap.removeClass('valid');
         }
       }
+    }
+  },
+
+  // We want to revalidate input fields as each key is pressed, but only after 
+  // the first time through the field, because otherwise it's annoying.
+  checkForUserInputLive: function(event) {
+    var $target = this.$(event.target);
+    if ($target.data('validate-live')) {
+      this.checkForUserInput(event);
     }
   },
 

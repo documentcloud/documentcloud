@@ -95,6 +95,7 @@ SignupFormView = dc.ui.FormView.extend({
     if (!saveForm) {
       this.enableForm();
       this.displayValidationErrors();
+      this.enableLiveValidation();
       this.$('.invalid').scrollTo();
     }
   },
