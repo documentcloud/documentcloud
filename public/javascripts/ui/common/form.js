@@ -1,6 +1,6 @@
 dc.ui.FormModel = Backbone.Model.extend({
 
-  VALIDATORS: {
+  _VALIDATORS: {
     isntBlank: function(val) {
       var valid = Backbone.$.trim(val) != '';
       return valid || "We need this info.";
@@ -9,21 +9,6 @@ dc.ui.FormModel = Backbone.Model.extend({
       var pattern = dc.app.validator.email;
       var valid   = pattern.test(val);
       return valid || "We need a valid email.";
-    },
-    isInteger: function(val) {
-      var pattern = /^[0-9]+$/;
-      var valid   = pattern.test(val);
-      return valid || "Enter numbers only.";
-    },
-    isCurrency: function(val) {
-      var pattern = /^[0-9]+(\.[0-9]{1,2})?$/;
-      var valid   = pattern.test(val);
-      return valid || "Enter a valid dollar amount.";
-    },
-    isMMYY: function(val) {
-      var pattern = /^[0-9]{2}\/[0-9]{2}$/;
-      var valid   = pattern.test(val);
-      return valid || "Enter date as MM/YY.";
     },
     isChosen: function(val) {
       var valid = !!val;
@@ -47,7 +32,7 @@ dc.ui.FormModel = Backbone.Model.extend({
   //     'conditions': { 'married': 1 },
   //  }],
   // TODO: Rewrite these to be properly declarative and take function conditions
-  VALIDATIONS: {},
+  _VALIDATIONS: {},
 
   initialize: function() {},
 
@@ -61,13 +46,17 @@ dc.ui.FormModel = Backbone.Model.extend({
   validate: function(attrs, options) {
     var errors = {};
 
-    var validations = options.only ? _.pick(this.VALIDATIONS, options.only) : this.VALIDATIONS;
+    // Combine original class validations/validators with instance ones
+    var _validations = _.extend({}, this._VALIDATIONS, this.VALIDATIONS);
+    var _validators  = _.extend({}, this._VALIDATORS,  this.VALIDATORS);
+
+    var validations = options.only ? _.pick(_validations, options.only) : _validations;
     _.each(validations, function(validators, attr) {
       var value = options.only ? attrs[attr] : this.get(attr);
       validators = _.isArray(validators) ? validators : ([]).push(validators);
       _.each(validators, function(validator) {
         if (typeof validator === 'string') {
-          var valid = this.VALIDATORS[validator](value);
+          var valid = _validators[validator](value);
           if (valid !== true) { (errors[attr] = (errors[attr] || [])).push(valid); }
         } else {
           var conditions_passed = true;
@@ -77,7 +66,7 @@ dc.ui.FormModel = Backbone.Model.extend({
           if (conditions_passed) {
             var conditional_validators = _.isArray(validator['validators']) ? validator['validators'] : ([]).push(validator['validators']);
             _.each(conditional_validators, function(conditional_validator) {
-              var valid = this.VALIDATORS[conditional_validator](value);
+              var valid = _validators[conditional_validator](value);
               if (valid !== true) { (errors[attr] = (errors[attr] || [])).push(valid); }
             }, this);
           }
