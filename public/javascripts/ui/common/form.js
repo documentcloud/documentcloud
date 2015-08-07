@@ -95,11 +95,11 @@ dc.ui.FormModel = Backbone.Model.extend({
 dc.ui.FormView = Backbone.View.extend({
 
   events: {
-    'focus  .field':                 'toggleFocusFilledState',
-    'blur   .field':                 'toggleFocusFilledState',
-    'change .field':                 'checkForUserInput',
-    'change input[type="radio"]':    'checkForUserInput',
-    'change input[type="checkbox"]': 'checkForUserInput',
+    'focus.dcForm  .field':                 'toggleFocusFilledState',
+    'blur.dcForm   .field':                 'toggleFocusFilledState',
+    'change.dcForm .field':                 'checkForUserInput',
+    'change.dcForm input[type="radio"]':    'checkForUserInput',
+    'change.dcForm input[type="checkbox"]': 'checkForUserInput',
   },
 
   initialize: function(options) {
