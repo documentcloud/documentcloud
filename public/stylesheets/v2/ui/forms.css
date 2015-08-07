@@ -270,8 +270,8 @@
 	border-bottom: 2px solid rgb(125, 127, 127);
 	font: 400 1em/1.2em Gotham, 'Proxima Nova', 'Avenir Next', 'Helvetica Neue', Helvetica, Arial, sans-serif !important;
 	-webkit-appearance: none; /* for box shadows to show on iOS */
-	-webkit-transition: box-shadow 0.25s, border-color 0.25s;
-	transition: box-shadow 0.25s, border-color 0.25s;
+	-webkit-transition: border-color 0.25s;
+	transition: border-color 0.25s;
 }
 .form_v2 select.field {
   font-size: 1em;
