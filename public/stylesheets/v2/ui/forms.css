@@ -401,6 +401,10 @@
   padding: 0.8em 0.4em;
   height: 100%;
   top: 0;
+  content: ''; /* Must exist so opacity transition will take effect. */
+  opacity: 0;
+  -webkit-transition: opacity 0.25s ease;
+          transition: opacity 0.25s ease;
 }
 
 .form_v2 .fieldwrap.inline:after {
@@ -411,11 +415,13 @@
 .form_v2 .fieldwrap.valid:after {
   content: "✓";
   color: #87d37c;
+  opacity: 1;
 }
 
 .form_v2 .fieldwrap.invalid:after {
   content: "✘";
   color: #df5454;
+  opacity: 1;
 }
 
 .form_v2 .togglewrap {
