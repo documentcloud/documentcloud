@@ -180,4 +180,4 @@ DC::Application.routes.draw do
 
 end
 
-DC::Application.load_additional_routes
+Rails.application.load_additional_routes
