@@ -691,9 +691,9 @@ class Document < ActiveRecord::Base
     self.save!
   end
 
-  def reprocess_entities
+  def process_entities
     RestClient.post(DC::CONFIG['cloud_crowd_server'] + '/jobs', {:job => {
-      'action'  => 'reprocess_entities',
+      'action'  => 'process_entities',
       'inputs'  => [id]
     }.to_json})
   end
