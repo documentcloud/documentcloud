@@ -127,7 +127,6 @@ class DocumentImport < DocumentAction
 
     document.page_count = @pages.length
     Page.refresh_page_map(document)
-    EntityDate.reset(document)
     document.save!
     pages = document.reload.pages.order(:page_number)
     Sunspot.index pages
