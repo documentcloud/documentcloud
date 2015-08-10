@@ -72,7 +72,7 @@ class DocumentImport < DocumentAction
 
   def process_entities
     if ! options['secure'] && DC::Language::SUPPORTED.include?(document.language)
-      document.reprocess_entities
+      document.process_entities
     end
   end
 
