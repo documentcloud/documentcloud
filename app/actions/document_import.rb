@@ -72,8 +72,7 @@ class DocumentImport < DocumentAction
 
   def process_entities
     if ! options['secure'] && DC::Language::SUPPORTED.include?(document.language)
-      text = pages.map(&:text).join('')
-      DC::Import::EntityExtractor.new.extract(document, text)
+      document.reprocess_entities
     end
   end
 
