@@ -3,8 +3,8 @@
 %>
 
 (function() {
-  // If the viewer is already loaded, don't repeat the process.
-  if (window.DV && window.DV.loaded) return;
+  /* If the viewer is already loaded, don't repeat the process. */
+  if (window.DV) { if (window.DV.loaded) { return; } }
 
   window.DV = window.DV || {};
   window.DV.recordHit = "<%= DC.server_root(:agnostic=>true) %>/pixel.gif";
@@ -21,16 +21,16 @@
 
   /*@cc_on
   /*@if (@_jscript_version < 5.8)
-    loadCSS('<%= asset_root %>/viewer/viewer.css');
+    loadCSS("<%= asset_root %>/viewer/viewer.css");
   @else @*/
-    loadCSS('<%= asset_root %>/viewer/viewer-datauri.css');
+    loadCSS("<%= asset_root %>/viewer/viewer-datauri.css");
   /*@end
   @*/
-  loadCSS('<%= asset_root %>/viewer/printviewer.css', 'print');
+  loadCSS("<%= asset_root %>/viewer/printviewer.css", 'print');
 
-  // Record the fact that the viewer is loaded.
+  /* Record the fact that the viewer is loaded. */
   DV.loaded = true;
 
-  // Request the viewer JavaScript.
-  document.write('<script type="text/javascript" src="<%= asset_root %>/viewer/viewer.js"></script>');
+  /* Request the viewer JavaScript. */
+  document.write('<script type="text/javascript" src="<%= asset_root %>/viewer/viewer.js"></scr' + 'ipt>');
 })();

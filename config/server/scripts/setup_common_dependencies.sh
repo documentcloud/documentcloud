@@ -12,24 +12,34 @@ set -e
 test $USER = 'root' || { echo run this as root >&2; exit 1; }
 # but the user we actually care about is the default ubuntu user.
 USERNAME=ubuntu
+DISTRO_NAME=trusty
 
 #################################
 # INSTALL SYSTEM DEPENDENCIES
 #################################
 
+# Make sure that apt-get doesn't attempt to load up any guis.
+DEBIAN_FRONTEND=noninteractive
+
 # Always make sure that we have up to date postgres packages by adding their apt repository.
-echo "deb http://apt.postgresql.org/pub/repos/apt/ trusty-pgdg main" > /etc/apt/sources.list.d/pgdg.list
+echo "deb http://apt.postgresql.org/pub/repos/apt/ $DISTRO_NAME-pgdg main" > /etc/apt/sources.list.d/pgdg.list
 
 # and make sure that we have the key to verify their repository
 wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add -
+
+NODE_VERSION=0.12
+add-apt-repository -y -r ppa:chris-lea/node.js
+curl -s https://deb.nodesource.com/gpgkey/nodesource.gpg.key | apt-key add -
+echo "deb https://deb.nodesource.com/node_$NODE_VERSION $DISTRO_NAME main" > /etc/apt/sources.list.d/nodesource.list
+echo "deb-src https://deb.nodesource.com/node_$NODE_VERSION $DISTRO_NAME main" >> /etc/apt/sources.list.d/nodesource.list
+
 apt-get update
 
 # List all the common system dependencies that all of our machines need.
 PACKAGES='
-postgresql-client-9.3
+postgresql-client-9.4
 libpq-dev
 git-core
-postfix
 sqlite3
 libsqlite3-dev
 libcurl4-openssl-dev
@@ -39,7 +49,7 @@ xpdf
 libreoffice
 libreoffice-common
 libjpeg-dev
-libtiff4-dev
+libtiff5-dev
 libpng12-dev
 libleptonica-dev
 tesseract-ocr-dev
@@ -47,7 +57,11 @@ tesseract-ocr
 libpcre3-dev
 sysstat
 libbz2-dev
+libfreetype6-dev
+libfreeimage-dev
 make
+ntp
+nodejs
 '
 
 RUBY_DEPENDENCIES='
@@ -67,26 +81,25 @@ ri
 ruby-dev
 '
 
-TESSERACT_LANGUAGES='
-tesseract-ocr-osd
-tesseract-ocr-eng
-tesseract-ocr-chi-sim
-tesseract-ocr-chi-tra
-tesseract-ocr-fra
-tesseract-ocr-dan
-tesseract-ocr-deu
-tesseract-ocr-jpn
-tesseract-ocr-kor
-tesseract-ocr-nld
-tesseract-ocr-nor
-tesseract-ocr-rus
-tesseract-ocr-spa
-tesseract-ocr-swe
-tesseract-ocr-ukr
+TESSERACT_LANGUAGES='tesseract-ocr-*'
+
+# Fonts to support Chinese, Japanese, and Korean character sets
+FONT_PACKAGES='
+ttf-wqy-microhei
+ttf-wqy-zenhei
+ttf-kochi-gothic
+ttf-kochi-mincho
+fonts-nanum
+ttf-baekmuk
 '
 
 # install all system dependencies
-echo $PACKAGES $TESSERACT_LANGUAGES $RUBY_DEPENDENCIES | xargs apt-get install -y
+echo $PACKAGES $TESSERACT_LANGUAGES $RUBY_DEPENDENCIES $FONT_PACKAGES | xargs apt-get install -y
+
+# Install pdfium https://github.com/documentcloud/pdfshaver
+# TODO Should we allow user to specifiy pdfium version?
+wget 'http://s3.documentcloud.org.s3.amazonaws.com/pdfium/libpdfium-dev_0.1%2Bgit20150311-1_amd64.deb'
+dpkg -i libpdfium-dev_0.1+git20150311-1_amd64.deb
 
 #################################
 # INSTALL RUBY SWITCHER
@@ -99,8 +112,8 @@ installer_tmp="/home/$USERNAME/downloads/"
 mkdir -p $installer_tmp
 cd $installer_tmp
 
-ruby_install_version='0.4.3'
-chruby_version='0.3.8'
+ruby_install_version='0.5.0'
+chruby_version='0.3.9'
 
 wget -O ruby-install-$ruby_install_version.tar.gz https://github.com/postmodern/ruby-install/archive/v$ruby_install_version.tar.gz
 tar -xzvf ruby-install-$ruby_install_version.tar.gz
@@ -112,11 +125,11 @@ tar -xzvf chruby-$chruby_version.tar.gz
 # # Import Postmodern's key.
 # wget https://raw.github.com/postmodern/postmodern.github.io/master/postmodern.asc
 # gpg --import postmodern.asc
-# 
+#
 # # Verify that ruby-install was signed by postmodern
 # wget https://raw.github.com/postmodern/ruby-install/master/pkg/ruby-install-$ruby_install_version.tar.gz.asc
 # gpg --verify ruby-install-$ruby_install_version.tar.gz.asc ruby-install-$ruby_install_version.tar.gz
-# 
+#
 # # Verify that chruby was signed by postmodern
 # wget https://raw.github.com/postmodern/chruby/master/pkg/chruby-$chruby_version.tar.gz.asc
 # gpg --verify chruby-$chruby_version.tar.gz.asc chruby-$chruby_version.tar.gz
@@ -128,7 +141,7 @@ cd "$installer_tmp/chruby-$chruby_version/"
 make install
 
 # Ensure that chruby is available to login shells and that
-# the current stable version of ruby is set to 
+# the current stable version of ruby is set to
 echo 'if [ -n "$BASH_VERSION" ] || [ -n "$ZSH_VERSION" ]; then
   source /usr/local/share/chruby/chruby.sh
   source /usr/local/share/chruby/auto.sh
@@ -136,7 +149,7 @@ echo 'if [ -n "$BASH_VERSION" ] || [ -n "$ZSH_VERSION" ]; then
 fi' > /etc/profile.d/chruby.sh
 
 # Install the current stable version of ruby.
-ruby-install ruby stable
+ruby-install ruby
 
 # turn off rdoc/ri generation for gems
 echo 'gem: --no-document' > /home/$USERNAME/.gemrc
@@ -147,23 +160,16 @@ chown $USERNAME.$USERNAME /home/$USERNAME/.gemrc
 # SYSTEM CONFIG
 #################################
 
+# CS 7.6.15 disabling for development purposes
 # disable ssh dns to avoid long pause before login
-grep -q '^UseDNS no' /etc/ssh/sshd_config || echo 'UseDNS no' >> /etc/ssh/sshd_config
-service ssh reload
+#grep -q '^UseDNS no' /etc/ssh/sshd_config || echo 'UseDNS no' >> /etc/ssh/sshd_config
+#service ssh reload
 
 # postfix configuration
-perl -pi -e 's/smtpd_use_tls=yes/smtpd_use_tls=no/' /etc/postfix/main.cf
-
-############################################
-# Install DocumentCloud source dependencies
-############################################
+#perl -pi -e 's/smtpd_use_tls=yes/smtpd_use_tls=no/' /etc/postfix/main.cf
 
 # load chruby (and thereby the current stable ruby)
 source /etc/profile.d/chruby.sh
-
-cd /home/$USERNAME/documentcloud
-gem install bundler
-bundle install
 
 ## Cleanup after ourselves
 rm -rf "$installer_tmp/ruby-install-$ruby_install_version/"
@@ -184,4 +190,3 @@ EOF
 uname -a | tee -a /etc/motd
 
 echo COMMON DEPENDENCY SETUP COMPLETED SUCCESSFULLY
-

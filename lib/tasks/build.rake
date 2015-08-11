@@ -69,29 +69,31 @@ namespace :build do
     FileUtils.rm_r('build') if File.exists?('build')
 
   end
+  
+  task :note_embed do
+    FileUtils.cp_r(Dir.glob("public/javascripts/vendor/documentcloud-notes/dist/*"), "public/note_embed")
+  end
 
-  [:search_embed, :note_embed].each do |embed|
-    task embed do
-      FileUtils.rm_r('build') if File.exists?('build')
-      sh "jammit -f -o build -c config/#{embed}_assets.yml"
-      sh "rm build/*.gz"
+  task :search_embed do
+    FileUtils.rm_r('build') if File.exists?('build')
+    sh "jammit -f -o build -c config/search_embed_assets.yml"
+    sh "rm build/*.gz"
 
-      Dir['build/*.css'].each do |css_file|
-        File.open(css_file, 'r+') do |file|
-          css = file.read
-          css.gsub!("/images/#{embed}", 'images')
-          file.rewind
-          file.write(css)
-          file.truncate(css.length)
-        end
+    Dir['build/*.css'].each do |css_file|
+      File.open(css_file, 'r+') do |file|
+        css = file.read
+        css.gsub!("/images/search_embed", 'images')
+        file.rewind
+        file.write(css)
+        file.truncate(css.length)
       end
-      FileUtils.cp_r("public/images/#{embed}", 'build/images') if File.exists?("public/images/#{embed}")
-
-      FileUtils.rm_r("public/#{embed}") if File.exists?("public/#{embed}")
-      FileUtils.cp_r('build', "public/#{embed}")
-
-      FileUtils.rm_r('build') if File.exists?('build')
     end
+    FileUtils.cp_r("public/images/search_embed", 'build/images') if File.exists?("public/images/search_embed")
+
+    FileUtils.rm_r("public/search_embed") if File.exists?("public/search_embed")
+    FileUtils.cp_r('build', "public/search_embed")
+
+    FileUtils.rm_r('build') if File.exists?('build')
   end
 
 end

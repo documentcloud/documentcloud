@@ -1,0 +1,14 @@
+# This is a standard ActiveRecord database.yml file. You can configure it
+# to use any database that ActiveRecord supports.
+
+<% secrets = YAML.load_file('secrets/secrets.yml')[ENV['RAILS_ENV']] %>
+
+:adapter:  postgresql
+:encoding: unicode
+:schema_search_path: public
+:pool:     5
+:username: <%= secrets['username'] %>
+:password: <%= secrets['db_password'] %>
+:allow_concurrency: true
+:host:     <%= secrets['db_host'] %>
+:database: dcloud_crowd_production

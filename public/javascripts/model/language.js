@@ -2,15 +2,26 @@
 
 dc.language = {
   NAMES: {
-    'eng': 'English',
-    'spa': 'Español/Spanish',
-    'fra': 'Français/French',
-    'deu': 'Duetch/German',
-    'dan': 'Danish',
-    'rus': 'Russian',
-    'ukr': 'Ukrainian'
+    'ara' : 'Arabic',
+    'zho' : 'Chinese (Simplified)',
+    'tra' : 'Chinese (Traditional)', // this is not a real ISO-639-2 code, see comments on language.rb
+    'dan' : 'Danish',
+    'eng' : 'English',
+    'fra' : 'French',
+    'deu' : 'German',
+    'hun' : 'Hungarian',
+    'ind' : 'Indonesian',
+    'ita' : 'Italian',
+    'jpn' : 'Japanese',
+    'kor' : 'Korean',
+    'nor' : 'Norwegian',
+    'por' : 'Portuguese',
+    'spa' : 'Spanish',
+    'swe' : 'Swedish',
+    'rus' : 'Russian',
+    'ukr' : 'Ukrainian'
   },
-  USER: ['eng','spa','rus','ukr']
+  USER: ['dan','eng','rus','spa','ukr']
 };
 
 dc.language.SUPPORTED = _.keys(dc.language.NAMES);

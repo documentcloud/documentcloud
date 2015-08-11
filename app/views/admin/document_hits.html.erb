@@ -1,0 +1,46 @@
+<%
+  @title = "Admin Dashboard :: Document Hits"
+  @stylesheets = [:admin]
+  @javascripts = [:admin]
+  @bodyclass   = 'doc-hits'
+%>
+<script>
+ var submitForm=function(){
+     var submitbtn = $("#submitbtn");
+     submitbtn.fadeOut();
+     _.delay(function(){
+         submitbtn.fadeIn();
+     },5000);
+     $('#full_screen_form form').submit();
+     $('#organization_slug').val('');
+ };
+</script>
+<div id="full_screen_form" class="full_page_background">
+  <form action="/admin/download_document_hits" method="POST">
+    <%= token_tag %>
+    <h1>Download document hits for Organization</h1>
+    <% if flash[:error] %>
+      <div class="form_error login_error">
+        <span>
+          <%= flash[:error] %>
+        </span>
+      </div>
+    <% end %>
+    <div class="line">
+      <div class="text_input">
+        <div class="background">
+          <div class="inner">
+            <input type="text" name="slug" id="organization_slug" />
+          </div>
+        </div>
+      </div>
+      <label for="organization_slug">
+        Organization Slug:<br /><span class="example">ex: daily-tribune</span>
+      </label>
+    </div>
+    <div class="line">
+      <div class="minibutton" id="submitbtn" onclick="submitForm()">Download</div>
+    </div>
+
+  </form>
+</div>

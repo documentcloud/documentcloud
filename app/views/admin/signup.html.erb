@@ -68,7 +68,7 @@
       <div class="text_input">
         <div class="background">
           <div class="inner">
-            <input type="text" name="account[email]" id="account_email" value="<%= @params[:account][:email] %>" />
+            <input type="text" name="account[email]" id="account_email" value="<%= @params[:account][:email] %>" <%="readonly" if @account && !@account.errors.any? %> />
           </div>
         </div>
       </div>
@@ -76,6 +76,18 @@
         Admin Email Address:<br /><span class="example">Email of the account owner</span>
       </label>
     </div>
+
+  <% if @account && !@account.errors.any? %>
+    <div class="line">
+      <p class="row-message">Account exists and is currently linked to  &ldquo;<%= @account.organization.name %>&rdquo;.</p>
+      <div class="input">
+        <input type="checkbox" name="move_account" id="move_account" value="t"/>
+      </div>
+      <label for="move_account">
+        Switch Organization:
+      </label>
+    </div>
+  <% else %>
     <div class="line">
       <div class="text_input left_half">
         <div class="background">
@@ -95,6 +107,7 @@
         Full Name:<br /><span class="example">First name, last name</span>
       </label>
     </div>
+  <% end %>
     <div class="line license">
     This form is intended as an admin tool. All users, especially those who plan to upload documents to DocumentCloud should review our terms of service, which can be found at <a href="http://www.documentcloud.org/terms">http://www.documentcloud.org/terms</a>.
     </div>

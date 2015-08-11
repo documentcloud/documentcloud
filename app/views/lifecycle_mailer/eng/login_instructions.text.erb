@@ -1,0 +1,25 @@
+<%= @account.full_name %>,
+
+<% if @admin -%>
+Hello! <%= @admin.full_name %> has added you to <%= @organization.name %>'s DocumentCloud account.
+<% else -%>
+Hello! A DocumentCloud account has been created for you and <%= @organization.name %>.
+<% end -%>
+
+Set your password and get started at:
+<%= DC.server_root(:force_ssl => true) %>/accounts/enable/<%= @account.security_key.key %>
+
+Once you've set your password, you can login at <%= DC.server_root(:ssl => false) %>/login using <%= @account.email %> as your username. Information about using the workspace, creating accounts, searching the repository and more is available on the help tab.
+
+We're always adding features and listening to your requests. To join the conversation:
+
+-- Sign up for DocumentCloud tips and important announcements via our newsletter: http://eepurl.com/bs89Ln
+-- Follow us on Twitter: https://twitter.com/documentcloud
+-- Send us feedback and feature requests: http://documentcloud.uservoice.com
+-- Check our blog for the latest on DocumentCloud's development: http://blog.documentcloud.org
+
+Finally, we love hearing about how DocumentCloud is helping your reporting, so please tell us if you run a story that DocumentCloud played a role in!
+
+Enjoy,
+
+The DocumentCloud Team

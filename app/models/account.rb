@@ -23,7 +23,7 @@ class Account < ActiveRecord::Base
     :presence   =>true,
     :uniqueness =>{ :case_sensitive => false },
     :format     =>{ :with => DC::Validators::EMAIL },
-    :if         => :has_memberships?
+    :if         => Proc.new{ |user| user.has_memberships? || user.email.present? }
 
   validate :validate_identity_is_unique
   validates :language, :inclusion=>{ :in => DC::Language::USER,
@@ -71,7 +71,7 @@ class Account < ActiveRecord::Base
   # Retrieve the names of the contributors for the result set of documents.
   def self.names_for_documents(docs)
     ids = docs.map {|doc| doc.account_id }.uniq
-    self.where({:id => ids}).select('id, first_name, last_name').inject({}) do |hash, acc| 
+    self.where({:id => ids}).select('id, first_name, last_name').inject({}) do |hash, acc|
       hash[acc.id] = acc.full_name; hash
     end
   end
@@ -257,9 +257,9 @@ class Account < ActiveRecord::Base
 
   # When an account is created by a third party, send an email with a secure
   # key to set the password.
-  def send_login_instructions(admin=nil)
+  def send_login_instructions(organization=self.organization, admin=nil)
     ensure_security_key!
-    LifecycleMailer.login_instructions(self, admin).deliver
+    LifecycleMailer.login_instructions(self, organization, admin).deliver
   end
 
   def ensure_security_key!
@@ -275,12 +275,15 @@ class Account < ActiveRecord::Base
     LifecycleMailer.reviewer_instructions(documents, inviter_account, self, message, key).deliver
   end
 
-  # Upgrading a reviewer account to a newsroom account also moves their                 #
-  # notes over to the (potentially different) organization.                             # Move to Organization
-  def upgrade_reviewer_to_real(organization, role)                                      #
-    update_attributes :organization => organization, :role => role                      #
-    Annotation.update_all("organization_id = #{organization.id}", "account_id = #{id}") #
-  end                                                                                   #
+  # Upgrades a reviewer account to a newsroom account.
+  # Switches their membership to the given role and makes sure the organization is correct
+  def upgrade_reviewer_to_real(organization, role)
+    # First attempt to find the membership for the given organization,
+    # or any membership that the account is a reviewer of
+    membership = memberships.where({:role=>Account::REVIEWER, :organization=>organization }).first ||
+                     memberships.where({:role=>Account::REVIEWER}).first
+    membership.update_attributes({:role=>role, :organization_id=>organization.id })
+  end
 
   # When a password reset request is made, send an email with a secure key to
   # reset the password.
@@ -332,6 +335,15 @@ class Account < ActiveRecord::Base
     end
   end
 
+  # Set the default membership.  Will mark the given membership as the default
+  # and the other memberships (if any) as non-default
+  def set_default_membership(default_membership)
+    raise "Membership must belong to account!" unless default_membership.account_id==self.id
+    self.memberships.each do | membership |
+      membership.update_attributes({ :default => (membership.id == default_membership.id) })
+    end
+  end
+
   def record_identity_attributes( identity )
     current_identities = ( self.identities ||= {} )
     current_identities[ identity['provider'] ] = identity['uid']
@@ -376,7 +388,7 @@ class Account < ActiveRecord::Base
       attrs['public_documents'] = Document.unrestricted.where(:account_id=>id).count
       attrs['private_documents'] = Document.restricted.where(:account_id => id).count
     end
-    
+
     # all of the below should be rendered obsolete and removed.
     if ( membership = options[:membership] || memberships.default.first )
       attrs['organization_id'] = membership.organization_id
@@ -386,7 +398,7 @@ class Account < ActiveRecord::Base
       attrs['organization_name'] = membership.organization.name if membership
       attrs['organizations']     = organizations.map(&:canonical)
     end
-    
+
     attrs
   end
 

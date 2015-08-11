@@ -51,7 +51,7 @@ class AccountsController < ApplicationController
         end
         redirect_to '/home'
       end
-      format.json do 
+      format.json do
         json current_organization.accounts.active
       end
     end
@@ -80,9 +80,10 @@ class AccountsController < ApplicationController
         :document_language=>current_organization.document_language
     })
     account = Account.lookup(account_attributes[:email]) || Account.create(account_attributes)
-
+    return json({:errors => account.errors.full_messages}, 409) unless account.valid?
     # Find role for account in organization if it exists.
     membership_attributes = pick(params, :role, :concealed)
+    return json({:errors => "Role is required" }, 400) unless Account::ROLES.include? membership_attributes[:role]
     membership = current_organization.role_of(account)
 
     # Create a membership if account has no existing role
@@ -97,12 +98,10 @@ class AccountsController < ApplicationController
       return json({:errors => ['That email address is already part of this organization']}, 409)
     end
 
-    if account.valid?
-      if account.pending?
-        account.send_login_instructions(current_account)
-      else
-        LifecycleMailer.membership_notification(account, current_organization, current_account).deliver
-      end
+    if account.pending?
+      account.send_login_instructions(current_organization, current_account)
+    else
+      LifecycleMailer.membership_notification(account, current_organization, current_account).deliver
     end
     json account.canonical( :membership=>membership )
   end
@@ -131,7 +130,7 @@ class AccountsController < ApplicationController
   def resend_welcome
     return forbidden unless current_account.admin?
     account = current_organization.accounts.find(params[:id])
-    LifecycleMailer.login_instructions( account, current_account ).deliver
+    LifecycleMailer.login_instructions( account, current_organization, current_account ).deliver
     json nil
   end
 

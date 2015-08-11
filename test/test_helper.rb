@@ -2,6 +2,7 @@ ENV["RAILS_ENV"] = "test"
 require File.expand_path(File.dirname(__FILE__) + "/../config/environment")
 require 'rails/test_help'
 require 'sunspot_matchers/test_helper'
+require "minitest/autorun"
 
 PROCESSING_JOBS = []
 
@@ -66,7 +67,7 @@ class ActiveSupport::TestCase
   let (:doc) { documents(:tv_manual) }
   let (:secret_doc){ documents(:top_secret)}
   let (:louis){ accounts(:louis) }
-  let (:tribune){ louis.organization }
+  let (:tribune){ organizations(:tribune) }
   let (:joe) { accounts(:reporter_joe) }
 
   # Add more helper methods to be used by all tests here...

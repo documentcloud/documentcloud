@@ -2,15 +2,15 @@
 
 We're always (with your help) discovering new and different ways to break our document importer. That is a good thing: it is one of the ways you're helping us make DocumentCloud better. In some cases, resolving a document import issue is as simple as opening the document in Adobe Acrobat or Apple Preview, optimizing it for web use and re-saving it.
 
-In Preview, open the PDF and choose "File > Print". When the dialog opens, click on the "PDF" menu in the lower-left hand corner, and use "Save as PDF".
+In Preview, open the PDF and choose "File > Print." When the dialog opens, click on the "PDF" menu in the lower-left hand corner, and use "Save as PDF."
 
-In Acrobat, open the PDF and choose "Advanced > PDF Optimizer". You'll see a window with a list of categories of optimizations on the left. Click through the list, and make sure that all of the possible optimizations are checked. When you're ready, click "Ok" to save the PDF.
+In Acrobat, open the PDF and choose "Advanced > PDF Optimizer." You'll see a window with a list of categories of optimizations on the left. Click through the list, and make sure that all of the possible optimizations are checked. When you're ready, click "OK" to save the PDF.
 
 <img src="/images/help/pdf_optimizer.jpg" class="full_line" />
 
 ## Noise in Documents
 
-Ever so very occasionally, we find that documents containing government redactions will look like they're covered in a dark gray fog of pixels. [GraphicsMagick][], which we use to break out images of each page in your document, seems to sometimes smear these redactions across the page. Recent updates to [Ghostscript][] seem to have resolved the problem for the most part, but if you're still seeing noise in documents, we've found that re-saving a document in Acrobat or Preview can fix the problem. If that doesn't work, [let us know][] and we'll help you figure it out.
+Occasionally, documents containing government redactions will look like they're covered in a dark gray fog of pixels. [GraphicsMagick][], which we use to break out images of each page in your document, sometimes smears these redactions across the page. Recent updates to [Ghostscript][] seem to have resolved the problem for the most part, but if you're still seeing noise in documents, we've found that re-saving a document in Acrobat or Preview can fix the problem. If that doesn't work, [let us know][] and we'll help you figure it out.
 
 ## No Text At All
 
@@ -22,9 +22,9 @@ It is not unheard of for government agencies to release public documents that ma
 
 ## <span id="more">More Tools</span>
 
-Don't have access to Acrobat or Preview? There's a [world of great PDF editors][] out there (and no shortage of not so great ones) but here are some we've tested out:
+Don't have access to Acrobat or Preview? There's a [world of great PDF editors][] out there (and no shortage of not so great ones) but here are some we've tested:
 
-  * **[pdftk][]**: If you're comfortable (or would like to get comfortable) working with command line tools [pdftk][] is a great resource. You can burst one document into many, merge many into one, rotate pages, and more.
+  * **[pdftk][]**: If you're comfortable (or would like to get comfortable) working with command line tools, [pdftk][] is a great resource. You can burst one document into many, merge many into one, rotate pages, and more.
 
   * **[qpdf][]**: Another excellent command line tool, [qpdf][] will, among other things, decrypt locked PDFs and optimize them for the web (using [linearization][]).
 

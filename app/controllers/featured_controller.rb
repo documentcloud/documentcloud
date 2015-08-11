@@ -1,4 +1,6 @@
 class FeaturedController < ApplicationController
+  
+  before_action :secure_only
 
   before_action :admin_required, :except => [:index]
 
@@ -30,7 +32,9 @@ class FeaturedController < ApplicationController
 
   def present_order
     params[:order].each_with_index do | id, order |
-      FeaturedReport.update_all( {:present_order=>order}, {:id=>id} )
+      report = FeaturedReport.find(id)
+      report.present_order = order
+      report.save!
     end
     render :nothing=>true
   end

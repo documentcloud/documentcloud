@@ -8,7 +8,7 @@ class BackupDatabase < CloudCrowd::Action
       @host     = config['host'] ? "-h #{config['host']}" : ''
       @username = config['username']
       @pass     = config['password']
-      Dir.mktmpdir do |temp_dir|
+      Dir.mktmpdir(nil, DC::CONFIG["large_file_storage"]) do |temp_dir|
         @temp_dir = temp_dir
         backup DC::MAIN_DB['database']
         backup DC::ANALYTICS_DB['database']
@@ -26,7 +26,7 @@ class BackupDatabase < CloudCrowd::Action
   def backup(db_name)
     dump = File.join(@temp_dir, "#{db_name}.dump")
     system "PGPASSWORD=\"#{@pass}\" pg_dump -U #{@username} #{@host} -Fc #{db_name} > #{dump}"
-    DC::Store::AssetStore.new.save_database_backup(db_name, dump)
+    DC::Store::AssetStore.new.save_backup(dump, "#{db_name}/#{Date.today}.dump")
   end
 
 end

@@ -32,7 +32,7 @@ class ImportControllerTest < ActionController::TestCase
   end
 
   def test_update_access
-    get :update_access
+    get :update_access, {:job=>{'id'=>1234}.to_json}
     assert_response 201
   end
 

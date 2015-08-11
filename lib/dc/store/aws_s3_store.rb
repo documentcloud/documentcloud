@@ -12,6 +12,8 @@ module DC
 
       DEFAULT_ACCESS  = DC::Access::PUBLIC
 
+      AWS_REGION      = DC::CONFIG['aws_region']
+
       # 60 seconds for persistent connections.
       S3_PARAMS       = {:connection_lifetime => 60}
 
@@ -20,10 +22,14 @@ module DC
 
       module ClassMethods
         def asset_root
-          Rails.env.production? ? "http://s3.documentcloud.org" : "http://s3.amazonaws.com/#{BUCKET_NAME}"
+          if AWS_REGION == 'us-east-1'
+            "https://s3.amazonaws.com/#{BUCKET_NAME}"
+          else
+            "https://s3-#{AWS_REGION}.amazonaws.com/#{BUCKET_NAME}"
+          end
         end
         def web_root
-          Thread.current[:ssl] ? "https://s3.amazonaws.com/#{BUCKET_NAME}" : asset_root
+          asset_root
         end
       end
       
@@ -97,8 +103,8 @@ module DC
         remove_file(document.page_text_path(page_number))
       end
       
-      def save_database_backup(name, path)
-        bucket.objects["backups/#{name}/#{Date.today}.dump"].write(File.open(path))
+      def save_backup(src, dest)
+        bucket.objects["backups/#{dest}"].write(File.open(src))
       end
       
       # This is going to be *extremely* expensive. We can thread it, but
@@ -136,11 +142,11 @@ module DC
       end
       
       def copy_text(source, destination, access)
-        bucket.objects[source.full_text_path].copy_to(destination.full_text_path, :acl => ACCESS_TO_ACL[access])
+        options = {:acl => ACCESS_TO_ACL[access], :content_type => content_type(destination.full_text_path)}
+        bucket.objects[source.full_text_path].copy_to(destination.full_text_path, options)
         source.pages.each do |page|
           num = page.page_number
           source_object = bucket.objects[source.page_text_path(num)]
-          options = {:acl => ACCESS_TO_ACL[access], :content_type => content_type(source.page_text_path(num))}
           source_object.copy_to(destination.page_text_path(num), options)
         end
         true
@@ -172,6 +178,21 @@ module DC
         true
       end
 
+      # This is a potentially expensive (as in $$) method since S3 charges by the request
+      # returns an array of paths that should exist in the S3 bucket but do not
+      def validate_assets(document)
+        invalid = []
+        1.upto(document.page_count) do |pg|
+          text_path  = document.page_text_path(pg)
+          invalid << text_path unless bucket.objects[text_path].exists?
+          Page::IMAGE_SIZES.keys.each do |size|
+            image_path = document.page_image_path(pg, size)
+            invalid << image_path unless bucket.objects[image_path].exists?
+          end
+        end
+        invalid
+      end
+
       private
 
       def s3
@@ -191,7 +212,13 @@ module DC
       end
 
       def content_type(s3_path)
-        Mime::Type.lookup_by_extension(File.extname(s3_path)).to_s
+        ext = File.extname(s3_path).remove(/^\./)
+        case ext
+          when 'txt'
+            'text/plain; charset=utf-8'
+          else
+            Mime::Type.lookup_by_extension(ext).to_s
+        end
       end
 
       # Saves a local file to a location on S3, and returns the public URL.

@@ -1,3 +1,4 @@
+node_modules
 log/*
 tmp
 db/*.sqlite3
@@ -9,6 +10,7 @@ db/*.pid
 db/mongodb*
 db/solr_*
 db/sphinx
+node_modules
 raw
 /secrets
 public/docs
@@ -24,4 +26,7 @@ cloud_crowd.db
 public/search
 vendor/solr-4.0.0/solr-webapp/webapp/*
 .bundle
-
+public/javascripts/vendor/*/
+.vagrant
+.tm_properties
+Vagrantfile

@@ -1,26 +1,54 @@
+# The DocumentCloud API
+
+DocumentCloud's API allows users to search, upload, edit, and organize documents. In addition, an oEmbed service provides easy embedding of documents.
+
+## Contents
+
+* General:
+  * [API Guidelines and Terms of Service](#guidelines)
+* Document methods:
+  * [Search](#search-documents)
+  * [Upload](#upload-documents)
+  * [Get](#get-document)
+  * [Update](#update-document)
+  * [Delete](#delete-document)
+  * [Entities](#get-entities)
+* Project methods:
+  * [Create](#create-project)
+  * [List projects](#get-projects)
+  * [Update](#update-project)
+  * [Delete](#delete-project)
+* [oEmbed](#oembed):
+  * [Documents](#oembed-documents)
+  * [Notes](#oembed-notes)
+
+<a name="guidelines"></a>
 # API Guidelines and Terms of Service
 
-DocumentCloud's API allows users to search, upload, edit, and organize documents. No API key is required, so performing searches directly from JavaScript is fair game. Please be considerate, and don't hammer our servers. _Restrictions on the use of the DocumentCloud API do not apply to participating organizations working with documents uploaded by their own users._
+No API key is required, so performing searches directly from JavaScript is fair game. Please be considerate and don't hammer our servers. _Restrictions on the use of the DocumentCloud API do not apply to participating organizations working with documents uploaded by their own users._
 
  * You may not recreate DocumentCloud.org in its entirety or build an application that simply displays the complete set of documents. You may not build an application that displays the document set of a contributing organization.
 
  * If your project allows users to interact with data from DocumentCloud, you must cite DocumentCloud as the source of your data. If your project allows users to view or browse specific documents, you must cite DocumentCloud and the relevant contributing organizations, as identified in the API.
 
- * You may not use the API commercially, by which we mean you may not charge people money to look at the data, or sell advertising specifically against it.
+ * You may not use the API commercially, by which we mean you may not charge people money to look at the data or sell advertising specifically against it.
 
  * You understand and acknowledge that any data provided by our API may contain errors and omissions.
 
 _We reserve the right to revise these guidelines. If you violate the spirit of these terms, especially if you use the API to systematically access and reprint documents that you or your newsroom didn't contribute, expect to be blocked without advance warning._
 
+# Document Methods
+
+<a name="search-documents"></a>
 ## GET /api/search.json
 
-Search the catalog of public documents. This method can be used to scrape the public documents from your account for embedding purposes, or to enable searches of your archive of uploaded documents directly from your own website. See our <a href="searching">search documentation</a> for help with search queries.
+Search the catalog of public documents. This method can be used to scrape the public documents from your account for embedding purposes or to enable searches of your archive of uploaded documents directly from your own website. See our <a href="searching">search documentation</a> for help with search queries.
 
 Parameter     | Description           |  Example
 --------------|-----------------------|--------------
 q             | the search query      | group:nytimes title:nuclear
 page          | response page number  | 3 (defaults to 1)
-per_page      | the number of documents to return per page | 100 (defaults to 10, max is 1000)
+per_page      | the number of documents to return per page | 100 (defaults to 10, max is 1,000)
 sections      | include document sections in the results | true (not present by default)
 annotations   | include document annotations in the results | true (not present by default)
 data          | include key/value data in the results | true (not present by default)
@@ -46,7 +74,7 @@ mentions      | include highlighted mentions of the search phrase | 3 (not prese
       </div>
       <label for="q">
         Search Query:
-        <div>ex: "person:geithner"</div>
+        <div>ex: "title:arrest"</div>
       </label>
     </form>
   </div>
@@ -56,8 +84,9 @@ mentions      | include highlighted mentions of the search phrase | 3 (not prese
 
 ### Tips
 
- * If you'd like to get back search results with more than ten documents on a page, pass the `per_page` parameter. A maximum of 1000 documents will be returned at a time.
+ * If you'd like to get back search results with more than 10 documents on a page, pass the `per_page` parameter. A maximum of 1,000 documents will be returned at a time.
 
+<a name="upload-documents"></a>
 ## POST /api/upload.json
 
 Our API for bulk uploads exposes the same method that we use internally, but wraps it in basic authentication over HTTPS. Documents will be uploaded into the authenticated account.
@@ -81,7 +110,7 @@ secure          | (optional) If you're dealing with a truly sensitive document, 
 ### Tips
 
  * Please ensure that you send the request properly encoded as "multipart/form-data"
- * Review your uploaded files and add a source and description if you didn't .
+ * Review your uploaded files and add a source and description if you didn't.
 
 ### Example
 
@@ -95,39 +124,54 @@ Using Ruby's RestClient library you could do:
       :data   => {"date" => "2009-04-01", "exhibit" => "E1146"}
     )
 
+<a name="get-document"></a>
 ## GET /api/documents/[id].json
 
-Retrieve the canonical JSON representation of a particular document, as specified by the document id (usually something like: **218-madoff-sec-report**).
+Retrieve the canonical JSON representation of a particular document, as specified by the document id (usually something like: **1659580-economic-analysis-of-the-south-pole-traverse**).
 
 ### Example Response
 
     {"document":{
-      "id":"207-american-academy-v-napolitano",
-      "title":"American Academy v. Napolitano",
-      "pages":52,
+      "id":"1659580-economic-analysis-of-the-south-pole-traverse",
+      "title":"Economic Analysis of the South Pole Traverse",
+      "access":"public"
+      "pages":38,
+      "description":"The South Pole Traverse is a highway of compacted snow built to provide an overland supply route between McMurdo Station on the Antarctic coast and the Amundsen–Scott South Pole Station.  This report provides an account of the logistical costs associated with transport across the Traverse compared with air transport via LC-130 Hercules aircraft.",
+      "source":"http://www.dtic.mil/cgi-bin/GetTRDoc?AD=ADA602402",
+      "created_at":"Wed, 11 Feb 2015 18:30:58 +0000",
+      "updated_at":"Sun, 08 Mar 2015 15:23:02 +0000",
+      "canonical_url":"https://www.documentcloud.org/documents/1659580-economic-analysis-of-the-south-pole-traverse.html",
       "language":"eng",
+      "file_hash":"c07f7b640c4df2132bacb8dbfac1dcb65f978418",
+      "contributor":"Ted Han",
+      "contributor_organization":"DocumentCloud",
       "display_language":"eng",
-      "description":"Appeal from the judgment of the United States District Court, granting summary judgment...",
-      "created_at":"Fri Dec 10 03:43:23 +0000 2010",
-      "updated_at":"Fri Jan 14 14:49:11 +0000 2011",
       "resources":{
-        "pdf":"http://s3.documentcloud.org/documents/207/american-academy-v-napolitano.pdf",
-        "text":"http://s3.documentcloud.org/documents/207/american-academy-v-napolitano.txt",
-        "thumbnail":"http://s3.documentcloud.org/documents/207/pages/american-academy-v-napolitano-p1-thumbnail.gif",
-        "search":"http://s3.documentcloud.org/207/search.json?q={query}",
+        "pdf":"https://s3.amazonaws.com/s3.documentcloud.org/documents/1659580/economic-analysis-of-the-south-pole-traverse.pdf",
+        "text":"https://s3.amazonaws.com/s3.documentcloud.org/documents/1659580/economic-analysis-of-the-south-pole-traverse.txt",
+        "thumbnail":"https://s3.amazonaws.com/s3.documentcloud.org/documents/1659580/pages/economic-analysis-of-the-south-pole-traverse-p1-thumbnail.gif",
+        "search":"https://www.documentcloud.org/documents/1659580/search.json?q={query}",
+        "print_annotations":"https://www.documentcloud.org/notes/print?docs[]=1659580",
+        "translations_url":"https://www.documentcloud.org/translations/{realm}/{language}",
         "page":{
-          "text":"http://s3.documentcloud.org/documents/207/pages/american-academy-v-napolitano-p{page}.txt",
-          "image":"http://s3.documentcloud.org/asset_store/documents/207/pages/american-academy-v-napolitano-p{page}-{size}.gif"
-        },
-        "related_article":"http://example.com/article.html"
+          "image":"https://s3.amazonaws.com/s3.documentcloud.org/documents/1659580/pages/economic-analysis-of-the-south-pole-traverse-p{page}-{size}.gif",
+          "text":"https://www.documentcloud.org/documents/1659580/pages/economic-analysis-of-the-south-pole-traverse-p{page}.txt"
+          },
+        "annotations_url":"https://www.documentcloud.org/documents/1659580/annotations"
       },
       "sections":[],
+      "data":{},
       "annotations":[]
     }}
 
+### Tips
+
+ * **Security note:** For fidelity with the source document, the extracted text (available via the URLs provided in `document.resources.text` and the `document.resources.page.text` page iteration pattern) is not sanitized. **You should always escape document and page text before insertion into the DOM.**
+
+<a name="update-document"></a>
 ## PUT /api/documents/[id].json
 
-Update a document's **title**, **source**, **description**, **related article**, **access level**, or **data** with this method. Reference your document by its id (usually something like: **218-madoff-sec-report**).
+Update a document's **title**, **source**, **description**, **related article**, **access level**, or **data** with this method. Reference your document by its id (usually something like: **1659580-economic-analysis-of-the-south-pole-traverse**).
 
 Parameter     | Description           |  Example
 --------------|-----------------------|--------------
@@ -143,8 +187,9 @@ The response value of this method will be the JSON representation of your docume
 
 ### Tips
 
- * If your HTTP client is unable to create a PUT request, you can send it as a POST, and add an extra parameter: `_method=put`
+ * If your HTTP client is unable to create a PUT request, you can send it as a POST and add an extra parameter: `_method=put`
 
+<a name="delete-document"></a>
 ## DELETE /api/documents/[id].json
 
 Delete a document from DocumentCloud. You must be authenticated as the owner of the document for this method to work.
@@ -153,9 +198,10 @@ Delete a document from DocumentCloud. You must be authenticated as the owner of 
 
  * If your HTTP client is unable to create a DELETE request, you can send it as a POST, and add an extra parameter: `_method=delete`
 
+<a name="get-entities"></a>
 ## GET /api/documents/[id]/entities.json
 
-Retrieve the JSON for all of the entities that a particular document contains, specified by the document id (usually something like: **218-madoff-sec-report**). Entities are ordered by their relevance to the document as determined by OpenCalais.
+Retrieve the JSON for all of the entities that a particular document contains, specified by the document id (usually something like: **1659580-economic-analysis-of-the-south-pole-traverse**). Entities are ordered by their relevance to the document as determined by OpenCalais.
 
 ### Example Response
 
@@ -175,6 +221,9 @@ Retrieve the JSON for all of the entities that a particular document contains, s
       }
     }
 
+# Project Methods
+
+<a name="create-project"></a>
 ## POST /api/projects.json
 
 Create a new project for the authenticated account, with a title, optional description, and optional document ids.
@@ -189,6 +238,7 @@ document_ids | (optional) a list of documents that the project contains, by id |
 
  * Note that you have to use the convention for passing an array of strings: `?document_ids[]=28-boumediene&document_ids[]=207-academy&document_ids[]=30-insider-trading`
 
+<a name="get-projects"></a>
 ## GET /api/projects.json
 
 Retrieve a list of project names and document ids. You must use basic authentication over HTTPS in order to make this request. The projects listed belong to the authenticated account.
@@ -207,13 +257,74 @@ Retrieve a list of project names and document ids. You must use basic authentica
       ...
     ]}
 
+<a name="update-project"></a>
 ## PUT /api/projects/[id].json
 
 Update an existing project for the current authenticated account. You can set the title, description or list of documents. See POST, above.
 
+<a name="delete-project"></a>
 ## DELETE /api/projects/[id].json
 
 Delete a project that belongs to the current authenticated account.
+
+<a name="oembed"></a>
+# oEmbed
+
+## GET /api/oembed.json
+
+Generate an embed code for a resource (a document or a note) using our [oEmbed](http://oembed.com/) service. Returns a rich JSON response.
+
+### Response format
+
+    {
+      "type": "rich",
+      "version": "1.0",
+      "provider_name": "DocumentCloud",
+      "provider_url": "https://www.documentcloud.org/",
+      "cache_age": 300,
+      "height": 750,
+      "width": 600,
+      "html": "<script>...</script>"
+    }
+
+<a name="oembed-documents"></a>
+### Example document request
+
+    /api/oembed.json?url=https%3A%2F%2Fwww.documentcloud.org%2Fdocuments%2Fdoc-name.html&responsive=true
+
+### Parameters for documents
+
+Parameter        | Description           |  Example
+-----------------|-----------------------|--------------
+url              | **(required)** URL-escaped document to embed     | https%3A//www.documentcloud.org/ documents/doc-name.html
+maxheight        | (optional) The viewer's height (pixels)    | 750
+maxwidth         | (optional) The viewer's width (pixels)     | 600
+container        | (optional) Specify the DOM container in which to embed the viewer | #my-document-div
+notes            | (optional) Enable the notes tab   | true (default)
+text             | (optional) Enable the text tab   | true (default)
+zoom             | (optional) Show the zoom slider    | true (default)
+search           | (optional) Show the search box    | true (default)
+sidebar          | (optional) Show the sidebar    | true (default)
+pdf              | (optional) Include a link to the original PDF    | true (default)
+responsive       | (optional) Make the viewer responsive    | false (default)
+responsive_offset| (optional) Specify header height (pixels)    | 4
+default_note     | (optional) Open the document to a specific note. An integer representing the note ID | 214279
+default_page     | (optional) Open the document to a specific page   | 3
+
+<a name="oembed-notes"></a>
+### Example note request
+
+    /api/oembed.json?url=https%3A%2F%2Fwww.documentcloud.org%2Fdocuments%2Fdoc-name%2Fannotations%2F123.js
+
+### Parameters for notes
+
+Parameter        | Description           |  Example
+-----------------|-----------------------|--------------
+url              | **(required)** URL-escaped document to embed     | https%3A//www.documentcloud.org/ documents/doc-name.html
+container        | (optional) Specify the DOM container in which to embed the viewer | #my-document-div
+
+
+# Questions?
 
 Still have questions about the API? Don't hesitate to [contact us][].
 

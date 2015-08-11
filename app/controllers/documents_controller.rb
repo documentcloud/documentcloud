@@ -50,10 +50,8 @@ class DocumentsController < ApplicationController
                          :related_article, :remote_url, :publish_at, :data, :language)
     success = doc.secure_update attrs, current_account
     return json(doc, 403) unless success
-    if doc.cacheable?
-      expire_page doc.canonical_cache_path
-      doc.annotations.each{ |note| expire_page note.canonical_cache_path }
-    end
+
+    clear_current_document_cache
     Document.populate_annotation_counts(current_account, [doc])
     json doc
   end
@@ -64,10 +62,8 @@ class DocumentsController < ApplicationController
       doc.errors.add(:base, "You don't have permission to delete the document." )
       return json(doc, 403)
     end
-    if doc.cacheable?
-      expire_page doc.canonical_cache_path
-      doc.annotations.each{ |note| expire_page note.canonical_cache_path }
-    end
+
+    clear_current_document_cache
     doc.destroy
     json nil
   end
@@ -205,15 +201,17 @@ class DocumentsController < ApplicationController
   end
 
   def send_full_text
+    maybe_set_cors_headers
     return not_found unless current_document(true)
     redirect_to current_document.full_text_url(:direct)
   end
 
   def send_page_text
+    maybe_set_cors_headers
     return not_found unless current_page
     @response = current_page.text
     return if jsonp_request?
-    render :text => @response
+    render :plain => @response
   end
 
   def set_page_text
@@ -277,5 +275,9 @@ class DocumentsController < ApplicationController
     return false unless current_document(true)
     @current_page ||= current_document.pages.find_by_page_number(num.to_i)
   end
-
+  
+  def clear_current_document_cache
+    expire_page current_document.canonical_cache_path
+    current_document.annotations.each{ |note| expire_page note.canonical_cache_path }
+  end
 end

@@ -97,16 +97,23 @@ class ApplicationController < ActionController::Base
 
   def api_login_required
     authenticate_or_request_with_http_basic("DocumentCloud") do |email, password|
-      return false unless @current_account = Account.log_in(email, password)
-      @current_organization = @current_account.organization
-      true
+      if @current_account = Account.log_in(email, password)
+        @current_organization = @current_account.organization
+        @current_account
+      else
+        return forbidden
+      end
     end
   end
 
   def api_login_optional
-    return if request.authorization.blank?
-    return unless @current_account = Account.log_in(*BasicAuth.user_name_and_password(request))
-    @current_organization = @current_account.organization
+    if request.authorization.blank?
+      # Public user
+      true
+    else
+      # The user is trying to log in. If the username/password is wrong, fail.
+      api_login_required
+    end
   end
   
   def allow_iframe
@@ -118,12 +125,12 @@ class ApplicationController < ActionController::Base
   end
 
   def prefer_secure
-    secure_only if cookies['dc_logged_in'] == 'true'
+    secure_only(302) if cookies['dc_logged_in'] == 'true'
   end
 
-  def secure_only
+  def secure_only(status=301)
     if !request.ssl? && (request.format.html? || request.format.nil?)
-      redirect_to DC.server_root(:force_ssl => true) + request.original_fullpath
+      redirect_to DC.server_root(:force_ssl => true) + request.original_fullpath, :status => status
     end
   end
 
@@ -145,27 +152,54 @@ class ApplicationController < ActionController::Base
     forbidden
   end
 
-  def bad_request
-    render :file => "#{Rails.root}/public/400.html", :status => 400
+  def bad_request(message="Bad Request")
+    respond_to do |format|
+      format.js  { json({:error=>message}, 400) }
+      format.json{ json({:error=>message}, 400) }
+      format.any { render :file => "#{Rails.root}/public/400.html", :status => 400 }
+    end
     false
   end
 
   # Return forbidden when the access is unauthorized.
   def forbidden
     @next = CGI.escape(request.original_url)
-    render :file => "#{Rails.root}/public/403.html", :status => 403
+    respond_to do |format|
+      format.js  { json({:error=>"Forbidden"}, 403) }
+      format.json{ json({:error=>"Forbidden"}, 403) }
+      format.any { render :file => "#{Rails.root}/public/403.html", :status => 403 }
+    end
     false
   end
 
   # Return not_found when a resource can't be located.
   def not_found
-    render :file => "#{Rails.root}/public/404.html", :status => 404
+    respond_to do |format|
+      format.js  { json({:error=>"Not Found"}, 404) }
+      format.json{ json({:error=>"Not Found"}, 404) }
+      format.any { render :file => "#{Rails.root}/public/404.html", :status => 404 }
+    end
     false
   end
 
   # Return server_error when an uncaught exception bubbles up.
   def server_error(e)
-    render :file => "#{Rails.root}/public/500.html", :status => 500
+    respond_to do |format|
+      format.js  { json({:error=>"Internal Server Error (sorry)"}, 500) }
+      format.json{ json({:error=>"Internal Server Error (sorry)"}, 500) }
+      format.any { render :file => "#{Rails.root}/public/500.html", :status => 500 }
+    end
+    false
+  end
+
+  # A resource was requested in a way we can't fulfill (e.g. an oEmbed
+  # request for XML when we only provide JSON)
+  def not_implemented
+    respond_to do |format|
+      format.js  { json({:error=>"Not Implemented"}, 501) }
+      format.json{ json({:error=>"Not Implemented"}, 501) }
+      format.any { render :file => "#{Rails.root}/public/501.html", :status => 501 }
+    end
     false
   end
 

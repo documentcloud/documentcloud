@@ -1,17 +1,19 @@
 # Responsible for sending out lifecycle emails to active accounts.
 class LifecycleMailer < ActionMailer::Base
   include ActionView::Helpers::TextHelper # pluralize and friends
-  
-  SUPPORT   = 'support@documentcloud.org'
-  NO_REPLY  = 'no-reply@documentcloud.org'
-  INFO      = 'info@documentcloud.org'
+
+  SUPPORT    = 'support@documentcloud.org'
+  EXCEPTIONS = 'exceptions@documentcloud.org'
+  NO_REPLY   = 'no-reply@documentcloud.org'
+  INFO       = 'info@documentcloud.org'
   default from: SUPPORT
 
   # Mail instructions for a new account, with a secure link to activate,
   # set their password, and log in.
-  def login_instructions(account, admin=nil)
+  def login_instructions(account, organization, admin=nil)
     @admin   = admin
     @account = account
+    @organization = organization
     options = {
       :subject       => DC.t(account, 'welcome_to_document_cloud'),
       :to            => @account.email,
@@ -67,6 +69,16 @@ class LifecycleMailer < ActionMailer::Base
     })
   end
 
+  def verification_request_notification(verification_request)
+    @request = verification_request
+    mail({
+        :subject  => "New DocumentCloud account request from #{verification_request.requester_full_name} (#{verification_request.organization_name}) in #{Rails.env}",
+        :from     => NO_REPLY,
+        :reply_to => verification_request.requester_email,
+        :to       => INFO
+      })
+  end
+
   # When someone sends a message through the "Contact Us" form, deliver it to
   # us via email.
   def contact_us(account, params)
@@ -90,7 +102,7 @@ class LifecycleMailer < ActionMailer::Base
     mail({
         :subject  => "DocumentCloud exception (#{Rails.env}:#{`hostname`.chomp}): #{error.class.name}",
         :from     => NO_REPLY,
-        :to       => SUPPORT
+        :to       => EXCEPTIONS
       })
   end
 
@@ -110,9 +122,11 @@ class LifecycleMailer < ActionMailer::Base
   def account_and_document_csvs
     date = Date.today.strftime "%Y-%m-%d"
 
+    accounts = ""
+    DC::Statistics.accounts_csv( CSV.new(accounts) )
     attachments["accounts-#{date}.csv"] = {
       mime_type: 'text/csv',
-      content: DC::Statistics.accounts_csv
+      content: accounts
     }
 
     attachments["top-documents-#{date}.csv"] = {

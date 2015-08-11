@@ -1,5 +1,15 @@
 namespace :app do
 
+  namespace :backup do
+
+    desc "Backup a file to the asset store that corresponds to the current environment."
+    task :logfile, [:type, :src_file]=>:environment do |t, args|
+      dest = "#{args[:type]}/#{Date.today}.log"
+      DC::Store::AssetStore.new.save_backup(args[:src_file], dest)
+    end
+
+  end
+
   task :start do
     sh "sudo /etc/init.d/nginx start"
   end
@@ -26,13 +36,15 @@ namespace :app do
   end
 
   task :console do
-    exec "script/console #{RAILS_ENV}"
+    exec "rails console #{RAILS_ENV}"
   end
 
   desc "Update the Rails application"
   task :update do
-    sh 'git pull && bundle install'
+    sh 'cd secrets && git pull && cd ..'
+    sh 'git pull'
     sleep 0.2
+    sh 'bundle install'
   end
 
   desc "Repackage static assets"

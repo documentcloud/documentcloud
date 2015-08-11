@@ -13,12 +13,10 @@ module DC
       # Fetch the RDF from OpenCalais, splitting it into chunks small enough
       # for Calais to swallow. Run the chunks in parallel.
       def fetch_rdf(text)
-        text    = text.mb_chars
-        chunks  = split_text(text)
-        threads, rdfs = [], []
+        rdfs    = []
         begin
-          chunks.each_with_index do |chunk, i|
-            rdfs[i] = fetch_rdf_from_calais(chunk)
+          rdfs = split_text(text).map do |chunk|
+            fetch_rdf_from_calais(chunk)
           end
         rescue Exception => e
           LifecycleMailer.exception_notification(e).deliver

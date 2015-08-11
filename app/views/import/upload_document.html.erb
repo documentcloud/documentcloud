@@ -6,7 +6,7 @@
 <body>
   <script>
     try {
-      window.top.Documents.add(new window.top.dc.model.Document(<%= @document.to_json %>));
+      window.top.Documents.add(new window.top.dc.model.Document(<%=raw @document.to_json %>));
       <% if @project_id %>
         window.top.Projects.incrementCountById(<%= @project_id %>);
       <% end %>

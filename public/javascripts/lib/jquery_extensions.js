@@ -12,6 +12,23 @@
 
   $.fn.extend({
 
+    // Scroll the viewport to the calling element. When multiple, will scroll 
+    // to the one closest to the top. Actually scrolls `opts.padding` pixels 
+    // above the element (defaults to 50).
+    scrollTo : function(opts) {
+      if (!this.length) { return; }
+      opts = _.defaults({padding: 50}, opts);
+
+      // Find the element closest to the top of the viewport
+      var $highest    = $(_.min($(this), function(el) { return $(el).offset().top; }));
+      var scrollToPos = $highest.offset().top;
+
+      // If there's room, scroll to `opts.padding` pixels above the element
+      if (scrollToPos >= opts.padding) { scrollToPos -= opts.padding; }
+
+      $('html, body').animate({ scrollTop: scrollToPos + 'px' });
+    },
+
     // Align an element relative to a target element's coordinates. Forces the
     // element to be absolutely positioned. Element must be visible.
     // Position string format is: "top -right".

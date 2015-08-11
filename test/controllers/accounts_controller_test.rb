@@ -97,7 +97,6 @@ class AccountsControllerTest < ActionController::TestCase
     login_account!(:louis)
     post :resend_welcome, :id=>joe.id
     assert_response 200
-    assert_template 'login_instructions'
     refute_empty ActionMailer::Base.deliveries
     mail = ActionMailer::Base.deliveries.last
     assert_equal [joe.email], mail.to
@@ -111,4 +110,14 @@ class AccountsControllerTest < ActionController::TestCase
     assert_equal Account::DISABLED, joe.role
   end
 
+  it "sends an error messages when email is not valid" do
+    login_account!(:louis)
+    assert_difference('Account.count',0) do
+      response = post :create, :first_name=>'Crazy', :last_name=>'Email', :email=>'crazy*{}**email@test.com', :language=>'eng', :document_language=>"eng"
+      assert_response 409
+      message = ActiveSupport::JSON.decode(response.body)
+      assert_equal ["Email is invalid"], message['errors']
+    end
+
+  end
 end

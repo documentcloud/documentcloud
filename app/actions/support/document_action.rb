@@ -1,4 +1,3 @@
-require File.dirname(__FILE__) + '/setup'
 require 'fileutils'
 
 class DocumentAction < CloudCrowd::Action

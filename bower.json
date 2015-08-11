@@ -1,0 +1,33 @@
+{
+  "name": "documentcloud",
+  "version": "1.0.0",
+  "homepage": "https://github.com/documentcloud/documentcloud",
+  "authors": [
+    "Ted Han <ted@knowtheory.net>",
+    "Nathan Stitt <nathan@stitt.com>",
+    "Jeremy Ashkenas <jashkenas@gmail.com>",
+    "Samuel Clay <samuel@ofbrooklyn.com>"
+  ],
+  "description": "Document transparency tools for journalists",
+  "dependencies":{
+    "jquery": "1.11.1",
+    "jquery-ui": "1.11",
+    "flot": "0.8.3",
+    "backbone": "1.1.2",
+    "blueimp-file-upload": "9.8",
+    "documentcloud-notes": "https://github.com/documentcloud/documentcloud-notes.git",
+    "visualsearch": "0.5.1"
+  },
+  "moduleType": [
+    "globals"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

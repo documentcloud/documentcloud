@@ -9,42 +9,64 @@ class AdminController < ApplicationController
 
   # The Admin Dashboard
   def index
-    @documents_by_access           = DC::Statistics.documents_by_access.to_json
-    @average_page_count            = DC::Statistics.average_page_count.to_json
-    @embedded_documents            = DC::Statistics.embedded_document_count.to_json
-    @total_pages                   = DC::Statistics.total_pages.to_json
-    @daily_documents               = keys_to_timestamps(DC::Statistics.daily_documents(1.month.ago)).to_json
-    @daily_pages                   = keys_to_timestamps(DC::Statistics.daily_pages(1.month.ago)).to_json
-    @weekly_documents              = keys_to_timestamps(DC::Statistics.weekly_documents).to_json
-    @weekly_pages                  = keys_to_timestamps(DC::Statistics.weekly_pages).to_json
-    @daily_hits_on_documents       = keys_to_timestamps(DC::Statistics.daily_hits_on_documents(1.month.ago)).to_json
-    @weekly_hits_on_documents      = keys_to_timestamps(DC::Statistics.weekly_hits_on_documents).to_json
-    @daily_hits_on_notes           = keys_to_timestamps(DC::Statistics.daily_hits_on_notes(1.month.ago)).to_json
-    @weekly_hits_on_notes          = keys_to_timestamps(DC::Statistics.weekly_hits_on_notes).to_json
-    @daily_hits_on_searches        = keys_to_timestamps(DC::Statistics.daily_hits_on_searches(1.month.ago)).to_json
-    @weekly_hits_on_searches       = keys_to_timestamps(DC::Statistics.weekly_hits_on_searches).to_json
-    @documents                     = Document.finished.chronological.limit(5).map {|d| d.admin_attributes }.to_json
-    @failed_documents              = Document.failed.chronological.limit(3).map {|d| d.admin_attributes }.to_json
-    @instances                     = DC::AWS.new.describe_instances.to_json
-    @top_documents                 = RemoteUrl.top_documents(7, 5).to_json
-    @top_searches                  = RemoteUrl.top_searches(7,  5).to_json
-    @top_notes                     = RemoteUrl.top_notes(7, 5).to_json
-    @remote_url_hits_last_week     = DC::Statistics.remote_url_hits_last_week.to_json
-    @remote_url_hits_all_time      = DC::Statistics.remote_url_hits_all_time.to_json
-    @count_organizations_embedding = DC::Statistics.count_organizations_embedding.to_json
-    @count_total_collaborators     = DC::Statistics.count_total_collaborators.to_json
-    @numbers                       = DC::Statistics.by_the_numbers.to_json
-    @accounts                      = [].to_json
-    if params[:accounts]
-      @accounts                    = Account.all.to_json
-      @public_per_account          = DC::Statistics.public_documents_per_account.to_json
-      @private_per_account         = DC::Statistics.private_documents_per_account.to_json
-      @pages_per_account           = DC::Statistics.pages_per_account.to_json
+    respond_to do |format|
+      format.json do
+        @response = {
+          :stats => {
+            :documents_by_access           => DC::Statistics.documents_by_access,
+            :embedded_documents            => DC::Statistics.embedded_document_count,
+            :average_page_count            => DC::Statistics.average_page_count,
+            :daily_documents               => keys_to_timestamps(DC::Statistics.daily_documents(1.month.ago)),
+            :daily_pages                   => keys_to_timestamps(DC::Statistics.daily_pages(1.month.ago)),
+            :weekly_documents              => keys_to_timestamps(DC::Statistics.weekly_documents),
+            :weekly_pages                  => keys_to_timestamps(DC::Statistics.weekly_pages),
+            :daily_hits_on_documents       => keys_to_timestamps(DC::Statistics.daily_hits_on_documents(1.month.ago)),
+            :weekly_hits_on_documents      => keys_to_timestamps(DC::Statistics.weekly_hits_on_documents),
+            :daily_hits_on_notes           => keys_to_timestamps(DC::Statistics.daily_hits_on_notes(1.month.ago)),
+            :weekly_hits_on_notes          => keys_to_timestamps(DC::Statistics.weekly_hits_on_notes),
+            :daily_hits_on_searches        => keys_to_timestamps(DC::Statistics.daily_hits_on_searches(1.month.ago)),
+            :weekly_hits_on_searches       => keys_to_timestamps(DC::Statistics.weekly_hits_on_searches),
+            :total_pages                   => DC::Statistics.total_pages,
+
+            :instances                     => DC::AWS.new.describe_instances,
+            :remote_url_hits_last_week     => DC::Statistics.remote_url_hits_last_week,
+            :remote_url_hits_all_time      => DC::Statistics.remote_url_hits_all_time,
+            :count_organizations_embedding => DC::Statistics.count_organizations_embedding,
+            :count_total_collaborators     => DC::Statistics.count_total_collaborators,
+            :numbers                       => DC::Statistics.by_the_numbers,
+          },
+          :documents        => Document.finished.chronological.limit(5).map {|d| d.admin_attributes },
+          :failed_documents => Document.failed.chronological.limit(3).map {|d| d.admin_attributes },
+          :top_documents    => RemoteUrl.top_documents(7, 5),
+          :top_searches     => RemoteUrl.top_searches(7,  5),
+          :top_notes        => RemoteUrl.top_notes(7, 5),
+          :accounts         => [],
+        }
+        if params[:accounts]
+          @response[:accounts]                    = Account.all
+          @response[:stats][:public_per_account]  = DC::Statistics.public_documents_per_account
+          @response[:stats][:private_per_account] = DC::Statistics.private_documents_per_account
+          @response[:stats][:pages_per_account]   = DC::Statistics.pages_per_account
+        end
+        cache_page @response.to_json
+        json_response
+      end
+      
+      format.html{ render }
+    end
+  end
+  
+  def expire_stats
+    respond_to do |format|
+      format.any do
+        expire_page "/admin/index.json"
+        redirect_to :action => :index
+      end
     end
   end
 
   def hits_on_documents
-    json RemoteUrl.top_documents(365, :limit => 1000).to_json
+    json RemoteUrl.top_documents(365).to_json
   end
 
   def all_accounts
@@ -64,8 +86,13 @@ class AdminController < ApplicationController
 
   def accounts_csv
     return not_found unless request.format.csv?
-    csv = DC::Statistics.accounts_csv
-    send_data csv, :type => :csv, :filename => 'documents.csv'
+    deliver_csv("#{Date.today}-accounts") do | csv |
+      DC::Statistics.accounts_csv(csv)
+    end
+  end
+
+  def charge
+    render :layout => 'admin_empty'
   end
 
   # Attempt a new signup for DocumentCloud -- includes both the organization and
@@ -78,24 +105,140 @@ class AdminController < ApplicationController
   def signup
     unless request.post?
       @params = DEFAULT_SIGNUP_PARAMS.dup
+      return render
     end
-    return render unless request.post?
     @params = params
-    organization_params = params.require(:organization).permit(:name,:slug,:language,:document_language)
-    org = Organization.create( organization_params )
-    return fail(org.errors.full_messages.join(', ')) if org.errors.any?
-    params[:account][:email].strip! if params[:account][:email]
-    user_params = params.require(:account).permit(:first_name,:last_name,:email,:slug,:language,:document_language)
-    acc = Account.new( user_params
-                       .merge( :language=>org.language, :document_language=>org.document_language ) )
-    acc.memberships.build({
-      :role => Account::ADMINISTRATOR, :default => true, :organization=>org
-    })
-    return org.destroy && fail( acc.errors.full_messages.join(', ') ) unless acc.save
 
-    acc.send_login_instructions
-    @success = "Account Created. Welcome email sent to #{acc.email}."
-    @params = DEFAULT_SIGNUP_PARAMS.dup
+    user_params = params.require(:account).permit(:first_name,:last_name,:email,:slug,:language,:document_language)
+
+    # First see if an account already exists for the email
+    @account = Account.lookup(user_params[:email])
+    if @account # Check if the account should be moved
+      if "t" != params[:move_account]
+        fail( "#{user_params[:email]} already exists!" ) and return
+      end
+    else
+      @account = Account.create( user_params
+        .merge( :language=>DC::Language::DEFAULT, :document_language=>DC::Language::DEFAULT ) )
+      if @account.errors.any?
+        fail( @account.errors.full_messages.join(', ') ) and return
+      end
+    end
+
+    # create the organization
+    organization_params = params.require(:organization).permit(:name,:slug,:language,:document_language)
+    organization = Organization.create( organization_params )
+    return fail(organization.errors.full_messages.join(', ')) if organization.errors.any?
+
+    # link the account to the organization
+    membership = @account.memberships.create({
+        :role => Account::ADMINISTRATOR, :default => true, :organization=>organization
+    })
+    @account.set_default_membership(membership)
+
+    @account.send_login_instructions
+    @success = "Account Created. Welcome email sent to #{@account.email}."
+    # clear variables so the form displays fresh
+    @account = nil
+    @params  = DEFAULT_SIGNUP_PARAMS.dup
+  end
+
+  def download_document_hits
+    organization=Organization.find_by_slug(params[:slug])
+    if !organization
+      flash[:error]="Organization for #{params[:slug]} was not found"
+      render :action=>:document_hits and return
+    end
+    deliver_csv("#{organization.slug}-hits") do |csv|
+      csv << [ "Day","Hits","Document" ]
+      urls=RemoteUrl
+        .where(:document_id=>organization.documents.published.ids)
+        .group(:date_recorded,:document_id)
+        .select('date_recorded','document_id','sum(hits) as hits')
+      urls.each do | hit |
+        csv << [ hit.date_recorded.strftime("%Y-%m-%d"), hit.hits, hit.document.canonical_url(:html) ]
+      end
+    end
+  end
+  
+  def organization_statistics
+    org = case
+    when params[:slug]
+      Organization.find_by_slug(params[:slug])
+    when params[:id]
+      Organization.find(params[:id])
+    end
+    return not_found unless org
+    
+    respond_to do |format|
+      format.json do
+        @response = Document.upload_statistics(:organization, org.id)
+        json_response
+      end
+      format.html{ render }
+      format.any{ redirect_to :format => :html, :params => pick(params, :id, :slug) }
+    end
+  end
+  
+  def account_statistics
+    account = case
+    when params[:email]
+      Account.lookup(params[:email])
+    when
+      Account.find(params[:id])
+    end
+    return not_found unless account
+    respond_to do |format|
+      format.json do
+        @response = Document.upload_statistics(:account, account.id)
+        json_response
+      end
+      format.html{ render }
+      format.any{ redirect_to :format => :html, :params => pick(params, :id, :slug) }
+    end
+  end
+
+  def manage_organization
+    query = if params[:slug]
+              ["lower(slug)=:slug or lower(name)=:slug",{:slug=>params[:slug].downcase}]
+            elsif params[:id]
+              {:id=>params[:id]}
+            end
+    @organization = Organization.where(query).includes(:memberships=>:account).first
+    if @organization.nil?
+      flash[:error] = "Organization for '#{params[:slug]}' was not found"
+      render :action=>:organizations
+    end
+  end
+
+  def update_organization
+    @organization = Organization.find(params[:id])
+    if @organization.update_attributes( {demo: false}.merge(pick(params,:name,:slug,:demo)) )
+      redirect_to :action=>'organizations' and return
+    end
+    flash[:error] = @organization.errors.full_messages.join("; ")
+    render :action=>:manage_organization
+  end
+
+  def update_memberships
+    @account = Account.find(params[:id])
+    @account.set_default_membership(@account.memberships.find(params[:default_membership]))
+    params[:role].each do | membership_id, role|
+      @account.memberships.find(membership_id).update_attributes({ role: role })
+    end
+    redirect_to :action=>'memberships'
+  end
+
+  def manage_memberships
+    @account = if params[:email]
+                 Account.lookup(params[:email])
+               elsif params[:id]
+                 Account.find(params[:id])
+               end
+    if !@account
+      flash[:error]="Account for #{params[:email]} was not found"
+      render :action=>:memberships and return
+    end
   end
 
   # Endpoint for our pixel-ping application, to save our analytic data every
@@ -111,7 +254,7 @@ class AdminController < ApplicationController
   # Ensure that the length of the pending document queue is ok.
   def queue_length
     ok = Document.pending.count <= Document::WARN_QUEUE_LENGTH
-    render :text => ok ? 'OK' : 'OVERLOADED'
+    render :plain => ok ? 'OK' : 'OVERLOADED'
   end
 
   # Spin up a new CloudCrowd medium worker, for processing. It takes a while
@@ -184,11 +327,11 @@ class AdminController < ApplicationController
   end
 
   def test_embedded_note
-    @document      = Document.find(282753)
-    @wide_note     = @document.annotations.find(80993)
-    @tiny_note     = @document.annotations.find(42225)
-    @page_note     = @document.annotations.find(53672)
-    @narrow_note   = @document.annotations.find(99206)
+    @document      = Document.find(1)
+    @wide_note     = @document.annotations.find(1)
+    @tiny_note     = @document.annotations.find(2)
+    @page_note     = @document.annotations.find(3)
+    @narrow_note   = @document.annotations.find(3)
     render :layout => false
   end
 
@@ -197,6 +340,7 @@ class AdminController < ApplicationController
 
   def fail(message)
     @failure = message
+    flash[:error] = message
   end
 
   # Pass in the seconds since the epoch, for JavaScript.
@@ -209,6 +353,17 @@ class AdminController < ApplicationController
       result[utc.to_f.to_i] = value
     end
     result
+  end
+
+  # Streams a CSV download to the browser
+  def deliver_csv( filename )
+    response.headers["Content-Type"] ||= 'text/csv'
+    response.headers["Content-Disposition"] = "attachment; filename=#{filename}.csv"
+    response.headers['Last-Modified'] = Time.now.ctime.to_s
+    self.response_body = Enumerator.new do |stream|
+      csv = CSV.new(stream)
+      yield csv
+    end
   end
 
 end

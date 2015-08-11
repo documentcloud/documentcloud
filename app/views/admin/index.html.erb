@@ -1,8 +1,5 @@
 <%
   @title = "Admin Dashboard"
-  @stylesheets = [:admin]
-  @javascripts = [:admin]
-  @bodyclass   = 'admin'
 %>
 
 <script type="text/javascript">
@@ -12,44 +9,25 @@
   window.TopSearches          = new dc.model.SearchEmbeds();
   window.FailedDocuments      = new dc.model.DocumentSet();
 
-  window.stats = {};
-  stats.documents_by_access           = <%=raw @documents_by_access      %>;
-  stats.embedded_documents            = <%=raw  @embedded_documents       %>;
-  stats.average_page_count            = <%=raw  @average_page_count       %>;
-  stats.daily_documents               = <%=raw  @daily_documents          %>;
-  stats.daily_pages                   = <%=raw  @daily_pages              %>;
-  stats.weekly_documents              = <%=raw  @weekly_documents         %>;
-  stats.weekly_pages                  = <%=raw  @weekly_pages             %>;
-  stats.daily_hits_on_documents       = <%=raw  @daily_hits_on_documents  %>;
-  stats.weekly_hits_on_documents      = <%=raw  @weekly_hits_on_documents %>;
-  stats.daily_hits_on_notes           = <%=raw  @daily_hits_on_notes      %>;
-  stats.weekly_hits_on_notes          = <%=raw  @weekly_hits_on_notes     %>;
-  stats.daily_hits_on_searches        = <%=raw @daily_hits_on_searches   %>;
-  stats.weekly_hits_on_searches       = <%=raw @weekly_hits_on_searches  %>;
-  stats.total_pages                   = <%=raw @total_pages              %>;
-  stats.public_per_account            = <%=raw @public_per_account   || 'null' %>;
-  stats.private_per_account           = <%=raw @private_per_account  || 'null' %>;
-  stats.pages_per_account             = <%=raw @pages_per_account    || 'null' %>;
-  stats.instances                     = <%=raw @instances %>;
-  stats.remote_url_hits_last_week     = <%=raw @remote_url_hits_last_week %>;
-  stats.remote_url_hits_all_time      = <%=raw @remote_url_hits_all_time %>;
-  stats.count_organizations_embedding = <%=raw @count_organizations_embedding %>;
-  stats.count_total_collaborators     = <%=raw @count_total_collaborators %>;
-  stats.numbers                       = <%=raw @numbers %>;
-
-  Accounts.reset(<%=raw @accounts %>);
-  Documents.reset(<%=raw @documents %>);
-  TopDocuments.reset(<%=raw @top_documents %>);
-  TopSearches.reset(<%=raw @top_searches %>);
-  TopNotes.reset(<%=raw @top_notes %>);
-  FailedDocuments.reset(<%=raw @failed_documents %>);
-
-  TopNotes.each(function(note) {
-    note.document = new dc.model.Document(note.get('document'));
-  });
-
   $(function(){
-    $('#content').append((new dc.ui.Admin()).render().el);
+    $.ajax({
+      url: "/admin/index.json", 
+      success: function(data, status, xhr) {
+        window.stats = data.stats;
+        Accounts.reset(data.accounts);
+        Documents.reset(data.documents);
+        TopDocuments.reset(data.top_documents);
+        TopSearches.reset(data.top_searches);
+        TopNotes.reset(data.top_notes);
+        FailedDocuments.reset(data.failed_documents);
+
+        TopNotes.each(function(note) {
+          note.document = new dc.model.Document(note.get('document'));
+        });
+
+        $('#content').append((new dc.ui.AdminStatistics()).render().el);
+      }
+    });
   });
 </script>
 

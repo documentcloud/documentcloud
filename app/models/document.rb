@@ -237,6 +237,57 @@ class Document < ActiveRecord::Base
     counts = Annotation.counts_for_documents(account, docs)
     docs.each {|doc| doc.annotation_count = counts[doc.id] }
   end
+  
+  # Produce a time series of uploaded documents for organization
+  def self.upload_statistics(type, id)
+    # ensure we only inject the organization id as integer into the following raw SQL query.
+    raise ArgumentError unless id.kind_of? Integer
+  
+    condition = case type
+    when :organization
+      "organization_id = #{id}"
+    when :account
+      "account_id = #{id}"
+    else
+      raise ArgumentError, "type must be :organization or :account"
+    end
+
+    # N.B. if the desire to expand this query grows,
+    # please seek an alternative structure for ensuring
+    # the safety and viability of this query
+    #
+    # gather total document, page, and file size counts
+    # segmented by month and access level
+    query = <<-QUERY
+  select date_trunc('month', created_at) as month, access, count(id) as c, sum(page_count) as p, sum(file_size) as s 
+    from documents 
+    where #{condition}
+    group by date_trunc('month', created_at), access
+  QUERY
+    # run the query and collect the returned tuples
+    rows = self.connection.execute(query).map do |row|
+      tuple_array = row.map do |key,string_value|
+        # and coerce string values returned by ActiveRecord into dates or integers.
+        value = key == "month" ? DateTime.parse(string_value) : string_value.to_i
+        [key, value]
+      end
+      Hash[tuple_array]
+    end
+
+    # agglutinate the tuples into a nested set of buckets
+    # first with months as the top level dimension
+    months = rows.group_by{ |row| row['month'] }
+    data = months.map do |month, rows|
+      # and then with access level as the secondary dimension
+      access_bins = rows.map do |row|
+        # and for tersness's sake, filter out the now redundant month & access values in the tuples.
+        filtered = row.reject{ |k,v| ['month', 'access'].include? k }
+        [row['access'], filtered]
+      end
+      [month, Hash[access_bins]]
+    end
+    Hash[data]
+  end
 
   # Ensure that titles are stripped of trailing whitespace.
   def title=(title="Untitled Document")
@@ -531,6 +582,10 @@ class Document < ActiveRecord::Base
     File.join(DC.server_root(:ssl => allow_ssl, :agnostic => format == :js), canonical_path(format))
   end
 
+  def oembed_url
+    "#{DC.server_root}/api/oembed.json?url=#{CGI.escape(self.canonical_url('html', true))}&responsive=true"
+  end
+
   def search_url
     "#{DC.server_root}/documents/#{id}/search.json?q={query}"
   end
@@ -819,41 +874,46 @@ class Document < ActiveRecord::Base
 
   # Create an identical clone of this document, in all ways (except for the ID).
   def duplicate!(account=nil, options={})
-    # Clone the document.
-    newattrs = attributes.merge({
-      :access     => PENDING,
-      :created_at => Time.now,
-      :updated_at => Time.now
-    })
-    newattrs[:account_id] = account.id if account
-    newattrs[:organization_id] = account.organization.id if account and not newattrs[:organization_id]
-    copy     = Document.create!(newattrs.merge({:hit_count  => 0, :detected_remote_url => nil}))
-    newattrs = {:document_id => copy.id}
+    Document.transaction do
+      # Clone the document.
+      newattrs = attributes.merge({
+          :access     => PENDING,
+          :created_at => Time.now,
+          :updated_at => Time.now
+      })
+      newattrs.delete('id')
+      newattrs[:account_id] = account.id if account
+      newattrs[:organization_id] = account.organization.id if account and not newattrs[:organization_id]
+      copy     = Document.create!(newattrs.merge({:hit_count  => 0, :detected_remote_url => nil}))
+      newattrs = {:document_id => copy.id}
 
-    # Clone the docdata.
-    if docdata and options['include_docdata']
-      Docdata.create! docdata.attributes.merge newattrs
-    end
-
-    # Clone the associations.
-    associations = [entities, entity_dates, pages]
-    associations.push sections if options['include_sections']
-    associations.push annotations.accessible(account) if options['include_annotations']
-    associations.push project_memberships if options['include_project']
-    associations.each do |association|
-      association.each do |model|
-        model.class.create! model.attributes.merge newattrs
+      # Clone the docdata.
+      if docdata and options['include_docdata']
+        Docdata.create! docdata.attributes.merge newattrs
       end
+
+      # Clone the associations.
+      associations = [entities, entity_dates, pages]
+      associations.push sections if options['include_sections']
+      associations.push annotations.accessible(account) if options['include_annotations']
+      associations.push project_memberships if options['include_project']
+      associations.each do |association|
+        association.each do |model|
+          model_attrs = model.attributes.merge newattrs
+          model_attrs.delete('id')
+          model.class.create! model_attrs
+        end
+      end
+
+      # Clone the assets.
+      DC::Store::AssetStore.new.copy_assets(self, copy, self.access)
+
+      # Reindex, set access.
+      copy.index
+      copy.set_access access
+
+      copy
     end
-
-    # Clone the assets.
-    DC::Store::AssetStore.new.copy_assets(self, copy, self.access)
-
-    # Reindex, set access.
-    copy.index
-    copy.set_access access
-
-    copy
   end
 
   # TODO: Make the to_json an extended form of the canonical.
@@ -931,7 +991,7 @@ class Document < ActiveRecord::Base
     doc['source']             = source
     doc['created_at']         = created_at.to_formatted_s(:rfc822)
     doc['updated_at']         = updated_at.to_formatted_s(:rfc822)
-    doc['canonical_url']      = canonical_url(:html, options[:allow_ssl])
+    doc['canonical_url']      = canonical_url(:html, true)
     doc['language']           = language
     doc['file_hash']          = file_hash
     if options[:contributor]
@@ -958,7 +1018,6 @@ class Document < ActiveRecord::Base
     end
     doc['sections']           = ordered_sections.map {|s| s.canonical } if options[:sections]
     doc['data']               = data if options[:data]
-    doc['language']           = language
     if options[:annotations] && (options[:allowed_to_edit] || options[:allowed_to_review])
       doc['annotations']      = self.annotations_with_authors(options[:account]).map {|a| a.canonical}
     elsif options[:annotations]

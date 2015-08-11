@@ -1,5 +1,4 @@
 --- !omap
-- html: !omap []
 - viewer: !omap
   - CLOSE: CERRAR
   - add_note_instructions: Destacar una parte de la página, o hacer clic entre páginas
@@ -105,10 +104,11 @@
   - add_public_note_warn: Notas Públicas son visibles para todos los que vean este
       documento.
   - add_reviewer: Añadir Revisor
+  - add_wp_shortcode_for_viewer: Añadir este código corto a tu sitio de WordPress.
   - added_project: añadido a este proyecto
   - added_to_x_documents:
-    - Se agregó un documento a %s
-    - Se agregaron %d documentos a %s
+    - Se agregó un documento a %2$s
+    - Se agregaron %1$d documentos a %2$s
   - adding_accounts: Añadir Cuentas
   - administrator: Administrador
   - all_documents: Todos los Documentos
@@ -299,8 +299,10 @@
   - export: Exportar
   - export_to_overview_explain: Estás a punto de exportar a Panorama. Necesitas crear
       una cuenta de Panorama que requiere tu nombre de usuario y contraseña de DocumentCloud.
-  - featured_examples_list: Puedes ver varios ejemplos de documentos incrustados en
-      nuestra lista de %sreportajes destacados%s.
+  - featured_examples_documents_list: Puedes ver varios ejemplos de documentos incrustados
+      en nuestra lista de %sreportajes destacados%s.
+  - featured_examples_notes_list: Usted puede encontrar un montón de ejemplos de notas
+      incrustadas en nuestra lista %sde los informes que se muestra%s.
   - featured_reporting_list: Puedes encontrar ejemplos de búsquedas incrustadas en
       nuestra lista de %sreportajes destacados%s.
   - filter: 'Filtro '
@@ -341,7 +343,11 @@
       "Subir Páginas".
   - insert_replace_pages: Insertar/Reemplazar Páginas
   - introduction: Introducción
-  - language: idioma
+  - invalid_upload_file_type: '"%s" tiene un tipo de archivo no válido. No somos capaces
+      de procesar documentos de este tipo, por favor convertir el archivo a un formato
+      de documento con el apoyo tales como PDF. Vista %sla resolución de problemas%s
+      para obtener más detalles.'
+  - language: Idioma
   - language_defaults: Predeterminados de Idiomas
   - last_name: Apellido
   - length: Extensión
@@ -374,7 +380,7 @@
   - must_have_title: Por favor provee un títular.
   - must_upload_something: Necesitas subir al menos un documento.
   - new_account: Crear una cuenta nueva
-  - new_documents: Documentos Nuevos
+  - new_documents: Documentos nuevos
   - new_project: Proyecto Nuevo
   - next: Próximo
   - no_appear_until_publish: no aparecerá hasta que se publique.
@@ -525,8 +531,8 @@
     - Retire página
     - Quite %d Páginas
   - removed_from_x_documents:
-    - Se eliminó un documento de %s
-    - Se eliminaron %d documentos de %s
+    - Se eliminó un documento de %2$s
+    - Se eliminaron %1$d documentos de %2$s
   - removing: Extracción de ...
   - reorder_hint: Reordenar páginas arrastrando y soltando.
   - reorder_pages: Reordenar Páginas
@@ -575,6 +581,10 @@
   - saved: Guardar
   - search: Buscar
   - search_bar: barra de búsqueda
+  - search_embed_nothing_chosen: No ha realizado una búsqueda para incrustar. Por
+      favor, realice cualquiera de una búsqueda o seleccionar algunos documentos.
+  - search_embed_too_long_error: Demasiado se seleccionaron muchos documentos para
+      incrustar. Por favor seleccione menos documentos o incrustar un proyecto.
   - searching_dd: Busquedas de Documentos y Datos
   - select_pages_remove: Selecciona las páginas que quieres eliminar.
   - select_single_to_embed: Por favor elije a un documento para crear un incrustado.
@@ -594,6 +604,7 @@
     - Compartir este Documento
     - Compartir estos Documentos
   - shared_with_you_by: Compartido por ti %s
+  - sharing_x_of_x_documents: Compartiendo %d/%d documentos
   - show_all: Mostrar todas
   - show_all_x_pages:
     - Mostrar una página
@@ -637,6 +648,7 @@
   - update_applied_all: Actualización aplicada a todos los documentos.
   - upload: Subir
   - upload_document: Subir Documento
+  - upload_failed: Subir fracasado
   - upload_pages: Subir Páginas
   - uploaded_x_document_has:
     - el documento subido tiene
@@ -654,6 +666,7 @@
   - welcome_to_document_cloud: 'Bienvenido a DocumentCloud '
   - width: Anchura
   - workspace: "Área de trabajo"
+  - wp_shortcode_plugin_docs_link: "%sPrograma adicional requerida%s."
   - x_accounts:
     - "%d cuenta "
     - "%d cuentas"
@@ -664,7 +677,7 @@
   - x_is_no_longer_a_reviewer_on_x:
     - "%2$s ya no es un crítico en el documento"
     - "%2$s ya no es un crítico de los %1$d Documentos"
-  - x_is_not_published: "\"%s\" no se publica."
+  - x_is_not_published: '"%s" no se publica.'
   - x_mentions:
     - Una Mención
     - "%d Menciones"
@@ -679,7 +692,7 @@
   - x_results:
     - "%d Resultado "
     - "%d Resultados"
-  - x_still_processing: "\"%s\" está siendo procesada. Espere a que termine por favor."
+  - x_still_processing: '"%s" está siendo procesada. Espere a que termine por favor.'
   - your_documents: Tus Documentos
   - your_organization: Tu Organización
   - your_published_documents: Tus Documentos Publicados

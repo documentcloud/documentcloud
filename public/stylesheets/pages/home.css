@@ -281,7 +281,7 @@ ol {
     margin: 1em 3em;
     color: #999;
     border-left: 2px solid #999;
-    padding-left: 1em; 
+    padding-left: 1em;
   }
   #content.featured p {
     margin-bottom: 0.3em;
@@ -321,7 +321,7 @@ ol {
     float: left;
     margin: 0 20px 0 0;
   }
-  
+
 #content #faqs ul li {
     padding-left: 10px;
     list-style: circle inside;
@@ -526,6 +526,11 @@ ol {
   #knight_credit {
     display: block;
     width: 150px; height: 23px;
+    margin: 0 auto;
+  }
+  #calais_credit {
+    display: block;
+    width: 250px; height: 39px;
     margin: 0 auto;
   }
   #footer_links {

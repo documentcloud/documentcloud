@@ -1,19 +1,29 @@
 javascript_compressor: closure
+css_compressor: sass
 template_function: _.template
 embed_assets: datauri
 
 javascripts:
   core:
     - public/javascripts/application.js
-    - public/javascripts/vendor/underscore-*.js
-    - public/javascripts/vendor/jquery-*.js
-    - public/javascripts/vendor/jquery.ui.core.js
-    - public/javascripts/vendor/jquery.ui.widget.js
-    - public/javascripts/vendor/jquery.ui.position.js
-    - public/javascripts/vendor/jquery.ui.mouse.js
-    - public/javascripts/vendor/jquery.ui.sortable.js
-    - public/javascripts/vendor/jquery.ui.autocomplete.js
-    - public/javascripts/vendor/*.js
+    - public/javascripts/vendor/underscore/underscore.js
+    - public/javascripts/vendor/jquery/dist/jquery.js
+    - public/javascripts/vendor/jquery-ui/ui/core.js
+    - public/javascripts/vendor/jquery-ui/ui/widget.js
+    - public/javascripts/vendor/jquery-ui/ui/position.js
+    - public/javascripts/vendor/jquery-ui/ui/mouse.js
+    - public/javascripts/vendor/jquery-ui/ui/sortable.js
+    - public/javascripts/vendor/jquery-ui/ui/autocomplete.js
+    - public/javascripts/vendor/jquery-ui/ui/menu.js
+    - public/javascripts/vendor/backbone/backbone.js
+    - public/javascripts/vendor/sprintf.js
+    - public/javascripts/vendor/visualsearch/build-min/visualsearch_templates.js
+    - public/javascripts/vendor/visualsearch/build-min/visualsearch.js
+    - public/javascripts/vendor/blueimp-file-upload/js/jquery.fileupload.js
+    - public/javascripts/vendor/blueimp-file-upload/js/jquery.iframe-transport.js
+    - public/javascripts/vendor/flot/jquery.flot.js
+    - public/javascripts/vendor/flot/jquery.flot.time.js
+    - public/javascripts/vendor/flot/jquery.flot.selection.js
     - public/javascripts/lib/*.js
     - public/javascripts/translations/*.js
     - public/javascripts/model/*.js
@@ -21,18 +31,17 @@ javascripts:
     - public/javascripts/ui/**/*.js
     - public/javascripts/app/**/*.js
     - app/views/jst/workspace/**/*.jst
-    - public/javascripts/viewer
   editor:
     - public/javascripts/editor/editor_toolbar.js
     - public/javascripts/editor/*.js
     - app/views/jst/editor/*.jst
   search_embed:
     - app/views/jst/embed/search_*.jst
-  note_embed:
-    - app/views/jst/embed/note_*.jst
   admin:
     - public/javascripts/admin/*.js
     - app/views/admin/*.jst
+  admin_v2:
+    - public/javascripts/admin/charge.js
   ie_only:
     - public/javascripts/ie/*.js
   dev_only:
@@ -41,7 +50,7 @@ javascripts:
     - public/javascripts/home/*.js
   embedded_login:
     - public/javascripts/vendor/json2.js
-    - public/javascripts/vendor/jquery-*.js
+    - public/javascripts/vendor/jquery/dist/jquery.js
     - public/javascripts/embed/easy_xdm.js
     - public/javascripts/embed/embedded_login.js
 
@@ -51,6 +60,12 @@ stylesheets:
     - public/stylesheets/ui/ui.css
     - public/stylesheets/ui/*.css
     - public/stylesheets/vendor/*.css
+    - public/javascripts/vendor/visualsearch/build-min/visualsearch-datauri.css
+  ui_v2:
+    - public/stylesheets/common/reset.css
+    - public/stylesheets/v2/common.css
+    - public/stylesheets/v2/ui/forms.css
+    - public/stylesheets/v2/ui/alerts.css
   authentication:
     - public/stylesheets/pages/workspace.css
   workspace:
@@ -60,6 +75,7 @@ stylesheets:
   admin:
     - public/stylesheets/pages/admin.css
     - public/stylesheets/pages/admin_featured_reports.css
+    - public/stylesheets/pages/admin_table.css
   home:
     - public/stylesheets/pages/home.css
   embedded_login:

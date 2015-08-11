@@ -26,7 +26,7 @@ module DC
     # config.i18n.default_locale = :de
 
     # Use SQL instead of Active Record's schema dumper when creating the test database.
-    config.active_record.schema_format = :sql
+    # config.active_record.schema_format = :sql
 
     config.action_controller.page_cache_directory = "#{Rails.root.to_s}/public"
     config.cache_store = :file_store, "#{Rails.root}/tmp/cache", { expires_in: 10.minutes,:race_condition_ttl => 120 }

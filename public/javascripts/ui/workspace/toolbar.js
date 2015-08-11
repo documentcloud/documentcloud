@@ -134,9 +134,22 @@ dc.ui.Toolbar = Backbone.View.extend({
     checkEdit ? this.edit(continuation) : continuation(Documents.selected());
   },
 
+  // Opens the search embed dialog if the query is valid
+  // otherwise displays an error dialog with an appropriate error message
   openSearchEmbedDialog : function() {
+    var query;
     var docs = Documents.chosen();
-    dc.app.searchEmbedDialog = new dc.ui.SearchEmbedDialog(docs);
+    if ( docs.length ){
+      query = Documents.searchEmbedQuery(docs);
+    } else {
+      query = dc.app.searcher.publicQuery() || "";
+    }
+    if (! query){
+      var error = _.t( docs.length ? "search_embed_too_long_error" : "search_embed_nothing_chosen" );
+      dc.ui.Dialog.alert(error);
+    } else {
+      dc.app.searchEmbedDialog = new dc.ui.SearchEmbedDialog(docs, query);
+    }
   },
 
   openDocumentEmbedDialog : function() {

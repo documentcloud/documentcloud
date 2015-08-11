@@ -19,7 +19,8 @@ module DC
       def scan(regex)
         while @scanner.scan_until(regex)
           match   = @scanner.matched
-          yield match, @scanner.charpos, match.length
+          position = @scanner.charpos - match.length
+          yield match, position, match.length
         end
       end
 

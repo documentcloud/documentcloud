@@ -5,6 +5,7 @@ module DC
   module CSV
 
     def self.generate_csv(records, keys=nil)
+      return if records.none?
       keys ||= records.first.keys
       ::CSV.generate do |csv|
         csv << keys

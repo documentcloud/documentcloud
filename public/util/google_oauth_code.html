@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Authorization code</title>
+  <style type="text/css" media="screen">
+    body {
+      font-size: 20pt;
+    }
+    input {
+      width: 50em;
+      font-size: 14pt;
+    }
+  </style>
+</head>
+<body>
+  <b>Authorization code:</b> <input type="text" id="code" onfocus="this.select();" readonly>
+  <script type="text/javascript">
+    if (window.location.href.indexOf('dev.dcloud.org') == -1) {
+      window.location.href = 'https://www.documentcloud.org/';
+    }
+
+    function getParameterByName(name) {
+        name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+        var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+            results = regex.exec(location.search);
+        return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+    }
+    var code = document.getElementById('code');
+    code.value = getParameterByName('code');
+    code.focus();
+  </script>
+</body>
+</html>

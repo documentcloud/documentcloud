@@ -21,7 +21,7 @@
 
   .featured_reports .controls.actions {
     position: absolute;
-    right: 10px;
+    right: 208px;
     top: 8px;
   }
 
@@ -66,7 +66,7 @@
     .featured_reports .edit .writeup textarea {
       width: 100%;
       height: 150px;
-      padding: 0px;
+      padding: 5px;
     }
      .featured_reports .edit .delete  {
        float: left;

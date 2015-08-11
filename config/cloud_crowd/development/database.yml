@@ -1,15 +1,16 @@
-# This is a standard ActiveRecord database.yml file. You can configure it 
+# This is a standard ActiveRecord database.yml file. You can configure it
 # to use any database that ActiveRecord supports.
 
-# :adapter:  mysql
-# :encoding: utf8
-# :username: root
-# :password:
-# :socket:   /tmp/mysql.sock
-# :database: cloud_crowd
+<% secrets = YAML.load_file('secrets/secrets.yml')['development'] %>
 
-# If you'd prefer to use an SQLite database instead, the following configuration
-# will do nicely:
-
-:adapter:  sqlite3
-:database: cloud_crowd.db
+:adapter:  postgresql
+:encoding: unicode
+:schema_search_path: public
+:pool: 10
+:dead_connection_timeout: 1
+:reaping_frequency: 30
+:username: <%= secrets['username'] %>
+:password: <%= secrets['db_password'] %>
+:allow_concurrency: true
+:database: dcloud_crowd_development
+:host:     dev.dcloud.org

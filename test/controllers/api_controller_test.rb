@@ -28,7 +28,6 @@ class ApiControllerTest < ActionController::TestCase
     assert_recognizes(
       { controller: 'api', action: 'cors_options', :format=>'json', "allowed_methods"=>[:get] },
       { path: '/api/search.json',  method: :options } )
-
   end
 
   def test_index
@@ -50,8 +49,7 @@ class ApiControllerTest < ActionController::TestCase
     assert_equal ["Accept", "Authorization", "Content-Length", "Content-Type", "Cookie"], cors_allowed_headers.sort
   end
 
-
-  def test_search
+  def test_empty_search_results
     get :search, q: 'ponies', :format => :json
     assert_has_search_params Sunspot.session.searches.last, :keywords, 'ponies'
     assert_equal 0, json_body['total']
@@ -61,6 +59,30 @@ class ApiControllerTest < ActionController::TestCase
     get :search, q: "document:#{doc.id}", :format=>:json
     assert_equal 1, json_body['total']
     assert_equal doc.canonical_id, json_body['documents'].first['id']
+  end
+
+  def test_api_login_required_returns_unauthorized
+    get :upload
+    assert_response 401
+  end
+
+  def test_search_works_if_authenticated
+    # authentication is optional, but it can get you more docs
+    account = accounts(:louis)
+    request.headers['HTTP_AUTHORIZATION'] = ActionController::HttpAuthentication::Basic.encode_credentials(account.email, 'password')
+    get(:search, q: "document:#{doc.id}", format: :json)
+    assert_response 200
+    assert_equal 1, json_body['total']
+    assert_equal doc.canonical_id, json_body['documents'].first['id']
+  end
+
+  def test_search_doesnt_work_if_authentication_fails
+    # otherwise the user might enter the wrong password and be sad the extra docs are missing
+    # https://github.com/documentcloud/documentcloud/issues/89
+    request.headers['HTTP_AUTHORIZATION'] = ActionController::HttpAuthentication::Basic.encode_credentials("WRONG-email@example.org", "WRONG-password")
+    refute request.authorization.blank?
+    get(:search, q: "document:#{doc.id}", format: :json)
+    assert_response 403
   end
 
   def test_it_requires_authentication

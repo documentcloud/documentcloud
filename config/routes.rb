@@ -22,7 +22,6 @@ DC::Application.routes.draw do
 
   # login / logout
   scope( controller: 'authentication' ) do
-    get '/signup',                        action: 'signup_info'
     match '/login',                       action: 'login', :via=>[:get,:post]
     get '/logout',                        action: 'logout'
     get '/auth/remote_data/:document_id', action: 'remote_data'
@@ -34,7 +33,7 @@ DC::Application.routes.draw do
   end
 
   # Public search.
-  get '/public/search' => 'public#index'
+  get '/public/search' => 'public#index', :as => :public_search
   get '/public/search/:query' => 'public#index', :query => /.*/
 
   # API.
@@ -66,7 +65,6 @@ DC::Application.routes.draw do
   resources :featured do
     collection { post :present_order }
   end
-
 
   resources :documents do
 
@@ -130,8 +128,12 @@ DC::Application.routes.draw do
       post :resend_welcome
     }
   end
-  match '/accounts/enable/:key' => 'accounts#enable', :via=>[:get,:post], :as => :enable_account
-  match '/reset_password' => 'accounts#reset', :via=>[:get,:post], :as => :reset_password
+  match '/accounts/enable/:key' => 'accounts#enable', :via => [:get, :post], :as => :enable_account
+  match '/reset_password' => 'accounts#reset', :via => [:get, :post], :as => :reset_password
+
+  get  '/signup' => 'redirect#index', :url => '/apply'
+  get  '/apply' => 'signup#index', :as => :apply
+  post '/apply' => 'signup#create', :as => :apply_create
 
   # Organizations management
   resources :organizations, :only=>:update
@@ -175,6 +177,6 @@ DC::Application.routes.draw do
   
   # Standard fallback routes
   match '/:controller(/:action(/:id))', :via=>[:get,:post]
-  get ':controller/:action.:format' => '#index'
+  get ':controller/:action.:format'
 
 end

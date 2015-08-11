@@ -1,6 +1,4 @@
-require File.dirname(__FILE__) + '/support/setup'
-require File.dirname(__FILE__) + '/support/document_action'
-
+require File.join(File.dirname(__FILE__), 'support', 'document_action')
 class DocumentImport < DocumentAction
   
   # Split a document import job into two parallel parts ... one for the image
@@ -97,7 +95,7 @@ class DocumentImport < DocumentAction
       end
     else
       begin
-        opts = {:pages => 'all', :output => 'text', :language => document.language}
+        opts = {:pages => 'all', :output => 'text', :language => DC::Language.ocr_name(document.language)}
         opts[:ocr] = true if options['force_ocr']
         opts[:clean] = false unless opts[:language] == 'eng'
         Docsplit.extract_text(@pdf, opts)
@@ -119,15 +117,18 @@ class DocumentImport < DocumentAction
       end
     end
     save_page_text!
-    text = @pages.map{|p| p[:text] }.join('')
+
     document.page_count = @pages.length
     Page.refresh_page_map(document)
     EntityDate.reset(document)
     document.save!
-    pages = document.reload.pages
+    pages = document.reload.pages.order(:page_number)
     Sunspot.index pages
     Sunspot.commit
-    DC::Import::EntityExtractor.new.extract(document, text) unless options['secure'] or not DC::Language::SUPPORTED.include? document.language
+    if ! options['secure'] && DC::Language::SUPPORTED.include?(document.language)
+      text = pages.map(&:text).join('')
+      DC::Import::EntityExtractor.new.extract(document, text)
+    end
     document.upload_text_assets(pages, access)
     document.id
   end

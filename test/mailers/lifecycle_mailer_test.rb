@@ -3,7 +3,7 @@ require 'test_helper'
 class LifecycleMailerTest < ActionMailer::TestCase
 
   def test_login_instructions
-    email = LifecycleMailer.login_instructions(louis).deliver
+    email = LifecycleMailer.login_instructions(louis, louis.organization).deliver
     assert !ActionMailer::Base.deliveries.empty?
     assert_equal [ louis.email ], email.to
     @key=louis.security_key.key
@@ -47,7 +47,7 @@ class LifecycleMailerTest < ActionMailer::TestCase
     rescue Exception=>exception
     end
     email = LifecycleMailer.exception_notification(exception).deliver
-    assert_equal [ LifecycleMailer::SUPPORT ], email.to
+    assert_equal [ LifecycleMailer::EXCEPTIONS ], email.to
     assert_match(/undefined local variable or method `jklasfa'/, email.body.to_s ) #`
   end
 

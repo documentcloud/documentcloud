@@ -1,12 +1,12 @@
 <%= @account.full_name %> --
 
 <% if @admin -%>
-<%= @admin.full_name %> додав Вас до екаунту <%= @account.organization_name %> на DocumentCloud.
+<%= @admin.full_name %> додав Вас до екаунту <%= @account.organization.name %> на DocumentCloud.
 <% else -%>
 Для Вас і для <%= @account.organization.name %> було створено екаунт на DocumentCloud.
 <% end -%>
 
-Створіть пароль і можете починати працювати із бета-версією:
+Створіть пароль і можете починати працювати:
 
 <%= DC.server_root(:force_ssl => true) %>/accounts/enable/<%= @account.security_key.key %>
 
@@ -18,7 +18,6 @@
 
 Щасти,
 
-Джеремі, Лоурен і Тед
-DocumentCloud
+DocumentCloud Команда
 
-PS. Нам дуже цікаво дізнаватися про те, як DocumentCloud допомагає вам у вашій повсякденній роботі, тож не забудьте розповісти нам про статтю, яку написалти вам допоміг DocumentCloud!
+P.S. Нам дуже цікаво дізнаватися про те, як DocumentCloud допомагає вам у вашій повсякденній роботі, тож не забудьте розповісти нам про статтю, яку написалти вам допоміг DocumentCloud!

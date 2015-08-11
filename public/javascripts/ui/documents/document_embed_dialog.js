@@ -125,7 +125,8 @@ dc.ui.DocumentEmbedDialog = dc.ui.Dialog.extend({
 
   // Remove line breaks from the viewer embed.
   removeLines : function() {
-    this.$('.snippet').val(this.$('.snippet').val().replace(/[\r\n]/g, ''));
+    var $html_snippet = this.$('#document_embed_html_snippet');
+    $html_snippet.val($html_snippet.val().replace(/[\r\n]/g, ''));
   },
 
   // Serialize and stringify embed options so they remain consistent between embeds.
@@ -164,13 +165,13 @@ dc.ui.DocumentEmbedDialog = dc.ui.Dialog.extend({
 
   // Collects embed options and renders them using a JST template in a textarea.
   _renderEmbedCode : function() {
-    var options       = this.embedOptions();
-    options.container = '"#DV-viewer-' + this.model.canonicalId() + '"';
-    var serialized    = _.map(options, function(value, key){ return key + ': ' + value; });
+    var options              = this.embedOptions();
+    options.container        = '"#DV-viewer-' + this.model.canonicalId() + '"';
     this.$('.publish_embed_code').html(JST['document/embed_code']({
       doc: this.model,
-      options: serialized.join(',\n    '),
-      rawOptions: options
+      options: _.map(options, function(value, key){ return key + ': ' + value; }).join(',\n    '),
+      shortcodeOptions: _.map(options, function(value, key) { return key + '=' + (typeof value == 'string' ? value.replace(/\"/g, '&quot;') : value); }).join(' '),
+      rawOptions: options,
     }));
   },
 
@@ -236,8 +237,8 @@ dc.ui.DocumentEmbedDialog = dc.ui.Dialog.extend({
   },
 
   // Auto-selects the embed code when user clicks on the textarea.
-  selectSnippet : function() {
-    this.$('.snippet').select();
+  selectSnippet : function(e) {
+    this.$(e.target).closest('.snippet').select();
   }
 
 });

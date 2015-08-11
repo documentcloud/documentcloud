@@ -19,6 +19,4 @@ dc.model.FeaturedReport = Backbone.Model.extend({
 dc.model.FeaturedReports = Backbone.Collection.extend({
   model : dc.model.FeaturedReport,
   url   : '/featured'
-
-
 });

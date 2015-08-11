@@ -185,12 +185,44 @@ module DC
       DC::CSV::generate_csv(documents)
     end
 
-    def self.accounts_csv
-      accounts = Account.all.map {|a| a.canonical(:include_document_counts => true,
-                                                  :include_organization => true) }
-      columns  = accounts.first.keys.sort_by {|key| Account.column_names.index(key) || 1000 }
-      # columns = Account.column_names | Account.first.canonical(:include_document_counts => true).keys
-      DC::CSV::generate_csv(accounts, columns)
+    def self.accounts_csv(csv)
+      keys = Account.first.canonical(:include_document_counts => true, :include_organization => true).keys
+      csv << keys.map{ |key| key.titleize }
+      Account.find_each do | account |
+        record = account.canonical(:include_document_counts => true, :include_organization => true)
+        csv << keys.map {|key| record[key] }
+      end
+    end
+    
+    def self.new_accounts_since(from, to=Time.now)
+      Account.joins(:memberships, :organizations).where('accounts.created_at >= ? and accounts.created_at <= ?', from, to)
+    end
+    
+    def self.new_organizations_since(from, to=Time.now)
+      Organization.where('created_at >= ? and created_at <= ?', from, to)
+    end
+
+    # To Do: set up a general notifier.
+    # Should take a webhook url and a json payload to send.
+    def self.notify_top_ten
+      top_ten_hits = RemoteUrl.where('document_id is not null and date_recorded = ?',Time.now.utc.to_date).group('document_id').order("sum_hits desc").limit(10).sum('hits')
+      data = top_ten_hits.map do |id, hits|
+        doc = Document.find(id)
+        {
+          'title' => doc.title,
+          'contributor' => doc.account.full_name,
+          'organization' => doc.organization.name,
+          'embedded_url' => doc.published_url || doc.detected_remote_url,
+          'canonical_url' => doc.canonical_url(:html),
+          'hits'  => hits
+        }
+      end
+
+      text = "Top ten most popular documents today\n"
+      text += data.map{ |d| "#{d['hits']} hits for <#{d['embedded_url']}|#{d['title']}> (<#{d['canonical_url']}|dc link>) contributed by #{d['contributor']} (#{d['organization']})" }.join("\n")
+      hook_url = DC::SECRETS['slack_webhook']
+      data = {:payload => {:text => text, :username => "docbot", :icon_emoji => ":doccloud:"}.to_json}
+      RestClient.post(hook_url, data)
     end
   end
 

@@ -2,9 +2,8 @@
 
 <html lang="en">
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <meta http-equiv="ClearType" content="true" />
-  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <%= render :partial => 'common/meta_tags' %>
+  <meta http-equiv="ClearType" content="true">
   <title><%= @query %></title>
 
   <% if Rails.env.production? %>
@@ -18,7 +17,7 @@
     <div id="DC-search-<%= @slug %>"></div>
     <script src="<%= DC.cdn_root %>/search/loader.js"></script>
     <script>
-      dc.embed.load("<%= DC.server_root(:ssl => false) %>/search/embed/", <%=raw @options %>);
+      dc.embed.load("<%= DC.server_root %>/search/embed/", <%=raw @options %>);
     </script>
   </div>
 

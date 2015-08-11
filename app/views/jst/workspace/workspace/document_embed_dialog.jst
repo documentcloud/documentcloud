@@ -62,9 +62,7 @@
     <select class="viewer_open_to" name="viewer_open_to">
       <option value="first_page"><%= _.t('first_page') %></option>
       <option value="page"><%= _.t('page_ellipsis') %></option>
-      <% if (doc.get('annotation_count')) { %>
-        <option value="note"><%= _.t('note_ellipsis') %></option>
-      <% } %>
+      <option value="note"><%= _.t('note_ellipsis') %></option>
     </select>
     <div class="open_to"></div>
     <p class="dialog_info selectable_text interface">

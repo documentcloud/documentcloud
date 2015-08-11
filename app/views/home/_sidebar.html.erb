@@ -10,24 +10,13 @@
       <a href="/"><span class="minibutton default">Start using DocumentCloud</span></a>
     </div>
 
-  <% end %>
+  <% else %>
 
-
-  <div id="search_wrapper" class="sidebar_section">
-    <div id="search_desc">
-      Search thousands of public documents<br />
-      from newsrooms across the country:
+    <div id="join" class="sidebar_section">
+      DocumentCloud is a tool for journalists.<br />
+      If you're reporting on or publishing primary source documents, we can help.
+      <a href="/apply"><span class="minibutton default">Join DocumentCloud</span></a>
     </div>
-    <div id="search_box_wrapper" class="text_input search noselect">
-      <div class="icon search_glyph"></div>
-      <div class="search_inner">
-        <input placeholder="Search..." id="search_box" />
-      </div>
-      <div class="icon cancel_search" title="clear search"></div>
-    </div>
-  </div>
-
-  <% if !@current_account || @current_account.reviewer? %>
 
     <div class="sidebar_section login_section">
       <% if flash[:error] %>
@@ -54,17 +43,42 @@
     </div>
 
   <% end %>
-  
-  <div id="news" class="sidebar_section">
-    <div class="section_title">
-      News
+
+  <div id="search_wrapper" class="sidebar_section">
+    <div id="search_desc">
+      Search thousands of public documents<br />
+      from newsrooms across the country:
     </div>
-    <ul>
-      <li>
-        June 9, 2011 &mdash; <a href="http://blog.documentcloud.org/blog/2011/06/new-home-at-ire/">DocumentCloud Merges with Investigative Reporters and Editors</a>
-      </li>
-    </ul>
+    <div id="search_box_wrapper" class="text_input search noselect">
+      <div class="icon search_glyph"></div>
+      <div class="search_inner">
+        <input placeholder="Search..." id="search_box" />
+      </div>
+      <div class="icon cancel_search" title="clear search"></div>
+    </div>
   </div>
+
+  <% if @current_account && !@current_account.reviewer? %>
+
+    <div id="email_signup" class="sidebar_section">
+      <div class="section_title">
+        Get DocumentCloud News &amp; Tips
+      </div>
+      <form action="//documentcloud.us11.list-manage.com/subscribe/post?u=4e1ca6e52b3163639d641f360&amp;id=20a793193a" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" style="margin-top:22px" novalidate>
+        <div class="text_input first light mc-field-group">
+          <div class="inner">
+            <input type="email" value="<%= @current_account.email %>" placeholder="Email" name="EMAIL" class="required email" id="mce-EMAIL" />
+          </div>
+        </div>
+        <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+        <div style="position: absolute; left: -5000px;"><input type="text" name="b_4e1ca6e52b3163639d641f360_20a793193a" tabindex="-1" value=""></div>
+        <div class="clear">
+          <button type="submit" value="Subscribe" name="subscribe" class="minibutton default">Subscribe</button>
+        </div>
+      </form>
+    </div>
+
+  <% end %>
 
   <div id="about" class="sidebar_section">
     <div class="section_title">
@@ -81,14 +95,13 @@
     </ul>
   </div>
 
-  <% if @title != 'Contact' && (!@current_account || @current_account.reviewer?) %> 
-
-    <div id="join" class="sidebar_section">
-      DocumentCloud is a tool for journalists.<br />
-      If you're reporting on or publishing primary source documents, we can help.
-      <a href="/contact"><span class="minibutton default">Join DocumentCloud</span></a>
+  <div id="news" class="sidebar_section">
+    <div class="section_title">
+      Latest News
     </div>
-
-  <% end %>
+    <ul id="news_headlines">
+      <li><img style="vertical-align:text-top" src="/images/search_embed/embed/spinner_circle.gif"/> Headlines <a href="http://en.wikipedia.org/wiki/To_come_%28publishing%29">TK</a></li>
+    </ul>
+  </div>
 
 </div>

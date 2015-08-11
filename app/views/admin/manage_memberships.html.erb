@@ -1,0 +1,59 @@
+<%
+  @title = "Admin Dashboard :: Membership Maintenance"
+  @stylesheets = [:admin]
+  @javascripts = [:admin]
+  @bodyclass   = 'admin memberships'
+%>
+<div id="full_screen_form" class="full_page_background">
+  <form action="/admin/update_memberships/<%= @account.id %>" method="POST">
+    <%= token_tag %>
+    <h1>Modify memberships for <%= @account.email %></h1>
+    <% if flash[:error] %>
+      <div class="form_error login_error">
+        <span>
+          <%= flash[:error] %>
+        </span>
+      </div>
+    <% end %>
+    <table class="admin_table">
+        <thead>
+            <tr>
+                <th>Default</th>
+                <th>Organization</th>
+                <th>Role</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        <% @account.memberships.each do | membership | %>
+            <tr>
+                <td>
+                    <input type="radio" name="default_membership" value="<%= membership.id%>" <%="checked" if membership.default%>>
+                </td>
+                <td>
+                    <%= membership.organization.name %>
+                </td>
+                <td>
+                    <select name="role[<%=membership.id%>]">
+                        <% Membership::ROLE_TITLES.each do |id,title| %>
+                            <option value="<%=id %>" <%= "selected" if membership.role == id %>>
+                                <%= title %>
+                            </option>
+                        <% end  %>
+                    </select>
+                </td>
+                <td>
+                  <%= link_to ">>", :action=>:manage_organization, :id=>membership.organization_id %>
+                </td>
+            </tr>
+
+        <% end %>
+        </tbody>
+    </table>
+    <div class="line">
+        <div class="minibutton" id="submitbtn" value="Modify" onclick="$('#full_screen_form form').submit();">Modify Memberships</div>
+    </div>
+
+
+  </form>
+</div>

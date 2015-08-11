@@ -4,6 +4,8 @@
 
 :disabled_actions:
   - backup_database
+  - api_document_import
+  - reindex_everything
 
 # The following settings allow you to control the number of workers that can run
 # on a given node, to prevent the node from becoming overloaded. 'max_workers'
@@ -38,11 +40,15 @@
 # The default value if left unspecified is '/tmp/cloud_crowd_storage'.
 # :local_storage_path:  /tmp/cloud_crowd_storage
 
+# Setting the temp_storage_path allows us to direct where
+# CloudCrowd will keep files that it's currently processing
+:temp_storage_path:   /mnt/cloud_crowd
+
 # Use HTTP Basic Auth for all requests? (Includes all internal worker requests
 # to the central server). If yes, specify the login and password that all
 # requests must provide for authentication.
 :http_authentication: no
-:login:               documentcloud
+:login:               <%= secrets['username'] %>
 :password:            <%= secrets['db_password'] %>
 
 # By default, CloudCrowd looks for installed actions inside the 'actions'

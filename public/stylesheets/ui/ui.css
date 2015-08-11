@@ -106,6 +106,7 @@ input.hidden_submit {
     display: block;
   }
 
+
 /*------------------------------ Text Inputs ---------------------------------*/
 div.text_input {
   position: relative;
@@ -323,6 +324,12 @@ textarea.text_area {
   .minibutton .text_arrow {
     font-size: 13px;
     line-height: 11px;
+  }
+
+  button.minibutton {
+    -webkit-box-sizing: content-box;
+       -moz-box-sizing: content-box;
+            box-sizing: content-box;
   }
 
 

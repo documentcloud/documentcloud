@@ -101,10 +101,11 @@
   - add_public_note: Add a Public Note
   - add_public_note_warn: Public notes are visible to everyone who views this document.
   - add_reviewer: Add Reviewer
+  - add_wp_shortcode_for_viewer: Add this shortcode to your WordPress content.
   - added_project: added to this project
   - added_to_x_documents:
-    - Added a document to %s
-    - Added %d documents to %s
+    - Added a document to %2$s
+    - Added %1$d documents to %2$s
   - adding_accounts: Adding Accounts
   - administrator: Administrator
   - all_documents: All Documents
@@ -156,9 +157,9 @@
   - contact_us: Contact Us
   - contributed_by: Contributed by
   - contributor: Contributor
-  - country: " Countries"
+  - country: Countries
   - create_new_project: Create a New Project
-  - date: " Dates"
+  - date: Dates
   - date_uploaded: Date Uploaded
   - default_document_language: Default Document Language
   - delete: Delete
@@ -237,7 +238,7 @@
   - edit_title: Edit Title
   - edit_x: Edit %s
   - editing_notes_sections: Editing Notes and Sections
-  - email: Email Addresses
+  - email: Email address
   - email_for_assistance: If you need assistance, please email us at support@documentcloud.org.
   - email_when_complete: Email me when %sdocuments have%s finished processing.
   - embed_a_note: Embed a Note
@@ -290,7 +291,9 @@
   - export_to_overview_explain: You are about to export to Overview. You must create
       an Overview account, and you must provide Overview with your DocumentCloud username
       and password.
-  - featured_examples_list: You can find plenty of examples of embedded documents
+  - featured_examples_documents_list: You can find plenty of examples of embedded
+      documents on our list of %sfeatured reporting%s.
+  - featured_examples_notes_list: You can find plenty of examples of embedded notes
       on our list of %sfeatured reporting%s.
   - featured_reporting_list: You can find examples of embedded searches on our list
       of %sfeatured reporting%s.
@@ -330,7 +333,10 @@
       at once. When you're ready, click the "Upload Pages" button.
   - insert_replace_pages: Insert/Replace Pages
   - introduction: Introduction
-  - language: language
+  - invalid_upload_file_type: "\"%s\" has an invalid file type.  We are unable to
+      process documents of this type, please convert the file to a supported document
+      format such as PDF.  \n View %stroubleshooting%s for additional details."
+  - language: Language
   - language_defaults: Language Defaults
   - last_name: Last name
   - length: Length
@@ -348,8 +354,8 @@
   - manage_account: Manage Account
   - manage_organization: Manage Organization %s
   - matching_search: matching this search
-  - max_upload_size_warn: You can only upload documents less than 200MB in size. Please
-      %soptimize your document%s before continuing.
+  - max_upload_size_warn: '"%s" is more than 400MB in size. Please %soptimize your
+      document%s before continuing.'
   - mentioned_in_x_documents:
     - Mentioned in a document
     - Mentioned in %d documents
@@ -363,7 +369,7 @@
   - must_have_title: Please enter a title.
   - must_upload_something: You must upload at least one document.
   - new_account: New Account
-  - new_documents: New Documents
+  - new_documents: New documents
   - new_project: New Project
   - next: Next
   - no_appear_until_publish: will not appear until published.
@@ -409,7 +415,7 @@
   - order_documents_by: Order documents by
   - organization:
     - Organization
-    - " Organizations"
+    - Organizations
   - organizations_documents: Documents belonging to %s
   - over_x_mentions: Over %d mentions
   - page: *2
@@ -421,9 +427,9 @@
   - password_reset: DocumentCloud password reset
   - password_updated: Password updated
   - pending: Pending
-  - person: " People"
+  - person: People
   - pg: p.
-  - phone: " Phone"
+  - phone: Phone
   - place: Places
   - please_enter_email: Please enter an email address.
   - please_enter_valid_email: Please enter a valid email address.
@@ -515,8 +521,8 @@
     - Remove Page
     - Remove %d Pages
   - removed_from_x_documents:
-    - Removed a document from %s
-    - Removed %d documents from %s
+    - Removed a document from %2$s
+    - Removed %1$d documents from %2$s
   - removing: Removing...
   - reorder_hint: Reorder pages by dragging and dropping.
   - reorder_pages: Reorder Pages
@@ -563,6 +569,10 @@
   - saved: Saved
   - search: Search
   - search_bar: Search Bar
+  - search_embed_nothing_chosen: You have not performed a search to embed.  Please
+      either perform a search or select some documents.
+  - search_embed_too_long_error: Too many documents were selected for embedding.  Please
+      select fewer documents or embed a project.
   - searching_dd: Searching Documents and Data
   - select_pages_remove: Select the pages you wish to remove.
   - select_single_to_embed: Please select a single document in order to create the
@@ -600,15 +610,16 @@
   - sort_documents_by: Sort Documents By
   - source: Source
   - source_of_document: The source from which you obtained this document
-  - state: " States"
+  - state: States
   - step_x_of_x: Step %d of %d
-  - term: " Terms"
+  - term: Terms
   - terms: Terms
   - text: Text
-  - text_reprocess_help: "\"Reprocess\" this document to take advantage of improvements
-      to our text extraction tools. Choose \"Force OCR\" (optical character recognition)
+  - text_reprocess_help: '"Reprocess" this document to take advantage of improvements
+      to our text extraction tools. Choose "Force OCR" (optical character recognition)
       to ignore any embedded text information and use Tesseract before reprocessing.
-      The document will close while it's being rebuilt. Are you sure you want to proceed?"
+      The document will close while it''s being rebuilt. Are you sure you want to
+      proceed?'
   - text_tools: Text Tools
   - the_api: The DocumentCloud API
   - timeline_for_doc: Timeline for "%s"
@@ -624,6 +635,7 @@
   - update_applied_all: Update applied to all files.
   - upload: Upload
   - upload_document: Upload Document
+  - upload_failed: Upload Failed
   - upload_pages: Upload Pages
   - uploaded_x_document_has:
     - the uploaded document has
@@ -641,6 +653,7 @@
   - welcome_to_document_cloud: Welcome to DocumentCloud
   - width: Width
   - workspace: Workspace
+  - wp_shortcode_plugin_docs_link: "%sPlugin required%s."
   - x_accounts:
     - "%d account"
     - "%d accounts"
@@ -651,7 +664,7 @@
   - x_is_no_longer_a_reviewer_on_x:
     - "%2$s is no longer a reviewer on the Document"
     - "%2$s is no longer a reviewer on the %1$d Documents"
-  - x_is_not_published: "\"%s\" is not published."
+  - x_is_not_published: '"%s" is not published.'
   - x_mentions:
     - One Mention
     - "%d Mentions"
@@ -666,7 +679,7 @@
   - x_results:
     - "%d Result"
     - "%d Results"
-  - x_still_processing: "\"%s\" is still being processed. Please wait for it to finish."
+  - x_still_processing: '"%s" is still being processed. Please wait for it to finish.'
   - your_documents: Your Documents
   - your_organization: Your Organization
   - your_published_documents: Your Published Documents

@@ -88,6 +88,17 @@ class AccountTest < ActiveSupport::TestCase
     assert_match louis.security_key.key, mail.body.to_s
   end
 
+  it "upgrades a reviewer account" do
+    account = accounts(:reporter_joe)
+    account.memberships.first.update_attributes(role: Account::REVIEWER)
+    assert account.reviewer?
+    # Perhaps they're going back into business?
+    account.upgrade_reviewer_to_real( organizations(:bankrupt), Account::ADMINISTRATOR )
+    membership = account.memberships(true).first
+    assert_equal organizations(:bankrupt), membership.organization
+    assert_equal Account::ADMINISTRATOR, membership.role
+  end
+
   it "can have multiple identities" do
     ids = { 'facebook'=>'12' }
     louis.identities = ids
@@ -111,4 +122,16 @@ class AccountTest < ActiveSupport::TestCase
     assert louis.canonical( :include_organization=>true, :include_document_counts=>true)
   end
 
+  it "disallows leading/trailing spaces in email address" do
+    account = Account.new(first_name: ' Bob', last_name: 'Smith ',
+      language: DC::Language::DEFAULT, document_language: DC::Language::DEFAULT )
+    account.email = ' bob@test.com'
+    refute account.save
+    assert account.errors.include?(:email)
+    account.email = 'bob@test.com '
+    refute account.save
+    assert account.errors.include?(:email)
+    account.email = 'bob@test.com'
+    assert account.save
+  end
 end

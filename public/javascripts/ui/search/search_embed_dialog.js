@@ -35,16 +35,14 @@ dc.ui.SearchEmbedDialog = dc.ui.Dialog.extend({
     q          : ''
   },
 
-  constructor : function(docs) {
+  // accepts an array of documents and the query string
+  // that should be used for embedding them.
+  constructor : function(docs, query) {
     this.currentStep = 1;
     this.docs        = docs;
-    if (docs.length) {
-      this.query = _.map(docs, function(doc){ return 'document: ' + doc.id; }).join(' ');
-    } else {
-      this.query = dc.app.searcher.publicQuery() || "";
-    }
-
-    dc.ui.Dialog.call(this, {mode : 'custom', title : this.displayTitle()});
+    var options = {mode : 'custom', title : this.displayTitle()};
+    this.query = query;
+    dc.ui.Dialog.call(this, options);
     dc.ui.spinner.show();
     this.fetchCounts();
   },
@@ -145,14 +143,16 @@ dc.ui.SearchEmbedDialog = dc.ui.Dialog.extend({
 
   _renderEmbedCode : function() {
     var options          = this.embedOptions();
+    var q                = options.q
     options.title        = '"' + options.title + '"';
     options.container    = '"' + options.container + '"';
-    options.q            = '"' + options.q + '"';
+    options.q            = '"' + q + '"';
     options.order        = '"' + options.order + '"';
     var serialized       = _.map(options, function(value, key){ return key + ': ' + value; });
     this.$('.publish_embed_code').html(JST['search/embed_code']({
       query: dc.inflector.sluggify(this.query),
-      options: serialized.join(',\n    ')
+      options: serialized.join(',\n    '),
+      publicSearchUrl: "https://" + window.location.host + "/public/search/" + encodeURIComponent(q),
     }));
   },
 
