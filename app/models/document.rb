@@ -389,7 +389,7 @@ class Document < ActiveRecord::Base
   end
   
   def has_running_jobs?
-    processing_jobs.incomplete.exist?
+    processing_jobs.incomplete.exists?
   end
 
   # Does this document have a title?
