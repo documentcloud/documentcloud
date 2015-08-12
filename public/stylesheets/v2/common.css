@@ -1,19 +1,69 @@
 /*----------------------------------- v2 -------------------------------------*/
 
-
-
 .v2 {
+  margin: 0;
   padding: 0 1em;
-  background: #fff url(/images/embed/home/stripes.png);
+  background: #ffffff url(/images/embed/home/stripes.png);
 
   font: 16px/1.6em Gotham, 'Proxima Nova', 'Avenir Next', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-weight: 400;
 }
 
-.container {
-  min-width: 300px;
-  max-width: 720px;
-  margin: 0 auto;
+section {
+  margin-bottom: 3em;
+}
+
+#header_primary {
+  position: relative;
+  background-color: rgb(90, 118, 160);
+  color: #ffffff;
+  padding: 1em;
+  margin: 0 -1em; /* Negative of body's side padding */
+  font-weight: 700;
+  -moz-osx-font-smoothing: grayscale;
+   -webkit-font-smoothing: antialiased;
+}
+
+#header_primary .container {
+  position: relative;
+  min-height: 2em;
+}
+
+#header_primary h1 {
+  float: left;
+  margin: 0;
+  font-size: 1em;
+}
+
+#header_primary a {
+  color: inherit;
+  text-decoration: none;
+}
+
+#header_primary h1 a {
+  display: block;
+  background: transparent url('/images/common/document_cloud_logo_white@2x.png') 0 0 no-repeat;
+  background-size: 9.375em 2em;
+  width: 9.375em;
+  height: 2em;
+  text-indent: -10000px;
+  overflow: hidden;
+}
+
+#nav_single {
+  float: right;
+}
+
+#nav_single a {
+  display: inline-block;
+  font-size: 0.75em;
+  padding: 1em;
+  line-height: 1em;
+  text-transform: uppercase;
+}
+
+#nav_single a:hover {
+  background-color: rgb(119, 147, 189);
 }
 
 #return_to_v1 {

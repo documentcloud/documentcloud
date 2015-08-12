@@ -62,9 +62,8 @@ stylesheets:
     - public/javascripts/vendor/visualsearch/build-min/visualsearch-datauri.css
   ui_v2:
     - public/stylesheets/common/reset.css
-    - public/stylesheets/v2/common.css
-    - public/stylesheets/v2/ui/forms.css
-    - public/stylesheets/v2/ui/alerts.css
+    - public/stylesheets/v2/*.css
+    - public/stylesheets/v2/**/*.css
   authentication:
     - public/stylesheets/pages/workspace.css
   workspace:
