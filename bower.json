@@ -17,7 +17,8 @@
     "blueimp-file-upload": "9.8",
     "documentcloud-notes": "https://github.com/documentcloud/documentcloud-notes.git",
     "visualsearch": "0.5.1",
-    "card": "~1.1.0"
+    "card": "~1.1.0",
+    "html5shiv": "~3.7.3"
   },
   "moduleType": [
     "globals"

@@ -41,6 +41,8 @@ javascripts:
   admin:
     - public/javascripts/admin/*.js
     - app/views/admin/*.jst
+  html5shiv:
+    - public/javascripts/vendor/html5shiv/dist/html5shiv.js
   lt_ie_9:
     - public/javascripts/ie/excanvas.js
   dev_only:
