@@ -44,6 +44,9 @@ dc.ui.FormModel = Backbone.Model.extend({
   // single-attribute validation checks the model via `get()` for any of its 
   // conditional validations.
   validate: function(attrs, options) {
+    attrs   = attrs || {};
+    options = options || {};
+
     var errors = {};
 
     // Combine original class validations/validators with instance ones
