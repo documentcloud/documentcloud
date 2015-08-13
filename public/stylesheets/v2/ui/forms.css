@@ -37,6 +37,12 @@
   border-bottom-color: #4e7a48;
 }
 
+.form_v2 button:disabled {
+  background-color: #d0d1d0;
+  color: #8c8e8e;
+  border-bottom-color: rgb(125, 127, 127);
+}
+
 .form_v2 button::-moz-inner-focus {
   outline: none;
   border: none;
@@ -60,12 +66,6 @@
 
 .form_v2 button[type=submit] {
   cursor: pointer;
-}
-
-.form_v2 button[type=submit]:disabled {
-  background-color: #d0d1d0;
-  color: #8c8e8e;
-  border-bottom-color: rgb(125, 127, 127);
 }
 
 .form_v2 .radioset,
