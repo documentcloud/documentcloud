@@ -24,7 +24,7 @@ javascripts:
     - public/javascripts/vendor/flot/jquery.flot.js
     - public/javascripts/vendor/flot/jquery.flot.time.js
     - public/javascripts/vendor/flot/jquery.flot.selection.js
-    - public/javascripts/vendor/card/lib/js/jquery.card.js
+    - public/javascripts/vendor/jquery.payment/lib/jquery.payment.js
     - public/javascripts/lib/*.js
     - public/javascripts/translations/*.js
     - public/javascripts/model/*.js
