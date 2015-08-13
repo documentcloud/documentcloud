@@ -50,8 +50,8 @@
 @media (min-width: 768px) {
   .col {
     float: left;
-    padding-left:  2%;
-    padding-right: 2%;
+    padding-left:  3%;
+    padding-right: 3%;
   }
   .col:first-child {
     padding-left: 0;
@@ -64,12 +64,12 @@
     float: right;
   }
   .row.rtl .col:first-child {
-    padding-left: 2%;
+    padding-left: 3%;
     padding-right: 0;
   }
   .row.rtl .col:last-child {
     padding-left: 0;
-    padding-right: 2%;
+    padding-right: 3%;
   }
 
   .col-6 {
