@@ -6,6 +6,7 @@ end
 
 if you_are_documentcloud?
   gem "bull_proof_china_shop", :git => "git@github.com:documentcloud/bull_proof_china_shop"
+  gem 'stripe',               '~> 1.24.0'
 end
 
 gem 'iconv'

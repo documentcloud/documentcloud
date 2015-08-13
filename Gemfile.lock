@@ -304,6 +304,9 @@ GEM
       actionpack (>= 3.0)
       activesupport (>= 3.0)
       sprockets (>= 2.8, < 4.0)
+    stripe (1.24.0)
+      json (~> 1.8.1)
+      rest-client (~> 1.4)
     sunspot (2.1.1)
       pr_geohash (~> 1.0)
       rsolr (~> 1.0.7)
@@ -370,6 +373,7 @@ DEPENDENCIES
   rubyzip (~> 1.1.0)
   sanitize (~> 2.0.6)
   spring
+  stripe (~> 1.24.0)
   sunspot_matchers
   sunspot_rails (~> 2.1.0)
   sunspot_solr (~> 2.1.0)
