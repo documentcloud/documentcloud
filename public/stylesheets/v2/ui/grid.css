@@ -37,12 +37,12 @@
           box-sizing: border-box;
 }
 
-.col-xs-12 {
+.col_xs_12 {
   float: left;
   width: 100%;
 }
 
-.row.rtl .col-xs-12 {
+.row.rtl .col_xs_12 {
   float: right;
 }
 
@@ -72,7 +72,23 @@
     padding-right: 3%;
   }
 
-  .col-6 {
+  .col_2 {
+    width: 16.5%;
+  }
+
+  .col_3 {
+    width: 25%;
+  }
+
+  .col_4 {
+    width: 33.25%;
+  }
+
+  .col_5 {
+    width: 41.5%;
+  }
+
+  .col_6 {
     width: 50%;
   }
 
