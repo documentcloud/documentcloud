@@ -17,6 +17,7 @@ module DC
       'ita' => 'Italian',
       'jpn' => 'Japanese',
       'kor' => 'Korean',
+      'nld' => 'Dutch',
       'nor' => 'Norwegian',
       'por' => 'Portuguese',
       'spa' => 'Spanish',
