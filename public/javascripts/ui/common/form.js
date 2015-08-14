@@ -87,16 +87,22 @@ dc.ui.FormModel = Backbone.Model.extend({
 dc.ui.FormView = Backbone.View.extend({
 
   events: {
-    'focus.dcForm  .field':                 'toggleFocusFilledState',
-    'blur.dcForm   .field':                 'toggleFocusFilledState',
-    'keyup.dcForm  .field':                 'checkForUserInputLive',
-    'change.dcForm .field':                 'checkForUserInput',
+    'focus.dcForm .field':                  'toggleFocusFilledState',
+    'blur.dcForm  .field':                  'toggleFocusFilledState',
     'change.dcForm input[type="radio"]':    'checkForUserInput',
     'change.dcForm input[type="checkbox"]': 'checkForUserInput',
   },
 
   initialize: function(options) {
     this.model = options.model || new dc.ui.FormModel({});
+
+    if (!options.ownCheckUserInputFields) {
+      this.events = _.extend({}, this.events, {
+        'keyup.dcForm  .field': 'checkForUserInputLive',
+        'change.dcForm .field': 'checkForUserInput',
+      });
+    }
+
   },
 
   // Saves current `disabled` property to a data attribute so the form can be
