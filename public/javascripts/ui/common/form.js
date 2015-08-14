@@ -131,6 +131,7 @@ dc.ui.FormView = Backbone.View.extend({
   displayValidationErrors: function() {
     _.each(this.model.validationError, function(messages, attr) {
       var $element = this.$('[name="' + attr + '"]');
+      if ($element.length === 0) { $element = this.$('#' + attr); }
 
       if ($element.hasClass('field')) {
         var $fieldwrap = $element.closest('.fieldwrap').addClass('invalid').removeClass('valid');
@@ -169,9 +170,8 @@ dc.ui.FormView = Backbone.View.extend({
   // clears old validation errors.
   checkForUserInput: function(event) {
     var $target = this.$(event.target);
-    var attr    = $target.attr('name');
+    var attr    = $target.attr('name') || $target.attr('id');
     var value   = $target.is('[type="checkbox"]') ? $target.prop('checked') : $target.val();
-
     this.toggleFocusFilledState(event);
 
     // For `checkForUserInputLive()`
@@ -217,7 +217,8 @@ dc.ui.FormView = Backbone.View.extend({
     var checkboxes = {};
     this.$('[type="checkbox"]').each(function(i, checkbox) {
       var $checkbox = $(checkbox);
-      checkboxes[$checkbox.attr('name')] = $checkbox.prop('checked');
+      var attr = $checkbox.attr('name') || $checkbox.attr('id');
+      checkboxes[attr] = $checkbox.prop('checked');
     });
     this.model.set(checkboxes);
   },
