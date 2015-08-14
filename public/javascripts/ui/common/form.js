@@ -158,9 +158,9 @@ dc.ui.FormView = Backbone.View.extend({
     var $target = this.$(event.target);
     var value   = $target.val();
     if ($target.is(':focus') || value) {
-      $target.closest('.fieldwrap').addClass('filled');
+      $target.closest('.fieldwrap, .hiddenwrap').addClass('filled');
     } else {
-      $target.closest('.fieldwrap').removeClass('filled');
+      $target.closest('.fieldwrap, .hiddenwrap').removeClass('filled');
     }
   },
 
@@ -186,7 +186,7 @@ dc.ui.FormView = Backbone.View.extend({
       this.model.set(attrs);
       this.model._validate(attrs, { validate: true, only: attr });
 
-      var $fieldwrap = $target.closest('.fieldwrap, .checkwrap, .radioset');
+      var $fieldwrap = $target.closest('.fieldwrap, .checkwrap, .radioset, .hiddenwrap');
 
       if (this.model.validationError) {
         this.displayValidationErrors();
