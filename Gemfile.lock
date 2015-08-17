@@ -24,6 +24,7 @@ PATH
   remote: ../bull_proof_china_shop
   specs:
     bull_proof_china_shop (0.0.1)
+      has_secure_token (~> 1.0.0)
       rails (~> 4.2.3)
 
 GEM
@@ -157,6 +158,8 @@ GEM
     guard-minitest (2.4.4)
       guard-compat (~> 1.2)
       minitest (>= 3.0)
+    has_secure_token (1.0.0)
+      activerecord (>= 3.0)
     hashie (3.4.2)
     highline (1.6.21)
     http-cookie (1.0.2)
