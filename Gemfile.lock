@@ -26,6 +26,7 @@ PATH
     bull_proof_china_shop (0.0.1)
       has_secure_token (~> 1.0.0)
       rails (~> 4.2.3)
+      stripe (~> 1.24.0)
 
 GEM
   remote: https://rubygems.org/
@@ -376,7 +377,6 @@ DEPENDENCIES
   rubyzip (~> 1.1.0)
   sanitize (~> 2.0.6)
   spring
-  stripe (~> 1.24.0)
   sunspot_matchers
   sunspot_rails (~> 2.1.0)
   sunspot_solr (~> 2.1.0)
