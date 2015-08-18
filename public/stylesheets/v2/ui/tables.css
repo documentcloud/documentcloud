@@ -1,0 +1,21 @@
+.table {
+  width: 100%;
+}
+
+.table > thead > tr > th,
+.table > tbody > tr > th {
+  font-weight: 700;
+}
+
+.table th,
+.table td {
+  padding: 0.25em;
+}
+
+.table > thead > tr > th {
+  border-bottom: 1px solid rgb(127, 127, 127);
+}
+
+.table .right {
+  text-align: right;
+}
