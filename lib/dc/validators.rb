@@ -33,5 +33,29 @@ module DC
     # State Abbreviation list.
     STATES = %w(AL AK AS AZ AR CA CO CT DE DC FL GA GU HI ID IL IN IA KS KY LA ME MD MA MI MN MS MO MT NE NV NH NJ NM NY NC ND OH OK OR PA PR RI SC SD TN TX UT VT VI VA WA WV WI WY)
 
+    def self.validate_url(url_string)
+      # default to false.
+      is_valid = false
+      begin
+        url = URI.parse(url_string)
+
+        valid_scheme = ( url.scheme =~ /\Ahttps?\z/i ? true : false )
+
+        valid_host = case url.host
+          when IP
+            # check if url.host is on the blacklist ip
+            black_list = [ /\A10|127|192\.168\./ ]
+            black_list.none?{ |matcher| url.host.match matcher }
+          when DOMAIN
+            true
+          else
+            false
+        end
+        
+        is_valid = (valid_scheme and valid_host)
+      rescue
+      end
+      is_valid
+    end
   end
 end
