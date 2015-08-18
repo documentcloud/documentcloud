@@ -8,7 +8,7 @@
 
 .form_v2 button {
   display: inline-block;
-  font: 600 1em/1.2em Gotham, 'Proxima Nova', 'Avenir Next', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font: 700 1em/1.2em 'Gotham SSm A', 'Gotham SSm B', 'Gotham A', 'Gotham B', Gotham, 'Proxima Nova', 'Avenir Next', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   height: 3em;
   padding: 0 0.8em;
   vertical-align: middle;
@@ -183,13 +183,13 @@
 
 .form_v2 .fieldalert {
   font-size: 0.9em;
-  font-weight: 600;
+  font-weight: 700;
   line-height: 1.5em;
 }
 
 .form_v2 .invalid .fieldalert {
   font-size: 0.9em;
-  font-weight: 600;
+  font-weight: 700;
   background-color: #df5454;
   color: #ffffff;
   -moz-osx-font-smoothing: grayscale;
@@ -271,7 +271,7 @@
 	border-radius: 5px;
 	border: none;
 	border-bottom: 2px solid rgb(125, 127, 127);
-	font: 400 1em/1.2em Gotham, 'Proxima Nova', 'Avenir Next', 'Helvetica Neue', Helvetica, Arial, sans-serif !important;
+	font: 300 1em/1.2em 'Gotham SSm A', 'Gotham SSm B', 'Gotham A', 'Gotham B', Gotham, 'Proxima Nova', 'Avenir Next', 'Helvetica Neue', Helvetica, Arial, sans-serif !important;
 	-webkit-appearance: none; /* for box shadows to show on iOS */
 	-webkit-transition: border-color 0.25s;
         	transition: border-color 0.25s;
@@ -306,7 +306,7 @@
 
 .form_v2 .fieldlabel {
   display: inline-block;
-	font-weight: 500;
+	font-weight: 300;
 	font-size: 0.9em;
   line-height: 1em;
 	-webkit-touch-callout: none;
