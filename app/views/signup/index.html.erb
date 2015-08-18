@@ -12,7 +12,7 @@
 
 <%= form_for @verification_request, :url => :apply_create, :html => { :class => 'form_v2', :novalidate => true } do |f| %>
 
-  <p>DocumentCloud is a tool primarily used by journalists to organize, research and publish primary source documents. But we're open to considering users in other industries. Fill out this application and we’ll be in touch, usually within a day or two. For help, feel free to <%= link_to 'contact us', :contact %>.</p>
+  <p>DocumentCloud is a tool primarily used by journalists to organize, research and publish primary source documents. But we do consider users in other industries. Fill out this application and we’ll be in touch, usually within a few days. Note that incomplete applications will not be processed. For help, feel free to <%= link_to 'contact us', :contact %>.</p>
 
   <fieldset class="fieldrow has3">
     <div class="fieldwrap">
@@ -163,5 +163,5 @@
   <div class="submitwrap">
     <button type="submit">Submit application</button>
   </div>
-  
+
 <% end %>
