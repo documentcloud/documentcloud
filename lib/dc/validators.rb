@@ -65,7 +65,7 @@ module DC
       fe80::/10
       ff00::/8
     ].map{ |ip_spec| IPAddr.new ip_spec }
-
+    
     # Ensure that a URL does not request a resource
     # from our internal network or any other invalid location
     def self.validate_external_url(url_string)
@@ -87,7 +87,7 @@ module DC
             # make sure none of the addresses
             resolved_addresses.none? do |address|
               # match any of the reserved IP blocks.
-              RESERVED_IP.any?{ |range| range.include? address }
+              (RESERVED_IP+restricted_ips).compact.any?{ |range| range.include? address }
             end
           else
             false # if we don't match a valid domain pattern or IP.
@@ -102,6 +102,24 @@ module DC
         raise e
       end
       is_valid
+    end
+    
+    def self.restricted_ips
+      @@restricted_ips ||= nil
+      @@last_fetched   ||= nil
+
+      if @@restricted_ips and @@last_fetched and @@last_fetched < 1.hour.ago
+        @@restricted_ips 
+      else
+        Rails.logger.info "fetching ip addresses"
+        @@restricted_ips = if Rails.env.test?
+          []
+        else
+          ::AWS::EC2.new.instances.map{ |i| [i.private_ip_address, i.public_ip_address] }.flatten.uniq
+        end
+        @@last_fetched = Time.now
+        @@restricted_ips
+      end
     end
   end
 end
