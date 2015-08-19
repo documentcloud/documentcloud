@@ -25,21 +25,4 @@ dc.language = {
   USER: ['dan','eng','rus','spa','ukr']
 };
 
-// Making an assumption that our user-facing names are unique; seems fair.
-dc.language.NAME_KEYS_SORTED_BY_DISPLAY_NAME = (function() {
-  var names_inverted = _.invert(dc.language.NAMES);
-  var names_sorted   = _.keys(names_inverted).sort();
-  return _.map(names_sorted, function(n) { return names_inverted[n]; });
-})();
-
-// Order language lists alphabetically by display name.
-dc.language.NAMES = (function(){
-  var names = {};
-  _.each(dc.language.NAME_KEYS_SORTED_BY_DISPLAY_NAME, function(key) {
-    names[key] = dc.language.NAMES[key];
-  });
-  return names;
-})();
-dc.language.USER = _.intersection(dc.language.NAME_KEYS_SORTED_BY_DISPLAY_NAME, dc.language.USER);
-
 dc.language.SUPPORTED = _.keys(dc.language.NAMES);
