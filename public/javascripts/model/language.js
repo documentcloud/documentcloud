@@ -6,6 +6,7 @@ dc.language = {
     'zho' : 'Chinese (Simplified)',
     'tra' : 'Chinese (Traditional)', // this is not a real ISO-639-2 code, see comments on language.rb
     'dan' : 'Danish',
+    'nld' : 'Dutch',
     'eng' : 'English',
     'fra' : 'French',
     'deu' : 'German',
@@ -14,7 +15,6 @@ dc.language = {
     'ita' : 'Italian',
     'jpn' : 'Japanese',
     'kor' : 'Korean',
-    'nld' : 'Dutch',
     'nor' : 'Norwegian',
     'por' : 'Portuguese',
     'spa' : 'Spanish',

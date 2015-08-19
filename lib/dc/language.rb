@@ -9,6 +9,7 @@ module DC
       'zho' => 'Chinese (Simplified)',
       'tra' => 'Chinese (Traditional)', # this is not a real ISO-639-2 code, see note below.
       'dan' => 'Danish',
+      'nld' => 'Dutch',
       'eng' => 'English',
       'fra' => 'French',
       'deu' => 'German',
@@ -17,7 +18,6 @@ module DC
       'ita' => 'Italian',
       'jpn' => 'Japanese',
       'kor' => 'Korean',
-      'nld' => 'Dutch',
       'nor' => 'Norwegian',
       'por' => 'Portuguese',
       'spa' => 'Spanish',
