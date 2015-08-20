@@ -11,37 +11,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150817174942) do
+ActiveRecord::Schema.define(version: 20150820174640) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-
-  create_table "account_requests", force: :cascade do |t|
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "requester_email",      limit: 255
-    t.string   "requester_first_name", limit: 255
-    t.string   "requester_last_name",  limit: 255
-    t.text     "requester_notes"
-    t.string   "organization_name",    limit: 255
-    t.string   "organization_url",     limit: 255
-    t.string   "approver_email",       limit: 255
-    t.string   "approver_first_name",  limit: 255
-    t.string   "approver_last_name",   limit: 255
-    t.string   "country",              limit: 255,                 null: false
-    t.text     "verification_notes"
-    t.integer  "status",                           default: 1
-    t.boolean  "agreed_to_terms",                  default: false
-    t.boolean  "authorized_posting",               default: false
-    t.string   "signup_key",           limit: 255
-    t.integer  "account_id"
-    t.string   "industry",             limit: 255
-    t.text     "use_case"
-    t.text     "reference_links"
-    t.boolean  "marketing_optin",                  default: false
-    t.boolean  "in_market",                        default: false
-    t.string   "requester_position"
-  end
 
   create_table "accounts", force: :cascade do |t|
     t.string   "first_name",        limit: 40
@@ -76,6 +49,47 @@ ActiveRecord::Schema.define(version: 20150817174942) do
   create_table "app_constants", force: :cascade do |t|
     t.string "key",   limit: 255
     t.string "value", limit: 255
+  end
+
+  create_table "bull_proof_china_shop_account_requests", force: :cascade do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "requester_email",      limit: 255
+    t.string   "requester_first_name", limit: 255
+    t.string   "requester_last_name",  limit: 255
+    t.text     "requester_notes"
+    t.string   "organization_name",    limit: 255
+    t.string   "organization_url",     limit: 255
+    t.string   "approver_email",       limit: 255
+    t.string   "approver_first_name",  limit: 255
+    t.string   "approver_last_name",   limit: 255
+    t.string   "country",              limit: 255,                 null: false
+    t.text     "verification_notes"
+    t.integer  "status",                           default: 1
+    t.boolean  "agreed_to_terms",                  default: false
+    t.boolean  "authorized_posting",               default: false
+    t.string   "signup_key",           limit: 255
+    t.integer  "account_id"
+    t.string   "industry",             limit: 255
+    t.text     "use_case"
+    t.text     "reference_links"
+    t.boolean  "marketing_optin",                  default: false
+    t.boolean  "in_market",                        default: false
+    t.string   "requester_position"
+  end
+
+  create_table "bull_proof_china_shop_permits", force: :cascade do |t|
+    t.string   "stripe_plan_id"
+    t.string   "stripe_customer_id"
+    t.string   "stripe_card_id"
+    t.integer  "proposal_id"
+    t.integer  "membership_id"
+    t.integer  "account_id"
+    t.integer  "organization_id"
+    t.integer  "membership_role"
+    t.integer  "status"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
   end
 
   create_table "collaborations", force: :cascade do |t|
