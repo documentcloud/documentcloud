@@ -86,8 +86,8 @@ section {
 .v2 h3 {
   font-family: 'Gotham A', 'Gotham B', 'Gotham SSm A', 'Gotham SSm B', Gotham, 'Proxima Nova', 'Avenir Next', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-weight: 300;
-  line-height: 1.6em;
-  margin: 1.6em 0;
+  line-height: 1.4em;
+  margin: 1.4em 0;
 }
 
 .v2 h1 {
@@ -107,8 +107,8 @@ section {
 .v2 h6 {
   font-family: 'Gotham SSm A', 'Gotham SSm B', 'Gotham A', 'Gotham B', Gotham, 'Proxima Nova', 'Avenir Next', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-weight: 700;
-  line-height: 1.6em;
-  margin: 1.6em 0;
+  line-height: 1.4em;
+  margin: 1.4em 0;
 }
 
 .v2 h4 {
