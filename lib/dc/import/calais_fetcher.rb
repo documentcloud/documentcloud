@@ -37,21 +37,18 @@ module DC
         # equivalent length before uploading.
         text.gsub!(/<\/?[^>]*>/) {|m| ' ' * m.length }
         retry_calais_errors do
-          client = OpenCalais::Client.new(:api_key=>DC::SECRETS['calais_license_v2'])
-
-          # client = Calais::Client.new(
-          #   :content                        => text,
-          #   :content_type                   => :raw,
-          #   :license_id                     => DC::SECRETS['calais_license'],
-          #   :allow_distribution             => false,
-          #   :allow_search                   => false,
-          #   :submitter                      => "DocumentCloud (#{Rails.env})",
-          #   :omit_outputting_original_text  => true
-          # )
-          client.enrich(text)
+          # Increment the count of our API calls
+          current_value = AppConstant.value(OPEN_CALAIS_KEY).to_i
+          # If we are over the max calls allowed, blacklist the action
+          if current_value >= OPEN_CALAIS_MAX_DAILY_CALLS
+            RestClient.post DC::CONFIG['cloud_crowd_server'] + '/blacklist', {name: "reprocess_entities"}
+          else
+            client = OpenCalais::Client.new(:api_key=>DC::SECRETS['calais_license_v2'])
+            client.enrich(text)
+            AppConstant.replace(OPEN_CALAIS_KEY, current_value + 1)
+          end
         end
       end
-
 
       private
 
