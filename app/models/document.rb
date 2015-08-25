@@ -685,7 +685,7 @@ class Document < ActiveRecord::Base
     pages = self.reload.pages
     Sunspot.index pages
     Sunspot.commit
-    reprocess_entities if calais_id
+    process_entities if calais_id
     upload_text_assets(pages, access)
     self.access = access if access
     self.save!

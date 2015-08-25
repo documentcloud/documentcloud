@@ -14,7 +14,7 @@
   - redact_pages
   - regenerate_thumbnails
   - reindex_document
-  - reprocess_entities
+  - process_entities
   - save_analytics
   - update_access
   - vacuum_analyze

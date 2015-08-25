@@ -222,8 +222,8 @@ class DocumentTest < ActiveSupport::TestCase
   end
 
   def test_submits_jobs
-    doc.reprocess_entities
-    assert_job_action 'reprocess_entities'
+    doc.process_entities
+    assert_job_action 'process_entities'
   end
 
   def test_job_recording

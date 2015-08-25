@@ -50,7 +50,7 @@ module DC
             end
             return analyzed_text
           else
-            RestClient.post DC::CONFIG['cloud_crowd_server'] + '/blacklist', {action: "reprocess_entities"}
+            RestClient.post DC::CONFIG['cloud_crowd_server'] + '/blacklist', {action: "process_entities"}
             []
           end
         end
