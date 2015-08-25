@@ -62,7 +62,7 @@ module DC
             :relevance    => entity[:score],
             :document     => document,
             :occurrences  => Occurrence.to_csv(occurrences),
-            :calais_id    => instance[:guid].match(/[^\/]+$/)[0] # Match string of characters after the last forward slash to the end of the url to get calais id. example: http://d.opencalais.com/comphash-1/7f9f8e5d-782c-357a-b6f3-7a5321f92e13
+            :calais_id    => File.basename(entity[:guid]) # Match string of characters after the last forward slash to the end of the url to get calais id. example: http://d.opencalais.com/comphash-1/7f9f8e5d-782c-357a-b6f3-7a5321f92e13
           )
           if previous = @entities[model.calais_id]
             previous.merge(model)
