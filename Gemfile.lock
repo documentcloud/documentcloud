@@ -20,6 +20,18 @@ GIT
       cssmin (>= 1.0.3)
       jsmin (>= 1.0.1)
 
+PATH
+  remote: ../open_calais
+  specs:
+    open_calais (0.3.2)
+      activesupport
+      excon
+      faraday
+      faraday_middleware
+      hashie
+      multi_json
+      multi_xml
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -220,14 +232,6 @@ GEM
     omniauth-twitter (1.2.0)
       json (~> 1.3)
       omniauth-oauth (~> 1.1)
-    open_calais (0.3.2)
-      activesupport
-      excon
-      faraday
-      faraday_middleware
-      hashie
-      multi_json
-      multi_xml
     options (2.3.2)
     pdfshaver (0.0.1)
     pdftailor (0.0.5)
@@ -358,7 +362,7 @@ DEPENDENCIES
   omniauth-facebook (~> 1.6)
   omniauth-google-oauth2 (~> 0.2)
   omniauth-twitter (~> 1.0)
-  open_calais
+  open_calais!
   pdfshaver
   pdftailor
   pg
@@ -375,6 +379,3 @@ DEPENDENCIES
   sunspot_matchers
   sunspot_rails (~> 2.1.0)
   sunspot_solr (~> 2.1.0)
-
-BUNDLED WITH
-   1.10.6
