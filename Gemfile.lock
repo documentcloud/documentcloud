@@ -20,8 +20,10 @@ GIT
       cssmin (>= 1.0.3)
       jsmin (>= 1.0.1)
 
-PATH
-  remote: ../open_calais
+GIT
+  remote: git://github.com/documentcloud/open_calais.git
+  revision: 38db0d9c12b125f969e9bdb1a3368b4ccaca6df9
+  branch: fuzziness
   specs:
     open_calais (0.3.2)
       activesupport
