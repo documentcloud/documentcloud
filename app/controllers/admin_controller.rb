@@ -92,7 +92,7 @@ class AdminController < ApplicationController
   end
 
   def charge
-    render :layout => 'empty'
+    render :layout => 'admin_empty'
   end
 
   # Attempt a new signup for DocumentCloud -- includes both the organization and

@@ -140,9 +140,7 @@ dc.ui.Dialog = Backbone.View.extend({
     $(e.target).removeClass('focus');
   }
 
-});
-
-_.extend(dc.ui.Dialog, {
+}, {
 
   alert : function(text, options) {
     return new dc.ui.Dialog(_.extend({

@@ -12,7 +12,7 @@ namespace :deploy do
   task :full do
     remote ["app:update", "db:migrate", "crowd:server:restart"], central_servers
     remote ["app:update", "app:jammit", "app:clearcache:docs", "app:clearcache:search", "app:restart", "app:warm"], app_servers
-    remote ["app:restart_solr"], search_servers
+    #remote ["app:restart_solr"], search_servers # solr is behaving badly, deploy to it manually for now.
     remote ["app:update", "crowd:node:restart"], worker_servers
   end
 

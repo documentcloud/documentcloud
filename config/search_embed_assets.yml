@@ -4,9 +4,9 @@ embed_assets: datauri
 
 javascripts:
   search_embed:
-    - public/javascripts/vendor/underscore-*.js
-    - public/javascripts/vendor/jquery-*.js
-    - public/javascripts/vendor/backbone-*.js
+    - public/javascripts/vendor/underscore/underscore.js
+    - public/javascripts/vendor/jquery/dist/jquery.js
+    - public/javascripts/vendor/backbone/backbone.js
     - public/javascripts/lib/inflector.js
     - public/javascripts/embed/search_embed.js
     - app/views/jst/embed/search_*.jst
