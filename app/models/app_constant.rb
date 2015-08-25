@@ -10,7 +10,7 @@ class AppConstant < ActiveRecord::Base
 
   def self.replace(key, new_value, default=nil)
     current = value(key)
-    constant = find_or_initialize_by_key(key)
+    constant = AppConstant.where(key: key).first_or_initialize
     constant.update_attribute(:value, new_value)
     current
   end
