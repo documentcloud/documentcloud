@@ -62,7 +62,7 @@ module DC
         attempts = 0
         begin
           yield
-        rescue OpenCalais::Error, Curl::Err::CurlError, Timeout::Error => e
+        rescue Faraday::Error, Timeout::Error => e
           Rails.logger.warn e.message
           return nil if e.message == 'Calais continues to expand its list of supported languages, but does not yet support your submitted content.'
           Rails.logger.warn 'waiting 10 seconds'
