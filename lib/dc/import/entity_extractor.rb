@@ -20,9 +20,9 @@ module DC
       def extract(document, text)
         @entities = {}
         chunks = CalaisFetcher.new.fetch_rdf(text)
+        extract_information(document, chunks.first) if document.calais_id.blank?
         chunks.each_with_index do |chunk, i|
           next if chunk.nil?
-          extract_information(document, chunk) if document.calais_id.blank?
           extract_entities(document, chunk, i)
         end
         document.entities = @entities.values
@@ -35,11 +35,11 @@ module DC
       # Pull out all of the standard, top-level entities, and add it to our
       # document if it hasn't already been set.
       def extract_information(document, calais)
-        info_elements = calais.raw.env.body.doc.info
-        document.title = info_elements.docTitle unless document.titled?
-        document.language ||= 'en' # TODO: Convert calais.language into an ISO language code.
+        info_elements               = calais.raw.body.doc.info
+        document.title              = info_elements.docTitle unless document.titled?
+        document.language         ||= 'en' # TODO: Convert calais.language into an ISO language code.
         document.publication_date ||= info_elements.docDate
-        document.calais_id = info_elements.calaisRequestID.match(/[^\/]+$/)[0] # Match string of characters after the last forward slash to the end of the url to get calais id. example: http://d.opencalais.com/comphash-1/7f9f8e5d-782c-357a-b6f3-7a5321f92e13
+        document.calais_id = File.basename(info_elements.docId) # Match string of characters after the last forward slash to the end of the url to get calais id. example: http://d.opencalais.com/dochash-1/c4d2ae6a-5049-34eb-992c-67881899bccd
       end
 
       # Extract the entities that Calais discovers in the document, along with
