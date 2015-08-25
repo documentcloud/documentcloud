@@ -21,7 +21,7 @@ module DC
         @entities = {}
         chunks = CalaisFetcher.new.fetch_rdf(text)
         chunks.each_with_index do |chunk, i|
-          next if chunk.nil?
+          next if chunk.blank?
           extract_information(document, chunk) if document.calais_id.blank?
           extract_entities(document, chunk, i)
         end
