@@ -1,4 +1,18 @@
 GIT
+  remote: git://github.com/documentcloud/cloud-crowd.git
+  revision: ddb0dabf467a6bd713bcc9f3c1f0b61fe4df3142
+  branch: blacklist
+  specs:
+    cloud-crowd (0.7.5)
+      active_model_serializers
+      activerecord (>= 3.0)
+      json (>= 1.1.7)
+      rake
+      rest-client (>= 1.4)
+      sinatra
+      thin (>= 1.2.4)
+
+GIT
   remote: git://github.com/documentcloud/jammit.git
   revision: b3e17e12e57a0d639762e819d5e33f8f9395dd8d
   specs:
@@ -7,13 +21,18 @@ GIT
       jsmin (>= 1.0.1)
 
 GIT
-  remote: git://github.com/nathanstitt/calais.git
-  revision: 6c292c405387195f09b583f22ac1816e8de99170
-  branch: newer_nokogiri
+  remote: git://github.com/documentcloud/open_calais.git
+  revision: 38db0d9c12b125f969e9bdb1a3368b4ccaca6df9
+  branch: fuzziness
   specs:
-    calais (0.0.13)
-      json (>= 1.1.3)
-      nokogiri (>= 1.3.3)
+    open_calais (0.3.2)
+      activesupport
+      excon
+      faraday
+      faraday_middleware
+      hashie
+      multi_json
+      multi_xml
 
 GEM
   remote: https://rubygems.org/
@@ -73,14 +92,6 @@ GEM
     byebug (5.0.0)
       columnize (= 0.9.0)
     closure-compiler (1.1.11)
-    cloud-crowd (0.7.5)
-      active_model_serializers
-      activerecord (>= 3.0)
-      json (>= 1.1.7)
-      rake
-      rest-client (>= 1.4)
-      sinatra
-      thin (>= 1.2.4)
     coderay (1.1.0)
     columnize (0.9.0)
     countries (0.11.5)
@@ -97,10 +108,18 @@ GEM
     domain_name (0.5.24)
       unf (>= 0.0.5, < 1.0.0)
     erubis (2.7.0)
-    eventmachine (1.0.7)
+    eventmachine (1.0.8)
+    excon (0.45.4)
     extlib (0.9.16)
+    factory_girl (4.5.0)
+      activesupport (>= 3.0.0)
+    factory_girl_rails (4.5.0)
+      factory_girl (~> 4.5.0)
+      railties (>= 3.0.0)
     faraday (0.9.1)
       multipart-post (>= 1.2, < 3)
+    faraday_middleware (0.10.0)
+      faraday (>= 0.7.4, < 0.10)
     ffi (1.9.10)
     formatador (0.2.5)
     globalid (0.3.5)
@@ -324,12 +343,12 @@ DEPENDENCIES
   aws-sdk (~> 1.30)
   bcrypt (~> 3.1.1)
   byebug
-  calais (~> 0.0.13)!
   closure-compiler
-  cloud-crowd (~> 0.7.3)
+  cloud-crowd!
   country_select (~> 2.2.0)
   curb (~> 0.8.4)
   docsplit (= 0.8.0.alpha1)
+  factory_girl_rails
   google_drive (~> 1.0.0)
   growl
   guard-bundler
@@ -345,6 +364,7 @@ DEPENDENCIES
   omniauth-facebook (~> 1.6)
   omniauth-google-oauth2 (~> 0.2)
   omniauth-twitter (~> 1.0)
+  open_calais!
   pdfshaver
   pdftailor
   pg
