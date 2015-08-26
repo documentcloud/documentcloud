@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150820224935) do
+ActiveRecord::Schema.define(version: 20150826214706) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -68,8 +68,7 @@ ActiveRecord::Schema.define(version: 20150820224935) do
     t.integer  "status",                           default: 1
     t.boolean  "agreed_to_terms",                  default: false
     t.boolean  "authorized_posting",               default: false
-    t.string   "signup_key",           limit: 255
-    t.integer  "account_id"
+    t.string   "token",                limit: 255
     t.string   "industry",             limit: 255
     t.text     "use_case"
     t.text     "reference_links"
@@ -78,18 +77,35 @@ ActiveRecord::Schema.define(version: 20150820224935) do
     t.string   "requester_position"
   end
 
+  create_table "bull_proof_china_shop_accounts", force: :cascade do |t|
+    t.string   "stripe_customer_id"
+    t.text     "billing_email"
+    t.integer  "dc_membership_id"
+    t.integer  "dc_membership_role"
+    t.integer  "dc_organization_id"
+    t.integer  "dc_account_id"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+  end
+
   create_table "bull_proof_china_shop_permits", force: :cascade do |t|
     t.string   "stripe_plan_id"
     t.string   "stripe_customer_id"
     t.string   "stripe_card_id"
-    t.integer  "proposal_id"
-    t.integer  "membership_id"
-    t.integer  "account_id"
-    t.integer  "organization_id"
-    t.integer  "membership_role"
+    t.integer  "dc_membership_id"
+    t.integer  "dc_account_id"
+    t.integer  "dc_organization_id"
+    t.integer  "dc_membership_role"
     t.integer  "status"
-    t.datetime "created_at",         null: false
-    t.datetime "updated_at",         null: false
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+    t.string   "stripe_subscription_id"
+    t.string   "stripe_customer_email"
+    t.integer  "stripe_card_last4"
+    t.integer  "account_id"
+    t.datetime "start_date"
+    t.datetime "end_date_scheduled"
+    t.datetime "end_date_actual"
   end
 
   create_table "bull_proof_china_shop_proposal_plans", force: :cascade do |t|
@@ -100,12 +116,12 @@ ActiveRecord::Schema.define(version: 20150820224935) do
   end
 
   create_table "bull_proof_china_shop_proposals", force: :cascade do |t|
-    t.integer  "account_request_id"
-    t.integer  "admin_account_id"
+    t.integer  "dc_admin_id"
     t.integer  "status"
     t.string   "token"
-    t.datetime "created_at",         null: false
-    t.datetime "updated_at",         null: false
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.integer  "permit_id"
   end
 
   create_table "collaborations", force: :cascade do |t|
