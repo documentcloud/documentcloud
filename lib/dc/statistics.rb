@@ -219,7 +219,7 @@ module DC
       end
 
       text = "Top ten most popular documents today\n"
-      text += data.map{ |d| "#{number_with_delimiter(d['hits'])}: <#{d['embedded_url']}|#{d['title']}> (<#{d['canonical_url']}|DC>) by #{d['contributor']} (#{d['organization']})" }.join("\n")
+      text += data.map{ |d| "#{d['hits']}: <#{d['embedded_url']}|#{d['title']}> (<#{d['canonical_url']}|DC>) by #{d['contributor']} (#{d['organization']})" }.join("\n")
       hook_url = DC::SECRETS['slack_webhook']
       data = {:payload => {:text => text, :username => "docbot", :icon_emoji => ":doccloud:"}.to_json}
       RestClient.post(hook_url, data)
