@@ -21,6 +21,7 @@ DocumentCloud's API allows users to search, upload, edit, and organize documents
 * [oEmbed](#oembed):
   * [Documents](#oembed-documents)
   * [Notes](#oembed-notes)
+* [API Wrappers](#api-wrappers)
 
 <a name="guidelines"></a>
 # API Guidelines and Terms of Service
@@ -323,6 +324,14 @@ Parameter        | Description           |  Example
 url              | **(required)** URL-escaped document to embed     | https%3A//www.documentcloud.org/ documents/doc-name.html
 container        | (optional) Specify the DOM container in which to embed the viewer | #my-document-div
 
+<a name="api-wrappers"></a>
+# API Wrappers
+
+The open-source community has contributed several helpful libraries for interacting with DocumentCloud's API. See their documentation for examples and more information:
+
+**Python:** [python-documentcloud](http://python-documentcloud.readthedocs.org/en/latest/)
+
+**Ruby:** [Documentcloud gem](https://rubygems.org/gems/documentcloud/versions/0.2.2)
 
 # Questions?
 
