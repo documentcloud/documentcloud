@@ -515,7 +515,7 @@ class Document < ActiveRecord::Base
   end
 
   def public_pdf_url
-    File.join(DC::Store::AssetStore.web_root, pdf_path)
+    File.join(DC.cdn_root(:force_ssl=>true), pdf_path)
   end
 
   def private_pdf_url
@@ -535,7 +535,7 @@ class Document < ActiveRecord::Base
   def page_image_url(page, size, options={} )
     path = page_image_path(page, size)
     if public?
-      url = File.join( DC::Store::AssetStore.web_root, path )
+      url = File.join( DC.cdn_root(:force_ssl=>true), path )
       url << "?#{updated_at.to_i}" if options[:cache_busting]
       url
     else
@@ -544,7 +544,7 @@ class Document < ActiveRecord::Base
   end
 
   def public_full_text_url
-    File.join(DC::Store::AssetStore.web_root, full_text_path)
+    File.join(DC.cdn_root(:force_ssl=>true), full_text_path)
   end
 
   def private_full_text_url
@@ -606,7 +606,7 @@ class Document < ActiveRecord::Base
   end
 
   def public_page_image_template
-    File.join(DC::Store::AssetStore.web_root, File.join(pages_path, page_image_template))
+    File.join(DC.cdn_root(:force_ssl=>true), File.join(pages_path, page_image_template))
   end
 
   def private_page_image_template
@@ -616,7 +616,7 @@ class Document < ActiveRecord::Base
   def page_image_url_template(opts={})
     tmpl = if opts[:local]
              File.join(slug, page_image_template )
-           elsif self.public? || Rails.env.development?
+           elsif self.public?
              public_page_image_template
            else
              private_page_image_template
@@ -627,7 +627,8 @@ class Document < ActiveRecord::Base
 
   def page_text_url_template(opts={})
     return File.join(slug, page_text_template) if opts[:local]
-    File.join(DC.server_root, File.join(pages_path, page_text_template))
+    host = (self.public? ? DC.cdn_root : DC.server_root)
+    File.join(host, File.join(pages_path, page_text_template))
   end
 
   def reviewers

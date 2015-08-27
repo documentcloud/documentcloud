@@ -9,6 +9,7 @@ module DC
     url_for('asset_root', options)
   end
 
+  # Lookup the appropriate host from config/document_cloud.yml
   def self.url_for(config, options)
     root = case
            when options[:force_ssl] || (options[:ssl] && Thread.current[:ssl]) then 'https://'

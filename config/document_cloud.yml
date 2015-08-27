@@ -15,13 +15,13 @@ staging:
   <<: *defaults
   cloud_crowd_server: <%= secrets['db_host'] %>:8080
   server_root:        staging.documentcloud.org
-  asset_root:         "s3.amazonaws.com/dcloud_staging"
+  asset_root:         s3.amazonaws.com/dcloud_staging
 
 production:
   <<: *defaults
   cloud_crowd_server: <%= secrets['db_host'] %>:8080
   server_root:        www.documentcloud.org
-  asset_root:         "s3.amazonaws.com/s3.documentcloud.org"
+  asset_root:         assets.documentcloud.org
   db_volume_id:       vol-d4c305bd
 
 test:
