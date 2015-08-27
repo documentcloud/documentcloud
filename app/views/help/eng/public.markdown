@@ -42,9 +42,9 @@ By default, DocumentCloud will search both the title and full text of every docu
 Term                        | Description
 ----------------------------|---------------------
 title                       | Will search only the titles of documents. For example: [title: deepwater][].
-source                      | Reporters have the opportunity to identify the source of each document they upload. For example: [source: supreme][] will identify documents attributed to "U.S. Supreme Court" as well as "New York State Supreme Court."
+source                      | Reporters have the opportunity to identify the source of each document they upload. For example: [source: supreme][] will identify documents attributed to "U.S. Supreme Court" plus various state supreme courts.
 description                 | Search for a word or phrase within all document descriptions. For example: [description: manifesto][].
-account                     | Specify an account id to see documents published by a specific user. Notice that clicking on any user's name in your search results will automatically filter your results to include only that user's documents.  For example: [account: 143-james-wilkerson][].
+account                     | Specify an account id to see documents published by a specific user. Notice that clicking on any user's name in your search results will automatically filter your results to include only that user's documents.  For example: [account: 149-brad-heath][].
 group                       | Search for all documents made public by a single newsroom. Notice that clicking on any organization name in your search results will automatically filter your results to include only that group's documents. For example: [group: chicago-tribune][].
 projectid                   | Reporters can organize documents into as many projects as appropriate. To restrict a search to documents in one project, you need to know that project's canonical identifier or project id. DocumentCloud doesn't publish individual project id's, however.  For example: [projectid: 6-the-financial-crisis][]
 filter                      | Filter documents by interesting criteria (one of "published", "unpublished", "annotated", or "popular"). For example, to view all published documents: [filter: published][]
@@ -72,7 +72,7 @@ Questions? Don't hesitate to [contact us][]. And as you go, feel free to [reques
 [John Yoo detainee]: /public/search/John%20Yoo%20detainee
 [geithner -madoff]: /public/search/geithner%20-madoff
 [geithner NOT madoff]: /public/search/geithner%20NOT%20madoff
-[account: 143-james-wilkerson]: /public/search/account%3A%20143-james-wilkerson
+[account: 149-brad-heath]: /public/search/account%3A%20149-brad-heath
 [group: chicago-tribune]: /public/search/group%3A%20chicago-tribune
 [title: deepwater]: /public/search/title%3A%20deepwater
 [source: supreme]: /public/search/source%3A%20supreme
