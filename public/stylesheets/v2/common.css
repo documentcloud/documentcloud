@@ -145,3 +145,49 @@ section {
 .v2 a:focus {
   outline: 2px dotted rgb(90, 118, 160);
 }
+
+.badge {
+  display: inline-block;
+  padding: 0.25em;
+  border-radius: 3px;
+
+  background-color: rgb(119, 147, 189);
+  color: white;
+  -moz-osx-font-smoothing: grayscale;
+   -webkit-font-smoothing: antialiased;
+}
+
+.badge.danger {
+  background-color: #d85157;
+  color: white;
+}
+
+.badge.warning {
+  background-color: #d89f37;
+  color: white;
+}
+
+.badge.good {
+  background-color: #78bb6e;
+  color: white;
+}
+
+.badge_group {
+  display: inline-block;
+}
+
+.badge_group .badge {
+  border-radius: 0;
+  margin-right: 1px;
+}
+
+.badge_group .badge:first-child {
+  border-top-left-radius:    3px;
+  border-bottom-left-radius: 3px;
+}
+
+.badge_group .badge:last-child {
+  border-top-right-radius:    3px;
+  border-bottom-right-radius: 3px;
+  margin-right: 0;
+}
