@@ -65,6 +65,10 @@ section {
   overflow: hidden;
 }
 
+#header_primary h1 a:focus {
+  background-color: rgb(119, 147, 189);
+}
+
 #nav_single {
   float: right;
 }
@@ -77,7 +81,8 @@ section {
   text-transform: uppercase;
 }
 
-#nav_single a:hover {
+#nav_single a:hover,
+#nav_single a:focus {
   background-color: rgb(119, 147, 189);
 }
 
