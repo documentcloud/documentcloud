@@ -148,14 +148,14 @@ Retrieve the canonical JSON representation of a particular document, as specifie
       "contributor_organization":"DocumentCloud",
       "display_language":"eng",
       "resources":{
-        "pdf":"https://s3.amazonaws.com/s3.documentcloud.org/documents/1659580/economic-analysis-of-the-south-pole-traverse.pdf",
-        "text":"https://s3.amazonaws.com/s3.documentcloud.org/documents/1659580/economic-analysis-of-the-south-pole-traverse.txt",
-        "thumbnail":"https://s3.amazonaws.com/s3.documentcloud.org/documents/1659580/pages/economic-analysis-of-the-south-pole-traverse-p1-thumbnail.gif",
+        "pdf":"https://assets.documentcloud.org/documents/1659580/economic-analysis-of-the-south-pole-traverse.pdf",
+        "text":"https://assets.documentcloud.org/documents/1659580/economic-analysis-of-the-south-pole-traverse.txt",
+        "thumbnail":"https://assets.documentcloud.org/documents/1659580/pages/economic-analysis-of-the-south-pole-traverse-p1-thumbnail.gif",
         "search":"https://www.documentcloud.org/documents/1659580/search.json?q={query}",
         "print_annotations":"https://www.documentcloud.org/notes/print?docs[]=1659580",
         "translations_url":"https://www.documentcloud.org/translations/{realm}/{language}",
         "page":{
-          "image":"https://s3.amazonaws.com/s3.documentcloud.org/documents/1659580/pages/economic-analysis-of-the-south-pole-traverse-p{page}-{size}.gif",
+          "image":"https://assets.documentcloud.org/documents/1659580/pages/economic-analysis-of-the-south-pole-traverse-p{page}-{size}.gif",
           "text":"https://www.documentcloud.org/documents/1659580/pages/economic-analysis-of-the-south-pole-traverse-p{page}.txt"
           },
         "annotations_url":"https://www.documentcloud.org/documents/1659580/annotations"
