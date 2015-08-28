@@ -627,8 +627,7 @@ class Document < ActiveRecord::Base
 
   def page_text_url_template(opts={})
     return File.join(slug, page_text_template) if opts[:local]
-    host = (self.public? ? DC.cdn_root : DC.server_root)
-    File.join(host, File.join(pages_path, page_text_template))
+    File.join(DC.server_root, File.join(pages_path, page_text_template))
   end
 
   def reviewers
