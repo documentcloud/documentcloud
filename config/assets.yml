@@ -24,7 +24,6 @@ javascripts:
     - public/javascripts/vendor/flot/jquery.flot.js
     - public/javascripts/vendor/flot/jquery.flot.time.js
     - public/javascripts/vendor/flot/jquery.flot.selection.js
-    - public/javascripts/vendor/jquery.payment/lib/jquery.payment.js
     - public/javascripts/lib/*.js
     - public/javascripts/translations/*.js
     - public/javascripts/model/*.js
@@ -32,6 +31,14 @@ javascripts:
     - public/javascripts/ui/**/*.js
     - public/javascripts/app/**/*.js
     - app/views/jst/workspace/**/*.jst
+  bpcs:
+    - public/javascripts/application.js
+    - public/javascripts/vendor/underscore/underscore.js
+    - public/javascripts/vendor/jquery/dist/jquery.js
+    - public/javascripts/vendor/backbone/backbone.js
+    - public/javascripts/vendor/sprintf.js
+    - public/javascripts/vendor/jquery.payment/lib/jquery.payment.js
+    - public/javascripts/lib/*.js
   editor:
     - public/javascripts/editor/editor_toolbar.js
     - public/javascripts/editor/*.js
@@ -84,3 +91,7 @@ stylesheets:
     - public/stylesheets/pages/viewer_editing.css
   lt_ie_9:
     - public/stylesheets/common/lt_ie_9.css
+  bpcs:
+    - public/stylesheets/common/reset.css
+    - public/stylesheets/v2/*.css
+    - public/stylesheets/v2/**/*.css
