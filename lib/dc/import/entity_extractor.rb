@@ -47,7 +47,7 @@ module DC
       def extract_entities(document, calais, chunk_number)
         offset = chunk_number * MAX_TEXT_SIZE
         doc_entities = calais.entities + calais.locations
-        doc_entities.entities.each do |entity|
+        doc_entities.each do |entity|
           kind = Entity.normalize_kind(entity[:type])
           value = entity[:name]
           next unless kind && value

@@ -22,7 +22,7 @@ GIT
 
 GIT
   remote: git://github.com/documentcloud/open_calais.git
-  revision: 57f92c9ce163d969945b0c851e399287089d3c40
+  revision: 38db0d9c12b125f969e9bdb1a3368b4ccaca6df9
   branch: fuzziness
   specs:
     open_calais (0.3.2)
