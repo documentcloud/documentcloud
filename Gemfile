@@ -14,7 +14,7 @@ gem 'docsplit',               '0.8.0.alpha1'
 gem 'sunspot_rails',          '~> 2.1.0'
 gem 'sunspot_solr',           '~> 2.1.0'
 gem 'progress_bar'  # optional, used by sunspot to show progress while re-indexing
-#gem 'cloud-crowd',            :github => 'documentcloud/cloud-crowd', :branch => 'blacklist'
+gem 'cloud-crowd',            :github => 'documentcloud/cloud-crowd', :branch => 'blacklist'
 gem 'pdftailor'
 gem 'pdfshaver'
 

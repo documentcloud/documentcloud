@@ -4,7 +4,6 @@ class ProcessEntities < DocumentAction
   def process
     puts "Reprocessing Entities: #{document.title}"
     EntityDate.reset(document)
-    byebug
     DC::Import::EntityExtractor.new.extract document, document.combined_page_text
     true
   end
