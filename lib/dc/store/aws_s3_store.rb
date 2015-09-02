@@ -130,7 +130,7 @@ module DC
       end
       
       def destroy(document)
-        bucket.objects.with_prefix(document.path).delete_all
+        bucket.objects.with_prefix(File.join(document.path, '/')).delete_all
       end
       
       # Duplicate all of the assets from one document over to another.
