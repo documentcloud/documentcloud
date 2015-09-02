@@ -667,10 +667,6 @@ class Document < ActiveRecord::Base
     @asset_store ||= DC::Store::AssetStore.new
   end
 
-  def delete_assets
-    asset_store.destroy(self)
-  end
-
   def reprocess_text(force_ocr = false)
     queue_import :text_only => true, :force_ocr => force_ocr, :secure => !calais_id
   end
@@ -974,7 +970,11 @@ class Document < ActiveRecord::Base
   end
 
   private
-  
+
+  def delete_assets
+    asset_store.destroy(self)
+  end
+
   def ensure_language_is_valid
     self.language = DC::Language::DEFAULT unless DC::Language::SUPPORTED.include?(language)
   end
