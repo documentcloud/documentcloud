@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 gem 'iconv'
 gem 'rails',                  '~>4.2.0'
 gem 'curb',                   '~>0.8.4'
-gem 'open_calais',            path:'../open_calais'#,            :github => "documentcloud/open_calais", :branch=> "fuzziness" # Supports Open Calais v2
+gem 'open_calais',            :github => "documentcloud/open_calais", :branch=> "fuzziness" # Supports Open Calais v2
 gem 'rest-client',            '~> 1.8.0'
 gem 'bcrypt',                 '~> 3.1.1', :require => 'bcrypt'
 gem 'rubyzip',                '~> 1.1.0' #0.9.9'
