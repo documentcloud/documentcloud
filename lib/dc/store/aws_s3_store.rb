@@ -130,7 +130,7 @@ module DC
       end
       
       def destroy(document)
-        bucket.objects.with_prefix(document.path).delete_all
+        bucket.objects.with_prefix(File.join(document.path, '/')).delete_all
       end
       
       # Duplicate all of the assets from one document over to another.
@@ -192,6 +192,31 @@ module DC
         end
         invalid
       end
+      
+      def invalidate_cloudfront_cache(document)
+        if distribution_id = DC::SECRETS['cloudfront_distribution_id']
+          paths = (1..document.page_count).map do |page_number|
+            page_image_paths = Page::IMAGE_SIZES.keys.map do |size|
+              document.page_image_path(page_number, size)
+            end
+            [document.page_text_path(page_number)] + page_image_paths
+          end.flatten
+          
+          paths.push document.pdf_path
+          paths.push document.full_text_path
+          paths.push document.original_file_path unless document.original_file_path == document.pdf_path
+          
+          cloudfront.client.create_invalidation({
+            :distribution_id    => distribution_id,
+            :invalidation_batch => {
+              :paths            => { :quantity => paths.size, :items => paths.map{|p| "/#{p}"} },
+              :caller_reference => document.id.to_s
+            }
+          })
+        else 
+          Rails.logger.warn("No 'cloudfront_distribution_id' in DC::SECRETS.  Skipping invalidation")
+        end
+      end
 
       private
 
@@ -205,6 +230,22 @@ module DC
 
       def secure_s3
         @secure_s3 ||= ::AWS::S3.new(:access_key_id => @key, :secret_access_key => @secret, :secure => true)
+      end
+      
+      def cloudfront
+        @cloudfront ||= create_cloudfront
+      end
+      
+      def create_cloudfront
+        ::AWS::CloudFront.new :access_key_id => @key, :secret_access_key => @secret
+      end
+      
+      def cloudfront_invalidation_list
+        cloudfront.client.list_invalidations(:distribution_id=>DC::SECRETS['cloudfront_distribution_id'])
+      end
+      
+      def cloudfront_invalidation_quantity
+        cloudfront_invalidation_list[:quantity]
       end
 
       def bucket

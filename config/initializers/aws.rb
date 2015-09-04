@@ -1,5 +1,3 @@
-# More generous HTTP timeouts ... mostly because Solr is unresponsive.
-
 AWS.config(
   :access_key_id     => DC::SECRETS['aws_access_key'],
   :secret_access_key => DC::SECRETS['aws_secret_key'],

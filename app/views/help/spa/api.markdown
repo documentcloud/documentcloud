@@ -21,6 +21,7 @@ El API de DocumentCloud permite a los usuarios buscar, cargar, editar y organiza
 * [oEmbed](#oembed):
   * [Documentos](#oembed-documents)
   * [Notas](#oembed-notes)
+* [API Envolturas](#api-wrappers)
 
 <a name="guidelines"></a>
 # Directrices y Condiciones del Servicio de API
@@ -51,7 +52,7 @@ annotations   |  incluyen notas de documentos en los resultados       |     true
 data	      |  incluyen datos clave/de valor en los resultados	  |       true (not present by default)
 mentions      |  incluyen las menciones destacadas de la frase de búsqueda    |      3 (not present by default, max is 10)
 
- 
+
 ### Ejemplo
 
     /api/search.json?q=obama&page=2
@@ -79,7 +80,7 @@ mentions      |  incluyen las menciones destacadas de la frase de búsqueda    |
   <pre id="search_results" style="display: none;"></pre>
 </div>
 
- 
+
 ### Consejos
 
  * Si desea obtener resultados de búsqueda con más de diez documentos en una página, pase el parámetro per_page. Un máximo de 1000 documentos se devolverán a la vez.
@@ -103,7 +104,7 @@ published_url   |   (opcional) la dirección URL de la página en la que se inte
 access		    |(opcional), una de "publico", "privado", "organización",público predeterminado como  "privado" |
 project		    | (opcional) una identificación de proyectos numérica, para cargar el documento en un proyecto existente.   |       1012
 data 		    | (opcional) una mezcla  de pares clave / valor de datos {"data": {"status": "active"}} (json) arbitrarios | data[status]=active (query string)
-secure	        |   (opcional) Si está trabajando con un documento  realmente sensible, pase el parámetro "seguro" con el fin de evitar que el documento sea enviado a OpenCalais para extracción de entidades. | verdadero 
+secure	        |   (opcional) Si está trabajando con un documento  realmente sensible, pase el parámetro "seguro" con el fin de evitar que el documento sea enviado a OpenCalais para extracción de entidades. | verdadero
 
 ### Consejos
 
@@ -146,14 +147,14 @@ Recupere la representación canónica JSON de un documento en particular, según
       "contributor_organization":"DocumentCloud",
       "display_language":"eng",
       "resources":{
-        "pdf":"https://s3.amazonaws.com/s3.documentcloud.org/documents/1659580/economic-analysis-of-the-south-pole-traverse.pdf",
-        "text":"https://s3.amazonaws.com/s3.documentcloud.org/documents/1659580/economic-analysis-of-the-south-pole-traverse.txt",
-        "thumbnail":"https://s3.amazonaws.com/s3.documentcloud.org/documents/1659580/pages/economic-analysis-of-the-south-pole-traverse-p1-thumbnail.gif",
+        "pdf":"https://assets.documentcloud.org/documents/1659580/economic-analysis-of-the-south-pole-traverse.pdf",
+        "text":"https://assets.documentcloud.org/documents/1659580/economic-analysis-of-the-south-pole-traverse.txt",
+        "thumbnail":"https://assets.documentcloud.org/documents/1659580/pages/economic-analysis-of-the-south-pole-traverse-p1-thumbnail.gif",
         "search":"https://www.documentcloud.org/documents/1659580/search.json?q={query}",
         "print_annotations":"https://www.documentcloud.org/notes/print?docs[]=1659580",
         "translations_url":"https://www.documentcloud.org/translations/{realm}/{language}",
         "page":{
-          "image":"https://s3.amazonaws.com/s3.documentcloud.org/documents/1659580/pages/economic-analysis-of-the-south-pole-traverse-p{page}-{size}.gif",
+          "image":"https://assets.documentcloud.org/documents/1659580/pages/economic-analysis-of-the-south-pole-traverse-p{page}-{size}.gif",
           "text":"https://www.documentcloud.org/documents/1659580/pages/economic-analysis-of-the-south-pole-traverse-p{page}.txt"
           },
         "annotations_url":"https://www.documentcloud.org/documents/1659580/annotations"
@@ -183,21 +184,21 @@ published_url   |   (opcional) la dirección URL de la página en la que se inte
 access		    |(opcional), una de "publico", "privado", "organización",público predeterminado como  "privado" |
 project		    | (opcional) una identificación de proyectos numérica, para cargar el documento en un proyecto existente.   |       1012
 data 		    | (opcional) una mezcla  de pares clave / valor de datos {"data": {"status": "active"}} (json) arbitrarios | data[status]=active (query string)
-secure	        |   (opcional) Si está trabajando con un documento  realmente sensible, pase el parámetro "seguro" con el fin de evitar que el documento sea enviado a OpenCalais para extracción de entidades. | verdadero 
+secure	        |   (opcional) Si está trabajando con un documento  realmente sensible, pase el parámetro "seguro" con el fin de evitar que el documento sea enviado a OpenCalais para extracción de entidades. | verdadero
 
 El valor en la respuesta de este método será la representación JSON de su documento (como se ve en el método GET arriba), con todos las actualizaciones aplicadas.
 
 ## Consejos
 
- * Si su cliente HTTP no puede crear una solicitud PUT, puede enviarlo como POST, y añadir un parámetro adicional: _method=put
- 
+ * Si su cliente HTTP no puede crear una solicitud PUT, puede enviarlo como POST, y añadir un parámetro adicional: `_method=put`
+
 <a name="delete-document"></a>
 ## DELETE/api/documents /[id].Json
 
 Elimine un documento de DocumentCloud. Debe ser autentificado como el propietario del documento para que este método funcione.
 Consejos
 
- * Si su cliente HTTP no puede crear una petición DELETE, puede enviarlo como POST, y añadir un parámetro adicional: _method=delete
+ * Si su cliente HTTP no puede crear una petición DELETE, puede enviarlo como POST, y añadir un parámetro adicional: `_method=delete`
 
 <a name="get-entities"></a>
 ## GET/api/documents/[id]/entities.json
@@ -234,7 +235,7 @@ Parámetro 	|	Descripción 					|	Ejemplo
 title 		| (obligatorio) El título del proyecto 	    	|	Drywall Complaints
 description	| (opcional) un párrafo de descripción detallada  	| Una colección de documentos de 2007-2009 relacionados con los informes de paneles de yeso contaminados en Florida.
 document_ids | 	(opcional) una lista de los documentos que el proyecto contiene, por id | 28-rammussen, 207-petersen
- 
+
 ## Consejos
  * Tenga en cuenta que tiene que utilizar la convención para pasar una matriz de cadenas: `?document_ids[]=28-boumediene&document_ids[]=207-academy&document_ids[]=30-insider-trading`
 
@@ -324,6 +325,15 @@ Parámetro   | Descripción           | Ejemplo
 -----------------|-----------------------|--------------
 url              | **(required)** De escape de URL documento para incrustar     | https%3A//www.documentcloud.org/ documents/doc-name.html
 container        | (optional) Especifique el contenedor DOM en el que se incorporará al espectador | #my-document-div
+
+<a name="api-wrappers"></a>
+# API Envolturas
+
+La comunidad de código abierto ha contribuido varias aplicaciones votos para interactuar con el API del DocumentCloud. Ver la documentación de ejemplos y más información:
+
+**Python:** [python-documentcloud](http://python-documentcloud.readthedocs.org/en/latest/)
+
+**Ruby:** [Documentcloud gem](https://rubygems.org/gems/documentcloud/versions/0.2.2)
 
 # Preguntas?
 

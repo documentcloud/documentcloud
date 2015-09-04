@@ -21,6 +21,7 @@ DocumentCloud's API allows users to search, upload, edit, and organize documents
 * [oEmbed](#oembed):
   * [Documents](#oembed-documents)
   * [Notes](#oembed-notes)
+* [API Wrappers](#api-wrappers)
 
 <a name="guidelines"></a>
 # API Guidelines and Terms of Service
@@ -147,14 +148,14 @@ Retrieve the canonical JSON representation of a particular document, as specifie
       "contributor_organization":"DocumentCloud",
       "display_language":"eng",
       "resources":{
-        "pdf":"https://s3.amazonaws.com/s3.documentcloud.org/documents/1659580/economic-analysis-of-the-south-pole-traverse.pdf",
-        "text":"https://s3.amazonaws.com/s3.documentcloud.org/documents/1659580/economic-analysis-of-the-south-pole-traverse.txt",
-        "thumbnail":"https://s3.amazonaws.com/s3.documentcloud.org/documents/1659580/pages/economic-analysis-of-the-south-pole-traverse-p1-thumbnail.gif",
+        "pdf":"https://assets.documentcloud.org/documents/1659580/economic-analysis-of-the-south-pole-traverse.pdf",
+        "text":"https://assets.documentcloud.org/documents/1659580/economic-analysis-of-the-south-pole-traverse.txt",
+        "thumbnail":"https://assets.documentcloud.org/documents/1659580/pages/economic-analysis-of-the-south-pole-traverse-p1-thumbnail.gif",
         "search":"https://www.documentcloud.org/documents/1659580/search.json?q={query}",
         "print_annotations":"https://www.documentcloud.org/notes/print?docs[]=1659580",
         "translations_url":"https://www.documentcloud.org/translations/{realm}/{language}",
         "page":{
-          "image":"https://s3.amazonaws.com/s3.documentcloud.org/documents/1659580/pages/economic-analysis-of-the-south-pole-traverse-p{page}-{size}.gif",
+          "image":"https://assets.documentcloud.org/documents/1659580/pages/economic-analysis-of-the-south-pole-traverse-p{page}-{size}.gif",
           "text":"https://www.documentcloud.org/documents/1659580/pages/economic-analysis-of-the-south-pole-traverse-p{page}.txt"
           },
         "annotations_url":"https://www.documentcloud.org/documents/1659580/annotations"
@@ -323,6 +324,14 @@ Parameter        | Description           |  Example
 url              | **(required)** URL-escaped document to embed     | https%3A//www.documentcloud.org/ documents/doc-name.html
 container        | (optional) Specify the DOM container in which to embed the viewer | #my-document-div
 
+<a name="api-wrappers"></a>
+# API Wrappers
+
+The open-source community has contributed several helpful libraries for interacting with DocumentCloud's API. See their documentation for examples and more information:
+
+**Python:** [python-documentcloud](http://python-documentcloud.readthedocs.org/en/latest/)
+
+**Ruby:** [Documentcloud gem](https://rubygems.org/gems/documentcloud/versions/0.2.2)
 
 # Questions?
 

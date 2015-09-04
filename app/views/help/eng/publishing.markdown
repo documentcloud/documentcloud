@@ -62,7 +62,7 @@ To see a live example of a fixed size document with no sidebar, take a look at [
 Click on the "Next" button to proceed to step 3, and you'll see the embed code: a snippet of HTML that can be pasted into any web page to create a document viewer. The code will look something like this:
 
     <div id="viewer-10-general-report"></div>
-    <script src="//s3.amazonaws.com/s3.documentcloud.org/viewer/loader.js"></script>
+    <script src="//assets.documentcloud.org/viewer/loader.js"></script>
     <script>
       DV.load('http://www.documentcloud.org/documents/10-general-report.js', {
         container : '#viewer-10-general-report'
@@ -89,7 +89,7 @@ If you have [annotated a document](/help/notes), you can embed any note directly
 You'll be asked to select the note to embed, and will be able to preview the embedded note. Use your own CSS to control the width of any note on your site. Your HTML embed code will look something like this:
 
     <div id="DC-note-237"></div>
-    <script src="//s3.amazonaws.com/s3.documentcloud.org/notes/loader.js"></script>
+    <script src="//assets.documentcloud.org/notes/loader.js"></script>
     <script>
       dc.embed.loadNote('http://www.documentcloud.org/documents/223/annotations/237.js');
     </script>
@@ -115,7 +115,7 @@ To get started, find a set of documents you wish to embed -- either by selecting
 Once you're comfortable with your settings, preview the embedded document set. If the preview looks good, copy and paste the HTML embed code. Here's an example of what the embed code should look like:
 
     <div id="DC-search-projectid-8-epa-flouride"></div>
-    <script src="//s3.amazonaws.com/s3.documentcloud.org/embed/loader.js"></script>
+    <script src="//assets.documentcloud.org/embed/loader.js"></script>
     <script>
       dc.embed.load('http://www.documentcloud.org/search/embed/', {
         q: "projectid: 8-epa-flouride",

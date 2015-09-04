@@ -59,7 +59,7 @@ Para ver un ejemplo activo de un documento de tamaño fijo sin barra lateral, ve
 Haga clic en el botón "Next" para continuar con el paso 3, y veráx el código de inserción: un fragmento de código HTML que se puede pegar en cualquier página web para crear un visor de documentos. El código se asemejará a lo siguiente: 
 
     <div id="viewer-10-general-report"></div>
-    <script src="//s3.amazonaws.com/s3.documentcloud.org/viewer/loader.js"></script>
+    <script src="//assets.documentcloud.org/viewer/loader.js"></script>
     <script>
       DV.load('http://www.documentcloud.org/documents/10-general-report.js', {
         container : '#viewer-10-general-report'
@@ -87,7 +87,7 @@ Se le pedirá que seleccione la nota a insertar, y podrá revisar la nota incrus
 
 
     <div id="DC-note-237"></div>
-    <script src="//s3.amazonaws.com/s3.documentcloud.org/notes/loader.js"></script>
+    <script src="//assets.documentcloud.org/notes/loader.js"></script>
     <script>
       dc.embed.loadNote('http://www.documentcloud.org/documents/223/annotations/237.js');
     </script>
@@ -113,7 +113,7 @@ Para empezar, encuentre un conjunto de documentos que desee incrustar - ya sea m
 Una vez que usted se sienta cómodo con la configuración, revise el conjunto de documentos incrustado en vista previa. Si la vista previa se ve bien, copie y pegue el código de inserción HTML.  Este es un ejemplo de cómo se debe ver el código de inserción:
 
     <div id="DC-search-projectid-8-epa-flouride"></div>
-    <script src="//s3.amazonaws.com/s3.documentcloud.org/embed/loader.js"></script>
+    <script src="//assets.documentcloud.org/embed/loader.js"></script>
     <script>
       dc.embed.load('http://www.documentcloud.org/search/embed/', {
         q: "projectid: 8-epa-flouride",

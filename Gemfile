@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 gem 'iconv'
 gem 'rails',                  '~>4.2.0'
 gem 'curb',                   '~>0.8.4'
-gem 'calais',                 '~> 0.0.13', :github=>'nathanstitt/calais', :branch=>'newer_nokogiri'
+gem 'open_calais',            :github => "documentcloud/open_calais", :branch=> "fuzziness" # Supports Open Calais v2
 gem 'rest-client',            '~> 1.8.0'
 gem 'bcrypt',                 '~> 3.1.1', :require => 'bcrypt'
 gem 'rubyzip',                '~> 1.1.0' #0.9.9'
@@ -14,7 +14,7 @@ gem 'docsplit',               '0.8.0.alpha1'
 gem 'sunspot_rails',          '~> 2.1.0'
 gem 'sunspot_solr',           '~> 2.1.0'
 gem 'progress_bar'  # optional, used by sunspot to show progress while re-indexing
-gem 'cloud-crowd',            '~>0.7.3'
+gem 'cloud-crowd',            :github => 'documentcloud/cloud-crowd', :branch => 'blacklist'
 gem 'pdftailor'
 gem 'pdfshaver'
 
@@ -45,5 +45,6 @@ group :development, :test do
   gem 'highline'
   gem "pry"
   gem "byebug" # Debugger
+  gem 'factory_girl_rails' # Mocking out objects
   gem "ruby-debug-passenger"
 end

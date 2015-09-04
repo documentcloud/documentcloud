@@ -1,0 +1,116 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: http://api.opencalais.com/enlighten/rest/
+    body:
+      encoding: US-ASCII
+      string: licenseID=7pjwxne4cu8exdw4cabeb8hf&content=Fair+use+is+a+limitation+and+exception+to+the+exclusive+right+granted+by+copyright+law+to+the+author+of+a+creative+work.+In+United+States+copyright+law%2C+fair+use+is+a+doctrine+that+permits+limited+use+of+copyrighted+material+without+acquiring+permission+from+the+rights+holders.&paramsXML=%3Cc%3Aparams+xmlns%3Ac%3D%22http%3A%2F%2Fs.opencalais.com%2F1%2Fpred%2F%22+xmlns%3Ardf%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2F02%2F22-rdf-syntax-ns%23%22%3E%0A++%3Cc%3AprocessingDirectives+c%3AcontentType%3D%22text%2Fraw%22+c%3AomitOutputtingOriginalText%3D%22true%22%2F%3E%0A++%3Cc%3AuserDirectives+c%3AallowDistribution%3D%22false%22+c%3AallowSearch%3D%22false%22+c%3Asubmitter%3D%22DocumentCloud+%28test%29%22%2F%3E%0A%3C%2Fc%3Aparams%3E
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+      Content-Type:
+      - application/x-www-form-urlencoded
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - text/xml;charset=UTF-8
+      Date:
+      - Mon, 03 Aug 2015 15:46:36 GMT
+      Server:
+      - Apache-Coyote/1.1
+      Vary:
+      - Accept-Encoding
+      X-Mashery-Responder:
+      - prod-j-worker-us-east-1b-80.mashery.com
+      Content-Length:
+      - '1588'
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: "<!--Use of the Calais Web Service is governed by the Terms of Service
+        located at http://www.opencalais.com. By using this service or the results
+        of the service you agree to these terms of service.--><!--Relations: \r\nCountry:
+        United States\r\nIndustryTerm: copyright law\r\nPosition: author\r\n--><rdf:RDF
+        xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\" xmlns:c=\"http://s.opencalais.com/1/pred/\"><rdf:Description
+        c:allowDistribution=\"false\" c:allowSearch=\"false\" c:calaisRequestID=\"6eb5a533-f667-d6ca-14ef-43e3b3f45abc\"
+        c:id=\"http://id.opencalais.com/P*tNO1OJF-qGACkhnRnGmg\" rdf:about=\"http://d.opencalais.com/dochash-1/9307fe44-21e6-3a0b-b040-d6c3f708da74\"><rdf:type
+        rdf:resource=\"http://s.opencalais.com/1/type/sys/DocInfo\"/><c:document/><c:docTitle/><c:docDate>2015-08-03
+        10:46:36.076</c:docDate><c:submitter>DocumentCloud (test)</c:submitter></rdf:Description><rdf:Description
+        c:contentType=\"text/raw\" c:emVer=\"7.1.1103.5\" c:langIdVer=\"DefaultLangId\"
+        c:language=\"English\" c:processingVer=\"CalaisJob01\" c:submissionDate=\"2015-08-03
+        10:46:35.967\" rdf:about=\"http://d.opencalais.com/dochash-1/9307fe44-21e6-3a0b-b040-d6c3f708da74/meta\"><rdf:type
+        rdf:resource=\"http://s.opencalais.com/1/type/sys/DocInfoMeta\"/><c:docId
+        rdf:resource=\"http://d.opencalais.com/dochash-1/9307fe44-21e6-3a0b-b040-d6c3f708da74\"/><c:submitterCode>8d14437d-3747-a6b2-959d-94d1042a3f96</c:submitterCode><c:signature>digestalg-1|uOxXu3A1m72kpeWoBzzr+idumm4=|D/dbcDAUlDIwpeh5s0eJG1OKVJIKxsXy4bU7Axb6AwQMd6ZfoKa0uw==</c:signature></rdf:Description><rdf:Description
+        rdf:about=\"http://d.opencalais.com/dochash-1/9307fe44-21e6-3a0b-b040-d6c3f708da74/lid/DefaultLangId\"><rdf:type
+        rdf:resource=\"http://s.opencalais.com/1/type/lid/DefaultLangId\"/><c:docId
+        rdf:resource=\"http://d.opencalais.com/dochash-1/9307fe44-21e6-3a0b-b040-d6c3f708da74\"/><c:lang
+        rdf:resource=\"http://d.opencalais.com/lid/DefaultLangId/English\"/></rdf:Description><rdf:Description
+        rdf:about=\"http://d.opencalais.com/dochash-1/9307fe44-21e6-3a0b-b040-d6c3f708da74/cat/1\"><rdf:type
+        rdf:resource=\"http://s.opencalais.com/1/type/cat/DocCat\"/><c:docId rdf:resource=\"http://d.opencalais.com/dochash-1/9307fe44-21e6-3a0b-b040-d6c3f708da74\"/><c:category
+        rdf:resource=\"http://d.opencalais.com/cat/Calais/Law_Crime\"/><c:classifierName>Calais</c:classifierName><c:categoryName>Law_Crime</c:categoryName><c:score>0.945</c:score></rdf:Description><rdf:Description
+        rdf:about=\"http://d.opencalais.com/genericHasher-1/e911da6b-56e4-3544-9357-5d79d01c1538\"><rdf:type
+        rdf:resource=\"http://s.opencalais.com/1/type/em/e/Position\"/><c:name>author</c:name></rdf:Description><rdf:Description
+        rdf:about=\"http://d.opencalais.com/dochash-1/9307fe44-21e6-3a0b-b040-d6c3f708da74/Instance/1\"><rdf:type
+        rdf:resource=\"http://s.opencalais.com/1/type/sys/InstanceInfo\"/><c:docId
+        rdf:resource=\"http://d.opencalais.com/dochash-1/9307fe44-21e6-3a0b-b040-d6c3f708da74\"/><c:subject
+        rdf:resource=\"http://d.opencalais.com/genericHasher-1/e911da6b-56e4-3544-9357-5d79d01c1538\"/><!--Position:
+        author; --><c:detection>[the exclusive right granted by copyright law to ]the
+        author[ of a creative work. In United States copyright]</c:detection><c:prefix>the
+        exclusive right granted by copyright law to </c:prefix><c:exact>the author</c:exact><c:suffix>
+        of a creative work. In United States copyright</c:suffix><c:offset>90</c:offset><c:length>10</c:length></rdf:Description><rdf:Description
+        rdf:about=\"http://d.opencalais.com/dochash-1/9307fe44-21e6-3a0b-b040-d6c3f708da74/Relevance/1\"><rdf:type
+        rdf:resource=\"http://s.opencalais.com/1/type/sys/RelevanceInfo\"/><c:docId
+        rdf:resource=\"http://d.opencalais.com/dochash-1/9307fe44-21e6-3a0b-b040-d6c3f708da74\"/><c:subject
+        rdf:resource=\"http://d.opencalais.com/genericHasher-1/e911da6b-56e4-3544-9357-5d79d01c1538\"/><c:relevance>0.500</c:relevance></rdf:Description><rdf:Description
+        rdf:about=\"http://d.opencalais.com/genericHasher-1/7ca3499c-033d-33aa-8ad4-17ed427a99d3\"><rdf:type
+        rdf:resource=\"http://s.opencalais.com/1/type/em/e/IndustryTerm\"/><c:name>copyright
+        law</c:name></rdf:Description><rdf:Description rdf:about=\"http://d.opencalais.com/dochash-1/9307fe44-21e6-3a0b-b040-d6c3f708da74/Instance/2\"><rdf:type
+        rdf:resource=\"http://s.opencalais.com/1/type/sys/InstanceInfo\"/><c:docId
+        rdf:resource=\"http://d.opencalais.com/dochash-1/9307fe44-21e6-3a0b-b040-d6c3f708da74\"/><c:subject
+        rdf:resource=\"http://d.opencalais.com/genericHasher-1/7ca3499c-033d-33aa-8ad4-17ed427a99d3\"/><!--IndustryTerm:
+        copyright law; --><c:detection>[and exception to the exclusive right granted
+        by ]copyright law[ to the author of a creative work. In United]</c:detection><c:prefix>and
+        exception to the exclusive right granted by </c:prefix><c:exact>copyright
+        law</c:exact><c:suffix> to the author of a creative work. In United</c:suffix><c:offset>73</c:offset><c:length>13</c:length></rdf:Description><rdf:Description
+        rdf:about=\"http://d.opencalais.com/dochash-1/9307fe44-21e6-3a0b-b040-d6c3f708da74/Instance/3\"><rdf:type
+        rdf:resource=\"http://s.opencalais.com/1/type/sys/InstanceInfo\"/><c:docId
+        rdf:resource=\"http://d.opencalais.com/dochash-1/9307fe44-21e6-3a0b-b040-d6c3f708da74\"/><c:subject
+        rdf:resource=\"http://d.opencalais.com/genericHasher-1/7ca3499c-033d-33aa-8ad4-17ed427a99d3\"/><!--IndustryTerm:
+        copyright law; --><c:detection>[the author of a creative work. In United States
+        ]copyright law[, fair use is a doctrine that permits limited use]</c:detection><c:prefix>the
+        author of a creative work. In United States </c:prefix><c:exact>copyright
+        law</c:exact><c:suffix>, fair use is a doctrine that permits limited use</c:suffix><c:offset>138</c:offset><c:length>13</c:length></rdf:Description><rdf:Description
+        rdf:about=\"http://d.opencalais.com/dochash-1/9307fe44-21e6-3a0b-b040-d6c3f708da74/Relevance/2\"><rdf:type
+        rdf:resource=\"http://s.opencalais.com/1/type/sys/RelevanceInfo\"/><c:docId
+        rdf:resource=\"http://d.opencalais.com/dochash-1/9307fe44-21e6-3a0b-b040-d6c3f708da74\"/><c:subject
+        rdf:resource=\"http://d.opencalais.com/genericHasher-1/7ca3499c-033d-33aa-8ad4-17ed427a99d3\"/><c:relevance>0.714</c:relevance></rdf:Description><rdf:Description
+        rdf:about=\"http://d.opencalais.com/er/geo/country/ralg-geo1/152649df-347e-e289-1a9e-acc883e07d17\"><rdf:type
+        rdf:resource=\"http://s.opencalais.com/1/type/er/Geo/Country\"/><c:docId rdf:resource=\"http://d.opencalais.com/dochash-1/9307fe44-21e6-3a0b-b040-d6c3f708da74\"/><!--United
+        States--><c:subject rdf:resource=\"http://d.opencalais.com/genericHasher-1/a54ac18b-a956-3b5c-b235-0609ca899305\"/><c:name>United
+        States</c:name><c:latitude>40.4230003233</c:latitude><c:longitude>-98.7372244786</c:longitude></rdf:Description><rdf:Description
+        rdf:about=\"http://d.opencalais.com/genericHasher-1/a54ac18b-a956-3b5c-b235-0609ca899305\"><rdf:type
+        rdf:resource=\"http://s.opencalais.com/1/type/em/e/Country\"/><c:name>United
+        States</c:name></rdf:Description><rdf:Description rdf:about=\"http://d.opencalais.com/dochash-1/9307fe44-21e6-3a0b-b040-d6c3f708da74/Instance/4\"><rdf:type
+        rdf:resource=\"http://s.opencalais.com/1/type/sys/InstanceInfo\"/><c:docId
+        rdf:resource=\"http://d.opencalais.com/dochash-1/9307fe44-21e6-3a0b-b040-d6c3f708da74\"/><c:subject
+        rdf:resource=\"http://d.opencalais.com/genericHasher-1/a54ac18b-a956-3b5c-b235-0609ca899305\"/><!--Country:
+        United States; --><c:detection>[law to the author of a creative work. In ]United
+        States[ copyright law, fair use is a doctrine that]</c:detection><c:prefix>law
+        to the author of a creative work. In </c:prefix><c:exact>United States</c:exact><c:suffix>
+        copyright law, fair use is a doctrine that</c:suffix><c:offset>124</c:offset><c:length>13</c:length></rdf:Description><rdf:Description
+        rdf:about=\"http://d.opencalais.com/dochash-1/9307fe44-21e6-3a0b-b040-d6c3f708da74/Relevance/3\"><rdf:type
+        rdf:resource=\"http://s.opencalais.com/1/type/sys/RelevanceInfo\"/><c:docId
+        rdf:resource=\"http://d.opencalais.com/dochash-1/9307fe44-21e6-3a0b-b040-d6c3f708da74\"/><c:subject
+        rdf:resource=\"http://d.opencalais.com/genericHasher-1/a54ac18b-a956-3b5c-b235-0609ca899305\"/><c:relevance>0.357</c:relevance></rdf:Description></rdf:RDF>"
+    http_version: 
+  recorded_at: Mon, 03 Aug 2015 15:46:39 GMT
+recorded_with: VCR 2.9.3

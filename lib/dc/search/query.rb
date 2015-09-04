@@ -27,7 +27,8 @@ module DC
       # appropriate attributes.
       def initialize(opts={})
         @text                   = opts[:text]
-        @page                   = opts[:page]
+        @page                   = opts[:page].to_i
+        @page                   = 1 unless @page > 0
         @access                 = opts[:access]
         @fields                 = opts[:fields]       || []
         @accounts               = opts[:accounts]     || []
@@ -52,7 +53,8 @@ module DC
 
       # Set the page of the search that this query is supposed to access.
       def page=(page)
-        @page = page
+        raise ArgumentError, "page must be > 0" unless page.to_i > 0
+        @page = page.to_i
         @from = (@page - 1) * @per_page
         @to   = @from + @per_page
       end
