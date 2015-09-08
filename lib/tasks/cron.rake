@@ -2,6 +2,7 @@ namespace :cron do
 
   # Only run on db01
   task :nightly do
+    invoke 'crowd:cluster:free_calais_blacklist'
     invoke 'db:backup'
     invoke 'db:vacuum_analyze'
     invoke 'db:optimize_solr'
@@ -11,7 +12,6 @@ namespace :cron do
   # Only run on db01
   task :hourly do
     invoke 'app:publish'
-    invoke 'blacklist:free_calais' if Time.now.hour % 23 == 0 # On the 23rd hour
   end
 
   # Only run on app01

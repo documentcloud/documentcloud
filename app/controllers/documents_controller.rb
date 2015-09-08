@@ -221,7 +221,8 @@ class DocumentsController < ApplicationController
   end
 
   def search
-    doc       = current_document(true)
+    doc = current_document(true)
+    return not_found unless doc
     pages     = Page.search_for_page_numbers(params[:q], doc)
     @response = {'query' => params[:q], 'results' => pages}
     json_response
