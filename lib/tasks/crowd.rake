@@ -62,6 +62,7 @@ namespace :crowd do
     desc "Remove blacklist on Open Calais for daily limit reset"
     task :free_calais_blacklist => :environment do
       RestClient.delete DC::CONFIG['cloud_crowd_server'] + File.join("/","blacklist","reprocess_entities")
+      AppConstant.replace("calais_calls_made", 0.to_s)
     end
   end
 
