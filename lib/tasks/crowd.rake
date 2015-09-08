@@ -58,6 +58,11 @@ namespace :crowd do
     task(:launch_nodes, :count, :node_name) do |t, options|
       CloudCrowd::NodeWrangler.new.launch_nodes(options)
     end
+    
+    desc "Remove blacklist on Open Calais for daily limit reset"
+    task :free_calais_blacklist => :environment do
+      RestClient.delete DC::CONFIG['cloud_crowd_server'] + File.join("/","blacklist","reprocess_entities")
+    end
   end
 
 end
