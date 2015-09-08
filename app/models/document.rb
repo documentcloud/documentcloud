@@ -806,7 +806,7 @@ class Document < ActiveRecord::Base
   end
 
   # Create an identical clone of this document, in all ways (except for the ID).
-  def duplicate!(account=nil, options={})
+  def duplicate!(recipient=nil, options={})
     Document.transaction do
       # Clone the document.
       newattrs = attributes.merge({
@@ -815,8 +815,8 @@ class Document < ActiveRecord::Base
           :updated_at => Time.now
       })
       newattrs.delete('id')
-      newattrs[:account_id] = account.id if account
-      newattrs[:organization_id] = account.organization.id if account and not newattrs[:organization_id]
+      newattrs[:account_id] = recipient.id if recipient
+      newattrs[:organization_id] = recipient.organization.id if recipient and not newattrs[:organization_id]
       copy     = Document.create!(newattrs.merge({:hit_count  => 0, :detected_remote_url => nil}))
       newattrs = {:document_id => copy.id}
 
@@ -824,11 +824,15 @@ class Document < ActiveRecord::Base
       if docdata and options['include_docdata']
         Docdata.create! docdata.attributes.merge newattrs
       end
+      
 
       # Clone the associations.
       associations = [entities, entity_dates, pages]
       associations.push sections if options['include_sections']
-      associations.push annotations.accessible(account) if options['include_annotations']
+      # Copy all notes that are visible by either the document owner or the recipient
+      account_context = options['as_owner'] ? self.account : recipient
+      associations.push annotations.accessible(account_context) if options['include_annotations']
+      # Copy the new document into all of the same projects as the old document
       associations.push project_memberships if options['include_project']
       associations.each do |association|
         association.each do |model|
