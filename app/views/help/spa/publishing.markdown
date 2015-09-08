@@ -1,12 +1,13 @@
 # Publicando documentos, notas y conjuntos de documentos
 
-¿Esta listo para hacer que sus documentos sean públicos? Publique documentos individuales, incruste un conjunto de documentos que sus lectores puedan navegar, o integre una sola nota en cualquier documento. 
+¿Esta listo para hacer que sus documentos sean públicos? Publique documentos individuales, incruste un conjunto de documentos que sus lectores puedan navegar, o integre una sola nota en cualquier documento.
 
 ## Contents
 
 * [Haciendo documentos públicos](#public)
 * Generar códigos embed:
   * [Documentos](#embed-document)
+  * [Pages](#embed-page)
   * [Notas](#embed-note)
   * [Grupo de Documentos](#embed-set)
 * [WordPress Shortcodes](#wordpress)
@@ -48,7 +49,7 @@ Aquí hay algunos ejemplos activos que vale la pena visitar: [NewsHour](http://w
 
 <img src="/images/help/newshour.jpg" class="full_line" />
 
-Si opta por integrar un visor de **tamaño fijo**, establezca la anchura y  la altura en píxeles. También puede intercambiar la barra lateral y la pestaña de texto. Recomendamos ocultar la barra lateral en los visores de documentos que son más estrechos que 800 píxeles. Si usted está incrustando documentos escritos a mano o documentos con resultados insatisfactorios de OCR, suele ser una buena idea ocultar la pestaña de texto. Utilice el enlace "preview the document viewer" para ver un ejemplo del visor presentado de acuerdo a sus especificaciones.  
+Si opta por integrar un visor de **tamaño fijo**, establezca la anchura y  la altura en píxeles. También puede intercambiar la barra lateral y la pestaña de texto. Recomendamos ocultar la barra lateral en los visores de documentos que son más estrechos que 800 píxeles. Si usted está incrustando documentos escritos a mano o documentos con resultados insatisfactorios de OCR, suele ser una buena idea ocultar la pestaña de texto. Utilice el enlace "preview the document viewer" para ver un ejemplo del visor presentado de acuerdo a sus especificaciones. 
 
 Para ver un ejemplo activo de un documento de tamaño fijo sin barra lateral, vea esta [boleta electoral de WNYC](http://beta.wnyc.org/articles/its-free-country/2010/sep/07/new-nyc-ballot-could-cause-confusion/).
 
@@ -75,6 +76,9 @@ En ocasiones es posible que haya incorporado/incrustado documentos que le gustar
 ## <span id="intouch">Manténgase en contacto</span>
 
 [¡Cuéntenos acerca de sus reportajes!](javascript:dc.ui.Dialog.contact(\))
+
+<a name="embed-page"></a>
+# Embed Codes for Individual Pages
 
 <a name="embed-note"></a>
 # <span id="note_embed">Incrustar una nota de un documento</span>

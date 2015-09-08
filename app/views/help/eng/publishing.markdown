@@ -7,6 +7,7 @@ Ready to share your documents with readers? Either by embedding our custom viewe
 * [Making documents public](#public)
 * Generating embed codes:
   * [Documents](#embed-document)
+  * [Pages](#embed-page)
   * [Notes](#embed-note)
   * [Document Sets](#embed-set)
 * [WordPress Shortcodes](#wordpress)
@@ -78,6 +79,11 @@ On occasion you may have embedded documents which you would like to remain priva
 ## <span id="intouch">Stay in Touch</span>
 
 [Let us know][] about your reporting!
+
+<a name="embed-page"></a>
+# Embed Codes for Individual Pages
+
+
 
 <a name="embed-note"></a>
 # <span id="note_embed">Embed Codes for a Note in a Document</span>
