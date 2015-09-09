@@ -56,7 +56,7 @@ class DocumentImport < DocumentAction
       when 'images' then process_images
       end
     rescue Exception => e
-      LifecycleMailer.exception_notification(e,options).deliver
+      LifecycleMailer.exception_notification(e,options).deliver_now
       raise e
     end
     document.id
@@ -100,7 +100,7 @@ class DocumentImport < DocumentAction
         opts[:clean] = false unless opts[:language] == 'eng'
         Docsplit.extract_text(@pdf, opts)
       rescue Exception => e
-        LifecycleMailer.exception_notification(e, options).deliver
+        LifecycleMailer.exception_notification(e, options).deliver_now
       end
       Docsplit.extract_length(@pdf).times do |i|
         page_number = i + 1
@@ -161,7 +161,7 @@ class DocumentImport < DocumentAction
     count = options['email_me']
     return unless count && count > 0
     if Document.owned_by(document.account).pending.count == 0
-      LifecycleMailer.documents_finished_processing(document.account, count).deliver
+      LifecycleMailer.documents_finished_processing(document.account, count).deliver_now
     end
   end
   

@@ -201,7 +201,7 @@ class DocumentTest < ActiveSupport::TestCase
     assert_equal "/#{base}-#{doc.slug}.js", doc.canonical_cache_path
     assert_equal "#{doc.slug}-p{page}-{size}.gif", doc.page_image_template
     assert_equal "#{doc.slug}-p{page}.txt", doc.page_text_template
-    assert_equal "#{DC::Store::AssetStore.web_root}/#{slug}.pdf", doc.public_pdf_url
+    assert_equal "#{DC.cdn_root(:force_ssl=>true)}/#{slug}.pdf", doc.public_pdf_url
     assert_equal "#{DC.server_root}/#{slug}.pdf", doc.private_pdf_url
     assert_equal doc.public_pdf_url, doc.pdf_url
     assert_equal secret_doc.private_pdf_url, secret_doc.pdf_url

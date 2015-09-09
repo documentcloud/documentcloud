@@ -27,7 +27,7 @@ class SignupController < ApplicationController
   private
 
   def notify_support_email
-    LifecycleMailer.verification_request_notification(@verification_request).deliver
+    LifecycleMailer.verification_request_notification(@verification_request).deliver_now
   end
 
   def notify_slack

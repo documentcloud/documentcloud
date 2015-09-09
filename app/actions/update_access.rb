@@ -19,7 +19,7 @@ class UpdateAccess < CloudCrowd::Action
       end
       document.update_attributes(:access => access)
     rescue Exception => e
-      LifecycleMailer.exception_notification(e,options).deliver
+      LifecycleMailer.exception_notification(e,options).deliver_now
       document.update_attributes(:access => DC::Access::ERROR) if document
       raise e
     end

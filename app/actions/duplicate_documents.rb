@@ -8,7 +8,7 @@ class DuplicateDocuments < CloudCrowd::Action
       begin
         doc.duplicate!(account, options)
       rescue => e
-        LifecycleMailer.exception_notification(e, options.merge({:document_id=>doc.id}) ).deliver
+        LifecycleMailer.exception_notification(e, options.merge({:document_id=>doc.id}) ).deliver_now
         outcomes[:failed].push(:id=>doc.id, :access=>doc.access, :error=>{:name=>e.class.name, :message=>e.message})
       end
       outcomes[:succeeded].push(doc.id)
@@ -28,7 +28,7 @@ class DuplicateDocuments < CloudCrowd::Action
     duplicate_projects(successes) if options['projects']
     
     data = {:successes => successes, :failures => failures}
-    LifecycleMailer.logging_email("DuplicateDocument batch manifest", data).deliver
+    LifecycleMailer.logging_email("DuplicateDocument batch manifest", data).deliver_now
     true
   end
   
