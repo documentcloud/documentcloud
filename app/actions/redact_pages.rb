@@ -23,7 +23,7 @@ class RedactPages < DocumentAction
       redact
     rescue Exception => e
       fail_document
-      LifecycleMailer.exception_notification(e,options).deliver
+      LifecycleMailer.exception_notification(e,options).deliver_now
       raise e
     end
     document.id

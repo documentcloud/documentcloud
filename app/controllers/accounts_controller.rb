@@ -101,7 +101,7 @@ class AccountsController < ApplicationController
     if account.pending?
       account.send_login_instructions(current_organization, current_account)
     else
-      LifecycleMailer.membership_notification(account, current_organization, current_account).deliver
+      LifecycleMailer.membership_notification(account, current_organization, current_account).deliver_now
     end
     json account.canonical( :membership=>membership )
   end
@@ -130,7 +130,7 @@ class AccountsController < ApplicationController
   def resend_welcome
     return forbidden unless current_account.admin?
     account = current_organization.accounts.find(params[:id])
-    LifecycleMailer.login_instructions( account, current_organization, current_account ).deliver
+    LifecycleMailer.login_instructions( account, current_organization, current_account ).deliver_now
     json nil
   end
 

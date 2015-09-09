@@ -259,7 +259,7 @@ class Account < ActiveRecord::Base
   # key to set the password.
   def send_login_instructions(organization=self.organization, admin=nil)
     ensure_security_key!
-    LifecycleMailer.login_instructions(self, organization, admin).deliver
+    LifecycleMailer.login_instructions(self, organization, admin).deliver_now
   end
 
   def ensure_security_key!
@@ -272,7 +272,7 @@ class Account < ActiveRecord::Base
       ensure_security_key!
       key = '?key=' + self.security_key.key
     end
-    LifecycleMailer.reviewer_instructions(documents, inviter_account, self, message, key).deliver
+    LifecycleMailer.reviewer_instructions(documents, inviter_account, self, message, key).deliver_now
   end
 
   # Upgrades a reviewer account to a newsroom account.
@@ -289,7 +289,7 @@ class Account < ActiveRecord::Base
   # reset the password.
   def send_reset_request
     ensure_security_key!
-    LifecycleMailer.reset_request(self).deliver
+    LifecycleMailer.reset_request(self).deliver_now
   end
 
   # No middle names, for now.
