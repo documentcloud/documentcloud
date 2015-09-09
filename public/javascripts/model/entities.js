@@ -164,6 +164,13 @@ dc.model.EntitySet = Backbone.Collection.extend({
     var missing = _.select(docs, function(doc){ return !doc.entities.loaded; });
     if (!missing.length) return callback();
     dc.ui.spinner.show();
+    // 1. Iterate over all docs looking at status of `process_entities`
+    // 2. Those with incomplete entity processing get added to a new Ajax call to get latest status
+      // 2a. If latest status is still incomplete, run `callback()`
+      // 2b. If latest status is complete, add to 3's list
+    // 3. Those with processed entities get passed to the existing Ajax call
+
+
     $.get('/documents/entities.json', {'ids[]' : _.pluck(missing, 'id')}, function(resp) {
       var entities = _.groupBy(resp.entities, 'document_id');
       _.each(entities, function(list, docId) {
