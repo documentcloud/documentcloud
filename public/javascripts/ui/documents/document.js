@@ -436,6 +436,7 @@ dc.ui.Document = Backbone.View.extend({
   // Re-renders the entities when the entities are refreshed.
   _renderEntities : function() {
     if (this.model.entities.length) {
+      // Update processing job status for process_entities IF it is not already completed.
       this.entitiesView.show();
     } else {
       dc.ui.Dialog.alert( _.t('has_no_entities', this.model.get('title') ) );

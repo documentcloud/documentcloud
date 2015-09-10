@@ -164,14 +164,35 @@ dc.model.EntitySet = Backbone.Collection.extend({
     var missing = _.select(docs, function(doc){ return !doc.entities.loaded; });
     if (!missing.length) return callback();
     dc.ui.spinner.show();
-    // 1. Iterate over all docs looking at status of `process_entities`
+
+    // 1. Fetch all of the latest statuses for the documents.
+    var missingReady = null
+    $.get('/documents/status.json', {'ids[]' : _.pluck(missing, 'id')}, function(resp) {
+      var documents = _.groupBy(resp.documents, 'id');
+      // Select all items have do not have an active process_entities job
+      missingReady = _.select(documents, function(doc){ 
+        // Where process status
+        return _.where(doc.processing_statuses, function(job){
+          // Is not actively running
+          return job.process_entities != true;
+        })
+      });
+      debugger
+      // Select all items that have blank or not equal to true for process_entities
+      //var missingReady = _.select(processing_jobs, function(doc){ return !doc.entities.loaded; });
+      // _.each(processing_jobs, function(list, docId) {
+      //   var collection = Documents.get(docId).processing_statuses;
+      //   collection.loaded = true;
+      //   collection.reset(list);
+      // });
+    }, 'json');
     // 2. Those with incomplete entity processing get added to a new Ajax call to get latest status
       // 2a. If latest status is still incomplete, run `callback()`
       // 2b. If latest status is complete, add to 3's list
     // 3. Those with processed entities get passed to the existing Ajax call
 
 
-    $.get('/documents/entities.json', {'ids[]' : _.pluck(missing, 'id')}, function(resp) {
+    $.get('/documents/entities.json', {'ids[]' : _.pluck(missingReady, 'id')}, function(resp) {
       var entities = _.groupBy(resp.entities, 'document_id');
       _.each(entities, function(list, docId) {
         var collection = Documents.get(docId).entities;

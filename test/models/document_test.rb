@@ -232,4 +232,10 @@ class DocumentTest < ActiveSupport::TestCase
     end
   end
 
+  def test_processing_jobs_included
+    job = FactoryGirl.create(:processing_job)
+    doc = job.document
+    assert doc.as_json.keys.include? :processing_statuses
+    job.destroy
+  end
 end

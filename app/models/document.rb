@@ -684,6 +684,18 @@ class Document < ActiveRecord::Base
     queue_import :images_only => true, :secure => !calais_id
   end
 
+  def processing_statuses
+    processing_manifest = {}
+    processing_jobs.map { |e|
+      processing_manifest[e.action] = begin 
+        e.status
+      rescue
+        next
+      end
+    }
+    processing_manifest
+  end
+
   def reindex_all!(access=nil)
     Page.refresh_page_map(self)
     EntityDate.reset(self)
@@ -918,7 +930,8 @@ class Document < ActiveRecord::Base
       :char_count          => char_count,
       :data                => data,
       :language            => language,
-      :file_hash           => file_hash
+      :file_hash           => file_hash,
+      :processing_statuses => processing_statuses
     }
     if opts[:annotations]
       json[:annotations_url] = annotations_url if commentable?(opts[:account])
