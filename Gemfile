@@ -48,5 +48,5 @@ group :development, :test do
   gem 'factory_girl_rails' # Mocking out objects
   gem "ruby-debug-passenger"
   gem 'vcr'
-  gem 'webmock'
+#  gem 'webmock'
 end
