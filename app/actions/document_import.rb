@@ -65,8 +65,15 @@ class DocumentImport < DocumentAction
   # When both sides are done, update the document to mark it as finished.
   def merge
     document.update_attributes :access => access
+    process_entities
     email_on_complete
     super
+  end
+
+  def process_entities
+    if ! options['secure'] && DC::Language::SUPPORTED.include?(document.language)
+      document.process_entities
+    end
   end
 
   def process_images
@@ -120,15 +127,10 @@ class DocumentImport < DocumentAction
 
     document.page_count = @pages.length
     Page.refresh_page_map(document)
-    EntityDate.reset(document)
     document.save!
     pages = document.reload.pages.order(:page_number)
     Sunspot.index pages
     Sunspot.commit
-    if ! options['secure'] && DC::Language::SUPPORTED.include?(document.language)
-      text = pages.map(&:text).join('')
-      DC::Import::EntityExtractor.new.extract(document, text)
-    end
     document.upload_text_assets(pages, access)
     document.id
   end

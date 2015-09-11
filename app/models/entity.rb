@@ -20,7 +20,7 @@ class Entity < ActiveRecord::Base
   scope :kind, lambda {|kind| where( :kind => kind ) }
 
   def self.normalize_kind(string)
-    DC::CALAIS_MAP[string.underscore.to_sym]
+    DC::CALAIS_MAP[string.downcase.tr(" ", "_").to_sym]
   end
 
   # Truncate and titlize the value, if necessary.

@@ -195,7 +195,7 @@ GEM
     method_source (0.8.2)
     mime-types (2.6.1)
     mini_portile (0.6.2)
-    minitest (5.7.0)
+    minitest (5.8.0)
     minitest-spec-rails (5.2.2)
       minitest (~> 5.0)
       rails (~> 4.1)

@@ -1,7 +1,6 @@
+# -*- coding: utf-8 -*-
 class Document < ActiveRecord::Base
   include DC::Access
-  #include DC::Status
-  ##extend DC::Status::Migration
   include ActionView::Helpers::TextHelper
 
   # Accessors and constants:
@@ -43,7 +42,7 @@ class Document < ActiveRecord::Base
   has_many :remote_urls,          :dependent   => :destroy
   has_many :project_memberships,  :dependent   => :destroy
   has_many :projects,             :through     => :project_memberships
-  has_many :processing_jobs,      :validate => false
+  has_many :processing_jobs
 
   has_many :reviewer_projects,     -> { where( :hidden => true) },
                                      :through     => :project_memberships,
@@ -702,16 +701,17 @@ class Document < ActiveRecord::Base
     pages = self.reload.pages
     Sunspot.index pages
     Sunspot.commit
-    reprocess_entities if calais_id
+    process_entities if calais_id
     upload_text_assets(pages, access)
     self.access = access if access
     self.save!
   end
 
-  def reprocess_entities
+  def process_entities
     RestClient.post(DC::CONFIG['cloud_crowd_server'] + '/jobs', {:job => {
-      'action'  => 'reprocess_entities',
-      'inputs'  => [id]
+      'action'  => 'process_entities',
+      'inputs'  => [id],
+      'options' => {'id' => id}
     }.to_json})
   end
 
@@ -727,11 +727,9 @@ class Document < ActiveRecord::Base
   end
 
   def save_page_text(modified_pages)
-    Rails.logger.info("DOCUMENT ACCESS IS: #{self.access}")
     eventual_access = self.access || PRIVATE
     self.update_attributes(
       :access       => PENDING,
-    #  #:status       => UNAVAILABLE,
       :text_changed => true
     )
     modified_pages.each_pair do |page_number, page_text|
@@ -739,13 +737,14 @@ class Document < ActiveRecord::Base
       page.text = page_text
       page.save
     end
-    Rails.logger.info("EVENTUAL ACCESS SHOULD BE: #{eventual_access}")
-    self.processing_jobs.new(
-      :action=> 'reindex_document', 
-      :title=>title, 
-      :account_id=>account_id,
-      :options=> {:id=>id, :access => eventual_access }
-    ).queue
+    record_job(RestClient.post(DC::CONFIG['cloud_crowd_server'] + '/jobs', {:job => {
+      'action'  => 'reindex_document',
+      'inputs'  => [id],
+      'options' => {
+        :id      => id,
+        :access  => eventual_access
+      }
+    }.to_json}).body)
   end
 
   # Redactions is an array of objects: {'page' => 1, 'location' => '30,50,50,10'}
@@ -760,50 +759,46 @@ class Document < ActiveRecord::Base
     end
 
     update_attributes attributes
-    self.processing_jobs.new(
-      :action     => 'redact_pages',
-      :title      => title,
-      :account_id => account_id,
-      :options    => {
-        :id         => id,
+    record_job(RestClient.post(DC::CONFIG['cloud_crowd_server'] + '/jobs', {:job => {
+      'action'  => 'redact_pages',
+      'inputs'  => [id],
+      'options' => {
+        :id => id,
         :redactions => redactions,
-        :access     => eventual_access,
-        :color      => color
+        :access => eventual_access,
+        :color => color
       }
-    ).queue
+    }.to_json}).body)
   end
 
   def remove_pages(pages, replace_pages_start=nil, insert_document_count=nil)
     eventual_access = access || PRIVATE
     update_attributes :access => PENDING
-    self.processing_jobs.new(
-      :action     => 'document_remove_pages',
-      :title      => title,
-      :account_id => account_id,
-      :options    => {
+    record_job(RestClient.post(DC::CONFIG['cloud_crowd_server'] + '/jobs', {:job => {
+      'action'  => 'document_remove_pages',
+      'inputs'  => [id],
+      'options' => {
         :id                    => id,
         :pages                 => pages,
         :access                => eventual_access,
         :replace_pages_start   => replace_pages_start,
         :insert_document_count => insert_document_count
       }
-    ).queue
+    }.to_json}).body)
   end
 
   def reorder_pages(page_order, eventual_access=nil)
     eventual_access ||= access || PRIVATE
     update_attributes :access => PENDING
-
-    self.processing_jobs.new(
-      :action     => 'document_reorder_pages',
-      :title      => title,
-      :account_id => account_id,
-      :options    => {
+    record_job(RestClient.post(DC::CONFIG['cloud_crowd_server'] + '/jobs', {:job => {
+      'action'  => 'document_reorder_pages',
+      'inputs'  => [id],
+      'options' => {
         :id          => id,
         :page_order  => page_order,
         :access      => eventual_access
       }
-    ).queue
+    }.to_json}).body)
   end
 
   def assert_page_order(page_order)
@@ -814,25 +809,11 @@ class Document < ActiveRecord::Base
   end
 
   def queue_import(opts={})
-    things = {
-      'organization_id'   => 0,
-      'account_id'        => 0,
-      'source'            => 'Unknown',
-      'access'            => PRIVATE
-    }
-    
     options = DEFAULT_IMPORT_OPTIONS.merge opts
     options[:access] ||= self.access || PRIVATE
     options[:id] = id
     self.update_attributes :access => PENDING
-    #record_job(DC::Import::CloudCrowdImporter.new.import([id], options, self.low_priority?).body)
-    
-    self.processing_jobs.new(
-      :action     => self.low_priority? ? 'large_document_import' : 'document_import',
-      :title      => title,
-      :account_id => account_id,
-      :options    => options
-    ).queue
+    record_job(DC::Import::CloudCrowdImporter.new.import([id], options, self.low_priority?).body)
   end
 
   def self.duplicate(document_ids, account, options={})
@@ -864,7 +845,6 @@ class Document < ActiveRecord::Base
       if docdata and options['include_docdata']
         Docdata.create! docdata.attributes.merge newattrs
       end
-      
 
       # Clone the associations.
       associations = [entities, entity_dates, pages]
@@ -1044,9 +1024,7 @@ class Document < ActiveRecord::Base
   end
 
   def background_update_asset_access(access_level)
-    changes = {:access => access_level}
-    #changes[:status] = DC::Status::FROM_ACCESS[access_level]
-    return update_attributes(changes) if Rails.env.development?
+    return update_attributes(:access => access_level) if Rails.env.development?
     RestClient.post(DC::CONFIG['cloud_crowd_server'] + '/jobs', {:job => {
       'action'  => 'update_access',
       'inputs'  => [self.id],
@@ -1054,4 +1032,5 @@ class Document < ActiveRecord::Base
       'callback_url' => "#{DC.server_root(:ssl => false)}/import/update_access"
     }.to_json})
   end
+
 end
