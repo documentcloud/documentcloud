@@ -315,6 +315,7 @@
   - guided_tour: Guided Tour
   - guides_howtos: Guides & Howto's
   - has_no_entities: "%s has no entities to display."
+  - awaiting_process_entities_job: "%s is still processing entities.  Please try again later."
   - height: Height
   - help: Help
   - help_pages: help pages

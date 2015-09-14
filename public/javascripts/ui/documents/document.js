@@ -435,10 +435,16 @@ dc.ui.Document = Backbone.View.extend({
 
   // Re-renders the entities when the entities are refreshed.
   _renderEntities : function() {
+    entityJobsRunning = _.select(this.model.processing_statuses, function(job){ 
+        return job.process_entities == true;
+    });
     // Update processing job status for process_entities IF it is not already completed.
+    debugger
     if (this.model.entities.length) {
       // Update processing job status for process_entities IF it is not already completed.
       this.entitiesView.show();
+    } else if (entityJobsRunning.length > 0) {
+      dc.ui.Dialog.alert( _.t('awaiting_process_entities_job', this.model.get('title') ) );
     } else {
       dc.ui.Dialog.alert( _.t('has_no_entities', this.model.get('title') ) );
     }

@@ -177,7 +177,7 @@ dc.model.EntitySet = Backbone.Collection.extend({
           return job.process_entities != true;
         })
       });
-      debugger
+      missingReady = _.flatten(missingReady);
       // Select all items that have blank or not equal to true for process_entities
       //var missingReady = _.select(processing_jobs, function(doc){ return !doc.entities.loaded; });
       // _.each(processing_jobs, function(list, docId) {
@@ -185,23 +185,23 @@ dc.model.EntitySet = Backbone.Collection.extend({
       //   collection.loaded = true;
       //   collection.reset(list);
       // });
+      $.get('/documents/entities.json', {'ids[]' : _.pluck(missingReady, 'id')}, function(resp) {
+        var entities = _.groupBy(resp.entities, 'document_id');
+        _.each(entities, function(list, docId) {
+          var collection = Documents.get(docId).entities;
+          collection.loaded = true;
+          collection.reset(list);
+        });
+        dc.ui.spinner.hide();
+        callback();
+      }, 'json');
     }, 'json');
     // 2. Those with incomplete entity processing get added to a new Ajax call to get latest status
       // 2a. If latest status is still incomplete, run `callback()`
       // 2b. If latest status is complete, add to 3's list
-    // 3. Those with processed entities get passed to the existing Ajax call
-
-
-    $.get('/documents/entities.json', {'ids[]' : _.pluck(missingReady, 'id')}, function(resp) {
-      var entities = _.groupBy(resp.entities, 'document_id');
-      _.each(entities, function(list, docId) {
-        var collection = Documents.get(docId).entities;
-        collection.loaded = true;
-        collection.reset(list);
-      });
-      dc.ui.spinner.hide();
-      callback();
-    }, 'json');
+    // 3. Those with processed entities get passed to the existing Ajax called
+    
+    
   }
 
 });
