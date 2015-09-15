@@ -11,10 +11,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150713194717) do
+ActiveRecord::Schema.define(version: 20150812163030) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+  enable_extension "hstore"
 
   create_table "accounts", force: :cascade do |t|
     t.string   "first_name",        limit: 40
@@ -50,13 +51,6 @@ ActiveRecord::Schema.define(version: 20150713194717) do
   create_table "app_constants", force: :cascade do |t|
     t.string "key",   limit: 255
     t.string "value", limit: 255
-  end
-
-  create_table "cloud_crowd_stats", force: :cascade do |t|
-    t.tsrange "period"
-    t.integer "pending_count"
-    t.integer "average_wait"
-    t.integer "processing_count"
   end
 
   create_table "collaborations", force: :cascade do |t|
@@ -111,7 +105,6 @@ ActiveRecord::Schema.define(version: 20150713194717) do
   add_index "documents", ["account_id"], name: "index_documents_on_account_id", using: :btree
   add_index "documents", ["file_hash"], name: "index_documents_on_file_hash", using: :btree
   add_index "documents", ["hit_count"], name: "index_documents_on_hit_count", using: :btree
-  add_index "documents", ["organization_id"], name: "foo2", using: :btree
   add_index "documents", ["public_note_count"], name: "index_documents_on_public_note_count", using: :btree
 
   create_table "entities", force: :cascade do |t|
@@ -207,13 +200,19 @@ ActiveRecord::Schema.define(version: 20150713194717) do
   end
 
   create_table "processing_jobs", force: :cascade do |t|
-    t.integer "account_id",                 null: false
-    t.integer "cloud_crowd_id",             null: false
-    t.string  "title",          limit: 255, null: false
+    t.integer "account_id",                                 null: false
+    t.integer "cloud_crowd_id",                             null: false
+    t.string  "title",          limit: 255,                 null: false
     t.integer "document_id"
+    t.string  "action"
+    t.string  "options"
+    t.boolean "complete",                   default: false
   end
 
   add_index "processing_jobs", ["account_id"], name: "index_processing_jobs_on_account_id", using: :btree
+  add_index "processing_jobs", ["action"], name: "index_processing_jobs_on_action", using: :btree
+  add_index "processing_jobs", ["cloud_crowd_id"], name: "index_processing_jobs_on_cloud_crowd_id", using: :btree
+  add_index "processing_jobs", ["document_id"], name: "index_processing_jobs_on_document_id", using: :btree
 
   create_table "project_memberships", force: :cascade do |t|
     t.integer "project_id",  null: false
@@ -258,27 +257,27 @@ ActiveRecord::Schema.define(version: 20150713194717) do
   create_table "verification_requests", force: :cascade do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "requester_email"
-    t.string   "requester_first_name"
-    t.string   "requester_last_name"
+    t.string   "requester_email",      limit: 255,                 null: false
+    t.string   "requester_first_name", limit: 255,                 null: false
+    t.string   "requester_last_name",  limit: 255,                 null: false
     t.text     "requester_notes"
-    t.string   "organization_name"
-    t.string   "organization_url"
-    t.string   "approver_email"
-    t.string   "approver_first_name"
-    t.string   "approver_last_name"
-    t.string   "country",                              null: false
+    t.string   "organization_name",    limit: 255,                 null: false
+    t.string   "organization_url",     limit: 255
+    t.string   "approver_email",       limit: 255,                 null: false
+    t.string   "approver_first_name",  limit: 255,                 null: false
+    t.string   "approver_last_name",   limit: 255,                 null: false
+    t.string   "country",              limit: 255,                 null: false
     t.text     "verification_notes"
-    t.integer  "status",               default: 1
-    t.boolean  "agreed_to_terms",      default: false
-    t.boolean  "authorized_posting",   default: false
-    t.string   "signup_key"
+    t.integer  "status",                           default: 1,     null: false
+    t.boolean  "agreed_to_terms",                  default: false, null: false
+    t.boolean  "authorized_posting",               default: false, null: false
+    t.string   "signup_key",           limit: 255
     t.integer  "account_id"
     t.string   "industry"
     t.text     "use_case"
     t.text     "reference_links"
-    t.boolean  "marketing_optin",      default: false
-    t.boolean  "in_market",            default: false
+    t.boolean  "marketing_optin",                  default: false
+    t.boolean  "in_market",                        default: false
     t.string   "requester_position"
   end
 

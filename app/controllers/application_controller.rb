@@ -97,7 +97,10 @@ class ApplicationController < ActionController::Base
 
   def api_login_required
     authenticate_or_request_with_http_basic("DocumentCloud") do |email, password|
-      if @current_account = Account.log_in(email, password)
+      # Don't mistakenly authenticate the Bouncer.
+      if email == DC::SECRETS['guest_username'] && password == DC::SECRETS['guest_password']
+        current_account && current_organization
+      elsif @current_account = Account.log_in(email, password)
         @current_organization = @current_account.organization
         @current_account
       else
