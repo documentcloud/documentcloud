@@ -100,8 +100,6 @@ GEM
     country_select (2.2.0)
       countries (~> 0.11.0)
       sort_alphabetical (~> 1.0)
-    crack (0.4.2)
-      safe_yaml (~> 1.0.0)
     cssmin (1.0.3)
     curb (0.8.8)
     currencies (0.4.2)
@@ -291,7 +289,6 @@ GEM
       builder (>= 2.1.2)
     ruby-debug-passenger (0.2.0)
     rubyzip (1.1.7)
-    safe_yaml (1.0.4)
     sanitize (2.0.6)
       nokogiri (>= 1.4.4)
     shellany (0.0.1)
@@ -338,9 +335,6 @@ GEM
     unf_ext (0.0.7.1)
     unicode_utils (1.4.0)
     vcr (2.9.3)
-    webmock (1.21.0)
-      addressable (>= 2.3.6)
-      crack (>= 0.3.2)
 
 PLATFORMS
   ruby
@@ -389,7 +383,3 @@ DEPENDENCIES
   sunspot_rails (~> 2.1.0)
   sunspot_solr (~> 2.1.0)
   vcr
-  webmock
-
-BUNDLED WITH
-   1.10.6
