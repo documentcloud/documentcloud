@@ -71,7 +71,7 @@ class AccountsController < ApplicationController
   # a password.
   def create
     # Check the requester's permissions
-    return forbidden unless current_account.admin? or
+    return forbidden unless current_account.admin?(current_organization) or
       (current_account.real?(current_organization) and params[:role] == Account::REVIEWER)
 
     # Find or create the appropriate account
