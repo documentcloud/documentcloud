@@ -126,7 +126,7 @@ class DocumentsController < ApplicationController
     result = {}
     documents.each do |doc|
       if doc.processing_jobs.select{|x| x.action == "process_entities" && x.complete == false}.present?
-        error = "Entities are still being extracted.  Please try again later"
+        error = "Entities are still being extracted.  Please try again later."
       end
       result[doc.id.to_s] = {'entities' => Entity.where({ :document_id => doc.id }), "error" => error}
     end
