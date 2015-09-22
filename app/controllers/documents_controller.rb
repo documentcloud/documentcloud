@@ -122,17 +122,13 @@ class DocumentsController < ApplicationController
   end
 
   def entities
-    # ids = Document.accessible(current_account, current_organization).where({:id => params[:ids]}).pluck('id')
-    # json 'entities' => Entity.where({ :document_id => ids }), 'errors' => []
-
     documents = Document.accessible(current_account, current_organization).where({:id => params[:ids]})
     result = {}
     documents.each do |doc|
-      errors = []
       if doc.processing_jobs.select{|x| x.action == "process_entities" && x.complete == false}.present?
-        errors.push "Entities are still being extracted.  Please try again later"
+        error = "Entities are still being extracted.  Please try again later"
       end
-      result[doc.id.to_s] = {'entities' => Entity.where({ :document_id => doc.id }), "errors" => errors}
+      result[doc.id.to_s] = {'entities' => Entity.where({ :document_id => doc.id }), "error" => error}
     end
     json result
   end

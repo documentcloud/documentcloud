@@ -168,6 +168,7 @@ dc.model.EntitySet = Backbone.Collection.extend({
       _.each(response, function(docEntityResponse, docId) {
         var collection = Documents.get(docId).entities;
         collection.loaded = true;
+        collection.errors = docEntityResponse.error
         collection.reset(docEntityResponse.entities);
       });
       dc.ui.spinner.hide();
