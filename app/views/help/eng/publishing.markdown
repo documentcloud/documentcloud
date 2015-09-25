@@ -7,7 +7,6 @@ Ready to share your documents with readers? Either by embedding our custom viewe
 * [Making documents public](#public)
 * Generating embed codes:
   * [Documents](#embed-document)
-  * [Pages](#embed-page)
   * [Notes](#embed-note)
   * [Document Sets](#embed-set)
 * [WordPress Shortcodes](#wordpress)
@@ -79,11 +78,6 @@ On occasion you may have embedded documents which you would like to remain priva
 ## <span id="intouch">Stay in Touch</span>
 
 [Let us know][] about your reporting!
-
-<a name="embed-page"></a>
-# Embed Codes for Individual Pages
-
-Sometimes, you may want to highlight a single page in a minimal presentation. DocumentCloud's page embed (which still allows navigation through the entire document) is a lightweight, responsive viewer with minimal chrome that works across phones, tablets and desktop. Embedding is similar to a page embed:
 
 <a name="embed-note"></a>
 # <span id="note_embed">Embed Codes for a Note in a Document</span>
