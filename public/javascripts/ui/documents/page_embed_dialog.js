@@ -1,15 +1,14 @@
 dc.ui.PageEmbedDialog = dc.ui.Dialog.extend({
 
   events : {
-    'change select'         : 'update',
-    'click select'          : 'update',
-    'click .next'           : 'nextStep',
-    'click .previous'       : 'previousStep',
-    'click .close'          : 'close',
-    'click .snippet'        : 'selectSnippet',
-    'click .set_publish_at' : 'openPublishAtDialog',
-    'click .edit_access'    : 'editAccessLevel',
-    'click .remove_lines'   : 'removeLines'
+    'click .next'              : 'nextStep',
+    'click .previous'          : 'previousStep',
+    'click .close'             : 'close',
+    'click .snippet'           : 'selectSnippet',
+    'click .set_publish_at'    : 'openPublishAtDialog',
+    'click .edit_access'       : 'editAccessLevel',
+    'click .remove_lines'      : 'removeLines',
+    'click .embed_page_select' : 'clickPage',
   },
 
   totalSteps : 2,
@@ -36,12 +35,14 @@ dc.ui.PageEmbedDialog = dc.ui.Dialog.extend({
     if (dc.account.organization().get('demo')) return dc.ui.Dialog.alert(this.DEMO_ERROR);
     dc.ui.Dialog.prototype.render.call(this);
     this.$('.custom').html(JST['workspace/page_embed_dialog']({
-      doc       : this.doc,
-      pageCount : this.doc.get('page_count')
+      doc          : this.doc,
+      pageCount    : this.doc.get('page_count'),
+      selectedPage : this._selectedPage,
+      pageImages   : this._pageImages()
     }));
     this._next          = this.$('.next');
     this._previous      = this.$('.previous');
-    this._pageSelectEl  = this.$('select[name=page]');
+    this._pages         = this.$('.embed_page_select');
     this._preview       = this.$('.page_preview');
     this.setMode('embed', 'dialog');
     this.setMode('page_embed', 'dialog');
@@ -56,8 +57,15 @@ dc.ui.PageEmbedDialog = dc.ui.Dialog.extend({
     return this.STEPS[this.currentStep];
   },
 
+  clickPage : function(event) {
+    var $target = $(event.target);
+    this._pages.removeClass('active');
+    $target.addClass('active');
+    this._selectedPage = $target.data('page-number');
+    this.update();
+  },
+
   update : function() {
-    this._selectedPage = parseInt(this._pageSelectEl.val(), 10);
     this._renderPage();
     this._renderEmbedCode();
     if (this._preview.height() > this.height) {
@@ -93,7 +101,7 @@ dc.ui.PageEmbedDialog = dc.ui.Dialog.extend({
       doc:              this.doc,
       pageNumber:       this._selectedPage,
       permalink:        this._pagePermalink(),
-      pageImageUrl:     this._pageImageUrl(),
+      pageImageUrl:     this._pageImageUrl(this._selectedPage),
       options:          _.map(options, function(value, key){ return key + ': ' + value; }).join(',\n    '),
       shortcodeOptions: options ? ' ' + _.map(options, function(value, key) { return key + '=' + (typeof value == 'string' ? value.replace(/\"/g, '&quot;') : value); }).join(' ') : '',
     }));
@@ -103,8 +111,17 @@ dc.ui.PageEmbedDialog = dc.ui.Dialog.extend({
     return this.doc.get('document_viewer_url') + '#document/p' + this._selectedPage;
   },
 
-  _pageImageUrl: function() {
-    return this.doc.get('page_image_url').replace('{page}', this._selectedPage).replace('{size}', 'normal');
+  _pageImageUrl: function(pageNumber, size) {
+    size = size || 'normal';
+    return this.doc.get('page_image_url').replace('{page}', pageNumber).replace('{size}', size);
+  },
+
+  _pageImages : function() {
+    var pageImages = [];
+    _.times(this.doc.get('page_count'), function(pageNumber) {
+      pageImages.push(this._pageImageUrl(pageNumber + 1, 'small'));
+    }, this);
+    return pageImages;
   },
 
   nextStep : function() {

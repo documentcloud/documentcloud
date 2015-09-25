@@ -258,6 +258,16 @@
   display: none;
 }
 
+.page_embed_dialog .embed_page_select {
+  cursor: pointer;
+  border: 2px solid transparent;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+  .page_embed_dialog .embed_page_select.active {
+    border-color: #ffe325;
+  }
+
 .page_embed_dialog .publish_wizard_controls {
   height: 24px;
 }
@@ -308,13 +318,6 @@
   overflow: hidden;
 }
 
-.page_embed_dialog .publish_step_1 label {
-  float: left;
-  margin: 0 6px 0 0;
-}
-.page_embed_dialog .publish_step_1 select {
-  margin: 0;
-}
 .page_embed_dialog .page_preview {
   max-height: 400px;
   overflow-y: auto;

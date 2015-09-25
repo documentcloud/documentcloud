@@ -11,12 +11,9 @@
   <% } %>
 
   <div class="publish_section publish_info selectable_text">
-    <label for="embed_page_select">Choose page:</label>
-    <select name="page" id="embed_page_select">
-      <% _.times(pageCount, function(pageNumber) { %>
-        <option value="<%= pageNumber + 1 %>"><%= pageNumber + 1 %></option>
-      <% }); %>
-    </select>
+  <% _.each(pageImages, function(pageImage, pageNumber) { %>
+    <img class="embed_page_select" src="<%= pageImage %>" width="80" data-page-number="<%= pageNumber + 1 %>" alt="Page <%= pageNumber + 1 %>">
+  <% }); %>
   </div>
 
   <div class="publish_section">
