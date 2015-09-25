@@ -15,8 +15,8 @@ dc.ui.PageEmbedDialog = dc.ui.Dialog.extend({
   totalSteps : 2,
 
   STEPS : [null,
-    'Select a page to embed', // TODO: Tranlsation
-    'Copy and paste embed code' // TODO: Translation
+    'Select a page to embed', // [need2i18n]
+    'Copy and paste embed code' // [need2i18n]
   ],
 
   DEMO_ERROR : _.t('embed_note_demo_error','<a href="/contact">','</a>','<a href="/help/publishing#step_5">','</a>'),
@@ -73,7 +73,6 @@ dc.ui.PageEmbedDialog = dc.ui.Dialog.extend({
   },
 
   _renderPage : function() {
-    console.log(this._selectedPage);
     // var noteView = new dc.ui.Note({
     //   model         : this.note,
     //   collection    : this.doc.notes,

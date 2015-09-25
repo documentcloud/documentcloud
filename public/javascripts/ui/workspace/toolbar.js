@@ -260,7 +260,7 @@ dc.ui.Toolbar = Backbone.View.extend({
       );
     } else {
       // Overview will refuse to import all DocumentCloud documents at once
-      dc.ui.Dialog.alert("In order to analyze documents in Overview, please select a project or some documents.");
+      dc.ui.Dialog.alert("In order to analyze documents in Overview, please select a project or some documents."); // [need2i18n]
     }
   },
 
@@ -327,7 +327,7 @@ dc.ui.Toolbar = Backbone.View.extend({
     var accountItems = [
       {title : _.t('embed_document_viewer'), onClick : this.openDocumentEmbedDialog,    attrs: {'class': 'singular'}},
       {title : _.t('embed_document_list'),   onClick : this.openSearchEmbedDialog,      attrs: {'class': 'always'}},
-      {title : 'Embed a Page [BETA]',        onClick : this.openPageEmbedDialog,        attrs: {'class': 'singular'}},
+      {title : 'Embed a Page [BETA]',        onClick : this.openPageEmbedDialog,        attrs: {'class': 'singular'}}, // [need2i18n] 
       {title : _.t('embed_a_note'),          onClick : this.openNoteEmbedDialog,        attrs: {'class': 'singular'}},
       {title : _.t('set_publication_date'),  onClick : this.openPublicationDateDialog,  attrs: {'class': 'private_only'}},
       {title : _.t('download_viewer'),       onClick : this.requestDownloadViewers}

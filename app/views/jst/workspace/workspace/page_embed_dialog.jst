@@ -1,8 +1,12 @@
+<!-- [need2i18n] all over the place -->
 <div class="publish_step publish_step_1 is_enabled">
 
   <% if (doc.get('access') != dc.access.PUBLIC) { %>
     <div class="publish_section dialog_info selectable_text interface">
-      This document is private. TODO: Finish this translation string.
+      This document is private. (Etc. etc.)
+      <!-- <%= _.t('note_embed_private', '<span class="text_link edit_access">','</span>') %>
+      <%= doc.get('publish_at') ? '' : _.t('set_the')  %>
+      <span class="text_link set_publish_at"><%= _.t('publication_date') %></span> -->
     </div>
   <% } %>
 
