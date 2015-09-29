@@ -46,6 +46,7 @@ dc.ui.PageEmbedDialog = dc.ui.Dialog.extend({
     this._preview       = this.$('.page_preview');
     this.setMode('embed', 'dialog');
     this.setMode('page_embed', 'dialog');
+    this.preselectPage();
     this.update();
     this.setStep();
     this.center();
@@ -59,11 +60,31 @@ dc.ui.PageEmbedDialog = dc.ui.Dialog.extend({
 
   clickPage : function(event) {
     var $page = $(event.target).closest('.page_select');
+    this.selectPage($page.data('page-number'));
+  },
+
+  preselectPage : function() {
+    // There must be a better way to pluck the current page
+    if (!_.isUndefined(window.DV)) {
+      if (_.has(window.DV, 'viewers')) {
+        if (_.size(window.DV.viewers) == 1) {
+          var viewer = _.sample(window.DV.viewers);
+          var currentPage = viewer.models.document.currentPage();
+          if (currentPage > 0) {
+            this.selectPage(currentPage);
+          }
+        }
+      }
+    }
+  },
+
+  selectPage : function(pageNumber) {
+    var $page = this.$('.page_select[data-page-number="' + pageNumber + '"]');
     var wasActive = $page.hasClass('active')
     this._pages.removeClass('active');
     if (!wasActive) {
       $page.addClass('active');
-      this._selectedPage = $page.data('page-number');
+      this._selectedPage = pageNumber;
     } else {
       this._selectedPage = null;
     }
