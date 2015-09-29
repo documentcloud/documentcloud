@@ -1,14 +1,14 @@
 dc.ui.PageEmbedDialog = dc.ui.Dialog.extend({
 
   events : {
-    'click .next'              : 'nextStep',
-    'click .previous'          : 'previousStep',
-    'click .close'             : 'close',
-    'click .snippet'           : 'selectSnippet',
-    'click .set_publish_at'    : 'openPublishAtDialog',
-    'click .edit_access'       : 'editAccessLevel',
-    'click .remove_lines'      : 'removeLines',
-    'click .embed_page_select' : 'clickPage',
+    'click .next'           : 'nextStep',
+    'click .previous'       : 'previousStep',
+    'click .close'          : 'close',
+    'click .snippet'        : 'selectSnippet',
+    'click .set_publish_at' : 'openPublishAtDialog',
+    'click .edit_access'    : 'editAccessLevel',
+    'click .remove_lines'   : 'removeLines',
+    'click .page_select'    : 'clickPage',
   },
 
   totalSteps : 2,
@@ -42,7 +42,7 @@ dc.ui.PageEmbedDialog = dc.ui.Dialog.extend({
     }));
     this._next          = this.$('.next');
     this._previous      = this.$('.previous');
-    this._pages         = this.$('.embed_page_select');
+    this._pages         = this.$('.page_select');
     this._preview       = this.$('.page_preview');
     this.setMode('embed', 'dialog');
     this.setMode('page_embed', 'dialog');
@@ -58,15 +58,21 @@ dc.ui.PageEmbedDialog = dc.ui.Dialog.extend({
   },
 
   clickPage : function(event) {
-    var $target = $(event.target);
+    var $page = $(event.target).closest('.page_select');
+    var wasActive = $page.hasClass('active')
     this._pages.removeClass('active');
-    $target.addClass('active');
-    this._selectedPage = $target.data('page-number');
+    if (!wasActive) {
+      $page.addClass('active');
+      this._selectedPage = $page.data('page-number');
+    } else {
+      this._selectedPage = null;
+    }
+    this.setStep();
     this.update();
   },
 
   update : function() {
-    this._renderPage();
+    // this._renderPage();
     this._renderEmbedCode();
     if (this._preview.height() > this.height) {
       this.center();
@@ -81,13 +87,7 @@ dc.ui.PageEmbedDialog = dc.ui.Dialog.extend({
   },
 
   _renderPage : function() {
-    // var noteView = new dc.ui.Note({
-    //   model         : this.note,
-    //   collection    : this.doc.notes,
-    //   disableLinks  : true
-    // });
-    // this.$('.note_preview').html(noteView.render().el);
-    // noteView.center();
+    // TODO: Fill with page embed preview
   },
 
   embedOptions : function() {
@@ -125,10 +125,12 @@ dc.ui.PageEmbedDialog = dc.ui.Dialog.extend({
   },
 
   nextStep : function() {
-    this.currentStep += 1;
-    if (this.currentStep > this.totalSteps) return this.close();
-    if (this.currentStep == 2) this.update();
-    this.setStep();
+    if (this._selectedPage > 0) {
+      this.currentStep += 1;
+      if (this.currentStep > this.totalSteps) return this.close();
+      if (this.currentStep == 2) this.update();
+      this.setStep();
+    }
   },
 
   previousStep : function() {
@@ -146,8 +148,11 @@ dc.ui.PageEmbedDialog = dc.ui.Dialog.extend({
     var first = this.currentStep == 1;
     var last = this.currentStep == this.totalSteps;
 
+    // On the first page only, require a page has been selected
+    var nextEnabled = !first || (this._selectedPage > 0);
+
     this._previous.setMode(first ? 'not' : 'is', 'enabled');
-    this._next.html(last ? _.t('finish') : _.t('next') + ' &raquo;').setMode('is', 'enabled');
+    this._next.html(last ? _.t('finish') : _.t('next') + ' &raquo;').setMode(nextEnabled ? 'is' : 'not', 'enabled');
   },
 
   selectSnippet : function(e) {
