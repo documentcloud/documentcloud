@@ -16,6 +16,7 @@
     "backbone": "1.1.2",
     "blueimp-file-upload": "9.8",
     "documentcloud-notes": "https://github.com/documentcloud/documentcloud-notes.git",
+    "documentcloud-pages": "https://github.com/documentcloud/documentcloud-pages.git",
     "visualsearch": "0.5.1"
   },
   "moduleType": [
