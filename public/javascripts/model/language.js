@@ -17,6 +17,7 @@ dc.language = {
     'kor' : 'Korean',
     'nor' : 'Norwegian',
     'por' : 'Portuguese',
+    'ron' : 'Romanian',
     'spa' : 'Spanish',
     'swe' : 'Swedish',
     'rus' : 'Russian',

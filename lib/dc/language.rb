@@ -20,6 +20,7 @@ module DC
       'kor' => 'Korean',
       'nor' => 'Norwegian',
       'por' => 'Portuguese',
+      'ron' => 'Romanian',
       'spa' => 'Spanish',
       'swe' => 'Swedish',
       'rus' => 'Russian',
@@ -28,12 +29,12 @@ module DC
 
     SUPPORTED = NAMES.keys
     DEFAULT = 'eng'
-    
+
     USER = ['dan','eng','rus','spa','ukr']
-    
+
     # For user facing purposes, documents are considered to have only a language.
-    # In reality documents possess two distinct properties a language 
-    # and a written script. The former can be represented by ISO-639-2 
+    # In reality documents possess two distinct properties a language
+    # and a written script. The former can be represented by ISO-639-2
     # language codes and the latter by ISO-15924 script codes.
     #
     # In almost all cases the script of a document can be inferred based
@@ -54,7 +55,7 @@ module DC
         code
       end
     end
-    
+
   end
 
 end
