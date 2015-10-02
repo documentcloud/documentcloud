@@ -48,4 +48,4 @@ cd /home/$USERNAME/documentcloud
 sudo -u postgres psql -f db/development_structure.sql dcloud_$RAILS_ENVIRONMENT #2>&1|grep ERROR
 sudo -u postgres psql -f db/analytics_structure.sql dcloud_analytics_$RAILS_ENVIRONMENT #2>&1|grep ERROR
 sudo su - $USERNAME -c "cd /home/$USERNAME/documentcloud && rake db:migrate"
-echo DATABASE SETUP COMPLETE
+echo DATABASE SETUP COMPLETED SUCCESSFULLY

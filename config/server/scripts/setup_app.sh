@@ -40,3 +40,4 @@ bower install --no-interactive
 
 # if you would like to use git hooks to automatically bundle the app's gem dependencies:
 # sudo ln -s /home/$USERNAME/documentcloud/config/server/files/git-post-merge.sh /home/$USERNAME/documentcloud/.git/hooks/post-merge
+echo APP SETUP COMPLETED SUCCESSFULLY
