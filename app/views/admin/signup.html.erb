@@ -79,6 +79,7 @@
 
   <% if @account && !@account.errors.any? %>
     <div class="line">
+    <% if @account.organization %>
       <p class="row-message">Account exists and is currently linked to  &ldquo;<%= @account.organization.name %>&rdquo;.</p>
       <div class="input">
         <input type="checkbox" name="move_account" id="move_account" value="t"/>
@@ -86,6 +87,9 @@
       <label for="move_account">
         Switch Organization:
       </label>
+    <% else %>
+      <p class="row-message">Account already exists but is currently linked to no organization. Weird.</p>
+    <% end %>
     </div>
   <% else %>
     <div class="line">
