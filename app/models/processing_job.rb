@@ -37,7 +37,7 @@ class ProcessingJob < ActiveRecord::Base
       case object.action
       when "update_access"
         "#{DC.server_root(:ssl => false)}/import/update_access"
-      when /(large_)?document_import/
+      when /^(large_)?document_import|redact_pages|document_insert_pages|document_reorder_pages|document_remove_pages|reindex_document$/
         "#{DC.server_root(:ssl => false)}/import/cloud_crowd"
       else
         ""
