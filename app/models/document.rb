@@ -214,16 +214,17 @@ class Document < ActiveRecord::Base
   def insert_documents(insert_page_at, document_count, eventual_access=nil)
     eventual_access ||= self.access || PRIVATE
     self.update_attributes :access => PENDING
-    record_job(RestClient.post(DC::CONFIG['cloud_crowd_server'] + '/jobs', {:job => {
-      'action'  => 'document_insert_pages',
-      'inputs'  => [id],
-      'options' => {
-        :id              => id,
-        :insert_page_at  => insert_page_at,
-        :pdfs_count      => document_count,
-        :access          => eventual_access
+    self.processing_jobs.new(
+      :action  => 'document_insert_pages',
+      :account_id => account_id,
+      :title=>title, 
+      :options => {
+        :id             => id,
+        :insert_page_at => insert_page_at,
+        :pdfs_count     => document_count,
+        :access         => eventual_access
       }
-    }.to_json}).body)
+    ).queue
   end
 
   # Publish all documents with a `publish_at` timestamp that is past due.
