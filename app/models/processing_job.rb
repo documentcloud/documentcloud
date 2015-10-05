@@ -48,13 +48,13 @@ class ProcessingJob < ActiveRecord::Base
     # If a Document is associated with this ProcessingJob, determine
     # whether the Document is available to be worked on, and if it's not
     # use ActiveRecord's error system to indicate it's unavailability.
-    if document and document.has_running_jobs?
-      errors.add(:document, "This document is already being processed") and (return false)
-
-      # in future we'll actually lock the document
-      # Lock the document & contact CloudCrowd to start the job
-      #document.update :status => UNAVAILABLE
-    end
+    #if document and document.has_running_jobs?
+    #  errors.add(:document, "This document is already being processed") and (return false)
+    #
+    #  # in future we'll actually lock the document
+    #  # Lock the document & contact CloudCrowd to start the job
+    #  #document.update :status => UNAVAILABLE
+    #end
     
     begin
       # Note the job id once CloudCrowd has recorded the job.
