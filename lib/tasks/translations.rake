@@ -33,8 +33,8 @@ namespace :translations do
     require 'highline/import'
     require 'yaml'
 
-    CLIENT_ID       = DC::SECRETS['google_client_id']
-    CLIENT_SECRET   = DC::SECRETS['google_client_secret']
+    CLIENT_ID       = DC::SECRETS['google']['client_id']
+    CLIENT_SECRET   = DC::SECRETS['google']['client_secret']
     SPREADSHEET_KEY = '1niK_gv0wsFPF2l3WvXprb6JVs6fZzFSERhTtrk42Ys4'
 
     client = Google::APIClient.new(
