@@ -2,6 +2,8 @@
 
 # exit the script if any of the commands fail.
 # further discussion: http://www.davidpashley.com/articles/writing-robust-shell-scripts/
+echo BEGINNING SETUP DATABASE
+
 set -e
 
 # Requirest two arguments to be passed in.  First is environment, second is database password.

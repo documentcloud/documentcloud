@@ -2,6 +2,8 @@
 
 # exit the script if any of the commands fail.
 # further discussion: http://www.davidpashley.com/articles/writing-robust-shell-scripts/
+echo BEGINNING WEBSERVER SETUP
+
 set -e
 
 # This script needs to be run as root for permission purposes
@@ -31,8 +33,8 @@ apt-get update
 apt-get install nginx-extras passenger -y
 # crash-watch gdb libc6-dbg libev4 liblua5.1-0 libperl5.14 nginx-common nginx-extras passenger passenger-dev passenger-doc ruby-daemon-controller ruby-rack
 
-apt-get install nodejs nodejs-dev npm -y
-ln -sf /usr/bin/nodejs /usr/bin/node
+apt-get install nodejs -y
+#ln -sf /usr/bin/nodejs /usr/bin/node
 
 npm install -g coffee-script
 

@@ -6,6 +6,8 @@
 
 # exit the script if any of the commands fail.
 # further discussion: http://www.davidpashley.com/articles/writing-robust-shell-scripts/
+echo BEGINNING COMMON DEPENDENCIES
+
 set -e
 
 # This script needs to be run as root for permission purposes
