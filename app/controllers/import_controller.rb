@@ -49,7 +49,7 @@ class ImportController < ApplicationController
 
   def expire_document_cache(document)
     if document
-      paths = [document.canonical_cache_path] + document.annotations.map(&:canonical_cache_path)
+      paths = [document.canonical_js_cache_path] + document.annotations.map(&:canonical_js_cache_path)
       paths.each{ |path| expire_page path }
     end
   end

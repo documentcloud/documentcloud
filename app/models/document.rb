@@ -504,11 +504,11 @@ class Document < ActiveRecord::Base
   end
 
   def canonical_path(format = :json)
-    "documents/#{canonical_id}.#{format}"
+    "/documents/#{canonical_id}.#{format}"
   end
 
-  def canonical_cache_path
-    "/#{canonical_path(:js)}"
+  def canonical_js_cache_path
+    canonical_path(:js)
   end
 
   def project_ids

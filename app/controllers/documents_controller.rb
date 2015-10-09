@@ -278,7 +278,7 @@ class DocumentsController < ApplicationController
   end
   
   def clear_current_document_cache
-    expire_page current_document.canonical_cache_path
-    current_document.annotations.each{ |note| expire_page note.canonical_cache_path }
+    expire_page current_document.canonical_js_cache_path
+    current_document.annotations.each{ |note| expire_page note.canonical_js_cache_path }
   end
 end

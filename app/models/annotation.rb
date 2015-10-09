@@ -144,7 +144,7 @@ class Annotation < ActiveRecord::Base
     "/documents/#{document.canonical_id}/annotations/#{id}.#{format}"
   end
 
-  def canonical_cache_path
+  def canonical_js_cache_path
     canonical_path(:js)
   end
   
