@@ -43,7 +43,7 @@ class AnnotationsController < ApplicationController
     note_attrs[:access] = ACCESS_MAP[note_attrs[:access].to_sym]
     doc = current_document
     return forbidden unless note_attrs[:access] == PRIVATE || current_account.allowed_to_comment?(doc)
-    expire_page doc.canonical_js_cache_path if doc.cacheable?
+    expire_pages doc.cache_paths if doc.cacheable?
     note_attrs[:organization_id] = current_account.organization_id
     anno = doc.annotations.create(note_attrs.merge(
       :account_id      => current_account.id
@@ -62,8 +62,8 @@ class AnnotationsController < ApplicationController
     attrs = pick(params, :title, :content, :access)
     attrs[:access] = DC::Access::ACCESS_MAP[attrs[:access].to_sym]
     anno.update_attributes(attrs)
-    expire_page current_document.canonical_js_cache_path if current_document.cacheable?
-    expire_page current_annotation.canonical_js_cache_path if current_annotation.cacheable?
+    expire_pages current_document.cache_paths if current_document.cacheable?
+    expire_pages current_annotation.cache_paths if current_annotation.cacheable?
     anno.reset_public_note_count
     json anno
   end
@@ -76,7 +76,7 @@ class AnnotationsController < ApplicationController
       return json(anno, 403)
     end
     anno.destroy
-    expire_page current_document.canonical_js_cache_path if current_document.cacheable?
+    expire_pages current_document.cache_paths if current_document.cacheable?
     json nil
   end
 

@@ -148,6 +148,15 @@ class Annotation < ActiveRecord::Base
     canonical_path(:js)
   end
   
+  # Effective duplicate of `canonical_path()` for explicitness
+  def canonical_json_cache_path
+    canonical_path(:json)
+  end
+  
+  def cache_paths
+    [canonical_js_cache_path, canonical_json_cache_path]
+  end
+
   def canonical(opts={})
     data = {'id' => id, 'page' => page_number, 'title' => title, 'content' => content, 'access' => access_name.to_s }
     data['location'] = {'image' => location} if location
