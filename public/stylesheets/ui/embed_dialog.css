@@ -273,35 +273,10 @@
   .page_embed_dialog .page_select:hover {
     background-color: rgba(254, 225, 63, 0.7);
   }
-  .page_embed_dialog .page_select:hover .page_number {
-    color: rgb(254, 225, 63);
-  }
 
   .page_embed_dialog .page_select.active {
     background-color: rgb(254, 225, 63);
   }
-
-    .page_embed_dialog .page_select .page_number {
-      display: inline-block;
-      position: absolute;
-      z-index: 2;
-      top: 0;
-      left: 0;
-      padding: 5px 8px;
-      background-color: rgba(0, 0, 0, 0.8);
-      color: white;
-      font-weight: bold;
-    }
-    .page_embed_dialog .page_select.active .page_number {
-      background-color: rgba(254, 225, 63, 0.9);
-      color: black;
-    }
-
-    .page_embed_dialog .page_select .page_image {
-      position: relative;
-      display: block;
-      z-index: 1;
-    }
   
 
 .page_embed_dialog .publish_wizard_controls {

@@ -8,7 +8,7 @@ dc.ui.PageEmbedDialog = dc.ui.Dialog.extend({
     'click .set_publish_at' : 'openPublishAtDialog',
     'click .edit_access'    : 'editAccessLevel',
     'click .remove_lines'   : 'removeLines',
-    'click .page_select'    : 'clickPage',
+    'change .page_select'   : 'changePageSelect',
   },
 
   totalSteps : 2,
@@ -18,7 +18,7 @@ dc.ui.PageEmbedDialog = dc.ui.Dialog.extend({
     'Copy and paste embed code' // [need2i18n]
   ],
 
-  DEMO_ERROR : _.t('embed_note_demo_error','<a href="/contact">','</a>','<a href="/help/publishing#step_5">','</a>'),
+  DEMO_ERROR : _.t('embed_note_demo_error','<a href="/contact">','</a>','<a href="/help/publishing#step_5">','</a>'), // [need2i18n]
 
   DEFAULT_OPTIONS : {},
 
@@ -38,12 +38,12 @@ dc.ui.PageEmbedDialog = dc.ui.Dialog.extend({
       doc          : this.doc,
       pageCount    : this.doc.get('page_count'),
       selectedPage : this._selectedPage,
-      pageImages   : this._pageImages()
     }));
-    this._next          = this.$('.next');
-    this._previous      = this.$('.previous');
-    this._pages         = this.$('.page_select');
-    this._preview       = this.$('.page_preview');
+    debugger
+    this.$next       = this.$('.next');
+    this.$previous   = this.$('.previous');
+    this.$pageSelect = this.$('.page_select');
+    this.$preview    = this.$('.page_preview');
     this.setMode('embed', 'dialog');
     this.setMode('page_embed', 'dialog');
     this.preselectPage();
@@ -56,11 +56,6 @@ dc.ui.PageEmbedDialog = dc.ui.Dialog.extend({
 
   displayTitle : function() {
     return this.STEPS[this.currentStep];
-  },
-
-  clickPage : function(event) {
-    var $page = $(event.target).closest('.page_select');
-    this.selectPage($page.data('page-number'));
   },
 
   preselectPage : function() {
@@ -78,12 +73,13 @@ dc.ui.PageEmbedDialog = dc.ui.Dialog.extend({
     }
   },
 
+  changePageSelect : function() {
+    var pageNumber = this.$pageSelect.val();
+    this.selectPage(pageNumber);
+  },
+
   selectPage : function(pageNumber) {
-    var $page = this.$('.page_select[data-page-number="' + pageNumber + '"]');
-    var wasActive = $page.hasClass('active')
-    this._pages.removeClass('active');
-    if (!wasActive) {
-      $page.addClass('active');
+    if (pageNumber > 0) {
       this._selectedPage = pageNumber;
     } else {
       this._selectedPage = null;
@@ -95,9 +91,9 @@ dc.ui.PageEmbedDialog = dc.ui.Dialog.extend({
   update : function() {
     // this._renderPage();
     this._renderEmbedCode();
-    if (this._preview.height() > this.height) {
+    if (this.$preview.height() > this.height) {
       this.center();
-      this.height = this._preview.height();
+      this.height = this.$preview.height();
     }
   },
 
@@ -172,8 +168,8 @@ dc.ui.PageEmbedDialog = dc.ui.Dialog.extend({
     // On the first page only, require a page has been selected
     var nextEnabled = !first || (this._selectedPage > 0);
 
-    this._previous.setMode(first ? 'not' : 'is', 'enabled');
-    this._next.html(last ? _.t('finish') : _.t('next') + ' &raquo;').setMode(nextEnabled ? 'is' : 'not', 'enabled');
+    this.$previous.setMode(first ? 'not' : 'is', 'enabled');
+    this.$next.html(last ? _.t('finish') : _.t('next') + ' &raquo;').setMode(nextEnabled ? 'is' : 'not', 'enabled');
   },
 
   selectSnippet : function(e) {

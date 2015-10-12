@@ -11,12 +11,14 @@
   <% } %>
 
   <div class="publish_section page_select_section">
-  <% _.each(pageImages, function(pageImage, pageNumber) { %>
-    <div class="page_select" data-page-number="<%= pageNumber + 1 %>">
-      <span class="page_number"><%= pageNumber + 1 %></span>
-      <img class="page_image" src="<%= pageImage %>" width="85" alt="Page <%= pageNumber + 1 %>">
-    </div>
-  <% }); %>
+    <select class="page_select">
+      <option>Choose a page…</option>
+    <% _.times(pageCount, function(pageNumber) { %>
+      <option value="<%= pageNumber+1 %>" <% if (selectedPage == pageNumber+1) { %>selected<% } %>>
+        Page <%= pageNumber+1 %> // TODO: Add `(# notes)`
+      </option>
+    <% }); %>
+    </select>
   </div>
 
   <!-- <div class="publish_section">
