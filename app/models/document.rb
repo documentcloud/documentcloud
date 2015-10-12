@@ -960,8 +960,10 @@ class Document < ActiveRecord::Base
     doc['language']           = language
     doc['file_hash']          = file_hash
     if options[:contributor]
-      doc['contributor']      = account_name
-      doc['contributor_organization'] = organization_name
+      doc['contributor']                   = account_name
+      doc['contributor_slug']              = account_slug
+      doc['contributor_organization']      = organization_name
+      doc['contributor_organization_slug'] = organization_slug
     end
     doc['display_language']   = display_language
     doc['resources']          = res = ActiveSupport::OrderedHash.new
