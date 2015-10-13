@@ -249,42 +249,14 @@
   font-size: 12px;
   text-align: left;
 }
-  .page_embed_dialog .custom {
-    position: relative;
-    font-size: 12px;
-  }
 
 .page_embed_dialog .controls {
   display: none;
 }
 
-.page_embed_dialog .page_select_section {
-  max-height: 200px;
-  overflow-y: scroll;
-}
-  .page_embed_dialog .page_select {
-    display: inline-block;
-    position: relative;
-    cursor: pointer;
-    border: 2px solid transparent;
-    -webkit-box-sizing: border-box;
-            box-sizing: border-box;
-  }
-  .page_embed_dialog .page_select:hover {
-    background-color: rgba(254, 225, 63, 0.7);
-  }
-
-  .page_embed_dialog .page_select.active {
-    background-color: rgb(254, 225, 63);
-  }
-  
-
 .page_embed_dialog .publish_wizard_controls {
   height: 24px;
 }
-  .page_embed_dialog .publish_wizard_controls .cancel {
-    float: left;
-  }
   .page_embed_dialog .publish_wizard_controls .next,
   .page_embed_dialog .publish_wizard_controls .previous {
     float: right;
@@ -314,16 +286,6 @@
   .page_embed_dialog input.snippet {
     height: 1.5em;
   }
-.page_embed_dialog .page {
-   -webkit-box-shadow: none; 
-      -moz-box-shadow: none;
-           box-shadow: none; 
-}
-.page_embed_dialog .publish_prepare_section {
-  margin: 0 0 16px 0;
-  clear: both;
-  overflow: hidden;
-}
 
 .page_embed_dialog .page_preview {
   max-height: 400px;
