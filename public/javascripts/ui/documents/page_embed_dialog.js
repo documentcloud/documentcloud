@@ -14,11 +14,11 @@ dc.ui.PageEmbedDialog = dc.ui.Dialog.extend({
   totalSteps : 2,
 
   STEPS : [null,
-    'Select a page to embed', // [need2i18n]
-    'Copy and paste embed code' // [need2i18n]
+    _.t('embed_page_step_one_title'),
+    _.t('embed_page_step_two_title')
   ],
 
-  DEMO_ERROR : _.t('embed_note_demo_error','<a href="/contact">','</a>','<a href="/help/publishing#step_5">','</a>'), // [need2i18n]
+  DEMO_ERROR : _.t('embed_demo_error','<a href="/contact">','</a>','<a href="/help/publishing#step_5">','</a>'),
 
   DEFAULT_OPTIONS : {},
 
@@ -39,7 +39,6 @@ dc.ui.PageEmbedDialog = dc.ui.Dialog.extend({
       pageCount    : this.doc.get('page_count'),
       selectedPage : this._selectedPage,
     }));
-    debugger
     this.$next       = this.$('.next');
     this.$previous   = this.$('.previous');
     this.$pageSelect = this.$('.page_select');
