@@ -12,7 +12,7 @@
     <select class="page_select">
       <option><%- _.t('embed_page_choose') %></option>
     <% _.times(pageCount, function(pageNumber) { %>
-      <option value="<%= pageNumber+1 %>" <% if (selectedPage == pageNumber+1) { %>selected<% } %>>
+      <option value="<%= pageNumber+1 %>" <% if (selectedPageNum == pageNumber+1) { %>selected<% } %>>
         <%- _.t('page_number', pageNumber+1) %>
       </option>
     <% }); %>

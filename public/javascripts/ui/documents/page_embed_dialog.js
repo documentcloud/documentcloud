@@ -34,10 +34,11 @@ dc.ui.PageEmbedDialog = dc.ui.Dialog.extend({
   render : function() {
     if (dc.account.organization().get('demo')) return dc.ui.Dialog.alert(this.DEMO_ERROR);
     dc.ui.Dialog.prototype.render.call(this);
+    this.preselectPage();
     this.$('.custom').html(JST['workspace/page_embed_dialog']({
-      doc          : this.doc,
-      pageCount    : this.doc.get('page_count'),
-      selectedPage : this._selectedPage,
+      doc             : this.doc,
+      pageCount       : this.doc.get('page_count'),
+      selectedPageNum : this._selectedPage,
     }));
     this.$next       = this.$('.next');
     this.$previous   = this.$('.previous');
@@ -45,7 +46,6 @@ dc.ui.PageEmbedDialog = dc.ui.Dialog.extend({
     this.$preview    = this.$('.page_preview');
     this.setMode('embed', 'dialog');
     this.setMode('page_embed', 'dialog');
-    this.preselectPage();
     this.update();
     this.setStep();
     this.center();
@@ -65,7 +65,7 @@ dc.ui.PageEmbedDialog = dc.ui.Dialog.extend({
           var viewer = _.sample(window.DV.viewers);
           var currentPage = viewer.models.document.currentPage();
           if (currentPage > 0) {
-            this.selectPage(currentPage);
+            this._selectedPage = currentPage
           }
         }
       }
