@@ -20,6 +20,8 @@ dc.ui.NoteEmbedDialog = dc.ui.Dialog.extend({
   ],
 
   DEMO_ERROR : _.t('embed_note_demo_error','<a href="/contact">','</a>','<a href="/help/publishing#step_5">','</a>'),
+  
+  NO_NOTES_ERROR: _.t('no_notes_to_embed'),
 
   DEFAULT_OPTIONS : {},
 
@@ -45,10 +47,14 @@ dc.ui.NoteEmbedDialog = dc.ui.Dialog.extend({
 
   render : function() {
     if (dc.account.organization().get('demo')) return dc.ui.Dialog.alert(this.DEMO_ERROR);
+    
+    var notes = this.doc.notes.select(function(note) { return note.get('access') == 'public'; });
+    if (notes.length < 1) { return dc.ui.Dialog.alert(this.NO_NOTES_ERROR); }
+
     dc.ui.Dialog.prototype.render.call(this);
     this.$('.custom').html(JST['workspace/note_embed_dialog']({
       doc           : this.doc,
-      notes         : this.doc.notes.select(function(note) { return note.get('access') == 'public'; }),
+      notes         : notes,
       initialNoteId : this.initialNoteId
     }));
     this._next          = this.$('.next');
