@@ -117,7 +117,7 @@ class ApiController < ApplicationController
     attrs[:access] = ACCESS_MAP[attrs[:access].to_sym] if attrs[:access]
     success = doc.secure_update attrs, current_account
     return json(doc, 403) unless success
-    expire_page doc.canonical_cache_path if doc.cacheable?
+    expire_pages doc.cache_paths if doc.cacheable?
     @response = {'document' => doc.canonical(:access => true, :sections => true, :annotations => true)}
     json_response
   end

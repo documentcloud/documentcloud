@@ -16,7 +16,7 @@ class OrganizationsController < ApplicationController
 
     if membership.organization.language != params[:language]
       Document.where({ :organization_id=>membership.organization_id }).each do | doc |
-        expire_page doc.canonical_cache_path if doc.cacheable?
+        expire_pages doc.cache_paths if doc.cacheable?
       end
     end
 

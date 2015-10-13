@@ -197,8 +197,9 @@ class DocumentTest < ActiveSupport::TestCase
     assert_equal "#{base}/pages", doc.pages_path
     assert_equal "#{base}/annotations", doc.annotations_path
     assert_equal "#{doc.id}-#{doc.slug}", doc.canonical_id
-    assert_equal "#{base}-#{doc.slug}.json", doc.canonical_path
-    assert_equal "/#{base}-#{doc.slug}.js", doc.canonical_cache_path
+    assert_equal "/#{base}-#{doc.slug}.json", doc.canonical_path
+    assert_equal "/#{base}-#{doc.slug}.js", doc.canonical_js_cache_path
+    assert_equal "/#{base}-#{doc.slug}.json", doc.canonical_json_cache_path
     assert_equal "#{doc.slug}-p{page}-{size}.gif", doc.page_image_template
     assert_equal "#{doc.slug}-p{page}.txt", doc.page_text_template
     assert_equal "#{DC.cdn_root(:force_ssl=>true)}/#{slug}.pdf", doc.public_pdf_url

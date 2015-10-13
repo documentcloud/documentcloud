@@ -28,6 +28,7 @@ class DocumentsController < ApplicationController
       format.text { redirect_to(doc.full_text_url) }
       format.json do
         @response = doc.canonical
+        cache_page @response if doc.cacheable?
         json_response
       end
       format.js do
@@ -278,7 +279,7 @@ class DocumentsController < ApplicationController
   end
   
   def clear_current_document_cache
-    expire_page current_document.canonical_cache_path
-    current_document.annotations.each{ |note| expire_page note.canonical_cache_path }
+    paths = current_document.cache_paths + current_document.annotations.map(&:cache_paths)
+    expire_pages paths
   end
 end
