@@ -40,10 +40,12 @@ dc.ui.PageEmbedDialog = dc.ui.Dialog.extend({
       pageCount       : this.doc.get('page_count'),
       selectedPageNum : this._selectedPage,
     }));
-    this.$next       = this.$('.next');
-    this.$previous   = this.$('.previous');
-    this.$pageSelect = this.$('.page_select');
-    this.$preview    = this.$('.page_preview');
+    this.$next           = this.$('.next');
+    this.$previous       = this.$('.previous');
+    this.$pageSelect     = this.$('.page_select');
+    this.$preview        = this.$('.page_preview');
+    this.$previewWrapper = this.$('.page_preview_section');
+    this.$embedCode      = this.$('.publish_embed_code');
     this.setMode('embed', 'dialog');
     this.setMode('page_embed', 'dialog');
     this.update();
@@ -88,12 +90,18 @@ dc.ui.PageEmbedDialog = dc.ui.Dialog.extend({
   },
 
   update : function() {
-    // this._renderPage();
-    this._renderEmbedCode();
-    if (this.$preview.height() > this.height) {
-      this.center();
-      this.height = this.$preview.height();
+    var pageSelected = this._selectedPage > 0;
+    if (this._selectedPage > 0) {
+      this.$previewWrapper.show();
+      this._renderEmbedCode();
+      this._renderPage();
+      if (this.$preview.height() > this.height) {
+        this.height = this.$preview.height();
+      }
+    } else {
+      this.$previewWrapper.hide();
     }
+    this.center();
   },
 
   // Remove line breaks from the viewer embed.
@@ -103,7 +111,7 @@ dc.ui.PageEmbedDialog = dc.ui.Dialog.extend({
   },
 
   _renderPage : function() {
-    // TODO: Fill with page embed preview
+    this.$preview.html(this.$('#page_embed_html_snippet').val());
   },
 
   embedOptions : function() {
@@ -113,7 +121,7 @@ dc.ui.PageEmbedDialog = dc.ui.Dialog.extend({
 
   _renderEmbedCode : function() {
     var options = this.embedOptions();
-    this.$('.publish_embed_code').html(JST['workspace/page_embed_code']({
+    this.$embedCode.html(JST['workspace/page_embed_code']({
       doc:              this.doc,
       docTitle:         this.doc.get('title'),
       docContributor:   this.doc.get('account_name'),

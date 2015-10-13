@@ -287,12 +287,29 @@
     height: 1.5em;
   }
 
-.page_embed_dialog .page_preview {
-  max-height: 400px;
-  overflow-y: auto;
-  padding-right: 12px;
-  margin-right: -12px;
+.page_embed_dialog .page_preview_section {
+  display: none;
+  background: rgb(224, 225, 227) url('/images/embed/pages/page_preview_bg.jpg') 0 0 repeat;
+  padding: 25px;
+  border-radius: 3px;
 }
+
+.page_embed_dialog .page_preview {
+  margin: 0 auto;
+  width: 400px;
+
+  font: 400 10pt/14pt sans-serif;
+  color: rgb(115, 115, 115);
+}
+
+  .page_embed_dialog .page_preview a {
+    color: rgb(90, 118, 160);
+    text-decoration: underline;
+  }
+
+  .page_embed_dialog .page_preview p {
+    margin: 0.5em 0;
+  }
 
 /* ===================== */
 /* = Note Embed Dialog = */
