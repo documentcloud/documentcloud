@@ -115,9 +115,13 @@ dc.ui.PageEmbedDialog = dc.ui.Dialog.extend({
     var options = this.embedOptions();
     this.$('.publish_embed_code').html(JST['workspace/page_embed_code']({
       doc:              this.doc,
+      docTitle:         this.doc.get('title'),
+      docContributor:   this.doc.get('account_name'),
+      docOrganization:  this.doc.get('organization_name'),
       pageNumber:       this._selectedPage,
       permalink:        this._pagePermalink(),
       pageImageUrl:     this._pageImageUrl(this._selectedPage),
+      pageTextUrl:      this._pageTextUrl(this._selectedPage),
       options:          _.map(options, function(value, key){ return key + ': ' + value; }).join(',\n    '),
       shortcodeOptions: options ? ' ' + _.map(options, function(value, key) { return key + '=' + (typeof value == 'string' ? value.replace(/\"/g, '&quot;') : value); }).join(' ') : '',
     }));
@@ -130,6 +134,10 @@ dc.ui.PageEmbedDialog = dc.ui.Dialog.extend({
   _pageImageUrl: function(pageNumber, size) {
     size = size || 'normal';
     return this.doc.get('page_image_url').replace('{page}', pageNumber).replace('{size}', size);
+  },
+
+  _pageTextUrl: function(pageNumber) {
+    return this.doc.get('page_text_url').replace('{page}', pageNumber);
   },
 
   _pageImages : function() {

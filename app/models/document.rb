@@ -905,6 +905,7 @@ class Document < ActiveRecord::Base
       :thumbnail_url       => thumbnail_url( { :cache_busting => opts[:cache_busting] } ),
       :full_text_url       => full_text_url,
       :page_image_url      => page_image_url_template( { :cache_busting => opts[:cache_busting] } ),
+      :page_text_url       => page_text_url_template( { :cache_busting => opts[:cache_busting] } ),
       :document_viewer_url => document_viewer_url,
       :document_viewer_js  => canonical_url(:js),
       :reviewer_count      => reviewer_count,

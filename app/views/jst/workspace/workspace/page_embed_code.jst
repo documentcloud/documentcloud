@@ -3,12 +3,15 @@
 </div>
 
 <textarea id="page_embed_html_snippet" class="snippet">
-&lt;div class="DC-embed-stub"&gt;
-  &lt;p style="margin:0 0 0.5em 0"&gt;Page <%= pageNumber %> of &lt;a href="<%= permalink %>" title="View <%= doc.get('title') %> on DocumentCloud"&gt;Lefler Thesis&lt;/a&gt;&lt;/p&gt;
-  &lt;img src="<%= pageImageUrl %>" style="border:1px solid #ccc;box-sizing:border-box;width:100%;max-width:700px;"&gt;
-  &lt;p style="margin:0;font-size:0.7em;text-align:center"&gt;Contributed by <%= doc.get('account_name') %> of <%= doc.get('organization_name') %> &amp;bull; &lt;a href="<%= permalink %>"&gt;View entire document on DocumentCloud&lt;/a&gt;&lt;/p&gt;
+&lt;div class="DC-embed" data-version="1.0" style="font-size:10pt"&gt;
+  &lt;p&gt;&lt;a class="DC-embed-resource" href="<%= permalink %>" title="View page <%= pageNumber %> of <%- docTitle %> on DocumentCloud in new window or tab" target="_blank"&gt;Page <%= pageNumber %> of <%- docTitle %>&lt;/a&gt;&lt;/p&gt;
+  &lt;img src="<%= pageImageUrl %>" alt="Page <%= pageNumber %> of <%- docTitle %>" style="border:1px solid #ccc;-webkit-box-sizing:border-box;box-sizing:border-box;width:100%;max-width:700px;"&gt;
+  &lt;p&gt;
+    Contributed to DocumentCloud by <%- docContributor %> of <%- docOrganization %> &bull;
+    &lt;a href="<%= pageTextUrl %>" title="View text of page <%= pageNumber %> of <%- docTitle %> in a new window or tab" target="_blank"&gt;View page as text&lt;/a&gt;
+  &lt;/p&gt;
 &lt;/div&gt;
-&lt;script src="dist/loader.js"&gt;&lt;/script&gt;
+&lt;script src="//assets.documentcloud.org/embed/loader/enhance.js"&gt;&lt;/script&gt;
 </textarea>
 
 <div class="dialog_info selectable_text interface">
