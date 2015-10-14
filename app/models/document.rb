@@ -915,6 +915,7 @@ class Document < ActiveRecord::Base
       :thumbnail_url       => thumbnail_url( { :cache_busting => opts[:cache_busting] } ),
       :full_text_url       => full_text_url,
       :page_image_url      => page_image_url_template( { :cache_busting => opts[:cache_busting] } ),
+      :page_text_url       => page_text_url_template( { :cache_busting => opts[:cache_busting] } ),
       :document_viewer_url => document_viewer_url,
       :document_viewer_js  => canonical_url(:js),
       :reviewer_count      => reviewer_count,
@@ -970,8 +971,10 @@ class Document < ActiveRecord::Base
     doc['language']           = language
     doc['file_hash']          = file_hash
     if options[:contributor]
-      doc['contributor']      = account_name
-      doc['contributor_organization'] = organization_name
+      doc['contributor']                   = account_name
+      doc['contributor_slug']              = account_slug
+      doc['contributor_organization']      = organization_name
+      doc['contributor_organization_slug'] = organization_slug
     end
     doc['display_language']   = display_language
     doc['resources']          = res = ActiveSupport::OrderedHash.new

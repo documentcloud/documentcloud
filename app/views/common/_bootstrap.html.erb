@@ -1,7 +1,5 @@
 <script type="text/javascript">
-window.RAILS_ENV = '<%= Rails.env.to_s %>';
-window.SERVER_ROOT = '<%= DC.server_root %>';
-window.SERVER_ROOT_HTTP = '<%= DC.server_root(:ssl => false) %>';
+<%= render :partial => 'common/globals.js' %>
 
 <% if workspace %>
   Organizations.reset(<%=raw @organizations.to_json(:include_document_count=>true, :include_note_count=>true) %>);

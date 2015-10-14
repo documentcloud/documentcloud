@@ -241,6 +241,77 @@
   }
 
 /* ===================== */
+/* = Page Embed Dialog = */
+/* ===================== */
+
+.page_embed_dialog {
+  width: 500px;
+  font-size: 12px;
+  text-align: left;
+}
+
+.page_embed_dialog .controls {
+  display: none;
+}
+
+.page_embed_dialog .publish_wizard_controls {
+  height: 24px;
+}
+  .page_embed_dialog .publish_wizard_controls .next,
+  .page_embed_dialog .publish_wizard_controls .previous {
+    float: right;
+    margin-left: 8px;
+  }
+
+.page_embed_dialog .publish_section {
+  position: relative;
+  margin-bottom: 24px;
+  clear: both;
+}
+  .page_embed_dialog .publish_info {
+    font-size: 11px;
+    color: #ccc;
+  }
+  .page_embed_dialog .snippet {
+    width: 96%;
+    border: 1px solid #dedede;
+    font: 11px Menlo, Consolas, Monaco, Courier, monospace;
+    margin: 10px 0px;
+    padding: 8px;
+    resize: none;
+  }
+  .page_embed_dialog textarea.snippet {
+    height: 120px;
+  }
+  .page_embed_dialog input.snippet {
+    height: 1.5em;
+  }
+
+.page_embed_dialog .page_preview_section {
+  display: none;
+  background: rgb(224, 225, 227) url('/images/embed/pages/page_preview_bg.jpg') 0 0 repeat;
+  padding: 25px;
+  border-radius: 3px;
+}
+
+.page_embed_dialog .page_preview {
+  margin: 0 auto;
+  width: 400px;
+
+  font: 400 10pt/14pt sans-serif;
+  color: rgb(115, 115, 115);
+}
+
+  .page_embed_dialog .page_preview a {
+    color: rgb(90, 118, 160);
+    text-decoration: underline;
+  }
+
+  .page_embed_dialog .page_preview p {
+    margin: 0.5em 0;
+  }
+
+/* ===================== */
 /* = Note Embed Dialog = */
 /* ===================== */
 
