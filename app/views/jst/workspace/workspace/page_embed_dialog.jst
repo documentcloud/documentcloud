@@ -1,0 +1,36 @@
+<div class="publish_step publish_step_1 is_enabled">
+
+  <% if (doc.get('access') != dc.access.PUBLIC) { %>
+    <div class="publish_section dialog_info selectable_text interface">
+      <%= _.t('embed_page_private_error', '<span class="text_link edit_access">','</span>') %>
+      <%= doc.get('publish_at') ? '' : _.t('set_the')  %>
+      <span class="text_link set_publish_at"><%= _.t('publication_date') %></span>
+    </div>
+  <% } %>
+
+  <div class="publish_section">
+    <select class="page_select">
+      <option><%- _.t('embed_page_choose') %></option>
+    <% _.times(pageCount, function(pageNumber) { %>
+      <option value="<%= pageNumber+1 %>" <% if (selectedPageNum == pageNumber+1) { %>selected<% } %>>
+        <%- _.t('page_number', pageNumber+1) %>
+      </option>
+    <% }); %>
+    </select>
+  </div>
+
+  <div class="publish_section page_preview_section">
+    <div class="page_preview not_draggable"></div>
+  </div>
+
+</div>
+
+<div class="publish_step publish_step_2">
+  <div class="publish_embed_code publish_section"></div>
+</div>
+
+<div class="publish_wizard_controls">
+  <div class="minibutton next default"><%= _.t('next') %> <span class="text_arrow">&raquo;</span></div>
+  <div class="minibutton previous dark"><span class="text_arrow">&laquo;</span> <%= _.t('back') %></div>
+  <div class="minibutton close dark"><%= _.t('close') %></div>
+</div>

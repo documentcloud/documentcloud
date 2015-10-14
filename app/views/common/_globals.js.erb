@@ -1,0 +1,4 @@
+window.RAILS_ENV = '<%= Rails.env.to_s %>';
+window.ASSET_ROOT  = '<%= DC.cdn_root(:agnostic => true) %>';
+window.SERVER_ROOT = '<%= DC.server_root %>';
+window.SERVER_ROOT_HTTP = '<%= DC.server_root(:ssl => false) %>';

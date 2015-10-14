@@ -251,6 +251,9 @@
       a support@documentcloud.org.
   - email_when_complete: Notifícame cuando %slos documentos%s estén procesados.
   - embed_a_note: Incrustar una Nota
+  - embed_demo_error: Las cuentas demo no se les permite incrustar. %sPóngase en contacto
+      con%s nosotros si necesita una cuenta con todas las funciones. Ver un ejemplo
+      del código de inserción %saquí%s.
   - embed_document: Incrustar este Documento
   - embed_document_list: Incrustar Lista de Documentos
   - embed_document_viewer: Incrustar Marco de Revisión
@@ -262,6 +265,13 @@
       %saquí%s.
   - embed_note_step_one: 'Primer Paso: Seleccionar una nota para incrustar'
   - embed_note_step_two: 'Segundo Paso: Copia y pega el código para incrustar'
+  - embed_page: Incrustar una Página [BETA]
+  - embed_page_choose: Seleccione una página...
+  - embed_page_private_error: 'Este documento es privado: la inserción no será visible
+      para el público hasta que el documento es público. Cambiar el %snivel de%s acceso
+      ahora o'
+  - embed_page_step_one_title: Seleccione una página para incrustar
+  - embed_page_step_two_title: Copiar y pegar el código embed
   - embed_search_demo_error: No se permite incrustar sets de documentos con cuentas
       de prueba. %sContáctanos%s si quieres una cuenta de acceso completo. Ve un ejemplo
       del código de incrustar %saquí%s.
@@ -299,6 +309,8 @@
   - export: Exportar
   - export_to_overview_explain: Estás a punto de exportar a Panorama. Necesitas crear
       una cuenta de Panorama que requiere tu nombre de usuario y contraseña de DocumentCloud.
+  - export_to_overview_select_something: Con el fin de analizar los documentos en
+      Overview, por favor seleccione un proyecto o algunos documentos.
   - featured_examples_documents_list: Puedes ver varios ejemplos de documentos incrustados
       en nuestra lista de %sreportajes destacados%s.
   - featured_examples_notes_list: Usted puede encontrar un montón de ejemplos de notas
@@ -430,6 +442,7 @@
   - over_x_mentions: Por %d menciones
   - page: *2
   - page_ellipsis: Página ...
+  - page_number: Página
   - page_tools: Herramientas de Página
   - pages_are_being_removed: Se están eliminando las páginas. Por favor, cierre el
       documento.
@@ -662,6 +675,8 @@
   - view_entities: Ver Entidades
   - view_pages: Ver Páginas
   - view_timeline: Ver cronología
+  - waiting_for_process_entities_job: Todavía estamos extrayendo entidades de %s.
+      Vuelve dentro de un rato.
   - welcome_message_sent_to: Un mensaje de bienvenida se envió a  %s.
   - welcome_to_document_cloud: 'Bienvenido a DocumentCloud '
   - width: Anchura
