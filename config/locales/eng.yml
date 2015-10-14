@@ -242,6 +242,8 @@
   - email_for_assistance: If you need assistance, please email us at support@documentcloud.org.
   - email_when_complete: Email me when %sdocuments have%s finished processing.
   - embed_a_note: Embed a Note
+  - embed_demo_error: Demo accounts are not allowed to embed. %sContact us%s if you
+      need a full featured account. View an example of the embed code %shere%s.
   - embed_document: Embed this Document
   - embed_document_list: Embed Document List
   - embed_document_viewer: Embed Document Viewer
@@ -253,6 +255,13 @@
       %shere%s.
   - embed_note_step_one: 'Step One: Select a Note to Embed'
   - embed_note_step_two: 'Step Two: Copy and Paste the Embed Code'
+  - embed_page: Embed a Page [BETA]
+  - embed_page_choose: Choose a page...
+  - embed_page_private_error: 'This document is private: the embed will not be visible
+      to the public until the document is public. Change the %saccess level%s now
+      or'
+  - embed_page_step_one_title: Select a page to embed
+  - embed_page_step_two_title: Copy and paste embed code
   - embed_search_demo_error: Demo accounts are not allowed to embed document sets.
       %sContact us%s if you need a full featured account. View an example of the embed
       code %shere%s.
@@ -291,6 +300,8 @@
   - export_to_overview_explain: You are about to export to Overview. You must create
       an Overview account, and you must provide Overview with your DocumentCloud username
       and password.
+  - export_to_overview_select_something: In order to analyze documents in Overview,
+      please select a project or some documents.
   - featured_examples_documents_list: You can find plenty of examples of embedded
       documents on our list of %sfeatured reporting%s.
   - featured_examples_notes_list: You can find plenty of examples of embedded notes
@@ -379,6 +390,7 @@
   - no_duplicate_section: Can't create a duplicate section.
   - no_embed_permission: You don't have permission to embed that document.
   - no_entities_found: No entities were found that match your search.
+  - no_notes_to_embed: This document has no notes to embed
   - no_past_publication: You can't set a document to be published in the past.
   - no_permission_to_edit_x: You don't have permission to edit "%s".
   - no_project_doc_selected: No project or documents selected
@@ -420,6 +432,7 @@
   - over_x_mentions: Over %d mentions
   - page: *2
   - page_ellipsis: Page ...
+  - page_number: Page %d
   - page_tools: Page Tools
   - pages_are_being_removed: The pages are being removed. Please close this document.
   - paragraph_description_of_document: Paragraph description of this document
@@ -649,6 +662,8 @@
   - view_entities: View Entities
   - view_pages: View Pages
   - view_timeline: View Timeline
+  - waiting_for_process_entities_job: We're still extracting entities from %s. Check
+      back in a little while.
   - welcome_message_sent_to: A welcome message has been sent to %s.
   - welcome_to_document_cloud: Welcome to DocumentCloud
   - width: Width
