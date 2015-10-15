@@ -1,4 +1,4 @@
-# Publishing Documents, Notes, and Document Sets
+# Publishing Documents, Pages, Notes, and Document Sets
 
 Ready to share your documents with readers? Either by embedding our custom viewer or using oEmbed, you can publish individual documents, embed a set of documents that readers can browse, or embed a single note from any document. Here's how:
 
@@ -7,6 +7,7 @@ Ready to share your documents with readers? Either by embedding our custom viewe
 * [Making documents public](#public)
 * Generating embed codes:
   * [Documents](#embed-document)
+  * [Pages](#embed-page)
   * [Notes](#embed-note)
   * [Document Sets](#embed-set)
 * [WordPress Shortcodes](#wordpress)
@@ -15,7 +16,7 @@ Ready to share your documents with readers? Either by embedding our custom viewe
 <a name="public"></a>
 # Making Documents Public
 
-Before you publish a note, document or document set, you'll want to make sure that the document or documents are public. There are two ways to do this:
+Before you publish a document, page, note or document set, you'll want to make sure that the document or documents are public. There are two ways to do this:
 
 * Edit the "Access Level" (from the "Edit" menu).
 * Set a publication date (from the "Publish" menu).
@@ -53,10 +54,6 @@ Live examples worth checking out are at the [Chicago Tribune][] and [ProPublica]
 
 If you opt to embed a **fixed size** viewer, set the width and height in pixels. Both the sidebar and the text tab can be shown or not. We recommend hiding the sidebar in document viewers that are narrower than 800 pixels. If you're embedding handwritten documents or documents with poor OCR results, hiding the text tab is usually a good idea. Use the "preview the document viewer" link to see an example of the viewer rendered to your specifications.
 
-To see a live example of a fixed size document with no sidebar, take a look at [this ballot from WNYC][].
-
-<img src="/images/help/wnyc.jpg" class="full_line" />
-
 ## <span id="embed">Copy and Paste the Code</span>
 
 Click on the "Next" button to proceed to step 3, and you'll see the embed code: a snippet of HTML that can be pasted into any web page to create a document viewer. The code will look something like this:
@@ -78,6 +75,28 @@ On occasion you may have embedded documents which you would like to remain priva
 ## <span id="intouch">Stay in Touch</span>
 
 [Let us know][] about your reporting!
+
+<a name="embed-page"></a>
+# <span id="page_embed">Embed Codes for a Single Page</span>
+
+![Embed Page Menu][]
+
+DocumentCloud offers a lightweight, responsive viewer that highlights a single page (including your annotations) with minimal extra chrome. It's designed to work equally well on mobile and desktop and is perfect for use in custom news applications or on long-form journalism presentations. Coming soon: options to allow readers to access all the pages in the document or read the extracted text.
+
+Embedding a page is similar to embedding a document: Select a document, open the "Publish" menu and click "Embed a Page." Alternately, right-click the document and select "Embed a Page."
+
+In the dialog box that appears next, select the number of the page to embed. A preview of the page embed appears; if you want a different page, you can select it from the menu.
+
+Click "Next" to move to Step 2 and generate the HTML embed code. Here is a sample of what it will look like:
+
+    <div class="DC-embed" data-version="1.0" style="font-size:10pt">
+      <p><a class="DC-embed-resource" href="https://www.documentcloud.org/documents/282753-lefler-thesis.html#document/p57" title="View page 57 of Lefler Thesis on DocumentCloud in new window or tab" target="_blank">Page 57 of Lefler Thesis</a></p>
+      <img src="//www.documentcloud.org/documents/282753/pages/lefler-thesis-p57-normal.gif" alt="Page 57 of Lefler Thesis" style="border:1px solid #ccc;-webkit-box-sizing:border-box;box-sizing:border-box;width:100%;max-width:700px;">
+      <p>Contributed to DocumentCloud by Ted Han of DocumentCloud &bull; <a href="https://www.documentcloud.org/documents/282753/pages/lefler-thesis-p57.txt" title="View text of page 57 of Lefler Thesis in a new window or tab" target="_blank">View page as text</a></p>
+    </div>
+    <script src="//assets.documentcloud.org/embed/loader/enhance.js"></script>
+
+Copy and paste the HTML to your site to publish the page.
 
 <a name="embed-note"></a>
 # <span id="note_embed">Embed Codes for a Note in a Document</span>
@@ -170,6 +189,7 @@ oEmbed is a Web standard for providing embedded content on a site via a request 
 Still have questions about publishing and embedding? Don't hesitate to [contact us][].
 
 [Embed Menu]: /images/help/embed_menu.png
+[Embed Page Menu]: /images/help/embed_page_menu.png
 [Embed Note Menu]: /images/help/embed_note_menu.png
 [Embed Search Menu]: /images/help/embed_search_menu.png
 [favorite embedded documents]: /featured
@@ -179,6 +199,5 @@ Still have questions about publishing and embedding? Don't hesitate to [contact 
 [Chicago Tribune]: http://media.apps.chicagotribune.com/docs/obama-subpoena.html
 [ProPublica]: http://www.propublica.org/documents/item/magnetars-responses-to-our-questions
 [this document from the Commercial Appeal]: http://www.commercialappeal.com/data/documents/bass-pro-lease/
-[this ballot from WNYC]: http://www.wnyc.org/story/93440-new-nyc-ballot-could-cause-confusion/
 [oEmbed API]: https://www.documentcloud.org/help/api#oembed
 [contact us]: javascript:dc.ui.Dialog.contact()

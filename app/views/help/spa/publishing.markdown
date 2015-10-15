@@ -1,12 +1,13 @@
-# Publicando documentos, notas y conjuntos de documentos
+# Publicando Documentos, Páginas, Notas y Conjuntos de Documentos
 
-¿Esta listo para hacer que sus documentos sean públicos? Publique documentos individuales, incruste un conjunto de documentos que sus lectores puedan navegar, o integre una sola nota en cualquier documento. 
+¿Esta listo para hacer que sus documentos sean públicos? Publique documentos individuales, incruste un conjunto de documentos que sus lectores puedan navegar, o integre una sola nota en cualquier documento.
 
 ## Contents
 
 * [Haciendo documentos públicos](#public)
 * Generar códigos embed:
   * [Documentos](#embed-document)
+  * [Páginas](#embed-page)
   * [Notas](#embed-note)
   * [Grupo de Documentos](#embed-set)
 * [WordPress Shortcodes](#wordpress)
@@ -15,7 +16,7 @@
 <a name="public"></a>
 # Haciendo documentos públicos
 
-Antes de publicar una nota, un documento o conjunto de documentos, usted querrá asegurarse de que el documento o los documentos son públicos. Haga público un documento mediante la opción "Nivel de Accesol" (en el menú "Editar") o mediante la selección de una fecha de publicación (en el menú "Publicar").
+Antes de publicar un documento, página, nota o conjunto de documentos, usted querrá asegurarse de que el documento o los documentos son públicos. Haga público un documento mediante la opción "Nivel de Accesol" (en el menú "Editar") o mediante la selección de una fecha de publicación (en el menú "Publicar").
 
 <a name="embed-document"></a>
 # Publicando documentos individuales
@@ -48,11 +49,7 @@ Aquí hay algunos ejemplos activos que vale la pena visitar: [NewsHour](http://w
 
 <img src="/images/help/newshour.jpg" class="full_line" />
 
-Si opta por integrar un visor de **tamaño fijo**, establezca la anchura y  la altura en píxeles. También puede intercambiar la barra lateral y la pestaña de texto. Recomendamos ocultar la barra lateral en los visores de documentos que son más estrechos que 800 píxeles. Si usted está incrustando documentos escritos a mano o documentos con resultados insatisfactorios de OCR, suele ser una buena idea ocultar la pestaña de texto. Utilice el enlace "preview the document viewer" para ver un ejemplo del visor presentado de acuerdo a sus especificaciones.  
-
-Para ver un ejemplo activo de un documento de tamaño fijo sin barra lateral, vea esta [boleta electoral de WNYC](http://beta.wnyc.org/articles/its-free-country/2010/sep/07/new-nyc-ballot-could-cause-confusion/).
-
-<img src="/images/help/wnyc.jpg" class="full_line" />
+Si opta por integrar un visor de **tamaño fijo**, establezca la anchura y  la altura en píxeles. También puede intercambiar la barra lateral y la pestaña de texto. Recomendamos ocultar la barra lateral en los visores de documentos que son más estrechos que 800 píxeles. Si usted está incrustando documentos escritos a mano o documentos con resultados insatisfactorios de OCR, suele ser una buena idea ocultar la pestaña de texto. Utilice el enlace "preview the document viewer" para ver un ejemplo del visor presentado de acuerdo a sus especificaciones. 
 
 ## <span id="embed">Copie y pegue el código</span>
 
@@ -75,6 +72,28 @@ En ocasiones es posible que haya incorporado/incrustado documentos que le gustar
 ## <span id="intouch">Manténgase en contacto</span>
 
 [¡Cuéntenos acerca de sus reportajes!](javascript:dc.ui.Dialog.contact(\))
+
+<a name="embed-page"></a>
+# <span id="page_embed">Códigos Integrar para una Sola Página</span>
+
+![Embed Page Menu](/images/help/embed_page_menu.png)
+
+DocumentCloud ofrece un visor ligero, sensible que pone de relieve una sola página (incluyendo las anotaciones) con un mínimo de cromo extra. Está diseñado para funcionar igual de bien en móviles y de escritorio y es perfecto para su uso en aplicaciones de noticias personalizadas o de formato largo presentaciones de periodismo. Próximamente: opciones para permitir que los lectores tengan acceso a todas las páginas en el documento o leer el texto extraído.
+
+Incorporación de una página es similar a la incorporación de un documento: Seleccione un documento, abra el menú "Publicar" y haga clic en "Incrustar una página." Alternativamente, haga clic en el documento y seleccione "Incrustar una página."
+
+En el cuadro de diálogo que aparece a continuación, seleccione el número de la página para incrustar. Una vista previa de la página de inserción aparece; si quieres una página diferente, puede seleccionarlo en el menú.
+
+Haga clic en "Siguiente" para pasar al paso 2 y generar el código HTML empotrable. He aquí una muestra de lo que se verá así:
+
+    <div class="DC-embed" data-version="1.0" style="font-size:10pt">
+      <p><a class="DC-embed-resource" href="https://www.documentcloud.org/documents/282753-lefler-thesis.html#document/p57" title="View page 57 of Lefler Thesis on DocumentCloud in new window or tab" target="_blank">Page 57 of Lefler Thesis</a></p>
+      <img src="//www.documentcloud.org/documents/282753/pages/lefler-thesis-p57-normal.gif" alt="Page 57 of Lefler Thesis" style="border:1px solid #ccc;-webkit-box-sizing:border-box;box-sizing:border-box;width:100%;max-width:700px;">
+      <p>Contributed to DocumentCloud by Ted Han of DocumentCloud &bull; <a href="https://www.documentcloud.org/documents/282753/pages/lefler-thesis-p57.txt" title="View text of page 57 of Lefler Thesis in a new window or tab" target="_blank">View page as text</a></p>
+    </div>
+    <script src="//assets.documentcloud.org/embed/loader/enhance.js"></script>
+
+Copie y pegue el código HTML a su sitio para publicar la página.
 
 <a name="embed-note"></a>
 # <span id="note_embed">Incrustar una nota de un documento</span>
