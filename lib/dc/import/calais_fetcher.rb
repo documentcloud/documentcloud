@@ -62,14 +62,18 @@ module DC
         attempts = 0
         begin
           yield
-        rescue Faraday::Error, Timeout::Error => e
+        rescue CalaisError::RateLimitExceeded => e
+          attempts += 1
+          sleep 10
+          Rails.logger.warn 'waiting 10 seconds.  Calais rate limit exceeded'
+          retry if attempts < 5
+        rescue CalaisError::ServiceUnavailable, CalaisError::ServerError => e
           Rails.logger.warn e.message
-          return nil if e.message == 'Calais continues to expand its list of supported languages, but does not yet support your submitted content.'
-          Rails.logger.warn 'waiting 10 seconds'
+          Rails.logger.warn 'Calais server had an error.  Retrying...waiting 10 seconds'
           attempts += 1
           sleep 10
           retry if attempts < 5
-        rescue RuntimeError => e
+        rescue RuntimeError => e # Do we still need this catch?
           return nil if e.message == 'content is too large'
           puts e.message
           puts e.class
@@ -77,6 +81,7 @@ module DC
         rescue Exception => e
           puts e.message
           puts e.class
+          LifecycleMailer.exception_notification(e).deliver_now
           raise e
         end
       end
