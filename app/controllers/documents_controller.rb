@@ -28,7 +28,7 @@ class DocumentsController < ApplicationController
       format.text { redirect_to(doc.full_text_url) }
       format.json do
         @response = doc.canonical
-        cache_page @response if doc.cacheable?
+        cache_page @response.to_json if doc.cacheable?
         json_response
       end
       format.js do
