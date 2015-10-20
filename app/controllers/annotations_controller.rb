@@ -17,7 +17,7 @@ class AnnotationsController < ApplicationController
     respond_to do |format|
       format.json do
         @response = current_annotation.canonical(:include_image_url => true, :include_document_url => true)
-        cache_page.to_json @response if current_annotation.cacheable?
+        cache_page @response.to_json if current_annotation.cacheable?
         json_response
       end
       format.js do
