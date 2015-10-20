@@ -67,7 +67,6 @@ DC::Application.routes.draw do
   end
 
   resources :documents do
-    member {  match '(*all)', action: :cors_options, via: :options, allowed_methods: [:get] }
 
     resources :annotations do
       member {  match '(*all)', action: :cors_options, via: :options, allowed_methods: [:put,:delete,:post] }
