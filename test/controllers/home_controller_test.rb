@@ -15,13 +15,6 @@ class HomeControllerTest < ActionController::TestCase
     assert_equal yaml['github'], assigns(:github)
   end
 
-
-  def test_news
-    get :news
-    yaml = YAML.load_file("#{Rails.root}/app/views/home/news.yml").sort{|a,b| b.last <=> a.last }
-    assert_equal yaml, assigns(:news)
-  end
-
   def test_contributors
     get :contributors
     yaml = YAML.load_file("#{Rails.root}/app/views/home/contributors.yml")
