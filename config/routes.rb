@@ -167,11 +167,11 @@ DC::Application.routes.draw do
   get '/who.php'     => 'redirect#index', :as => :who,        :url => '/about'
   get '/who-we-are'  => 'redirect#index', :as => :who_we_are, :url => '/about'
   get '/partner.php' => 'redirect#index', :as => :partner,    :url => '/contributors'
-  get '/blog/feed'   => 'redirect#index', :as => :feed,       :url => 'http://blog.documentcloud.org/feed'
-  get '/feed'        => 'redirect#index', :as => :root_feed,  :url => 'http://blog.documentcloud.org/feed'
-  get '/blog/*parts' => 'redirect#index', :as => :blog,       :url => 'http://blog.documentcloud.org/'
-  get '/clips.php'   => 'redirect#index', :as => :clips,      :url => 'http://blog.documentcloud.org/'
-  get '/news'        => 'redirect#index', :as => :news,       :url => 'http://blog.documentcloud.org/'
+  get '/blog/feed'   => 'redirect#index', :as => :feed,       :url => 'https://blog.documentcloud.org/feed'
+  get '/feed'        => 'redirect#index', :as => :root_feed,  :url => 'https://blog.documentcloud.org/feed'
+  get '/blog/*parts' => 'redirect#index', :as => :blog,       :url => 'https://blog.documentcloud.org/'
+  get '/clips.php'   => 'redirect#index', :as => :clips,      :url => 'https://blog.documentcloud.org/'
+  get '/news'        => 'redirect#index', :as => :news,       :url => 'https://blog.documentcloud.org/'
 
   get '/admin' => 'admin#index'
   
