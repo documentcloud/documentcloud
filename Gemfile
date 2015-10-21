@@ -40,13 +40,17 @@ group :development, :test, optional: true do
   gem 'minitest-spec-rails'
   gem 'guard-minitest'
   gem 'spring'
-  # for downloading the translations from google spreadsheet
-  gem 'google_drive',         '~> 1.0.0'
-  # securely ask for username/password for access to translation spreadsheet
-  gem 'highline'
   gem "pry"
   gem "byebug" # Debugger
   gem 'factory_girl_rails' # Mocking out objects
   gem "ruby-debug-passenger"
   gem 'vcr'
+end
+
+group :development, optional: true do
+  # `google_drive` and `highline` are development-only because we use them to
+  # access/compile the translations spreadsheet, and this should only be done
+  # by a developer on their local machine before committing the compiled strings
+  gem 'google_drive',         '~> 1.0.0'
+  gem 'highline'
 end
