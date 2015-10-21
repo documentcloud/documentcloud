@@ -36,15 +36,11 @@ group :development, :test, optional: true do
   gem 'growl'
   gem 'sunspot-rails-tester'
   #gem 'sunspot_matchers'
-  gem 'minitest'
-  gem 'minitest-spec-rails'
-  gem 'guard-minitest'
   gem 'spring'
   gem 'pry'
   gem 'byebug' # Debugger
   gem 'factory_girl_rails' # Mocking out objects
   gem 'ruby-debug-passenger'
-  gem 'vcr'
 end
 
 group :development, optional: true do
@@ -53,4 +49,12 @@ group :development, optional: true do
   # by a developer on their local machine before committing the compiled strings
   gem 'google_drive',         '~> 1.0.0'
   gem 'highline'
+end
+
+group :test, optional: true do
+  gem 'minitest'
+  gem 'minitest-spec-rails'
+  gem 'guard-minitest'
+  gem 'vcr'
+  gem 'webmock'
 end
