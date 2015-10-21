@@ -9,7 +9,7 @@ class EntityExtractorTest < ActiveSupport::TestCase
 
   test "Pull out standard top level entities and add to document" do
     document = FactoryGirl.create(:document, title: "Wow look at the title", language: nil, publication_date: nil, calais_id: nil)
-    mock_calais_object = OpenStruct.new(raw: OpenStruct.new(env: OpenStruct.new(body: OpenStruct.new(doc: OpenStruct.new(info: OpenStruct.new(docTitle: "Awesome doc title", docDate: Time.now, calaisRequestID: "123456789"))))))
+    mock_calais_object = OpenStruct.new(raw: OpenStruct.new(body: OpenStruct.new(doc: OpenStruct.new(info: OpenStruct.new(docId: '1', docTitle: "Awesome doc title", docDate: Time.now, calaisRequestID: "123456789")))))
     # Invoke private method to test
     DC::Import::EntityExtractor.new.send(:extract_information, document, mock_calais_object)
     assert document.title && document.language && document.publication_date && document.calais_id 

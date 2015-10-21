@@ -38,7 +38,7 @@ module DC
       # Pull out all of the standard, top-level entities, and add it to our
       # document if it hasn't already been set.
       def extract_information(document, calais)
-        if calais and calais.raw and calais.raw.body.doc
+        if calais and calais.raw and calais.raw.body and calais.raw.body.doc
           info_elements               = calais.raw.body.doc.info
           document.title              = info_elements.docTitle unless document.titled?
           document.language         ||= 'en' # TODO: Convert calais.language into an ISO language code.
