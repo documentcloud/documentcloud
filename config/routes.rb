@@ -149,29 +149,29 @@ DC::Application.routes.draw do
   end
 
   # Home pages.
-  get '/contributors' => 'home#contributors', :as => :contributors
-  get '/faq' => 'home#faq'
-  get '/terms' => 'home#terms', :as => :terms
-  get '/privacy' => 'home#privacy', :as => :privacy
-  get '/p3p.:format' => 'home#p3p', :as => :p3p
-  get '/home' => 'home#index', :as => :home
-  get '/opensource' => 'home#opensource', :as => :opensource
-  get '/about' => 'home#about', :as => :about
-  get '/contact' => 'home#contact', :as => :contact
-  get '/help' => 'home#help'
-  get '/help/:page' => 'home#help'
+  get '/contributors'  => 'home#contributors',  :as => :contributors
+  get '/faq'           => 'home#faq'
+  get '/terms'         => 'home#terms',         :as => :terms
+  get '/privacy'       => 'home#privacy',       :as => :privacy
+  get '/p3p.:format'   => 'home#p3p',           :as => :p3p
+  get '/home'          => 'home#index',         :as => :home
+  get '/opensource'    => 'home#opensource',    :as => :opensource
+  get '/about'         => 'home#about',         :as => :about
+  get '/contact'       => 'home#contact',       :as => :contact
+  get '/help'          => 'home#help'
+  get '/help/:page'    => 'home#help'
   get '/multilanguage' => 'home#multilanguage', :as => :multilanguage
 
   # Redirects.
-  get '/faq.php' => 'redirect#index', :url => '/faq'
-  get '/who.php' => 'redirect#index', :as => :who, :url => '/about'
-  get '/who-we-are' => 'redirect#index', :as => :who_we_are, :url => '/about'
-  get '/partner.php' => 'redirect#index', :as => :partner, :url => '/contributors'
-  get '/blog/feed' => 'redirect#index', :as => :feed, :url => 'http://blog.documentcloud.org/feed'
-  get '/feed' => 'redirect#index', :as => :root_feed, :url => 'http://blog.documentcloud.org/feed'
-  get '/blog/*parts' => 'redirect#index', :as => :blog, :url => 'http://blog.documentcloud.org/'
-  get '/clips.php' => 'redirect#index', :as => :clips, :url => 'http://blog.documentcloud.org/'
-  get '/news' => 'redirect#index', :as => :news, :url => 'http://blog.documentcloud.org/'
+  get '/faq.php'     => 'redirect#index',                     :url => '/faq'
+  get '/who.php'     => 'redirect#index', :as => :who,        :url => '/about'
+  get '/who-we-are'  => 'redirect#index', :as => :who_we_are, :url => '/about'
+  get '/partner.php' => 'redirect#index', :as => :partner,    :url => '/contributors'
+  get '/blog/feed'   => 'redirect#index', :as => :feed,       :url => 'http://blog.documentcloud.org/feed'
+  get '/feed'        => 'redirect#index', :as => :root_feed,  :url => 'http://blog.documentcloud.org/feed'
+  get '/blog/*parts' => 'redirect#index', :as => :blog,       :url => 'http://blog.documentcloud.org/'
+  get '/clips.php'   => 'redirect#index', :as => :clips,      :url => 'http://blog.documentcloud.org/'
+  get '/news'        => 'redirect#index', :as => :news,       :url => 'http://blog.documentcloud.org/'
 
   get '/admin' => 'admin#index'
   
