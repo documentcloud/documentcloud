@@ -17,12 +17,12 @@ class StatisticsTest < ActiveSupport::TestCase
 
   def test_weekly_documents
     docs = DC::Statistics.weekly_documents( Date.parse("2013-01-01") )
-    assert_equal [1,1], docs.values
+    assert_equal [1, 1], docs.values
   end
 
   def test_weekly_pages
     pgs = DC::Statistics.weekly_pages
-    assert_equal [68, 68 ], pgs.values
+    assert_equal [68, 68], pgs.values
   end
 
   def test_daily_hits_on_documents
@@ -37,12 +37,12 @@ class StatisticsTest < ActiveSupport::TestCase
 
   def test_daily_hits_on_notes
     hits = DC::Statistics.daily_hits_on_notes
-    assert_equal [11,3].sort, hits.values.sort
+    assert_equal [11, 3].sort, hits.values.sort
   end
 
   def test_weekly_hits_on_notes
     hits = DC::Statistics.weekly_hits_on_notes
-    assert_equal [3,11].sort, hits.values.sort
+    assert_equal [3, 11].sort, hits.values.sort
   end
 
   def test_daily_hits_on_searches
@@ -52,7 +52,7 @@ class StatisticsTest < ActiveSupport::TestCase
 
   def test_weekly_hits_on_searches
     hits = DC::Statistics.weekly_hits_on_searches
-    assert_equal [1,11,13].sort, hits.values.sort
+    assert_equal [1, 11, 13].sort, hits.values.sort
   end
 
   def test_pages_since
