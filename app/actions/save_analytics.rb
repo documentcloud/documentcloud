@@ -60,7 +60,7 @@ class SaveAnalytics < CloudCrowd::Action
     begin
       yield
     rescue Exception => e
-      LifecycleMailer.exception_notification(e,options).deliver
+      LifecycleMailer.exception_notification(e,options).deliver_now
       raise e
     end
     true

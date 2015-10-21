@@ -22,7 +22,6 @@ DC::Application.routes.draw do
 
   # login / logout
   scope( controller: 'authentication' ) do
-    get '/signup',                        action: 'signup_info'
     match '/login',                       action: 'login', :via=>[:get,:post]
     get '/logout',                        action: 'logout'
     get '/auth/remote_data/:document_id', action: 'remote_data'
@@ -34,7 +33,7 @@ DC::Application.routes.draw do
   end
 
   # Public search.
-  get '/public/search' => 'public#index'
+  get '/public/search' => 'public#index', :as => :public_search
   get '/public/search/:query' => 'public#index', :query => /.*/
 
   # API.
@@ -66,7 +65,6 @@ DC::Application.routes.draw do
   resources :featured do
     collection { post :present_order }
   end
-
 
   resources :documents do
 
@@ -130,8 +128,12 @@ DC::Application.routes.draw do
       post :resend_welcome
     }
   end
-  match '/accounts/enable/:key' => 'accounts#enable', :via=>[:get,:post], :as => :enable_account
-  match '/reset_password' => 'accounts#reset', :via=>[:get,:post], :as => :reset_password
+  match '/accounts/enable/:key' => 'accounts#enable', :via => [:get, :post], :as => :enable_account
+  match '/reset_password' => 'accounts#reset', :via => [:get, :post], :as => :reset_password
+
+  get  '/signup' => 'redirect#index', :url => '/apply'
+  get  '/apply' => 'signup#index', :as => :apply
+  post '/apply' => 'signup#create', :as => :apply_create
 
   # Organizations management
   resources :organizations, :only=>:update
@@ -147,34 +149,34 @@ DC::Application.routes.draw do
   end
 
   # Home pages.
-  get '/contributors' => 'home#contributors', :as => :contributors
-  get '/faq' => 'home#faq'
-  get '/terms' => 'home#terms', :as => :terms
-  get '/privacy' => 'home#privacy', :as => :privacy
-  get '/p3p.:format' => 'home#p3p', :as => :p3p
-  get '/home' => 'home#index', :as => :home
-  get '/news' => 'home#news', :as => :news
-  get '/opensource' => 'home#opensource', :as => :opensource
-  get '/about' => 'home#about', :as => :about
-  get '/contact' => 'home#contact', :as => :contact
-  get '/help' => 'home#help'
-  get '/help/:page' => 'home#help'
+  get '/contributors'  => 'home#contributors',  :as => :contributors
+  get '/faq'           => 'home#faq'
+  get '/terms'         => 'home#terms',         :as => :terms
+  get '/privacy'       => 'home#privacy',       :as => :privacy
+  get '/p3p.:format'   => 'home#p3p',           :as => :p3p
+  get '/home'          => 'home#index',         :as => :home
+  get '/opensource'    => 'home#opensource',    :as => :opensource
+  get '/about'         => 'home#about',         :as => :about
+  get '/contact'       => 'home#contact',       :as => :contact
+  get '/help'          => 'home#help'
+  get '/help/:page'    => 'home#help'
   get '/multilanguage' => 'home#multilanguage', :as => :multilanguage
 
   # Redirects.
-  get '/faq.php' => 'redirect#index', :url => '/faq'
-  get '/who.php' => 'redirect#index', :as => :who, :url => '/about'
-  get '/who-we-are' => 'redirect#index', :as => :who_we_are, :url => '/about'
-  get '/partner.php' => 'redirect#index', :as => :partner, :url => '/contributors'
-  get '/clips.php' => 'redirect#index', :as => :clips, :url => '/news'
-  get '/blog/feed' => 'redirect#index', :as => :feed, :url => 'http://blog.documentcloud.org/feed'
-  get '/feed' => 'redirect#index', :as => :root_feed, :url => 'http://blog.documentcloud.org/feed'
-  get '/blog/*parts' => 'redirect#index', :as => :blog, :url => 'http://blog.documentcloud.org/'
+  get '/faq.php'     => 'redirect#index',                     :url => '/faq'
+  get '/who.php'     => 'redirect#index', :as => :who,        :url => '/about'
+  get '/who-we-are'  => 'redirect#index', :as => :who_we_are, :url => '/about'
+  get '/partner.php' => 'redirect#index', :as => :partner,    :url => '/contributors'
+  get '/blog/feed'   => 'redirect#index', :as => :feed,       :url => 'https://blog.documentcloud.org/feed'
+  get '/feed'        => 'redirect#index', :as => :root_feed,  :url => 'https://blog.documentcloud.org/feed'
+  get '/blog/*parts' => 'redirect#index', :as => :blog,       :url => 'https://blog.documentcloud.org/'
+  get '/clips.php'   => 'redirect#index', :as => :clips,      :url => 'https://blog.documentcloud.org/'
+  get '/news'        => 'redirect#index', :as => :news,       :url => 'https://blog.documentcloud.org/'
 
   get '/admin' => 'admin#index'
   
   # Standard fallback routes
   match '/:controller(/:action(/:id))', :via=>[:get,:post]
-  get ':controller/:action.:format' => '#index'
+  get ':controller/:action.:format'
 
 end

@@ -10,9 +10,10 @@ class LifecycleMailer < ActionMailer::Base
 
   # Mail instructions for a new account, with a secure link to activate,
   # set their password, and log in.
-  def login_instructions(account, admin=nil)
+  def login_instructions(account, organization, admin=nil)
     @admin   = admin
     @account = account
+    @organization = organization
     options = {
       :subject       => DC.t(account, 'welcome_to_document_cloud'),
       :to            => @account.email,
@@ -66,6 +67,16 @@ class LifecycleMailer < ActionMailer::Base
         :content_type  => "text/plain",
         :template_path => translation_path_for( account.language )
     })
+  end
+
+  def verification_request_notification(verification_request)
+    @request = verification_request
+    mail({
+        :subject  => "New DocumentCloud account request from #{verification_request.requester_full_name} (#{verification_request.organization_name}) in #{Rails.env}",
+        :from     => NO_REPLY,
+        :reply_to => verification_request.requester_email,
+        :to       => INFO
+      })
   end
 
   # When someone sends a message through the "Contact Us" form, deliver it to

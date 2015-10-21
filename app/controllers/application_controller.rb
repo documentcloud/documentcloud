@@ -77,6 +77,10 @@ class ApplicationController < ActionController::Base
     json @response
   end
 
+  def expire_pages(paths)
+    [paths].flatten.each { |path| expire_page path }
+  end
+
   # Select only a sub-set of passed parameters. Useful for whitelisting
   # attributes from the params hash before performing a mass-assignment.
   def pick(hash, *keys)
@@ -97,16 +101,26 @@ class ApplicationController < ActionController::Base
 
   def api_login_required
     authenticate_or_request_with_http_basic("DocumentCloud") do |email, password|
-      return false unless @current_account = Account.log_in(email, password)
-      @current_organization = @current_account.organization
-      true
+      # Don't mistakenly authenticate the Bouncer.
+      if email == DC::SECRETS['guest_username'] && password == DC::SECRETS['guest_password']
+        current_account && current_organization
+      elsif @current_account = Account.log_in(email, password)
+        @current_organization = @current_account.organization
+        @current_account
+      else
+        return forbidden
+      end
     end
   end
 
   def api_login_optional
-    return if request.authorization.blank?
-    return unless @current_account = Account.log_in(*BasicAuth.user_name_and_password(request))
-    @current_organization = @current_account.organization
+    if request.authorization.blank?
+      # Public user
+      true
+    else
+      # The user is trying to log in. If the username/password is wrong, fail.
+      api_login_required
+    end
   end
   
   def allow_iframe
@@ -141,14 +155,14 @@ class ApplicationController < ActionController::Base
 
   def handle_unverified_request
     error = RuntimeError.new "CSRF Verification Failed"
-    LifecycleMailer.exception_notification(error, params).deliver
+    LifecycleMailer.exception_notification(error, params).deliver_now
     forbidden
   end
 
-  def bad_request
+  def bad_request(message="Bad Request")
     respond_to do |format|
-      format.js  { json({:error=>"Bad Request"}, 400) }
-      format.json{ json({:error=>"Bad Request"}, 400) }
+      format.js  { json({:error=>message}, 400) }
+      format.json{ json({:error=>message}, 400) }
       format.any { render :file => "#{Rails.root}/public/400.html", :status => 400 }
     end
     false
@@ -213,7 +227,7 @@ class ApplicationController < ActionController::Base
       yield
     rescue Exception => e
       ignore = e.is_a?(AbstractController::ActionNotFound) || e.is_a?(ActionController::RoutingError)
-      LifecycleMailer.exception_notification(e, params).deliver unless ignore
+      LifecycleMailer.exception_notification(e, params).deliver_now unless ignore
       raise e
     end
   end

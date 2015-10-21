@@ -170,6 +170,7 @@ dc.ui.AccountView = Backbone.View.extend({
       this.setMode('display', 'view_mode');
     } else {
       dc.ui.spinner.show();
+      this._refresh = _.has(this.model.changedAttributes(attributes), 'language');
       this.model.save(attributes, options);
     }
   },
@@ -193,7 +194,7 @@ dc.ui.AccountView = Backbone.View.extend({
       return true;
     }, this), {
       id          : 'disable_account_confirm',
-      title       : _.t('double_check_disable'),
+      title       : _.t('double_check_disable', this.model.fullName()),
       description : _.t('explain_disable_account', this.model.fullName(), '<span class="contact_support text_link">','</span>' ),
       saveText    : 'Disable'
     });
@@ -226,6 +227,16 @@ dc.ui.AccountView = Backbone.View.extend({
         duration  : 5000,
         mode      : 'info'
       });
+    } else {
+      dc.ui.notifier.show({
+        text      : _.t('saved'),
+        duration  : 5000,
+        mode      : 'info'
+      });
+      if (this._refresh) {
+        this._refresh = false;
+        window.location.reload(true);
+      }
     }
   },
 

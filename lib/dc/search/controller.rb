@@ -11,7 +11,7 @@ module DC
         @query            = DC::Search::Parser.new.parse(params[:q] || '')
         @query.per_page   = per_page
         @query.order      = params[:order] || DEFAULT_ORDER
-        @query.page       = params[:page] ? params[:page].to_i : 1
+        @query.page       = params[:page].to_i > 0 ? params[:page].to_i : 1
         search_results    = Document.search(@query, opts)
         @documents        = search_results.results
       end

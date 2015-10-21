@@ -14,7 +14,7 @@ dc.ui.Toolbar = Backbone.View.extend({
     Backbone.View.call(this, options);
     _.bindAll(this, '_updateSelectedDocuments',
       '_deleteSelectedDocuments', 'editTitle', 'editSource', 'editDescription',
-      'editRelatedArticle', 'editAccess', 'openDocumentEmbedDialog', 'openNoteEmbedDialog',
+      'editRelatedArticle', 'editAccess', 'openDocumentEmbedDialog', 'openNoteEmbedDialog', 'openPageEmbedDialog',
       'openSearchEmbedDialog', 'openPublicationDateDialog', 'requestDownloadViewers',
       'checkFloat', '_analyzeInOverview', '_openTimeline', '_viewEntities',
       'editPublishedUrl', 'openShareDialog', '_markOrder', '_removeFromSelectedProject',
@@ -161,6 +161,15 @@ dc.ui.Toolbar = Backbone.View.extend({
     (new dc.ui.DocumentEmbedDialog(doc)).render();
   },
 
+  openPageEmbedDialog : function() {
+    var docs = Documents.chosen();
+    if (!docs.length) return;
+    if (docs.length != 1) return dc.ui.Dialog.alert( _.t('select_single_to_embed') );
+    var doc = docs[0];
+    if (!doc.checkAllowedToEdit(Documents.EMBED_FORBIDDEN)) return;
+    dc.app.pageEmbedDialog = new dc.ui.PageEmbedDialog(doc);
+  },
+
   openNoteEmbedDialog : function() {
     var docs = Documents.chosen();
     if (!docs.length) return;
@@ -251,7 +260,7 @@ dc.ui.Toolbar = Backbone.View.extend({
       );
     } else {
       // Overview will refuse to import all DocumentCloud documents at once
-      dc.ui.Dialog.alert("In order to analyze documents in Overview, please select a project or some documents.");
+      dc.ui.Dialog.alert(_.t('export_to_overview_select_something'));
     }
   },
 
@@ -318,6 +327,7 @@ dc.ui.Toolbar = Backbone.View.extend({
     var accountItems = [
       {title : _.t('embed_document_viewer'), onClick : this.openDocumentEmbedDialog,    attrs: {'class': 'singular'}},
       {title : _.t('embed_document_list'),   onClick : this.openSearchEmbedDialog,      attrs: {'class': 'always'}},
+      {title : _.t('embed_page'),            onClick : this.openPageEmbedDialog,        attrs: {'class': 'singular'}},
       {title : _.t('embed_a_note'),          onClick : this.openNoteEmbedDialog,        attrs: {'class': 'singular'}},
       {title : _.t('set_publication_date'),  onClick : this.openPublicationDateDialog,  attrs: {'class': 'private_only'}},
       {title : _.t('download_viewer'),       onClick : this.requestDownloadViewers}

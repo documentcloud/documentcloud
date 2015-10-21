@@ -25,15 +25,32 @@
   };
 
   // Treat empty strings as `null`, in the context of Backbone Models.
-  var oldSet = Backbone.Model.prototype.set;
-  Backbone.Model.prototype.set = function(attrs, options) {
-    var copy = {};
+  var setOriginal = Backbone.Model.prototype.set;
+  Backbone.Model.prototype.set = function(key, val, options) {
+    // Keep in sync with Backbone.Model.set (minus unnecessary var declarations)
+    // from here...
+    var attrs;
+    if (key == null) return this;
+
+    // Handle both `"key", value` and `{key: value}` -style arguments.
+    if (typeof key === 'object') {
+      attrs = key;
+      options = val;
+    } else {
+      (attrs = {})[key] = val;
+    }
+
+    options || (options = {});
+    // ...to here.
+
+    var attrsCopy = {};
     if (attrs) {
       for (var attr in attrs) {
-        copy[attr] = (attrs[attr] !== '' ? attrs[attr] : null);
+        attrsCopy[attr] = (attrs[attr] !== '' ? attrs[attr] : null);
       }
     }
-    return oldSet.call(this, copy, options);
+
+    return setOriginal.call(this, attrsCopy, options);
   };
 
 })();

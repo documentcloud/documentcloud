@@ -1,8 +1,28 @@
-# Publishing Documents, Notes, and Document Sets
+# Publishing Documents, Pages, Notes, and Document Sets
 
-Ready to make your documents public? You can publish individual documents, embed a whole set of documents for your readers to browse, or embed a single note from any document. Before you publish a note, document or document set, you'll want to make sure that the document or documents are public. Do this by editing the "Access Level" (from the "Edit" menu) or by setting a publication date (from the "Publish" menu).
+Ready to share your documents with readers? Either by embedding our custom viewer or using oEmbed, you can publish individual documents, embed a set of documents that readers can browse, or embed a single note from any document. Here's how:
 
-# Publishing Individual Documents
+## Contents
+
+* [Making documents public](#public)
+* Generating embed codes:
+  * [Documents](#embed-document)
+  * [Pages](#embed-page)
+  * [Notes](#embed-note)
+  * [Document Sets](#embed-set)
+* [WordPress Shortcodes](#wordpress)
+* [oEmbed service](#oembed)
+
+<a name="public"></a>
+# Making Documents Public
+
+Before you publish a document, page, note or document set, you'll want to make sure that the document or documents are public. There are two ways to do this:
+
+* Edit the "Access Level" (from the "Edit" menu).
+* Set a publication date (from the "Publish" menu).
+
+<a name="embed-document"></a>
+# Embed Codes for Individual Documents
 
 To publish any document from DocumentCloud, either download a standalone copy of the viewer, or generate, copy, and paste a simple embed code for that document. We strongly encourage you to embed code that links back to DocumentCloud for most documents. The instructions that follow assume some basic familiarity with HTML, but we've tried to keep the embedding process as simple as possible.
 
@@ -34,16 +54,12 @@ Live examples worth checking out are at the [Chicago Tribune][] and [ProPublica]
 
 If you opt to embed a **fixed size** viewer, set the width and height in pixels. Both the sidebar and the text tab can be shown or not. We recommend hiding the sidebar in document viewers that are narrower than 800 pixels. If you're embedding handwritten documents or documents with poor OCR results, hiding the text tab is usually a good idea. Use the "preview the document viewer" link to see an example of the viewer rendered to your specifications.
 
-To see a live example of a fixed size document with no sidebar, take a look at [this ballot from WNYC][].
-
-<img src="/images/help/wnyc.jpg" class="full_line" />
-
 ## <span id="embed">Copy and Paste the Code</span>
 
 Click on the "Next" button to proceed to step 3, and you'll see the embed code: a snippet of HTML that can be pasted into any web page to create a document viewer. The code will look something like this:
 
     <div id="viewer-10-general-report"></div>
-    <script src="http://s3.documentcloud.org/viewer/loader.js"></script>
+    <script src="//assets.documentcloud.org/viewer/loader.js"></script>
     <script>
       DV.load('http://www.documentcloud.org/documents/10-general-report.js', {
         container : '#viewer-10-general-report'
@@ -60,7 +76,30 @@ On occasion you may have embedded documents which you would like to remain priva
 
 [Let us know][] about your reporting!
 
-# <span id="note_embed">Embedding a Note from a Document</span>
+<a name="embed-page"></a>
+# <span id="page_embed">Embed Codes for a Single Page</span>
+
+![Embed Page Menu][]
+
+DocumentCloud offers a lightweight, responsive viewer that highlights a single page (including your annotations) with minimal extra chrome. It's designed to work equally well on mobile and desktop and is perfect for use in custom news applications or on long-form journalism presentations. Coming soon: options to allow readers to access all the pages in the document or read the extracted text.
+
+Embedding a page is similar to embedding a document: Select a document, open the "Publish" menu and click "Embed a Page." Alternately, right-click the document and select "Embed a Page."
+
+In the dialog box that appears next, select the number of the page to embed. A preview of the page embed appears; if you want a different page, you can select it from the menu.
+
+Click "Next" to move to Step 2 and generate the HTML embed code. Here is a sample of what it will look like:
+
+    <div class="DC-embed" data-version="1.0" style="font-size:10pt">
+      <p><a class="DC-embed-resource" href="https://www.documentcloud.org/documents/282753-lefler-thesis.html#document/p57" title="View page 57 of Lefler Thesis on DocumentCloud in new window or tab" target="_blank">Page 57 of Lefler Thesis</a></p>
+      <img src="//www.documentcloud.org/documents/282753/pages/lefler-thesis-p57-normal.gif" alt="Page 57 of Lefler Thesis" style="border:1px solid #ccc;-webkit-box-sizing:border-box;box-sizing:border-box;width:100%;max-width:700px;">
+      <p>Contributed to DocumentCloud by Ted Han of DocumentCloud &bull; <a href="https://www.documentcloud.org/documents/282753/pages/lefler-thesis-p57.txt" title="View text of page 57 of Lefler Thesis in a new window or tab" target="_blank">View page as text</a></p>
+    </div>
+    <script src="//assets.documentcloud.org/embed/loader/enhance.js"></script>
+
+Copy and paste the HTML to your site to publish the page.
+
+<a name="embed-note"></a>
+# <span id="note_embed">Embed Codes for a Note in a Document</span>
 
 ![Embed Note Menu][]
 
@@ -69,14 +108,15 @@ If you have [annotated a document](/help/notes), you can embed any note directly
 You'll be asked to select the note to embed, and will be able to preview the embedded note. Use your own CSS to control the width of any note on your site. Your HTML embed code will look something like this:
 
     <div id="DC-note-237"></div>
-    <script src="http://s3.documentcloud.org/notes/loader.js"></script>
+    <script src="//assets.documentcloud.org/notes/loader.js"></script>
     <script>
       dc.embed.loadNote('http://www.documentcloud.org/documents/223/annotations/237.js');
     </script>
 
 Copy and paste the HTML onto your own site. Clicking the title or the image will open the document. Documents will open in DocumentCloud unless you've published them elsewhere. We use [pixel ping](http://www.propublica.org/nerds/item/pixel-ping-a-nodejs-stats-tracker) to guess a document's Published URL, so if users won't find the document another way, you may need to add the Published URL manually.
 
-# <span id="docset">Embedding a Document Set</span>
+<a name="embed-set"></a>
+# <span id="docset">Embed Codes for a Document Set</span>
 
 ![Embed Search Menu][]
 
@@ -94,7 +134,7 @@ To get started, find a set of documents you wish to embed -- either by selecting
 Once you're comfortable with your settings, preview the embedded document set. If the preview looks good, copy and paste the HTML embed code. Here's an example of what the embed code should look like:
 
     <div id="DC-search-projectid-8-epa-flouride"></div>
-    <script src="http://s3.documentcloud.org/embed/loader.js"></script>
+    <script src="//assets.documentcloud.org/embed/loader.js"></script>
     <script>
       dc.embed.load('http://www.documentcloud.org/search/embed/', {
         q: "projectid: 8-epa-flouride",
@@ -112,9 +152,44 @@ Paste the code into on your website, and you'll see the set of documents appear.
 
 Click on any document to open it. If you've previously published the document on your website, we should have automatically detected its URL, and it will open at that URL. If the document is public but has not yet been published, it will open on DocumentCloud.org. If you're sure that you've published a document but it still opens on DocumentCloud.org, open the "Edit" menu, click "Published URL", and manually set the URL at which the document has been published.
 
+<a name="wordpress"></a>
+# <span id="docset">WordPress Shortcodes</span>
+
+Users who publish via WordPress can install a plugin that lets you embed DocumentCloud resources using [shortcodes](https://codex.wordpress.org/Shortcode_API).
+
+Download the DocumentCloud plugin at its [WordPress plugin page](https://wordpress.org/plugins/documentcloud/). Install and activate it according to the directions.
+
+Once activated, you can embed resources with a simple shortcode. You also can pass additional parameters to control the size and attributes of the embed. For example, if you want to embed a document at 800px wide, pre-scrolled to page 3:
+
+    [documentcloud url="https://www.documentcloud.org/documents/282753-lefler-thesis.html" width="800" default_page="3"]
+
+If you don't indicate a width (or manually disable responsive widths with `responsive="false"`), then the document will automatically narrow and widen to fill available width.
+
+For a note, use any note-specific URL:
+
+    [documentcloud url="https://www.documentcloud.org/documents/282753-lefler-thesis.html#document/p1/a53674"]
+
+A list of all the parameters you can use with the shortcode is available on the [plugin page](https://wordpress.org/plugins/documentcloud/).
+
+<a name="oembed"></a>
+# <span id="docset">oEmbed Service</span>
+
+oEmbed is a Web standard for providing embedded content on a site via a request to the URL of the resource. If a content management system supports oEmbed, you can simply paste in the URL to a DocumentCloud resource, and the CMS will fetch it via our [oEmbed API][] and embed it. Check with your organization's systems administrator about whether your CMS supports oEmbed.
+
+### Example document URL for oEmbed
+
+    https://www.documentcloud.org/documents/1234-document-name.html
+
+### Example note URL for oEmbed
+
+    https://www.documentcloud.org/documents/1234-document-name.html#document/p2/a208505
+
+# Questions?
+
 Still have questions about publishing and embedding? Don't hesitate to [contact us][].
 
 [Embed Menu]: /images/help/embed_menu.png
+[Embed Page Menu]: /images/help/embed_page_menu.png
 [Embed Note Menu]: /images/help/embed_note_menu.png
 [Embed Search Menu]: /images/help/embed_search_menu.png
 [favorite embedded documents]: /featured
@@ -124,5 +199,5 @@ Still have questions about publishing and embedding? Don't hesitate to [contact 
 [Chicago Tribune]: http://media.apps.chicagotribune.com/docs/obama-subpoena.html
 [ProPublica]: http://www.propublica.org/documents/item/magnetars-responses-to-our-questions
 [this document from the Commercial Appeal]: http://www.commercialappeal.com/data/documents/bass-pro-lease/
-[this ballot from WNYC]: http://www.wnyc.org/story/93440-new-nyc-ballot-could-cause-confusion/
+[oEmbed API]: https://www.documentcloud.org/help/api#oembed
 [contact us]: javascript:dc.ui.Dialog.contact()

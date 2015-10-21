@@ -8,7 +8,7 @@ class SectionsController < ApplicationController
     return json(nil, 403) unless current_account.allowed_to_edit?(doc)
     doc.sections.destroy_all
     sections.each {|s| doc.sections.create(pick(s, :title, :page_number)) }
-    expire_page doc.canonical_cache_path if doc.cacheable?
+    expire_pages doc.cache_paths if doc.cacheable?
     json nil
   end
 

@@ -4,10 +4,3 @@
 <script type="text/javascript">
   DV.load("<%= options[:resource_js_url] %>", <%= data.to_json %>);
 </script>
-<% if data[:pdf] %>
-<noscript>
-  <a href="<%#= options[:pdf_url] %>"><%#= options[:title] %> (PDF)</a>
-  <br>
-  <a href="<%#= options[:full_text_url] %>"><%#= options[:title] %> (Text)</a>
-</noscript>
-<% end %>

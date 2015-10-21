@@ -104,8 +104,8 @@
   - add_wp_shortcode_for_viewer: Add this shortcode to your WordPress content.
   - added_project: added to this project
   - added_to_x_documents:
-    - Added a document to %s
-    - Added %d documents to %s
+    - Added a document to %2$s
+    - Added %1$d documents to %2$s
   - adding_accounts: Adding Accounts
   - administrator: Administrator
   - all_documents: All Documents
@@ -157,9 +157,9 @@
   - contact_us: Contact Us
   - contributed_by: Contributed by
   - contributor: Contributor
-  - country: " Countries"
+  - country: Countries
   - create_new_project: Create a New Project
-  - date: " Dates"
+  - date: Dates
   - date_uploaded: Date Uploaded
   - default_document_language: Default Document Language
   - delete: Delete
@@ -238,10 +238,12 @@
   - edit_title: Edit Title
   - edit_x: Edit %s
   - editing_notes_sections: Editing Notes and Sections
-  - email: Email Addresses
+  - email: Email address
   - email_for_assistance: If you need assistance, please email us at support@documentcloud.org.
   - email_when_complete: Email me when %sdocuments have%s finished processing.
   - embed_a_note: Embed a Note
+  - embed_demo_error: Demo accounts are not allowed to embed. %sContact us%s if you
+      need a full featured account. View an example of the embed code %shere%s.
   - embed_document: Embed this Document
   - embed_document_list: Embed Document List
   - embed_document_viewer: Embed Document Viewer
@@ -253,6 +255,13 @@
       %shere%s.
   - embed_note_step_one: 'Step One: Select a Note to Embed'
   - embed_note_step_two: 'Step Two: Copy and Paste the Embed Code'
+  - embed_page: Embed a Page [BETA]
+  - embed_page_choose: Choose a page...
+  - embed_page_private_error: 'This document is private: the embed will not be visible
+      to the public until the document is public. Change the %saccess level%s now
+      or'
+  - embed_page_step_one_title: Select a page to embed
+  - embed_page_step_two_title: Copy and paste embed code
   - embed_search_demo_error: Demo accounts are not allowed to embed document sets.
       %sContact us%s if you need a full featured account. View an example of the embed
       code %shere%s.
@@ -291,7 +300,11 @@
   - export_to_overview_explain: You are about to export to Overview. You must create
       an Overview account, and you must provide Overview with your DocumentCloud username
       and password.
-  - featured_examples_list: You can find plenty of examples of embedded documents
+  - export_to_overview_select_something: In order to analyze documents in Overview,
+      please select a project or some documents.
+  - featured_examples_documents_list: You can find plenty of examples of embedded
+      documents on our list of %sfeatured reporting%s.
+  - featured_examples_notes_list: You can find plenty of examples of embedded notes
       on our list of %sfeatured reporting%s.
   - featured_reporting_list: You can find examples of embedded searches on our list
       of %sfeatured reporting%s.
@@ -334,7 +347,7 @@
   - invalid_upload_file_type: "\"%s\" has an invalid file type.  We are unable to
       process documents of this type, please convert the file to a supported document
       format such as PDF.  \n View %stroubleshooting%s for additional details."
-  - language: language
+  - language: Language
   - language_defaults: Language Defaults
   - last_name: Last name
   - length: Length
@@ -367,7 +380,7 @@
   - must_have_title: Please enter a title.
   - must_upload_something: You must upload at least one document.
   - new_account: New Account
-  - new_documents: New Documents
+  - new_documents: New documents
   - new_project: New Project
   - next: Next
   - no_appear_until_publish: will not appear until published.
@@ -377,6 +390,7 @@
   - no_duplicate_section: Can't create a duplicate section.
   - no_embed_permission: You don't have permission to embed that document.
   - no_entities_found: No entities were found that match your search.
+  - no_notes_to_embed: This document has no notes to embed
   - no_past_publication: You can't set a document to be published in the past.
   - no_permission_to_edit_x: You don't have permission to edit "%s".
   - no_project_doc_selected: No project or documents selected
@@ -413,11 +427,12 @@
   - order_documents_by: Order documents by
   - organization:
     - Organization
-    - " Organizations"
+    - Organizations
   - organizations_documents: Documents belonging to %s
   - over_x_mentions: Over %d mentions
   - page: *2
   - page_ellipsis: Page ...
+  - page_number: Page %d
   - page_tools: Page Tools
   - pages_are_being_removed: The pages are being removed. Please close this document.
   - paragraph_description_of_document: Paragraph description of this document
@@ -425,9 +440,9 @@
   - password_reset: DocumentCloud password reset
   - password_updated: Password updated
   - pending: Pending
-  - person: " People"
+  - person: People
   - pg: p.
-  - phone: " Phone"
+  - phone: Phone
   - place: Places
   - please_enter_email: Please enter an email address.
   - please_enter_valid_email: Please enter a valid email address.
@@ -519,8 +534,8 @@
     - Remove Page
     - Remove %d Pages
   - removed_from_x_documents:
-    - Removed a document from %s
-    - Removed %d documents from %s
+    - Removed a document from %2$s
+    - Removed %1$d documents from %2$s
   - removing: Removing...
   - reorder_hint: Reorder pages by dragging and dropping.
   - reorder_pages: Reorder Pages
@@ -570,7 +585,7 @@
   - search_embed_nothing_chosen: You have not performed a search to embed.  Please
       either perform a search or select some documents.
   - search_embed_too_long_error: Too many documents were selected for embedding.  Please
-      select fewer documents or embed a project
+      select fewer documents or embed a project.
   - searching_dd: Searching Documents and Data
   - select_pages_remove: Select the pages you wish to remove.
   - select_single_to_embed: Please select a single document in order to create the
@@ -608,9 +623,9 @@
   - sort_documents_by: Sort Documents By
   - source: Source
   - source_of_document: The source from which you obtained this document
-  - state: " States"
+  - state: States
   - step_x_of_x: Step %d of %d
-  - term: " Terms"
+  - term: Terms
   - terms: Terms
   - text: Text
   - text_reprocess_help: '"Reprocess" this document to take advantage of improvements
@@ -647,11 +662,13 @@
   - view_entities: View Entities
   - view_pages: View Pages
   - view_timeline: View Timeline
+  - waiting_for_process_entities_job: We're still extracting entities from %s. Check
+      back in a little while.
   - welcome_message_sent_to: A welcome message has been sent to %s.
   - welcome_to_document_cloud: Welcome to DocumentCloud
   - width: Width
   - workspace: Workspace
-  - wp_shortcode_plugin_docs_link: Plugin required.
+  - wp_shortcode_plugin_docs_link: "%sPlugin required%s."
   - x_accounts:
     - "%d account"
     - "%d accounts"

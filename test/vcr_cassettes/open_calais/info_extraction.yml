@@ -1,0 +1,97 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.thomsonreuters.com/permid/calais
+    body:
+      encoding: UTF-8
+      string: Fair use is a limitation and exception to the exclusive right granted
+        by copyright law to the author of a creative work. In United States copyright
+        law, fair use is a doctrine that permits limited use of copyrighted material
+        without acquiring permission from the rights holders.
+    headers:
+      User-Agent:
+      - OpenCalais Ruby Gem 0.3.2
+      Accept:
+      - application/json;charset=utf-8
+      X-Ag-Access-Token:
+      - TkuMl7uPXAQ3OwshIWcKWPFrVehheWtW
+      Content-Type:
+      - text/raw
+      Outputformat:
+      - application/json
+      X-Calais-Language:
+      - English
+  response:
+    status:
+      code: 200
+      message: ''
+    headers:
+      Date:
+      - Tue, 04 Aug 2015 19:11:14 GMT
+      Set-Cookie:
+      - TR-TMS-MDaaS-SESSIONID=gn13Q_r9RVSBkJHeeNFGbA^1fc3f068;Path=/;HttpOnly
+      Expires:
+      - Thu, 01 Jan 1970 00:00:00 GMT
+      Content-Type:
+      - application/json;charset=UTF-8
+      Durationmillis:
+      - '362'
+      Vary:
+      - Accept-Encoding
+      Access-Control-Allow-Origin:
+      - http://developer.permid.org
+      Access-Control-Allow-Headers:
+      - accept, x-ag-access-token, authorization, outputformat, content-type, x-openmatch-numberofmatchesperrecord,
+        x-openmatch-datatype, x-calais-language
+      Access-Control-Max-Age:
+      - '3628800'
+      Access-Control-Allow-Methods:
+      - GET, POST, OPTIONS
+      Origin:
+      - ''
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: '{"doc":{"info":{"calaisRequestID":"f150c67d-19bc-d162-14ef-a1ff1cf185f3","id":"http:\/\/id.opencalais.com\/P*tNO1OJF-qGACkhnRnGmg","ontology":"http:\/\/163.231.4.65\/owlschema\/8.6\/onecalais.owl.allmetadata.xml","docId":"http:\/\/d.opencalais.com\/dochash-1\/9307fe44-21e6-3a0b-b040-d6c3f708da74","document":"Fair
+        use is a limitation and exception to the exclusive right granted by copyright
+        law to the author of a creative work. In United States copyright law, fair
+        use is a doctrine that permits limited use of copyrighted material without
+        acquiring permission from the rights holders.","docTitle":"","docDate":"2015-08-04
+        19:11:14.694"},"meta":{"contentType":"text\/raw","processingVer":"AllMetadata","serverVersion":"OneCalais_8.6-RELEASE:371","stagsVer":"OneCalais_8.6-RELEASE-b5-2015-06-17_18:45:15","submissionDate":"2015-08-04
+        19:11:14.383","submitterCode":"0ca6a864-5659-789d-5f32-f365f695e757","signature":"digestalg-1|FtaTTChPKQaj7MoeRqElrjTWYbs=|VKQ1hsD4ddYXAFRDMowjojBDsZATG0pw3vKVP1Ikuq\/8EbxCWYgbUQ==","language":"English"}},"http:\/\/d.opencalais.com\/dochash-1\/9307fe44-21e6-3a0b-b040-d6c3f708da74\/cat\/1":{"_typeGroup":"topics","forenduserdisplay":"false","score":0.945,"name":"Law_Crime"},"http:\/\/d.opencalais.com\/dochash-1\/9307fe44-21e6-3a0b-b040-d6c3f708da74\/lid\/DefaultLangId":{"_typeGroup":"language","language":"http:\/\/d.opencalais.com\/lid\/DefaultLangId\/English","forenduserdisplay":"false","permid":"505062"},"http:\/\/d.opencalais.com\/dochash-1\/9307fe44-21e6-3a0b-b040-d6c3f708da74\/SocialTag\/1":{"_typeGroup":"socialTag","id":"http:\/\/d.opencalais.com\/dochash-1\/9307fe44-21e6-3a0b-b040-d6c3f708da74\/SocialTag\/1","socialTag":"http:\/\/d.opencalais.com\/genericHasher-1\/ce95fa21-d223-3bc8-9418-39b1c5f5bf31","forenduserdisplay":"true","name":"Copyright
+        law","importance":"1","originalValue":"Copyright law"},"http:\/\/d.opencalais.com\/dochash-1\/9307fe44-21e6-3a0b-b040-d6c3f708da74\/SocialTag\/2":{"_typeGroup":"socialTag","id":"http:\/\/d.opencalais.com\/dochash-1\/9307fe44-21e6-3a0b-b040-d6c3f708da74\/SocialTag\/2","socialTag":"http:\/\/d.opencalais.com\/genericHasher-1\/7dbe7e7b-84c0-3e04-ba97-1f2c576b1fd1","forenduserdisplay":"true","name":"Intellectual
+        property law","importance":"1","originalValue":"Intellectual property law"},"http:\/\/d.opencalais.com\/dochash-1\/9307fe44-21e6-3a0b-b040-d6c3f708da74\/SocialTag\/3":{"_typeGroup":"socialTag","id":"http:\/\/d.opencalais.com\/dochash-1\/9307fe44-21e6-3a0b-b040-d6c3f708da74\/SocialTag\/3","socialTag":"http:\/\/d.opencalais.com\/genericHasher-1\/b45581d2-83e6-3e91-aafb-36ddbadf1fb7","forenduserdisplay":"true","name":"United
+        States copyright law","importance":"1","originalValue":"United States copyright
+        law"},"http:\/\/d.opencalais.com\/dochash-1\/9307fe44-21e6-3a0b-b040-d6c3f708da74\/SocialTag\/4":{"_typeGroup":"socialTag","id":"http:\/\/d.opencalais.com\/dochash-1\/9307fe44-21e6-3a0b-b040-d6c3f708da74\/SocialTag\/4","socialTag":"http:\/\/d.opencalais.com\/genericHasher-1\/a0053616-5b85-326c-9f14-8d91bdedc582","forenduserdisplay":"true","name":"Fair
+        use","importance":"2","originalValue":"Fair use"},"http:\/\/d.opencalais.com\/dochash-1\/9307fe44-21e6-3a0b-b040-d6c3f708da74\/SocialTag\/5":{"_typeGroup":"socialTag","id":"http:\/\/d.opencalais.com\/dochash-1\/9307fe44-21e6-3a0b-b040-d6c3f708da74\/SocialTag\/5","socialTag":"http:\/\/d.opencalais.com\/genericHasher-1\/a87421b6-c5f9-3cbc-8ca2-e9f2e96a4787","forenduserdisplay":"true","name":"Copyright
+        law of the United States","importance":"2","originalValue":"Copyright law
+        of the United States"},"http:\/\/d.opencalais.com\/dochash-1\/9307fe44-21e6-3a0b-b040-d6c3f708da74\/SocialTag\/6":{"_typeGroup":"socialTag","id":"http:\/\/d.opencalais.com\/dochash-1\/9307fe44-21e6-3a0b-b040-d6c3f708da74\/SocialTag\/6","socialTag":"http:\/\/d.opencalais.com\/genericHasher-1\/98ae37ce-07e2-314c-94e8-cfea2f720080","forenduserdisplay":"true","name":"Copyright","importance":"2","originalValue":"Copyright"},"http:\/\/d.opencalais.com\/dochash-1\/9307fe44-21e6-3a0b-b040-d6c3f708da74\/SocialTag\/7":{"_typeGroup":"socialTag","id":"http:\/\/d.opencalais.com\/dochash-1\/9307fe44-21e6-3a0b-b040-d6c3f708da74\/SocialTag\/7","socialTag":"http:\/\/d.opencalais.com\/genericHasher-1\/7f288598-c168-3752-940c-44cf462efb7f","forenduserdisplay":"true","name":"Copyright
+        law of the Philippines","importance":"2","originalValue":"Copyright law of
+        the Philippines"},"http:\/\/d.opencalais.com\/dochash-1\/9307fe44-21e6-3a0b-b040-d6c3f708da74\/SocialTag\/8":{"_typeGroup":"socialTag","id":"http:\/\/d.opencalais.com\/dochash-1\/9307fe44-21e6-3a0b-b040-d6c3f708da74\/SocialTag\/8","socialTag":"http:\/\/d.opencalais.com\/genericHasher-1\/53a969f3-4d61-3f40-9077-5b1c91a6cfb9","forenduserdisplay":"true","name":"Perpetual
+        copyright","importance":"2","originalValue":"Perpetual copyright"},"http:\/\/d.opencalais.com\/dochash-1\/9307fe44-21e6-3a0b-b040-d6c3f708da74\/ComponentVersions":{"_typeGroup":"versions","version":["Deals
+        Index:201508041758:201508041758","index-refineries:201508011757:201508011757","config-physicalAssets-powerStations:277:277","OA
+        Index:201508040048:201508040048","NextTags:OneCalais_8.6-RELEASE:125","SpanishIM:OneCalais_8.6-RELEASE:209","config-sca-DataPackage:34:34","SECHeaderMetadataIM:OneCalais_8.6-RELEASE:209","com.clearforest.infoext.dial4j.plugins-basistechconfig:OneCalais_8.6-RELEASE:232","People
+        Index:201508041638:201508041638","Collector:OneCalais_8.6-RELEASE:125","config-negativeSignature:277:277","Dial4J:OneCalais_8.6-RELEASE:209","AutocoderRuntimeIM:OneCalais_8.6-RELEASE:209","OA
+        Override:282:282","People Override:277:277","index-vessels:201508011747:201508011747","BrokerResearchIM:OneCalais_8.6-RELEASE:209","config-refineries:277:277","config-cse:281:281","OneCalaisIM:OneCalais_8.6-RELEASE:209","config-vessels:277:277","OneCalais:OneCalais_8.6-RELEASE:371","Housekeeper:OneCalais_8.6-RELEASE:125","WatchDog:OneCalais_8.6-RELEASE:125","config-physicalAssets-mines:277:277","SocialTags
+        Index:201507241602:201507241602","BlackList:277:277","index-ports:201508012352:201508012352","FrenchIM:OneCalais_8.6-RELEASE:209","config-physicalAssets-ports:277:277","config-drugs:277:277"]},"http:\/\/d.opencalais.com\/genericHasher-1\/e911da6b-56e4-3544-9357-5d79d01c1538":{"_typeGroup":"entities","_type":"Position","forenduserdisplay":"false","name":"author","_typeReference":"http:\/\/s.opencalais.com\/1\/type\/em\/e\/Position","instances":[{"detection":"[the
+        exclusive right granted by copyright law to ]the author[ of a creative work.
+        In United States copyright]","prefix":"the exclusive right granted by copyright
+        law to ","exact":"the author","suffix":" of a creative work. In United States
+        copyright","offset":90,"length":10}],"relevance":0.2},"http:\/\/d.opencalais.com\/genericHasher-1\/7ca3499c-033d-33aa-8ad4-17ed427a99d3":{"_typeGroup":"entities","_type":"IndustryTerm","forenduserdisplay":"false","name":"copyright
+        law","_typeReference":"http:\/\/s.opencalais.com\/1\/type\/em\/e\/IndustryTerm","instances":[{"detection":"[and
+        exception to the exclusive right granted by ]copyright law[ to the author
+        of a creative work. In United]","prefix":"and exception to the exclusive right
+        granted by ","exact":"copyright law","suffix":" to the author of a creative
+        work. In United","offset":73,"length":13},{"detection":"[the author of a creative
+        work. In United States ]copyright law[, fair use is a doctrine that permits
+        limited use]","prefix":"the author of a creative work. In United States ","exact":"copyright
+        law","suffix":", fair use is a doctrine that permits limited use","offset":138,"length":13}],"relevance":0.8},"http:\/\/d.opencalais.com\/genericHasher-1\/a54ac18b-a956-3b5c-b235-0609ca899305":{"_typeGroup":"entities","_type":"Country","forenduserdisplay":"true","name":"United
+        States","resolutions":[{"name":"United States","shortname":"United States","latitude":"40.4230003233","longitude":"-98.7372244786","rcscode":"G:6J","permid":"100319"}],"_typeReference":"http:\/\/s.opencalais.com\/1\/type\/em\/e\/Country","instances":[{"detection":"[law
+        to the author of a creative work. In ]United States[ copyright law, fair use
+        is a doctrine that]","prefix":"law to the author of a creative work. In ","exact":"United
+        States","suffix":" copyright law, fair use is a doctrine that","offset":124,"length":13}],"relevance":0.2}}'
+    http_version: 
+  recorded_at: Tue, 04 Aug 2015 19:11:19 GMT
+recorded_with: VCR 2.9.3

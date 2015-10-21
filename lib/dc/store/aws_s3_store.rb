@@ -12,6 +12,8 @@ module DC
 
       DEFAULT_ACCESS  = DC::Access::PUBLIC
 
+      AWS_REGION      = DC::CONFIG['aws_region']
+
       # 60 seconds for persistent connections.
       S3_PARAMS       = {:connection_lifetime => 60}
 
@@ -20,7 +22,11 @@ module DC
 
       module ClassMethods
         def asset_root
-          "https://s3.amazonaws.com/#{BUCKET_NAME}"
+          if AWS_REGION == 'us-east-1'
+            "https://s3.amazonaws.com/#{BUCKET_NAME}"
+          else
+            "https://s3-#{AWS_REGION}.amazonaws.com/#{BUCKET_NAME}"
+          end
         end
         def web_root
           asset_root
@@ -124,7 +130,7 @@ module DC
       end
       
       def destroy(document)
-        bucket.objects.with_prefix(document.path).delete_all
+        bucket.objects.with_prefix(File.join(document.path, '/')).delete_all
       end
       
       # Duplicate all of the assets from one document over to another.
@@ -136,11 +142,11 @@ module DC
       end
       
       def copy_text(source, destination, access)
-        bucket.objects[source.full_text_path].copy_to(destination.full_text_path, :acl => ACCESS_TO_ACL[access])
+        options = {:acl => ACCESS_TO_ACL[access], :content_type => content_type(destination.full_text_path)}
+        bucket.objects[source.full_text_path].copy_to(destination.full_text_path, options)
         source.pages.each do |page|
           num = page.page_number
           source_object = bucket.objects[source.page_text_path(num)]
-          options = {:acl => ACCESS_TO_ACL[access], :content_type => content_type(source.page_text_path(num))}
           source_object.copy_to(destination.page_text_path(num), options)
         end
         true
@@ -186,6 +192,31 @@ module DC
         end
         invalid
       end
+      
+      def invalidate_cloudfront_cache(document)
+        if distribution_id = DC::SECRETS['cloudfront_distribution_id']
+          paths = (1..document.page_count).map do |page_number|
+            page_image_paths = Page::IMAGE_SIZES.keys.map do |size|
+              document.page_image_path(page_number, size)
+            end
+            [document.page_text_path(page_number)] + page_image_paths
+          end.flatten
+          
+          paths.push document.pdf_path
+          paths.push document.full_text_path
+          paths.push document.original_file_path unless document.original_file_path == document.pdf_path
+          
+          cloudfront.client.create_invalidation({
+            :distribution_id    => distribution_id,
+            :invalidation_batch => {
+              :paths            => { :quantity => paths.size, :items => paths.map{|p| "/#{p}"} },
+              :caller_reference => document.id.to_s
+            }
+          })
+        else 
+          Rails.logger.warn("No 'cloudfront_distribution_id' in DC::SECRETS.  Skipping invalidation")
+        end
+      end
 
       private
 
@@ -200,13 +231,35 @@ module DC
       def secure_s3
         @secure_s3 ||= ::AWS::S3.new(:access_key_id => @key, :secret_access_key => @secret, :secure => true)
       end
+      
+      def cloudfront
+        @cloudfront ||= create_cloudfront
+      end
+      
+      def create_cloudfront
+        ::AWS::CloudFront.new :access_key_id => @key, :secret_access_key => @secret
+      end
+      
+      def cloudfront_invalidation_list
+        cloudfront.client.list_invalidations(:distribution_id=>DC::SECRETS['cloudfront_distribution_id'])
+      end
+      
+      def cloudfront_invalidation_quantity
+        cloudfront_invalidation_list[:quantity]
+      end
 
       def bucket
         @bucket ||= (s3.buckets[BUCKET_NAME].exists? ? s3.buckets[BUCKET_NAME] : s3.buckets.create(BUCKET_NAME))
       end
 
       def content_type(s3_path)
-        Mime::Type.lookup_by_extension(File.extname(s3_path).remove(/^\./)).to_s
+        ext = File.extname(s3_path).remove(/^\./)
+        case ext
+          when 'txt'
+            'text/plain; charset=utf-8'
+          else
+            Mime::Type.lookup_by_extension(ext).to_s
+        end
       end
 
       # Saves a local file to a location on S3, and returns the public URL.

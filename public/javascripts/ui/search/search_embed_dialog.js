@@ -143,14 +143,16 @@ dc.ui.SearchEmbedDialog = dc.ui.Dialog.extend({
 
   _renderEmbedCode : function() {
     var options          = this.embedOptions();
+    var q                = options.q
     options.title        = '"' + options.title + '"';
     options.container    = '"' + options.container + '"';
-    options.q            = '"' + options.q + '"';
+    options.q            = '"' + q + '"';
     options.order        = '"' + options.order + '"';
     var serialized       = _.map(options, function(value, key){ return key + ': ' + value; });
     this.$('.publish_embed_code').html(JST['search/embed_code']({
       query: dc.inflector.sluggify(this.query),
-      options: serialized.join(',\n    ')
+      options: serialized.join(',\n    '),
+      publicSearchUrl: "https://" + window.location.host + "/public/search/" + encodeURIComponent(q),
     }));
   },
 

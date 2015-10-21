@@ -193,6 +193,14 @@ module DC
         csv << keys.map {|key| record[key] }
       end
     end
+    
+    def self.new_accounts_since(from, to=Time.now)
+      Account.joins(:memberships, :organizations).where('accounts.created_at >= ? and accounts.created_at <= ?', from, to)
+    end
+    
+    def self.new_organizations_since(from, to=Time.now)
+      Organization.where('created_at >= ? and created_at <= ?', from, to)
+    end
 
     # To Do: set up a general notifier.
     # Should take a webhook url and a json payload to send.
@@ -211,7 +219,7 @@ module DC
       end
 
       text = "Top ten most popular documents today\n"
-      text += data.map{ |d| "#{d['hits']} hits for <#{d['embedded_url']}|#{d['title']}> (<#{d['canonical_url']}|dc link>) contributed by #{d['contributor']} (#{d['organization']})" }.join("\n")
+      text += data.map{ |d| "#{d['hits']}: <#{d['embedded_url']}|#{d['title']}> (<#{d['canonical_url']}|DC>) by #{d['contributor']} (#{d['organization']})" }.join("\n")
       hook_url = DC::SECRETS['slack_webhook']
       data = {:payload => {:text => text, :username => "docbot", :icon_emoji => ":doccloud:"}.to_json}
       RestClient.post(hook_url, data)

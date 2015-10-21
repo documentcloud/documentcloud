@@ -63,7 +63,6 @@
     </tr>
     
     <!-- Hit Charts -->
-
     <tr class="data">
       <td colspan="2">
         <div class="chart_col">
@@ -98,7 +97,9 @@
           <tbody>
             <% _.each(Documents.models.reverse(), function(doc) { %>
               <tr>
-                <td class="first"><img class="doc" src="<%= doc.get('thumbnail_url') %>" /></td>
+                <td class="first">
+                  <% if (doc.get('public')) { %><img class="doc" src="<%= doc.get('thumbnail_url') %>" /><% } %>
+                </td>
                 <td><%= doc.get('id') %></td>
                 <td><%= doc.get('public') ? dc.inflector.truncate(doc.get('title') || '', 50) : '<i>private</i>' %></td>
                 <td><%= doc.get('account_name') %></td>

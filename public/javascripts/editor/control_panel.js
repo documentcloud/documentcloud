@@ -26,6 +26,7 @@ dc.ui.ViewerControlPanel = Backbone.View.extend({
     'click .edit_replace_pages':    'editReplacePages',
     'click .toggle_document_info':  'toggleDocumentInfo',
     'click .embed_document':        'embedDocument',
+    'click .embed_page':            'embedPage',
     'click .embed_note':            'embedNote',
     'click .access_info':           'editAccess'
   },
@@ -259,6 +260,12 @@ dc.ui.ViewerControlPanel = Backbone.View.extend({
   embedDocument : function() {
     var doc = this._getDocumentModel();
     (new dc.ui.DocumentEmbedDialog(doc)).render();
+  },
+
+  embedPage : function() {
+    var doc = this._getDocumentModel();
+    Documents.reset([doc]);
+    dc.app.pageEmbedDialog = new dc.ui.PageEmbedDialog(doc);
   },
 
   embedNote : function() {

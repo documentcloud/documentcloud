@@ -1,6 +1,6 @@
 <script type="text/javascript">
   window.currentDocumentModel = <%=raw @current_document.to_json({:cache_busting=>true}); %>;
-  window.SERVER_ROOT_HTTP = '<%=raw DC.server_root(:ssl => false) %>';
+  <%= render :partial => 'common/globals.js' %>
 
   DV.jQuery(function() {
     <% if @current_account %>

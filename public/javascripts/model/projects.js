@@ -70,8 +70,13 @@ dc.model.Project = Backbone.Model.extend({
     }, 0);
 
     if (removedCount) {
+      var annotationsRemovedCount = _.reduce(documents, function(sum, doc) {
+        sum += doc.get('annotation_count');
+        return sum;
+      }, 0);
       if (Projects.firstSelected() === this) Documents.remove(documents);
       this.set({document_count : this.get('document_count') - removedCount});
+      this.set({annotation_count : this.get('annotation_count') - annotationsRemovedCount});
       this.notifyProjectChange(removedCount, true);
       if (!localOnly) {
         $.ajax({
@@ -88,7 +93,8 @@ dc.model.Project = Backbone.Model.extend({
 
   notifyProjectChange : function(numDocs, removal) {
     var key = removal ? 'removed_from_x_documents' : 'added_to_x_documents'
-    dc.ui.notifier.show({mode : 'info', text : _.t( key, numDocs ) } );
+    var projectTitle = this.get('title');
+    dc.ui.notifier.show({mode : 'info', text : _.t( key, numDocs, projectTitle ) } );
   },
 
   // Does this project already contain a given document?

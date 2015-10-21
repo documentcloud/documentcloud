@@ -3,9 +3,10 @@ defaults: &defaults
   cloud_crowd_server:   http://dev.dcloud.org:8080
   server_root:          dev.dcloud.org
   large_file_storage:   /mnt/large_files
+  aws_region:           us-east-1
   aws_zone:             us-east-1c
   preconfigured_ami_id: <%= secrets['ami'] %>
-  asset_root:         "dev.dcloud.org"
+  asset_root:           "dev.dcloud.org"
 
 development:
   <<: *defaults
@@ -14,13 +15,13 @@ staging:
   <<: *defaults
   cloud_crowd_server: <%= secrets['db_host'] %>:8080
   server_root:        staging.documentcloud.org
-  asset_root:         "s3.amazonaws.com/dcloud_staging"
+  asset_root:         s3.amazonaws.com/dcloud_staging
 
 production:
   <<: *defaults
   cloud_crowd_server: <%= secrets['db_host'] %>:8080
   server_root:        www.documentcloud.org
-  asset_root:         "s3.amazonaws.com/s3.documentcloud.org"
+  asset_root:         assets.documentcloud.org
   db_volume_id:       vol-d4c305bd
 
 test:

@@ -2,6 +2,7 @@ namespace :cron do
 
   # Only run on db01
   task :nightly do
+    invoke 'crowd:cluster:free_calais_blacklist'
     invoke 'db:backup'
     invoke 'db:vacuum_analyze'
     invoke 'db:optimize_solr'

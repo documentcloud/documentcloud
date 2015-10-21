@@ -39,5 +39,5 @@ Use **Reprocess Text** to take advantage of improvements to DocumentCloud's text
 Still have questions about document modification? Don't hesitate to [contact us][].
 
 
-[improve the quality of our OCR]: http://blog.documentcloud.org/blog/2010/11/improving-the-quality-of-ocr/
+[improve the quality of our OCR]: https://blog.documentcloud.org/blog/2010/11/improving-the-quality-of-ocr/
 [contact us]: javascript:dc.ui.Dialog.contact()

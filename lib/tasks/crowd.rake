@@ -7,6 +7,10 @@ namespace :crowd do
   task :console do
     sh "./bin/crowd -c config/cloud_crowd/#{RAILS_ENV} -e #{RAILS_ENV} console"
   end
+  
+  task :load_schema do
+    sh "./bin/crowd -c config/cloud_crowd/#{crowd_folder} -e #{RAILS_ENV} load_schema"
+  end
 
   [:server, :node].each do |resource|
     namespace resource do
@@ -53,6 +57,12 @@ namespace :crowd do
     desc "Launch nodes on the cluster"
     task(:launch_nodes, :count, :node_name) do |t, options|
       CloudCrowd::NodeWrangler.new.launch_nodes(options)
+    end
+    
+    desc "Remove blacklist on Open Calais for daily limit reset"
+    task :free_calais_blacklist => :environment do
+      RestClient.delete DC::CONFIG['cloud_crowd_server'] + File.join("/","blacklist","reprocess_entities")
+      AppConstant.replace("calais_calls_made", 0.to_s)
     end
   end
 

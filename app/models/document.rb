@@ -1,6 +1,7 @@
-# -*- coding: utf-8 -*-
 class Document < ActiveRecord::Base
   include DC::Access
+  #include DC::Status
+  ##extend DC::Status::Migration
   include ActionView::Helpers::TextHelper
 
   # Accessors and constants:
@@ -42,7 +43,7 @@ class Document < ActiveRecord::Base
   has_many :remote_urls,          :dependent   => :destroy
   has_many :project_memberships,  :dependent   => :destroy
   has_many :projects,             :through     => :project_memberships
-  has_many :processing_jobs
+  has_many :processing_jobs,      :validate => false
 
   has_many :reviewer_projects,     -> { where( :hidden => true) },
                                      :through     => :project_memberships,
@@ -213,16 +214,17 @@ class Document < ActiveRecord::Base
   def insert_documents(insert_page_at, document_count, eventual_access=nil)
     eventual_access ||= self.access || PRIVATE
     self.update_attributes :access => PENDING
-    record_job(RestClient.post(DC::CONFIG['cloud_crowd_server'] + '/jobs', {:job => {
-      'action'  => 'document_insert_pages',
-      'inputs'  => [id],
-      'options' => {
-        :id              => id,
-        :insert_page_at  => insert_page_at,
-        :pdfs_count      => document_count,
-        :access          => eventual_access
+    self.processing_jobs.new(
+      :action  => 'document_insert_pages',
+      :account_id => account_id,
+      :title=>title, 
+      :options => {
+        :id             => id,
+        :insert_page_at => insert_page_at,
+        :pdfs_count     => document_count,
+        :access         => eventual_access
       }
-    }.to_json}).body)
+    ).queue
   end
 
   # Publish all documents with a `publish_at` timestamp that is past due.
@@ -234,6 +236,57 @@ class Document < ActiveRecord::Base
   def self.populate_annotation_counts(account, docs)
     counts = Annotation.counts_for_documents(account, docs)
     docs.each {|doc| doc.annotation_count = counts[doc.id] }
+  end
+  
+  # Produce a time series of uploaded documents for organization
+  def self.upload_statistics(type, id)
+    # ensure we only inject the organization id as integer into the following raw SQL query.
+    raise ArgumentError unless id.kind_of? Integer
+  
+    condition = case type
+    when :organization
+      "organization_id = #{id}"
+    when :account
+      "account_id = #{id}"
+    else
+      raise ArgumentError, "type must be :organization or :account"
+    end
+
+    # N.B. if the desire to expand this query grows,
+    # please seek an alternative structure for ensuring
+    # the safety and viability of this query
+    #
+    # gather total document, page, and file size counts
+    # segmented by month and access level
+    query = <<-QUERY
+  select date_trunc('month', created_at) as month, access, count(id) as c, sum(page_count) as p, sum(file_size) as s 
+    from documents 
+    where #{condition}
+    group by date_trunc('month', created_at), access
+  QUERY
+    # run the query and collect the returned tuples
+    rows = self.connection.execute(query).map do |row|
+      tuple_array = row.map do |key,string_value|
+        # and coerce string values returned by ActiveRecord into dates or integers.
+        value = key == "month" ? DateTime.parse(string_value) : string_value.to_i
+        [key, value]
+      end
+      Hash[tuple_array]
+    end
+
+    # agglutinate the tuples into a nested set of buckets
+    # first with months as the top level dimension
+    months = rows.group_by{ |row| row['month'] }
+    data = months.map do |month, rows|
+      # and then with access level as the secondary dimension
+      access_bins = rows.map do |row|
+        # and for tersness's sake, filter out the now redundant month & access values in the tuples.
+        filtered = row.reject{ |k,v| ['month', 'access'].include? k }
+        [row['access'], filtered]
+      end
+      [month, Hash[access_bins]]
+    end
+    Hash[data]
   end
 
   # Ensure that titles are stripped of trailing whitespace.
@@ -330,6 +383,14 @@ class Document < ActiveRecord::Base
   # largest end_offset off our pages.
   def reset_char_count!
     update_attributes :char_count => 1+self.pages.maximum(:end_offset).to_i
+  end
+
+  def has_no_running_jobs?
+    processing_jobs.incomplete.none?
+  end
+  
+  def has_running_jobs?
+    processing_jobs.incomplete.exists?
   end
 
   # Does this document have a title?
@@ -443,11 +504,20 @@ class Document < ActiveRecord::Base
   end
 
   def canonical_path(format = :json)
-    "documents/#{canonical_id}.#{format}"
+    "/documents/#{canonical_id}.#{format}"
   end
 
-  def canonical_cache_path
-    "/#{canonical_path(:js)}"
+  def canonical_js_cache_path
+    canonical_path(:js)
+  end
+
+  # Effective duplicate of `canonical_path()` for explicitness
+  def canonical_json_cache_path
+    canonical_path(:json)
+  end
+
+  def cache_paths
+    [canonical_js_cache_path, canonical_json_cache_path]
   end
 
   def project_ids
@@ -464,7 +534,7 @@ class Document < ActiveRecord::Base
   end
 
   def public_pdf_url
-    File.join(DC::Store::AssetStore.web_root, pdf_path)
+    File.join(DC.cdn_root(:force_ssl=>true), pdf_path)
   end
 
   def private_pdf_url
@@ -484,7 +554,7 @@ class Document < ActiveRecord::Base
   def page_image_url(page, size, options={} )
     path = page_image_path(page, size)
     if public?
-      url = File.join( DC::Store::AssetStore.web_root, path )
+      url = File.join( DC.cdn_root(:force_ssl=>true), path )
       url << "?#{updated_at.to_i}" if options[:cache_busting]
       url
     else
@@ -493,7 +563,7 @@ class Document < ActiveRecord::Base
   end
 
   def public_full_text_url
-    File.join(DC::Store::AssetStore.web_root, full_text_path)
+    File.join(DC.cdn_root(:force_ssl=>true), full_text_path)
   end
 
   def private_full_text_url
@@ -555,7 +625,7 @@ class Document < ActiveRecord::Base
   end
 
   def public_page_image_template
-    File.join(DC::Store::AssetStore.web_root, File.join(pages_path, page_image_template))
+    File.join(DC.cdn_root(:force_ssl=>true), File.join(pages_path, page_image_template))
   end
 
   def private_page_image_template
@@ -565,7 +635,7 @@ class Document < ActiveRecord::Base
   def page_image_url_template(opts={})
     tmpl = if opts[:local]
              File.join(slug, page_image_template )
-           elsif self.public? || Rails.env.development?
+           elsif self.public?
              public_page_image_template
            else
              private_page_image_template
@@ -616,10 +686,6 @@ class Document < ActiveRecord::Base
     @asset_store ||= DC::Store::AssetStore.new
   end
 
-  def delete_assets
-    asset_store.destroy(self)
-  end
-
   def reprocess_text(force_ocr = false)
     queue_import :text_only => true, :force_ocr => force_ocr, :secure => !calais_id
   end
@@ -659,9 +725,11 @@ class Document < ActiveRecord::Base
   end
 
   def save_page_text(modified_pages)
+    Rails.logger.info("DOCUMENT ACCESS IS: #{self.access}")
     eventual_access = self.access || PRIVATE
     self.update_attributes(
       :access       => PENDING,
+    #  #:status       => UNAVAILABLE,
       :text_changed => true
     )
     modified_pages.each_pair do |page_number, page_text|
@@ -669,14 +737,13 @@ class Document < ActiveRecord::Base
       page.text = page_text
       page.save
     end
-    record_job(RestClient.post(DC::CONFIG['cloud_crowd_server'] + '/jobs', {:job => {
-      'action'  => 'reindex_document',
-      'inputs'  => [id],
-      'options' => {
-        :id      => id,
-        :access  => eventual_access
-      }
-    }.to_json}).body)
+    Rails.logger.info("EVENTUAL ACCESS SHOULD BE: #{eventual_access}")
+    self.processing_jobs.new(
+      :action=> 'reindex_document', 
+      :title=>title, 
+      :account_id=>account_id,
+      :options=> {:id=>id, :access => eventual_access }
+    ).queue
   end
 
   # Redactions is an array of objects: {'page' => 1, 'location' => '30,50,50,10'}
@@ -691,46 +758,50 @@ class Document < ActiveRecord::Base
     end
 
     update_attributes attributes
-    record_job(RestClient.post(DC::CONFIG['cloud_crowd_server'] + '/jobs', {:job => {
-      'action'  => 'redact_pages',
-      'inputs'  => [id],
-      'options' => {
-        :id => id,
+    self.processing_jobs.new(
+      :action     => 'redact_pages',
+      :title      => title,
+      :account_id => account_id,
+      :options    => {
+        :id         => id,
         :redactions => redactions,
-        :access => eventual_access,
-        :color => color
+        :access     => eventual_access,
+        :color      => color
       }
-    }.to_json}).body)
+    ).queue
   end
 
   def remove_pages(pages, replace_pages_start=nil, insert_document_count=nil)
     eventual_access = access || PRIVATE
     update_attributes :access => PENDING
-    record_job(RestClient.post(DC::CONFIG['cloud_crowd_server'] + '/jobs', {:job => {
-      'action'  => 'document_remove_pages',
-      'inputs'  => [id],
-      'options' => {
+    self.processing_jobs.new(
+      :action     => 'document_remove_pages',
+      :title      => title,
+      :account_id => account_id,
+      :options    => {
         :id                    => id,
         :pages                 => pages,
         :access                => eventual_access,
         :replace_pages_start   => replace_pages_start,
         :insert_document_count => insert_document_count
       }
-    }.to_json}).body)
+    ).queue
   end
 
   def reorder_pages(page_order, eventual_access=nil)
     eventual_access ||= access || PRIVATE
     update_attributes :access => PENDING
-    record_job(RestClient.post(DC::CONFIG['cloud_crowd_server'] + '/jobs', {:job => {
-      'action'  => 'document_reorder_pages',
-      'inputs'  => [id],
-      'options' => {
+
+    self.processing_jobs.new(
+      :action     => 'document_reorder_pages',
+      :title      => title,
+      :account_id => account_id,
+      :options    => {
         :id          => id,
         :page_order  => page_order,
         :access      => eventual_access
       }
-    }.to_json}).body)
+    ).queue
   end
 
   def assert_page_order(page_order)
@@ -741,11 +812,25 @@ class Document < ActiveRecord::Base
   end
 
   def queue_import(opts={})
+    things = {
+      'organization_id'   => 0,
+      'account_id'        => 0,
+      'source'            => 'Unknown',
+      'access'            => PRIVATE
+    }
+    
     options = DEFAULT_IMPORT_OPTIONS.merge opts
     options[:access] ||= self.access || PRIVATE
     options[:id] = id
     self.update_attributes :access => PENDING
-    record_job(DC::Import::CloudCrowdImporter.new.import([id], options, self.low_priority?).body)
+    #record_job(DC::Import::CloudCrowdImporter.new.import([id], options, self.low_priority?).body)
+    
+    self.processing_jobs.new(
+      :action     => self.low_priority? ? 'large_document_import' : 'document_import',
+      :title      => title,
+      :account_id => account_id,
+      :options    => options
+    ).queue
   end
 
   def self.duplicate(document_ids, account, options={})
@@ -759,7 +844,7 @@ class Document < ActiveRecord::Base
   end
 
   # Create an identical clone of this document, in all ways (except for the ID).
-  def duplicate!(account=nil, options={})
+  def duplicate!(recipient=nil, options={})
     Document.transaction do
       # Clone the document.
       newattrs = attributes.merge({
@@ -768,8 +853,8 @@ class Document < ActiveRecord::Base
           :updated_at => Time.now
       })
       newattrs.delete('id')
-      newattrs[:account_id] = account.id if account
-      newattrs[:organization_id] = account.organization.id if account and not newattrs[:organization_id]
+      newattrs[:account_id] = recipient.id if recipient
+      newattrs[:organization_id] = recipient.organization.id if recipient and not newattrs[:organization_id]
       copy     = Document.create!(newattrs.merge({:hit_count  => 0, :detected_remote_url => nil}))
       newattrs = {:document_id => copy.id}
 
@@ -777,11 +862,15 @@ class Document < ActiveRecord::Base
       if docdata and options['include_docdata']
         Docdata.create! docdata.attributes.merge newattrs
       end
+      
 
       # Clone the associations.
       associations = [entities, entity_dates, pages]
       associations.push sections if options['include_sections']
-      associations.push annotations.accessible(account) if options['include_annotations']
+      # Copy all notes that are visible by either the document owner or the recipient
+      account_context = options['as_owner'] ? self.account : recipient
+      associations.push annotations.accessible(account_context) if options['include_annotations']
+      # Copy the new document into all of the same projects as the old document
       associations.push project_memberships if options['include_project']
       associations.each do |association|
         association.each do |model|
@@ -826,6 +915,7 @@ class Document < ActiveRecord::Base
       :thumbnail_url       => thumbnail_url( { :cache_busting => opts[:cache_busting] } ),
       :full_text_url       => full_text_url,
       :page_image_url      => page_image_url_template( { :cache_busting => opts[:cache_busting] } ),
+      :page_text_url       => page_text_url_template( { :cache_busting => opts[:cache_busting] } ),
       :document_viewer_url => document_viewer_url,
       :document_viewer_js  => canonical_url(:js),
       :reviewer_count      => reviewer_count,
@@ -877,12 +967,14 @@ class Document < ActiveRecord::Base
     doc['source']             = source
     doc['created_at']         = created_at.to_formatted_s(:rfc822)
     doc['updated_at']         = updated_at.to_formatted_s(:rfc822)
-    doc['canonical_url']      = canonical_url(:html, options[:allow_ssl])
+    doc['canonical_url']      = canonical_url(:html, true)
     doc['language']           = language
     doc['file_hash']          = file_hash
     if options[:contributor]
-      doc['contributor']      = account_name
-      doc['contributor_organization'] = organization_name
+      doc['contributor']                   = account_name
+      doc['contributor_slug']              = account_slug
+      doc['contributor_organization']      = organization_name
+      doc['contributor_organization_slug'] = organization_slug
     end
     doc['display_language']   = display_language
     doc['resources']          = res = ActiveSupport::OrderedHash.new
@@ -923,7 +1015,11 @@ class Document < ActiveRecord::Base
   end
 
   private
-  
+
+  def delete_assets
+    asset_store.destroy(self)
+  end
+
   def ensure_language_is_valid
     self.language = DC::Language::DEFAULT unless DC::Language::SUPPORTED.include?(language)
   end
@@ -948,7 +1044,9 @@ class Document < ActiveRecord::Base
   end
 
   def background_update_asset_access(access_level)
-    return update_attributes(:access => access_level) if Rails.env.development?
+    changes = {:access => access_level}
+    #changes[:status] = DC::Status::FROM_ACCESS[access_level]
+    return update_attributes(changes) if Rails.env.development?
     RestClient.post(DC::CONFIG['cloud_crowd_server'] + '/jobs', {:job => {
       'action'  => 'update_access',
       'inputs'  => [self.id],
@@ -956,5 +1054,4 @@ class Document < ActiveRecord::Base
       'callback_url' => "#{DC.server_root(:ssl => false)}/import/update_access"
     }.to_json})
   end
-
 end

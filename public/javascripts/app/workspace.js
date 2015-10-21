@@ -86,7 +86,7 @@ dc.controllers.Workspace = Backbone.Router.extend({
     title:     _.t('title'),
     source:    _.t('source'),
     group:     _.t('group'),
-    document:  _.t('document'),
+    'document':  _.t('document'),
     projectid: _.t('projectid')
   },
 
@@ -95,7 +95,7 @@ dc.controllers.Workspace = Backbone.Router.extend({
     access: {
       'public':     _.t('public'),
       'private':    _.t('private'),
-      organization: _.t('organization',1),
+      organization: _.t('organization', 1),
       pending:      _.t('pending'),
       error:        _.t('error')
     },

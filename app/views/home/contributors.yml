@@ -19,6 +19,8 @@ contributors:
      - http://www.stamfordadvocate.com
    - - Advocate Magazines
      - http://advocatemag.com/
+   - - Air Force Times
+     - http://www.airforcetimes.com
    - - Al Jazeera English
      - http://english.aljazeera.net/
    - - Albany Times-Union
@@ -31,7 +33,7 @@ contributors:
      - http://www.independentmail.com/
    - - AnnArbor.com
      - http://annarbor.com
-   - - Argus Leader of Sioux Falls 
+   - - Argus Leader of Sioux Falls
      - http://www.argusleader.com/
    - - Arizona Republic
      - http://azcentral.com
@@ -55,6 +57,8 @@ contributors:
      - http://www.statesman.com/
    - - Australian Broadcasting Corporation
      - http://www.abc.net.au/
+   - - The Baltimore Sun
+     - http://www.baltimoresun.com/
    - - The Bay Citizen
      - http://www.baycitizen.org/
    - - The Bellingham Herald
@@ -81,6 +85,8 @@ contributors:
      - http://www.burrillreport.com/
    - - Business Green
      - http://www.businessgreen.com
+   - - BuzzFeed
+     - http://www.buzzfeed.com/
    - - California Watch
      - http://californiawatch.org
    - - Carbon Brief
@@ -93,6 +99,8 @@ contributors:
      - http://opencrs.com
    - - Center for Investigative Reporting
      - http://centerforinvestigativereporting.org
+   - - Center for Media and Democracy
+     - http://www.prwatch.org/
    - - Center for Public Integrity
      - http://publicintegrity.org
    - - Centre for Investigative Journalism, City University London
@@ -203,6 +211,8 @@ contributors:
      - http://elpasotimes.com
    - - Electronic Frontier Foundation
      - http://www.eff.org
+   - - Entertainment Weekly
+     - http://www.ew.com
    - - epiNewswire
      - http://www.epinews.com/
    - - Epoch Times
@@ -219,6 +229,8 @@ contributors:
      - http://firedoglake.com
    - - Florida Center for Investigative Reporting
      - http://fcir.org
+   - - The Florida Times-Union
+     - http://jacksonville.com/
    - - Florida Today
      - http://www.floridatoday.com/
    - - American Way of Eating
@@ -231,6 +243,8 @@ contributors:
      - http://freegovinfo.info/
    - - The Free Press
      - http://www.mankatofreepress.com
+   - - The Frontier
+     - http://www.tulsafrontier.com/
    - - Frontline
      - http://www.pbs.org/wgbh/pages/frontline
    - - The Gadsden Times
@@ -239,6 +253,8 @@ contributors:
      - http://www.gainesville.com
    - - Gapers Block
      - http://gapersblock.com
+   - - Gawker.com
+     - http://gawker.com/
    - - The Georgia Straight
      - http://www.straight.com/
    - - Gizmodo
@@ -257,7 +273,7 @@ contributors:
      - http://www.greenwichtime.com
    - - Greenwire
      - http://www.eenews.net/gw
-   - - The Guardian 
+   - - The Guardian
      - http://www.guardian.co.uk
    - - The GW Hatchet
      - http://www.gwhatchet.com/
@@ -269,8 +285,10 @@ contributors:
      - http://helpmeinvestigate.com/
    - - Herald Sun
      - http://www.heraldsun.com.au/
+   - - The Hollywood Reporter
+     - http://hollywoodreportter.com
    - - Homicide Watch D.C.
-     - http://homicidewatch.org/    
+     - http://homicidewatch.org/
    - - Honolulu Civil Beat
      - http://www.civilbeat.com/
    - - Houston Chronicle
@@ -317,6 +335,8 @@ contributors:
      - http://www.king5.com/
    - - Knoxville News Sentinel
      - http://www.knoxnews.com/
+   - - The Korea Center for Investigative Journalism
+     - http://welcome.newstapa.org/
    - - The Komisar Scoop
      - http://thekomisarscoop.com
    - - KPTV
@@ -343,6 +363,8 @@ contributors:
      - http://www.lgcplus.com/
    - - Longview News-Journal
      - http://news-journal.com/
+   - - Los Angeles News Group
+     - http://losangelesnewsgroup.com/
    - - Los Angeles Times
      - http://latimes.com
    - - Los Angeles Times Community News
@@ -355,6 +377,8 @@ contributors:
      - http://maisonneuve.org/
    - - Maryland Reporter
      - http://marylandreporter.com
+   - - Mashable
+     - http://mashable.com
    - - McClatchy Washington Bureau
      - http://www.mcclatchydc.com
    - - Media Coop
@@ -395,13 +419,19 @@ contributors:
      - http://gwu.edu/~nsarchiv
    - - National Security Journalism Initiative (Medill)
      - http://medillnsj.org/
+   - - NBC 7 San Diego
+     - http://www.nbcsandiego.com/
+   - - NBC 4 Southern California
+     - http://www.nbclosangeles.com/
    - - NEast Philly
      - http://neastphilly.com/
    - - The Nerve (South Carolina Policy Council)
      - http://www.thenerve.org
    - - NET Nebraska
      - http://www.netnebraska.org
-   - - New York Times
+   - - New York Daily News
+     - http://www.nydailynews.com/
+   - - The New York Times
      - http://nytimes.com
    - - The New Yorker
      - http://newyorker.com
@@ -433,6 +463,8 @@ contributors:
      - http://www.omaha.com
    - - OMB Watch
      - http://ombwatch.org/
+   - - Open State Foundation
+     - http://www.openstate.eu/
    - - OpenFile
      - http://openfile.ca
    - - Oregon Daily Emerald
@@ -451,6 +483,8 @@ contributors:
      - http://www.ky3.com/
    - - Ozarks Unbound
      - http://www.ozarksunbound.com/
+   - - Pacific Daily News
+     - http://www.guampdn.com/
    - - Pacific Northwest Inlander
      - http://www.inlander.com/
    - - Página/12
@@ -473,7 +507,7 @@ contributors:
      - http://www.pioneerlocal.com
    - - Pittsburg Post-Gazette
      - http://post-gazette.com
-   - - Poderopedia 
+   - - Poderopedia
      - http://www.poderopedia.com/
    - - Politico.ie
      - http://politico.ie
@@ -483,6 +517,8 @@ contributors:
      - http://www.easttexasnews.com/Enterprise/News/Main/enterprise_main.htm
    - - Post Star
      - http://poststar.com/
+   - - Postimees
+     - http://www.postimees.ee/
    - - Poughkeepsie Journal
      - http://www.poughkeepsiejournal.com/
    - - POV
@@ -498,7 +534,7 @@ contributors:
    - - ProPublica
      - http://propublica.org
    - - PsychSearch.net
-     - http://www.psychsearch.net/psych_news/  
+     - http://www.psychsearch.net/psych_news/
    - - Public Education Center
      - http://DCBureau.org
    - - Public Insight Journalism
@@ -515,7 +551,7 @@ contributors:
      - http://www.raleighpublicrecord.org
    - - Rapid City Journal
      - http://www.rapidcityjournal.com
-   - - Reality Blurred 
+   - - Reality Blurred
      - http://realityblurred.com
    - - Reese News
      - http://reesenews.org/
@@ -529,6 +565,8 @@ contributors:
      - http://www.regstate.net/
    - - Reno Gazette Journal
      - http://www.rgj.com/
+   - - Reported.ly
+     - https://firstlook.org/reportedly/
    - - Reprieve
      - http://www.reprieve.org.uk
    - - Richmond Times-Dispatch
@@ -537,6 +575,8 @@ contributors:
      - http://www.roanoke.com/
    - - Sacramento Bee
      - http://www.sacbee.com
+   - - Salon
+     - http://www.salon.com
    - - San Antonio Express-News
      - http://www.mysanantonio.com/
    - - San Diego Reader
@@ -547,6 +587,8 @@ contributors:
      - http://www.sfgate.com
    - - San Jose Mercury News
      - http://www.mercurynews.com
+   - - Santa Fe New Mexican
+     - http://www.santafenewmexican.com
    - - Santa Fe Reporter
      - http://sfreporter.com
    - - Santee Patch
@@ -561,7 +603,7 @@ contributors:
      - http://seattletimes.nwsource.com
    - - SF Public Press
      - http://sfpublicpress.org
-   - - Sharesleuth 
+   - - Sharesleuth
      - http://sharesleuth.com/
    - - Show-Me Institute
      - http://showmeinstitute.org/
@@ -581,8 +623,8 @@ contributors:
      - http://spinwatch.org
    - - The Spokesman-Review
      - http://www.spokesman.com/
-   - - Spot.us
-     - http://spot.us/
+   - - The St. Augustine Record
+     - http://staugustine.com/
    - - St. Cloud Times
      - http://stcloudtimes.com
    - - St. Louis Post-Dispatch
@@ -639,14 +681,20 @@ contributors:
      - http://www.recordonline.com
    - - The Times-Picayune
      - http://www.nola.com
+   - - Toronto Star
+     - http://thestar.com
    - - Transactional Records Access Clearinghouse
      - http://trac.syr.edu/
    - - Treasure Coast
      - http://www.tcpalm.com/
    - - Tucson Sentinel
      - http://www.tucsonsentinel.com/
+   - - Tulsa World
+     - http://www.tulsaworld.com/
    - - Two Circles
      - http://www.TwoCircles.net
+   - - Tyler Morning Telegraph
+     - http://www.tylerpaper.com
    - - UBC School of Journalism
      - http://journalism.ubc.ca
    - - The Union
@@ -655,7 +703,7 @@ contributors:
      - http://www.ukings.ns.ca/journalism
    - - US Local News Network
      - http://www.uslnn.com
-   - - USA Today
+   - - USA TODAY
      - http://www.usatoday.com
    - - Valerie Brown Writer
      - http://www.valeriebrownwriter.com
@@ -673,8 +721,12 @@ contributors:
      - http://voiceofsandiego.org
    - - Voices of Montana
      - http://www.northernbroadcasting.com
+   - - VTDigger
+     - http://vtdigger.org/
    - - WA Today
      - http://www.watoday.com.au
+   - - The Wall Street Journal
+     - http://www.wsj.com/
    - - Washington Post
      - http://wpost.com
    - - The Washington Times
@@ -707,16 +759,19 @@ contributors:
      - http://host.madison.com/wsj/
    - - WNYC Radio
      - http://wnyc.org
+   - - WRAL-TV
+     - http://www.wral.com/
    - - WSHU Public Radio
      - http://www.wshunews.org
    - - WTVF NewsChannel 5
      - http://www.newschannel5.com/
    - - WTXF Fox 29
      - http://www.foxtv.com
+   - - WUSA9
+     - http://www.wusa9.com
    - - WVUE-TV
      - http://www.fox8live.com
    - - WyoFile
      - http://wyofile.com/
    - - York Daily Record
      - http://www.ydr.com
-

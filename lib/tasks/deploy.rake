@@ -1,3 +1,5 @@
+require 'zlib'
+
 namespace :deploy do
   DEPLOYABLE_ENV = %w(production staging)
 
@@ -10,7 +12,7 @@ namespace :deploy do
   task :full do
     remote ["app:update", "db:migrate", "crowd:server:restart"], central_servers
     remote ["app:update", "app:jammit", "app:clearcache:docs", "app:clearcache:search", "app:restart", "app:warm"], app_servers
-    remote ["app:restart_solr"], search_servers
+    #remote ["app:restart_solr"], search_servers # solr is behaving badly, deploy to it manually for now.
     remote ["app:update", "crowd:node:restart"], worker_servers
   end
 
@@ -67,8 +69,8 @@ namespace :deploy do
         upload_attributes = { :acl => :public_read }
 
         # attempt to identify the mimetype for this file.
-        mimetype = MIME::Types.type_for(File.extname(file)).first
-        upload_attributes[:content_type] = mimetype.content_type if mimetype
+        mimetype = Mime::Type.lookup_by_extension(File.extname(file).remove(/^\./))
+        upload_attributes[:content_type] = mimetype.to_s if mimetype
 
         destination_path = destination_root + file.gsub(source_path_filter, '')
         destination = bucket.objects[destination_path]
@@ -79,10 +81,31 @@ namespace :deploy do
   end
 
   def upload_template( template_path, destination_path )
+    upload_attributes = { :acl => :public_read }
     contents = render_template(template_path)
-    puts "uploading #{template_path} to #{destination_path}"
+    puts "uploading #{template_path} to #{destination_path} and #{destination_path+'.gz'}"
 
     destination = bucket.objects[ destination_path ]
-    destination.write( contents, { :acl=> :public_read, :content_type=>'application/javascript' })
+    destination.write( contents, upload_attributes.merge(:content_type => 'application/javascript') )
+
+    zipped_destination = bucket.objects[ destination_path + '.gz' ]
+    zipped_destination.write( gzip_string(contents), upload_attributes.merge(:content_type => Mime::Type.lookup_by_extension('gz').to_s) )
+  end
+  
+  def gzip_string(contents)
+    # Create a pipe with an input IO and an output IO
+    IO.pipe do |zip_out, zip_in|
+      # make sure they're configured to take arbitrary binary data
+      zip_in.binmode
+      zip_out.binmode
+      # attach a gzip compressor as a funnel into the pipe.
+      # add the contents to the funnel.
+      # and then close off the top of the pipe.
+      Zlib::GzipWriter.new(zip_in, Zlib::BEST_COMPRESSION) do |zipper|
+        zipper.write(contents)
+      end.close
+      # retrieve the compressed contents out of the bottom of the pipe.
+      zip_out.read
+    end
   end
 end

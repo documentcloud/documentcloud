@@ -66,8 +66,8 @@ news:
 
 github:
   - - Backbone.js
-    - http://documentcloud.github.com/backbone/
-    - http://github.com/documentcloud/backbone/
+    - http://backbonejs.org/
+    - https://github.com/jashkenas/backbone
     - "A JavaScript library that helps you structure your client-side code with Models, Collections, and Views. Used heavily in the DocumentCloud workspace."
   - - "NY Times' Document Viewer"
     - http://github.com/documentcloud/document-viewer
@@ -77,13 +77,17 @@ github:
     - http://documentcloud.github.com/docsplit/
     - http://github.com/documentcloud/docsplit/
     - "A command-line utility and Ruby library that converts documents into PDFs and breaks them apart into images and text."
+  - - PDFShaver
+    - http://github.com/documentcloud/pdfshaver/
+    - http://github.com/documentcloud/pdfshaver/
+    - "Shave pages off of PDFs as images."
   - - Jammit
     - http://documentcloud.github.com/jammit/
     - http://github.com/documentcloud/jammit/
     - "An asset packaging plugin for Rails, which we use to help the DocumentCloud interface load as fast as possible."
   - - Underscore.js
-    - http://documentcloud.github.com/underscore/
-    - http://github.com/documentcloud/underscore/
+    - http://underscorejs.org/
+    - https://github.com/jashkenas/underscore/
     - "Our most widely-used project: a library of functional programming helpers for JavaScript that fit in nicely alongside jQuery."
   - - CloudCrowd
     - http://wiki.github.com/documentcloud/cloud-crowd

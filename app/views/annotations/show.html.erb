@@ -1,0 +1,6 @@
+<script src="<%= DC.cdn_root %>/note_embed/note_embed.js"></script>
+<link href="<%= DC.cdn_root %>/note_embed/note_embed.css" media="all" rel="stylesheet" />
+<div id="DC-note-<%= @current_annotation.id %>" class="DC-note-container"></div>
+<script type="text/javascript">
+  dc.embed.loadNote("<%= @current_annotation.canonical_url(:js) %>");
+</script>

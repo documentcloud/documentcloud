@@ -28,6 +28,7 @@ class DocumentsController < ApplicationController
       format.text { redirect_to(doc.full_text_url) }
       format.json do
         @response = doc.canonical
+        cache_page @response.to_json if doc.cacheable?
         json_response
       end
       format.js do
@@ -201,11 +202,13 @@ class DocumentsController < ApplicationController
   end
 
   def send_full_text
+    maybe_set_cors_headers
     return not_found unless current_document(true)
     redirect_to current_document.full_text_url(:direct)
   end
 
   def send_page_text
+    maybe_set_cors_headers
     return not_found unless current_page
     @response = current_page.text
     return if jsonp_request?
@@ -219,7 +222,8 @@ class DocumentsController < ApplicationController
   end
 
   def search
-    doc       = current_document(true)
+    doc = current_document(true)
+    return not_found unless doc
     pages     = Page.search_for_page_numbers(params[:q], doc)
     @response = {'query' => params[:q], 'results' => pages}
     json_response
@@ -275,7 +279,7 @@ class DocumentsController < ApplicationController
   end
   
   def clear_current_document_cache
-    expire_page current_document.canonical_cache_path
-    current_document.annotations.each{ |note| expire_page note.canonical_cache_path }
+    paths = current_document.cache_paths + current_document.annotations.map(&:cache_paths)
+    expire_pages paths
   end
 end

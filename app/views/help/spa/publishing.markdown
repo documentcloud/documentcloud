@@ -1,7 +1,24 @@
-# Publicando documentos, notas y conjuntos de documentos
+# Publicando Documentos, Páginas, Notas y Conjuntos de Documentos
 
-¿Esta listo para hacer que sus documentos sean públicos? Publique documentos individuales, incruste un conjunto de documentos que sus lectores puedan navegar, o integre una sola nota en cualquier documento. Antes de publicar una nota, un documento o conjunto de documentos, usted querrá asegurarse de que el documento o los documentos son públicos. Haga público un documento mediante la opción "Nivel de Accesol" (en el menú "Editar") o mediante la selección de una fecha de publicación (en el menú "Publicar").
+¿Esta listo para hacer que sus documentos sean públicos? Publique documentos individuales, incruste un conjunto de documentos que sus lectores puedan navegar, o integre una sola nota en cualquier documento.
 
+## Contents
+
+* [Haciendo documentos públicos](#public)
+* Generar códigos embed:
+  * [Documentos](#embed-document)
+  * [Páginas](#embed-page)
+  * [Notas](#embed-note)
+  * [Grupo de Documentos](#embed-set)
+* [WordPress Shortcodes](#wordpress)
+* [oEmbed service](#oembed)
+
+<a name="public"></a>
+# Haciendo documentos públicos
+
+Antes de publicar un documento, página, nota o conjunto de documentos, usted querrá asegurarse de que el documento o los documentos son públicos. Haga público un documento mediante la opción "Nivel de Accesol" (en el menú "Editar") o mediante la selección de una fecha de publicación (en el menú "Publicar").
+
+<a name="embed-document"></a>
 # Publicando documentos individuales
 
 Para publicar cualquier documento de DocumentCloud, puede descargar una copia independiente del visor, o generar, copiar, y pegar un código de inserción sencillo para ese documento. Le recomendamos incrustar un código que vincule a DocumentCloud en la mayoría de los documentos. Las siguientes instrucciones asumen que tiene conocimiento básico de HTML, pero hemos tratado que el proceso de incorporación/incrustación sea lo sencillo posible. 
@@ -32,18 +49,14 @@ Aquí hay algunos ejemplos activos que vale la pena visitar: [NewsHour](http://w
 
 <img src="/images/help/newshour.jpg" class="full_line" />
 
-Si opta por integrar un visor de **tamaño fijo**, establezca la anchura y  la altura en píxeles. También puede intercambiar la barra lateral y la pestaña de texto. Recomendamos ocultar la barra lateral en los visores de documentos que son más estrechos que 800 píxeles. Si usted está incrustando documentos escritos a mano o documentos con resultados insatisfactorios de OCR, suele ser una buena idea ocultar la pestaña de texto. Utilice el enlace "preview the document viewer" para ver un ejemplo del visor presentado de acuerdo a sus especificaciones.  
-
-Para ver un ejemplo activo de un documento de tamaño fijo sin barra lateral, vea esta [boleta electoral de WNYC](http://beta.wnyc.org/articles/its-free-country/2010/sep/07/new-nyc-ballot-could-cause-confusion/).
-
-<img src="/images/help/wnyc.jpg" class="full_line" />
+Si opta por integrar un visor de **tamaño fijo**, establezca la anchura y  la altura en píxeles. También puede intercambiar la barra lateral y la pestaña de texto. Recomendamos ocultar la barra lateral en los visores de documentos que son más estrechos que 800 píxeles. Si usted está incrustando documentos escritos a mano o documentos con resultados insatisfactorios de OCR, suele ser una buena idea ocultar la pestaña de texto. Utilice el enlace "preview the document viewer" para ver un ejemplo del visor presentado de acuerdo a sus especificaciones. 
 
 ## <span id="embed">Copie y pegue el código</span>
 
 Haga clic en el botón "Next" para continuar con el paso 3, y veráx el código de inserción: un fragmento de código HTML que se puede pegar en cualquier página web para crear un visor de documentos. El código se asemejará a lo siguiente: 
 
     <div id="viewer-10-general-report"></div>
-    <script src="http://s3.documentcloud.org/viewer/loader.js"></script>
+    <script src="//assets.documentcloud.org/viewer/loader.js"></script>
     <script>
       DV.load('http://www.documentcloud.org/documents/10-general-report.js', {
         container : '#viewer-10-general-report'
@@ -58,8 +71,31 @@ En ocasiones es posible que haya incorporado/incrustado documentos que le gustar
 
 ## <span id="intouch">Manténgase en contacto</span>
 
-[]¡Cuéntenos acerca de sus reportajes!](javascript:dc.ui.Dialog.contact(\))
+[¡Cuéntenos acerca de sus reportajes!](javascript:dc.ui.Dialog.contact(\))
 
+<a name="embed-page"></a>
+# <span id="page_embed">Códigos Integrar para una Sola Página</span>
+
+![Embed Page Menu](/images/help/embed_page_menu.png)
+
+DocumentCloud ofrece un visor ligero, sensible que pone de relieve una sola página (incluyendo las anotaciones) con un mínimo de cromo extra. Está diseñado para funcionar igual de bien en móviles y de escritorio y es perfecto para su uso en aplicaciones de noticias personalizadas o de formato largo presentaciones de periodismo. Próximamente: opciones para permitir que los lectores tengan acceso a todas las páginas en el documento o leer el texto extraído.
+
+Incorporación de una página es similar a la incorporación de un documento: Seleccione un documento, abra el menú "Publicar" y haga clic en "Incrustar una página." Alternativamente, haga clic en el documento y seleccione "Incrustar una página."
+
+En el cuadro de diálogo que aparece a continuación, seleccione el número de la página para incrustar. Una vista previa de la página de inserción aparece; si quieres una página diferente, puede seleccionarlo en el menú.
+
+Haga clic en "Siguiente" para pasar al paso 2 y generar el código HTML empotrable. He aquí una muestra de lo que se verá así:
+
+    <div class="DC-embed" data-version="1.0" style="font-size:10pt">
+      <p><a class="DC-embed-resource" href="https://www.documentcloud.org/documents/282753-lefler-thesis.html#document/p57" title="View page 57 of Lefler Thesis on DocumentCloud in new window or tab" target="_blank">Page 57 of Lefler Thesis</a></p>
+      <img src="//www.documentcloud.org/documents/282753/pages/lefler-thesis-p57-normal.gif" alt="Page 57 of Lefler Thesis" style="border:1px solid #ccc;-webkit-box-sizing:border-box;box-sizing:border-box;width:100%;max-width:700px;">
+      <p>Contributed to DocumentCloud by Ted Han of DocumentCloud &bull; <a href="https://www.documentcloud.org/documents/282753/pages/lefler-thesis-p57.txt" title="View text of page 57 of Lefler Thesis in a new window or tab" target="_blank">View page as text</a></p>
+    </div>
+    <script src="//assets.documentcloud.org/embed/loader/enhance.js"></script>
+
+Copie y pegue el código HTML a su sitio para publicar la página.
+
+<a name="embed-note"></a>
 # <span id="note_embed">Incrustar una nota de un documento</span>
 
 ![Embed Note Menu](/images/help/embed_note_menu.png)
@@ -70,13 +106,14 @@ Se le pedirá que seleccione la nota a insertar, y podrá revisar la nota incrus
 
 
     <div id="DC-note-237"></div>
-    <script src="http://s3.documentcloud.org/notes/loader.js"></script>
+    <script src="//assets.documentcloud.org/notes/loader.js"></script>
     <script>
       dc.embed.loadNote('http://www.documentcloud.org/documents/223/annotations/237.js');
     </script>
 
 Copie y pegue el código HTML en su propio sitio. Al hacer clic en el título o la imagen, se abrirá el documento. Los documentos se abrirán en DocumentCloud a menos que los haya publicado en otra parte. Utilizamos pixel ping de adivinar el URL publicado de un documento, de manera que si los usuarios no pueden encuentran el documento de otra manera, puede que usted tenga que añadir el URL publicado manualmente.
 
+<a name="embed-set"></a>
 # <span id="docset">Incrustando un conjunto de documentos</span>
 
 ![Embed Search Menu](/images/help/embed_search_menu.png)
@@ -95,7 +132,7 @@ Para empezar, encuentre un conjunto de documentos que desee incrustar - ya sea m
 Una vez que usted se sienta cómodo con la configuración, revise el conjunto de documentos incrustado en vista previa. Si la vista previa se ve bien, copie y pegue el código de inserción HTML.  Este es un ejemplo de cómo se debe ver el código de inserción:
 
     <div id="DC-search-projectid-8-epa-flouride"></div>
-    <script src="http://s3.documentcloud.org/embed/loader.js"></script>
+    <script src="//assets.documentcloud.org/embed/loader.js"></script>
     <script>
       dc.embed.load('http://www.documentcloud.org/search/embed/', {
         q: "projectid: 8-epa-flouride",
@@ -113,5 +150,38 @@ Pegue el código en su página web, y el conjunto de documentos aparecerá.
 
 Haga clic en cualquier documento para abrirlo. Si ha publicado el documento en su página web previamente,  deberíamos haber detectado su URL automáticamente, y se abrirá con ese URL. Si el documento es público, pero aún no se ha publicado, se abrirá en DocumentCloud.org. Si está seguro de que usted ha publicado un documento, pero aun así se abre en DocumentCloud.org, abra el menú "Edit", haga clic en "URL Publicado", y establezca manualmente el URL con el que se ha publicado el documento.
 
+<a name="wordpress"></a>
+# <span id="docset">WordPress Shortcodes</span>
+
+Los usuarios que publican a través de WordPress pueden instalar un plugin que permite incorporar recursos DocumentCloud utilizando [shortcodes](https://codex.wordpress.org/Shortcode_API).
+
+Descargue el plugin DocumentCloud en su [página de plugin para WordPress](https://wordpress.org/plugins/documentcloud/). Instalar y activar de acuerdo a las instrucciones.
+
+Una vez activado, puede incrustar recursos con un simple shortcode. También puede pasar parámetros adicionales para controlar el tamaño y los atributos del embed. Por ejemplo, si desea incrustar un documento a 800px de ancho, pre-desplazado a la página 3:
+
+    [documentcloud url="https://www.documentcloud.org/documents/282753-lefler-thesis.html" width="800" default_page="3"]
+
+Para una nota, utilice cualquier URL-nota específica:
+
+    [documentcloud url="https://www.documentcloud.org/documents/282753-lefler-thesis.html#document/p1/a53674"]
+
+Una lista de todos los parámetros que puede utilizar con el código corto está disponible en [la página del plugin](https://wordpress.org/plugins/documentcloud/).
+
+<a name="oembed"></a>
+# <span id="docset">oEmbed Service</span>
+
+oEmbed es un estándar Web para proporcionar el contenido embebido en un sitio a través de una petición a la URL del recurso. Si un sistema de gestión de contenidos apoya oEmbed, sólo tiene que pegar en la URL de un recurso DocumentCloud, y el CMS se ha podido ir a través de nuestro [oEmbed API] [] e incrustarlo. Consulte con el administrador de sistemas de la organización acerca de si su CMS apoya oEmbed.
+
+### Ejemplo URL documento para oEmbed
+
+    https://www.documentcloud.org/documents/1234-document-name.html
+
+### Ejemplo URL nota para oEmbed
+
+    https://www.documentcloud.org/documents/1234-document-name.html#document/p2/a208505
+
+# Preguntas?
 
 ¿Aún tiene preguntas acerca de la publicación e incrustación? No dude en [comunicarse con nosotros](javascript:dc.ui.Dialog.contact(\)).
+
+[oEmbed API]: https://www.documentcloud.org/help/api#oembed

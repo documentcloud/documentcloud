@@ -17,12 +17,12 @@
           <tr>
             <td class="first"><img class="doc" src="<%= note.document.get('thumbnail_url') %>" /></td>
             <td>
-              <b><%= note.get('id') %></b><br />
+              <b><%= note.get('note_id') %></b><br />
               <%= note.get('document_id') %>
             </td>
             <td>
-              <b><a href="<%= note.get('url') %>"><%= dc.inflector.truncate(note.get('title') || '', 50) %></a></b><br />
-              <a href="<%= note.document.publishedUrl() %><%= '#document/p' + note.get('page') + '/a' + note.get('id') %>"><%= note.document.get('access') == dc.access.PUBLIC ? dc.inflector.truncate(note.document.get('title') || '', 50) : '<i>private</i>' %></a>
+              <b><a href="<%= note.document.viewerUrl() %><%= '#document/p' + note.get('page') + '/a' + note.get('note_id') %>"><%= dc.inflector.truncate(note.get('title') || '', 50) %></a></b><br />
+              <a href="<%= note.document.publishedUrl() %>"><%= note.document.get('access') == dc.access.PUBLIC ? dc.inflector.truncate(note.document.get('title') || '', 50) : '<i>private</i>' %></a>
             </td>
             <td><%= note.document.get('account_name') %></td>
             <td><%= note.document.get('organization_name') %></td>

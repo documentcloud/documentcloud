@@ -7,7 +7,7 @@ class AjaxHelpController < ApplicationController
     :index            => 'Introduction',
     :tour             => 'Guided Tour',
     :public           => 'The Public Catalog',
-    :accounts         => 'Adding Accounts',
+    :accounts         => 'Managing Accounts',
     :searching        => 'Searching Documents and Data',
     :uploading        => 'Uploading Documents',
     :troubleshooting  => 'Troubleshooting Failed Uploads',
@@ -15,7 +15,7 @@ class AjaxHelpController < ApplicationController
     :privacy          => 'Privacy',
     :collaboration    => 'Collaboration',
     :notes            => 'Editing Notes and Sections',
-    :publishing       => 'Publishing &amp; Embedding',
+    :publishing       => 'Publishing and Embedding',
     :api              => 'API'
   }
 
@@ -25,7 +25,7 @@ class AjaxHelpController < ApplicationController
 
   def contact_us
     return bad_request unless params[:message]
-    LifecycleMailer.contact_us(current_account, params).deliver
+    LifecycleMailer.contact_us(current_account, params).deliver_now
     json nil
   end
 

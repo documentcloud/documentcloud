@@ -19,11 +19,12 @@ sudo mount $DEVICE /mnt/ami/
 
 # 3) Set up the application.
 #    For DocumentCloud the process goes like this (after you've scp'd up the scripts dir & github key)
-git clone
-cd ~/documentcloud
-sudo ./config/server/scripts/setup_common_dependencies.sh
+sudo ./scripts/setup_common_dependencies.sh
 source /etc/profile.d/chruby.sh
 gem install bundler
+./scripts/setup_app.sh
+
+pushd documentcloud
 git clone git@github.com:documentcloud/documentcloud-secrets secrets
 bundle install
 rails runner -e production "puts Organization.count"
@@ -38,32 +39,30 @@ sudo chown ubuntu:ubuntu /mnt/cloud_crowd
 sudo perl -pi.orig -e   'next if /-backports/; s/^# (deb .* multiverse)$/$1/'   /etc/apt/sources.list
 sudo apt-get update
 
-#download pdfium deb
-cd ~/
-wget http://s3.amazonaws.com/s3.documentcloud.org/pdfium/libpdfium-dev_0.1%2Bgit20150303-1_amd64.deb
-sudo dpkg -i libpdfium-dev_0.1+git20150217-1_amd64.deb
-rm libpdfium-dev_0.1+git20150217-1_amd64.deb
-
-
 # Install the AMI and API tools
 sudo apt-get install ec2-ami-tools ec2-api-tools
 
-
-ACCESS_KEY=$(egrep "aws_access_key"  secrets/secrets.yml | awk '{print $NF}')
-SECRET_KEY=$(egrep "aws_secret_key"  secrets/secrets.yml | awk '{print $NF}')
+ACCESS_KEY=$(egrep "aws_access_key"  ~/documentcloud/secrets/secrets.yml | awk '{print $NF}')
+SECRET_KEY=$(egrep "aws_secret_key"  ~/documentcloud/secrets/secrets.yml | awk '{print $NF}')
 
 ec2-describe-regions --aws-access-key $ACCESS_KEY --aws-secret-key $SECRET_KEY
 
+# use the --no-filter flag so that /etc/ssl/certs/*.pem don't get deleted.
 sudo -E su
-ec2-bundle-vol -k /home/ubuntu/documentcloud/secrets/keys/ami_signing.key -c /home/ubuntu/documentcloud/secrets/keys/ami_signing.pem --no-filter --exclude /etc/ssh/*_key* -u $(egrep "aws_account_id"  /home/ubuntu/documentcloud/secrets/secrets.yml | awk '{print $NF}') -r x86_64 -d /mnt/ami
+ec2-bundle-vol \
+  --privatekey /home/ubuntu/documentcloud/secrets/keys/ami_signing.key                                  \
+  --cert /home/ubuntu/documentcloud/secrets/keys/ami_signing.pem                                        \
+  --user $(egrep "aws_account_id"  /home/ubuntu/documentcloud/secrets/secrets.yml | awk '{print $NF}')  \
+  --arch x86_64 --destination /mnt/ami                                                                  \
+  --include /mnt/cloud_crowd --no-filter
 exit
 
-AMI_NAME=dc-worker-ephemeral-`date +'%Y-%m-%d'`
-
+AMI_NAME=dc-worker-ephemeral-$(date +'%Y-%m-%d')
 ec2-upload-bundle -b dcloud-ami/$AMI_NAME -m /mnt/ami/image.manifest.xml -a $ACCESS_KEY -s $SECRET_KEY --location US
 
 ec2-register dcloud-ami/$AMI_NAME/image.manifest.xml -n $AMI_NAME -O $ACCESS_KEY -W $SECRET_KEY --region us-east-1
 
+# echo "127.0.0.1 $(hostname)" | sudo tee -a /etc/hosts
 
 # Biblography
 # http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/InstanceStorage.html

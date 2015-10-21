@@ -14,7 +14,7 @@ class BackupDatabase < CloudCrowd::Action
         backup DC::ANALYTICS_DB['database']
       end
     rescue Exception => e
-      LifecycleMailer.exception_notification(e).deliver
+      LifecycleMailer.exception_notification(e).deliver_now
       raise e
     end
     true

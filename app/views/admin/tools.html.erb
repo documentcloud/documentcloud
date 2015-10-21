@@ -1,0 +1,10 @@
+<%
+  @title = "Admin Tools"
+%>
+
+<div style="max-width: 600px;margin: 3em auto;padding:0 1.5em;">
+  <dl>
+    <dt><a style="color:blue;text-decoration:underline" href="javascript:(function(){var href=window.location.href;if((href.indexOf('s3.documentcloud.org')!=-1)||(href.indexOf('assets.documentcloud.org')!=-1)){window.location=href.replace('//s3.amazonaws.com/s3', '//www').replace('//s3', '//www').replace('//assets', '//www').replace(/^http\:/, 'https:').replace(/\/([0-9]+)\//, '/$1-').replace(/\.pdf$/, '.html');}else{alert('You don’t seem to be on a DocumentCloud PDF.')}})();">Redirect PDF to HTML</a></dt>
+    <dd>Sometimes you are linked directly to a DocumentCloud PDF and need to get to the workspace version of the document. Drag the link above to your Bookmarks Bar and click it next time you have a DocumentCloud-hosted PDF open; it will take you to the appropriate page in the workspace.</dd>
+  </dl>
+</div>

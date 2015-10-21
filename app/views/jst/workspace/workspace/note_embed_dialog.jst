@@ -3,8 +3,8 @@
   <% if (doc.get('access') != dc.access.PUBLIC) { %>
     <div class="publish_section dialog_info selectable_text interface">
       <%= _.t('note_embed_private', '<span class="text_link edit_access">','</span>') %>
-      &nbsp;<%= doc.get('publish_at') ? '' : _.t('set_the')  %>
-      <span class="text_link set_publish_at">&nbsp;<%= _.t('publication_date') %></span>
+      <%= doc.get('publish_at') ? '' : _.t('set_the')  %>
+      <span class="text_link set_publish_at"><%= _.t('publication_date') %></span>
     </div>
   <% } %>
 
