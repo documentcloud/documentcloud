@@ -2,18 +2,18 @@ source 'https://rubygems.org'
 gem 'iconv'
 gem 'rails',                  '~>4.2.0'
 gem 'curb',                   '~>0.8.4'
-gem 'open_calais',            :github => "documentcloud/open_calais", :branch=> "fuzziness" # Supports Open Calais v2
+gem 'open_calais',            :github => 'documentcloud/open_calais', :branch => 'fuzziness' # Supports Open Calais v2
 gem 'rest-client',            '~> 1.8.0'
 gem 'bcrypt',                 '~> 3.1.1', :require => 'bcrypt'
-gem 'rubyzip',                '~> 1.1.0' #0.9.9'
-gem 'aws-sdk',                '~> 1.30', :require => 'aws' #11.1'
+gem 'rubyzip',                '~> 1.1.0'
+gem 'aws-sdk',                '~> 1.30', :require => 'aws'
 gem 'pg'
 
 gem 'closure-compiler'
 gem 'docsplit',               '0.8.0.alpha1'
 gem 'sunspot_rails'
 gem 'sunspot_solr'
-gem 'progress_bar'  # optional, used by sunspot to show progress while re-indexing
+gem 'progress_bar' # Optional, used by sunspot to show progress while re-indexing
 gem 'cloud-crowd',            :github => 'documentcloud/cloud-crowd', :branch => 'blacklist'
 gem 'pdftailor'
 gem 'pdfshaver'
@@ -26,7 +26,7 @@ gem 'sanitize',               '~> 2.0.6'
 gem 'rdiscount',              '~> 2.1.6'
 gem 'rake'
 gem 'actionpack-page_caching'
-gem 'jammit',                 :github=>'documentcloud/jammit'
+gem 'jammit',                 :github => 'documentcloud/jammit'
 gem 'nokogiri',               '~> 1.6.0'
 gem 'net-ssh-shell'
 gem 'country_select',         '~> 2.2.0'
@@ -34,16 +34,16 @@ gem 'country_select',         '~> 2.2.0'
 group :development, :test, optional: true do
   gem 'guard-bundler'
   gem 'growl'
-  gem "sunspot-rails-tester"
+  gem 'sunspot-rails-tester'
   #gem 'sunspot_matchers'
   gem 'minitest'
   gem 'minitest-spec-rails'
   gem 'guard-minitest'
   gem 'spring'
-  gem "pry"
-  gem "byebug" # Debugger
+  gem 'pry'
+  gem 'byebug' # Debugger
   gem 'factory_girl_rails' # Mocking out objects
-  gem "ruby-debug-passenger"
+  gem 'ruby-debug-passenger'
   gem 'vcr'
 end
 
