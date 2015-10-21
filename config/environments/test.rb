@@ -33,4 +33,7 @@ DC::Application.configure do
 
   # Print deprecation notices to the stderr.
   config.active_support.deprecation = :stderr
+
+  # Avoid deprecation warning in Rails 4 about upcoming Rails 5 behavior
+  config.active_support.test_order = :random
 end
