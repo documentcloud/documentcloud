@@ -316,7 +316,9 @@ GEM
     sunspot (2.1.1)
       pr_geohash (~> 1.0)
       rsolr (~> 1.0.7)
-    sunspot_matchers (2.2.0.4)
+    sunspot-rails-tester (1.0.0)
+      sunspot_rails (>= 1.2)
+      sunspot_solr (>= 1.2)
     sunspot_rails (2.1.1)
       nokogiri
       rails (>= 3)
@@ -380,9 +382,9 @@ DEPENDENCIES
   rubyzip (~> 1.1.0)
   sanitize (~> 2.0.6)
   spring
-  sunspot_matchers
-  sunspot_rails (~> 2.1.0)
-  sunspot_solr (~> 2.1.0)
+  sunspot-rails-tester
+  sunspot_rails
+  sunspot_solr
   vcr
 
 BUNDLED WITH
