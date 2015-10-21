@@ -31,7 +31,7 @@ gem 'nokogiri',               '~> 1.6.0'
 gem 'net-ssh-shell'
 gem 'country_select',         '~> 2.2.0'
 
-group :development, :test do
+group :development, :test, optional: true do
   gem 'guard-bundler'
   gem 'growl'
   gem "sunspot-rails-tester"
