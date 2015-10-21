@@ -31,7 +31,7 @@ gem 'nokogiri',               '~> 1.6.0'
 gem 'net-ssh-shell'
 gem 'country_select',         '~> 2.2.0'
 
-group :development, :test, optional: true do
+group :development, :test do
   gem 'guard-bundler'
   gem 'growl'
   gem 'sunspot-rails-tester'
@@ -43,7 +43,7 @@ group :development, :test, optional: true do
   gem 'ruby-debug-passenger'
 end
 
-group :development, optional: true do
+group :development do
   # `google_drive` and `highline` are development-only because we use them to
   # access/compile the translations spreadsheet, and this should only be done
   # by a developer on their local machine before committing the compiled strings
@@ -51,7 +51,7 @@ group :development, optional: true do
   gem 'highline'
 end
 
-group :test, optional: true do
+group :test do
   gem 'minitest'
   gem 'minitest-spec-rails'
   gem 'guard-minitest'
