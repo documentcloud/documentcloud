@@ -17,7 +17,8 @@ class AnnotationsController < ApplicationController
     respond_to do |format|
       format.json do
         @response = current_annotation.canonical(:include_image_url => true, :include_document_url => true)
-        cache_page @response.to_json if current_annotation.cacheable?
+        # TODO: https://github.com/documentcloud/documentcloud/issues/291
+        # cache_page @response.to_json if current_annotation.cacheable?
         json_response
       end
       format.js do
