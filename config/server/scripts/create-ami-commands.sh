@@ -27,7 +27,7 @@ gem install bundler
 pushd documentcloud
 git clone git@github.com:documentcloud/documentcloud-secrets secrets
 bundle install
-rails runner -e production "puts Organization.count"
+rails runner -e production "puts Organization.count" # check for human eyeballs
 sudo mkdir /mnt/cloud_crowd
 sudo chown ubuntu:ubuntu /mnt/cloud_crowd
 
@@ -45,6 +45,7 @@ sudo apt-get install ec2-ami-tools ec2-api-tools
 ACCESS_KEY=$(egrep "aws_access_key"  ~/documentcloud/secrets/secrets.yml | awk '{print $NF}')
 SECRET_KEY=$(egrep "aws_secret_key"  ~/documentcloud/secrets/secrets.yml | awk '{print $NF}')
 
+# check for human eyeballs
 ec2-describe-regions --aws-access-key $ACCESS_KEY --aws-secret-key $SECRET_KEY
 
 # use the --no-filter flag so that /etc/ssl/certs/*.pem don't get deleted.

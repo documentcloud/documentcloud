@@ -100,8 +100,8 @@ echo $PACKAGES $TESSERACT_LANGUAGES $RUBY_DEPENDENCIES $FONT_PACKAGES | xargs ap
 
 # Install pdfium https://github.com/documentcloud/pdfshaver
 # TODO Should we allow user to specifiy pdfium version?
-wget 'http://s3.documentcloud.org.s3.amazonaws.com/pdfium/libpdfium-dev_0.1%2Bgit20150311-1_amd64.deb'
-dpkg -i libpdfium-dev_0.1+git20150311-1_amd64.deb
+wget 'https://assets.documentcloud.org/pdfium/libpdfium-dev_20151024.163326_amd64.deb'
+dpkg -i libpdfium-dev_20151024.163326_amd64.deb
 
 #################################
 # INSTALL RUBY SWITCHER
