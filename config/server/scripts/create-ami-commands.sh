@@ -1,7 +1,7 @@
 # STEPS
 
 # 1) get AMI from https://cloud.ubuntu.com/ami and follow the link.
-#    as of right now (2014-11-14) the link is here: https://console.aws.amazon.com/ec2/home?region=us-east-1#launchAmi=ami-a88c0bc0
+#    as of right now (2015-10-26) the link is here: https://console.aws.amazon.com/ec2/home?region=us-east-1#launchAmi=ami-11f9aa74
 #    we're using us-east-1 instance-store amd64 instances
 #    Launch the instance as desired.
 
