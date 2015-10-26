@@ -9,7 +9,7 @@
     "Samuel Clay <samuel@ofbrooklyn.com>"
   ],
   "description": "Document transparency tools for journalists",
-  "dependencies":{
+  "dependencies": {
     "jquery": "1.11.1",
     "jquery-ui": "1.11",
     "flot": "0.8.3",
@@ -30,5 +30,8 @@
     "bower_components",
     "test",
     "tests"
-  ]
+  ],
+  "resolutions": {
+    "underscore": "~1.8.3"
+  }
 }
