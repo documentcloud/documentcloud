@@ -98,6 +98,8 @@ GEM
     country_select (2.2.0)
       countries (~> 0.11.0)
       sort_alphabetical (~> 1.0)
+    crack (0.4.2)
+      safe_yaml (~> 1.0.0)
     cssmin (1.0.3)
     curb (0.8.8)
     currencies (0.4.2)
@@ -163,6 +165,7 @@ GEM
     guard-minitest (2.4.4)
       guard-compat (~> 1.2)
       minitest (>= 3.0)
+    hashdiff (0.2.2)
     hashie (3.4.2)
     highline (1.7.8)
     http-cookie (1.0.2)
@@ -290,6 +293,7 @@ GEM
       builder (>= 2.1.2)
     ruby-debug-passenger (0.2.0)
     rubyzip (1.1.7)
+    safe_yaml (1.0.4)
     sanitize (2.0.6)
       nokogiri (>= 1.4.4)
     shellany (0.0.1)
@@ -316,7 +320,9 @@ GEM
     sunspot (2.1.1)
       pr_geohash (~> 1.0)
       rsolr (~> 1.0.7)
-    sunspot_matchers (2.2.0.4)
+    sunspot-rails-tester (1.0.0)
+      sunspot_rails (>= 1.2)
+      sunspot_solr (>= 1.2)
     sunspot_rails (2.1.1)
       nokogiri
       rails (>= 3)
@@ -336,6 +342,10 @@ GEM
     unf_ext (0.0.7.1)
     unicode_utils (1.4.0)
     vcr (2.9.3)
+    webmock (1.22.1)
+      addressable (>= 2.3.6)
+      crack (>= 0.3.2)
+      hashdiff
 
 PLATFORMS
   ruby
@@ -380,10 +390,11 @@ DEPENDENCIES
   rubyzip (~> 1.1.0)
   sanitize (~> 2.0.6)
   spring
-  sunspot_matchers
-  sunspot_rails (~> 2.1.0)
-  sunspot_solr (~> 2.1.0)
+  sunspot-rails-tester
+  sunspot_rails
+  sunspot_solr
   vcr
+  webmock
 
 BUNDLED WITH
    1.10.6

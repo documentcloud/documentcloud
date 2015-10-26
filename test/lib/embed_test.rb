@@ -65,7 +65,6 @@ describe DC::Embed::Document do
     end
   end
   
-  it "should output to keys the viewer recognizes" do
-    
-  end
+  it "should output to keys the viewer recognizes"
+
 end

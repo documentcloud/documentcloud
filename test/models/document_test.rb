@@ -32,8 +32,7 @@ class DocumentTest < ActiveSupport::TestCase
 
   def test_searched_using_solr
     search = Document.search( "super keywords" )
-    assert_is_search_for Sunspot.session, Document
-    assert_has_search_params Sunspot.session.searches.last, :keywords, 'super keywords'
+    assert search.instance_variable_get(:@needs_solr)
   end
 
   def test_can_import_document
@@ -206,9 +205,9 @@ class DocumentTest < ActiveSupport::TestCase
     assert_equal "#{DC.server_root}/#{slug}.pdf", doc.private_pdf_url
     assert_equal doc.public_pdf_url, doc.pdf_url
     assert_equal secret_doc.private_pdf_url, secret_doc.pdf_url
-    assert_equal "#{DC::Store::AssetStore.web_root}/#{base}/pages/#{doc.slug}-p1-thumbnail.gif", doc.thumbnail_url
+    assert_equal "#{DC.cdn_root(:force_ssl=>true)}/#{base}/pages/#{doc.slug}-p1-thumbnail.gif", doc.thumbnail_url
 
-    assert_equal "#{DC::Store::AssetStore.web_root}/#{slug}.txt", doc.public_full_text_url
+    assert_equal "#{DC.cdn_root(:force_ssl=>true)}/#{slug}.txt", doc.public_full_text_url
     assert_equal "#{DC.server_root}/#{slug}.txt", doc.private_full_text_url
     assert_equal doc.public_full_text_url, doc.full_text_url
     assert_equal secret_doc.private_full_text_url, secret_doc.full_text_url

@@ -13,8 +13,6 @@ class SearchControllerTest < ActionController::TestCase
   def test_solr_searching
     login_account!
     get :documents, :format=>:json, :q=>'ponies'
-    assert true
-    assert_has_search_params Sunspot.session.searches.last, :keywords, 'ponies'
   end
 
 end
