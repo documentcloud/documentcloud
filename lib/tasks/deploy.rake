@@ -3,27 +3,42 @@ require 'zlib'
 namespace :deploy do
   DEPLOYABLE_ENV = %w(production staging)
 
-  desc "Deploy only minimal updates to Rails code"
+  desc "Deploy Rails app"
   task :minimal do
     remote ["app:update", "app:restart", "app:warm"], app_servers
   end
 
-  desc "Deploy and migrate the database, then restart CloudCrowd"
-  task :full do
-    remote ["app:update", "db:migrate", "crowd:server:restart"], central_servers
-    remote ["app:update", "app:bower", "app:jammit", "app:clearcache:docs", "app:clearcache:search", "app:restart", "app:warm"], app_servers
-    #remote ["app:restart_solr"], search_servers # solr is behaving badly, deploy to it manually for now.
-    remote ["app:update", "crowd:node:restart"], worker_servers
+  desc "Deploy Rails app and clear the JSON object cache"
+  task :rails do
+    remote ["app:update", "app:clearcache:docs", "app:clearcache:search", "app:restart", "app:warm"], app_servers
   end
 
-  desc "Deploy the Rails application"
+  desc "Deploy Rails app, update and compile static assets, and clear the JSON object cache"
   task :app do
     remote ["app:update", "app:bower", "app:jammit", "app:clearcache:docs", "app:clearcache:search", "app:restart", "app:warm"], app_servers
   end
 
-  desc "Deploy just updates to Rails code"
-  task :rails do
-    remote ["app:update", "app:clearcache:docs", "app:clearcache:search", "app:restart", "app:warm"], app_servers
+  desc "Deploy and migrate the database, then restart CloudCrowd"
+  task :full do
+    invoke "deploy:cluster"
+    invoke "deploy:app"
+    # invoke "deploy:search" # Solr is behaving badly, deploy manually for now
+    invoke "deploy:workers"
+  end
+
+  desc "Deploy Rails app to CloudCrowd server, migrate database, and restart CloudCrowd"
+  task :cluster do
+    remote ["app:update", "db:migrate", "crowd:server:restart"], central_servers
+  end
+
+  desc "Deploy Rails app to workers and restart CloudCrowd nodes"
+  task :workers do
+    remote ["app:update", "crowd:node:restart"], worker_servers
+  end
+
+  desc "Deploy Rails app to search server and restart Solr"
+  task :search do
+    remote ["app:update", "app:restart_solr"], search_servers
   end
 
   desc "Deploy the Document Viewer to S3"
