@@ -47,6 +47,13 @@ namespace :app do
     sh 'bundle install'
   end
 
+  desc "Update Bower dependencies"
+  task :bower do
+    options = ['-F']
+    options.push "--production" if Rails.env.staging? or Rails.env.production?
+    sh "bower install #{options.join(' ')}"
+  end
+
   desc "Repackage static assets"
   task :jammit do
     config = YAML.load(ERB.new(File.read("#{Rails.root}/config/document_cloud.yml")).result(binding))[Rails.env]
