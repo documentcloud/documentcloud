@@ -3,7 +3,6 @@ $(function() {
   window.HomePage = Backbone.View.extend({
 
     BLOG_HEADLINES_URL : '//blog.documentcloud.org/?json=get_recent_posts&count=7&callback=?',
-    FAVORITES_URL : '//twitter.com/favorites/documentcloud.json?callback=?',
 
     el : document.body,
 
@@ -48,22 +47,6 @@ $(function() {
 
     removeFocus : function() {
       $('#search_box_wrapper').removeClass('focus');
-    },
-
-    loadTweets : function() {
-      if (!$(document.body).hasClass('homepage')) return;
-      var formatDate = DateUtils.create("%b %e, %Y");
-      $.getJSON(this.FAVORITES_URL, function(json) {
-        var tweets = json.slice(0, 3);
-        var html   = "";
-        _.each(tweets, function(tweet, i) {
-          html += JST['home/tweet'](_.extend(tweet, {
-            index: i,
-            date : formatDate(new Date(Date.parse(tweet.created_at)))
-          }));
-        });
-        $('#tweets').html(html).show();
-      });
     },
 
     loadBlogHeadlines : function() {
