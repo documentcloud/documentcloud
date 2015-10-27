@@ -39,7 +39,6 @@ namespace :build do
   task :search_embed do
     FileUtils.rm_r('build') if File.exists?('build')
     sh "jammit -f -o build -c config/search_embed_assets.yml"
-    sh "rm build/*.gz"
 
     Dir['build/*.css'].each do |css_file|
       File.open(css_file, 'r+') do |file|
