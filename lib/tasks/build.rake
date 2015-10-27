@@ -33,14 +33,19 @@ namespace :build do
   end
   
   task :note_embed do
-    FileUtils.cp_r(Dir.glob("public/javascripts/vendor/documentcloud-notes/dist/*"), "public/note_embed")
+    note_embed_dir = 'public/note_embed'
+    FileUtils.rm_r(note_embed_dir) if File.exists?(note_embed_dir)
+    FileUtils.mkdir(note_embed_dir)
+    FileUtils.cp_r(Dir.glob("public/javascripts/vendor/documentcloud-notes/dist/*"), note_embed_dir)
   end
 
   task :search_embed do
-    FileUtils.rm_r('build') if File.exists?('build')
-    sh "jammit -f -o build -c config/search_embed_assets.yml"
+    search_embed_dir = "public/search_embed"
+    build_dir        = "tmp/build"
 
-    Dir['build/*.css'].each do |css_file|
+    FileUtils.rm_r(build_dir) if File.exists?(build_dir)
+    sh "jammit -f -o #{build_dir} -c config/search_embed_assets.yml"
+    Dir["#{build_dir}/*.css"].each do |css_file|
       File.open(css_file, 'r+') do |file|
         css = file.read
         css.gsub!("/images/search_embed", 'images')
@@ -49,12 +54,12 @@ namespace :build do
         file.truncate(css.length)
       end
     end
-    FileUtils.cp_r("public/images/search_embed", 'build/images') if File.exists?("public/images/search_embed")
+    FileUtils.cp_r("public/images/search_embed", "#{build_dir}/images") if File.exists?("public/images/search_embed")
 
-    FileUtils.rm_r("public/search_embed") if File.exists?("public/search_embed")
-    FileUtils.cp_r('build', "public/search_embed")
+    FileUtils.rm_r(search_embed_dir) if File.exists?(search_embed_dir)
+    FileUtils.cp_r(build_dir, search_embed_dir)
 
-    FileUtils.rm_r('build') if File.exists?('build')
+    FileUtils.rm_r(build_dir) if File.exists?(build_dir) # Clean up tmp
   end
 
 end
