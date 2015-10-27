@@ -1,43 +1,5 @@
 namespace :build do
 
-  BACKBONE         = '../backbone/backbone.js'
-  UNDERSCORE       = '../underscore/underscore.js'
-  VISUALSEARCH_JS  = '../visualsearch/build/visualsearch.js'
-  VISUALSEARCH_CSS = '../visualsearch/build/visualsearch.css'
-
-  # Figure out the version number of a JS source file.
-  def get_version(string)
-    string.match(/VERSION = '(\S+)'/)[1]
-  end
-
-  # Pull in a new build of Backbone.
-  task :backbone do
-    version = get_version File.read BACKBONE
-    FileUtils.cp BACKBONE, "public/javascripts/vendor/backbone-#{version}.js", :verbose => true
-  end
-
-  # Pull in a new build of Underscore.
-  task :underscore do
-    version = get_version File.read UNDERSCORE
-    FileUtils.cp UNDERSCORE, "public/javascripts/vendor/underscore-#{version}.js", :verbose => true
-  end
-
-  # Pull in a new build of VisualSearch.
-  task :visualsearch do
-    version = get_version File.read VISUALSEARCH_JS
-    FileUtils.cp VISUALSEARCH_JS, "public/javascripts/vendor/visualsearch-#{version}.js", :verbose => true
-    FileUtils.cp VISUALSEARCH_CSS, "public/stylesheets/vendor/", :verbose => true
-
-    # Fix image url paths.
-    File.open('public/stylesheets/vendor/visualsearch.css', 'r+') do |file|
-      css = file.read
-      css.gsub!(/url\((.*?)images\/embed\/icons/, 'url(../../images/embed/icons')
-      file.rewind
-      file.write(css)
-      file.truncate(css.length)
-    end
-  end
-
   # Pull in a new build of the Document Viewer.
   task :viewer do
 
