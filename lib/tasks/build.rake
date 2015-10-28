@@ -34,9 +34,12 @@ namespace :build do
   
   task :note_embed do
     note_embed_dir = 'public/note_embed'
+
     FileUtils.rm_r(note_embed_dir) if File.exists?(note_embed_dir)
     FileUtils.mkdir(note_embed_dir)
     FileUtils.cp_r(Dir.glob("public/javascripts/vendor/documentcloud-notes/dist/*"), note_embed_dir)
+    # TODO: Configure S3/CloudFront to serve gzipped versions; until then, nix
+    sh "rm #{note_embed_dir}/*.gz"
   end
 
   task :search_embed do
