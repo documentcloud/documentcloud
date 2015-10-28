@@ -2,13 +2,14 @@ namespace :build do
 
   # Pull in a new build of the Document Viewer.
   task :viewer do
+    build_dir = "tmp/build"
 
     Dir.chdir '../document-viewer'
 
-    FileUtils.rm_r('build') if File.exists?('build')
-    sh "jammit -f -o build"
-    sh "rm build/*.gz"
-    Dir['build/*.css'].each do |css_file|
+    FileUtils.rm_r(build_dir) if File.exists?(build_dir)
+    sh "jammit -f -o #{build_dir}"
+    sh "rm #{build_dir}/*.gz"
+    Dir["#{build_dir}/*.css"].each do |css_file|
       File.open(css_file, 'r+') do |file|
         css = file.read
         css.gsub!(/(\.\.\/)+images/, 'images')
@@ -17,21 +18,21 @@ namespace :build do
         file.truncate(css.length)
       end
     end
-    FileUtils.cp_r('public/images', 'build/images')
+    FileUtils.cp_r("public/images", "#{build_dir}/images")
 
     # Export back to DocumentCloud
-    FileUtils.cp_r('build/images', '../documentcloud/public/viewer')
-    `cat build/viewer.js build/templates.js > build/viewer_new.js`
-    FileUtils.rm_r(['build/viewer.js', 'build/templates.js'])
-    FileUtils.mv 'build/viewer_new.js', 'build/viewer.js'
-    FileUtils.cp 'build/print.css', "../documentcloud/public/viewer/printviewer.css"
-    Dir['build/viewer*'].each do |asset|
+    FileUtils.cp_r("#{build_dir}/images", "../documentcloud/public/viewer")
+    sh "cat #{build_dir}/viewer.js #{build_dir}/templates.js > #{build_dir}/viewer_new.js"
+    FileUtils.rm_r(["#{build_dir}/viewer.js", "#{build_dir}/templates.js"])
+    FileUtils.mv "#{build_dir}/viewer_new.js", "#{build_dir}/viewer.js"
+    FileUtils.cp "#{build_dir}/print.css", "../documentcloud/public/viewer/printviewer.css"
+    Dir["#{build_dir}/viewer*"].each do |asset|
       FileUtils.cp(asset, "../documentcloud/public/viewer/#{File.basename(asset)}")
     end
-    FileUtils.rm_r('build') if File.exists?('build')
 
+    FileUtils.rm_r(build_dir) if File.exists?(build_dir) # Clean up tmp
   end
-  
+
   task :note_embed do
     note_embed_dir = 'public/note_embed'
 
