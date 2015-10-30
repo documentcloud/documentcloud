@@ -109,7 +109,7 @@
   - added_to_x_documents:
     - Se agregó un documento a %2$s
     - Se agregaron %1$d documentos a %2$s
-  - adding_accounts: Añadir Cuentas
+  - adding_accounts: Administrar Cuentas
   - administrator: Administrador
   - all_documents: Todos los Documentos
   - allow_readers_to_search: Permitir que lectores busquen esta colección de documentos

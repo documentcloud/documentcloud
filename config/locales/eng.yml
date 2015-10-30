@@ -106,7 +106,7 @@
   - added_to_x_documents:
     - Added a document to %2$s
     - Added %1$d documents to %2$s
-  - adding_accounts: Adding Accounts
+  - adding_accounts: Manage Accounts
   - administrator: Administrator
   - all_documents: All Documents
   - allow_readers_to_search: Allow readers to search this set of documents
@@ -324,7 +324,7 @@
   - future_documents_w_appear: Future documents %s will appear in your embed.
   - group: Group
   - guided_tour: Guided Tour
-  - guides_howtos: Guides & Howto's
+  - guides_howtos: Guides & How-to's
   - has_no_entities: "%s has no entities to display."
   - height: Height
   - help: Help
