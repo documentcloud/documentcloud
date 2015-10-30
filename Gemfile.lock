@@ -1,12 +1,4 @@
 GIT
-  remote: git://github.com/documentcloud/jammit.git
-  revision: 3c51c406ff00c81fa2a6612ca66936a4abba3f9b
-  specs:
-    jammit (0.7.1)
-      cssmin (~> 1.0)
-      jsmin (~> 1.0)
-
-GIT
   remote: git://github.com/documentcloud/open_calais.git
   revision: e29a75f1793e0a24f5f3a5af1d46b28f4a37b3f3
   branch: fuzziness
@@ -168,6 +160,9 @@ GEM
     i18n (0.7.0)
     i18n_data (0.7.0)
     iconv (1.0.4)
+    jammit (0.7.0)
+      cssmin (~> 1.0)
+      jsmin (~> 1.0)
     jsmin (1.0.1)
     json (1.8.3)
     jwt (1.5.2)
@@ -362,7 +357,7 @@ DEPENDENCIES
   guard-minitest
   highline
   iconv
-  jammit!
+  jammit (~> 0.7.0)
   minitest
   minitest-spec-rails
   net-ssh-shell
