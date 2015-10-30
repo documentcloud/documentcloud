@@ -54,6 +54,7 @@ sections      | include document sections in the results | true (not present by 
 annotations   | include document annotations in the results | true (not present by default)
 data          | include key/value data in the results | true (not present by default)
 mentions      | include highlighted mentions of the search phrase | 3 (not present by default, max is 10)
+order         | the order by which documents are listed | title (default is "created\_at", other choices are: "score", "created\_at", "title", "page_count", "source")
 
 ### Example
 
