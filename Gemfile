@@ -16,7 +16,7 @@ gem 'sunspot_solr'
 gem 'progress_bar' # Optional, used by sunspot to show progress while re-indexing
 gem 'cloud-crowd',            '~>0.7.6'
 gem 'pdftailor'
-gem 'pdfshaver'
+gem 'pdfshaver',              '>=0.0.2'
 
 gem 'omniauth',               '~> 1.2.1'
 gem 'omniauth-twitter',       '~> 1.0'
