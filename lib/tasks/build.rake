@@ -36,7 +36,7 @@ namespace :build do
   namespace :embed do
 
     task :page do
-      page_embed_dir = 'public/embed/page'
+      page_embed_dir = 'public/embeds/page'
 
       FileUtils.rm_r(page_embed_dir) if File.exists?(page_embed_dir)
       FileUtils.mkdir(page_embed_dir)
