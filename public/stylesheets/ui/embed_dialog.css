@@ -289,7 +289,7 @@
 
 .page_embed_dialog .page_preview_section {
   display: none;
-  background: rgb(224, 225, 227) url('/images/embed/pages/page_preview_bg.jpg') 0 0 repeat;
+  background: rgb(224, 225, 227) url('/images/embed/ui/bg.jpg') 0 0 repeat;
   padding: 25px;
   border-radius: 3px;
 }
