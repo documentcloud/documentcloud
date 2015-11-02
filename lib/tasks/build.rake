@@ -33,6 +33,21 @@ namespace :build do
     FileUtils.rm_r(build_dir) if File.exists?(build_dir) # Clean up tmp
   end
 
+  namespace :embed do
+
+    task :page do
+      page_embed_dir = 'public/embed/page'
+
+      FileUtils.rm_r(page_embed_dir) if File.exists?(page_embed_dir)
+      FileUtils.mkdir(page_embed_dir)
+      FileUtils.cp_r(Dir.glob("public/javascripts/vendor/documentcloud-pages/dist/*"), page_embed_dir)
+      FileUtils.cp_r(Dir.glob("public/javascripts/vendor/documentcloud-pages/src/css/vendor/fontello/font"), page_embed_dir)
+      # TODO: Configure S3/CloudFront to serve gzipped versions; until then, nix
+      sh "rm #{page_embed_dir}/*.gz"
+    end
+
+  end
+
   task :note_embed do
     note_embed_dir = 'public/note_embed'
 
