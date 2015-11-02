@@ -46,39 +46,53 @@ namespace :build do
       sh "rm #{page_embed_dir}/*.gz"
     end
 
+    task :note do
+      note_embed_dir = 'public/note_embed'
+
+      FileUtils.rm_r(note_embed_dir) if File.exists?(note_embed_dir)
+      FileUtils.mkdir(note_embed_dir)
+      FileUtils.cp_r(Dir.glob("public/javascripts/vendor/documentcloud-notes/dist/*"), note_embed_dir)
+      # TODO: Configure S3/CloudFront to serve gzipped versions; until then, nix
+      sh "rm #{note_embed_dir}/*.gz"
+    end
+
+    task :search do
+      search_embed_dir = "public/search_embed"
+      build_dir        = "tmp/build"
+
+      FileUtils.rm_r(build_dir) if File.exists?(build_dir)
+      sh "jammit -f -o #{build_dir} -c config/search_embed_assets.yml"
+      Dir["#{build_dir}/*.css"].each do |css_file|
+        File.open(css_file, 'r+') do |file|
+          css = file.read
+          css.gsub!("/images/search_embed", 'images')
+          file.rewind
+          file.write(css)
+          file.truncate(css.length)
+        end
+      end
+      FileUtils.cp_r("public/images/search_embed", "#{build_dir}/images") if File.exists?("public/images/search_embed")
+
+      FileUtils.rm_r(search_embed_dir) if File.exists?(search_embed_dir)
+      FileUtils.cp_r(build_dir, search_embed_dir)
+
+      FileUtils.rm_r(build_dir) if File.exists?(build_dir) # Clean up tmp
+    end
+
+    task :all do
+      invoke "build:embed:page"
+      invoke "build:embed:note"
+      invoke "build:embed:search"
+    end
+
   end
 
   task :note_embed do
-    note_embed_dir = 'public/note_embed'
-
-    FileUtils.rm_r(note_embed_dir) if File.exists?(note_embed_dir)
-    FileUtils.mkdir(note_embed_dir)
-    FileUtils.cp_r(Dir.glob("public/javascripts/vendor/documentcloud-notes/dist/*"), note_embed_dir)
-    # TODO: Configure S3/CloudFront to serve gzipped versions; until then, nix
-    sh "rm #{note_embed_dir}/*.gz"
+    puts "DEPRECATED. Use `build:embed:note` instead."
   end
 
   task :search_embed do
-    search_embed_dir = "public/search_embed"
-    build_dir        = "tmp/build"
-
-    FileUtils.rm_r(build_dir) if File.exists?(build_dir)
-    sh "jammit -f -o #{build_dir} -c config/search_embed_assets.yml"
-    Dir["#{build_dir}/*.css"].each do |css_file|
-      File.open(css_file, 'r+') do |file|
-        css = file.read
-        css.gsub!("/images/search_embed", 'images')
-        file.rewind
-        file.write(css)
-        file.truncate(css.length)
-      end
-    end
-    FileUtils.cp_r("public/images/search_embed", "#{build_dir}/images") if File.exists?("public/images/search_embed")
-
-    FileUtils.rm_r(search_embed_dir) if File.exists?(search_embed_dir)
-    FileUtils.cp_r(build_dir, search_embed_dir)
-
-    FileUtils.rm_r(build_dir) if File.exists?(build_dir) # Clean up tmp
+    puts "DEPRECATED. Use `build:embed:search` instead."
   end
 
 end
