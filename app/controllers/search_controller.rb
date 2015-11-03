@@ -57,10 +57,4 @@ class SearchController < ApplicationController
     @options = params[:options]
   end
 
-  def loader
-    respond_to do |format|
-      format.js { render :template => 'search_embed/loader' }
-    end
-  end
-
 end

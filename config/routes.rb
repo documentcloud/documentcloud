@@ -14,7 +14,6 @@ DC::Application.routes.draw do
   get '/search' => 'workspace#index'
   get '/search/preview' => 'search#preview', :as => :preview
   get '/search/restricted_count' => 'search#restricted_count'
-  get '/search/loader.:format' => 'search#loader'
   get '/search/:query' => 'workspace#index', :query => /.*/
   get '/help' => 'workspace#help'
   get '/help/:page' => 'workspace#help'
