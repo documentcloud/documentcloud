@@ -367,7 +367,7 @@ DEPENDENCIES
   omniauth-google-oauth2 (~> 0.2)
   omniauth-twitter (~> 1.0)
   open_calais!
-  pdfshaver
+  pdfshaver (>= 0.0.2)
   pdftailor
   pg
   progress_bar
