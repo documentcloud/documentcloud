@@ -1,15 +1,14 @@
 # Be sure to restart your server when you modify this file.
 
-# Add new mime types for use in respond_to blocks:
-Mime::Type.register "application/rdf+xml", :rdf
+mime_types = {
+  :rdf  => "application/rdf+xml",
+  :gz   => "application/x-gzip",
+  :svg  => "image/svg+xml",
+  :ttf  => "application/x-font-truetype",
+  :eot  => "application/vnd.ms-fontobject",
+  :woff => "application/font-woff"
+}
 
-# Add mime type for gzipped assets:
-Mime::Type.register "application/x-gzip", :gz
-
-#Mime::Type.register_alias "text/html", :iphone
-#Mime::Type.register "text/richtext", :rtf
-#Mime::Type.register 'application/pdf',      :pdf
-#Mime::Type.register 'application/zip',      :zip
-#Mime::Type.register 'application/rdf+xml',  :rdf
-#Mime::Type.register 'image/gif',            :gif
-#Mime::Type.register 'image/jpeg',           :jpg
+mime_types.each do |ext, mime_type|
+  Mime::Type.register mime_type, ext
+end
