@@ -1,0 +1,1 @@
+This directory exists as the build destination for `build:embed` rake tasks. Think of it like `dist`. Don't manually edit its contents unless you don't mind `build:embed` stomping all over it.

@@ -65,9 +65,9 @@ namespace :deploy do
       end
 
       # Upload loader (entry point)
-      upload_template( "public/embeds/page/enhance.js", "embed/loader/enhance.js" )
+      upload_template( "public/embed/page/enhance.js", "embed/loader/enhance.js" )
       # Upload assets: scripts, styles, and images
-      local_root = "public/embeds/page"
+      local_root = "public/embed/page"
       upload_filetree( "#{local_root}/**/*", "embed/page", /^#{local_root}/ )
     end
 
