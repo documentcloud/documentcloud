@@ -64,7 +64,7 @@ namespace :deploy do
 
       # Each loader.js file is the entry point for each embed.
       # It coordinates all of the other javascript and assets.
-      # they currently live at /notes/loader.js and /search/loader.js
+      # they currently live at /notes/loader.js and /embed/loader.js
       upload_template( "app/views/#{embed[:source_dir]}/loader.js.erb", "#{embed[:destination_dir]}/loader.js" )
       # The assets are currently served out of a different directory from each loader.
       # /note_embed/ and /search_embed/ respectively
