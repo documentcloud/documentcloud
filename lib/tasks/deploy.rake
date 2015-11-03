@@ -41,36 +41,72 @@ namespace :deploy do
     remote ["app:update", "app:restart_solr"], search_servers
   end
 
-  desc "Deploy the Document Viewer to S3"
-  task :viewer => :environment do
-    unless deployable_environment?
-      raise ArgumentError, "Rails.env was (#{Rails.env}) and should be one of #{DEPLOYABLE_ENV.inspect}
-(e.g. `rake production deploy:[taskname]`)"
-    end
-    upload_filetree( 'public/viewer/*', '', /^public\//)
-    upload_template( 'app/views/documents/loader.js.erb', 'viewer/loader.js' )
-  end
+  # TODO: Consolidate these using a loop like in the old version. This is just
+  #       an explicit first pass to draw attention to the similarities/diffs.
+  namespace :embed do
 
-  embeds = [{:name => :search_embed, :source_dir => 'search_embed', :destination_dir =>'embed'},
-            {:name => :note_embed,   :source_dir => 'note_embed',   :destination_dir =>'notes'}]
-
-  desc "Deploy the Search/Note Embed to S3"
-  embeds.each do |embed|
-    task embed[:name] => :environment do
+    # Deploy document viewer (https://github.com/documentcloud/document-viewer)
+    task :document => :environment do
       unless deployable_environment?
-        raise ArgumentError, "Rails.env was (#{Rails.env}) and should be one of #{DEPLOYABLE_ENV.inspect}
-(e.g. `rake production deploy:[taskname]`)"
+        raise ArgumentError, "Rails.env was (#{Rails.env}) and should be one of #{DEPLOYABLE_ENV.inspect} (e.g. `rake production deploy:[taskname]`)"
       end
 
-      # Each loader.js file is the entry point for each embed.
-      # It coordinates all of the other javascript and assets.
-      # they currently live at /notes/loader.js and /embed/loader.js
-      upload_template( "app/views/#{embed[:source_dir]}/loader.js.erb", "#{embed[:destination_dir]}/loader.js" )
-      # The assets are currently served out of a different directory from each loader.
-      # /note_embed/ and /search_embed/ respectively
-      local_root = "public/#{embed[:source_dir]}"
-      upload_filetree( "#{local_root}/**/*", embed[:source_dir], /^#{local_root}/ )
+      # Upload loader (entry point)
+      upload_template( 'app/views/documents/embed_loader.js.erb', 'viewer/loader.js' )
+      # Upload assets: scripts, styles, and images
+      local_root = "public/viewer"
+      upload_filetree( "#{local_root}/**/*", "viewer", /^#{local_root}/ )
     end
+
+    # Deploy page embed (https://github.com/documentcloud/documentcloud-pages)
+    task :page => :environment do
+      unless deployable_environment?
+        raise ArgumentError, "Rails.env was (#{Rails.env}) and should be one of #{DEPLOYABLE_ENV.inspect} (e.g. `rake production deploy:[taskname]`)"
+      end
+
+      # Upload loader (entry point)
+      upload_template( "public/embeds/page/enhance.js", "embed/loader/enhance.js" )
+      # Upload assets: scripts, styles, and images
+      local_root = "public/embeds/page"
+      upload_filetree( "#{local_root}/**/*", "embed/page", /^#{local_root}/ )
+    end
+
+    # Deploy note embed (https://github.com/documentcloud/documentcloud-notes)
+    task :note => :environment do
+      unless deployable_environment?
+        raise ArgumentError, "Rails.env was (#{Rails.env}) and should be one of #{DEPLOYABLE_ENV.inspect} (e.g. `rake production deploy:[taskname]`)"
+      end
+
+      # Upload loader (entry point)
+      upload_template( "app/views/annotations/embed_loader.js.erb", "notes/loader.js" )
+      # Upload assets: scripts, styles, and images
+      local_root = "public/note_embed"
+      upload_filetree( "#{local_root}/**/*", "note_embed", /^#{local_root}/ )
+    end
+
+    # Deploy search embed (document list)
+    task :search => :environment do
+      unless deployable_environment?
+        raise ArgumentError, "Rails.env was (#{Rails.env}) and should be one of #{DEPLOYABLE_ENV.inspect} (e.g. `rake production deploy:[taskname]`)"
+      end
+
+      # Upload loader (entry point)
+      upload_template( "app/views/search/embed_loader.js.erb", "embed/loader.js" )
+      # Upload assets: scripts, styles, and images
+      local_root = "public/search_embed"
+      upload_filetree( "#{local_root}/**/*", "search_embed", /^#{local_root}/ )
+    end
+
+  end
+
+  task :viewer do
+    puts "DEPRECATED. Use `deploy:embed:document` instead."
+  end
+  task :note_embed do
+    puts "DEPRECATED. Use `deploy:embed:note` instead."
+  end
+  task :search_embed do
+    puts "DEPRECATED. Use `deploy:embed:search` instead."
   end
 
   # helper methods for tasks that upload to S3
@@ -89,7 +125,7 @@ namespace :deploy do
 
         destination_path = destination_root + file.gsub(source_path_filter, '')
         destination = bucket.objects[destination_path]
-        puts "uploading #{file} (#{mimetype}) to #{destination_path}"
+        puts "Uploading #{file} (#{mimetype}) to #{destination_path}"
         destination.write( Pathname.new(file), upload_attributes)
       end
     end
@@ -98,11 +134,12 @@ namespace :deploy do
   def upload_template( template_path, destination_path )
     upload_attributes = { :acl => :public_read }
     contents = render_template(template_path)
-    puts "uploading #{template_path} to #{destination_path} and #{destination_path+'.gz'}"
+    puts "Uploading #{template_path} to #{destination_path} and #{destination_path + '.gz'}"
 
     destination = bucket.objects[ destination_path ]
     destination.write( contents, upload_attributes.merge(:content_type => 'application/javascript') )
 
+    # TODO: Configure S3/CloudFront to actually serve these
     zipped_destination = bucket.objects[ destination_path + '.gz' ]
     zipped_destination.write( gzip_string(contents), upload_attributes.merge(:content_type => Mime::Type.lookup_by_extension('gz').to_s) )
   end

@@ -120,7 +120,7 @@ class DocumentsController < ApplicationController
   end
 
   def loader
-    render :action => 'loader.js.erb', :content_type => :js
+    render :action => 'embed_loader.js.erb', :content_type => :js
   end
 
   def entities

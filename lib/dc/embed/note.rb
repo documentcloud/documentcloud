@@ -171,7 +171,7 @@ module DC
   
       # intended for use in the static deployment to s3.
       def self.static_loader(options={})
-        template_path = "#{Rails.root}/app/views/note_embed/loader.js.erb"
+        template_path = "#{Rails.root}/app/views/annotations/embed_loader.js.erb"
         ERB.new(File.read(template_path)).result(binding)
       end
   
