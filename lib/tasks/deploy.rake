@@ -109,9 +109,11 @@ namespace :deploy do
     puts "DEPRECATED. Use `deploy:embed:search` instead."
   end
 
-  # helper methods for tasks that upload to S3
-  def bucket; ::AWS::S3.new( { :secure => false } ).buckets[DC::SECRETS['bucket']]; end
-  def render_template(template_path); ERB.new(File.read( template_path )).result(binding); end  
+  # Helper methods for tasks that upload to S3
+
+  # NB: `:secure => true` may be a placebo, as I can't find documentation about     what it does and flipping it doesn't seem to affect the bucket's `url`.
+  def bucket; ::AWS::S3.new({ :secure => true }).buckets[DC::SECRETS['bucket']]; end
+  def render_template(template_path); ERB.new(File.read( template_path )).result(binding); end
   def deployable_environment?; DEPLOYABLE_ENV.include? Rails.env; end
 
   def upload_filetree( source_pattern, destination_root, source_path_filter=// )
