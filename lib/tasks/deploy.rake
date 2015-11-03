@@ -46,7 +46,7 @@ namespace :deploy do
   namespace :embed do
 
     # Deploy document viewer (https://github.com/documentcloud/document-viewer)
-    task :document => :environment do
+    task :viewer => :environment do
       unless deployable_environment?
         raise ArgumentError, "Rails.env was (#{Rails.env}) and should be one of #{DEPLOYABLE_ENV.inspect} (e.g. `rake production deploy:[taskname]`)"
       end
@@ -99,15 +99,10 @@ namespace :deploy do
 
   end
 
-  task :viewer do
-    puts "DEPRECATED. Use `deploy:embed:document` instead."
-  end
-  task :note_embed do
-    puts "DEPRECATED. Use `deploy:embed:note` instead."
-  end
-  task :search_embed do
-    puts "DEPRECATED. Use `deploy:embed:search` instead."
-  end
+  # Notices for old task names
+  task :viewer do       puts "REMOVED: Use `deploy:embed:document` instead." end
+  task :note_embed do   puts "REMOVED: Use `deploy:embed:note` instead." end
+  task :search_embed do puts "REMOVED: Use `deploy:embed:search` instead." end
 
   # Helper methods for tasks that upload to S3
 
