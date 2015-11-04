@@ -119,12 +119,13 @@ namespace :deploy do
   def upload_template( template_path, destination_path )
     upload_attributes = { :acl => :public_read }
     contents = render_template(template_path)
-    puts "Uploading #{template_path} to #{destination_path} and #{destination_path + '.gz'}"
+    puts "Uploading #{template_path} to #{destination_path}"
+    # puts "Uploading #{template_path} to #{destination_path} and #{destination_path + '.gz'}"
 
     destination = bucket.objects[ destination_path ]
     destination.write( contents, upload_attributes.merge(:content_type => 'application/javascript') )
 
-    # TODO: Configure S3/CloudFront to actually serve these
+    # Nix gzipped assets until we're serving them (#207)
     # zipped_destination = bucket.objects[ destination_path + '.gz' ]
     # zipped_destination.write( gzip_string(contents), upload_attributes.merge(:content_type => Mime::Type.lookup_by_extension('gz').to_s) )
   end
