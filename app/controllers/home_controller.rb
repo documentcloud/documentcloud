@@ -6,7 +6,7 @@ class HomeController < ApplicationController
 
   before_action :secure_only
   before_action :current_account
-  before_action :bouncer if Rails.env.staging?
+  before_action :bouncer if exclusive_access?
 
   def index
     @document = Rails.cache.fetch( "homepage/featured_document" ) do

@@ -5,7 +5,7 @@ class ApiController < ApplicationController
 
   layout 'workspace'
 
-  before_action :bouncer if Rails.env.staging?
+  before_action :bouncer if exclusive_access?
   before_action :prefer_secure, :only => [:index]
 
   skip_before_action :verify_authenticity_token

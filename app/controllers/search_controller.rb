@@ -1,7 +1,7 @@
 class SearchController < ApplicationController
   include DC::Search::Controller
 
-  before_action :bouncer if Rails.env.staging?
+  before_action :bouncer if exclusive_access?
 
   FIELD_STRIP = /\S+:\s*/
 

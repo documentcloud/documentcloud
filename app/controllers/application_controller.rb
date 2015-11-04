@@ -217,6 +217,10 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def exclusive_access?
+    Rails.env.staging?
+  end
+
   def set_ssl
     Thread.current[:ssl] = request.ssl?
   end

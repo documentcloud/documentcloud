@@ -6,7 +6,7 @@ class WorkspaceController < ApplicationController
   # Regex that matches missed markdown links in `[title][]` format.
   MARKDOWN_LINK_REPLACER = /\[([^\]]*?)\]\[\]/i
 
-  before_action :bouncer, :except => :index if Rails.env.staging?
+  before_action :bouncer, :except => :index if exclusive_access?
 
   before_action :secure_only
 
