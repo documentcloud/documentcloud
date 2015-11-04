@@ -122,8 +122,8 @@ namespace :deploy do
     destination.write( contents, upload_attributes.merge(:content_type => 'application/javascript') )
 
     # TODO: Configure S3/CloudFront to actually serve these
-    zipped_destination = bucket.objects[ destination_path + '.gz' ]
-    zipped_destination.write( gzip_string(contents), upload_attributes.merge(:content_type => Mime::Type.lookup_by_extension('gz').to_s) )
+    # zipped_destination = bucket.objects[ destination_path + '.gz' ]
+    # zipped_destination.write( gzip_string(contents), upload_attributes.merge(:content_type => Mime::Type.lookup_by_extension('gz').to_s) )
   end
   
   def gzip_string(contents)
