@@ -37,11 +37,20 @@ namespace :build do
     task :page do
       puts "Building page embed..."
 
-      page_embed_dir = 'public/embed/page'
-      FileUtils.rm_r(page_embed_dir) if File.exists?(page_embed_dir)
-      FileUtils.mkdir(page_embed_dir)
+      page_embed_dir = "public/embed/page"
+      loader_dir     = "public/embed/loader"
+
+      # Clean out old build files
+      FileUtils.rm_r page_embed_dir
+      FileUtils.mkdir page_embed_dir
+      # Don't `rm_r` the loader directory, as in the future other embed 
+      # builders might also write to it.
+      FileUtils.rm ["#{loader_dir}/enhance.js", "#{loader_dir}/pym.js"]
+
+      # Copy in new build files
       FileUtils.cp_r(Dir.glob("public/javascripts/vendor/documentcloud-pages/dist/*"), page_embed_dir)
       FileUtils.cp_r(Dir.glob("public/javascripts/vendor/documentcloud-pages/src/css/vendor/fontello/font"), page_embed_dir)
+      FileUtils.mv(["#{page_embed_dir}/enhance.js", "#{page_embed_dir}/pym.js"], "#{loader_dir}/")
 
       # TODO: Configure S3/CloudFront to serve gzipped versions; until then, nix
       `rm #{page_embed_dir}/*.gz`

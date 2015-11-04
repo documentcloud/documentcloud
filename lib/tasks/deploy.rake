@@ -52,9 +52,7 @@ namespace :deploy do
         :asset_dir   => 'viewer'
       },
       { :name        => :page,
-        # NB: This will get passed through `ERB.new()` even though it's not ERB
-        :loader_src  => 'public/embed/page/enhance.js',
-        :loader_dest => 'embed/loader/enhance.js',
+        :loader_dir  => 'embed/loader',
         :asset_dir   => 'embed/page'
       },
       { :name        => :note,
@@ -75,8 +73,13 @@ namespace :deploy do
           raise ArgumentError, "Rails.env was (#{Rails.env}) and should be one of #{DEPLOYABLE_ENV.inspect} (e.g. `rake production deploy:embed:[taskname]`)"
         end
 
-        # Upload loader (entry point)
-        upload_template( embed[:loader_src], embed[:loader_dest] )
+        if embed[:loader_dir]
+          # Loader isn't a template, it's a directory of files; upload them
+          upload_filetree( "public/#{embed[:loader_dir]}/**/*", embed[:loader_dir], /^public\/#{embed[:loader_dir]}/ )
+        else
+          # Loader is a template; render and upload it
+          upload_template( embed[:loader_src], embed[:loader_dest] )
+        end
         # Upload assets (scripts, styles, and images)
         upload_filetree( "public/#{embed[:asset_dir]}/**/*", embed[:asset_dir], /^public\/#{embed[:asset_dir]}/ )
       end
