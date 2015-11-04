@@ -45,56 +45,41 @@ namespace :deploy do
   #       an explicit first pass to draw attention to the similarities/diffs.
   namespace :embed do
 
-    # Deploy document viewer (https://github.com/documentcloud/document-viewer)
-    task :viewer => :environment do
-      unless deployable_environment?
-        raise ArgumentError, "Rails.env was (#{Rails.env}) and should be one of #{DEPLOYABLE_ENV.inspect} (e.g. `rake production deploy:[taskname]`)"
+    embeds = [
+      { :name        => :viewer,
+        :loader_src  => 'app/views/documents/embed_loader.js.erb',
+        :loader_dest => 'viewer/loader.js',
+        :asset_dir   => 'viewer'
+      },
+      { :name        => :page,
+        # NB: This will get passed through `ERB.new()` even though it's not ERB
+        :loader_src  => 'public/embed/page/enhance.js',
+        :loader_dest => 'embed/loader/enhance.js',
+        :asset_dir   => 'embed/page'
+      },
+      { :name        => :note,
+        :loader_src  => 'app/views/annotations/embed_loader.js.erb',
+        :loader_dest => 'notes/loader.js',
+        :asset_dir   => 'note_embed'
+      },
+      { :name        => :search,
+        :loader_src  => 'app/views/search/embed_loader.js.erb',
+        :loader_dest => 'embed/loader.js',
+        :asset_dir   => 'search_embed'
+      }
+    ]
+
+    embeds.each do |embed|
+      task embed[:name] => :environment do
+        unless deployable_environment?
+          raise ArgumentError, "Rails.env was (#{Rails.env}) and should be one of #{DEPLOYABLE_ENV.inspect} (e.g. `rake production deploy:embed:[taskname]`)"
+        end
+
+        # Upload loader (entry point)
+        upload_template( embed[:loader_src], embed[:loader_dest] )
+        # Upload assets (scripts, styles, and images)
+        upload_filetree( "public/#{embed[:asset_dir]}/**/*", embed[:asset_dir], /^public\/#{embed[:asset_dir]}/ )
       end
-
-      # Upload loader (entry point)
-      upload_template( 'app/views/documents/embed_loader.js.erb', 'viewer/loader.js' )
-      # Upload assets: scripts, styles, and images
-      local_root = "public/viewer"
-      upload_filetree( "#{local_root}/**/*", "viewer", /^#{local_root}/ )
-    end
-
-    # Deploy page embed (https://github.com/documentcloud/documentcloud-pages)
-    task :page => :environment do
-      unless deployable_environment?
-        raise ArgumentError, "Rails.env was (#{Rails.env}) and should be one of #{DEPLOYABLE_ENV.inspect} (e.g. `rake production deploy:[taskname]`)"
-      end
-
-      # Upload loader (entry point)
-      upload_template( "public/embed/page/enhance.js", "embed/loader/enhance.js" )
-      # Upload assets: scripts, styles, and images
-      local_root = "public/embed/page"
-      upload_filetree( "#{local_root}/**/*", "embed/page", /^#{local_root}/ )
-    end
-
-    # Deploy note embed (https://github.com/documentcloud/documentcloud-notes)
-    task :note => :environment do
-      unless deployable_environment?
-        raise ArgumentError, "Rails.env was (#{Rails.env}) and should be one of #{DEPLOYABLE_ENV.inspect} (e.g. `rake production deploy:[taskname]`)"
-      end
-
-      # Upload loader (entry point)
-      upload_template( "app/views/annotations/embed_loader.js.erb", "notes/loader.js" )
-      # Upload assets: scripts, styles, and images
-      local_root = "public/note_embed"
-      upload_filetree( "#{local_root}/**/*", "note_embed", /^#{local_root}/ )
-    end
-
-    # Deploy search embed (document list)
-    task :search => :environment do
-      unless deployable_environment?
-        raise ArgumentError, "Rails.env was (#{Rails.env}) and should be one of #{DEPLOYABLE_ENV.inspect} (e.g. `rake production deploy:[taskname]`)"
-      end
-
-      # Upload loader (entry point)
-      upload_template( "app/views/search/embed_loader.js.erb", "embed/loader.js" )
-      # Upload assets: scripts, styles, and images
-      local_root = "public/search_embed"
-      upload_filetree( "#{local_root}/**/*", "search_embed", /^#{local_root}/ )
     end
 
   end
