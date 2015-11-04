@@ -217,7 +217,7 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def exclusive_access?
+  def self.exclusive_access?
     Rails.env.staging?
   end
 
