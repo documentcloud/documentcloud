@@ -41,8 +41,6 @@ namespace :deploy do
     remote ["app:update", "app:restart_solr"], search_servers
   end
 
-  # TODO: Consolidate these using a loop like in the old version. This is just
-  #       an explicit first pass to draw attention to the similarities/diffs.
   namespace :embed do
 
     embeds = [
