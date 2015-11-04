@@ -3,13 +3,17 @@ namespace :build do
   namespace :embed do
 
     task :viewer do
-      build_dir = "tmp"
+      puts "Building viewer..."
 
+      # Navigate up and over to the `document-viewer` repo
+      # TODO: Stop doing this!
       Dir.chdir '../document-viewer'
 
+      build_dir = "tmp"
       FileUtils.rm_r(build_dir) if File.exists?(build_dir)
-      sh "jammit -f -o #{build_dir}"
-      sh "rm #{build_dir}/*.gz"
+
+      `jammit -f -o #{build_dir}`
+      `rm #{build_dir}/*.gz`
       Dir["#{build_dir}/*.css"].each do |css_file|
         File.open(css_file, 'r+') do |file|
           css = file.read
@@ -23,15 +27,18 @@ namespace :build do
 
       # Export back to DocumentCloud
       FileUtils.cp_r("#{build_dir}/images", "../documentcloud/public/viewer")
-      sh "cat #{build_dir}/viewer.js #{build_dir}/templates.js > #{build_dir}/viewer_new.js"
+      `cat #{build_dir}/viewer.js #{build_dir}/templates.js > #{build_dir}/viewer_new.js`
       FileUtils.rm_r(["#{build_dir}/viewer.js", "#{build_dir}/templates.js"])
-      FileUtils.mv "#{build_dir}/viewer_new.js", "#{build_dir}/viewer.js"
-      FileUtils.cp "#{build_dir}/print.css", "../documentcloud/public/viewer/printviewer.css"
+      FileUtils.mv("#{build_dir}/viewer_new.js", "#{build_dir}/viewer.js")
+      FileUtils.cp("#{build_dir}/print.css", "../documentcloud/public/viewer/printviewer.css")
       Dir["#{build_dir}/viewer*"].each do |asset|
         FileUtils.cp(asset, "../documentcloud/public/viewer/#{File.basename(asset)}")
       end
 
-      FileUtils.rm_r(build_dir) if File.exists?(build_dir) # Clean up tmp
+      # Clean up temp build directory
+      FileUtils.rm_r(build_dir) if File.exists?(build_dir)
+
+      puts "Done building viewer"
     end
 
     task :page do
@@ -40,40 +47,47 @@ namespace :build do
       page_embed_dir = "public/embed/page"
       loader_dir     = "public/embed/loader"
 
-      # Clean out old build files
-      FileUtils.rm_r page_embed_dir
-      FileUtils.mkdir page_embed_dir
+      FileUtils.rm_r(page_embed_dir) if File.exists?(page_embed_dir)
+      FileUtils.mkdir(page_embed_dir)
       # Don't `rm_r` the loader directory, as in the future other embed 
       # builders might also write to it.
-      FileUtils.rm ["#{loader_dir}/enhance.js", "#{loader_dir}/pym.js"]
+      FileUtils.rm(["#{loader_dir}/enhance.js", "#{loader_dir}/pym.js"])
 
-      # Copy in new build files
       FileUtils.cp_r(Dir.glob("public/javascripts/vendor/documentcloud-pages/dist/*"), page_embed_dir)
       FileUtils.cp_r(Dir.glob("public/javascripts/vendor/documentcloud-pages/src/css/vendor/fontello/font"), page_embed_dir)
       FileUtils.mv(["#{page_embed_dir}/enhance.js", "#{page_embed_dir}/pym.js"], "#{loader_dir}/")
 
-      # TODO: Configure S3/CloudFront to serve gzipped versions; until then, nix
+      # Nix gzipped assets until we're serving them (#207)
       `rm #{page_embed_dir}/*.gz`
 
       puts "Done building page embed"
     end
 
     task :note do
+      puts "Building note embed..."
+
       note_embed_dir = 'public/note_embed'
 
       FileUtils.rm_r(note_embed_dir) if File.exists?(note_embed_dir)
       FileUtils.mkdir(note_embed_dir)
+
       FileUtils.cp_r(Dir.glob("public/javascripts/vendor/documentcloud-notes/dist/*"), note_embed_dir)
-      # TODO: Configure S3/CloudFront to serve gzipped versions; until then, nix
-      sh "rm #{note_embed_dir}/*.gz"
+
+      # Nix gzipped assets until we're serving them (#207)
+      `rm #{note_embed_dir}/*.gz`
+
+      puts "Done building note embed"
     end
 
     task :search do
-      search_embed_dir = "public/search_embed"
-      build_dir        = "tmp/build"
+      puts "Building search embed..."
 
+      search_embed_dir = "public/search_embed"
+
+      build_dir        = "tmp/build"
       FileUtils.rm_r(build_dir) if File.exists?(build_dir)
-      sh "jammit -f -o #{build_dir} -c config/search_embed_assets.yml"
+
+      `jammit -f -o #{build_dir} -c config/search_embed_assets.yml`
       Dir["#{build_dir}/*.css"].each do |css_file|
         File.open(css_file, 'r+') do |file|
           css = file.read
@@ -88,7 +102,10 @@ namespace :build do
       FileUtils.rm_r(search_embed_dir) if File.exists?(search_embed_dir)
       FileUtils.cp_r(build_dir, search_embed_dir)
 
-      FileUtils.rm_r(build_dir) if File.exists?(build_dir) # Clean up tmp
+      # Clean up temp build directory
+      FileUtils.rm_r(build_dir) if File.exists?(build_dir)
+
+      puts "Done building search embed"
     end
 
     task :all do
