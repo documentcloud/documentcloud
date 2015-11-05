@@ -1,5 +1,5 @@
 // This file only makes sense in the context of the main platform.
-
+<% asset_root = DC.cdn_root(:agnostic => true) %>
 (function(){
   
   var ENV = window.ENV        = window.ENV || {};
@@ -8,8 +8,8 @@
   ENV.config.embed.assetPaths = ENV.config.embed.assetPaths || {};
 
   ENV.config.embed.assetPaths.page = {
-    style: "//dev.dcloud.org/embed/page/page_embed.css",
-    app:   "//dev.dcloud.org/embed/page/page_embed.js"
+    style: "<%= asset_root %>/embed/page/page_embed.css",
+    app:   "<%= asset_root %>/embed/page/page_embed.js"
   };
 
 })();

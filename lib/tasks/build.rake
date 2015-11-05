@@ -1,3 +1,5 @@
+require './lib/dc/urls' # For `:environment`-less `render_template()`
+
 namespace :build do
 
   namespace :embed do
@@ -41,24 +43,23 @@ namespace :build do
       puts "Done building viewer"
     end
 
-    task :page do
+    task :page  do
       puts "Building page embed..."
 
+      vendor_dir     = "public/javascripts/vendor/documentcloud-pages"
       page_embed_dir = "public/embed/page"
       loader_dir     = "public/embed/loader"
 
       FileUtils.rm_r(page_embed_dir) if File.exists?(page_embed_dir)
       FileUtils.mkdir(page_embed_dir)
-      # Don't `rm_r` the loader directory, as in the future other embed 
-      # builders might also write to it.
-      FileUtils.rm(["#{loader_dir}/enhance.js", "#{loader_dir}/pym.js"])
+      FileUtils.cp_r(Dir.glob("#{vendor_dir}/dist/*"), page_embed_dir)
+      FileUtils.cp_r(Dir.glob("#{vendor_dir}/src/css/vendor/fontello/font"), page_embed_dir)
 
-      FileUtils.cp_r(Dir.glob("public/javascripts/vendor/documentcloud-pages/dist/*"), page_embed_dir)
-      FileUtils.cp_r(Dir.glob("public/javascripts/vendor/documentcloud-pages/src/css/vendor/fontello/font"), page_embed_dir)
-      FileUtils.mv(["#{page_embed_dir}/enhance.js", "#{page_embed_dir}/pym.js"], "#{loader_dir}/")
+      `cat #{vendor_dir}/src/js/config/config.js.erb #{page_embed_dir}/enhance.js > #{loader_dir}/enhance.js.erb`
+      FileUtils.rm(["#{page_embed_dir}/enhance.js"])
 
-      # Nix gzipped assets until we're serving them (#207)
-      `rm #{page_embed_dir}/*.gz`
+      # This is just so local development has a copy of the page loader too
+      File.write("#{loader_dir}/enhance.js", render_template("#{loader_dir}/enhance.js.erb"))
 
       puts "Done building page embed"
     end
@@ -120,5 +121,7 @@ namespace :build do
   task :viewer do puts       "REMOVED: Use `build:embed:viewer` instead." end
   task :note_embed do puts   "REMOVED: Use `build:embed:note` instead." end
   task :search_embed do puts "REMOVED: Use `build:embed:search` instead." end
+
+  def render_template(template_path); ERB.new(File.read(template_path)).result(binding); end
 
 end
