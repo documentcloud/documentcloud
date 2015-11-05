@@ -58,7 +58,7 @@ namespace :build do
       `cat #{vendor_dir}/src/js/config/config.js.erb #{page_embed_dir}/enhance.js > #{loader_dir}/enhance.js.erb`
       FileUtils.rm(["#{page_embed_dir}/enhance.js"])
 
-      # This is just so local development has a copy of the page loader too
+      # Mimic deployment of the loader so that development has a copy too
       File.write("#{loader_dir}/enhance.js", render_template("#{loader_dir}/enhance.js.erb"))
 
       puts "Done building page embed"
@@ -76,6 +76,9 @@ namespace :build do
 
       # Nix gzipped assets until we're serving them (#207)
       `rm #{note_embed_dir}/*.gz`
+
+      # Mimic deployment of the loader so that development has a copy too
+      File.write("public/notes/loader.js", render_template("app/views/annotations/embed_loader.js.erb"))
 
       puts "Done building note embed"
     end
@@ -105,6 +108,9 @@ namespace :build do
 
       # Clean up temp build directory
       FileUtils.rm_r(build_dir) if File.exists?(build_dir)
+
+      # Mimic deployment of the loader so that development has a copy too
+      File.write("public/embed/loader.js", render_template("app/views/search/embed_loader.js.erb"))
 
       puts "Done building search embed"
     end
