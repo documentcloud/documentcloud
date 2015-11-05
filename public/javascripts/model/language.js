@@ -5,6 +5,7 @@ dc.language = {
     'ara' : 'Arabic',
     'zho' : 'Chinese (Simplified)',
     'tra' : 'Chinese (Traditional)', // this is not a real ISO-639-2 code, see comments on language.rb
+    'hrv' : 'Croatian',
     'dan' : 'Danish',
     'nld' : 'Dutch',
     'eng' : 'English',
@@ -18,9 +19,9 @@ dc.language = {
     'nor' : 'Norwegian',
     'por' : 'Portuguese',
     'ron' : 'Romanian',
+    'rus' : 'Russian',
     'spa' : 'Spanish',
     'swe' : 'Swedish',
-    'rus' : 'Russian',
     'ukr' : 'Ukrainian'
   },
   USER: ['dan','eng','rus','spa','ukr']

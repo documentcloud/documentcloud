@@ -8,6 +8,7 @@ module DC
       'ara' => 'Arabic',
       'zho' => 'Chinese (Simplified)',
       'tra' => 'Chinese (Traditional)', # this is not a real ISO-639-2 code, see note below.
+      'hrv' => 'Croatian',
       'dan' => 'Danish',
       'nld' => 'Dutch',
       'eng' => 'English',
@@ -21,9 +22,9 @@ module DC
       'nor' => 'Norwegian',
       'por' => 'Portuguese',
       'ron' => 'Romanian',
+      'rus' => 'Russian',
       'spa' => 'Spanish',
       'swe' => 'Swedish',
-      'rus' => 'Russian',
       'ukr' => 'Ukrainian'
     }
 
