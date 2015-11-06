@@ -1,5 +1,3 @@
-require 'zlib'
-
 namespace :deploy do
   DEPLOYABLE_ENV = %w(production staging)
 
@@ -149,19 +147,6 @@ namespace :deploy do
   end
   
   def gzip_string(contents)
-    # Create a pipe with an input IO and an output IO
-    IO.pipe do |zip_out, zip_in|
-      # make sure they're configured to take arbitrary binary data
-      zip_in.binmode
-      zip_out.binmode
-      # attach a gzip compressor as a funnel into the pipe.
-      # add the contents to the funnel.
-      # and then close off the top of the pipe.
-      Zlib::GzipWriter.new(zip_in, Zlib::BEST_COMPRESSION) do |zipper|
-        zipper.write(contents)
-      end.close
-      # retrieve the compressed contents out of the bottom of the pipe.
-      zip_out.read
-    end
+    ActiveSupport::Gzip.compress(contents, Zlib::BEST_COMPRESSION)
   end
 end
