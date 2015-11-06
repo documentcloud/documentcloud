@@ -91,15 +91,6 @@ namespace :deploy do
   task :note_embed do   puts "REMOVED: Use `deploy:embed:note` instead." end
   task :search_embed do puts "REMOVED: Use `deploy:embed:search` instead." end
 
-  # Helper methods for tasks that upload to S3
-
-  # NB: `:secure => true` may be a placebo, as I can't find documentation about     what it does and flipping it doesn't seem to affect the bucket's `url`.
-  def bucket; ::AWS::S3.new({ :secure => true }).buckets[DC::SECRETS['bucket']]; end
-  def render_template(template_path); ERB.new(File.read(template_path)).result(binding); end
-  def deployable_environment?; DEPLOYABLE_ENV.include? Rails.env; end
-  def compressed?(file); File.extname(file).remove(/^\./) == 'gz' end
-  def compressable?(file); ['css', 'js'].include?(File.extname(file).remove(/^\./)) end
-
   def upload_filetree( source_pattern, destination_root, source_path_filter=// )
     Dir[source_pattern].each do |file|
       unless File.directory?(file) || compressed?(file)
@@ -152,7 +143,12 @@ namespace :deploy do
     destination.write(file_contents, upload_attributes)
   end
   
-  def gzip_string(contents)
-    ActiveSupport::Gzip.compress(contents, Zlib::BEST_COMPRESSION)
-  end
+  # Helpers
+  # NB: `:secure => true` may be a placebo, as I can't find documentation about     what it does and flipping it doesn't seem to affect the bucket's `url`.
+  def bucket; ::AWS::S3.new({ :secure => true }).buckets[DC::SECRETS['bucket']]; end
+  def render_template(template_path); ERB.new(File.read(template_path)).result(binding); end
+  def deployable_environment?; DEPLOYABLE_ENV.include?(Rails.env); end
+  def compressed?(file); File.extname(file).remove(/^\./) == 'gz'; end
+  def compressable?(file); ['css', 'js'].include?(File.extname(file).remove(/^\./)); end
+  def gzip_string(contents); ActiveSupport::Gzip.compress(contents, Zlib::BEST_COMPRESSION); end
 end
