@@ -1,8 +1,6 @@
 javascript_compressor: closure
 template_function: dc._.template
 embed_assets: datauri
-# Nix gzipped assets until we're serving them (#207)
-gzip_assets: off
 
 javascripts:
   search_embed:

@@ -15,7 +15,6 @@ namespace :build do
       FileUtils.rm_r(build_dir) if File.exists?(build_dir)
 
       `jammit -f -o #{build_dir}`
-      `rm #{build_dir}/*.gz`
       Dir["#{build_dir}/*.css"].each do |css_file|
         File.open(css_file, 'r+') do |file|
           css = file.read
