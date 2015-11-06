@@ -103,37 +103,53 @@ namespace :deploy do
   def bucket; ::AWS::S3.new({ :secure => true }).buckets[DC::SECRETS['bucket']]; end
   def render_template(template_path); ERB.new(File.read( template_path )).result(binding); end
   def deployable_environment?; DEPLOYABLE_ENV.include? Rails.env; end
+  def compressed?(file); File.extname(file).remove(/^\./) == 'gz' end
+  def compressable?(file); ['css', 'js'].include?(File.extname(file).remove(/^\./)) end
 
   def upload_filetree( source_pattern, destination_root, source_path_filter=// )
     Dir[source_pattern].each do |file|
-      unless File.directory?(file)
+      unless File.directory?(file) || compressed?(file)
         upload_attributes = { :acl => :public_read }
 
-        # attempt to identify the mimetype for this file.
+        # Attempt to identify the MIME type for this file
         file_extension = File.extname(file).remove(/^\./)
-        mimetype = Mime::Type.lookup_by_extension(file_extension)
-        upload_attributes[:content_type] = mimetype.to_s if mimetype
-        upload_attributes[:content_encoding] = 'gzip' if file_extension == 'gz'
+        mime_type      = Mime::Type.lookup_by_extension(file_extension)
+        upload_attributes[:content_type] = mime_type.to_s if mime_type
+
+        if compressable?(file)
+          if File.exists?("#{file}.gz")
+            # Rather than uploading `foo.css`, upload `foo.css.gz` as `foo.css`
+            file_contents = File.read("#{file}.gz")
+          else
+            # Compress `foo.css` and upload it as `foo.css`
+            file_contents = gzip_string(File.read(file))
+          end
+          upload_attributes[:content_encoding] = 'gzip'
+        else
+          # File isn't compressable; upload as-is
+          file_contents = Pathname.new(file)
+        end
 
         destination_path = destination_root + file.gsub(source_path_filter, '')
+        puts "Uploading #{file} (#{mime_type}) to #{destination_path}"
         destination = bucket.objects[destination_path]
-        puts "Uploading #{file} (#{mimetype}) to #{destination_path}"
-        destination.write( Pathname.new(file), upload_attributes)
+        destination.write(file_contents, upload_attributes)
       end
     end
   end
 
-  def upload_template( template_path, destination_path )
-    upload_attributes = { :acl => :public_read }
-    contents = render_template(template_path)
-    puts "Uploading #{template_path} to #{destination_path} and #{destination_path + '.gz'}"
+  def upload_template(template_path, destination_path)
+    upload_attributes = {
+      :acl              => :public_read,
+      :content_type     => 'application/javascript',
+      :content_encoding => 'gzip'
+    }
 
-    destination = bucket.objects[ destination_path ]
-    destination.write( contents, upload_attributes.merge(:content_type => 'application/javascript') )
+    file_contents = gzip_string(render_template(template_path))
 
-    zipped_destination = bucket.objects[ destination_path + '.gz' ]
-    zip_attrs = upload_attributes.merge({:content_type => Mime::Type.lookup_by_extension('gz').to_s, :content_encoding => 'gzip'})
-    zipped_destination.write(gzip_string(contents), zip_attrs)
+    puts "Uploading #{template_path} to #{destination_path} (compressed)"
+    destination = bucket.objects[destination_path]
+    destination.write(file_contents, upload_attributes)
   end
   
   def gzip_string(contents)
