@@ -111,21 +111,27 @@ namespace :deploy do
         upload_attributes[:content_type] = mime_type.to_s if mime_type
 
         if compressable?(file)
-          if File.exists?("#{file}.gz")
-            # Rather than uploading `foo.css`, upload `foo.css.gz` as `foo.css`
-            file_contents = File.read("#{file}.gz")
-          else
-            # Compress `foo.css` and upload it as `foo.css`
-            file_contents = gzip_string(File.read(file))
-          end
+          # Compress `foo.css` and upload it as `foo.css`
+          file_contents = gzip_string(File.read(file))
           upload_attributes[:content_encoding] = 'gzip'
+          message_suffix = " (compressed)"
+
+          # NB: We would *like* to re-use Jammit's precompressed `.gz` file if 
+          # it exists, but they seem to be broken. At least, browsers think so.
+          # But in case that's ever fixed, here's the logic we'd *like* to have.
+          # 
+          # if File.exists?("#{file}.gz")
+          #   file_contents = File.read("#{file}.gz")
+          # else
+          #   file_contents = gzip_string(File.read(file))
+          # end
         else
           # File isn't compressable; upload as-is
-          file_contents = Pathname.new(file)
+          file_contents = file
         end
 
         destination_path = destination_root + file.gsub(source_path_filter, '')
-        puts "Uploading #{file} (#{mime_type}) to #{destination_path}"
+        puts "Uploading #{file} (#{mime_type}) to #{destination_path}#{message_suffix}"
         destination = bucket.objects[destination_path]
         destination.write(file_contents, upload_attributes)
       end
