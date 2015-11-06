@@ -84,6 +84,12 @@ namespace :deploy do
       end
     end
 
+    task :all => :environment do
+      embeds.each do |embed|
+        invoke "deploy:embed:#{embed[:name]}"
+      end
+    end
+
   end
 
   # Notices for old task names
@@ -128,7 +134,6 @@ namespace :deploy do
     zipped_destination = bucket.objects[ destination_path + '.gz' ]
     zip_attrs = upload_attributes.merge({:content_type => Mime::Type.lookup_by_extension('gz').to_s, :content_encoding => 'gzip'})
     zipped_destination.write(gzip_string(contents), zip_attrs)
-    puts zip_attrs.inspect
   end
   
   def gzip_string(contents)
