@@ -40,6 +40,8 @@ namespace :build do
       # Clean up temp build directory
       FileUtils.rm_r(build_dir) if File.exists?(build_dir)
 
+      Dir.chdir '../documentcloud'
+
       puts "Done building viewer"
     end
 
@@ -113,6 +115,7 @@ namespace :build do
     end
 
     task :all do
+      invoke "build:embed:viewer"
       invoke "build:embed:page"
       invoke "build:embed:note"
       invoke "build:embed:search"
