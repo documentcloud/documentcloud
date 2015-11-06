@@ -74,9 +74,6 @@ namespace :build do
 
       FileUtils.cp_r(Dir.glob("public/javascripts/vendor/documentcloud-notes/dist/*"), note_embed_dir)
 
-      # Nix gzipped assets until we're serving them (#207)
-      `rm #{note_embed_dir}/*.gz`
-
       # Mimic deployment of the loader so that development has a copy too
       File.write("public/notes/loader.js", render_template("app/views/annotations/embed_loader.js.erb"))
 
