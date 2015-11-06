@@ -1,31 +1,69 @@
-# Cargando documentos
+# Carga de documentos
 
-La mayoría de usuarios de DocumentCloud están usando archivos PDF, pero nuestro software puede trabajar con cualquier tipo de archivo compatible con OpenOffice: documentos en Microsoft Word, RTF y archivos de OpenDocument funcionarán bien. Los archivos de imágenes, como tiff, jpeg y png también funcionarán.
+Como usuario DocumentCloud, usted quiere construir una colección de archivos a la investigación, analizar, comentar y publicar con nuestros incrusta. Afortunadamente, la carga de archivos - si usted tiene un puñado o varios miles - es fácil.
 
-Si abre un proyecto antes de comenzar la carga, sus nuevos documentos se añadirán al proyecto que ha abierto.
+## Contenido
 
-Para cargar uno o varios documentos, haga clic en el botón "Documentos Nuevos" en la barra lateral y seleccione los archivos que desea subir. Mantenga presionada la tecla Ctrl para seleccionar más de un documento. *Nota: solo se pueden cargar múltiples documentos a la vez usando navegadores que no sean Internet Explorer.*
+* Carga:
+  * [Sube a través de Workspace](#upload-workspace)
+  * [Sube a través de API](#upload-api)
+* Details and Options:
+  * [OCR Idiomas](#ocr-languages)
+  * [Formatos de Archivo](#file-formats)
+  * [Tamaño de Archivo](#file-size)
+
+<a name="upload-workspace"></a>
+## Sube a través de Workspace
+
+Hay dos formas de subir en el workspace:
+
+* Arrastre y suelte los documentos en el propio espacio de trabajo. *Nota: nuevo navegador de Microsoft Windows 10, Edge, no soporta arrastrar y soltar actualmente.*
+* Alternativamente, haga clic en el botón "Documentos nuevos" en la barra lateral y seleccione los archivos que desea cargar. En Windows, mantenga presionada la tecla `ctrl` para seleccionar más de un documento. En un Mac, mantenga presionada `command`. *Nota: solo se pueden cargar múltiples documentos a la vez usando navegadores que no sean Internet Explorer.*
 
 <img src="/images/help/upload_dialog.png" class="full_line" />
 
-El cargador le sugerirá un título para el documento, basado en el nombre del archivo. Usted puede editar el título antes de continuar, pero también podrá de editar los metadatos de cada documento después de haberlos cargado. Considere proporcionar datos adicionales acerca de cada documento: haga clic en el icono de lápiz para ampliar una forma detallada, donde puede añadir una descripción y fuente/origen de cada documento y establecer el nivel de acceso. Si los archivos que está cargando deben compartir una fuente y descripción, haga clic en el enlace titulado: "aplicar a todos los archivos."
+El cargador le sugerirá un título para el documento basado en su nombre de archivo. Puede editar el título antes de continuar, o puede editar el título, más otros metadatos después se carga el documento. Haga clic en el icono de lápiz para agregar una descripción y la fuente para cada documento y establecer el nivel de acceso (por defecto es privado). Si los archivos que estamos introduciendo deben compartir una fuente y la descripción, haga clic en "Aplicar a todos los archivos."
 
-Cuando esté listo, haga clic en "Subir”. El diálogo se cerrará cuando todos los archivos se hayan cargado. Antes de poder trabajar con ellos, DocumentCloud tiene que terminar de procesar sus documentos para poder verlos en nuestro visor de documentos. La mayoría de los documentos son procesados en menos de 30 minutos, pero el tiempo que se tarda en procesar los documentos depende en gran medida de cuántos usuarios están trabajando al mismo tiempo. Si desea que se le notifique cuando el grupo de documentos termine de ser procesado, haga clic en la casilla correspondiente y nosotros le enviaremos un e-mail cuando estén listos. Si está cargando muchos documentos grandes a la vez, notifíquenos para asegurarnos de que hay suficiente potencia de cálculo disponible.
+Cuando esté listo, haga clic en "Subir." El diálogo se cerrará cuando todos los archivos se han subido. Antes de poder trabajar con ellos, sin embargo, DocumentCloud debe procesar los documentos para el visor de documentos. La cantidad de tiempo requerido para procesar un documento varía en función de su tamaño, su tipo y la cantidad actual de la actividad de la plataforma.
 
-Usted puede obtener mejores resultados si optimiza documentos de gran tamaño (de más de 10 MB) antes de cargarlos. En Mac, [utilice Vista Previa (Preview) para reducir el tamaño de su archivo](http://www.ehow.com/how_4499823_reduce-file-size-pdf-using.html). Adobe Acrobat [tan bien funciona](http://www.ehow.com/how_5874491_decrease-size-pdf.html). ¿No tiene Acrobat o Vista Previa? Visite nuestra página de consejos para [solución de problemas de documentos](/help/troubleshooting) para obtener más recursos.
+Para ser notificado por correo electrónico cuando se acaban sus documentos, haga clic en la casilla de verificación. Si va a subir muchos documentos grandes a la vez, háganoslo saber para que podamos garantizar que hay suficientes recursos informáticos disponibles.
 
-## API
+Para ver todos los documentos que has subido, haga clic en el enlace "[Tus Documentos][]" en la parte superior izquierda.
 
-También ofrecemos una [API para cargar conjuntos](/help/api) de documentos. La información de nuestro API sólo es accesible para usuarios registrados.
+<a name="upload-api"></a>
+## Sube a través de API
 
-## Reconocimiento óptico de caracteres (OCR)
+Los usuarios que quieran subir muchos cientos o miles de documentos o automatizar los envíos de documentos pueden querer considerar el uso de la [DocumentCloud API][]. [El método][] `upload.json` prevé que pasa en el nombre del archivo, de la identificación de proyectos y muchos otros parámetros con el propio archivo. También permite archivos directamente desde una URL.
 
-Estamos utilizando un software de OCR llamado [Tesseract](http://code.google.com/p/tesseract-ocr/). Para ser una herramienta absolutamente gratis, es bastante impresionante, pero usted obtendrá mejores resultados con algunos de los servicios de propiedad más elegantes como Abbyy o Nuance. Si usted tiene acceso a OCR de alta calidad, le recomendamos utilice dicho [OCR](http://en.wikipedia.org/wiki/Optical_character_recognition) en su documento antes de subirlo a DocumentCloud.
+<a name="ocr-languages"></a>
+## OCR Idiomas
 
-¿Qué es OCR? OCR es un software que identifica cada carácter individual o letra en un documento escaneado o en imágenes que de otra manera no tienen información de texto.
+Si el archivo ha texto incrustado, extractos DocumentCloud y lo guarda. Si no es así (como en un archivo de imagen o un archivo PDF de un documento escaneado), DocumentCloud utiliza el reconocimiento óptico de caracteres ([OCR][]) de software para tratar de identificar el texto. Para ello, nuestra plataforma se basa en el código abierto [Tesseract][] biblioteca.
 
-## Revisando su trabajo
+A través de Tesseract, DocumentCloud Actualmente soporta más de 20 idiomas para OCR, incluido el árabe, español y ruso. Puede seleccionar un idioma predeterminado en la pestaña "Cuentas" en el Workspace. Elija un idioma en el menú desplegable "Documentos nuevos".
 
-Para ver todos los documentos que ha subido, haga clic en el enlace ["Tus Documentos"](javascript:Accounts.current(\).openDocuments(\)) en la parte superior izquierda.
+<a name="file-formats"></a>
+## Formatos de Archivo
 
-¿Todavía tiene preguntas acerca de la carga de documentos? No dude en [comunicarse con nosotros](javascript:dc.ui.Dialog.contact(\)).
+La mayoría de los usuarios DocumentCloud trabajar con archivos PDF, pero nuestro software pueden tomar cualquier tipo de archivo que [LibreOffice][] apoyos. Esto incluye Microsoft Word, Excel y PowerPoint; Archivos de texto enriquecido; y varios archivos de imagen incluyendo TIFF, PNG, GIF y JPEG.
+
+Al cargar, todos los archivos que no son PDF se convierten a PDF para su uso en DocumentCloud.
+
+<a name="file-size"></a>
+## Tamaño de Archivo
+
+El tamaño máximo de archivo para una carga de DocumentCloud es de 400 MB. Sin embargo, los archivos que grandes son difíciles de procesar, y es probable que obtener mejores resultados si a optimizar documentos de gran tamaño (algo más de 10 MB) antes de cargarlas. En un Mac, [usar Vista previa para reducir el tamaño de su archivo][]. Adobe Acrobat [funciona tan bien][]. ¿No tiene Acrobat o de vista previa? Echa un vistazo a nuestros consejos para la solución de [problemas documentos][] para más recursos.
+
+
+¿Todavía tiene preguntas sobre la carga de documentos? No dude en [contáctenos][].
+
+[LibreOffice]: http://www.libreoffice.org/
+[usar Vista previa para reducir el tamaño de su archivo]: http://www.ehow.com/how_4499823_reduce-file-size-pdf-using.html
+[funciona tan bien]: http://www.ehow.com/how_5874491_decrease-size-pdf.html
+[OCR]: http://en.wikipedia.org/wiki/Optical_character_recognition
+[Tesseract]: http://code.google.com/p/tesseract-ocr/
+[problemas documentos]: /help/troubleshooting
+[DocumentCloud API]: /help/api
+[El método]: /help/api#upload-documents
+[Tus Documentos]: javascript:Accounts.current().openDocuments()
+[contáctenos]: javascript:dc.ui.Dialog.contact()
