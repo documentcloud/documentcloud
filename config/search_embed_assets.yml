@@ -1,8 +1,6 @@
 javascript_compressor: closure
 template_function: dc._.template
 embed_assets: datauri
-# TODO: Configure S3/CloudFront to serve gzipped versions; until then, disable
-gzip_assets: off
 
 javascripts:
   search_embed:

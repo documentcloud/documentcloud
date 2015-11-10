@@ -3,11 +3,11 @@ defaults: &defaults
   cloud_crowd_server:   http://dev.dcloud.org:8080
   cloud_crowd_console:  http://dev.dcloud.org:8080
   server_root:          dev.dcloud.org
+  asset_root:           dev.dcloud.org
   large_file_storage:   /mnt/large_files
   aws_region:           us-east-1
   aws_zone:             us-east-1c
   preconfigured_ami_id: <%= secrets['ami'] %>
-  asset_root:           "dev.dcloud.org"
 
 development:
   <<: *defaults

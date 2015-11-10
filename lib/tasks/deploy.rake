@@ -1,5 +1,3 @@
-require 'zlib'
-
 namespace :deploy do
   DEPLOYABLE_ENV = %w(production staging)
 
@@ -41,86 +39,116 @@ namespace :deploy do
     remote ["app:update", "app:restart_solr"], search_servers
   end
 
-  desc "Deploy the Document Viewer to S3"
-  task :viewer => :environment do
-    unless deployable_environment?
-      raise ArgumentError, "Rails.env was (#{Rails.env}) and should be one of #{DEPLOYABLE_ENV.inspect}
-(e.g. `rake production deploy:[taskname]`)"
-    end
-    upload_filetree( 'public/viewer/*', '', /^public\//)
-    upload_template( 'app/views/documents/loader.js.erb', 'viewer/loader.js' )
-  end
+  namespace :embed do
 
-  embeds = [{:name => :search_embed, :source_dir => 'search_embed', :destination_dir =>'embed'},
-            {:name => :note_embed,   :source_dir => 'note_embed',   :destination_dir =>'notes'}]
+    embeds = [
+      { :name        => :viewer,
+        :loader_src  => 'app/views/documents/embed_loader.js.erb',
+        :loader_dest => 'viewer/loader.js',
+        :asset_dir   => 'viewer'
+      },
+      { :name        => :page,
+        :loader_src  => 'public/embed/loader/enhance.js.erb',
+        :loader_dest => 'embed/loader/enhance.js',
+        :asset_dir   => 'embed/page'
+      },
+      { :name        => :note,
+        :loader_src  => 'app/views/annotations/embed_loader.js.erb',
+        :loader_dest => 'notes/loader.js',
+        :asset_dir   => 'note_embed'
+      },
+      { :name        => :search,
+        :loader_src  => 'app/views/search/embed_loader.js.erb',
+        :loader_dest => 'embed/loader.js',
+        :asset_dir   => 'search_embed'
+      }
+    ]
 
-  desc "Deploy the Search/Note Embed to S3"
-  embeds.each do |embed|
-    task embed[:name] => :environment do
-      unless deployable_environment?
-        raise ArgumentError, "Rails.env was (#{Rails.env}) and should be one of #{DEPLOYABLE_ENV.inspect}
-(e.g. `rake production deploy:[taskname]`)"
+    embeds.each do |embed|
+      task embed[:name] => :environment do
+        unless deployable_environment?
+          raise ArgumentError, "Rails.env was (#{Rails.env}) and should be one of #{DEPLOYABLE_ENV.inspect} (e.g. `rake production deploy:embed:[taskname]`)"
+        end
+
+        # Upload loader (entry point)
+        upload_template(embed[:loader_src], embed[:loader_dest])
+
+        # Upload assets (scripts, styles, and images)
+        upload_filetree("public/#{embed[:asset_dir]}/**/*", embed[:asset_dir], /^public\/#{embed[:asset_dir]}/)
       end
-
-      # Each loader.js file is the entry point for each embed.
-      # It coordinates all of the other javascript and assets.
-      # they currently live at /notes/loader.js and /search/loader.js
-      upload_template( "app/views/#{embed[:source_dir]}/loader.js.erb", "#{embed[:destination_dir]}/loader.js" )
-      # The assets are currently served out of a different directory from each loader.
-      # /note_embed/ and /search_embed/ respectively
-      local_root = "public/#{embed[:source_dir]}"
-      upload_filetree( "#{local_root}/**/*", embed[:source_dir], /^#{local_root}/ )
     end
+
+    task :all => :environment do
+      embeds.each do |embed|
+        invoke "deploy:embed:#{embed[:name]}"
+      end
+    end
+
   end
 
-  # helper methods for tasks that upload to S3
-  def bucket; ::AWS::S3.new( { :secure => false } ).buckets[DC::SECRETS['bucket']]; end
-  def render_template(template_path); ERB.new(File.read( template_path )).result(binding); end  
-  def deployable_environment?; DEPLOYABLE_ENV.include? Rails.env; end
+  # Notices for old task names
+  task :viewer do       puts "REMOVED: Use `deploy:embed:document` instead." end
+  task :note_embed do   puts "REMOVED: Use `deploy:embed:note` instead." end
+  task :search_embed do puts "REMOVED: Use `deploy:embed:search` instead." end
 
   def upload_filetree( source_pattern, destination_root, source_path_filter=// )
     Dir[source_pattern].each do |file|
-      unless File.directory?(file)
+      unless File.directory?(file) || compressed?(file)
         upload_attributes = { :acl => :public_read }
 
-        # attempt to identify the mimetype for this file.
-        mimetype = Mime::Type.lookup_by_extension(File.extname(file).remove(/^\./))
-        upload_attributes[:content_type] = mimetype.to_s if mimetype
+        # Attempt to identify the MIME type for this file
+        file_extension = File.extname(file).remove(/^\./)
+        mime_type      = Mime::Type.lookup_by_extension(file_extension)
+        upload_attributes[:content_type] = mime_type.to_s if mime_type
+
+        if compressable?(file)
+          # Compress `foo.css` and upload it as `foo.css`
+          file_contents = gzip_string(File.read(file))
+          upload_attributes[:content_encoding] = 'gzip'
+          message_suffix = " (compressed)"
+
+          # NB: We would *like* to re-use Jammit's precompressed `.gz` file if 
+          # it exists, but they seem to be broken. At least, browsers think so.
+          # But in case that's ever fixed, here's the logic we'd *like* to have.
+          # 
+          # if File.exists?("#{file}.gz")
+          #   file_contents = File.read("#{file}.gz")
+          # else
+          #   file_contents = gzip_string(File.read(file))
+          # end
+        else
+          # File isn't compressable; upload as-is
+          file_contents = file
+        end
 
         destination_path = destination_root + file.gsub(source_path_filter, '')
+        puts "Uploading #{file} (#{mime_type}) to #{destination_path}#{message_suffix}"
         destination = bucket.objects[destination_path]
-        puts "uploading #{file} (#{mimetype}) to #{destination_path}"
-        destination.write( Pathname.new(file), upload_attributes)
+        destination.write(file_contents, upload_attributes)
       end
     end
   end
 
-  def upload_template( template_path, destination_path )
-    upload_attributes = { :acl => :public_read }
-    contents = render_template(template_path)
-    puts "uploading #{template_path} to #{destination_path} and #{destination_path+'.gz'}"
+  def upload_template(template_path, destination_path)
+    upload_attributes = {
+      :acl              => :public_read,
+      :content_type     => 'application/javascript',
+      :content_encoding => 'gzip'
+    }
 
-    destination = bucket.objects[ destination_path ]
-    destination.write( contents, upload_attributes.merge(:content_type => 'application/javascript') )
+    file_contents = gzip_string(render_template(template_path))
 
-    zipped_destination = bucket.objects[ destination_path + '.gz' ]
-    zipped_destination.write( gzip_string(contents), upload_attributes.merge(:content_type => Mime::Type.lookup_by_extension('gz').to_s) )
+    puts "Uploading #{template_path} to #{destination_path} (compressed)"
+    destination = bucket.objects[destination_path]
+    destination.write(file_contents, upload_attributes)
   end
   
-  def gzip_string(contents)
-    # Create a pipe with an input IO and an output IO
-    IO.pipe do |zip_out, zip_in|
-      # make sure they're configured to take arbitrary binary data
-      zip_in.binmode
-      zip_out.binmode
-      # attach a gzip compressor as a funnel into the pipe.
-      # add the contents to the funnel.
-      # and then close off the top of the pipe.
-      Zlib::GzipWriter.new(zip_in, Zlib::BEST_COMPRESSION) do |zipper|
-        zipper.write(contents)
-      end.close
-      # retrieve the compressed contents out of the bottom of the pipe.
-      zip_out.read
-    end
-  end
+  # Helpers
+  # NB: `:secure => true` may be a placebo, as I can't find documentation about     what it does and flipping it doesn't seem to affect the bucket's `url`.
+  def bucket; ::AWS::S3.new({ :secure => true }).buckets[DC::SECRETS['bucket']]; end
+  def render_template(template_path); ERB.new(File.read(template_path)).result(binding); end
+  def deployable_environment?; DEPLOYABLE_ENV.include?(Rails.env); end
+  def compressed?(file); File.extname(file).remove(/^\./) == 'gz'; end
+  def compressable?(file); ['css', 'js'].include?(File.extname(file).remove(/^\./)); end
+  def gzip_string(contents); ActiveSupport::Gzip.compress(contents, Zlib::BEST_COMPRESSION); end
 end
