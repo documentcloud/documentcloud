@@ -32,7 +32,6 @@ namespace :build do
       FileUtils.rm_r(["#{build_dir}/viewer.js", "#{build_dir}/templates.js"])
       FileUtils.mv("#{build_dir}/viewer_new.js", "#{build_dir}/viewer.js")
       FileUtils.cp("#{build_dir}/print.css", "../documentcloud/public/viewer/printviewer.css")
-      FileUtils.cp("#{build_dir}/print.css.gz", "../documentcloud/public/viewer/printviewer.css.gz")
       Dir["#{build_dir}/viewer*"].each do |asset|
         FileUtils.cp(asset, "../documentcloud/public/viewer/#{File.basename(asset)}")
       end

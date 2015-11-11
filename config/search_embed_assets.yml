@@ -1,6 +1,7 @@
 javascript_compressor: closure
-template_function: dc._.template
-embed_assets: datauri
+template_function:     dc._.template
+embed_assets:          datauri
+gzip_assets:           off
 
 javascripts:
   search_embed:
