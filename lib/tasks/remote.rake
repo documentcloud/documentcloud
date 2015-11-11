@@ -69,7 +69,7 @@ end
 
 def central_servers
   case RAILS_ENV
-  when 'staging'    then ['staging.documentcloud.org']
+  when 'staging'    then ['54.157.241.4']
   when 'production' then ['db01.documentcloud.org']
   end
 end
