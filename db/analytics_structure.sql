@@ -3,6 +3,7 @@
 --
 
 SET statement_timeout = 0;
+SET lock_timeout = 0;
 SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
 SET check_function_bodies = false;
@@ -41,11 +42,12 @@ CREATE TABLE remote_urls (
     created_at timestamp without time zone,
     updated_at timestamp without time zone,
     note_id integer,
-    search_query character varying(255)
+    search_query character varying(255),
+    page_number integer
 );
 
 
-ALTER TABLE public.remote_urls OWNER TO documentcloud;
+ALTER TABLE remote_urls OWNER TO documentcloud;
 
 --
 -- Name: remote_urls_id_seq; Type: SEQUENCE; Schema: public; Owner: documentcloud
@@ -59,7 +61,7 @@ CREATE SEQUENCE remote_urls_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.remote_urls_id_seq OWNER TO documentcloud;
+ALTER TABLE remote_urls_id_seq OWNER TO documentcloud;
 
 --
 -- Name: remote_urls_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: documentcloud
