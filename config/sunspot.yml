@@ -28,7 +28,7 @@ test:
 
 staging:
   solr:
-    hostname: ec2-50-16-197-147.compute-1.amazonaws.com
+    hostname: ip-10-181-70-72.ec2.internal
     port: 7377
     log_level: WARNING
     pid_dir: tmp/pids
