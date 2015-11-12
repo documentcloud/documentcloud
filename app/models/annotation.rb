@@ -136,7 +136,7 @@ class Annotation < ActiveRecord::Base
     File.join(DC.server_root(:ssl => true), "/documents/#{document.canonical_id}.html#annotation/a#{id}")
   end
 
-  def canonical_url(format = :json, allow_ssl = false)
+  def canonical_url(format = :json, allow_ssl = true)
     File.join(DC.server_root(:ssl => allow_ssl), canonical_path(format))
   end
   
@@ -162,8 +162,8 @@ class Annotation < ActiveRecord::Base
     data['location'] = {'image' => location} if location
     data['image_url'] = document.page_image_url_template if opts[:include_image_url]
     data['published_url'] = document.published_url || document.document_viewer_url(:allow_ssl => true) if opts[:include_document_url]
-    data['canonical_url'] = canonical_url(:html, true)
-    data['resource_url'] = canonical_url(:js, true)
+    data['canonical_url'] = canonical_url(:html)
+    data['resource_url'] = canonical_url(:js)
     data['account_id'] = account_id if [PREMODERATED, POSTMODERATED].include? document.access
     if author
       data.merge!({

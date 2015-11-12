@@ -591,12 +591,12 @@ class Document < ActiveRecord::Base
     canonical_url(:html, opts[:allow_ssl]) + suffix
   end
 
-  def canonical_url(format = :json, allow_ssl = false)
+  def canonical_url(format = :json, allow_ssl = true)
     File.join(DC.server_root(:ssl => allow_ssl, :agnostic => format == :js), canonical_path(format))
   end
 
   def oembed_url
-    "#{DC.server_root}/api/oembed.json?url=#{CGI.escape(self.canonical_url('html', true))}&responsive=true"
+    "#{DC.server_root}/api/oembed.json?url=#{CGI.escape(self.canonical_url('html'))}&responsive=true"
   end
 
   def search_url
@@ -967,7 +967,7 @@ class Document < ActiveRecord::Base
     doc['source']             = source
     doc['created_at']         = created_at.to_formatted_s(:rfc822)
     doc['updated_at']         = updated_at.to_formatted_s(:rfc822)
-    doc['canonical_url']      = canonical_url(:html, true)
+    doc['canonical_url']      = canonical_url(:html)
     doc['language']           = language
     doc['file_hash']          = file_hash
     if options[:contributor]
