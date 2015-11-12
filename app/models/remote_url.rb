@@ -40,6 +40,16 @@ class RemoteUrl < ActiveRecord::Base
     doc.update_attributes(:hit_count => doc.hit_count + hits) if doc
   end
 
+  def self.record_hits_on_page(doc_id, page_number, url, hits)
+    url = url.mb_chars[0...255].to_s
+    row = self.find_or_create_by(:document_id=>doc_id, :page_number=>page_number, :url=>url, :date_recorded=>Time.now.utc.to_date)
+    row.update_attributes :hits => row.hits + hits
+
+    # Increment the document's total hits.
+    doc = Document.find_by_id(doc_id)
+    doc.update_attributes(:hit_count => doc.hit_count + hits) if doc
+  end
+
   def self.record_hits_on_search(query, url, hits)
     url   = url[0...255]
     query = CGI::unescape(query)
