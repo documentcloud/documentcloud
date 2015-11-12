@@ -10,10 +10,10 @@
   "permissions": [],
   "app": {
     "urls": [
-      "http://www.documentcloud.org/public"
+      "https://www.documentcloud.org/public"
     ],
     "launch": {
-      "web_url": "http://www.documentcloud.org/public"
+      "web_url": "https://www.documentcloud.org/public"
     }
   }
 }

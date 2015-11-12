@@ -58,7 +58,7 @@ Haga clic en el botón "Next" para continuar con el paso 3, y veráx el código 
     <div id="viewer-10-general-report"></div>
     <script src="//assets.documentcloud.org/viewer/loader.js"></script>
     <script>
-      DV.load('http://www.documentcloud.org/documents/10-general-report.js', {
+      DV.load('https://www.documentcloud.org/documents/10-general-report.js', {
         container : '#viewer-10-general-report'
       });
     </script>
@@ -108,7 +108,7 @@ Se le pedirá que seleccione la nota a insertar, y podrá revisar la nota incrus
     <div id="DC-note-237"></div>
     <script src="//assets.documentcloud.org/notes/loader.js"></script>
     <script>
-      dc.embed.loadNote('http://www.documentcloud.org/documents/223/annotations/237.js');
+      dc.embed.loadNote('https://www.documentcloud.org/documents/223/annotations/237.js');
     </script>
 
 Copie y pegue el código HTML en su propio sitio. Al hacer clic en el título o la imagen, se abrirá el documento. Los documentos se abrirán en DocumentCloud a menos que los haya publicado en otra parte. Utilizamos pixel ping de adivinar el URL publicado de un documento, de manera que si los usuarios no pueden encuentran el documento de otra manera, puede que usted tenga que añadir el URL publicado manualmente.
@@ -134,7 +134,7 @@ Una vez que usted se sienta cómodo con la configuración, revise el conjunto de
     <div id="DC-search-projectid-8-epa-flouride"></div>
     <script src="//assets.documentcloud.org/embed/loader.js"></script>
     <script>
-      dc.embed.load('http://www.documentcloud.org/search/embed/', {
+      dc.embed.load('https://www.documentcloud.org/search/embed/', {
         q: "projectid: 8-epa-flouride",
         container: "#DC-search-projectid-8-epa-flouride",
         order: "title",

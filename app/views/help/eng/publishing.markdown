@@ -61,7 +61,7 @@ Click on the "Next" button to proceed to step 3, and you'll see the embed code: 
     <div id="viewer-10-general-report"></div>
     <script src="//assets.documentcloud.org/viewer/loader.js"></script>
     <script>
-      DV.load('http://www.documentcloud.org/documents/10-general-report.js', {
+      DV.load('https://www.documentcloud.org/documents/10-general-report.js', {
         container : '#viewer-10-general-report'
       });
     </script>
@@ -110,7 +110,7 @@ You'll be asked to select the note to embed, and will be able to preview the emb
     <div id="DC-note-237"></div>
     <script src="//assets.documentcloud.org/notes/loader.js"></script>
     <script>
-      dc.embed.loadNote('http://www.documentcloud.org/documents/223/annotations/237.js');
+      dc.embed.loadNote('https://www.documentcloud.org/documents/223/annotations/237.js');
     </script>
 
 Copy and paste the HTML onto your own site. Clicking the title or the image will open the document. Documents will open in DocumentCloud unless you've published them elsewhere. We use [pixel ping](http://www.propublica.org/nerds/item/pixel-ping-a-nodejs-stats-tracker) to guess a document's Published URL, so if users won't find the document another way, you may need to add the Published URL manually.
@@ -136,7 +136,7 @@ Once you're comfortable with your settings, preview the embedded document set. I
     <div id="DC-search-projectid-8-epa-flouride"></div>
     <script src="//assets.documentcloud.org/embed/loader.js"></script>
     <script>
-      dc.embed.load('http://www.documentcloud.org/search/embed/', {
+      dc.embed.load('https://www.documentcloud.org/search/embed/', {
         q: "projectid: 8-epa-flouride",
         container: "#DC-search-projectid-8-epa-flouride",
         order: "title",
