@@ -13,7 +13,7 @@ development:
 
 staging:
   <<: *defaults
-  host: staging.documentcloud.org
+  host: <%= DC::SECRETS['db_host'] %>
   database: dcloud_analytics_staging
 
 production:
