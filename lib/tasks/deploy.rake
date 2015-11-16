@@ -70,11 +70,11 @@ namespace :deploy do
           raise ArgumentError, "Rails.env was (#{Rails.env}) and should be one of #{DEPLOYABLE_ENV.inspect} (e.g. `rake production deploy:embed:[taskname]`)"
         end
 
-        # Upload loader (entry point)
-        upload_template(embed[:loader_src], embed[:loader_dest])
-
         # Upload assets (scripts, styles, and images)
         upload_filetree("public/#{embed[:asset_dir]}/**/*", embed[:asset_dir], /^public\/#{embed[:asset_dir]}/)
+
+        # Upload loader (entry point)
+        upload_template(embed[:loader_src], embed[:loader_dest])
       end
     end
 
