@@ -19,9 +19,9 @@
   <![endif]-->
   <link href="<%= DC.cdn_root(:agnostic => true) %>/viewer/printviewer.css" media="print" rel="stylesheet" type="text/css" />
   <script src="<%= DC.cdn_root(:agnostic => true) %>/viewer/viewer.js"></script>
-  <% if Rails.env.production? && !request.ssl? %>
+  <% if Rails.env.production? %>
     <script>
-      window.DV.recordHit = "<%= DC.server_root(:ssl => false).html_safe %>/pixel.gif";
+      window.DV.recordHit = "<%= DC.server_root(:agnostic => true).html_safe %>/pixel.gif";
     </script>
   <% end %>
   <% unless @local %>
