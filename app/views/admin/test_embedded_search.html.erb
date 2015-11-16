@@ -1,49 +1,86 @@
 <!DOCTYPE html>
-<html>
-<head>
-  <title></title>
-  <link href="/stylesheets/embed/search_embed.css" media="screen" rel="stylesheet" type="text/css" />
-  <script src="/javascripts/vendor/underscore-1.3.1.js" type="text/javascript"></script>
-  <script src="/javascripts/vendor/jquery-1.7.1.js" type="text/javascript"></script>
-  <script src="/javascripts/vendor/backbone-0.9.0.js" type="text/javascript"></script>
-  <script src="/javascripts/lib/inflector.js" type="text/javascript"></script>
-  <script src="/javascripts/embed/search_embed.js" type="text/javascript"></script>
-  <script>
-    window._ = dc._;
-    window.dc.recordHit = "<%= DC.server_root(:ssl => false).sub('s3', 'www') %>/pixel.gif";
-  </script>
-  <%= include_javascripts(:search_embed) %>
-</head>
-<body style="margin:0; padding:0;">
-  <div class="DC-embed-preview">
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>DocumentCloud Search Embed Test</title>
+    <style type="text/css" media="screen">
+      body {
+        font: 400 1em/1.4em Gotham, sans-serif;
+      }
+      .embed-section {
+        float: left;
+        width: 30%;
+        min-width: 200px;
+        margin-right: 3%;
+      }
+      .embed-section:last-child {
+        margin-right: 0;
+      }
+    </style>
+  </head>
+  <body>
 
-    <div id="embed_1" style="width:370px"></div>
+    <div class="embed-section">
+      <h1>Local loader:</h1>
+      <div id="DC-search-projectid-23310-screen-shot-project" class="DC-search-container"></div>
+      <script src="/embed/loader.js"></script>
+      <script>
+        dc.embed.load('http://www.documentcloud.org/search/embed/', {
+          q: "projectid: 23310-screen-shot-project ",
+          container: "#DC-search-projectid-23310-screen-shot-project",
+          title: "",
+          order: "created_at",
+          per_page: 12,
+          search_bar: true,
+          organization: 1
+        });
+      </script>
+      <noscript>
+        <a href="https://www.documentcloud.org/public/search/projectid%3A%2023310-screen-shot-project%20">View/search document collection</a>
+      </noscript>
+    </div>
 
-    <script type="text/javascript">
-      dc.embed.load('<%= DC.server_root(:force_ssl => true) %>/search/embed/', {
-        q: 'programming access:public',
-        order: 'title',
-        container: '#embed_1',
-        per_page: 6,
-        organization: 1,
-        pass_search: true
-      });
-    </script>
+    <div class="embed-section">
+      <h1>Staging loader:</h1>
+      <div id="DC-search-projectid-23309-lefler-thesis-backup-project" class="DC-search-container"></div>
+      <script src="//s3.amazonaws.com/dcloud_staging/embed/loader.js"></script>
+      <script>
+        dc.embed.load('http://www.documentcloud.org/search/embed/', {
+          q: "projectid: 23309-lefler-thesis-backup-project ",
+          container: "#DC-search-projectid-23309-lefler-thesis-backup-project",
+          title: "",
+          order: "created_at",
+          per_page: 12,
+          search_bar: true,
+          organization: 1
+        });
+      </script>
+      <noscript>
+        <a href="https://www.documentcloud.org/public/search/projectid%3A%2023309-lefler-thesis-backup-project%20">View/search document collection</a>
+      </noscript>
+    </div>
 
+    <div class="embed-section">
+      <h1>Production loader:</h1>
+      <div id="DC-search-projectid-20037-lefler-thesis-project" class="DC-search-container"></div>
+      <script src="//assets.documentcloud.org/embed/loader.js"></script>
+      <script>
+        dc.embed.load('http://www.documentcloud.org/search/embed/', {
+          q: "projectid: 20037-lefler-thesis-project ",
+          container: "#DC-search-projectid-20037-lefler-thesis-project",
+          title: "",
+          order: "created_at",
+          per_page: 12,
+          search_bar: true,
+          organization: 1
+        });
+      </script>
+      <noscript>
+        <a href="https://www.documentcloud.org/public/search/projectid%3A%2020037-lefler-thesis-project%20">View/search document collection</a>
+      </noscript>
+    </div>
 
-    <div id="embed_2"></div>
-
-    <script type="text/javascript">
-      dc.embed.load('<%= DC.server_root(:ssl => false) %>/search/embed/', {
-        q: 'states filter:annotated',
-        order: 'score',
-        container: '#embed_2',
-        per_page: 12,
-        organization: 1,
-        search: 'web'
-      });
-    </script>
-
-  </div>
-</body>
+  </body>
 </html>

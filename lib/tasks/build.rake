@@ -41,6 +41,9 @@ namespace :build do
 
       Dir.chdir '../documentcloud'
 
+      # Mimic deployment of the loader so that development has a copy too
+      File.write("public/viewer/loader.js", render_template("app/views/documents/embed_loader.js.erb"))
+
       puts "Done building viewer"
     end
 

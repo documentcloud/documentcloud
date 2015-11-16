@@ -5,7 +5,7 @@ class AdminController < ApplicationController
   skip_before_action :verify_authenticity_token, :only => [:save_analytics, :queue_length]
 
   before_action :secure_only,    :only   => [:index, :signup, :login_as]
-  before_action :admin_required, :except => [:save_analytics, :queue_length, :test_embedded_search, :test_embedded_note, :test_embedded_viewer]
+  before_action :admin_required, :except => [:save_analytics, :queue_length, :test_embedded_search, :test_embedded_note, :test_embedded_page, :test_embedded_viewer]
 
   # The Admin Dashboard
   def index
@@ -314,27 +314,17 @@ class AdminController < ApplicationController
     render :layout => false
   end
 
-  def test_s3_viewer
+  def test_embedded_page
     render :layout => false
   end
 
-  def test_multi_viewer
+  def test_embedded_note
     render :layout => false
   end
 
   def test_embedded_search
     render :layout => false
   end
-
-  def test_embedded_note
-    @document      = Document.find(1)
-    @wide_note     = @document.annotations.find(1)
-    @tiny_note     = @document.annotations.find(2)
-    @page_note     = @document.annotations.find(3)
-    @narrow_note   = @document.annotations.find(3)
-    render :layout => false
-  end
-
 
   private
 
