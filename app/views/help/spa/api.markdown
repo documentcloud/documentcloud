@@ -333,7 +333,7 @@ La comunidad de código abierto ha contribuido varias aplicaciones votos para in
 
 **Python:** [python-documentcloud](http://python-documentcloud.readthedocs.org/en/latest/)
 
-**Ruby:** [Documentcloud gem](https://rubygems.org/gems/documentcloud/versions/0.2.2)
+**Ruby:** [Documentcloud gem](https://rubygems.org/gems/documentcloud/)
 
 # Preguntas?
 
