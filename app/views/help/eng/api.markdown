@@ -332,7 +332,7 @@ The open-source community has contributed several helpful libraries for interact
 
 **Python:** [python-documentcloud](http://python-documentcloud.readthedocs.org/en/latest/)
 
-**Ruby:** [Documentcloud gem](https://rubygems.org/gems/documentcloud/versions/0.2.2)
+**Ruby:** [Documentcloud gem](https://rubygems.org/gems/documentcloud/)
 
 # Questions?
 
