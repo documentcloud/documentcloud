@@ -1,20 +1,6 @@
-<div class="publish_info selectable_text interface">
-  <span class="text_link remove_lines"><%= _.t('remove_line_breaks') %></span>
+<div class="DC-embed" data-version="1.0" style="font-size:10pt"<% if (options != '{}') { %> data-options='<%= options %>'<% } %>>
+  <p><a class="DC-embed-resource" href="<%= pagePermalink %>" title="View page <%= pageNumber %> of <%- docTitle %> on DocumentCloud in new window or tab" target="_blank">Page <%= pageNumber %> of <%- docTitle %></a></p>
+  <img src="<%= pageImageUrl %>" alt="Page <%= pageNumber %> of <%- docTitle %>" style="border:1px solid #ccc;-webkit-box-sizing:border-box;box-sizing:border-box;width:100%;max-width:700px;">
+  <p>Contributed to DocumentCloud by <%- docContributor %> of <%- docOrganization %> &bull; <a href="<%= pageTextUrl %>" title="View text of page <%= pageNumber %> of <%- docTitle %> in a new window or tab" target="_blank">View page as text</a></p>
 </div>
-
-<textarea id="page_embed_html_snippet" class="snippet">
-&lt;div class="DC-embed" data-version="1.0" style="font-size:10pt"&gt;
-  &lt;p&gt;&lt;a class="DC-embed-resource" href="<%= pagePermalink %>" title="View page <%= pageNumber %> of <%- docTitle %> on DocumentCloud in new window or tab" target="_blank"&gt;Page <%= pageNumber %> of <%- docTitle %>&lt;/a&gt;&lt;/p&gt;
-  &lt;img src="<%= pageImageUrl %>" alt="Page <%= pageNumber %> of <%- docTitle %>" style="border:1px solid #ccc;-webkit-box-sizing:border-box;box-sizing:border-box;width:100%;max-width:700px;"&gt;
-  &lt;p&gt;Contributed to DocumentCloud by <%- docContributor %> of <%- docOrganization %> &bull; &lt;a href="<%= pageTextUrl %>" title="View text of page <%= pageNumber %> of <%- docTitle %> in a new window or tab" target="_blank"&gt;View page as text&lt;/a&gt;&lt;/p&gt;
-&lt;/div&gt;
-&lt;script src="<%= window.ASSET_ROOT %>/embed/loader/enhance.js"&gt;&lt;/script&gt;
-</textarea>
-
-<div class="dialog_info selectable_text interface">
-  <i>Coming soon: WordPress shortcodes and setting embed options.</i>
-</div>
-
-<div class="publish_info selectable_text interface hidden">
-  <%= _.t( 'featured_examples_notes_list', '<a class="text_link" href="/featured" target="_blank">','</a>' ) %>
-</div>
+<script src="<%= window.ASSET_ROOT %>/embed/loader/enhance.js"></script>

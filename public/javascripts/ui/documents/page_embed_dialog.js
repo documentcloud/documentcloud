@@ -40,12 +40,12 @@ dc.ui.PageEmbedDialog = dc.ui.Dialog.extend({
       pageCount       : this.doc.get('page_count'),
       selectedPageNum : this._selectedPage,
     }));
-    this.$next           = this.$('.next');
-    this.$previous       = this.$('.previous');
-    this.$pageSelect     = this.$('.page_select');
-    this.$preview        = this.$('.page_preview');
-    this.$previewWrapper = this.$('.page_preview_section');
-    this.$embedCode      = this.$('.publish_embed_code');
+    this.$next            = this.$('.next');
+    this.$previous        = this.$('.previous');
+    this.$pageSelect      = this.$('.page_select');
+    this.$preview         = this.$('.page_preview');
+    this.$previewWrapper  = this.$('.page_preview_section');
+    this.$embedCodeDialog = this.$('.publish_embed_code');
     this.setMode('embed', 'dialog');
     this.setMode('page_embed', 'dialog');
     this.update();
@@ -93,8 +93,8 @@ dc.ui.PageEmbedDialog = dc.ui.Dialog.extend({
     var pageSelected = this._selectedPage > 0;
     if (this._selectedPage > 0) {
       this.$previewWrapper.show();
-      this._renderEmbedCode();
-      this._renderPage();
+      this._renderEmbedCodeDialog();
+      this._renderPreview();
       if (this.$preview.height() > this.height) {
         this.height = this.$preview.height();
       }
@@ -110,18 +110,17 @@ dc.ui.PageEmbedDialog = dc.ui.Dialog.extend({
     $html_snippet.val($html_snippet.val().replace(/[\r\n]/g, ''));
   },
 
-  _renderPage : function() {
-    this.$preview.html(this.$('#page_embed_html_snippet').val());
+  _renderPreview : function() {
+    this.$preview.html(this._generateEmbedCode({preview: true}));
   },
 
-  embedOptions : function() {
-    var options = {};
-    return options;
+  _embedOptions : function(options) {
+    return _.extend({}, this.DEFAULT_OPTIONS, options);
   },
 
-  _renderEmbedCode : function() {
-    var options = this.embedOptions();
-    this.$embedCode.html(JST['workspace/page_embed_code']({
+  _generateEmbedCode : function(options) {
+    options = this._embedOptions(options);
+    return JST['workspace/page_embed_code']({
       doc:              this.doc,
       docTitle:         this.doc.get('title'),
       docContributor:   this.doc.get('account_name'),
@@ -130,8 +129,14 @@ dc.ui.PageEmbedDialog = dc.ui.Dialog.extend({
       pageNumber:       this._selectedPage,
       pageImageUrl:     this._pageImageUrl(this._selectedPage),
       pageTextUrl:      this._pageTextUrl(this._selectedPage),
-      options:          _.map(options, function(value, key){ return key + ': ' + value; }).join(',\n    '),
-      shortcodeOptions: options ? ' ' + _.map(options, function(value, key) { return key + '=' + (typeof value == 'string' ? value.replace(/\"/g, '&quot;') : value); }).join(' ') : '',
+      options:          JSON.stringify(options),
+      shortcodeOptions: _.map(options, function(value, key) { return key + '=' + (_.isString(value) ? value.replace(/\"/g, '&quot;') : value); }).join(' ')
+    });
+  },
+
+  _renderEmbedCodeDialog : function() {
+    this.$embedCodeDialog.html(JST['workspace/page_embed_code_dialog']({
+      embedCode: _.escape(this._generateEmbedCode())
     }));
   },
 
