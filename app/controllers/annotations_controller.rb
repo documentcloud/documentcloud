@@ -28,7 +28,7 @@ class AnnotationsController < ApplicationController
         render :js => js
       end
       format.html do
-        render
+        render :layout => 'empty'
       end
     end
   end
