@@ -42,9 +42,12 @@ require_relative 'embed/document'
 require_relative 'embed/note'
 require_relative 'embed/search'
 
+# DC::Embed is a collection of presenters which provide a 
+# serializable representation of embeddable resources (for example, oEmbed).
 module DC
   module Embed
     
+    # List the resources which are supported for serialization
     EMBED_RESOURCE_MAP = {
       :document => self::Document,
       :note     => self::Note,
@@ -52,17 +55,22 @@ module DC
     }
     EMBEDDABLE_RESOURCES = EMBED_RESOURCE_MAP.keys
     
+    # also list the mapping between model classes
+    # and embeddable resources (where there is one).
     EMBEDDABLE_MODEL_MAP = {
       ::Document   => :document,
       ::Annotation => :note,
     }
     EMBEDDABLE_MODELS = EMBEDDABLE_MODEL_MAP.keys
     
+    # Determine & return the appropriate presenter class for a resource
     def self.embed_type(resource)
       case
       when EMBEDDABLE_MODELS.any?{ |model_klass| resource.kind_of? model_klass }
+        # by looking up whether the resource's model is embeddable
         EMBEDDABLE_MODEL_MAP[resource.class]
       when EMBEDDABLE_RESOURCES.include?(resource.type)
+        # or if the resource specifies a type of embed explicitly.
         resource.type
       else
         # set up a system to actually register types of things as embeddable

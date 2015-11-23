@@ -1,3 +1,8 @@
+# DC::Embed::Base is the base presenter class
+# which is used to transform a request for a resource
+# into a serializable set of attributes which represent
+# how to embed that resource.
+
 module DC
   module Embed
     class Base
@@ -10,7 +15,11 @@ module DC
         self::CONFIG_KEYS
       end
       
-      def initialize(*args)
+      # Embed presenters accept 
+      # a hash representing a resource,
+      # configuration which specifies how the embed markup/data will be generated
+      # and a set of options specifying how the presenter will behave
+      def initialize(resource, embed_config={}, options={})
         raise NotImplementedError
       end
     
