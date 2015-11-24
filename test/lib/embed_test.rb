@@ -57,7 +57,8 @@ describe DC::Embed::Document do
       :responsive_offset => 12,
       :container         => ".hi"
     }
-    embed = DC::Embed::Document.new(resource, Hash[input_config.map{ |k,v| [k, v.to_s] }])
+    string_config_values = Hash[input_config.map{ |k,v| [k, v.to_s] }]
+    embed = DC::Embed::Document.new(resource, string_config_values)
     
     config = embed.embed_config
     input_config.keys.each do |key|
