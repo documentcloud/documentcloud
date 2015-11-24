@@ -397,9 +397,8 @@
 /* ================= */
 
 .DC-embed-preview {
-  width: 900px;
   margin: 50px auto;
 }
   .DC-embed-preview .DC-search-embed {
-    margin: 50px 0;
+    margin: 50px;
   }
