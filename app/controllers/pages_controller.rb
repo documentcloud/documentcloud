@@ -10,6 +10,32 @@ class PagesController < ApplicationController
   #skip_before_action :verify_authenticity_token, :only => [:send_page_text]
   
   def show
-    
+    return forbidden if Document.exists?(params[:document_id]) and not current_document
+    return not_found unless current_page
+    respond_to do |format|
+      format.html do
+        # do some stuff.
+      end
+      
+      format.json do
+        @response = current_document.canonical.merge({"page": params[:page_number]})
+        json_response
+      end
+    end
+  end
+  
+  private
+  
+  def current_document(exists=false)
+    @current_document ||= exists ?
+      Document.accessible(current_account, current_organization).find_by_id(params[:id].to_i) :
+      Document.new(:id => params[:id].to_i)
+  end
+
+  def current_page
+    num = params[:page_name][PAGE_NUMBER_EXTRACTOR, 1]
+    return false unless num
+    return false unless current_document(true)
+    @current_page ||= current_document.pages.find_by_page_number(num.to_i)
   end
 end
