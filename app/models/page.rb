@@ -127,6 +127,10 @@ class Page < ActiveRecord::Base
     File.join(DC.server_root, contextual_path)
   end
 
+  def oembed_url
+    "#{DC.server_root}/api/oembed.json?url=#{CGI.escape(self.canonical_url(:html))}"
+  end
+  
   def title
     "Page #{page_number} of #{document.title}"
   end

@@ -28,6 +28,7 @@ class AnnotationsController < ApplicationController
         render :js => js
       end
       format.html do
+        make_oembeddable(current_annotation)
         @stylesheets_header = ["#{DC.cdn_root}/note_embed/note_embed.css"]
         @javascripts_footer = ["#{DC.cdn_root}/note_embed/note_embed.js",
                                "#{DC.cdn_root}/notes/loader.js"]
@@ -96,7 +97,6 @@ class AnnotationsController < ApplicationController
   end
 
   private
-
 
   def current_annotation
     @current_annotation ||= current_document.annotations.find_by_id(params[:id])

@@ -15,6 +15,7 @@ class PagesController < ApplicationController
     return not_found unless current_page
     respond_to do |format|
       format.html do
+        make_oembeddable(current_page)
       end
       
       format.json do

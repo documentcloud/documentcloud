@@ -30,6 +30,11 @@ class ApplicationController < ActionController::Base
     request.format.xml?
   end
 
+  def make_oembeddable(resource)
+    # Resource should have both an `oembed_url` and a `title`
+    @oembeddable_resource = resource
+  end
+
   def maybe_set_cors_headers
     return unless request.headers['Origin']
     headers['Access-Control-Allow-Origin'] = request.headers['Origin']

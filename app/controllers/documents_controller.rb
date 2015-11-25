@@ -23,6 +23,7 @@ class DocumentsController < ApplicationController
         populate_editor_data if current_account && current_organization
         return if date_requested?
         return if entity_requested?
+        make_oembeddable(doc)
       end
       format.pdf  { redirect_to(doc.pdf_url) }
       format.text { redirect_to(doc.full_text_url) }
