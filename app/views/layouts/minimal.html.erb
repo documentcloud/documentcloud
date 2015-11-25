@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <%= render :partial => 'common/meta_tags' %>
+  <title><%= compose_title(@title) %></title>
+  <% stylesheets_jammit = [:ui_v2] + (@stylesheets_jammit || []) %>
+  <%= include_stylesheets *stylesheets_jammit %>
+</head>
+<body class="v2">
+
+  <%= yield %>
+
+  <% javascripts_jammit = (@javascripts_jammit || []) %>
+  <%= include_javascripts *javascripts_jammit %>
+
+<% if @javascript_footer_inline %>
+  <script>
+    <%= raw @javascript_footer_inline %>
+  </script>
+<% end %>
+
+<% if Rails.env.production? %>
+  <%= render :partial => 'common/google' %>
+<% end %>
+</body>
+</html>

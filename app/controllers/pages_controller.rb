@@ -1,5 +1,5 @@
 class PagesController < ApplicationController
-  layout nil
+  layout 'minimal'
 
   before_action :bouncer,             :only => [:show] if exclusive_access?
   #before_action :login_required,      :only => [:update, :destroy]
@@ -14,11 +14,11 @@ class PagesController < ApplicationController
     return not_found unless current_page
     respond_to do |format|
       format.html do
-        # do some stuff.
+        @page_of_title = "#{@current_page.page_number} of #{@current_document.title}"
       end
       
       format.json do
-        @response = current_document.canonical.merge({"page": params[:page_number]})
+        @response = current_document.canonical.merge({page: params[:page_number]})
         json_response
       end
     end
@@ -33,7 +33,7 @@ class PagesController < ApplicationController
   end
 
   def current_page
-    num = params[:page_name][PAGE_NUMBER_EXTRACTOR, 1]
+    num = params[:page_number]
     return false unless num
     return false unless current_document(true)
     @current_page ||= current_document.pages.find_by_page_number(num.to_i)
