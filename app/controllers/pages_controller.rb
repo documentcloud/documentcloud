@@ -10,7 +10,8 @@ class PagesController < ApplicationController
   #skip_before_action :verify_authenticity_token, :only => [:send_page_text]
   
   def show
-    return forbidden if Document.exists?(params[:document_id]) and not current_document
+    document_id = (params[:id] || params[:document_id]).to_i
+    return forbidden if Document.exists?(document_id) and not current_document
     return not_found unless current_page
     respond_to do |format|
       format.html do
@@ -21,17 +22,26 @@ class PagesController < ApplicationController
         @response = current_document.canonical.merge({page: params[:id]}).to_json
         json_response
       end
+      
+      #format.txt { send_page_text }
+      
+      #format.gif { send_page_image }
     end
   end
   
   private
   
   def current_document
-    @current_document ||= Document.accessible(current_account, current_organization).find_by_id(params[:document_id].to_i)
+    # in order to hack together non-resourceful route,
+    # temporarily use :id
+    document_id = (params[:id] || params[:document_id]).to_i
+    @current_document ||= Document.accessible(current_account, current_organization).find_by_id(document_id)
   end
 
   def current_page
-    num = params[:id]
+    # in order to hack together non-resourceful route,
+    # temporarily use :page_number
+    num = (params[:page_number] || params[:id] ).to_i
     return false unless num
     return false unless current_document
     @current_page ||= current_document.pages.find_by_page_number(num.to_i)
