@@ -127,6 +127,10 @@ class Page < ActiveRecord::Base
     File.join(DC.server_root, contextual_path)
   end
 
+  def title
+    "Page #{page_number} of #{document.title}"
+  end
+
   private
 
   # Make sure that HTML never gets written into the plain text contents.

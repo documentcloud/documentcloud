@@ -6,11 +6,11 @@
 <div class="container embed-preview-container">
 
   <div class="DC-embed" data-version="1.0" style="font-size:10pt">
-    <p><a class="DC-embed-resource" href="<%= @current_page.contextual_url %>" title="View page <%= @page_of_title %> on DocumentCloud in new window or tab" target="_blank">Page <%= @page_of_title %></a></p>
-    <img src="<%= @current_document.page_image_url(@current_page.page_number, 'normal') %>" alt="Page <%= @page_of_title %>" style="border:1px solid #ccc;-webkit-box-sizing:border-box;box-sizing:border-box;width:100%;max-width:700px;">
+    <p><a class="DC-embed-resource" href="<%= @current_page.contextual_url %>" title="View <%= @current_page.title %> on DocumentCloud in new window or tab" target="_blank"><%= @current_page.title %></a></p>
+    <img src="<%= @current_document.page_image_url(@current_page.page_number, 'normal') %>" alt="<%= @current_page.title %>" style="border:1px solid #ccc;-webkit-box-sizing:border-box;box-sizing:border-box;width:100%;max-width:700px;">
     <p>
       Contributed to DocumentCloud by <%= @current_document.account_name %> of <%= @current_document.organization_name %> &bull;
-      <a href="<%= @current_page.text_url %>" title="View text of page <%= @page_of_title %> in a new window or tab" target="_blank">View page as text</a>
+      <a href="<%= @current_page.text_url %>" title="View text of <%= @current_page.title %> in a new window or tab" target="_blank">View page as text</a>
     </p>
   </div>
   <script src="<%= File.join(DC.cdn_root(:agnostic => true), "/embed/loader/enhance.js") %>"></script>

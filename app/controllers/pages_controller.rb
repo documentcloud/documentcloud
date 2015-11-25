@@ -15,7 +15,6 @@ class PagesController < ApplicationController
     return not_found unless current_page
     respond_to do |format|
       format.html do
-        @page_of_title = "#{@current_page.page_number} of #{@current_document.title}"
       end
       
       format.json do
