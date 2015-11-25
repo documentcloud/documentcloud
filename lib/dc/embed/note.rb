@@ -1,71 +1,14 @@
 module DC
   module Embed
     class Note < Base
-      class Config
-        Boolean = Proc.new{ |value|
-          case
-          when (value.kind_of? TrueClass or value.kind_of? FalseClass); then value
-          when value == "true"; then true
-          when value == "false"; then false
-          else; value
-          end
-        }
-    
-        Integer = Proc.new { |value|
-          case
-          when value.kind_of?(Numeric); then value
-          when value =~ /\A[+-]?\d+\Z/; then value.to_i
-          when value =~ /\A[+-]?\d+\.\d+\Z/; then value.to_f
-          else; value
-          end
-        }
-    
-        String = Proc.new{ |value| value.to_s unless value.nil? }
-    
-        ATTRIBUTE_MAP = {
-          :container         => self::String,
-          :maxheight         => self::Integer,
-          :maxwidth          => self::Integer,
-        }
-             
-        KEYS = ATTRIBUTE_KEYS = ATTRIBUTE_MAP.keys
-    
-        NAME_MAP = {}
-    
-        def self.keys; KEYS; end
-        attr_reader *KEYS
-        def initialize(args={})
-          self.class.keys.each{ |attribute| self[attribute] = args[attribute] }
-        end
-    
-        def attributes
-          Hash[self.class.keys.map{ |attribute| [attribute, self[attribute]] }]
-        end
-    
-        def [](attribute); self.instance_variable_get("@#{attribute}"); end
-    
-        def []=(attribute, value)
-          raise ArgumentError unless KEYS.include? attribute
-          self.instance_variable_set("@#{attribute}", ATTRIBUTE_MAP[attribute].call(value))
-        end
-    
-        def compact
-          self.attributes.delete_if{ |key, value| value.nil? }
-        end
-    
-        def dump
-          attribute_pairs = self.compact.map do |attribute, value|
-            attribute = NAME_MAP[attribute] if NAME_MAP.keys.include? attribute
-            [attribute, value]
-          end
-          Hash[attribute_pairs]
+      class Config < Base::Config
+        define_attributes do
+          string  :container
+          number  :maxheight
+          number  :maxwidth
         end
       end
-  
-      def self.config_keys
-        Config.keys
-      end
-  
+
       def initialize(resource, embed_config={}, options={})
         # resource should be a wrapper object around a model 
         # which plucks out relevant metadata

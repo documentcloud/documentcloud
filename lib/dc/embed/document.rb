@@ -1,83 +1,24 @@
 module DC
   module Embed
     class Document < Base
-      class Config
-        Boolean = Proc.new{ |value|
-          case
-          when (value.kind_of? TrueClass or value.kind_of? FalseClass); then value
-          when value == "true"; then true
-          when value == "false"; then false
-          else; value
-          end
-        }
-    
-        Integer = Proc.new { |value|
-          case
-          when value.kind_of?(Numeric); then value
-          when value =~ /\A[+-]?\d+\Z/; then value.to_i
-          when value =~ /\A[+-]?\d+\.\d+\Z/; then value.to_f
-          else; value
-          end
-        }
-    
-        String = Proc.new{ |value| value.to_s unless value.nil? }
-    
-        ATTRIBUTE_MAP = {
-          :container         => self::String,
-          :default_page      => self::Integer,
-          :default_note      => self::Integer,
-          :maxheight         => self::Integer,
-          :maxwidth          => self::Integer,
-          :zoom              => self::Integer,
-          :notes             => self::Boolean,
-          :search            => self::Boolean,
-          :sidebar           => self::Boolean,
-          :text              => self::Boolean,
-          :pdf               => self::Boolean,
-          :responsive        => self::Boolean,
-          :responsive_offset => self::Integer, }
-             
-        KEYS = ATTRIBUTE_KEYS = ATTRIBUTE_MAP.keys
-    
-        NAME_MAP = {
-          :notes             => :showAnnotations,
-          :responsive_offset => :responsiveOffset,
-          :default_page      => :page,
-          :default_note      => :note,
-          :maxheight         => :height,
-          :maxwidth          => :width,
-        }
-    
-        def self.keys; KEYS; end
-        attr_reader *KEYS
-        def initialize(args={})
-          self.class.keys.each{ |attribute| self[attribute] = args[attribute] }
-        end
-    
-        def attributes
-          Hash[self.class.keys.map{ |attribute| [attribute, self[attribute]] }]
-        end
-    
-        def [](attribute); self.instance_variable_get("@#{attribute}"); end
-    
-        def []=(attribute, value)
-          raise ArgumentError unless KEYS.include? attribute
-          self.instance_variable_set("@#{attribute}", ATTRIBUTE_MAP[attribute].call(value))
-        end
-    
-        def compact
-          self.attributes.delete_if{ |key, value| value.nil? }
-        end
-    
-        def dump
-          attribute_pairs = self.compact.map do |attribute, value|
-            attribute = NAME_MAP[attribute] if NAME_MAP.keys.include? attribute
-            [attribute, value]
-          end
-          Hash[attribute_pairs]
+      class Config < Base::Config
+        define_attributes do
+          string  :container
+          number  :default_page,      :output_as => :page
+          number  :default_note,      :output_as => :note
+          number  :maxheight,         :output_as => :height
+          number  :maxwidth,          :output_as => :width
+          number  :zoom
+          boolean :notes,             :output_as => :showAnnotations
+          boolean :search
+          boolean :sidebar
+          boolean :text
+          boolean :pdf
+          boolean :responsive
+          number  :responsive_offset, :output_as => :responsiveOffset
         end
       end
-  
+      
       def self.config_keys
         Config.keys
       end
