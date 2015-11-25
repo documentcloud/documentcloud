@@ -18,7 +18,7 @@ class PagesController < ApplicationController
       end
       
       format.json do
-        @response = current_document.canonical.merge({page: params[:id]}).to_json
+        @response = current_document.canonical.merge({page: (params[:page_number] || params[:id])}).to_json
         json_response
       end
       
@@ -40,7 +40,7 @@ class PagesController < ApplicationController
   def current_page
     # in order to hack together non-resourceful route,
     # temporarily use :page_number
-    num = (params[:page_number] || params[:id] ).to_i
+    num = (params[:page_number] || params[:id]).to_i
     return false unless num
     return false unless current_document
     @current_page ||= current_document.pages.find_by_page_number(num.to_i)
