@@ -18,7 +18,7 @@ class PagesController < ApplicationController
       end
       
       format.json do
-        @response = current_document.canonical.merge({page: params[:page_number]})
+        @response = current_document.canonical.merge({page: params[:id]}).to_json
         json_response
       end
     end
@@ -26,16 +26,14 @@ class PagesController < ApplicationController
   
   private
   
-  def current_document(exists=false)
-    @current_document ||= exists ?
-      Document.accessible(current_account, current_organization).find_by_id(params[:id].to_i) :
-      Document.new(:id => params[:id].to_i)
+  def current_document
+    @current_document ||= Document.accessible(current_account, current_organization).find_by_id(params[:document_id].to_i)
   end
 
   def current_page
-    num = params[:page_number]
+    num = params[:id]
     return false unless num
-    return false unless current_document(true)
+    return false unless current_document
     @current_page ||= current_document.pages.find_by_page_number(num.to_i)
   end
 end

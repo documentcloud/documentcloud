@@ -73,6 +73,9 @@ DC::Application.routes.draw do
     resource :annotation do
       match '(*all)', action: :cors_options, via: :options, allowed_methods: [:get,:post]
     end
+    
+    resources :pages
+    
     collection do
       get :status
       get :loader
@@ -96,7 +99,6 @@ DC::Application.routes.draw do
       post :reorder_pages
       post :save_page_text
       get  :preview
-      get  'pages/:page_number.html', :controller => :pages, :action => :show
       get  'pages/:page_name.txt', :action=>:send_page_text
       post 'pages/:page_name.txt', :action=>:set_page_text
       get  'pages/:page_name.gif', :action=>:send_page_image
