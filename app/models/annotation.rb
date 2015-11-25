@@ -130,10 +130,12 @@ class Annotation < ActiveRecord::Base
     PUBLIC_LEVELS.include?(access) && document.cacheable?
   end
 
-  # `permalink_url` exists only to feed the `Annotation/show` redirect.
-  # Once we have proper .html versions of notes, this can go away.
-  def permalink_url
-    File.join(DC.server_root(:ssl => true), "/documents/#{document.canonical_id}.html#annotation/a#{id}")
+  def contextual_url
+    File.join(DC.server_root, contextual_path)
+  end
+  
+  def contextual_path
+    "#{document.canonical_path(:html)}\#document/p#{page_number}/a#{id}"
   end
 
   def canonical_url(format = :json, allow_ssl = true)

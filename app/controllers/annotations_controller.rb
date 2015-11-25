@@ -28,7 +28,10 @@ class AnnotationsController < ApplicationController
         render :js => js
       end
       format.html do
-        render :layout => 'empty'
+        @stylesheets_header = ["#{DC.cdn_root}/note_embed/note_embed.css"]
+        @javascripts_footer = ["#{DC.cdn_root}/note_embed/note_embed.js",
+                               "#{DC.cdn_root}/notes/loader.js"]
+        render :layout => 'minimal'
       end
     end
   end
