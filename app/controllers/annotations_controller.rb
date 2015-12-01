@@ -3,7 +3,7 @@ class AnnotationsController < ApplicationController
 
   layout false
 
-  before_action :login_required, :except => [:index, :show, :print,:cors_options]
+  before_action :login_required, :except => [:index, :show, :loader, :print, :cors_options]
   skip_before_action :verify_authenticity_token
 
   # In the workspace, request a listing of annotations.
@@ -35,6 +35,11 @@ class AnnotationsController < ApplicationController
         render :layout => 'minimal'
       end
     end
+  end
+
+  def loader
+    return bad_request unless request.format.js?
+    render :embed_loader, :content_type => Mime::Type.lookup_by_extension('js')
   end
 
   # Print out all the annotations for a document (or documents.)

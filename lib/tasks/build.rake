@@ -75,9 +75,6 @@ namespace :build do
 
       FileUtils.cp_r(Dir.glob("public/javascripts/vendor/documentcloud-notes/dist/*"), note_embed_dir)
 
-      # Mimic deployment of the loader so that development has a copy too
-      File.write("public/notes/loader.js", render_template("app/views/annotations/embed_loader.js.erb"))
-
       puts "Done building note embed"
     end
 
@@ -106,9 +103,6 @@ namespace :build do
 
       # Clean up temp build directory
       FileUtils.rm_r(build_dir) if File.exists?(build_dir)
-
-      # Mimic deployment of the loader so that development has a copy too
-      File.write("public/embed/loader.js", render_template("app/views/search/embed_loader.js.erb"))
 
       puts "Done building search embed"
     end

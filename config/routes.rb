@@ -10,6 +10,7 @@ DC::Application.routes.draw do
   # Search Embeds.
   get '/search/embed/:q/:options.:format' => 'search#embed', :q => /[^\/;,?]*/, :options => /p-(\d+)-per-(\d+)-order-(\w+)-org-(\d+)(-secure)?/
   get '/search/embed/:options.:format' => 'search#embed',    :q => /[^\/;,?]*/, :options => /p-(\d+)-per-(\d+)-order-(\w+)-org-(\d+)(-secure)?/
+  get '/embed/loader' => 'search#loader'
   # Journalist workspace and surrounding HTML.
   get '/search' => 'workspace#index'
   get '/search/preview' => 'search#preview', :as => :preview
@@ -111,6 +112,8 @@ DC::Application.routes.draw do
 
   # # Print notes.
   get '/notes/print' => 'annotations#print', :as => :print_notes
+  # # Embed notes
+  get '/notes/loader' => 'annotations#loader'
 
   # Reviewers.
   resources :reviewers do

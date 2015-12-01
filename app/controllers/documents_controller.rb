@@ -47,6 +47,11 @@ class DocumentsController < ApplicationController
     end
   end
 
+  def loader
+    return bad_request unless request.format.js?
+    render :embed_loader, :content_type => Mime::Type.lookup_by_extension('js')
+  end
+
   def update
     return not_found unless doc = current_document(true)
     attrs = pick(params, :access, :title, :description, :source,
@@ -118,10 +123,6 @@ class DocumentsController < ApplicationController
     modified_pages = JSON.parse(params[:modified_pages])
     doc.save_page_text(modified_pages) unless modified_pages.empty?
     json doc
-  end
-
-  def loader
-    render :action => 'embed_loader.js.erb', :content_type => Mime::Type.lookup_by_extension('js')
   end
 
   def entities
