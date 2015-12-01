@@ -188,6 +188,7 @@ class ApiController < ApplicationController
     controller_embed_map = {
       'annotations' => :note,
       'documents'   => :document,
+      'pages'       => :page
     }
 
     resource = resource_serializer_klass.new(resource_params[:id], resource_js_url, controller_embed_map[resource_params[:controller]])
@@ -230,7 +231,7 @@ class ApiController < ApplicationController
         # Document.accessible(nil, nil).exists?(params[:id].to_i) 
       ) or
       (
-        resource_params[:controller] == "annotations" and
+        %w[annotations pages].include?(resource_params[:controller]) and
         resource_params[:document_id] =~ DC::Validators::SLUG
       )
     )

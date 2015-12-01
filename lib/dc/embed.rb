@@ -39,6 +39,7 @@ The embedding context is generally not known to the embed generator.
 
 require_relative 'embed/base'
 require_relative 'embed/document'
+require_relative 'embed/page'
 require_relative 'embed/note'
 require_relative 'embed/search'
 

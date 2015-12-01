@@ -110,10 +110,12 @@ module DC
         SCRIPT
       end
   
+      # Change This
       def static_loader
         %(<script type="text/javascript" src="#{DC.cdn_root(:agnostic => true)}/notes/loader.js"></script>)
       end
-  
+
+      # Change This
       # intended for use in the static deployment to s3.
       def self.static_loader(options={})
         template_path = "#{Rails.root}/app/views/annotations/embed_loader.js.erb"
