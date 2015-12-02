@@ -25,6 +25,7 @@ module DC
         slugged = words.length > 1 ? words[0, words.length - 1].join(' ') : words.first
       end
       slugged.gsub!(' ', '-')   # Dasherize spaces.
+      slugged
     end
 
     # Class methods to mix in.
