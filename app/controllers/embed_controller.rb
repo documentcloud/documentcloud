@@ -1,9 +1,9 @@
 class EmbedController < ApplicationController
   layout false
 
-  # In development only, let us directly access the embed loaders.
+  # In development/test only, let us directly access the embed loaders.
   # In real life, these are only accessed from the CDN root.
-  before_action { not_found } unless Rails.env.development?
+  before_action { not_found } unless Rails.env.development? || Rails.env.test?
 
   def enhance
     return not_implemented unless request.format.js?
@@ -14,14 +14,18 @@ class EmbedController < ApplicationController
   def loader
     return not_implemented unless request.format.js?
 
-    controller_map = {
+    object_controller_map = {
       'documents' => 'documents',
       'notes'     => 'annotations',
       'embed'     => 'search'
     }
 
-    render "#{controller_map[params[:object]]}/embed_loader",
-           :content_type => Mime::Type.lookup_by_extension('js')
+    if matching_controller = object_controller_map[params[:object]]
+      render "#{matching_controller}/embed_loader",
+             :content_type => Mime::Type.lookup_by_extension('js')
+    else
+      return not_found
+    end
   end
 
 end

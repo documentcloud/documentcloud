@@ -2,42 +2,42 @@ require 'test_helper'
 
 class EmbedControllerTest < ActionController::TestCase
 
-  def test_document_loader
-    get '/documents/loader.js'
+  test "should render embed enhancer" do
+    get :enhance, format: 'js'
     assert_response :success
-    # TODO: Assert result matches template
+    assert_template 'embed/enhance'
   end
 
-  def test_search_loader
-    get '/embed/loader.js'
+  test "should render document embed loader" do
+    get :loader, object: :documents, format: 'js'
     assert_response :success
-    # TODO: Assert result matches template
+    assert_template 'documents/embed_loader'
   end
 
-  def test_note_loader
-    get '/notes/loader.js'
+  test "should render note embed loader" do
+    get :loader, object: :notes, format: 'js'
     assert_response :success
-    # TODO: Assert result matches template
+    assert_template 'annotations/embed_loader'
   end
 
-  def test_enhancer
-    get 'embed/loader/enhance.js'
+  test "should render search embed loader" do
+    get :loader, object: :embed, format: 'js'
     assert_response :success
-    # TODO: Assert result matches template
+    assert_template 'search/embed_loader'
   end
 
-  def test_unrecognized_loader_object
-    get '/foo/loader.js'
+  test "shouldn't find unrecognized embed type loader" do
+    get :loader, object: :foo, format: 'js'
     assert_response 404
   end
 
-  def test_unimplemented_loader_format
-    get 'documents/loader.html'
+  test "shouldn't implement unrecognized embed loader format" do
+    get :loader, object: :documents, format: 'html'
     assert_response 501
   end
 
-  def test_unimplemented_enhancer_format
-    get 'embed/loader/enhance.html'
+  test "shouldn't implement unrecognized embed enhancer format" do
+    get :enhance, format: 'html'
     assert_response 501
   end
 
