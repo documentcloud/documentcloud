@@ -51,6 +51,7 @@ module DC
     # List the resources which are supported for serialization
     EMBED_RESOURCE_MAP = {
       :document => self::Document,
+      :page     => self::Page,
       :note     => self::Note,
       :search   => self::Search,
     }

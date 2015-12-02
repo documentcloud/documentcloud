@@ -43,22 +43,19 @@ namespace :deploy do
 
     embeds = [
       { :name        => :viewer,
-        :loader_src  => 'app/views/documents/embed_loader.js.erb',
+        :embed_name  => :document,
         :loader_dest => 'viewer/loader.js',
         :asset_dir   => 'viewer'
       },
       { :name        => :page,
-        :loader_src  => 'app/views/embed/enhance.js.erb',
         :loader_dest => 'embed/loader/enhance.js',
         :asset_dir   => 'embed/page'
       },
       { :name        => :note,
-        :loader_src  => 'app/views/annotations/embed_loader.js.erb',
         :loader_dest => 'notes/loader.js',
         :asset_dir   => 'note_embed'
       },
       { :name        => :search,
-        :loader_src  => 'app/views/search/embed_loader.js.erb',
         :loader_dest => 'embed/loader.js',
         :asset_dir   => 'search_embed'
       }
@@ -66,15 +63,17 @@ namespace :deploy do
 
     embeds.each do |embed|
       task embed[:name] => :environment do
-        unless deployable_environment?
-          raise ArgumentError, "Rails.env was (#{Rails.env}) and should be one of #{DEPLOYABLE_ENV.inspect} (e.g. `rake production deploy:embed:[taskname]`)"
+        if deployable_environment?
+          # Upload assets (scripts, styles, and images)
+          upload_filetree("public/#{embed[:asset_dir]}/**/*", embed[:asset_dir], /^public\/#{embed[:asset_dir]}/)
+
+          # Upload loader (entry point)
+          upload_loader(embed)
+        else
+          # Ignore the file tree, but generate and dump loader for inspection
+          puts generate_loader(embed)
         end
 
-        # Upload assets (scripts, styles, and images)
-        upload_filetree("public/#{embed[:asset_dir]}/**/*", embed[:asset_dir], /^public\/#{embed[:asset_dir]}/)
-
-        # Upload loader (entry point)
-        upload_template(embed[:loader_src], embed[:loader_dest])
       end
     end
 
@@ -87,9 +86,12 @@ namespace :deploy do
   end
 
   # Notices for old task names
+
   task :viewer do       puts "REMOVED: Use `deploy:embed:document` instead." end
   task :note_embed do   puts "REMOVED: Use `deploy:embed:note` instead." end
   task :search_embed do puts "REMOVED: Use `deploy:embed:search` instead." end
+
+  # Helpers
 
   def upload_filetree( source_pattern, destination_root, source_path_filter=// )
     Dir[source_pattern].each do |file|
@@ -129,24 +131,29 @@ namespace :deploy do
     end
   end
 
-  def upload_template(template_path, destination_path)
+  def upload_loader(embed)
     upload_attributes = {
       :acl              => :public_read,
       :content_type     => 'application/javascript',
       :content_encoding => 'gzip'
     }
 
-    file_contents = gzip_string(render_template(template_path))
-
-    puts "Uploading #{template_path} to #{destination_path} (compressed)"
-    destination = bucket.objects[destination_path]
+    file_contents = gzip_string(generate_loader(embed))
+    puts "Uploading #{embed[:loader_dest]} (compressed)"
+    destination = bucket.objects[embed[:loader_dest]]
     destination.write(file_contents, upload_attributes)
   end
   
-  # Helpers
+  def generate_loader(embed)
+    # For historical reasons, we call the document embed "viewer" in some 
+    # contexts but refer to it more sensibly as "document" in the DC::Embed 
+    # context. If we've defined a separate embed name, use it.
+    embed_name = embed[:embed_name] ? embed[:embed_name] : embed[:name]
+    DC::Embed.embed_klass(embed_name).static_loader
+  end
+
   # NB: `:secure => true` may be a placebo, as I can't find documentation about     what it does and flipping it doesn't seem to affect the bucket's `url`.
   def bucket; ::AWS::S3.new({ :secure => true }).buckets[DC::SECRETS['bucket']]; end
-  def render_template(template_path); ERB.new(File.read(template_path)).result(binding); end
   def deployable_environment?; DEPLOYABLE_ENV.include?(Rails.env); end
   def compressed?(file); File.extname(file).remove(/^\./) == 'gz'; end
   def compressable?(file); ['css', 'js'].include?(File.extname(file).remove(/^\./)); end
