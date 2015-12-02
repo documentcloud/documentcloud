@@ -1,5 +1,3 @@
-require './lib/dc/urls' # For `:environment`-less `render_template()`
-
 namespace :build do
 
   namespace :embed do
@@ -116,7 +114,5 @@ namespace :build do
   task :viewer do puts       "REMOVED: Use `build:embed:viewer` instead." end
   task :note_embed do puts   "REMOVED: Use `build:embed:note` instead." end
   task :search_embed do puts "REMOVED: Use `build:embed:search` instead." end
-
-  def render_template(template_path); ERB.new(File.read(template_path)).result(binding); end
 
 end
