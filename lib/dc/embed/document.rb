@@ -69,12 +69,11 @@ module DC
       end
   
       def inline_loader
-        asset_root = DC.cdn_root(:agnostic => true)
         <<-SCRIPT
         <script>
         #{ERB.new(File.read("#{Rails.root}/app/views/documents/oembed_loader.js.erb")).result(binding)}
         </script>
-        <script type="text/javascript" src="#{asset_root}/viewer/viewer.js"></script>
+        <script type="text/javascript" src="#{DC.cdn_root(:agnostic => true)}/viewer/viewer.js"></script>
         SCRIPT
       end
   

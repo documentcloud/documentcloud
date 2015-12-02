@@ -1,13 +1,13 @@
 <%
-  asset_root = DC.cdn_root(:agnostic => true)
+  server_root = DC.server_root(:agnostic => true)
+  asset_root  = DC.cdn_root(:agnostic => true)
 %>
-
 (function() {
   /* If the viewer is already loaded, don't repeat the process. */
   if (window.DV) { if (window.DV.loaded) { return; } }
 
   window.DV = window.DV || {};
-  window.DV.recordHit = "<%= DC.server_root(:agnostic=>true) %>/pixel.gif";
+  window.DV.recordHit = "<%= server_root %>/pixel.gif";
 
   var pendingQueue = window.DV._documentsWaitingForAppLoad = [];
   window.DV.load = function(resource_js_url, options) {
