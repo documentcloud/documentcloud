@@ -4,12 +4,8 @@ DC::Application.routes.draw do
   # homepage
   get '/' => 'workspace#index'
 
-  # In development only, let us directly access the embed loaders.
-  # In real life, these are only accessed from the CDN root.
-  if Rails.env.development?
-    get '/embed/loader/enhance', as: :embed_enhance, to: 'embed#enhance'
-    get '/:object/loader',       as: :embed_loader,  to: 'embed#loader', object: /documents|notes|embed/
-  end
+  get '/embed/loader/enhance', as: :embed_enhance, to: 'embed#enhance'
+  get '/:object/loader',       as: :embed_loader,  to: 'embed#loader', object: /documents|notes|embed/
 
   # Internal Search API.
   get '/search/documents.json' => 'search#documents'

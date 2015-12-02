@@ -1,6 +1,10 @@
 class EmbedController < ApplicationController
   layout false
 
+  # In development only, let us directly access the embed loaders.
+  # In real life, these are only accessed from the CDN root.
+  before_action { not_found } unless Rails.env.development?
+
   def enhance
     return not_implemented unless request.format.js?
 
