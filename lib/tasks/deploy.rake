@@ -48,7 +48,7 @@ namespace :deploy do
         :asset_dir   => 'viewer'
       },
       { :name        => :page,
-        :loader_src  => 'public/embed/loader/enhance.js.erb',
+        :loader_src  => 'app/views/embed/enhance.js.erb',
         :loader_dest => 'embed/loader/enhance.js',
         :asset_dir   => 'embed/page'
       },

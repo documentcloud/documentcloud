@@ -38,11 +38,6 @@ class SearchController < ApplicationController
     render :js => js
   end
 
-  def loader
-    return bad_request unless request.format.js?
-    render :embed_loader, :content_type => Mime::Type.lookup_by_extension('js')
-  end
-
   def restricted_count
     params[:q] = (params[:q] || "") + " filter:restricted"
     perform_search

@@ -4,13 +4,19 @@ DC::Application.routes.draw do
   # homepage
   get '/' => 'workspace#index'
 
+  # In development only, let us directly access the embed loaders.
+  # In real life, these are only accessed from the CDN root.
+  if Rails.env.development?
+    get '/embed/loader/enhance', as: :embed_enhance, to: 'embed#enhance'
+    get '/:object/loader',       as: :embed_loader,  to: 'embed#loader', object: /documents|notes|embed/
+  end
+
   # Internal Search API.
   get '/search/documents.json' => 'search#documents'
 
   # Search Embeds.
   get '/search/embed/:q/:options.:format' => 'search#embed', :q => /[^\/;,?]*/, :options => /p-(\d+)-per-(\d+)-order-(\w+)-org-(\d+)(-secure)?/
   get '/search/embed/:options.:format' => 'search#embed',    :q => /[^\/;,?]*/, :options => /p-(\d+)-per-(\d+)-order-(\w+)-org-(\d+)(-secure)?/
-  get '/embed/loader' => 'search#loader'
   # Journalist workspace and surrounding HTML.
   get '/search' => 'workspace#index'
   get '/search/preview' => 'search#preview', :as => :preview
@@ -80,7 +86,6 @@ DC::Application.routes.draw do
     
     collection do
       get :status
-      get :loader
       get :queue_length
       get :preview
       get :published
@@ -112,8 +117,6 @@ DC::Application.routes.draw do
 
   # # Print notes.
   get '/notes/print' => 'annotations#print', :as => :print_notes
-  # # Embed notes
-  get '/notes/loader' => 'annotations#loader'
 
   # Reviewers.
   resources :reviewers do

@@ -37,11 +37,6 @@ class AnnotationsController < ApplicationController
     end
   end
 
-  def loader
-    return bad_request unless request.format.js?
-    render :embed_loader, :content_type => Mime::Type.lookup_by_extension('js')
-  end
-
   # Print out all the annotations for a document (or documents.)
   def print
     docs = Document.accessible(current_account, current_organization).where( :id => params[:docs] )

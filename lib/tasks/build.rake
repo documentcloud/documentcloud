@@ -49,18 +49,14 @@ namespace :build do
 
       vendor_dir     = "public/javascripts/vendor/documentcloud-pages"
       page_embed_dir = "public/embed/page"
-      loader_dir     = "public/embed/loader"
 
       FileUtils.rm_r(page_embed_dir) if File.exists?(page_embed_dir)
       FileUtils.mkdir(page_embed_dir)
       FileUtils.cp_r(Dir.glob("#{vendor_dir}/dist/*"), page_embed_dir)
       FileUtils.cp_r(Dir.glob("#{vendor_dir}/src/css/vendor/fontello/font"), page_embed_dir)
 
-      `cat #{vendor_dir}/src/js/config/config.js.erb #{page_embed_dir}/enhance.js > #{loader_dir}/enhance.js.erb`
+      `cat #{vendor_dir}/src/js/config/config.js.erb #{page_embed_dir}/enhance.js > app/views/embed/enhance.js.erb`
       FileUtils.rm(["#{page_embed_dir}/enhance.js"])
-
-      # Mimic deployment of the loader so that development has a copy too
-      File.write("#{loader_dir}/enhance.js", render_template("#{loader_dir}/enhance.js.erb"))
 
       puts "Done building page embed"
     end
