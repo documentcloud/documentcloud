@@ -38,7 +38,6 @@ module DC
       
       def resource_js_url(url)
         resource_params = Rails.application.routes.recognize_path(url) rescue nil
-        Rails.logger.info "resource_params are #{resource_params.merge(:format => 'js')}"
         url_for(resource_params.merge(:format => 'js'))
       end
 
