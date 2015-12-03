@@ -34,6 +34,7 @@ module DC
       end
       
       private
+
       def content_template
         raise NotImplementedError
       end

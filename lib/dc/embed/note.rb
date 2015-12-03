@@ -39,6 +39,10 @@ module DC
         template.result(binding)
       end
 
+      def bootstrap_markup
+        @strategy == :oembed ? inline_loader : static_loader
+      end
+
       def content_markup
         template_options = {
           :use_default_container => @embed_config[:container].nil? || @embed_config[:container].empty?,
@@ -48,10 +52,6 @@ module DC
     
         @embed_config[:container] ||= '#' + template_options[:default_container_id]
         render(@embed_config.dump, template_options)
-      end
-
-      def bootstrap_markup
-        @strategy == :oembed ? inline_loader : static_loader
       end
 
       def inline_loader
