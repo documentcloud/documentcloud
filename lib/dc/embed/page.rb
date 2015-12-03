@@ -39,7 +39,10 @@ module DC
         template.result(binding)
       end
 
-      # Change this
+      # TODO: Consider how page embed works (HTML + enhancer), and customize 
+      # `content_markup` and `bootstrap_markup` accordingly. See 
+      # `DC::Embed::Base#code`
+
       def content_markup
         template_options = {
           :use_default_container => @embed_config[:container].nil? || @embed_config[:container].empty?,

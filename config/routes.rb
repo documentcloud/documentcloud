@@ -79,6 +79,9 @@ DC::Application.routes.draw do
     
     # in order not to clobber existing routes
     #resources :pages
+    # When we're using proper routes, we'll also need to update 
+    # `ApiController#resource_embeddable?` to make pages act like notes, and 
+    # untangle `params[:page_number|:id|:document_id]` in `PagesController`
     
     collection do
       get :status

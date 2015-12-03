@@ -13,16 +13,23 @@ class PagesController < ApplicationController
     document_id = (params[:id] || params[:document_id]).to_i
     return forbidden if Document.exists?(document_id) and not current_document
     return not_found unless current_page
+
     respond_to do |format|
       format.html do
         make_oembeddable(current_page)
       end
       
       format.json do
-        @response = current_document.canonical.merge({page: (params[:page_number] || params[:id])}).to_json
+        @response = current_document_json
         json_response
       end
       
+      format.js do
+        js = "DV.loadJSON(#{current_document_json});"
+        cache_page js if current_document.cacheable?
+        render :js => js
+      end
+
       #format.txt { send_page_text }
       
       #format.gif { send_page_image }
@@ -31,6 +38,10 @@ class PagesController < ApplicationController
   
   private
   
+  def current_document_json
+    current_document.canonical.merge({page: (params[:page_number] || params[:id])}).to_json
+  end
+
   def current_document
     # in order to hack together non-resourceful route,
     # temporarily use :id
