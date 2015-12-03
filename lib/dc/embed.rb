@@ -6,34 +6,38 @@ Embeds can be categorized along three dimensions:
 
 ## Resource
 
-The resource is the type of thing you are embedding.  The contents of the embed will depend on the resource.  Each resource will include different code and configuration options (the literal contents of the embed). 
+The resource is the type of thing you are embedding. The contents of the embed
+will depend on the resource. Each resource will include different code and
+configuration options (the literal contents of the embed). 
 
 * Documents
+* Pages (currently uses Document as its model)
 * Notes
 * Search
 
+## Request Strategy
+
+* oEmbed
+* Literal
+
 ## DOM Mechanism
 
-The mechanism used for containing the contents of an embed.  Effectively there are two types of mechanisms: inserting a JS application directly into the embedding DOM, or inserting an iFrame which contains the contents of the embed.
+The mechanism used for containing the contents of an embed. Effectively there
+are two types of mechanisms: inserting a JS application directly into the
+embedding DOM, or inserting an iFrame which contains the contents of the embed.
 
 * in-DOM (direct)
 * iFrame
 
 ## Embedding Context
 
-Embedding context is the manner in which the embed code is introduced to the web page it 
-has been instructed to load on (either contained in the markup sent to the browser, or 
-inserted dynamically via javascript).
-
-The embedding context is generally not known to the embed generator.
+Embedding context is the manner in which the embed code is introduced to the web
+page it has been instructed to load on (either contained in the markup sent to
+the browser, or inserted dynamically via javascript). The embedding context is
+generally not known to the embed generator.
 
 * Embedded in markup (server_side)
 * Client-side injection (client_side)
-
-## Request Strategy
-
-* oEmbed
-* Literal
 
 =end
 

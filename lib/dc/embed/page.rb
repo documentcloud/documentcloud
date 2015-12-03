@@ -3,7 +3,6 @@ module DC
     class Page < Base
       class Config < Base::Config
         define_attributes do
-          string  :container
           number  :maxheight
           number  :maxwidth
         end
@@ -15,7 +14,7 @@ module DC
         # Consider ActiveModel::Serializers for this purpose.
         # N.B. we should be able to generate oembed codes for things that are 
         # basically mocks of a document, not just for real documents
-        [:id, :js_url].each do |attribute| 
+        [:id, :resource_url].each do |attribute| 
           raise ArgumentError, "Embed resource must `respond_to?` an ':#{attribute}' attribute" unless resource.respond_to?(attribute)
         end
         @resource      = resource
@@ -43,21 +42,25 @@ module DC
       # `content_markup` and `bootstrap_markup` accordingly. See 
       # `DC::Embed::Base#code`
 
+      # Page embed uses a noscript-style enhancer, which prefers content markup 
+      # before bootstrap markup
+      def code
+        content_markup
+      end
+
+      def content_markup
+        Rails.logger.info "@resource.resource_url is #{@resource.resource_url}"
+        template_options = {
+          :resource_url => @resource.resource_url
+        }
+
+        render(@embed_config.dump, template_options)
+      end
+
       def bootstrap_markup
         @strategy == :oembed ? inline_loader : static_loader
       end
   
-      def content_markup
-        template_options = {
-          :use_default_container => @embed_config[:container].nil? || @embed_config[:container].empty?,
-          :default_container_id  => "DC-note-#{@resource.id}",
-          :resource_js_url       => @resource.js_url
-        }
-    
-        @embed_config[:container] ||= '#' + template_options[:default_container_id]
-        render(@embed_config.dump, template_options)
-      end
-
       def inline_loader
         <<-SCRIPT
         <script>

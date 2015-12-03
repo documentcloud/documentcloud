@@ -180,10 +180,8 @@ class ApiController < ApplicationController
     return not_found unless url.host == DC::CONFIG['server_root'] and resource_embeddable?(resource_params)
 
     # create a serializer mock/class/struct for temporary use
-    resource_serializer_klass = Struct.new(:id, :js_url, :type)
-    # The JS URL should match the protocol used for the request, but
-    # the "canonical" resource URL can be our preferred one (HTTPS).
-    resource_js_url = url_for(resource_params.merge(:format => 'js'))
+    resource_serializer_klass = Struct.new(:id, :resource_url, :type)
+    resource_url = url_for(resource_params)
 
     controller_embed_map = {
       'annotations' => :note,
@@ -191,7 +189,7 @@ class ApiController < ApplicationController
       'pages'       => :page
     }
 
-    resource = resource_serializer_klass.new(resource_params[:id], resource_js_url, controller_embed_map[resource_params[:controller]])
+    resource = resource_serializer_klass.new(resource_params[:id], resource_url, controller_embed_map[resource_params[:controller]])
     
     config = pick(params, *DC::Embed.embed_klass(resource.type).config_keys)
     embed = DC::Embed.embed_for(resource, config, {:strategy => :oembed})

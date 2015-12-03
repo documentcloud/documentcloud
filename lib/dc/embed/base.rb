@@ -9,6 +9,9 @@ module DC
       attr_accessor :strategy, :dom_mechanism, :template
       attr_reader   :resource, :embed_config
       
+      include Rails.application.routes.url_helpers
+      default_url_options[:host] = DC::CONFIG['server_root']
+
       # Embed presenters accept 
       # a hash representing a resource,
       # configuration which specifies how the embed markup/data will be generated
@@ -33,6 +36,12 @@ module DC
         Config.keys
       end
       
+      def resource_js_url(url)
+        resource_params = Rails.application.routes.recognize_path(url) rescue nil
+        Rails.logger.info "resource_params are #{resource_params.merge(:format => 'js')}"
+        url_for(resource_params.merge(:format => 'js'))
+      end
+
       private
 
       def content_template
@@ -46,7 +55,7 @@ module DC
       def render(template, data, options)
         raise NotImplementedError
       end
-      
+
       # Embeds specify the configuration options
       # with subclasses of this Config class.
       class Config
