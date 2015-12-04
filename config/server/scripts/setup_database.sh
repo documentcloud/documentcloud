@@ -47,16 +47,16 @@ cp /home/$USERNAME/documentcloud/config/server/files/postgres/pg_hba.conf /etc/p
 cp /etc/postgresql/9.4/main/postgresql.conf /etc/postgresql/9.4/main/postgresql.default.conf
 cp /home/$USERNAME/documentcloud/config/server/files/postgres/postgresql.conf /etc/postgresql/9.4/main/postgresql.conf
 /etc/init.d/postgresql reload
-sudo -u postgres createuser -s ubuntu
 sudo -u postgres createuser -s documentcloud
 sudo -u postgres psql -c "alter user documentcloud password '$PASSWORD_ARG' "
-#TODO validate that this is unnecessary when importing a database backup.
-sudo -u postgres psql -c "CREATE EXTENSION hstore;"
 sudo -u postgres createdb dcloud_$RAILS_ENVIRONMENT
 sudo -u postgres createdb dcloud_analytics_$RAILS_ENVIRONMENT
 sudo -u postgres createdb dcloud_crowd_$RAILS_ENVIRONMENT
+
+sudo -u postgres psql -f /home/$USERNAME/documentcloud/db/analytics_structure.sql dcloud_analytics_$RAILS_ENVIRONMENT #2>&1|grep ERROR
+sudo su -l $USERNAME <<RAILS
 cd /home/$USERNAME/documentcloud
-sudo -u postgres psql -f db/development_structure.sql dcloud_$RAILS_ENVIRONMENT #2>&1|grep ERROR
-sudo -u postgres psql -f db/analytics_structure.sql dcloud_analytics_$RAILS_ENVIRONMENT #2>&1|grep ERROR
-sudo su - $USERNAME -c "cd /home/$USERNAME/documentcloud && rake db:migrate"
+RAILS_ENV=$RAILS_ENVIRONMENT rake db:structure:load
+RAILS_ENV=$RAILS_ENVIRONMENT rake db:migrate
+RAILS
 echo DATABASE SETUP COMPLETED SUCCESSFULLY
