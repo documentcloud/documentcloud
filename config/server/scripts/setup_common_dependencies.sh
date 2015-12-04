@@ -148,7 +148,7 @@ make install
 echo 'if [ -n "$BASH_VERSION" ] || [ -n "$ZSH_VERSION" ]; then
   source /usr/local/share/chruby/chruby.sh
   source /usr/local/share/chruby/auto.sh
-  chruby ruby stable
+  chruby ruby
 fi' > /etc/profile.d/chruby.sh
 
 # Install the current stable version of ruby.
