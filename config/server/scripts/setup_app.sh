@@ -24,7 +24,7 @@ bundle
 
 # Install bower
 sudo npm install -g bower
-bower install --no-interactive
+bower install --config.interactive=false
 
 # # Set password in environment.
 # sudo su -l ubuntu <<EOF
