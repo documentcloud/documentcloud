@@ -19,55 +19,56 @@ RAILS_ENVIRONMENT=${1:-"$RAILS_ENV"}
 if [ ! -n "$RAILS_ENVIRONMENT" ]; then 
   echo "environment must be set in RAILS_ENV or passed as first argument. CLI will be priority" >&2; exit 1;
 fi
+
+# update certificates
 apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 561F9B9CAC40B2F7
 apt-get install apt-transport-https ca-certificates -y
 
+# Add Passenger's apt server
 echo "deb https://oss-binaries.phusionpassenger.com/apt/passenger trusty main" | tee /etc/apt/sources.list.d/passenger.list
 gpg --keyserver keyserver.ubuntu.com --recv-keys 561F9B9CAC40B2F7
 gpg --armor --export 561F9B9CAC40B2F7 | sudo apt-key add -
 
+# fetch metadata so that we can find the passenger package
 apt-get update
 
+# and install it.
 apt-get install nginx-extras passenger -y
-# crash-watch gdb libc6-dbg libev4 liblua5.1-0 libperl5.14 nginx-common nginx-extras passenger passenger-dev passenger-doc ruby-daemon-controller ruby-rack
 
+# also, install node and coffeescript, so that we can install pixel-ping and bower.
 apt-get install nodejs -y
-#ln -sf /usr/bin/nodejs /usr/bin/node
-
 npm install -g coffee-script
 
-# Config files for nginx installed via apt-get are located in /etc/nginx
-
+# clone pixel-ping
 cd /home/$USERNAME
-
 test -e pixel-ping || su -c "git clone git://github.com/documentcloud/pixel-ping.git pixel-ping" $USERNAME
 
-#cd /home/$USERNAME/documentcloud
-
+# Config files for nginx installed via apt-get are located in /etc/nginx
+#
+# first move the existing config files out of the way.
 test -e /etc/nginx/nginx.conf && mv /etc/nginx/nginx.conf /etc/nginx/nginx.default.conf
 test -e /etc/nginx/sites-enabled/default && rm /etc/nginx/sites-enabled/default
 
-# Needed to remove variable expansion using { } as it was causing script to fail. 
-sudo cp /home/$USERNAME/documentcloud/config/server/files/nginx/nginx.conf /etc/nginx/
-sudo cp /home/$USERNAME/documentcloud/config/server/files/nginx/documentcloud.conf /etc/nginx/
-sudo cp /home/$USERNAME/documentcloud/config/server/files/nginx/passenger.conf /etc/nginx/
-sudo cp /home/$USERNAME/documentcloud/config/server/files/nginx/staging.conf /etc/nginx/sites-available/
-sudo cp /home/$USERNAME/documentcloud/config/server/files/nginx/production.conf /etc/nginx/sites-available/
-sudo cp /home/$USERNAME/documentcloud/config/server/files/nginx/development.conf /etc/nginx/sites-available/
+# then copy our nginx configuration into the system directory
+cd /home/$USERNAME/documentcloud
+sudo cp config/server/files/nginx/*.conf                 /etc/nginx/
+sudo cp -r config/server/files/nginx/env                 /etc/nginx/env
+sudo cp config/server/files/nginx/sites-available/*.conf /etc/nginx/sites-available/
 
-ln -fs /etc/nginx/sites-available/$RAILS_ENVIRONMENT.conf /etc/nginx/sites-enabled/documentcloud-$RAILS_ENVIRONMENT.conf
-ln -fs /var/log/nginx /etc/nginx/logs
+# and link up the environment specific config file and the server configuration.
+ln -fs /etc/nginx/env/vagrant.conf                   /etc/nginx/env.conf
+ln -fs /etc/nginx/sites-available/documentcloud.conf /etc/nginx/sites-enabled/documentcloud.conf
+ln -fs /var/log/nginx                                /etc/nginx/logs
 
 ! test -e /usr/share/nginx/logs && mkdir /usr/share/nginx/logs
 ! test -e /home/$USERNAME/documentcloud/log && mkdir /home/$USERNAME/documentcloud/log
-# touch -f /home/$USERNAME/documentcloud/log/pixel_ping.pid
-# touch -f /home/$USERNAME/documentcloud/log/pixel_ping.log
 
+# and restart nginx
 sudo service nginx restart
 
 sudo su -l $USERNAME <<EOF
-echo $RAILS_ENVIRONMENT
-cd /home/$USERNAME/documentcloud && rake $RAILS_ENVIRONMENT ping:start
+  echo $RAILS_ENVIRONMENT
+  cd /home/$USERNAME/documentcloud && rake $RAILS_ENVIRONMENT ping:start
 EOF
 
 echo WEBSERVER SETUP COMPLETED SUCCESSFULLY
