@@ -4,6 +4,6 @@ class AddPageNumberToRemoteUrls < ActiveRecord::Migration
   end
 
   def change
-    add_column :remote_urls, :page_number, :integer, :null => true
+    add_column :remote_urls, :page_number, :integer, :null => true unless column_exists? :remote_urls, :page_number
   end
 end
