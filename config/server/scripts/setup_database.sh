@@ -6,19 +6,28 @@ echo BEGINNING SETUP DATABASE
 
 set -e
 
-# Requirest two arguments to be passed in.  First is environment, second is database password.
-USERNAME=ubuntu
-CLI_ARG=$1
-PASSWORD_ARG=$2
-RAILS_ENVIRONMENT=${CLI_ARG:-"$RAILS_ENV"} 
+# Setting up database requires knowing 2 pieces of information (and 1 optional piece of info)
+# which must be passed in to the script in this order:
+#  1) the rails environment
+#  2) the database password
+#  3) the setup user (which will be inferred from the login user)
+
+RAILS_ENVIRONMENT=${1:-"$RAILS_ENV"} 
 # If environment is not set exit script.  Make Command line priority.
 if [ ! -n "$RAILS_ENVIRONMENT" ]; then 
   echo "environment must be set in RAILS_ENV or passed as first argument. CLI will be priority" >&2; exit 1;
 fi
 
+PASSWORD_ARG=$2
 if [ ! -n "$PASSWORD_ARG" ]; then 
   echo "database password must passed as second argument." >&2; exit 1;
 fi
+
+# This script needs to be run as root for permission purposes
+test $USER = 'root' || { echo run this as root >&2; exit 1; }
+# but the user we actually care about is the login user.
+LOGINUSER=$(logname)      # login user is ubuntu for a vanilla ubuntu installation.
+USERNAME=${3:-$LOGINUSER} # but this can be overridden by passing a username as the third argument.
 
 echo "deb http://apt.postgresql.org/pub/repos/apt/ trusty-pgdg main" > /etc/apt/sources.list.d/pgdg.list
 

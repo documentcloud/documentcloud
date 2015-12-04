@@ -8,13 +8,11 @@ set -e
 
 # This script needs to be run as root for permission purposes
 test $USER = 'root' || { echo run this as root >&2; exit 1; }
+# but the user we actually care about is the login user.
+LOGINUSER=$(logname)      # login user is ubuntu for a vanilla ubuntu installation.
+USERNAME=${2:-$LOGINUSER} # but this can be overridden by passing a username as the second argument.
 
-USERNAME=ubuntu
-CLI_ARG=$1
-RAILS_ENVIRONMENT=${CLI_ARG:-"$RAILS_ENV"}
-
-# Set the RAILS ENV
-#source ~/.bashrc && [ -z "$RAILS_ENV" ] && echo "export RAILS_ENV=$RAILS_ENVIRONMENT" >> ~/.bashrc
+RAILS_ENVIRONMENT=${1:-"$RAILS_ENV"}
 
 # Make sure we have env set
 # If environment is not set exit script.  Make Command line priority.
