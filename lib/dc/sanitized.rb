@@ -13,6 +13,20 @@ module DC
     def sanitize(s, level=:relaxed)
       Sanitize.clean(s, DC::Sanitizer::LEVELS[ level ] )
     end
+    
+    def sluggify(string)
+      slugged = string
+      slugged.gsub!(/[^\p{Letter}\p{Number}]/, ' ') # All non-word characters become spaces.
+      slugged.squeeze!(' ')     # Squeeze out runs of spaces.
+      slugged.strip!            # Strip surrounding whitespace
+      # Truncate to the nearest space.
+      if slugged.length > 50
+        words = slugged[0...50].split(/\s|_|-/)
+        slugged = words.length > 1 ? words[0, words.length - 1].join(' ') : words.first
+      end
+      slugged.gsub!(' ', '-')   # Dasherize spaces.
+      slugged
+    end
 
     # Class methods to mix in.
     module ClassMethods

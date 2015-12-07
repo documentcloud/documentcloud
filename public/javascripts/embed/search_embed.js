@@ -265,7 +265,7 @@
     className : 'DC-document-tile-container',
 
     events : {
-      'click a.DC-document-tile' : 'click'
+      'click.dcSearch a.DC-document-tile' : 'click'
     },
 
     initialize : function(options) {
@@ -302,7 +302,7 @@
       if (this.embed.options.click) {
         return this.embed.options.click(e, this);
       } else {
-        return this.open(e);
+        this.open(e);
       }
     },
 
@@ -310,8 +310,11 @@
       var query   = this.embed.options.pass_search && this.embed.query;
       var suffix  = query ? "#search/p1/" + encodeURIComponent(query) : '';
       var baseUrl = this.model.get('resources').published_url || this.model.get('canonical_url');
-      window.open((this.model.get('resources').published_url || this.model.get('canonical_url')) + suffix);
-      return false;
+      var href    = (this.model.get('resources').published_url || this.model.get('canonical_url')) + suffix;
+      var $link   = $(e.target).closest('a.DC-document-tile');
+      // Triggering `click.foo` means we skip the `click.dcSearch` observed 
+      // event above and just do a native click
+      $link.attr('href', href).trigger('click.foo');
     }
 
   });

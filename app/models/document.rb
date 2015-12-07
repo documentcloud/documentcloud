@@ -3,6 +3,7 @@ class Document < ActiveRecord::Base
   #include DC::Status
   ##extend DC::Status::Migration
   include ActionView::Helpers::TextHelper
+  include DC::Sanitized
 
   # Accessors and constants:
 
@@ -1027,22 +1028,11 @@ class Document < ActiveRecord::Base
   def ensure_titled
     self.title ||= DEFAULT_TITLE
     return true if self.slug
-    slugged = self.title.mb_chars.normalize(:kd).gsub(/[^\x00-\x7F]/n, '').to_s # As ASCII
-    slugged.gsub!(/[']+/, '') # Remove all apostrophes.
-    slugged.gsub!(/\W+/, ' ') # All non-word characters become spaces.
-    slugged.squeeze!(' ')     # Squeeze out runs of spaces.
-    slugged.strip!            # Strip surrounding whitespace
-    slugged.downcase!         # Ensure lowercase.
-    # Truncate to the nearest space.
-    if slugged.length > 50
-      words = slugged[0...50].split(/\s|_|-/)
-      slugged = words.length > 1 ? words[0, words.length - 1].join(' ') : words.first
-    end
-    slugged.gsub!(' ', '-')   # Dasherize spaces.
+    slugged = sluggify(self.title)
     self.slug = slugged.empty? ? "untitled" : slugged
     true
   end
-
+  
   def background_update_asset_access(access_level)
     changes = {:access => access_level}
     #changes[:status] = DC::Status::FROM_ACCESS[access_level]

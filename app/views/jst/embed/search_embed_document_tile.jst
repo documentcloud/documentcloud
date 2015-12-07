@@ -1,4 +1,4 @@
-<a class="DC-document-tile <% if (doc.isPrivate()) { %>DC-document-private<% } %> <% if (showOrg) { %>DC-show-organization<% } %>" href="<%= doc.url() %>" style="width: <%= tileWidth %>px;">
+<a class="DC-document-tile <% if (doc.isPrivate()) { %>DC-document-private<% } %> <% if (showOrg) { %>DC-show-organization<% } %>" href="<%= doc.url() %>" style="width: <%= tileWidth %>px;" target="_blank">
   <div class="DC-document-thumbnail-select"></div>
   <div class="DC-document-thumbnail"><img src="<%= doc.get('resources')['thumbnail'] %>" /></div>
   <div class="DC-document-title">
