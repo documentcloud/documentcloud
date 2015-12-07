@@ -3,7 +3,7 @@ class AnnotationsController < ApplicationController
 
   layout false
 
-  before_action :login_required, :except => [:index, :show, :loader, :print, :cors_options]
+  before_action :login_required, :except => [:index, :show, :print, :cors_options]
   skip_before_action :verify_authenticity_token
 
   # In the workspace, request a listing of annotations.
