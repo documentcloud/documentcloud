@@ -43,7 +43,7 @@ module DC
         template_options = {
           :use_default_container => @embed_config[:container].nil? || @embed_config[:container].empty?,
           :default_container_id  => "DC-note-#{@resource.id}",
-          :resource_js_url       => resource_js_url(@resource.resource_url)
+          :resource_url          => resource_url_js(@resource.resource_url)
         }
     
         @embed_config[:container] ||= '#' + template_options[:default_container_id]

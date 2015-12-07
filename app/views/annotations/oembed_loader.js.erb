@@ -10,15 +10,15 @@
   window.dc.recordHit = "<%= server_root %>/pixel.gif";
 
   var pendingQueue = window.dc._notesWaitingForAppLoad = [];
-  window.dc.load = function(resource_js_url, options) {
-    pendingQueue.push({js_url: resource_js_url, options: options});
+  window.dc.load = function(resource_url, options) {
+    pendingQueue.push({resource_url: resource_url, options: options});
   };
 
   var eventuallyLoadNotes = function(){
     if (window.dc.embed) {
       for (var i=0; i < pendingQueue.length; i++){ 
         var resource = pendingQueue[i];
-        dc.embed.loadNote(resource.js_url, resource.options);
+        dc.embed.loadNote(resource.resource_url, resource.options);
       }
     } else {
       setTimeout(eventuallyLoadNotes, 500);

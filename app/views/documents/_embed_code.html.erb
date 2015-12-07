@@ -2,5 +2,5 @@
 <div id="<%= options[:default_container_id] %>" class="DV-container"></div>
 <% end %>
 <script type="text/javascript">
-  DV.load("<%= options[:resource_js_url] %>", <%= data.to_json %>);
+  DV.load("<%= options[:resource_url] %>", <%= data.to_json %>);
 </script>

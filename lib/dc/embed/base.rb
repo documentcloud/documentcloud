@@ -36,7 +36,7 @@ module DC
         Config.keys
       end
       
-      def resource_js_url(url)
+      def resource_url_js(url)
         resource_params = Rails.application.routes.recognize_path(url) rescue nil
         url_for(resource_params.merge(:format => 'js'))
       end
