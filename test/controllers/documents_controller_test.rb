@@ -105,12 +105,6 @@ class DocumentsControllerTest < ActionController::TestCase
     assert_job_action 'reindex_document'
   end
 
-  def test_loader
-    get :loader
-    assert_response :success
-    assert_equal 'js', response.content_type
-  end
-
   def test_entities
     login_account!
     get :entities, :ids=>[doc.id]
