@@ -15,11 +15,14 @@ namespace :app do
   end
 
   task :devstart do
-    sh "rake crowd:server:start && rake crowd:node:start && rake sunspot:solr:start && sudo nginx"
+    invoke 'sunspot:solr:start'
+    invoke 'crowd:server:start'
+    invoke 'crowd:node:start'
   end
 
   task :restart_solr do
-    sh "rake #{RAILS_ENV} sunspot:solr:stop sunspot:solr:start"
+    invoke "sunspot:solr:stop"
+    invoke "sunspot:solr:start"
   end
 
   task :stop do
@@ -85,15 +88,6 @@ namespace :app do
       print `rm -rf ./public/search/embed/*`
     end
 
-  end
-
-end
-
-namespace :openoffice do
-
-  task :start do
-    utility = RUBY_PLATFORM.match(/darwin/) ? "/Applications/LibreOffice.app/Contents/MacOS/soffice.bin" : "soffice"
-    sh "nohup #{utility} --headless --accept=\"socket,host=127.0.0.1,port=8100;urp;\" --nofirststartwizard > log/soffice.log 2>&1 & echo $! > ./tmp/pids/soffice.pid"
   end
 
 end
