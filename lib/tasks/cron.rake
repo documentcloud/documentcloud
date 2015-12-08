@@ -5,7 +5,6 @@ namespace :cron do
     invoke 'crowd:cluster:free_calais_blacklist'
     invoke 'db:backup'
     invoke 'db:vacuum_analyze'
-    invoke 'db:optimize_solr'
     invoke 'mail:csv'
   end
 
