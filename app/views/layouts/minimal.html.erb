@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <%= render :partial => 'common/meta_tags' %>
-  <%= render :partial => 'common/oembed' %>
+  <%= render :partial => 'common/oembed' if @oembeddable_resource %>
   <title><%= compose_title(@title) %></title>
   <%# CSS Jammit's aware of %>
   <% stylesheets_jammit = [:ui_v2] + (@stylesheets_jammit || []) %>
