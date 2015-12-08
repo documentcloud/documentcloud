@@ -62,11 +62,14 @@ namespace :crowd do
     
     desc "Remove blacklist on Open Calais for daily limit reset"
     task :free_calais_blacklist => :environment do
-      RestClient.delete DC::CONFIG['cloud_crowd_server'] + File.join("/","blacklist","reprocess_entities")
+      begin
+        RestClient.delete File.join(DC::CONFIG['cloud_crowd_server'],"blacklist","reprocess_entities")
+      rescue RestClient::ResourceNotFound => e
+        # it's fine if reprocess_entities isn't on the blacklist.
+      end
       AppConstant.replace("calais_calls_made", 0.to_s)
     end
   end
-
 end
 
 
@@ -80,6 +83,6 @@ def crowd_folder
     when File.exists?('API')
       'api'
     else
-      RAILS_ENV
+      Rails.env
   end
 end
