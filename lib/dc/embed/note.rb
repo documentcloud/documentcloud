@@ -41,11 +41,11 @@ module DC
 
       def content_markup
         template_options = {
-          :use_default_container => @embed_config[:container].nil? || @embed_config[:container].empty?,
-          :default_container_id  => "DC-note-#{@resource.id}",
-          :resource_url          => @resource.resource_url
+          :default_container_id => "DC-note-#{@resource.id}",
+          :resource_url         => @resource.resource_url
         }
-    
+        template_options[:generate_default_container] = @embed_config[:container].nil? || @embed_config[:container].empty? || @embed_config[:container] == '#' + template_options[:default_container_id]
+
         @embed_config[:container] ||= '#' + template_options[:default_container_id]
         render(@embed_config.dump, template_options)
       end
