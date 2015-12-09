@@ -8,9 +8,6 @@ module DC
     class Base
       attr_accessor :strategy, :dom_mechanism, :template
       attr_reader   :resource, :embed_config
-      
-      include Rails.application.routes.url_helpers
-      default_url_options[:host] = DC::CONFIG['server_root']
 
       # Embed presenters accept 
       # a hash representing a resource,
@@ -36,11 +33,6 @@ module DC
         Config.keys
       end
       
-      def resource_url_js(url)
-        resource_params = Rails.application.routes.recognize_path(url) rescue nil
-        url_for(resource_params.merge(:format => 'js'))
-      end
-
       private
 
       def content_template
