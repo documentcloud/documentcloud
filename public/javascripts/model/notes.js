@@ -12,6 +12,13 @@ dc.model.Note = Backbone.Model.extend({
     return Accounts.current().allowedToEdit(this);
   },
   
+  canonicalUrl: function(opts) {
+    var options = opts || {};
+    var url = this.get('canonical_url');
+    if (options.agnostic){ url = url.replace(/^\S+:/,''); }
+    return url;
+  },
+
   resourceUrl: function(opts) {
     var options = opts || {};
     var url = this.get('resource_url');

@@ -19,7 +19,7 @@
   <%= _.t('add_wp_shortcode_for_viewer') %> (<%= _.t('wp_shortcode_plugin_docs_link', '<a class="text_link" href="https://wordpress.org/plugins/documentcloud/" target="_blank">', '</a>') %>)
 </div>
 
-<input type="text" id="note_embed_wordpress_snippet" class="snippet" value="[documentcloud url=&quot;<%= note.resourceUrl() %>&quot;<%= shortcodeOptions %>]">
+<input type="text" id="note_embed_wordpress_snippet" class="snippet" value="[documentcloud url=&quot;<%= note.canonicalUrl() %>&quot;<%= shortcodeOptions %>]">
 
 <div class="publish_info publish_prepare_section_label selectable_text interface hidden">
   <%= _.t( 'featured_examples_notes_list', '<a class="text_link" href="/featured" target="_blank">','</a>' ) %>
