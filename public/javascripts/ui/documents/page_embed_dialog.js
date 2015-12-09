@@ -118,8 +118,8 @@ dc.ui.PageEmbedDialog = dc.ui.Dialog.extend({
     return _.extend({}, this.DEFAULT_OPTIONS, options);
   },
 
-  _generateEmbedCode : function(options) {
-    options = this._embedOptions(options);
+  _generateEmbedCode : function(embedOptions) {
+    embedOptions = JSON.stringify(this._embedOptions(embedOptions));
     return JST['workspace/page_embed_code']({
       doc:              this.doc,
       docTitle:         this.doc.get('title'),
@@ -129,17 +129,21 @@ dc.ui.PageEmbedDialog = dc.ui.Dialog.extend({
       pageNumber:       this._selectedPage,
       pageImageUrl:     this._pageImageUrl(this._selectedPage),
       pageTextUrl:      this._pageTextUrl(this._selectedPage),
-      options:          JSON.stringify(options),
-      shortcodeOptions: _.map(options, function(value, key) { return key + '=' + (_.isString(value) ? value.replace(/\"/g, '&quot;') : value); }).join(' ')
+      options:          embedOptions
     });
   },
 
   _renderEmbedCodeDialog : function() {
+    var embedOptions     = this._embedOptions();
+    var shortcodeOptions = embedOptions ? ' ' + _.map(embedOptions, function(value, key) { return key + '=' + (typeof value == 'string' ? value.replace(/\"/g, '&quot;') : value); }).join(' ') : '';
     this.$embedCodeDialog.html(JST['workspace/page_embed_code_dialog']({
-      embedCode: _.escape(this._generateEmbedCode())
+      embedCode: _.escape(this._generateEmbedCode()),
+      pagePermalink: this._pagePermalink(),
+      shortcodeOptions: shortcodeOptions
     }));
   },
 
+  // TODO: Replace contextual page URL with canonical
   _pagePermalink: function() {
     return this.doc.get('document_viewer_url') + '#document/p' + this._selectedPage;
   },

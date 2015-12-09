@@ -5,8 +5,10 @@
 <textarea id="page_embed_html_snippet" class="snippet"><%= embedCode %></textarea>
 
 <div class="dialog_info selectable_text interface">
-  <i>Coming soon: WordPress shortcodes and setting embed options.</i>
+  <%= _.t('add_wp_shortcode_for_viewer') %> (<%= _.t('wp_shortcode_plugin_docs_link', '<a class="text_link" href="https://wordpress.org/plugins/documentcloud/" target="_blank">', '</a>') %>)
 </div>
+
+<input type="text" id="page_embed_wordpress_snippet" class="snippet" value="[documentcloud url=&quot;<%= pagePermalink %>&quot;<%= shortcodeOptions %>]">
 
 <div class="publish_info selectable_text interface hidden">
   <%= _.t( 'featured_examples_notes_list', '<a class="text_link" href="/featured" target="_blank">','</a>' ) %>
