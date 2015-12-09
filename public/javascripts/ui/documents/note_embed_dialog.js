@@ -107,11 +107,13 @@ dc.ui.NoteEmbedDialog = dc.ui.Dialog.extend({
   },
 
   _renderEmbedCode : function() {
-    var options          = this.embedOptions();
+    var embedOptions     = this.embedOptions();
+    var options          = _.map(embedOptions, function(value, key){ return key + ': ' + value; }).join(',\n    ');
+    var shortcodeOptions = embedOptions ? ' ' + _.map(embedOptions, function(value, key) { return key + '=' + (typeof value == 'string' ? value.replace(/\"/g, '&quot;') : value); }).join(' ') : '';
     this.$('.publish_embed_code').html(JST['workspace/note_embed_code']({
       note    : this.note,
-      options : _.map(options, function(value, key){ return key + ': ' + value; }).join(',\n    '),
-      shortcodeOptions: options ? ' ' + _.map(options, function(value, key) { return key + '=' + (typeof value == 'string' ? value.replace(/\"/g, '&quot;') : value); }).join(' ') : '',
+      options : options,
+      shortcodeOptions: shortcodeOptions,
     }));
   },
 

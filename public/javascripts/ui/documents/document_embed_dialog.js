@@ -165,13 +165,15 @@ dc.ui.DocumentEmbedDialog = dc.ui.Dialog.extend({
 
   // Collects embed options and renders them using a JST template in a textarea.
   _renderEmbedCode : function() {
-    var options              = this.embedOptions();
-    options.container        = '"#DV-viewer-' + this.model.canonicalId() + '"';
+    var embedOptions     = this.embedOptions();
+    var options          = _.extend({}, embedOptions, {container: '"#DV-viewer-' + this.model.canonicalId() + '"'});
+        options          = _.map(options, function(value, key){ return key + ': ' + value; }).join(',\n    ');
+    var shortcodeOptions = embedOptions ? ' ' + _.map(embedOptions, function(value, key) { return key + '=' + (typeof value == 'string' ? value.replace(/\"/g, '&quot;') : value); }).join(' ') : '';
     this.$('.publish_embed_code').html(JST['document/embed_code']({
       doc: this.model,
-      options: _.map(options, function(value, key){ return key + ': ' + value; }).join(',\n    '),
-      shortcodeOptions: _.map(options, function(value, key) { return key + '=' + (typeof value == 'string' ? value.replace(/\"/g, '&quot;') : value); }).join(' '),
-      rawOptions: options,
+      options: options,
+      shortcodeOptions: shortcodeOptions,
+      rawOptions: embedOptions,
     }));
   },
 
