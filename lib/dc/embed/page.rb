@@ -49,7 +49,6 @@ module DC
       end
 
       def content_markup
-        Rails.logger.info "@resource.resource_url is #{@resource.resource_url}"
         template_options = {
           :resource_url => @resource.resource_url
         }
