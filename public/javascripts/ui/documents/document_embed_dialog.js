@@ -168,7 +168,7 @@ dc.ui.DocumentEmbedDialog = dc.ui.Dialog.extend({
     var embedOptions     = this.embedOptions();
     var options          = _.extend({}, embedOptions, {container: '"#DV-viewer-' + this.model.canonicalId() + '"'});
         options          = _.map(options, function(value, key){ return key + ': ' + value; }).join(',\n    ');
-    var shortcodeOptions = embedOptions ? ' ' + _.map(embedOptions, function(value, key) { return key + '=' + (typeof value == 'string' ? value.replace(/\"/g, '&quot;') : value); }).join(' ') : '';
+    var shortcodeOptions = _.isEmpty(embedOptions) ? '' : ' ' + _.map(embedOptions, function(value, key) { return key + '=' + (typeof value == 'string' ? value.replace(/\"/g, '&quot;') : value); }).join(' ');
     this.$('.publish_embed_code').html(JST['document/embed_code']({
       doc: this.model,
       options: options,

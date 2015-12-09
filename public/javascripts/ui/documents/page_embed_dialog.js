@@ -135,7 +135,7 @@ dc.ui.PageEmbedDialog = dc.ui.Dialog.extend({
 
   _renderEmbedCodeDialog : function() {
     var embedOptions     = this._embedOptions();
-    var shortcodeOptions = embedOptions ? ' ' + _.map(embedOptions, function(value, key) { return key + '=' + (typeof value == 'string' ? value.replace(/\"/g, '&quot;') : value); }).join(' ') : '';
+    var shortcodeOptions = _.isEmpty(embedOptions) ? '' : ' ' + _.map(embedOptions, function(value, key) { return key + '=' + (typeof value == 'string' ? value.replace(/\"/g, '&quot;') : value); }).join(' ');
     this.$embedCodeDialog.html(JST['workspace/page_embed_code_dialog']({
       embedCode: _.escape(this._generateEmbedCode()),
       pagePermalink: this._pagePermalink(),
