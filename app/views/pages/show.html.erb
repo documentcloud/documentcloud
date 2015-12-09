@@ -1,0 +1,18 @@
+<div id="return_to_v1">
+  <%= link_to '⬅︎ Read full document', @current_page.contextual_path, id: 'return_to_v1_text' %>
+  <a id="return_to_v1_logo" href="/home"><img src="/images/common/document_cloud_logo_white@2x.png" width="150" height="32"></a>
+</div>
+
+<div class="container embed-preview-container">
+
+  <div class="DC-embed" data-version="1.0" style="font-size:10pt">
+    <p><a class="DC-embed-resource" href="<%= @current_page.contextual_url %>" title="View <%= @current_page.title %> on DocumentCloud in new window or tab" target="_blank"><%= @current_page.title %></a></p>
+    <img src="<%= @current_document.page_image_url(@current_page.page_number, 'normal') %>" alt="<%= @current_page.title %>" style="border:1px solid #ccc;-webkit-box-sizing:border-box;box-sizing:border-box;width:100%;max-width:700px;">
+    <p>
+      Contributed to DocumentCloud by <%= @current_document.account_name %> of <%= @current_document.organization_name %> &bull;
+      <a href="<%= @current_page.text_url %>" title="View text of <%= @current_page.title %> in a new window or tab" target="_blank">View page as text</a>
+    </p>
+  </div>
+  <script src="<%= File.join(DC.cdn_root(:agnostic => true), "/embed/loader/enhance.js") %>"></script>
+
+</div>

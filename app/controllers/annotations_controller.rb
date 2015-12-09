@@ -3,7 +3,7 @@ class AnnotationsController < ApplicationController
 
   layout false
 
-  before_action :login_required, :except => [:index, :show, :print,:cors_options]
+  before_action :login_required, :except => [:index, :show, :print, :cors_options]
   skip_before_action :verify_authenticity_token
 
   # In the workspace, request a listing of annotations.
@@ -28,7 +28,11 @@ class AnnotationsController < ApplicationController
         render :js => js
       end
       format.html do
-        render :layout => 'empty'
+        make_oembeddable(current_annotation)
+        @stylesheets_header = ["#{DC.cdn_root}/note_embed/note_embed.css"]
+        @javascripts_footer = ["#{DC.cdn_root}/note_embed/note_embed.js",
+                               "#{DC.cdn_root}/notes/loader.js"]
+        render :layout => 'minimal'
       end
     end
   end
@@ -93,7 +97,6 @@ class AnnotationsController < ApplicationController
   end
 
   private
-
 
   def current_annotation
     @current_annotation ||= current_document.annotations.find_by_id(params[:id])

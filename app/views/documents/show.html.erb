@@ -6,11 +6,7 @@
   <meta http-equiv="ClearType" content="true">
   <title><%= @current_document && @current_document.title %></title>
   <%= render :partial => 'accounts/language_settings' if @edits_enabled %>
-
-  <% if @current_document %>
-    <link rel="alternate" type="application/json+oembed" href="<%= @current_document.oembed_url %>" title="<%= @current_document.title %>" />
-  <% end %>
-
+  <%= render :partial => 'common/oembed' if @oembeddable_resource %>
   <!--[if (!IE)|(gte IE 8)]><!-->
     <link href="<%= DC.cdn_root(:agnostic => true) %>/viewer/viewer-datauri.css" media="screen" rel="stylesheet" type="text/css" />
   <!--<![endif]-->

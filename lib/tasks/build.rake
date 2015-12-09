@@ -1,5 +1,3 @@
-require './lib/dc/urls' # For `:environment`-less `render_template()`
-
 namespace :build do
 
   namespace :embed do
@@ -49,18 +47,14 @@ namespace :build do
 
       vendor_dir     = "public/javascripts/vendor/documentcloud-pages"
       page_embed_dir = "public/embed/page"
-      loader_dir     = "public/embed/loader"
 
       FileUtils.rm_r(page_embed_dir) if File.exists?(page_embed_dir)
       FileUtils.mkdir(page_embed_dir)
       FileUtils.cp_r(Dir.glob("#{vendor_dir}/dist/*"), page_embed_dir)
       FileUtils.cp_r(Dir.glob("#{vendor_dir}/src/css/vendor/fontello/font"), page_embed_dir)
 
-      `cat #{vendor_dir}/src/js/config/config.js.erb #{page_embed_dir}/enhance.js > #{loader_dir}/enhance.js.erb`
+      `cat #{vendor_dir}/src/js/config/config.js.erb #{page_embed_dir}/enhance.js > app/views/embed/enhance.js.erb`
       FileUtils.rm(["#{page_embed_dir}/enhance.js"])
-
-      # Mimic deployment of the loader so that development has a copy too
-      File.write("#{loader_dir}/enhance.js", render_template("#{loader_dir}/enhance.js.erb"))
 
       puts "Done building page embed"
     end
@@ -74,9 +68,6 @@ namespace :build do
       FileUtils.mkdir(note_embed_dir)
 
       FileUtils.cp_r(Dir.glob("public/javascripts/vendor/documentcloud-notes/dist/*"), note_embed_dir)
-
-      # Mimic deployment of the loader so that development has a copy too
-      File.write("public/notes/loader.js", render_template("app/views/annotations/embed_loader.js.erb"))
 
       puts "Done building note embed"
     end
@@ -107,9 +98,6 @@ namespace :build do
       # Clean up temp build directory
       FileUtils.rm_r(build_dir) if File.exists?(build_dir)
 
-      # Mimic deployment of the loader so that development has a copy too
-      File.write("public/embed/loader.js", render_template("app/views/search/embed_loader.js.erb"))
-
       puts "Done building search embed"
     end
 
@@ -126,7 +114,5 @@ namespace :build do
   task :viewer do puts       "REMOVED: Use `build:embed:viewer` instead." end
   task :note_embed do puts   "REMOVED: Use `build:embed:note` instead." end
   task :search_embed do puts "REMOVED: Use `build:embed:search` instead." end
-
-  def render_template(template_path); ERB.new(File.read(template_path)).result(binding); end
 
 end

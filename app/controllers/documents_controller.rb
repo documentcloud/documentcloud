@@ -23,6 +23,7 @@ class DocumentsController < ApplicationController
         populate_editor_data if current_account && current_organization
         return if date_requested?
         return if entity_requested?
+        make_oembeddable(doc)
       end
       format.pdf  { redirect_to(doc.pdf_url) }
       format.text { redirect_to(doc.full_text_url) }
@@ -117,10 +118,6 @@ class DocumentsController < ApplicationController
     modified_pages = JSON.parse(params[:modified_pages])
     doc.save_page_text(modified_pages) unless modified_pages.empty?
     json doc
-  end
-
-  def loader
-    render :action => 'embed_loader.js.erb', :content_type => Mime::Type.lookup_by_extension('js')
   end
 
   def entities

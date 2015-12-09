@@ -103,6 +103,39 @@ class Page < ActiveRecord::Base
     DC::Store::AssetStore.new.authorized_url(document.page_image_path(page_number, size))
   end
 
+  def text_path
+    document.page_text_path(page_number)
+  end
+
+  def text_url
+    File.join(DC.server_root, text_path)
+  end
+
+  def canonical_path(format = :json)
+    "/documents/#{document.canonical_id}/pages/#{page_number}.#{format}"
+  end
+
+  def canonical_url(format = :json)
+    File.join(DC.server_root, canonical_path(format))
+  end
+
+  # `contextual` means "show this thing in the context of its document parent",
+  # which right now correlates to its page-anchored version.
+  def contextual_path
+    "/documents/#{document.canonical_id}.html\#document/p#{page_number}"
+  end
+
+  def contextual_url
+    File.join(DC.server_root, contextual_path)
+  end
+
+  def oembed_url
+    "#{DC.server_root}/api/oembed.json?url=#{CGI.escape(self.canonical_url(:html))}"
+  end
+  
+  def title
+    "Page #{page_number} of #{document.title}"
+  end
 
   private
 

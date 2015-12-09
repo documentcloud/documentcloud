@@ -8,7 +8,7 @@ module DC
     class Base
       attr_accessor :strategy, :dom_mechanism, :template
       attr_reader   :resource, :embed_config
-      
+
       # Embed presenters accept 
       # a hash representing a resource,
       # configuration which specifies how the embed markup/data will be generated
@@ -34,6 +34,7 @@ module DC
       end
       
       private
+
       def content_template
         raise NotImplementedError
       end
@@ -45,7 +46,7 @@ module DC
       def render(template, data, options)
         raise NotImplementedError
       end
-      
+
       # Embeds specify the configuration options
       # with subclasses of this Config class.
       class Config

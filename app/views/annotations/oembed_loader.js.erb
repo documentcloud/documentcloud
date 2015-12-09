@@ -1,0 +1,49 @@
+<%
+  server_root = DC.server_root(:agnostic => true)
+  asset_root  = DC.cdn_root(:agnostic => true)
+%>
+(function() {
+  /* If the note embed is already loaded, don't repeat the process. */
+  if (window.dc) { if (window.dc.noteEmbedLoaded) { return; } }
+
+  window.dc = window.dc || {};
+  window.dc.recordHit = "<%= server_root %>/pixel.gif";
+
+  var pendingQueue = window.dc._notesWaitingForAppLoad = [];
+  window.dc.load = function(resource_url, options) {
+    pendingQueue.push({resource_url: resource_url, options: options});
+  };
+
+  var eventuallyLoadNotes = function(){
+    if (window.dc.embed) {
+      for (var i=0; i < pendingQueue.length; i++){ 
+        var resource = pendingQueue[i];
+        dc.embed.loadNote(resource.resource_url, resource.options);
+      }
+    } else {
+      setTimeout(eventuallyLoadNotes, 500);
+    }
+  };
+  eventuallyLoadNotes();
+
+  var loadCSS = function(url, media) {
+    var link   = document.createElement('link');
+    link.rel   = 'stylesheet';
+    link.type  = 'text/css';
+    link.media = media || 'screen';
+    link.href  = url;
+    var head   = document.getElementsByTagName('head')[0];
+    head.appendChild(link);
+  };
+
+  /*@cc_on
+  /*@if (@_jscript_version < 5.8)
+    loadCSS("<%= asset_root %>/note_embed/note_embed.css");
+  @else @*/
+    loadCSS("<%= asset_root %>/note_embed/note_embed-datauri.css");
+  /*@end
+  @*/
+
+  /* Record the fact that the note embed is loaded. */
+  dc.noteEmbedLoaded = true;
+})();

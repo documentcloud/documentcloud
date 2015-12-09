@@ -1,24 +1,24 @@
 <%
-  asset_root = DC.cdn_root(:agnostic => true)
+  server_root = DC.server_root(:agnostic => true)
+  asset_root  = DC.cdn_root(:agnostic => true)
 %>
-
 (function() {
   /* If the viewer is already loaded, don't repeat the process. */
   if (window.DV) { if (window.DV.loaded) { return; } }
 
   window.DV = window.DV || {};
-  window.DV.recordHit = "<%= DC.server_root(:agnostic=>true) %>/pixel.gif";
+  window.DV.recordHit = "<%= server_root %>/pixel.gif";
 
   var pendingQueue = window.DV._documentsWaitingForAppLoad = [];
-  window.DV.load = function(resource_js_url, options) {
-    pendingQueue.push({js_url: resource_js_url, options: options});
+  window.DV.load = function(resource_url, options) {
+    pendingQueue.push({resource_url: resource_url, options: options});
   };
 
   var eventuallyLoadDocuments = function(){
     if (window.DV.viewers) {
       for (var i=0; i < pendingQueue.length; i++){ 
         var resource = pendingQueue[i];
-        DV.load(resource.js_url, resource.options);
+        DV.load(resource.resource_url, resource.options);
       }
     } else {
       setTimeout(eventuallyLoadDocuments, 500);

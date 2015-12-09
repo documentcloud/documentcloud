@@ -1,7 +1,16 @@
-<script src="<%= DC.cdn_root %>/note_embed/note_embed.js"></script>
-<link href="<%= DC.cdn_root %>/note_embed/note_embed.css" media="all" rel="stylesheet">
-<script src="<%= DC.cdn_root %>/notes/loader.js"></script>
-<div id="DC-note-<%= @current_annotation.id %>" class="DC-note-container"></div>
-<script type="text/javascript">
-  dc.embed.loadNote("<%= @current_annotation.canonical_url(:js) %>");
-</script>
+<div id="return_to_v1">
+  <%= link_to '⬅︎ Read full document', @current_annotation.contextual_path, id: 'return_to_v1_text' %>
+  <a id="return_to_v1_logo" href="/home"><img src="/images/common/document_cloud_logo_white@2x.png" width="150" height="32"></a>
+</div>
+
+<div class="container">
+
+  <div id="DC-note-<%= @current_annotation.id %>" class="DC-note-container" style="background:white"></div>
+
+</div>
+
+<%
+  @javascript_footer_inline = <<-EOS
+    dc.embed.loadNote("#{@current_annotation.canonical_url(:js)}");
+  EOS
+%>

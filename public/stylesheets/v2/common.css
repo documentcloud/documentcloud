@@ -16,6 +16,16 @@
   margin: 0 auto;
 }
 
+.embed-preview-container {
+  margin-top: 30px;
+  background: white;
+  padding: 30px 40px;
+  box-shadow: 0 0 20px #aaa;
+  border-radius: 6px;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
 #return_to_v1 {
   position: relative;
   background-color: rgb(90, 118, 160);

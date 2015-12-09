@@ -4,6 +4,9 @@ DC::Application.routes.draw do
   # homepage
   get '/' => 'workspace#index'
 
+  get '/embed/loader/enhance', as: :embed_enhance, to: 'embed#enhance'
+  get '/:object/loader',       as: :embed_loader,  to: 'embed#loader', object: /documents|notes|embed/
+
   # Internal Search API.
   get '/search/documents.json' => 'search#documents'
 
@@ -73,9 +76,15 @@ DC::Application.routes.draw do
     resource :annotation do
       match '(*all)', action: :cors_options, via: :options, allowed_methods: [:get,:post]
     end
+    
+    # in order not to clobber existing routes
+    #resources :pages
+    # When we're using proper routes, we'll also need to update 
+    # `ApiController#resource_embeddable?` to make pages act like notes, and 
+    # untangle `params[:page_number|:id|:document_id]` in `PagesController`
+    
     collection do
       get :status
-      get :loader
       get :queue_length
       get :preview
       get :published
@@ -99,6 +108,7 @@ DC::Application.routes.draw do
       get  'pages/:page_name.txt', :action=>:send_page_text
       post 'pages/:page_name.txt', :action=>:set_page_text
       get  'pages/:page_name.gif', :action=>:send_page_image
+      get  'pages/:page_number.:format', :controller => :pages, :action => :show
       get  ':slug.pdf', :action=>:send_pdf
       get  ':slug.txt', :action=>:send_full_text
     end

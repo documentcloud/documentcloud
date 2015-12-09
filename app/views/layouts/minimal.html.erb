@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <%= render :partial => 'common/meta_tags' %>
+  <%= render :partial => 'common/oembed' if @oembeddable_resource %>
+  <title><%= compose_title(@title) %></title>
+  <%# CSS Jammit's aware of %>
+  <% stylesheets_jammit = [:ui_v2] + (@stylesheets_jammit || []) %>
+  <%= include_stylesheets *stylesheets_jammit %>
+  <%# CSS Jammit's not aware of %>
+  <% stylesheets_header = (@stylesheets_header || []) %>
+  <%= stylesheet_link_tag *stylesheets_header %>
+  <%# JS you need in the header because stuff in the body requires it %>
+  <% javascripts_header = (@javascripts_header || []) %>
+  <%= javascript_include_tag *javascripts_header %>
+</head>
+<body class="v2">
+
+  <%= yield %>
+
+  <%# JS Jammit's aware of %>
+  <% javascripts_jammit = (@javascripts_jammit || []) %>
+  <%= include_javascripts *javascripts_jammit %>
+  <%# JS Jammit's not aware of %>
+  <% javascripts_footer = (@javascripts_footer || []) %>
+  <%= javascript_include_tag *javascripts_footer %>
+
+  <%# JS you want to describe from your template, but run in the right place %>
+<% if @javascript_footer_inline %>
+  <script>
+    <%= raw @javascript_footer_inline %>
+  </script>
+<% end %>
+
+<% if Rails.env.production? %>
+  <%= render :partial => 'common/google' %>
+<% end %>
+</body>
+</html>
