@@ -119,6 +119,8 @@ class Page < ActiveRecord::Base
     File.join(DC.server_root, canonical_path(format))
   end
 
+  # `contextual` means "show this thing in the context of its document parent",
+  # which right now correlates to its page-anchored version.
   def contextual_path
     "/documents/#{document.canonical_id}.html\#document/p#{page_number}"
   end

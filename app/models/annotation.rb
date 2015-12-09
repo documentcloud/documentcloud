@@ -130,6 +130,8 @@ class Annotation < ActiveRecord::Base
     PUBLIC_LEVELS.include?(access) && document.cacheable?
   end
 
+  # `contextual` means "show this thing in the context of its document parent",
+  # which right now correlates to its page-anchored version.
   def contextual_url
     File.join(DC.server_root, contextual_path)
   end
