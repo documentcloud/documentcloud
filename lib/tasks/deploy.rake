@@ -8,12 +8,12 @@ namespace :deploy do
 
   desc "Deploy Rails app and clear the JSON object cache"
   task :rails do
-    remote ["app:update", "app:clearcache:docs", "app:clearcache:search", "app:restart", "app:warm"], app_servers
+    remote ["app:update", "app:clearcache:documents", "app:clearcache:search", "app:restart", "app:warm"], app_servers
   end
 
   desc "Deploy Rails app, update and compile static assets, and clear the JSON object cache"
   task :app do
-    remote ["app:update", "app:bower", "app:jammit", "app:clearcache:docs", "app:clearcache:search", "app:restart", "app:warm"], app_servers
+    remote ["app:update", "app:bower", "app:jammit", "app:clearcache:documents", "app:clearcache:search", "app:restart", "app:warm"], app_servers
   end
 
   desc "Deploy and migrate the database, then restart CloudCrowd"

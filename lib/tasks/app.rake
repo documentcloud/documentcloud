@@ -71,7 +71,7 @@ namespace :app do
   namespace :clearcache do
 
     desc "Clears out cached document JS files."
-    task :docs do
+    task :documents do
       print `find ./public/documents/ -maxdepth 1 -name "*.js" -delete`
       print `find ./public/documents/ -maxdepth 1 -name "*.js.gz" -delete`
       invoke 'app:clearcache:notes'
