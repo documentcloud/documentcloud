@@ -35,7 +35,7 @@ class ApiController < ApplicationController
           q:        params[:q],
           documents: @documents.map {|d| d.canonical(opts) }
         }
-        json_response
+        render_cross_origin_json
       end
     end
   end
@@ -62,7 +62,7 @@ class ApiController < ApplicationController
       end
       params[:url] = params[:file] unless is_file
       @response = Document.upload(params, current_account, current_organization).canonical
-      json_response
+      render_cross_origin_json
     end
   end
 
@@ -83,15 +83,15 @@ class ApiController < ApplicationController
         direct = [PRIVATE, ORGANIZATION, EXCLUSIVE].include? current_document.access
         redirect_to(current_document.full_text_url(direct))
       end
-      format.json { json_response }
-      format.js { json_response }
+      format.json { render_cross_origin_json }
+      format.js { render_cross_origin_json }
     end
   end
 
   def pending
     @response = { :total_documents => Document.pending.count }
     @response[:your_documents] = current_account.documents.pending.count if logged_in?
-    json_response
+    render_cross_origin_json
   end
 
   # Retrieve a note's canonical JSON.
@@ -99,7 +99,7 @@ class ApiController < ApplicationController
     return bad_request unless params[:note_id] and request.format.json? || request.format.js?
     return not_found unless current_note
     @response = {'annotation' => current_note.canonical}
-    json_response
+    render_cross_origin_json
   end
 
   # Retrieve the entities for a document.
@@ -107,7 +107,7 @@ class ApiController < ApplicationController
     return bad_request unless params[:id] and request.format.json? || request.format.js?
     return not_found unless current_document
     @response = {'entities' => current_document.ordered_entity_hash}
-    json_response
+    render_cross_origin_json
   end
 
   def update
@@ -119,7 +119,7 @@ class ApiController < ApplicationController
     return json(doc, 403) unless success
     expire_pages doc.cache_paths if doc.cacheable?
     @response = {'document' => doc.canonical(:access => true, :sections => true, :annotations => true)}
-    json_response
+    render_cross_origin_json
   end
 
   def destroy
@@ -137,7 +137,7 @@ class ApiController < ApplicationController
     return not_found unless project
     opts = { :include_document_ids => params[:include_document_ids] != 'false' }
     @response = {'project' => project.canonical(opts)}
-    json_response
+    render_cross_origin_json
   end
 
   # Retrieve a listing of your projects, including document id.
@@ -145,14 +145,14 @@ class ApiController < ApplicationController
     return forbidden unless current_account # already returns a 401 if credentials aren't supplied
     opts = { :include_document_ids => params[:include_document_ids] != 'false' }
     @response = {'projects' => Project.accessible(current_account).map {|p| p.canonical(opts) } }
-    json_response
+    render_cross_origin_json
   end
 
   def create_project
     attrs = pick(params, :title, :description)
     attrs[:document_ids] = (params[:document_ids] || []).map(&:to_i)
     @response = {'project' => current_account.projects.create(attrs).canonical}
-    json_response
+    render_cross_origin_json
   end
 
   def update_project
@@ -162,7 +162,7 @@ class ApiController < ApplicationController
     current_project.set_documents( doc_ids )
     current_project.update_attributes data
     @response = {'project' => current_project.reload.canonical}
-    json_response
+    render_cross_origin_json
   end
 
   def destroy_project
@@ -204,7 +204,7 @@ class ApiController < ApplicationController
     respond_to do |format|
       format.json do
         @response = embed.as_json.to_json
-        json_response
+        render_cross_origin_json
       end
       format.all do
         # Per the oEmbed spec, unrecognized formats should trigger a 501

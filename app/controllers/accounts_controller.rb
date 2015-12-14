@@ -61,7 +61,7 @@ class AccountsController < ApplicationController
   def logged_in
     return bad_request unless request.format.json? or request.format.js?
     @response = {:logged_in => logged_in?}
-    json_response
+    render_cross_origin_json
   end
 
   # Fetches or creates a user account and creates a membership for that

@@ -21,7 +21,7 @@ class PagesController < ApplicationController
       
       format.json do
         @response = current_document_json
-        json_response
+        render_cross_origin_json
       end
       
       format.js do

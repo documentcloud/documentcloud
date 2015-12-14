@@ -63,21 +63,24 @@ class ApplicationController < ActionController::Base
     headers['P3P'] = 'CP="IDC DSP COR ADM DEVi TAIi PSA PSD IVAi IVDi CONi HIS OUR IND CNT"'
   end
 
-  # If the request is asking for JSONP (eg. has a 'callback' parameter), then
-  # short-circuit, and return the rendered JSONP.
-  def jsonp_request?
-    return false unless params[:callback]
-    @callback = params[:callback]
-    render :partial => 'common/jsonp.js', :content_type => 'application/javascript'
-    true
+  def has_callback?
+    !!params[:callback]
   end
 
-  # Make a JSONP-aware JSON response, using the contents of `@response`
-  # Where we allow JSONP, we also allow CORS.
-  def json_response
-    return if jsonp_request?
+  # If the request is asking for JSONP (i.e., has a `callback` parameter), then
+  # wrap the JSON and render as JSONP.
+  def render_as_jsonp
+    @callback = params[:callback]
+    render :partial => 'common/jsonp.js', :content_type => 'application/javascript'
+  end
+
+  # Return the contents of `@response` as cross-origin-allowed JSON or, if 
+  # it has a `callback` parameter, as JSONP.
+  def render_cross_origin_json
+    return render_as_jsonp if has_callback?
     # If the request has already set the CORS headers, don't overwrite them
-    # Sending the wildcard origin that will dissallow sending cookies for authentication.
+    # Sending the wildcard origin that will dissallow sending cookies for 
+    # authentication.
     headers['Access-Control-Allow-Origin'] = '*' unless headers.has_key?('Access-Control-Allow-Origin')
     json @response
   end

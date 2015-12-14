@@ -49,7 +49,7 @@ class AdminController < ApplicationController
           @response[:stats][:pages_per_account]   = DC::Statistics.pages_per_account
         end
         cache_page @response.to_json
-        json_response
+        render_cross_origin_json
       end
       
       format.html{ render }
@@ -173,7 +173,7 @@ class AdminController < ApplicationController
     respond_to do |format|
       format.json do
         @response = Document.upload_statistics(:organization, org.id)
-        json_response
+        render_cross_origin_json
       end
       format.html{ render }
       format.any{ redirect_to :format => :html, :params => pick(params, :id, :slug) }
@@ -191,7 +191,7 @@ class AdminController < ApplicationController
     respond_to do |format|
       format.json do
         @response = Document.upload_statistics(:account, account.id)
-        json_response
+        render_cross_origin_json
       end
       format.html{ render }
       format.any{ redirect_to :format => :html, :params => pick(params, :id, :slug) }

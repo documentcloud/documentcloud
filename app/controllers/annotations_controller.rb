@@ -19,7 +19,7 @@ class AnnotationsController < ApplicationController
         @response = current_annotation.canonical(:include_image_url => true, :include_document_url => true)
         # TODO: https://github.com/documentcloud/documentcloud/issues/291
         # cache_page @response.to_json if current_annotation.cacheable?
-        json_response
+        render_cross_origin_json
       end
       format.js do
         json = current_annotation.canonical(:include_image_url => true, :include_document_url => true).to_json

@@ -31,7 +31,7 @@ class DocumentsController < ApplicationController
         @response = doc.canonical
         # TODO: https://github.com/documentcloud/documentcloud/issues/291
         # cache_page @response.to_json if doc.cacheable?
-        json_response
+        render_cross_origin_json
       end
       format.js do
         js = "DV.loadJSON(#{doc.canonical.to_json});"
@@ -209,7 +209,7 @@ class DocumentsController < ApplicationController
     maybe_set_cors_headers
     return not_found unless current_page
     @response = current_page.text
-    return if jsonp_request?
+    return render_as_jsonp if has_callback?
     render :plain => @response
   end
 
@@ -224,7 +224,7 @@ class DocumentsController < ApplicationController
     return not_found unless doc
     pages     = Page.search_for_page_numbers(params[:q], doc)
     @response = {'query' => params[:q], 'results' => pages}
-    json_response
+    render_cross_origin_json
   end
 
   def preview
