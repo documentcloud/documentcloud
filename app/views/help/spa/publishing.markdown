@@ -86,7 +86,7 @@ En el cuadro de diálogo que aparece a continuación, seleccione el número de l
 
 Haga clic en "Siguiente" para pasar al paso 2 y generar el código HTML empotrable. He aquí una muestra de lo que se verá así:
 
-    <div class="DC-embed-stub" data-version="1.0" style="font-size:10pt">
+    <div class="DC-embed" data-version="1.0" style="font-size:10pt">
       <p><a class="DC-embed-resource" href="https://www.documentcloud.org/documents/282753-lefler-thesis.html#document/p57" title="View page 57 of Lefler Thesis on DocumentCloud in new window or tab" target="_blank">Page 57 of Lefler Thesis</a></p>
       <img src="//www.documentcloud.org/documents/282753/pages/lefler-thesis-p57-normal.gif" alt="Page 57 of Lefler Thesis" style="border:1px solid #ccc;-webkit-box-sizing:border-box;box-sizing:border-box;width:100%;max-width:700px;">
       <p>Contributed to DocumentCloud by Ted Han of DocumentCloud &bull; <a href="https://www.documentcloud.org/documents/282753/pages/lefler-thesis-p57.txt" title="View text of page 57 of Lefler Thesis in a new window or tab" target="_blank">View page as text</a></p>
