@@ -56,13 +56,6 @@ class ApplicationController < ActionController::Base
     render :json => obj, :status => status
   end
 
-  # for use by actions that may be embedded in an iframe
-  # without this header IE will not send cookies
-  def set_p3p_header
-    # explanation of what these mean: http://www.p3pwriter.com/LRN_111.asp
-    headers['P3P'] = 'CP="IDC DSP COR ADM DEVi TAIi PSA PSD IVAi IVDi CONi HIS OUR IND CNT"'
-  end
-
   def has_callback?
     !!params[:callback]
   end
@@ -83,6 +76,13 @@ class ApplicationController < ActionController::Base
     # authentication.
     headers['Access-Control-Allow-Origin'] = '*' unless headers.has_key?('Access-Control-Allow-Origin')
     json @response
+  end
+
+  # for use by actions that may be embedded in an iframe
+  # without this header IE will not send cookies
+  def set_p3p_header
+    # explanation of what these mean: http://www.p3pwriter.com/LRN_111.asp
+    headers['P3P'] = 'CP="IDC DSP COR ADM DEVi TAIi PSA PSD IVAi IVDi CONi HIS OUR IND CNT"'
   end
 
   def expire_pages(paths)
