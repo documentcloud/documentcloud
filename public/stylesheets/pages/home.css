@@ -58,7 +58,7 @@ a, a:link, a:visited, #help a, #help a:visited {
     text-decoration: none;
   }
 
-h1 {
+body > h1 {
   position: absolute;
   width: 960px;
   text-align: left;
