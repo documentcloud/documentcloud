@@ -4,7 +4,8 @@ class CollaboratorsController < ApplicationController
 
   def create
     account = Account.lookup(pick(params, :email)[:email])
-    return json(nil, 404) if !account || account.id == current_account.id
+    return not_found if !account
+    return conflict if account.id == current_account.id
     return bad_request(:error => 'That account has been disabled.') if account.role == Account::DISABLED
     
     success = current_project.add_collaborator account
