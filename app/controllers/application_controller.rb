@@ -204,59 +204,37 @@ class ApplicationController < ActionController::Base
     forbidden
   end
 
-  def bad_request
-    respond_to do |format|
-      format.js  { render_cross_origin_json({:error=>"Bad Request"}, {:status => 400}) }
-      format.json{ render_cross_origin_json({:error=>"Bad Request"}, {:status => 400}) }
-      format.any { render :file => "#{Rails.root}/public/400.html", :status => 400 }
-    end
-    false
+  def bad_request(options={})
+    options = { :message  => "Bad Request" }.merge(options)
+    error_response 400, options
   end
 
   # Return forbidden when the access is unauthorized.
-  def forbidden
-    @next = CGI.escape(request.original_url)
-    respond_to do |format|
-      format.js  { render_cross_origin_json({:error=>"Forbidden"}, {:status => 403}) }
-      format.json{ render_cross_origin_json({:error=>"Forbidden"}, {:status => 403}) }
-      format.any { render :file => "#{Rails.root}/public/403.html", :status => 403 }
-    end
-    false
+  def forbidden(options = {})
+    options = {
+      :message => "Forbidden",
+      :locals  => { next: CGI.escape(request.original_url) }
+    }.merge(options)
+    error_response 403, options
   end
 
   # Return not_found when a resource can't be located.
   def not_found(options={})
-    options = {
-      :template => "#{Rails.root}/public/404.html"
-    }.merge(options)
-
-    respond_to do |format|
-      format.js  { render_cross_origin_json({:error=>"Not Found"}, {:status => 404}) }
-      format.json{ render_cross_origin_json({:error=>"Not Found"}, {:status => 404}) }
-      format.any { render :file => options[:template], :status => 404 }
-    end
-    false
+    options = { :message => "Not Found" }.merge(options)
+    error_response 404, options
   end
 
   # Return server_error when an uncaught exception bubbles up.
-  def server_error(e)
-    respond_to do |format|
-      format.js  { render_cross_origin_json({:error=>"Internal Server Error (sorry)"}, {:status => 500}) }
-      format.json{ render_cross_origin_json({:error=>"Internal Server Error (sorry)"}, {:status => 500}) }
-      format.any { render :file => "#{Rails.root}/public/500.html", :status => 500 }
-    end
-    false
+  def server_error(e, options={})
+    options = { :message  => "Internal Server Error" }.merge(options)
+    error_response 500, options
   end
 
   # A resource was requested in a way we can't fulfill (e.g. an oEmbed
   # request for XML when we only provide JSON)
-  def not_implemented
-    respond_to do |format|
-      format.js  { render_cross_origin_json({:error=>"Not Implemented"}, {:status => 501}) }
-      format.json{ render_cross_origin_json({:error=>"Not Implemented"}, {:status => 501}) }
-      format.any { render :file => "#{Rails.root}/public/501.html", :status => 501 }
-    end
-    false
+  def not_implemented(options={})
+    options = { :message  => "Not Implemented" }.merge(options)
+    error_response 501, options
   end
 
   # Simple HTTP Basic Auth to make sure folks don't snoop where the shouldn't.
@@ -303,6 +281,26 @@ class ApplicationController < ActionController::Base
   # the JSON visible in the browser.
   def debug_api
     response.content_type = 'text/plain' if params[:debug]
+  end
+
+  private
+  
+  # Generic error response helper. Defaults to 500, but never called directly 
+  # anyway.
+  def error_response(status=500, options={})
+    options = {
+      :message  => "Internal Server Error",
+      :template => status, # Exists only for `doc_404`
+      :locals   => {}
+    }.merge(options)
+
+    respond_to do |format|
+      format.js   { render_cross_origin_json({:error=>options[:message]}, {:status => status}) }
+      format.json { render_cross_origin_json({:error=>options[:message]}, {:status => status}) }
+      format.any  { render :file => "#{Rails.root}/public/#{options[:template]}.html", :locals => options[:locals], :status => status }
+    end
+
+    false
   end
 
 end

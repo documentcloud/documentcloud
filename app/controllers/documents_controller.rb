@@ -16,7 +16,7 @@ class DocumentsController < ApplicationController
     Account.login_reviewer(params[:key], session, cookies) if params[:key]
     doc = current_document(true)
     return forbidden if doc.nil? && Document.exists?(params[:id].to_i)
-    return not_found(:template => "#{Rails.root}/public/doc_404.html") unless doc
+    return not_found(:template => "doc_404") unless doc
     respond_to do |format|
       format.html do
         @no_sidebar = (params[:sidebar] || '').match /no|false/
