@@ -213,7 +213,7 @@ class ApplicationController < ActionController::Base
   def forbidden(options = {})
     options = {
       :message => "Forbidden",
-      :locals  => { next: CGI.escape(request.original_url) }
+      :locals  => { post_login_url: CGI.escape(request.original_url) }
     }.merge(options)
     error_response 403, options
   end
