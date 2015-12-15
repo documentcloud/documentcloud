@@ -57,10 +57,7 @@ class ReviewersController < ApplicationController
 
   def load_documents
     @documents = Document.accessible(current_account, current_organization).find(params[:document_ids])
-    if @documents.any? {|d| !current_account.allowed_to_edit?(d) }
-      json nil, 403
-      false
-    end
+    return forbidden if @documents.any? {|d| !current_account.allowed_to_edit?(d) }
   end
 
 end

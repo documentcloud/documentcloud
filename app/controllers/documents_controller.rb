@@ -51,8 +51,7 @@ class DocumentsController < ApplicationController
     return not_found unless doc = current_document(true)
     attrs = pick(params, :access, :title, :description, :source,
                          :related_article, :remote_url, :publish_at, :data, :language)
-    success = doc.secure_update attrs, current_account
-    return json(doc, 403) unless success
+    return json(doc, 403) unless doc.secure_update attrs, current_account
 
     clear_current_document_cache
     Document.populate_annotation_counts(current_account, [doc])
@@ -61,11 +60,7 @@ class DocumentsController < ApplicationController
 
   def destroy
     return not_found unless doc = current_document(true)
-    if !current_account.owns_or_collaborates?(doc)
-      doc.errors.add(:base, "You don't have permission to delete the document." )
-      return json(doc, 403)
-    end
-
+    return forbidden(:error => "You don't have permission to delete the document.") unless current_account.owns_or_collaborates?(doc)
     clear_current_document_cache
     doc.destroy
     json nil
@@ -182,7 +177,7 @@ class DocumentsController < ApplicationController
 
   def reprocess_text
     return not_found unless doc = current_document(true)
-    return json(nil, 403) unless current_account.allowed_to_edit?(doc)
+    return forbidden unless current_account.allowed_to_edit?(doc)
     doc.reprocess_text(params[:ocr])
     json nil
   end

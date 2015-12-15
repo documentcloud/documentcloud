@@ -3,15 +3,14 @@ class SectionsController < ApplicationController
   before_action :login_required
 
   def set
-    return json(nil) unless sections
+    return bad_request unless sections
     doc = current_document
-    return json(nil, 403) unless current_account.allowed_to_edit?(doc)
+    return forbidden unless current_account.allowed_to_edit?(doc)
     doc.sections.destroy_all
     sections.each {|s| doc.sections.create(pick(s, :title, :page_number)) }
     expire_pages doc.cache_paths if doc.cacheable?
     json nil
   end
-
 
   private
 
