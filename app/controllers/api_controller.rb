@@ -48,17 +48,11 @@ class ApiController < ApplicationController
       return bad_request unless params[:file] && params[:title] && current_account
       is_file = params[:file].respond_to?(:path)
       if !is_file && !(URI.parse(params[:file]) rescue nil)
-        return render({
-          :json => {:message => "The 'file' parameter must be the contents of a file or a URL."},
-          :status => 400
-        })
+        return bad_request(:error => "The 'file' parameter must be the contents of a file or a URL.")
       end
       
       if params[:file_hash] && Document.accessible(current_account, current_organization).exists?(:file_hash=>params[:file_hash])
-        return render({ 
-          :status=>409, 
-          :json => "This file is a duplicate of an existing one you have access to" 
-        })
+        return conflict(:error => "This file is a duplicate of an existing one you have access to.")
       end
       params[:url] = params[:file] unless is_file
       @response = Document.upload(params, current_account, current_organization).canonical

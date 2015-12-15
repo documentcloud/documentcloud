@@ -60,7 +60,7 @@ class ApplicationController < ActionController::Base
     obj = {} if obj.nil?
     if obj.respond_to?(:errors) && obj.errors.any?
       response = {
-        :json   => { 'errors' => obj.errors.full_messages },
+        :json   => { :errors => obj.errors.full_messages },
         :status => 409
       }
     else
@@ -205,35 +205,41 @@ class ApplicationController < ActionController::Base
   end
 
   def bad_request(options={})
-    options = { :message  => "Bad Request" }.merge(options)
+    options = { :error => "Bad Request" }.merge(options)
     error_response 400, options
   end
 
   # Return forbidden when the access is unauthorized.
   def forbidden(options = {})
     options = {
-      :message => "Forbidden",
-      :locals  => { post_login_url: CGI.escape(request.original_url) }
+      :error  => "Forbidden",
+      :locals => { post_login_url: CGI.escape(request.original_url) }
     }.merge(options)
     error_response 403, options
   end
 
   # Return not_found when a resource can't be located.
   def not_found(options={})
-    options = { :message => "Not Found" }.merge(options)
+    options = { :error => "Not Found" }.merge(options)
     error_response 404, options
+  end
+
+  # Return conflict when e.g. there's an edit conflict.
+  def conflict(options={})
+    options = { :error => "Conflict" }.merge(options)
+    error_response 409, options
   end
 
   # Return server_error when an uncaught exception bubbles up.
   def server_error(e, options={})
-    options = { :message  => "Internal Server Error" }.merge(options)
+    options = { :error => "Internal Server Error" }.merge(options)
     error_response 500, options
   end
 
   # A resource was requested in a way we can't fulfill (e.g. an oEmbed
   # request for XML when we only provide JSON)
   def not_implemented(options={})
-    options = { :message  => "Not Implemented" }.merge(options)
+    options = { :error => "Not Implemented" }.merge(options)
     error_response 501, options
   end
 
@@ -285,18 +291,20 @@ class ApplicationController < ActionController::Base
 
   private
   
-  # Generic error response helper. Defaults to 500, but never called directly 
-  # anyway.
-  def error_response(status=500, options={})
+  # Generic error response helper. Defaults to 200 because never called directly
+  def error_response(status=200, options={})
     options = {
-      :message  => "Internal Server Error",
       :template => status, # Exists only for `doc_404`
       :locals   => {}
     }.merge(options)
 
+    obj          = {}
+    obj[:error]  = options[:error]  if options[:error]
+    obj[:errors] = options[:errors] if options[:errors]
+
     respond_to do |format|
-      format.js   { render_cross_origin_json({:error=>options[:message]}, {:status => status}) }
-      format.json { render_cross_origin_json({:error=>options[:message]}, {:status => status}) }
+      format.js   { render_cross_origin_json(obj, {:status => status}) }
+      format.json { render_cross_origin_json(obj, {:status => status}) }
       format.any  { render :file => "#{Rails.root}/public/#{options[:template]}.html", :locals => options[:locals], :status => status }
     end
 

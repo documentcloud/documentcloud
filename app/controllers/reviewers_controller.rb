@@ -12,8 +12,8 @@ class ReviewersController < ApplicationController
   def create
     account = Account.lookup(params[:email])
     if account
-      return json(nil, 409) if account.id == current_account.id
-      return json({:errors => ['The account associated with that email address has been disabled.']}, 409) if account.disabled?( current_organization )
+      return conflict if account.id == current_account.id
+      return bad_request(:error => 'The account associated with that email address has been disabled.') if account.disabled?( current_organization )
     else
       account = Account.create( pick(params, :first_name, :last_name, :email) )
       unless account.new_record?

@@ -85,14 +85,14 @@ class DocumentsController < ApplicationController
 
   def reorder_pages
     return not_found unless doc = current_document(true)
-    return json(nil, 409) if params[:page_order].length != doc.page_count
+    return conflict if params[:page_order].length != doc.page_count
     doc.reorder_pages params[:page_order].map {|p| p.to_i }
     json doc
   end
 
   def upload_insert_document
     return not_found unless doc = current_document(true)
-    return json(nil, 409) unless params[:file] && params[:document_number] && (params[:insert_page_at] || params[:replace_pages_start])
+    return conflict unless params[:file] && params[:document_number] && (params[:insert_page_at] || params[:replace_pages_start])
 
     DC::Import::PDFWrangler.new.ensure_pdf(params[:file], params[:Filename]) do |path|
       DC::Store::AssetStore.new.save_insert_pdf(doc, path, params[:document_number]+'.pdf')

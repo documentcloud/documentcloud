@@ -11,7 +11,7 @@ class ImportController < ApplicationController
 
   # Internal document upload, called from the workspace.
   def upload_document
-    return json(nil, 409) unless params[:file]
+    return bad_request unless params[:file]
     @document = Document.upload(params, current_account, current_organization)
     @project_id = params[:project]
     if params[:multi_file_upload]

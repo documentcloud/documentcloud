@@ -5,8 +5,12 @@ class CollaboratorsController < ApplicationController
   def create
     account = Account.lookup(pick(params, :email)[:email])
     return json(nil, 404) if !account || account.id == current_account.id
-    return json({:errors => ['That account has been disabled.']}, 409) if account.role == Account::DISABLED
+    return bad_request(:error => 'That account has been disabled.') if account.role == Account::DISABLED
+    
     success = current_project.add_collaborator account
+    # TODO: Are we actually expecting the contents of `account`? [JR]
+    # - If we're using `account.errors`, can be reduced to `json(account)`
+    # - If we're not using it, can be reduced to `conflict`
     return json(account, 409) unless success
     json account.to_json(:include_organization => true)
   end
