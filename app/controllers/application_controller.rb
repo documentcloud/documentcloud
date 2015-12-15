@@ -204,10 +204,10 @@ class ApplicationController < ActionController::Base
     forbidden
   end
 
-  def bad_request(message="Bad Request")
+  def bad_request
     respond_to do |format|
-      format.js  { render_cross_origin_json({:error=>message}, {:status => 400}) }
-      format.json{ render_cross_origin_json({:error=>message}, {:status => 400}) }
+      format.js  { render_cross_origin_json({:error=>"Bad Request"}, {:status => 400}) }
+      format.json{ render_cross_origin_json({:error=>"Bad Request"}, {:status => 400}) }
       format.any { render :file => "#{Rails.root}/public/400.html", :status => 400 }
     end
     false
