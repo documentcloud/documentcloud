@@ -43,17 +43,39 @@ class ApplicationController < ActionController::Base
     headers['Access-Control-Allow-Credentials'] = 'true'
   end
 
-  # Convenience method for responding with JSON. Sets the content type,
-  # serializes, and allows empty responses. If json'ing an ActiveRecord object,
-  # and the object has errors on it, a 409 Conflict will be returned with a
+  # Convenience method for responding with JSON. Supports empty responses, 
+  # specifying status codes, and adding CORS headers. If JSONing an 
+  # ActiveRecord object with errors, a 409 Conflict will be returned with a
   # list of error messages.
-  def json(obj, status=200)
+  def json(obj, options={})
+    # Compatibility: second param used to be `status` and take a numeric status 
+    # code. Until we've purged all these, do a check.
+    options = { :status => options } if options.is_a?(Numeric)
+
+    options = {
+      :status => 200,
+      :cors   => false
+    }.merge(options)
+
     obj = {} if obj.nil?
     if obj.respond_to?(:errors) && obj.errors.any?
-      obj = {'errors' => obj.errors.full_messages}
-      status = 409
+      response = {
+        :json   => { 'errors' => obj.errors.full_messages },
+        :status => 409
+      }
+    else
+      response = {
+        :json   => obj,
+        :status => options[:status]
+      }
     end
-    render :json => obj, :status => status
+
+    # If the request has already set the CORS headers, don't overwrite them
+    # Sending the wildcard origin that will dissallow sending cookies for 
+    # authentication.
+    headers['Access-Control-Allow-Origin'] = '*' if options[:cors] && !headers.has_key?('Access-Control-Allow-Origin')
+
+    render response
   end
 
   def has_callback?
@@ -62,20 +84,35 @@ class ApplicationController < ActionController::Base
 
   # If the request is asking for JSONP (i.e., has a `callback` parameter), then
   # wrap the JSON and render as JSONP.
-  def render_as_jsonp
-    @callback = params[:callback]
-    render :partial => 'common/jsonp.js', :content_type => 'application/javascript'
+  def render_as_jsonp(obj, options={})
+    options = {
+      :status => 200
+    }.merge(options)
+
+    response = {
+      :partial      => 'common/jsonp.js',
+      :locals       => { obj: obj, callback: params[:callback] },
+      :content_type => 'application/javascript',
+      :status       => options[:status]
+    }
+
+    render response
   end
 
-  # Return the contents of `@response` as cross-origin-allowed JSON or, if 
-  # it has a `callback` parameter, as JSONP.
-  def render_cross_origin_json
-    return render_as_jsonp if has_callback?
-    # If the request has already set the CORS headers, don't overwrite them
-    # Sending the wildcard origin that will dissallow sending cookies for 
-    # authentication.
-    headers['Access-Control-Allow-Origin'] = '*' unless headers.has_key?('Access-Control-Allow-Origin')
-    json @response
+  # Return the contents of `obj` as cross-origin-allowed JSON or, if it has a 
+  # `callback` parameter, as JSONP.
+  def render_cross_origin_json(obj=nil, options={})
+    # Compatibility: Previous version expected the `@response` instance var, so 
+    # until we modify all instances to pass in `obj`, set it to `@response`.
+    obj ||= @response
+
+    return render_as_jsonp(obj, options) if has_callback?
+
+    options = {
+      :cors => true
+    }.merge(options)
+
+    json obj, options
   end
 
   # for use by actions that may be embedded in an iframe
@@ -169,8 +206,8 @@ class ApplicationController < ActionController::Base
 
   def bad_request(message="Bad Request")
     respond_to do |format|
-      format.js  { json({:error=>message}, 400) }
-      format.json{ json({:error=>message}, 400) }
+      format.js  { render_cross_origin_json({:error=>message}, {:status => 400}) }
+      format.json{ render_cross_origin_json({:error=>message}, {:status => 400}) }
       format.any { render :file => "#{Rails.root}/public/400.html", :status => 400 }
     end
     false
@@ -180,19 +217,23 @@ class ApplicationController < ActionController::Base
   def forbidden
     @next = CGI.escape(request.original_url)
     respond_to do |format|
-      format.js  { json({:error=>"Forbidden"}, 403) }
-      format.json{ json({:error=>"Forbidden"}, 403) }
+      format.js  { render_cross_origin_json({:error=>"Forbidden"}, {:status => 403}) }
+      format.json{ render_cross_origin_json({:error=>"Forbidden"}, {:status => 403}) }
       format.any { render :file => "#{Rails.root}/public/403.html", :status => 403 }
     end
     false
   end
 
   # Return not_found when a resource can't be located.
-  def not_found
+  def not_found(options={})
+    options = {
+      :template => "#{Rails.root}/public/404.html"
+    }.merge(options)
+
     respond_to do |format|
-      format.js  { json({:error=>"Not Found"}, 404) }
-      format.json{ json({:error=>"Not Found"}, 404) }
-      format.any { render :file => "#{Rails.root}/public/404.html", :status => 404 }
+      format.js  { render_cross_origin_json({:error=>"Not Found"}, {:status => 404}) }
+      format.json{ render_cross_origin_json({:error=>"Not Found"}, {:status => 404}) }
+      format.any { render :file => options[:template], :status => 404 }
     end
     false
   end
@@ -200,8 +241,8 @@ class ApplicationController < ActionController::Base
   # Return server_error when an uncaught exception bubbles up.
   def server_error(e)
     respond_to do |format|
-      format.js  { json({:error=>"Internal Server Error (sorry)"}, 500) }
-      format.json{ json({:error=>"Internal Server Error (sorry)"}, 500) }
+      format.js  { render_cross_origin_json({:error=>"Internal Server Error (sorry)"}, {:status => 500}) }
+      format.json{ render_cross_origin_json({:error=>"Internal Server Error (sorry)"}, {:status => 500}) }
       format.any { render :file => "#{Rails.root}/public/500.html", :status => 500 }
     end
     false
@@ -211,8 +252,8 @@ class ApplicationController < ActionController::Base
   # request for XML when we only provide JSON)
   def not_implemented
     respond_to do |format|
-      format.js  { json({:error=>"Not Implemented"}, 501) }
-      format.json{ json({:error=>"Not Implemented"}, 501) }
+      format.js  { render_cross_origin_json({:error=>"Not Implemented"}, {:status => 501}) }
+      format.json{ render_cross_origin_json({:error=>"Not Implemented"}, {:status => 501}) }
       format.any { render :file => "#{Rails.root}/public/501.html", :status => 501 }
     end
     false
