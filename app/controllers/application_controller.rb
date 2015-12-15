@@ -45,7 +45,7 @@ class ApplicationController < ActionController::Base
 
   # Convenience method for responding with JSON. Supports empty responses, 
   # specifying status codes, and adding CORS headers. If JSONing an 
-  # ActiveRecord object with errors, a 409 Conflict will be returned with a
+  # ActiveRecord object with errors, a 400 Bad Request will be returned with a
   # list of error messages.
   def json(obj, options={})
     # Compatibility: second param used to be `status` and take a numeric status 
@@ -61,7 +61,7 @@ class ApplicationController < ActionController::Base
     if obj.respond_to?(:errors) && obj.errors.any?
       response = {
         :json   => { :errors => obj.errors.full_messages },
-        :status => 409
+        :status => 400
       }
     else
       response = {

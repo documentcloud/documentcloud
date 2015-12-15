@@ -114,7 +114,7 @@ class AccountsControllerTest < ActionController::TestCase
     login_account!(:louis)
     assert_difference('Account.count',0) do
       response = post :create, :first_name=>'Crazy', :last_name=>'Email', :email=>'crazy*{}**email@test.com', :language=>'eng', :document_language=>"eng"
-      assert_response 409
+      assert_response 400
       message = ActiveSupport::JSON.decode(response.body)
       assert_equal ["Email is invalid"], message['errors']
     end
