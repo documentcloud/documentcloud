@@ -188,11 +188,11 @@ oEmbed is a Web standard for providing embedded content on a site via a request 
 
 ### Example page URL for oEmbed
 
-    https://www.documentcloud.org/documents/1234-document-name.html#document/p2
+    https://www.documentcloud.org/documents/1234-document-name/pages/2.html
 
 ### Example note URL for oEmbed
 
-    https://www.documentcloud.org/documents/1234-document-name.html#document/p2/a208505
+    https://www.documentcloud.org/documents/1234-document-name/annotations/220666.html
 
 # Questions?
 
