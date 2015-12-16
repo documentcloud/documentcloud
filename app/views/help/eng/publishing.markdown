@@ -1,6 +1,6 @@
 # Publishing Documents, Pages, Notes, and Document Sets
 
-Ready to share your documents with readers? Either by embedding our custom viewer or using oEmbed, you can publish individual documents, embed a set of documents that readers can browse, or embed a single note from any document. Here's how:
+Ready to share your documents with readers? Either by embedding our custom viewer or using oEmbed, you can publish individual documents, embed a set of documents that readers can browse, or embed a single page or note from any document.
 
 ## Contents
 
@@ -159,11 +159,17 @@ Users who publish via WordPress can install a plugin that lets you embed Documen
 
 Download the DocumentCloud plugin at its [WordPress plugin page](https://wordpress.org/plugins/documentcloud/). Install and activate it according to the directions.
 
-Once activated, you can embed resources with a simple shortcode. You also can pass additional parameters to control the size and attributes of the embed. For example, if you want to embed a document at 800px wide, pre-scrolled to page 3:
+Once activated, you can embed resources with a simple shortcode, which you can grab from the last step of our embed wizard. You also can pass additional parameters to control the size and attributes of the embed.
+
+For example, if you want to embed a document at 800px wide, pre-scrolled to page 3:
 
     [documentcloud url="https://www.documentcloud.org/documents/282753-lefler-thesis.html" width="800" default_page="3"]
 
 If you don't indicate a width (or manually disable responsive widths with `responsive="false"`), then the document will automatically narrow and widen to fill available width.
+
+For a page, use any page-specific URL:
+
+    [documentcloud url="https://www.documentcloud.org/documents/282753-lefler-thesis.html#document/p22"]
 
 For a note, use any note-specific URL:
 
@@ -179,6 +185,10 @@ oEmbed is a Web standard for providing embedded content on a site via a request 
 ### Example document URL for oEmbed
 
     https://www.documentcloud.org/documents/1234-document-name.html
+
+### Example page URL for oEmbed
+
+    https://www.documentcloud.org/documents/1234-document-name.html#document/p2
 
 ### Example note URL for oEmbed
 
