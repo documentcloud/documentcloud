@@ -1,6 +1,6 @@
 # El API de DocumentCloud
 
-El API de DocumentCloud permite a los usuarios buscar, cargar, editar y organizar documentos. Además, un servicio oEmbed ofrece fácil incorporación de documentos.
+El API de DocumentCloud permite a los usuarios buscar, cargar, editar y organizar documentos. Además, un servicio oEmbed proporciona una fácil integración de incrustación de documentos, páginas y notas.
 
 ## Contenido
 
@@ -20,6 +20,7 @@ El API de DocumentCloud permite a los usuarios buscar, cargar, editar y organiza
   * [Borre](#delete-project)
 * [oEmbed](#oembed):
   * [Documentos](#oembed-documents)
+  * [Páginas](#oembed-pages)
   * [Notas](#oembed-notes)
 * [API Envolturas](#api-wrappers)
 
@@ -299,7 +300,7 @@ Generar un código de inserción para un recurso (un documento o una nota) utili
 
 Parámetro   | Descripción           | Ejemplo
 -----------------|-----------------------|--------------
-url              | **(requerido)** De escape de URL documento para incrustar     | https%3A//www.documentcloud.org/ documents/doc-name.html
+url              | **(requerido)** De escape de URL documento para incrustar | https%3A%2F%2Fwww.documentcloud.org %2Fdocuments%2Fdoc-name.html
 maxheight        | (opcional) La altura del espectador (pixels)    | 750
 maxwidth         | (opcional) La ancho del espectador (pixels)     | 600
 container        | (opcional) Especifique el contenedor DOM en el que se incorporará al espectador | #my-document-div
@@ -314,16 +315,27 @@ responsive_offset| (opcional) Especifique la altura del cabezal (pixels)    | 4
 default_note     | (opcional) Abra el documento en una nota específica. Un entero que representa el ID de nota | 214279
 default_page     | (opcional) Abra el documento a una página específica   | 3
 
+<a name="oembed-pages"></a>
+### Ejemplo petición página
+
+    /api/oembed.json?url=https%3A%2F%2Fwww.documentcloud.org%2Fdocuments%2Fdoc-name%2Fpages%2F5.html
+
+### Parameters for pages
+
+Parameter        | Description           |  Example
+-----------------|-----------------------|--------------
+url              | **(required)** De escape de URL documento página para incrustar     | https%3A%2F%2Fwww.documentcloud.org%2F documents%2Fdoc-name%2Fpages%2F5.html
+
 <a name="oembed-notes"></a>
 ### Ejemplo petición nota
 
-    /api/oembed.json?url=https%3A%2F%2Fwww.documentcloud.org%2Fdocuments%2Fdoc-name%2Fannotations%2F123.js
+    /api/oembed.json?url=https%3A%2F%2Fwww.documentcloud.org%2Fdocuments%2Fdoc-name%2Fannotations%2F220666.html
 
 ### Parámetros para notas
 
 Parámetro   | Descripción           | Ejemplo
 -----------------|-----------------------|--------------
-url              | **(required)** De escape de URL documento para incrustar     | https%3A//www.documentcloud.org/ documents/doc-name.html
+url              | **(required)** De escape de URL documento para incrustar     | https%3A%2F%2Fwww.documentcloud.org%2F documents%2Fdoc-name%2Fannotations%2F220666.html
 container        | (optional) Especifique el contenedor DOM en el que se incorporará al espectador | #my-document-div
 
 <a name="api-wrappers"></a>
