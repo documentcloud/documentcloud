@@ -11,6 +11,12 @@ class DocumentsController < ApplicationController
 
   SIZE_EXTRACTOR        = /-(\w+)\Z/
   PAGE_NUMBER_EXTRACTOR = /.*-p(\d+)/
+  
+  READONLY_ACTIONS = [
+    :show, :entities, :entity, :dates, :occurence, :mentions, :status, :per_page_note_counts, :queue_length,
+    :send_pdf, :send_page_image, :send_full_text, :send_page_text, :search, :preview
+  ]
+  before_action :read_only_error, :except => READONLY_ACTIONS if read_only?
 
   def show
     Account.login_reviewer(params[:key], session, cookies) if params[:key]

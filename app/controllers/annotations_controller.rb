@@ -5,6 +5,7 @@ class AnnotationsController < ApplicationController
 
   before_action :login_required, :except => [:index, :show, :print, :cors_options]
   skip_before_action :verify_authenticity_token
+  before_action :read_only_error, :except => [:index, :show, :print, :cors_options] if read_only?
 
   # In the workspace, request a listing of annotations.
   def index
