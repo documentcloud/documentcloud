@@ -22,7 +22,7 @@ class LifecycleMailerTest < ActionMailer::TestCase
     assert_equal [ accounts(:admin).email ], email.cc
     assert_equal [ joe.email ], email.to
     assert_equal 'Review "Secret Plans" on DocumentCloud', email.subject
-    assert_match( /Admin startor at The Daily Tribune has invited you to review "Secret Plans."/, email.body.to_s )
+    assert_match( /Admin Person at The Daily Tribune has invited you to review "Secret Plans."/, email.body.to_s )
   end
 
   def test_reset_request

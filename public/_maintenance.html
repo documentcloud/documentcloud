@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>DocumentCloud is offline for maintenance</title>
+  <link rel="stylesheet" type="text/css" href="/stylesheets/common/reset.css" >
+  <link rel="stylesheet" type="text/css" href="/stylesheets/v2/common.css">
+</head>
+<body class="v2">
+
+  <div id="return_to_v1">
+    <a id="return_to_v1_text" href="https://twitter.com/DocumentCloud">Follow us on Twitter</a>
+    <a id="return_to_v1_logo" href="/home"><img src="/images/common/document_cloud_logo_white@2x.png" width="150" height="32"></a>
+  </div>
+
+  <div class="container">
+
+    <h1>DocumentCloud is offline for maintenance.</h1>
+    <p>We're performing some updates to the platform and should be back online by <b id="online-estimate">10:00am UTC</b>. <a href="https://twitter.com/DocumentCloud">Follow us on Twitter for updates</a>, or <a href="mailto:support@documentcloud.org">shoot us an email</a> if you need something.</p>
+
+    <h2>Don't worry, embeds are still loading:</h2>
+    <div class="DC-embed" data-version="1.0" style="font-size:10pt">
+      <p><a class="DC-embed-resource" href="http://www.documentcloud.org/documents/1659580-economic-analysis-of-the-south-pole-traverse.html#document/p4" title="View page 4 of Economic Analysis of the South Pole Traverse on DocumentCloud in new window or tab" target="_blank">Page 4 of Economic Analysis of the South Pole Traverse</a></p>
+      <img src="https://assets.documentcloud.org/documents/1659580/pages/economic-analysis-of-the-south-pole-traverse-p4-normal.gif?1449249890" alt="Page 4 of Economic Analysis of the South Pole Traverse" style="border:1px solid #ccc;-webkit-box-sizing:border-box;box-sizing:border-box;width:100%;max-width:700px;">
+      <p>Contributed to DocumentCloud by Ted Han of DocumentCloud &bull; <a href="https://www.documentcloud.org/documents/1659580/pages/economic-analysis-of-the-south-pole-traverse-p4.txt" title="View text of page 4 of Economic Analysis of the South Pole Traverse in a new window or tab" target="_blank">View page as text</a></p>
+    </div>
+    <script src="//assets.documentcloud.org/embed/loader/enhance.js"></script>
+
+  </div>
+  
+
+<script type="text/javascript">
+  var onlineTime = new Date('9/20/2018 10:00:00 AM UTC');
+
+  var hour = onlineTime.getHours();
+  var ampm;
+  if (hour >= 12) {
+    ampm = 'pm';
+    if (hour > 12) {
+      hour = hour - 12;
+    }
+  } else {
+    ampm = 'am';
+    if (hour == 0) {
+      hour = 12;
+    }
+  }
+
+  var minutes = onlineTime.getMinutes();
+  if (minutes < 10) {
+    minutes = '0' + minutes;
+  }
+
+  var tzOffset = onlineTime.getTimezoneOffset() / 60;
+  var offsetSuffix = '';
+  if (tzOffset > 0) {
+    offsetSuffix = '-' + tzOffset;
+  } else if (tzOffset < 0) {
+    offsetSuffix = '+' + tzOffset;
+  }
+
+  var localTime = hour + ':' + minutes + ampm + ' (UTC' + offsetSuffix + ')';
+  document.getElementById('online-estimate').innerText = localTime;
+</script>
+</body>
+</html>

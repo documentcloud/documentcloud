@@ -1,7 +1,7 @@
 admin:
   email: admin@documentcloud.org
   first_name: Admin
-  last_name: startor
+  last_name: Person
   hashed_password: $2a$08$FR1MWbwlC7qqdVfmF/C/8uHRHzZDjV97pkVd6M5ixbigq/3nhcNtm
   document_language: eng
   language: eng
