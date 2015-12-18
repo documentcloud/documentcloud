@@ -39,5 +39,8 @@ module DC
     ::DC::MAIN_DB      = YAML.load(ERB.new(File.read("#{Rails.root}/config/database.yml")).result(binding))[Rails.env]
 
     config.filter_parameters += [:password]
+
+    # Put the site into a read-only mode for database updates
+    config.read_only = false
   end
 end
