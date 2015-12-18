@@ -31,4 +31,7 @@ DC::Application.configure do
 
   # Enable threaded mode
   # config.threadsafe!
+
+  # Put the site into a read-only mode for database updates
+  # config.read_only = false
 end

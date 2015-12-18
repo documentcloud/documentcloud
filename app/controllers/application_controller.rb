@@ -22,7 +22,7 @@ class ApplicationController < ActionController::Base
   protected
   
   def read_only?
-    true
+    Rails.application.config.read_only
   end
   
   def read_only_error

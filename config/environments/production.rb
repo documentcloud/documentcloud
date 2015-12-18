@@ -81,4 +81,7 @@ DC::Application.configure do
 
   # Use default logging formatter so that PID and timestamp are not suppressed.
   config.log_formatter = ::Logger::Formatter.new
+
+  # Put the site into a read-only mode for database updates
+  # config.read_only = false
 end
