@@ -4,6 +4,11 @@ class FeaturedController < ApplicationController
   before_action :current_account
   before_action :admin_required, :except => [:index]
 
+  READONLY_ACTIONS = [
+    :create, :update, :destroy, :present_order
+  ]
+  before_action :read_only_error, :except => READONLY_ACTIONS if read_only?
+
   def index
     @reports = FeaturedReport.sorted
     respond_to do |format|

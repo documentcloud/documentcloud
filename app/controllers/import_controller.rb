@@ -8,6 +8,11 @@ class ImportController < ApplicationController
 
   before_action :secure_only,    :only => [:upload_document]
   before_action :login_required, :only => [:upload_document]
+  
+  READONLY_ACTIONS = [
+    :upload_document, :cloud_crowd, :update_access
+  ]
+  before_action :read_only_error, :except => READONLY_ACTIONS if read_only?
 
   # Internal document upload, called from the workspace.
   def upload_document
