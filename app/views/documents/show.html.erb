@@ -27,7 +27,13 @@
   <%= render(:partial => 'viewer_editing_head') if @edits_enabled %>
 </head>
 <body style="margin:0; padding:0;">
-  <%= render :partial => 'common/maintenance' if @current_account %>
+  <% if @current_account %>
+    <% if Rails.application.config.read_only %>
+      <%= render :partial => 'common/readonly' %>
+    <% else %>
+      <%= render :partial => 'common/maintenance' %>
+    <% end %>
+  <% end %>
   <div id="viewer"></div>
   <div id="overlay"></div>
   <script type="text/javascript">
