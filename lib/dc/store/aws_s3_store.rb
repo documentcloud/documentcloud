@@ -193,31 +193,6 @@ module DC
         invalid
       end
       
-      def invalidate_cloudfront_cache(document)
-        if distribution_id = DC::SECRETS['cloudfront_distribution_id']
-          paths = (1..document.page_count).map do |page_number|
-            page_image_paths = Page::IMAGE_SIZES.keys.map do |size|
-              document.page_image_path(page_number, size)
-            end
-            [document.page_text_path(page_number)] + page_image_paths
-          end.flatten
-          
-          paths.push document.pdf_path
-          paths.push document.full_text_path
-          paths.push document.original_file_path unless document.original_file_path == document.pdf_path
-          
-          cloudfront.client.create_invalidation({
-            :distribution_id    => distribution_id,
-            :invalidation_batch => {
-              :paths            => { :quantity => paths.size, :items => paths.map{|p| "/#{p}"} },
-              :caller_reference => document.id.to_s
-            }
-          })
-        else 
-          Rails.logger.warn("No 'cloudfront_distribution_id' in DC::SECRETS.  Skipping invalidation")
-        end
-      end
-
       private
 
       def s3
