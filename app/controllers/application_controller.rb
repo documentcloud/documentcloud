@@ -20,6 +20,14 @@ class ApplicationController < ActionController::Base
   end
 
   protected
+  
+  def read_only?
+    true
+  end
+  
+  def read_only_error
+    error_response(503, {:error=>"Temporarily Unavailable"})
+  end
 
   def embeddable?
     request.format.json? or 
@@ -85,10 +93,7 @@ class ApplicationController < ActionController::Base
   # If the request is asking for JSONP (i.e., has a `callback` parameter), then
   # wrap the JSON and render as JSONP.
   def render_as_jsonp(obj, options={})
-    options = {
-      :status => 200
-    }.merge(options)
-
+    options = { :status => 200 }.merge(options)
     response = {
       :partial      => 'common/jsonp.js',
       :locals       => { obj: obj, callback: params[:callback] },
