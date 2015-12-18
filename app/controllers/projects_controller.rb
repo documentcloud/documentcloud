@@ -2,6 +2,11 @@ class ProjectsController < ApplicationController
 
   before_action :login_required
 
+  READONLY_ACTIONS = [
+    :index, :documents
+  ]
+  before_action :read_only_error, :except => READONLY_ACTIONS if read_only?
+
   def index
     json Project.visible.accessible(current_account)
   end

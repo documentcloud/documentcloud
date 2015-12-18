@@ -1,6 +1,7 @@
 class SectionsController < ApplicationController
 
   before_action :login_required
+  before_action :read_only_error if read_only?
 
   def set
     return bad_request unless sections

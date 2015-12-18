@@ -8,7 +8,7 @@ class AuthenticationController < ApplicationController
   before_action :secure_only,     :only => [:login]
   
   READONLY_ACTIONS = [
-    :signup_info, :login, :logout, :blank, :remote_data, :clear_login_state
+    :signup_info, :login, :logout, :blank, :remote_data
   ]
   before_action :read_only_error, :except => READONLY_ACTIONS if read_only?
 
