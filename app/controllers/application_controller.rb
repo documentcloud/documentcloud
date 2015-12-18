@@ -21,12 +21,12 @@ class ApplicationController < ActionController::Base
 
   protected
   
-  def read_only?
+  def self.read_only?
     Rails.application.config.read_only
   end
   
   def read_only_error
-    error_response(503, {:error=>"Temporarily Unavailable"})
+    service_unavailable(:error => 'Sorry, actions that write to the database are currently disabled for maintenance.')
   end
 
   def embeddable?
@@ -246,6 +246,12 @@ class ApplicationController < ActionController::Base
   def not_implemented(options={})
     options = { :error => "Not Implemented" }.merge(options)
     error_response 501, options
+  end
+
+  # We're offline in an expected way
+  def service_unavailable(options={})
+    options = { :error => "Service Unavailable" }.merge(options)
+    error_response 503, options
   end
 
   # Simple HTTP Basic Auth to make sure folks don't snoop where the shouldn't.
