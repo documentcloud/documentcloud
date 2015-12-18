@@ -726,3 +726,26 @@ iframe.hidden_iframe {
       font-size: 12px;
       margin-bottom: 7px;
     }
+
+
+/*--------------------------- Notification Bar -------------------------------*/
+    
+    #container {
+      position: relative;
+    }
+
+    .notification_bar {
+      background-color: #ffc;
+      font-size: 11pt;
+      text-align: center;
+      padding: 10px;
+      font-family: sans-serif;
+    }
+    .notification_bar .notification_action {
+      display: inline-block;
+      padding: 8px;
+      background-color: rgb(90, 118, 160);
+      color: white;
+      text-decoration: none;
+      -webkit-font-smoothing: antialiased;
+    }
