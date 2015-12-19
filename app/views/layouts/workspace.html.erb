@@ -27,7 +27,13 @@
 </head>
 <body class="<%= @bodyclass %> <%= @current_account ? 'logged_in' : '' %>">
 
-  <%= render :partial => 'common/maintenance' if @current_account %>
+  <% if @current_account %>
+    <% if Rails.application.config.read_only %>
+      <%= render :partial => 'common/readonly' %>
+    <% else %>
+      <%= render :partial => 'common/maintenance' %>
+    <% end %>
+  <% end %>
 
   <div id="container">
     <div id="topbar" class="header gradient_mid">

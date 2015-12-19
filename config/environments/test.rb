@@ -36,4 +36,7 @@ DC::Application.configure do
 
   # Avoid deprecation warning in Rails 4 about upcoming Rails 5 behavior
   config.active_support.test_order = :random
+
+  # Put the site into a read-only mode for database updates
+  # config.read_only = false
 end

@@ -3,6 +3,11 @@ class ReviewersController < ApplicationController
 
   before_action :login_required, :load_documents
 
+  READONLY_ACTIONS = [
+    :index, :preview_email, :send_email
+  ]
+  before_action :read_only_error, :except => READONLY_ACTIONS if read_only?
+
   def index
     reviewers = {}
     @documents.each {|doc| reviewers[doc.id] = doc.reviewers }

@@ -7,6 +7,11 @@ class AccountsController < ApplicationController
   before_action :login_required, :except => [:enable, :reset, :logged_in]
   before_action :bouncer, :only => [:enable, :reset] if exclusive_access?
 
+  READONLY_ACTIONS = [
+    :index, :logged_in, :resend_welcome
+  ]
+  before_action :read_only_error, :except => READONLY_ACTIONS if read_only?
+
   # Enabling an account continues the second half of the signup process,
   # allowing the journalist to set their password, and logging them in.
   def enable

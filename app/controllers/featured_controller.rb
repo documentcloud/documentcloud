@@ -3,6 +3,7 @@ class FeaturedController < ApplicationController
   before_action :secure_only
   before_action :current_account
   before_action :admin_required, :except => [:index]
+  before_action :read_only_error if read_only?
 
   def index
     @reports = FeaturedReport.sorted

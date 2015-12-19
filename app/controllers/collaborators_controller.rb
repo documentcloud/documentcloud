@@ -1,6 +1,7 @@
 class CollaboratorsController < ApplicationController
 
   before_action :login_required
+  before_action :read_only_error if read_only?
 
   def create
     account = Account.lookup(pick(params, :email)[:email])

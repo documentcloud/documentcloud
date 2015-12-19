@@ -6,6 +6,11 @@ class AuthenticationController < ApplicationController
   after_action :allow_iframe, :only=>[:iframe,:inner_iframe,:iframe_success,:iframe_logout]
 
   before_action :secure_only,     :only => [:login]
+  
+  READONLY_ACTIONS = [
+    :signup_info, :login, :logout, :blank, :remote_data
+  ]
+  before_action :read_only_error, :except => READONLY_ACTIONS if read_only?
 
   # Display the signup information page.
   def signup_info
@@ -164,7 +169,6 @@ class AuthenticationController < ApplicationController
       render :action=>:login
     end
   end
-
 
   def record_user_information
     account = current_account

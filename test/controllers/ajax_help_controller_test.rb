@@ -2,7 +2,6 @@ require 'test_helper'
 
 class AjaxHelpControllerTest < ActionController::TestCase
 
-
   it "sends contact emails" do
     login_account!
     assert_difference 'ActionMailer::Base.deliveries.size', +1 do

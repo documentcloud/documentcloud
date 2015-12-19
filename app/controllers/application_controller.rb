@@ -20,6 +20,14 @@ class ApplicationController < ActionController::Base
   end
 
   protected
+  
+  def self.read_only?
+    Rails.application.config.read_only
+  end
+  
+  def read_only_error
+    service_unavailable(:error => 'Sorry, actions that write to the database are currently disabled for maintenance.')
+  end
 
   def embeddable?
     request.format.json? or 
@@ -85,10 +93,7 @@ class ApplicationController < ActionController::Base
   # If the request is asking for JSONP (i.e., has a `callback` parameter), then
   # wrap the JSON and render as JSONP.
   def render_as_jsonp(obj, options={})
-    options = {
-      :status => 200
-    }.merge(options)
-
+    options = { :status => 200 }.merge(options)
     response = {
       :partial      => 'common/jsonp.js',
       :locals       => { obj: obj, callback: params[:callback] },
@@ -241,6 +246,12 @@ class ApplicationController < ActionController::Base
   def not_implemented(options={})
     options = { :error => "Not Implemented" }.merge(options)
     error_response 501, options
+  end
+
+  # We're offline in an expected way
+  def service_unavailable(options={})
+    options = { :error => "Service Unavailable" }.merge(options)
+    error_response 503, options
   end
 
   # Simple HTTP Basic Auth to make sure folks don't snoop where the shouldn't.

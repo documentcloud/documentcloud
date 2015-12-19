@@ -4,6 +4,12 @@ class ApiController < ApplicationController
   include DC::Search::Controller
 
   layout 'workspace'
+  
+  READONLY_ACTIONS = [
+    :index, :search, :documents, :pending, :notes, :entities, :project, :projects, :oembed,
+    :cors_options, :logger
+  ]
+  before_action :read_only_error, :except => READONLY_ACTIONS if read_only?
 
   before_action :bouncer if exclusive_access?
   before_action :prefer_secure, :only => [:index]
