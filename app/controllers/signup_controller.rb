@@ -2,7 +2,6 @@ class SignupController < ApplicationController
   layout 'empty'
 
   before_action :secure_only
-  before_action :redirect_to_status_page if read_only?
 
   def index
     @verification_request ||= VerificationRequest.new
@@ -26,10 +25,6 @@ class SignupController < ApplicationController
   end
 
   private
-
-  def redirect_to_status_page
-    redirect_to('/status')
-  end
 
   def notify_support_email
     LifecycleMailer.verification_request_notification(@verification_request).deliver_now
