@@ -25,7 +25,6 @@ production:
   cloud_crowd_console: db01.documentcloud.org:8080
   server_root:         www.documentcloud.org
   asset_root:          assets.documentcloud.org
-  db_volume_id:        vol-d4c305bd
 
 test:
   <<: *defaults
