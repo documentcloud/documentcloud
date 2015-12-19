@@ -13,7 +13,7 @@ namespace :ping do
   end
 
   task :flush do
-    sh "kill -s USR1 `cat log/pixel_ping.pid`"
+    sh "kill -s USR2 `cat log/pixel_ping.pid`"
   end
 
   task :restart => [:stop, :start]
