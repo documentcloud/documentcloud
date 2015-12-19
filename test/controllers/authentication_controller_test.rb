@@ -2,6 +2,15 @@ require 'test_helper'
 
 class AuthenticationControllerTest < ActionController::TestCase
 
+  let(:read_only?) { Rails.application.config.read_only }
+
+  it "responds to read-only mode" do
+    get :signup_info
+    assert_response :success
+    get :iframe
+    assert_response read_only? ? 503 : :success
+  end
+
   def test_signup_info
     get :signup_info
     assert_template layout: "workspace.html.erb"
@@ -34,21 +43,26 @@ class AuthenticationControllerTest < ActionController::TestCase
     assert_nil session['account_id']
   end
 
-  def test_logs_in_from_omniauth_callback
-    request.env['omniauth.auth'] = {
-      'provider' => 'twitter',
-      'uid' => '424',
-      'info' =>{
-        'email' => 'test@test.com',
-        'name'  => 'Testing Tester'
+  # Tests that don't matter in read-only mode
+  unless Rails.application.config.read_only
+
+    def test_logs_in_from_omniauth_callback
+      request.env['omniauth.auth'] = {
+        'provider' => 'twitter',
+        'uid' => '424',
+        'info' =>{
+          'email' => 'test@test.com',
+          'name'  => 'Testing Tester'
+        }
       }
-    }
-    assert_empty Account.with_identity( 'twitter', '424' )
-    assert_difference( 'Account.count' ) do
-      get :callback
+      assert_empty Account.with_identity( 'twitter', '424' )
+      assert_difference( 'Account.count' ) do
+        get :callback
+      end
+      account = Account.where( email: 'test@test.com' ).first
+      assert_equal 'Testing', account.first_name
     end
-    account = Account.where( email: 'test@test.com' ).first
-    assert_equal 'Testing', account.first_name
+
   end
 
 end

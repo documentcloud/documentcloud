@@ -8,7 +8,7 @@ class AccountsControllerTest < ActionController::TestCase
     get :index
     assert_response 403
     get :enable
-    assert_response(read_only? ? 503 : 403)
+    assert_response read_only? ? 503 : :success
   end
 
   it "has proper routes" do
