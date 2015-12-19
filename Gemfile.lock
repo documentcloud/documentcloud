@@ -385,6 +385,3 @@ DEPENDENCIES
   sunspot_solr (= 2.2.0)
   vcr
   webmock
-
-BUNDLED WITH
-   1.10.6
