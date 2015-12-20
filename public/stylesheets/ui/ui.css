@@ -730,9 +730,9 @@ iframe.hidden_iframe {
 
 /*--------------------------- Notification Bar -------------------------------*/
     
-    #container {
+    /*#container {
       position: relative;
-    }
+    }*/
 
     .notification_bar {
       background-color: #ffc;
