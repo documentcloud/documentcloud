@@ -1,7 +1,8 @@
 require 'test_helper'
 
 class ValidatorsTest < ActiveSupport::TestCase
-  it "is able to validate domain names" do
+
+  it "validates domain names" do
     %w(google.com www.documentcloud.org internal.web1.est.example.com).each do |domain|
       assert DC::Validators::DOMAIN.match(domain), "#{domain} wasn't marked as valid and should be."
     end
@@ -20,7 +21,7 @@ class ValidatorsTest < ActiveSupport::TestCase
   end
 
 
-  it "can validate email addresses" do
+  it "validates email addresses" do
     %w(jsmith@example.com jeremy@documentcloud.org bill+peters@gmail.com).each do |email|
       assert DC::Validators::EMAIL.match(email), "#{email} wasn't marked as valid and should be."
     end
@@ -29,7 +30,7 @@ class ValidatorsTest < ActiveSupport::TestCase
     end
   end
   
-  def test_validator_for_external_url_requests
+  it "validates external URL requests" do
     good_urls = %w[
       http://www.documentcloud.org/home
       https://www.documentcloud.org/home
@@ -47,4 +48,5 @@ class ValidatorsTest < ActiveSupport::TestCase
     good_urls.each{ |url| assert DC::Validators.validate_external_url(url), "#{url} wasn't marked as valid and should be." }
     bad_urls.each{ |url|  refute DC::Validators.validate_external_url(url), "#{url} was marked as valid and shouldn't be." }
   end
+
 end

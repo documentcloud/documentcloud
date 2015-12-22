@@ -2,8 +2,10 @@ module DC
 
   module Validators
     
+    DOMAIN_BODY = '((?:[a-z0-9\-_]+\.)+[a-z]{2,63})'
+
     # Forgiving Domain Name validator
-    DOMAIN = /\A((?:[a-z0-9\-_]+\.)+[a-z]{2,63})\Z/i
+    DOMAIN = /\A#{DOMAIN_BODY}\Z/i
 
     # We're not talking full domains, just (prefix).documentcloud.org
     SUBDOMAIN = /\A[0-9a-z\-_]+\Z/i
@@ -19,7 +21,7 @@ module DC
     IP = /\A(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\Z/
 
     # Email validator.
-    EMAIL = /\A([\w\.\-\+\=]+)@((?:[a-z0-9\-_]+\.)+[a-z]{2,63})\Z/i
+    EMAIL = /\A([\w\.\-\+\=]+)@#{DOMAIN_BODY}\Z/i
 
     # Login must start with a letter, and only contain lowercase alphanumerics, '.' or '_' thereafter
     LOGIN = /\A[a-z][a-z0-9\._]*\Z/
@@ -121,5 +123,6 @@ module DC
         @@restricted_ips
       end
     end
+
   end
 end
