@@ -103,9 +103,10 @@ namespace :deploy do
         mime_type      = Mime::Type.lookup_by_extension(file_extension)
         upload_attributes[:content_type] = mime_type.to_s if mime_type
 
+        file_contents = File.read(file)
         if compressable?(file)
           # Compress `foo.css` and upload it as `foo.css`
-          file_contents = gzip_string(File.read(file))
+          file_contents = gzip_string(file_contents)
           upload_attributes[:content_encoding] = 'gzip'
           message_suffix = " (compressed)"
 
@@ -118,9 +119,6 @@ namespace :deploy do
           # else
           #   file_contents = gzip_string(File.read(file))
           # end
-        else
-          # File isn't compressable; upload as-is
-          file_contents = file
         end
 
         destination_path = destination_root + file.gsub(source_path_filter, '')
