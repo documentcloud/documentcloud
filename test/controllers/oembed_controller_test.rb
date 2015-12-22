@@ -12,7 +12,7 @@ class OembedControllerTest < ActionController::TestCase
   let(:unsupported_resource_url) { CGI.escape(url_for :controller => 'home', :action => 'index') }
   let(:external_resource_url) { CGI.escape('http://www2.warnerbros.com/spacejam/movie/jam.htm') }
 
-  def test_oembed_response
+  it "should understand a valid oEmbed request" do
     get :oembed, :format => "json", :url => valid_resource_url
     assert_response :success
     assert_equal 'rich', json_body['type']
@@ -20,27 +20,27 @@ class OembedControllerTest < ActionController::TestCase
     assert_equal DC.server_root, json_body['provider_url']
   end
 
-  def test_missing_url_param
+  it "should require a URL parameter" do
     get :oembed, :format => "json"
     assert_response 400
   end
 
-  def test_unsupported_format
+  it "shouldn't support wacky formats" do
     get :oembed, :format => "lol", :url => valid_resource_url
     assert_response 501
   end
 
-  def test_wrong_domain
+  it "shouldn't find URLs from non-DocumentCloud domains" do
     get :oembed, :format => "json", :url => external_resource_url
     assert_response 404
   end
 
-  def test_unsupported_resource
+  it "shouldn't find unsupported URLs" do
     get :oembed, :format => "json", :url => unsupported_resource_url
     assert_response 404
   end
 
-  def test_missing_resource
+  it "shouldn't find resources that don't exist" do
     skip "Not yet implemented missing resource check"
     get :oembed, :format => "json", :url => missing_resource_url
     assert_response 404
