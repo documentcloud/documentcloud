@@ -5,7 +5,7 @@ DC::Application.routes.draw do
   get '/' => 'workspace#index'
 
   get '/embed/loader/enhance', as: :embed_enhance, to: 'embed#enhance'
-  get '/:object/loader',       as: :embed_loader,  to: 'embed#loader', object: /documents|notes|embed/
+  get '/:object/loader',       as: :embed_loader,  to: 'embed#loader', object: /viewer|notes|embed/
 
   # Internal Search API.
   get '/search/documents.json' => 'search#documents'

@@ -20,7 +20,7 @@ class EmbedController < ApplicationController
     return not_implemented unless request.format.js?
 
     object_controller_map = {
-      'documents' => 'documents',
+      'viewer'    => 'documents',
       'notes'     => 'annotations',
       'embed'     => 'search'
     }
