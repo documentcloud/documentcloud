@@ -32,15 +32,9 @@ sudo mkdir /mnt/cloud_crowd
 sudo chown ubuntu:ubuntu /mnt/cloud_crowd
 
 # 4) Install the AWS command line tools:
-#    a) We'll need to add the multiverse deb servers
-
-# find all of the multiverse deb lines and uncomment them, skipping the backports repositories.
-# then update w/ the new the package list
-sudo perl -pi.orig -e   'next if /-backports/; s/^# (deb .* multiverse)$/$1/'   /etc/apt/sources.list
-sudo apt-get update
 
 # Install the AMI and API tools
-sudo apt-get install ec2-ami-tools ec2-api-tools
+sudo apt-get install ec2-ami-tools ec2-api-tools -y
 
 ACCESS_KEY=$(egrep "aws_access_key"  ~/documentcloud/secrets/secrets.yml | awk '{print $NF}')
 SECRET_KEY=$(egrep "aws_secret_key"  ~/documentcloud/secrets/secrets.yml | awk '{print $NF}')
