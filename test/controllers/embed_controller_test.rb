@@ -9,7 +9,7 @@ class EmbedControllerTest < ActionController::TestCase
   end
 
   test "should render document embed loader" do
-    get :loader, object: :documents, format: 'js'
+    get :loader, object: :viewer, format: 'js'
     assert_response :success
     assert_template 'documents/embed_loader'
   end
