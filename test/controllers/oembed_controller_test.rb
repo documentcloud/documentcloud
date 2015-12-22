@@ -8,6 +8,7 @@ class OembedControllerTest < ActionController::TestCase
   default_url_options[:host] = DC::CONFIG['server_root']
 
   let(:valid_resource_url) { CGI.escape(url_for :controller => 'documents', :action => 'show', :id => '1-is-the-lonelist-number', :format => 'html') }
+  let(:unicode_resource_url) { CGI.escape(url_for :controller => 'documents', :action => 'show', :id => '2-不', :format => 'html') }
   let(:missing_resource_url) { CGI.escape(url_for :controller => 'documents', :action => 'show', :id => '3-the-magic-number', :format => 'html') }
   let(:unsupported_resource_url) { CGI.escape(url_for :controller => 'home', :action => 'index') }
   let(:external_resource_url) { CGI.escape('http://www2.warnerbros.com/spacejam/movie/jam.htm') }
@@ -18,6 +19,12 @@ class OembedControllerTest < ActionController::TestCase
     assert_equal 'rich', json_body['type']
     assert_equal '1.0', json_body['version']
     assert_equal DC.server_root, json_body['provider_url']
+  end
+
+  it "should correctly parse Unicode slugs" do
+    Rails.logger.info unicode_resource_url
+    get :oembed, :format => "json", :url => unicode_resource_url
+    assert_response :success
   end
 
   it "should require a URL parameter" do
