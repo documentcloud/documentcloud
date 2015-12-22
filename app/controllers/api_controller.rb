@@ -171,7 +171,7 @@ class ApiController < ApplicationController
 
   def oembed
     # get the target url and turn it into a manipulable object.
-    url = URI.parse(CGI.unescape(params[:url])) rescue nil
+    url = Addressable::URI.parse(CGI.unescape(params[:url])) rescue nil
     return bad_request if params[:url].blank? or !url
 
     # Use the rails router to identify whether a URL is an embeddable resource

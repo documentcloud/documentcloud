@@ -342,6 +342,7 @@ PLATFORMS
 
 DEPENDENCIES
   actionpack-page_caching
+  addressable (~> 2.4.0)
   aws-sdk (~> 1.30)
   bcrypt (~> 3.1.1)
   byebug

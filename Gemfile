@@ -30,6 +30,7 @@ gem 'jammit',                 '~> 0.7.0'
 gem 'nokogiri',               '~> 1.6.0'
 gem 'net-ssh-shell'
 gem 'country_select',         '~> 2.2.0'
+gem 'addressable',            '~> 2.4.0'
 
 group :development, :test do
   gem 'guard-bundler'
