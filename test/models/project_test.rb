@@ -9,8 +9,6 @@ class ProjectTest < ActiveSupport::TestCase
     assert_associations_queryable subject
   end
 
-
-
   it "has scopes that are queryable" do
     assert_working_relations( Project, [ :alphabetical, :visible, :hidden ] )
     assert Project.accessible( louis )
@@ -97,7 +95,7 @@ class ProjectTest < ActiveSupport::TestCase
     # Project#collaborator_ids used to be a method - removed in favor of Rails built-in xxx_ids
     assert_equal [louis.id], subject.collaborator_ids
     subject.add_collaborator( joe )
-    assert_equal [louis.id, joe.id], subject.collaborator_ids
+    assert_equal [louis.id, joe.id].sort, subject.collaborator_ids.sort
   end
 
   it "counts annotations" do
