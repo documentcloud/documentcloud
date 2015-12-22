@@ -231,12 +231,12 @@ class ApiController < ApplicationController
     (
       (
         %w[documents pages].include?(resource_params[:controller]) and
-        resource_params[:id] =~ DC::Validators::SLUG # and
+        resource_params[:id].force_encoding('utf-8') =~ DC::Validators::SLUG # and
         # Document.accessible(nil, nil).exists?(params[:id].to_i) 
       ) or
       (
         resource_params[:controller] == "annotations" and
-        resource_params[:document_id] =~ DC::Validators::SLUG
+        resource_params[:document_id].force_encoding('utf-8') =~ DC::Validators::SLUG
       )
     )
   end
