@@ -68,7 +68,7 @@ namespace :deploy do
           upload_filetree("public/#{embed[:asset_dir]}/**/*", embed[:asset_dir], /^public\/#{embed[:asset_dir]}/)
 
           # Upload loader (entry point)
-          upload_loader(embed)
+          upload_file(generate_loader(embed), embed[:loader_dest])
         else
           # Ignore the file tree, but generate and dump loader for inspection
           puts generate_loader(embed)
@@ -93,55 +93,28 @@ namespace :deploy do
 
   # Helpers
 
-  def upload_filetree( source_pattern, destination_root, source_path_filter=// )
+  def upload_filetree(source_pattern, destination_root, source_path_filter=//)
     Dir[source_pattern].each do |file|
       unless File.directory?(file) || compressed?(file)
-        upload_attributes = { :acl => :public_read }
-
-        # Attempt to identify the MIME type for this file
-        file_extension = File.extname(file).remove(/^\./)
-        mime_type      = Mime::Type.lookup_by_extension(file_extension)
-        upload_attributes[:content_type] = mime_type.to_s if mime_type
-
-        file_contents = File.read(file)
-        if compressable?(file)
-          # Compress `foo.css` and upload it as `foo.css`
-          file_contents = gzip_string(file_contents)
-          upload_attributes[:content_encoding] = 'gzip'
-          message_suffix = " (compressed)"
-
-          # NB: We would *like* to re-use Jammit's precompressed `.gz` file if 
-          # it exists, but they seem to be broken. At least, browsers think so.
-          # But in case that's ever fixed, here's the logic we'd *like* to have.
-          # 
-          # if File.exists?("#{file}.gz")
-          #   file_contents = File.read("#{file}.gz")
-          # else
-          #   file_contents = gzip_string(File.read(file))
-          # end
-        end
-
+        file_contents    = File.read(file)
         destination_path = destination_root + file.gsub(source_path_filter, '')
-        puts "Uploading #{file} (#{mime_type}) to #{destination_path}#{message_suffix}"
-        destination = bucket.objects[destination_path]
-        destination.write(file_contents, upload_attributes)
+        upload_file(file_contents, destination_path)
       end
     end
   end
 
-  def upload_loader(embed)
-    upload_attributes = {
-      :acl              => :public_read,
-      :content_type     => 'application/javascript',
-      :content_encoding => 'gzip'
-    }
+  def upload_file(file_contents, destination_path)
+    file_extension = destination_path.split('.').last
+    mime_type      = Mime::Type.lookup_by_extension(file_extension)
 
-    file_contents = gzip_string(generate_loader(embed))
-    puts "Uploading #{embed[:loader_dest]} (compressed)"
-    destination = bucket.objects[embed[:loader_dest]]
+    upload_attributes = { :acl => :public_read }
+    upload_attributes[:content_type] = mime_type.to_s if mime_type
+
+    puts "Uploading #{destination_path}"
+    destination = bucket.objects[destination_path]
     destination.write(file_contents, upload_attributes)
   end
-  
+
   def generate_loader(embed)
     # For historical reasons, we call the document embed "viewer" in some 
     # contexts but refer to it more sensibly as "document" in the DC::Embed 
@@ -154,6 +127,4 @@ namespace :deploy do
   def bucket; ::AWS::S3.new({ :secure => true }).buckets[DC::SECRETS['bucket']]; end
   def deployable_environment?; DEPLOYABLE_ENV.include?(Rails.env); end
   def compressed?(file); File.extname(file).remove(/^\./) == 'gz'; end
-  def compressable?(file); ['css', 'js'].include?(File.extname(file).remove(/^\./)); end
-  def gzip_string(contents); ActiveSupport::Gzip.compress(contents, Zlib::BEST_COMPRESSION); end
 end
