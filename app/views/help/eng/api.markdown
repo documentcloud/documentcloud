@@ -1,6 +1,6 @@
 # The DocumentCloud API
 
-DocumentCloud's API allows users to search, upload, edit, and organize documents. In addition, an oEmbed service provides easy integration of embedding documents, pages and notes.
+DocumentCloud's API provides resources to search, upload, edit, and organize documents as well as to work with projects. In addition, an oEmbed service provides easy integration of embedding documents, pages and notes.
 
 ## Contents
 
@@ -27,17 +27,19 @@ DocumentCloud's API allows users to search, upload, edit, and organize documents
 <a name="guidelines"></a>
 # API Guidelines and Terms of Service
 
-No API key is required, so performing searches directly from JavaScript is fair game. Please be considerate and don't hammer our servers. _Restrictions on the use of the DocumentCloud API do not apply to participating organizations working with documents uploaded by their own users._
+A limited portion of DocumentCloud's API is available for public use, including document search and individual document data retrieval. All other resources require authentication via a DocumentCloud account. No API key is required.
 
- * You may not recreate DocumentCloud.org in its entirety or build an application that simply displays the complete set of documents. You may not build an application that displays the document set of a contributing organization.
+Please be considerate and don't hammer our servers. Also:
 
- * If your project allows users to interact with data from DocumentCloud, you must cite DocumentCloud as the source of your data. If your project allows users to view or browse specific documents, you must cite DocumentCloud and the relevant contributing organizations, as identified in the API.
+* You may not recreate DocumentCloud.org in its entirety or build an application that simply displays the complete set of documents. You may not build an application that displays the document set of a contributing organization.
 
- * You may not use the API commercially, by which we mean you may not charge people money to look at the data or sell advertising specifically against it.
+* If your project allows users to interact with data from DocumentCloud, you must cite DocumentCloud as the source of your data. If your project allows users to view or browse specific documents, you must cite DocumentCloud and the contributing organizations as identified in the API.
 
- * You understand and acknowledge that any data provided by our API may contain errors and omissions.
+* You may not use the API commercially; you may not charge people money to look at the data or sell advertising specifically against it.
 
-_We reserve the right to revise these guidelines. If you violate the spirit of these terms, especially if you use the API to systematically access and reprint documents that you or your newsroom didn't contribute, expect to be blocked without advance warning._
+* You understand and acknowledge that any data provided by our API may contain errors and omissions.
+
+_Restrictions on the use of the DocumentCloud API do not apply to participating organizations working with documents uploaded by their own users. We reserve the right to revise these guidelines. If you violate the spirit of these terms, especially if you use the API to systematically access and reprint documents that you or your newsroom didn't contribute, expect to be blocked without advance warning._
 
 # Document Methods
 
