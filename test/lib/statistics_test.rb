@@ -7,7 +7,7 @@ class StatisticsTest < ActiveSupport::TestCase
   MONTH_DATE  = Date.today - 1.month - 2.day
   def test_daily_documents
     docs = DC::Statistics.daily_documents( MONTH_DATE )
-    assert_equal 1, docs.detect{ |day, count| day.to_date == MONTH_DATE }.last
+    assert_equal 2, docs.detect{ |day, count| day.to_date == MONTH_DATE }.last
   end
 
   def test_daily_pages
@@ -17,12 +17,12 @@ class StatisticsTest < ActiveSupport::TestCase
 
   def test_weekly_documents
     docs = DC::Statistics.weekly_documents( Date.parse("2013-01-01") )
-    assert_equal [1, 1], docs.values
+    assert_equal [1, 2], docs.values
   end
 
   def test_weekly_pages
     pgs = DC::Statistics.weekly_pages
-    assert_equal [68, 68], pgs.values
+    assert_equal [68, 136], pgs.values
   end
 
   def test_daily_hits_on_documents
@@ -61,7 +61,7 @@ class StatisticsTest < ActiveSupport::TestCase
 
   def test_public_documents_per_account
     counts =  DC::Statistics.public_documents_per_account
-    assert_equal 1, counts[ louis.id ]
+    assert_equal 2, counts[ louis.id ]
   end
 
   def test_private_documents_per_account
@@ -71,11 +71,11 @@ class StatisticsTest < ActiveSupport::TestCase
 
   def test_pages_per_account
     counts =  DC::Statistics.pages_per_account
-    assert_equal 136, counts[ louis.id ]
+    assert_equal 204, counts[ louis.id ]
   end
 
   def test_total_pages
-    assert_equal 136, DC::Statistics.total_pages
+    assert_equal 204, DC::Statistics.total_pages
   end
 
   def test_by_the_numbers
@@ -85,8 +85,8 @@ class StatisticsTest < ActiveSupport::TestCase
     assert_equal( {:total=>4,   :day=>4, :week=>4, :month=>4,  :half_year=>4}   , nums["All Accounts"] )
     assert_equal( {:total=>1,   :day=>1, :week=>1, :month=>1,  :half_year=>1}   , nums["Active Accounts"] )
     assert_equal( {:total=>0,   :day=>0, :week=>0, :month=>0,  :half_year=>0}   , nums["Reviewers"] )
-    assert_equal( {:total=>2,   :day=>0, :week=>0, :month=>1,  :half_year=>2}   , nums["Documents"] )
-    assert_equal( {:total=>136, :day=>0, :week=>0, :month=>68, :half_year=>136} , nums["Pages"] )
+    assert_equal( {:total=>3,   :day=>0, :week=>0, :month=>1,  :half_year=>3}   , nums["Documents"] )
+    assert_equal( {:total=>204, :day=>0, :week=>0, :month=>68, :half_year=>204} , nums["Pages"] )
     assert_equal( {:total=>2,   :day=>2, :week=>2, :month=>2,  :half_year=>2}   , nums["Notes"] )
   end
 
@@ -97,7 +97,7 @@ class StatisticsTest < ActiveSupport::TestCase
   def test_documents_by_access
     docs = DC::Statistics.documents_by_access
     assert_equal 1, docs[ Document::PRIVATE ]
-    assert_equal 1, docs[ Document::PUBLIC  ]
+    assert_equal 2, docs[ Document::PUBLIC  ]
   end
 
   def test_averate_page_count
@@ -109,7 +109,7 @@ class StatisticsTest < ActiveSupport::TestCase
   end
 
   def test_embedded_document_count
-    assert_equal 1, DC::Statistics.embedded_document_count
+    assert_equal 2, DC::Statistics.embedded_document_count
   end
 
   def test_remote_url_hits_last_week
