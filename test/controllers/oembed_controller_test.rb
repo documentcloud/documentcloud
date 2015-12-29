@@ -22,7 +22,6 @@ class OembedControllerTest < ActionController::TestCase
   end
 
   it "should correctly parse Unicode slugs" do
-    Rails.logger.info unicode_resource_url
     get :oembed, :format => "json", :url => unicode_resource_url
     assert_response :success
   end
