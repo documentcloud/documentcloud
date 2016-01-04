@@ -500,8 +500,8 @@ class Document < ActiveRecord::Base
     File.join(path, 'annotations')
   end
 
-  def canonical_id
-    "#{id}-#{slug}"
+  def canonical_id(options={})
+    "#{id}-#{options[:escaped] ? CGI.escape(slug) : slug}"
   end
 
   def canonical_path(format = :json)
