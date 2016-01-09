@@ -86,7 +86,7 @@ class DocumentImport < DocumentAction
     @pages = []
     # Destroy existing text and pages to make way for the new.
     document.pages.destroy_all if document.pages.count > 0
-    if duplicate = document.duplicates.first
+    if (duplicate = document.duplicates.first) and !options['force_ocr']
       asset_store.copy_text( duplicate, document, access )
       Docsplit.extract_length(@pdf).times do |i|
         page_number = i + 1
