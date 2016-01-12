@@ -107,7 +107,9 @@ published_url   |   (opcional) la dirección URL de la página en la que se inte
 access		    |(opcional), una de "publico", "privado", "organización",público predeterminado como  "privado" |
 project		    | (opcional) una identificación de proyectos numérica, para cargar el documento en un proyecto existente.   |       1012
 data 		    | (opcional) una mezcla  de pares clave / valor de datos {"data": {"status": "active"}} (json) arbitrarios | data[status]=active (query string)
-secure	        |   (opcional) Si está trabajando con un documento  realmente sensible, pase el parámetro "seguro" con el fin de evitar que el documento sea enviado a OpenCalais para extracción de entidades. | verdadero
+secure	        |   (opcional) Si está trabajando con un documento  realmente sensible, pase el parámetro "seguro" con el fin de evitar que el documento sea enviado a OpenCalais para extracción de entidades. | true
+force_ocr | (opcional) especifica que un documento debe OCR'd incluso si tiene texto en él (default is "false") | true
+
 
 ### Consejos
 
@@ -187,7 +189,7 @@ published_url   |   (opcional) la dirección URL de la página en la que se inte
 access		    |(opcional), una de "publico", "privado", "organización",público predeterminado como  "privado" |
 project		    | (opcional) una identificación de proyectos numérica, para cargar el documento en un proyecto existente.   |       1012
 data 		    | (opcional) una mezcla  de pares clave / valor de datos {"data": {"status": "active"}} (json) arbitrarios | data[status]=active (query string)
-secure	        |   (opcional) Si está trabajando con un documento  realmente sensible, pase el parámetro "seguro" con el fin de evitar que el documento sea enviado a OpenCalais para extracción de entidades. | verdadero
+secure	        |   (opcional) Si está trabajando con un documento  realmente sensible, pase el parámetro "seguro" con el fin de evitar que el documento sea enviado a OpenCalais para extracción de entidades. | true
 
 El valor en la respuesta de este método será la representación JSON de su documento (como se ve en el método GET arriba), con todos las actualizaciones aplicadas.
 

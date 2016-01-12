@@ -108,9 +108,10 @@ language        | (optional) The language of the document.  Will be used to dete
 related_article | (optional) the URL of the article associated with the document | http://example.com/news/blago/2010-5-3.html
 published_url   | (optional) the URL of the page on which the document will be embedded | http://documents.example.com/blago-transcript.html
 access          | (optional) one of "public", "private", "organization", defaults to "private" | public
-project         | (optional) a numeric Project id, to upload the document into an existing project. | 1012
+project         | (optional) a numeric Project id, to upload the document into an existing project | 1012
 data            | (optional) a hash of arbitrary key/value data pairs | {"data": {"status": "active"}} (json) <br /> data[status]=active (query string)
 secure          | (optional) If you're dealing with a truly sensitive document, pass the "secure" parameter in order to prevent the document from being sent to OpenCalais for entity extraction. | true
+force_ocr | (optional) specify that a document should be OCR'd even if it has text in it (default is "false") | true
 
 ### Tips
 
