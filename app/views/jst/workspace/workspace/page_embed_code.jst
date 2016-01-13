@@ -1,6 +1,6 @@
 <div class="DC-embed" data-version="1.0" style="font-size:10pt"<% if (options != '{}') { %> data-options='<%= options %>'<% } %>>
   <p><a class="DC-embed-resource" href="<%= pagePermalink %>" title="View page <%= pageNumber %> of <%- docTitle %> on DocumentCloud in new window or tab" target="_blank">Page <%= pageNumber %> of <%- docTitle %></a></p>
-  <img src="<%= pageImageUrl %>" alt="Page <%= pageNumber %> of <%- docTitle %>" style="border:1px solid #ccc;-webkit-box-sizing:border-box;box-sizing:border-box;width:100%;max-width:700px;">
+  <img src="<%= pageImageUrl %>" srcset="<%= pageImageLargeUrl %> 1000w" alt="Page <%= pageNumber %> of <%- docTitle %>" style="border:1px solid #ccc;-webkit-box-sizing:border-box;box-sizing:border-box;width:100%;max-width:700px;">
   <p>Contributed to DocumentCloud by <%- docContributor %> of <%- docOrganization %> &bull; <a href="<%= pageTextUrl %>" title="View text of page <%= pageNumber %> of <%- docTitle %> in a new window or tab" target="_blank">View page as text</a></p>
 </div>
 <script src="<%= window.ASSET_ROOT %>/embed/loader/enhance.js"></script>
