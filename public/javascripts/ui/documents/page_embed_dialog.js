@@ -157,14 +157,6 @@ dc.ui.PageEmbedDialog = dc.ui.Dialog.extend({
     return this.doc.get('page_text_url').replace('{page}', pageNumber);
   },
 
-  _pageImages : function() {
-    var pageImages = [];
-    _.times(this.doc.get('page_count'), function(pageNumber) {
-      pageImages.push(this._pageImageUrl(pageNumber + 1, 'small'));
-    }, this);
-    return pageImages;
-  },
-
   nextStep : function() {
     if (this._selectedPage > 0) {
       this.currentStep += 1;
