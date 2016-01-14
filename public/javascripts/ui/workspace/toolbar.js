@@ -327,8 +327,8 @@ dc.ui.Toolbar = Backbone.View.extend({
     var accountItems = [
       {title : _.t('embed_document_viewer'), onClick : this.openDocumentEmbedDialog,    attrs: {'class': 'singular'}},
       {title : _.t('embed_document_list'),   onClick : this.openSearchEmbedDialog,      attrs: {'class': 'always'}},
-      {title : _.t('embed_page'),            onClick : this.openPageEmbedDialog,        attrs: {'class': 'singular'}},
-      {title : _.t('embed_a_note'),          onClick : this.openNoteEmbedDialog,        attrs: {'class': 'singular'}},
+      {title : _.t('embed_page'),            onClick : this.openPageEmbedDialog,        attrs: {'class': 'singular mark_responsive', 'data-responsive-text': _.t('responsive')}},
+      {title : _.t('embed_a_note'),          onClick : this.openNoteEmbedDialog,        attrs: {'class': 'singular mark_responsive', 'data-responsive-text': _.t('responsive')}},
       {title : _.t('set_publication_date'),  onClick : this.openPublicationDateDialog,  attrs: {'class': 'private_only'}},
       {title : _.t('download_viewer'),       onClick : this.requestDownloadViewers}
     ];

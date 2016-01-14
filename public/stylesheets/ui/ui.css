@@ -42,6 +42,20 @@ input.hidden_submit {
   -moz-user-select: none;
   user-select: none;
 }
+.mark_responsive:after {
+  content: attr(data-responsive-text);
+  background-color: orange;
+  color: white;
+  font-weight: bold;
+  text-transform: uppercase;
+  padding: 2px 4px;
+  margin-left: 6px;
+  border-radius: 2px;
+  -webkit-font-smoothing: antialiased;
+}
+.mark_responsive.disabled:after {
+  display: none;
+}
 
 /*------------------------------ Gradients ---------------------------------*/
 .gradient_white {

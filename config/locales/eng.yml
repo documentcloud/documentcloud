@@ -549,6 +549,7 @@
   - reprocess_text: Reprocess Text
   - resend_instructions: Resend Instructions
   - resend_welcome_email: Resend Welcome Email
+  - responsive: Responsive
   - restricted: Restricted
   - review_x_documents:
     - Review "%2$s" on DocumentCloud
