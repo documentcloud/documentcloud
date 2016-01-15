@@ -23,6 +23,7 @@ class DocumentsController < ApplicationController
     doc = current_document(true)
     return forbidden if doc.nil? && Document.exists?(params[:id].to_i)
     return not_found(:template => "doc_404") unless doc
+    options = {data: true}.merge(pick(params, :data))
     respond_to do |format|
       format.html do
         @no_sidebar = (params[:sidebar] || '').match /no|false/
@@ -34,18 +35,18 @@ class DocumentsController < ApplicationController
       format.pdf  { redirect_to(doc.pdf_url) }
       format.text { redirect_to(doc.full_text_url) }
       format.json do
-        @response = doc.canonical
+        @response = doc.canonical(options)
         # TODO: https://github.com/documentcloud/documentcloud/issues/291
         # cache_page @response.to_json if doc.cacheable?
         render_cross_origin_json
       end
       format.js do
-        js = "DV.loadJSON(#{doc.canonical.to_json});"
+        js = "DV.loadJSON(#{doc.canonical(options).to_json});"
         cache_page js if doc.cacheable?
         render :js => js
       end
       format.xml do
-        render :xml => doc.canonical.to_xml(:root => 'document')
+        render :xml => doc.canonical(options).to_xml(:root => 'document')
       end
       format.rdf do
         @doc = doc
