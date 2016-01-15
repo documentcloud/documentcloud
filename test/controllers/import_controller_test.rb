@@ -15,9 +15,8 @@ class ImportControllerTest < ActionController::TestCase
   end
 
   def test_cloud_crowd_success
-    ProcessingJob.create!( :document=>doc, :account=>louis, :cloud_crowd_id => 42,
-      :title=>'import', :remote_job => 'document_import' )
-    assert_difference( 'ProcessingJob.count', -1 ) do
+    ProcessingJob.create!( :document=>doc, :account=>louis, :cloud_crowd_id => 42, :title=>'import', :remote_job => 'document_import' )
+    assert_difference( ->{ ProcessingJob.incomplete.count }, -1 ) do
       get :cloud_crowd, :job=>'{ "id": 42, "status":"succeeded" }'
     end
   end
@@ -25,7 +24,7 @@ class ImportControllerTest < ActionController::TestCase
   def test_cloud_crowd_failure
     ProcessingJob.create!( :document=>doc, :account=>louis, :cloud_crowd_id => 42,
       :title=>'import', :remote_job => 'document_import' )
-    assert_difference( 'ProcessingJob.count', -1 ) do
+    assert_difference( ->{ ProcessingJob.incomplete.count }, -1 ) do
       get :cloud_crowd, :job=>'{ "id": 42, "status":"failed" }'
     end
     assert_equal Document::ERROR, doc.reload.access
