@@ -7,6 +7,9 @@ class Docdata < ActiveRecord::Base
   validate  :ensure_keys_are_not_forbidden
   validates :data, :presence=>true
   after_save :index_document
+  
+  DEPTH_LIMIT = 1
+  DATA_TYPES = [String, Numeric, FalseClass, TrueClass, NilClass]
 
   private
 
@@ -27,9 +30,23 @@ class Docdata < ActiveRecord::Base
       true
     end
   end
-
+  
+  def ensure_depth_limit
+    self.data.values.all? do |obj|
+      case
+        when DATA_TYPES.any?{ |klass| obj.kind_of? klass }
+          true
+        when obj.kind_of?(Array)
+          obj.values.all?{ |item| DATA_TYPE.any?{ |klass| item.kind_of? klass } }
+        when obj.kind_of?(Hash)
+          obj.all?{ |key, value| DATA_TYPE.any?{ |klass| value.kind_of? klass } }
+        else
+          false
+      end
+    end
+  end
+  
   def index_document
     self.document.index
   end
-
 end
