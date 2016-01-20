@@ -137,6 +137,10 @@ class Page < ActiveRecord::Base
     "Page #{page_number} of #{document.title}"
   end
 
+  def title_lower
+    "page #{page_number} of #{document.title}"
+  end
+
   private
 
   # Make sure that HTML never gets written into the plain text contents.
