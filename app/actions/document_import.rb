@@ -83,18 +83,25 @@ class DocumentImport < DocumentAction
 
   def process_images
     if duplicate = document.duplicates.first
+      @page_aspect_ratios = duplicate.pages.order(:page_number).pluck(:aspect_ratio)
       asset_store.copy_images( duplicate, document, access )
     else
       Docsplit.extract_images(@pdf, :format => :gif, :size => Page::IMAGE_SIZES.values, :rolling => true, :output => 'images')
       
-      @page_image_paths = Dir['images/700x/*.gif']
-      save_page_aspect_ratios!
-      page_count = @page_image_paths.length
+      page_image_paths = Dir['images/700x/*.gif']
+      @page_aspect_ratios = page_image_paths.map do |image_path|
+        cmd = %(gm identify #{image_path} | egrep -o "[[:digit:]]+x[[:digit:]]+")
+        width, height = `#{cmd}`.split("x").map(&:to_f)
+        width / height
+      end
+      page_count = page_image_paths.length
       page_count.times do |i|
         number = i + 1
         image  = "#{document.slug}_#{number}.gif"
         DC::Import::Utils.save_page_images(asset_store, document, number, image, access)
       end
+      
+      save_page_aspect_ratios!
     end
   end
 
@@ -180,12 +187,6 @@ class DocumentImport < DocumentAction
   end
   
   def save_page_aspect_ratios!
-    page_aspect_ratios = @page_image_paths.map do |image_path|
-      cmd = %(gm identify #{image_path} | egrep -o "[[:digit:]]+x[[:digit:]]+")
-      width, height = `#{cmd}`.split("x").map(&:to_f)
-      width / height
-    end
-    
     ids = document.pages.order(:page_number).pluck(:id)
     
     query_template = <<-QUERY
@@ -194,7 +195,7 @@ class DocumentImport < DocumentAction
       FROM (SELECT unnest(ARRAY[?]) as id, unnest(ARRAY[?]) as aspect_ratio) AS input
       WHERE pages.id = input.id
     QUERY
-    query = Page.send(:replace_bind_variables, query_template, [ids, page_aspect_ratios])
+    query = Page.send(:replace_bind_variables, query_template, [ids, @page_aspect_ratios])
     Page.connection.execute(query)
   end
 
