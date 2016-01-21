@@ -3,19 +3,21 @@
 
 
 .v2 {
-  margin: 0;
-  padding: 0;
+  padding: 0 1em;
   background: #fff url(/images/embed/home/stripes.png);
 
   font: 16px/1.6em Gotham, 'Proxima Nova', 'Avenir Next', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-weight: 400;
+}
+.v2.empty {
+  padding: 0;
+  background-image: none;
 }
 
 .container {
   min-width: 300px;
   max-width: 720px;
   margin: 0 auto;
-  padding: 0 1em;
 }
 
 .embed-preview-container {
@@ -38,6 +40,12 @@
   font-weight: 700;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  margin-left: -1.3em;
+  margin-right: -1.3em;
+}
+.v2.empty #return_to_v1 {
+  margin-left: 0;
+  margin-right: 0;
 }
 
 #return_to_v1 a:link,
