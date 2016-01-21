@@ -1,8 +1,8 @@
 <% (@stylesheets_header ||= []).push File.join(DC.cdn_root(:agnostic => true), "/embed/page/page_embed.css") %>
 
 <div id="DC-embed-container">
-    <!-- TODO: Remove `respond_to?` check when aspect ratios are stored -->
-  <img src="<%= @current_document.page_image_url(@current_page.page_number, 'normal') %>" alt="<%= @current_page.title %>" style="width:100%;height:auto;display:block">
+  <!-- TODO: Remove `respond_to?` check when aspect ratios are stored -->
+  <img src="<%= @current_document.page_image_url(@current_page.page_number, 'normal') %>" srcset="<%= @current_document.page_image_url(@current_page.page_number, 'large') %> 1000w" alt="<%= @current_page.title %>" style="width:100%;height:auto;display:block">
 </div>
 
 <% (@javascripts_footer ||= []).push File.join(DC.cdn_root(:agnostic => true), "/embed/page/page_embed.js") %>
