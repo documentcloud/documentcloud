@@ -11,7 +11,7 @@
       Page <%= @current_page.page_number %> of <a class="DC-embed-resource" href="<%= @current_page.contextual_path %>" title="View <%= @current_page.title_lower %> on DocumentCloud in new window or tab" target="_blank"><%= @current_document.title %></a>
     </div>
     <!-- TODO: Remove `respond_to?` check when aspect ratios are stored -->
-    <div style="position:relative;padding-bottom:<%= @current_page.respond_to?(:aspect_ratio) ? @current_page.aspect_ratio * 100 : 129.4 %>%;height:0;overflow:hidden;max-width:100%;margin:0.5em 0;border:1px solid #ccc;-webkit-box-sizing:border-box;clear:both">
+    <div style="position:relative;padding-bottom:<%= @current_page.respond_to?(:aspect_ratio) ? 1 / @current_page.aspect_ratio * 100 : 129.4 %>%;height:0;overflow:hidden;max-width:100%;margin:0.5em 0;border:1px solid #ccc;-webkit-box-sizing:border-box;clear:both">
       <img src="<%= @current_document.page_image_url(@current_page.page_number, 'normal') %>" srcset="<%= @current_document.page_image_url(@current_page.page_number, 'large') %> 1000w" alt="<%= @current_page.title %>" style="position:absolute;top:0;left:0;width:100%;height:100%">
     </div>
     <div style="font-size:8pt;line-height:12pt;text-align:center">
