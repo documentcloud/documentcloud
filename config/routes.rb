@@ -184,6 +184,7 @@ DC::Application.routes.draw do
   get '/news'        => 'redirect#index', :as => :news,       :url => 'https://blog.documentcloud.org/'
 
   get '/admin' => 'admin#index'
+  get '/admin/health_check/:subject/:env', to: 'admin#health_check', subject: /page_embed/, env: /production|staging/
   
   # Standard fallback routes
   match '/:controller(/:action(/:id))', :via=>[:get,:post]
