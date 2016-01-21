@@ -8,7 +8,7 @@ module DC
       end
 
       def self.save_page_images(asset_store, document, page_number, filename, access)
-        images = Page::IMAGE_SIZES.reduce({}) |sizes, label, size| do
+        images = Page::IMAGE_SIZES.reduce({}) do |sizes, label, size|
           sizes[label] = "images/#{size}/#{filename}"
           sizes
         end
