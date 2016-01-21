@@ -183,7 +183,7 @@ class DocumentImport < DocumentAction
     page_aspect_ratios = @page_image_paths.map do |image_path|
       cmd = %(gm identify #{image_path} | egrep -o "[[:digit:]]+x[[:digit:]]+")
       width, height = `#{cmd}`.split("x").map(&:to_f)
-      height / width
+      width / height
     end
     
     ids = document.pages.order(:page_number).pluck(:id)
