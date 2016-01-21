@@ -3,7 +3,8 @@
 
 
 .v2 {
-  padding: 0 1em;
+  margin: 0;
+  padding: 0;
   background: #fff url(/images/embed/home/stripes.png);
 
   font: 16px/1.6em Gotham, 'Proxima Nova', 'Avenir Next', 'Helvetica Neue', Helvetica, Arial, sans-serif;
@@ -14,11 +15,12 @@
   min-width: 300px;
   max-width: 720px;
   margin: 0 auto;
+  padding: 0 1em;
 }
 
 .embed-preview-container {
   margin-top: 30px;
-  background: white;
+  background-color: white;
   padding: 30px 40px;
   box-shadow: 0 0 20px #aaa;
   border-radius: 6px;
@@ -36,8 +38,6 @@
   font-weight: 700;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  margin-left: -1.3em;
-  margin-right: -1.3em;
 }
 
 #return_to_v1 a:link,
@@ -112,4 +112,21 @@
 
 .v2 a:focus {
   outline: 2px dotted rgb(90, 118, 160);
+}
+
+/*------------------------------ iframe embeds -------------------------------*/
+
+/* We don't even generate these elements when the embedder has iframed the
+   correct version of the resource, but in case they just iframe the canonical
+   resource URL, strip it down.
+*/
+.DC-embed-iframe #return_to_v1 {
+  display: none;
+}
+
+.DC-embed-iframe .embed-preview-container {
+  margin: 0;
+  padding: 0;
+  box-shadow: none;
+  border-radius: 0;
 }
