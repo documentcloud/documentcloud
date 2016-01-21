@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151111214857) do
+ActiveRecord::Schema.define(version: 20160120214245) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -183,6 +183,7 @@ ActiveRecord::Schema.define(version: 20151111214857) do
     t.text    "text",            null: false
     t.integer "start_offset"
     t.integer "end_offset"
+    t.float   "aspect_ratio"
   end
 
   add_index "pages", ["document_id"], name: "index_pages_on_document_id", using: :btree
