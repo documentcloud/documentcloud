@@ -1012,7 +1012,7 @@ class Document < ActiveRecord::Base
   # Updates file_size and file_hash
   # Will default to reading the data from the asset_store
   # or can be passed arbitrary data such as from a file on disk
-  def update_file_metadata( data = asset_store.read_original(self) )
+  def update_file_metadata(data)
     update_attributes!( :file_size => data.bytesize, :file_hash => Digest::SHA1.hexdigest( data ) )
   end
 
