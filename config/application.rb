@@ -9,8 +9,8 @@ Bundler.require(:default, Rails.env)
 
 module DC
 
-  SECRETS   = {}
-  CONFIG = {}
+  SECRETS = {}
+  CONFIG  = {}
 
   class Application < Rails::Application
     # Settings in config/environments/* take precedence over those specified here.
@@ -32,7 +32,7 @@ module DC
     config.cache_store = :file_store, "#{Rails.root}/tmp/cache", { expires_in: 10.minutes,:race_condition_ttl => 120 }
 
     # DocumentCloud-specific configuration.
-    ::DC::SECRETS.merge! YAML.load_file("#{Rails.root}/secrets/secrets.yml")[Rails.env]
+    ::DC::SECRETS.merge! YAML.load_file(File.join(Rails.root,"secrets","secrets.yml"))[Rails.env]
     ::DC::CONFIG.merge!  YAML.load( ERB.new(File.read( Rails.root.join('config','document_cloud.yml') ) ).result )[Rails.env]
 
     ::DC::ANALYTICS_DB = YAML.load(ERB.new(File.read("#{Rails.root}/config/database_analytics.yml")).result(binding))[Rails.env]
