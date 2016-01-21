@@ -141,6 +141,14 @@ class Page < ActiveRecord::Base
     "page #{page_number} of #{document.title}"
   end
 
+  def safe_aspect_ratio
+    aspect_ratio || 8.5/11
+  end
+
+  def inverted_aspect_ratio
+    1 / safe_aspect_ratio
+  end
+
   private
 
   # Make sure that HTML never gets written into the plain text contents.
