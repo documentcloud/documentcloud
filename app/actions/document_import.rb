@@ -100,9 +100,8 @@ class DocumentImport < DocumentAction
         image  = "#{document.slug}_#{number}.gif"
         DC::Import::Utils.save_page_images(asset_store, document, number, image, access)
       end
-      
-      save_page_aspect_ratios!
     end
+    save_page_aspect_ratios!
   end
 
   def process_text
