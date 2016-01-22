@@ -281,7 +281,8 @@
   height: 3em;
 }
 
-.form_v2 .field:focus {
+.form_v2 .field:focus,
+.form_v2 .filled .field {
   outline: none;
   box-shadow: inset 0 0 2px 0px rgba(125, 127, 127, 0.25);
 }
