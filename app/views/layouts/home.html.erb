@@ -6,7 +6,7 @@
   <title><%= compose_title(@title) %></title>
   <%= include_stylesheets :ui, :home %>
   <!--[if lt IE 9]>
-    <%= include_stylesheets :ie_only, :embed_assets => false %>
+    <%= include_stylesheets :lt_ie_9, :embed_assets => false %>
   <![endif]-->
   <%= include_javascripts :core, :home %>
   <% if Rails.env.production? %>

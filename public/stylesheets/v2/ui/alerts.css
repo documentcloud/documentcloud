@@ -5,8 +5,9 @@
   margin: 1.5em 0;
   padding: 1em 1em 1em 2.5em;
 
-  font: 22px/1.5em Gotham, 'Proxima Nova', 'Avenir Next', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  font-weight: 400;
+  font-size: 22px;
+  line-height: 1.5em;
+  font-weight: 300;
 
   background-color: #b5d8f4;
   color: #333;
@@ -27,8 +28,8 @@
 .alert_v2.error {
   background-color: #d85157;
   color: white;
-  -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+   -webkit-font-smoothing: antialiased;
 }
 .alert_v2.error:before {
   content: '✘';
@@ -37,8 +38,8 @@
 .alert_v2.success {
   background-color: #78bb6e;
   color: white;
-  -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+   -webkit-font-smoothing: antialiased;
 }
 .alert_v2.success:before {
   content: '✔︎';
