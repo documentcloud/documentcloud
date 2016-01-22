@@ -1,7 +1,7 @@
 <% (@stylesheets_header ||= []).push File.join(DC.cdn_root(:agnostic => true), "/embed/page/page_embed.css") %>
 
 <div id="DC-embed-container">
-  <img src="<%= @current_document.page_image_url(@current_page.page_number, 'normal') %>" srcset="<%= @current_document.page_image_url(@current_page.page_number, 'large') %> 1000w" alt="<%= @current_page.title %>" style="width:100%;height:auto;display:block">
+  <img src="<%= @current_document.page_image_url(@current_page.page_number, 'normal') %>" srcset="<%= @current_document.page_image_url(@current_page.page_number, 'normal') %> 700w, <%= @current_document.page_image_url(@current_page.page_number, 'large') %> 1000w" alt="<%= @current_page.title %>" style="width:100%;height:auto;display:block">
 </div>
 
 <% (@javascripts_footer ||= []).push File.join(DC.cdn_root(:agnostic => true), "/embed/page/page_embed.js") %>
