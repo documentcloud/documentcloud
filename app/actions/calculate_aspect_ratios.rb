@@ -4,8 +4,9 @@ class CalculateAspectRatios < DocumentAction
   
   def process
     errors = []
-    document = Document.find(input)
-    @page_aspect_ratios = (1..document.page_count).map do |page_number|
+
+    page_numbers = (1..document.page_count)
+    @page_aspect_ratios = page_numbers.map do |page_number|
       path = document.page_image_path(page_number, 'small')
       filename = File.basename(path)
       begin
@@ -14,9 +15,7 @@ class CalculateAspectRatios < DocumentAction
         width, height = `#{cmd}`.split("x").map(&:to_f)
         width / height
       rescue Exception => e
-        params = options.merge({page_number: page_number})
-        errors.push(params)
-        LifecycleMailer.exception_notification(e,params).deliver_now
+        errors.push({params: options.merge({page_number: page_number}), error: e})
         0
       end
     end
@@ -38,16 +37,4 @@ class CalculateAspectRatios < DocumentAction
     Page.connection.execute(query)
   end
   
-end
-
-__END__
-operator = Account.lookup(email)
-Document.find_each do |document|
-  job = document.processing_jobs.new( 
-    action: 'calculate_aspect_ratios', 
-    title: 'calculate_aspect_ratios', 
-    options: {id: document.id},
-    account_id: operator.id
-  )
-  job.queue
 end
