@@ -1,6 +1,4 @@
-require File.join(File.dirname(__FILE__), 'support', 'document_action')
-
-class CalculateAspectRatios < DocumentAction
+class CalculateAspectRatios < CloudCrowd::Action
   
   def process
     errors = []
@@ -24,6 +22,7 @@ class CalculateAspectRatios < DocumentAction
     errors
   end
   
+  private
   def save_page_aspect_ratios!
     ids = document.pages.order(:page_number).pluck(:id)
     
@@ -35,6 +34,14 @@ class CalculateAspectRatios < DocumentAction
     QUERY
     query = Page.send(:replace_bind_variables, query_template, [ids, @page_aspect_ratios])
     Page.connection.execute(query)
+  end
+  
+  def document
+    @document ||= Document.find(options['id'])
+  end
+
+  def asset_store
+    @asset_store ||= DC::Store::AssetStore.new
   end
   
 end
