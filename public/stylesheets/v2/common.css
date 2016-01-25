@@ -161,7 +161,8 @@ section {
 }
 
 .v2 a:focus {
-  outline: 2px dotted rgb(90, 118, 160);
+  color: white;
+  background-color: rgb(119, 147, 189);
 }
 
 /*------------------------------ iframe embeds -------------------------------*/
