@@ -33,7 +33,6 @@ class DocumentImport < DocumentAction
       file_size: data.bytesize,
       file_hash: Digest::SHA1.hexdigest(data)
     }
-    attributes[:page_count] = Docsplit.extract_length(file) if build_pages
     document.update_attributes(attributes)
 
     if duplicate = document.duplicates.first
@@ -43,6 +42,7 @@ class DocumentImport < DocumentAction
       Rails.logger.info "Building PDF"
       File.open(file, 'r') do |f|
         DC::Import::PDFWrangler.new.ensure_pdf(f, file) do |path|
+          document.update_attributes(page_count: Docsplit.extract_length(file)) if build_pages
           DC::Store::AssetStore.new.save_pdf(document, path, access)
         end
       end
