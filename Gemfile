@@ -5,7 +5,7 @@ def you_are_documentcloud?
 end
 
 if you_are_documentcloud?
-  gem "bull_proof_china_shop", :git => "git@github.com:documentcloud/bull_proof_china_shop"
+  gem "bull_proof_china_shop", :git => "git@github.com:documentcloud/bull_proof_china_shop", :branch => "master" # Must include branch explicitly for bundler's local config override
 end
 
 gem 'iconv'
