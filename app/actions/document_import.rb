@@ -38,7 +38,7 @@ class DocumentImport < DocumentAction
     if duplicate = document.duplicates.first
       Rails.logger.info "Duplicate found, copying pdf"
       asset_store.copy_pdf( duplicate, document, access )
-      document.update_attribute(page_count: duplicate.page_count) if build_pages
+      document.update_attributes(page_count: duplicate.page_count) if build_pages
     else
       Rails.logger.info "Building PDF"
       File.open(file, 'r') do |f|
