@@ -354,7 +354,7 @@
   - introduction: "Вступ"
   - invalid_upload_file_type: На жаль формат файлу "%s" наразі не підтримується. Спробуйте
       конвертувати файл у формат, зо підтримується, наприклад, у PDF. Більше про файли,
-      що підтримуються, можна дізнатися з %stroubleshooting%.
+      що підтримуються, можна дізнатися з %stroubleshooting%s.
   - language: "Мова"
   - language_defaults: "Мова за замовченням"
   - last_name: "Прізвище"
@@ -692,7 +692,7 @@
   - welcome_to_document_cloud: "Ласкаво просимо до DocumentCloud! "
   - width: "Ширина"
   - workspace: "Інтерфейс"
-  - wp_shortcode_plugin_docs_link: "%Потрібен плагін%s."
+  - wp_shortcode_plugin_docs_link: "%sПотрібен плагін%s."
   - x_accounts:
     - "%d екаунт"
     - "%d екаунти"
