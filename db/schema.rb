@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160120214245) do
+ActiveRecord::Schema.define(version: 20160129000705) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -106,23 +106,6 @@ ActiveRecord::Schema.define(version: 20160120214245) do
     t.datetime "start_date"
     t.datetime "end_date_scheduled"
     t.datetime "end_date_actual"
-  end
-
-  create_table "bull_proof_china_shop_proposal_plans", force: :cascade do |t|
-    t.string   "stripe_plan_id"
-    t.integer  "proposal_id"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
-  end
-
-  create_table "bull_proof_china_shop_proposals", force: :cascade do |t|
-    t.integer  "dc_admin_id"
-    t.integer  "status",             default: 1
-    t.string   "token"
-    t.datetime "created_at",                     null: false
-    t.datetime "updated_at",                     null: false
-    t.integer  "permit_id"
-    t.integer  "account_request_id"
   end
 
   create_table "collaborations", force: :cascade do |t|
