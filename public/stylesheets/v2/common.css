@@ -183,7 +183,6 @@ section {
 }
 
 .badge {
-  display: inline-block;
   padding: 0.25em;
   border-radius: 3px;
 
@@ -206,10 +205,6 @@ section {
 .badge.good {
   background-color: #78bb6e;
   color: white;
-}
-
-.badge_group {
-  display: inline-block;
 }
 
 .badge_group .badge {
