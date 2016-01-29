@@ -14,7 +14,7 @@ GIT
 
 GIT
   remote: git@github.com:documentcloud/bull_proof_china_shop
-  revision: 6316e57dcbef0ccf3fe377069734fa761ef12b73
+  revision: ceb1fead3faa7d5cd9b350d156da69a4c8bdf81f
   branch: master
   specs:
     bull_proof_china_shop (0.0.1)
