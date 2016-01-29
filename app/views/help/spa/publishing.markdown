@@ -78,7 +78,7 @@ En ocasiones es posible que haya incorporado/incrustado documentos que le gustar
 
 ![Embed Page Menu](/images/help/embed_page_menu.png)
 
-DocumentCloud ofrece un visor ligero, sensible que pone de relieve una sola página (incluyendo las anotaciones) con un mínimo de cromo extra. Está diseñado para funcionar igual de bien en móviles y de escritorio y es perfecto para su uso en aplicaciones de noticias personalizadas o de formato largo presentaciones de periodismo. Próximamente: opciones para permitir que los lectores tengan acceso a todas las páginas en el documento o leer el texto extraído.
+DocumentCloud ofrece un visor ligero, adaptive que pone de relieve una sola página (incluyendo las anotaciones) con un mínimo de cromo extra. Está diseñado para funcionar igual de bien en móviles y de escritorio y es perfecto para su uso en aplicaciones de noticias personalizadas o de formato largo presentaciones de periodismo. Próximamente: opciones para permitir que los lectores tengan acceso a todas las páginas en el documento o leer el texto extraído.
 
 Incorporación de una página es similar a la incorporación de un documento: Seleccione un documento, abra el menú "Publicar" y haga clic en "Incrustar una página." Alternativamente, haga clic en el documento y seleccione "Incrustar una página."
 
@@ -163,7 +163,7 @@ Por ejemplo, si desea incrustar un documento a 800px de ancho, pre-desplazado a 
 
     [documentcloud url="https://www.documentcloud.org/documents/282753-lefler-thesis.html" width="800" default_page="3"]
 
-Si usted no indica una anchura (o manualmente deshabilitar anchos de respuesta con `responsive="false"`), el documento automáticamente estrecho y ampliar para llenar el ancho disponible.
+Si usted no indica una anchura (o manualmente deshabilitar anchos de adaptive con `responsive="false"`), el documento automáticamente estrecho y ampliar para llenar el ancho disponible.
 
 Para una página, utilice cualquier URL específica de la página:
 
