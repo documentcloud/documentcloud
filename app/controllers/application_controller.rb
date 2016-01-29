@@ -186,7 +186,7 @@ class ApplicationController < ActionController::Base
   end
 
   def secure_only(status=301)
-    if !request.ssl? && (request.format.html? || request.format.nil?)
+    if !request.ssl?
       redirect_to DC.server_root(:force_ssl => true) + request.original_fullpath, :status => status
     end
   end
