@@ -402,6 +402,7 @@
   - no_duplicate_section: No se puede duplicar una sección.
   - no_embed_permission: Usted no tiene permiso para insertar el documento.
   - no_entities_found: Ninguna entidad resultó relacionada con tu búsqueda.
+  - no_notes_to_embed: Este documento no tiene notas para incrustar
   - no_past_publication: No puedes designar que se publique un documento en el pasado.
   - no_permission_to_edit_x: Usted no tiene permiso para edita "%s".
   - no_project_doc_selected: No has seleccionado un proyecto o documentos
@@ -559,6 +560,7 @@
   - reprocess_text: Reprocesar Texto
   - resend_instructions: Reenviar Instrucciones
   - resend_welcome_email: Reenviar Correo de Bienvenida
+  - responsive: Adaptable
   - restricted: Restringido
   - review_x_documents:
     - Crítica "%2$s" en DocumentCloud

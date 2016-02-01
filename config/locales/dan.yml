@@ -247,6 +247,8 @@
   - email_for_assistance: Hvis du har brug for hjælp, kan du kontakte os på support@documentcloud.org.
   - email_when_complete: Email mig, når %sdokumenter er%s færdige med at blive bearbejdet.
   - embed_a_note: Embed en note
+  - embed_demo_error: Demo konti har ikke ret til at embedde.  %sKontakt os%s hvis
+      du har brug for en rigtig konto. Se et eksempel på en embed-kode %sher%s.
   - embed_document: Embed dette dokument
   - embed_document_list: Embed dokument-listen
   - embed_document_viewer: Embed "Document Viewer"
@@ -257,6 +259,12 @@
       os%s, hvis du har brug for en rigtig konto. Se et eksempel på embedkoden %sher%s.
   - embed_note_step_one: 'Trin et: ​​Vælg en note som skal embeddes'
   - embed_note_step_two: 'Trin to: Kopier og indsæt embed-koden'
+  - embed_page: Embed en side
+  - embed_page_choose: Vælg en side...
+  - embed_page_private_error: Dette dokument er privat. Det vil ikke være synligt
+      for andre, før du gør det offentligt. Ændr på %sadgangs-rettigheder%s nu eller
+  - embed_page_step_one_title: Vælg en side til embed
+  - embed_page_step_two_title: Kopier embed-koden og sæt den ind
   - embed_search_demo_error: Demo konti har ikke tilladelse til at embedde dokumenter.
       %skontakt os%s, hvis du har brug for en rigtig konto. Se et eksempel på embedkoden
       %sher%s .
@@ -267,7 +275,7 @@
       fjerne dette felt for at skjule indholdsoversigten.
   - embed_show_text_tab: Vis fanen tekst
   - embed_step_one_title: 'Trin et: Bedøm "%s"'
-  - embed_step_three_title: 'Trin tre: Kopier og indsæt embedingskoden'
+  - embed_step_three_title: 'Trin tre: Kopier og indsæt embed-koden'
   - embed_step_two_title: 'Trin to: Konfiguration af Document Viewer'
   - embed_tools: Embed-værktøjer
   - embed_url_of_document: De fleste brugere behøver ikke at tilføje dette. Det er
@@ -295,6 +303,8 @@
   - export_to_overview_explain: Du er ved at eksportere til Overview. Du skal oprette
       en konto i Overview, og du skal oplyse Overview om dit brugernavn og adgangskode
       til DocumentCloud.
+  - export_to_overview_select_something: Hvis du vil analysere dokumenter i Overview,
+      skal du først vælge et projekt eller nogle dokumenter.
   - featured_examples_documents_list: Du kan finde masser af eksempler på embeddede
       dokumenter på vores liste over %seksempler%s .
   - featured_examples_notes_list: Du kan finde masser af eksempler på embeddede noter
@@ -384,6 +394,7 @@
   - no_duplicate_section: Kan ikke oprette en dublikeret sektion.
   - no_embed_permission: Du har ikke tilladelse til at embedde dette dokument.
   - no_entities_found: Ingen enheder fundet, der matcher din søgning.
+  - no_notes_to_embed: Dette dokument har ingen noter, der kan embeddes
   - no_past_publication: Du kan ikke indstille et dokument til udgivelse i fortiden.
   - no_permission_to_edit_x: Du har ikke tilladelse til at redigere "%s".
   - no_project_doc_selected: Intet projekt eller dokumenter er valgt
@@ -425,6 +436,7 @@
   - over_x_mentions: Over %d omtaler
   - page: *2
   - page_ellipsis: Side ...
+  - page_number: Side %d
   - page_tools: Side-værktøjer
   - pages_are_being_removed: Siderne bliver fjernet. Luk venligst dette dokument.
   - paragraph_description_of_document: Beskrivelse af dette dokument på sætningsniveau
@@ -540,6 +552,7 @@
   - reprocess_text: Ombearbejd tekst
   - resend_instructions: Gensend instruktioner
   - resend_welcome_email: Gensend velkomst email
+  - responsive: Responsivt
   - restricted: 'Begrænset '
   - review_x_documents:
     - 'Gennemse "%2$s" på DocumentCloud '
@@ -654,6 +667,8 @@
   - view_entities: Se enheder
   - view_pages: Vis sider
   - view_timeline: Se tidslinje
+  - waiting_for_process_entities_job: Vi er stadig i færd med at udtrække enheder
+      fra %s. Check igen inden længe.
   - welcome_message_sent_to: En velkomstbesked er sendt til %s.
   - welcome_to_document_cloud: 'Velkommen til DocumentCloud '
   - width: Bredde
