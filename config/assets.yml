@@ -31,7 +31,7 @@ javascripts:
     - public/javascripts/ui/**/*.js
     - public/javascripts/app/**/*.js
     - app/views/jst/workspace/**/*.jst
-  bpcs:
+  bpcs_support:
     - public/javascripts/application.js
     - public/javascripts/vendor/underscore/underscore.js
     - public/javascripts/vendor/jquery/dist/jquery.js
@@ -91,7 +91,7 @@ stylesheets:
     - public/stylesheets/pages/viewer_editing.css
   lt_ie_9:
     - public/stylesheets/common/lt_ie_9.css
-  bpcs:
+  bpcs_support:
     - public/stylesheets/common/reset.css
     - public/stylesheets/v2/*.css
     - public/stylesheets/v2/**/*.css
