@@ -617,6 +617,14 @@ class Document < ActiveRecord::Base
     "#{DC.server_root}/notes/print?docs[]=#{id}"
   end
 
+  def organization_search_url
+    "#{DC.server_root}/public/search/Group:#{organization_slug}"
+  end
+
+  def account_search_url
+    "#{DC.server_root}/public/search/Account:#{account_slug}"
+  end
+
   # Internally used image path, not to be confused with page_image_template()
   def page_image_path(page_number, size)
     File.join(pages_path, "#{slug}-p#{page_number}-#{size}.gif")
@@ -910,8 +918,10 @@ class Document < ActiveRecord::Base
       :description         => description,
       :organization_name   => organization_name,
       :organization_slug   => organization_slug,
+      :organization_search_url => organization_search_url,
       :account_name        => account_name,
       :account_slug        => account_slug,
+      :account_search_url  => account_search_url,
       :related_article     => related_article,
       :pdf_url             => pdf_url,
       :thumbnail_url       => thumbnail_url( { :cache_busting => opts[:cache_busting] } ),
