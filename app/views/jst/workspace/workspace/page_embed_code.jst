@@ -1,6 +1,15 @@
-<div class="DC-embed" data-version="1.0" style="font-size:10pt"<% if (options != '{}') { %> data-options='<%= options %>'<% } %>>
-  <p><a class="DC-embed-resource" href="<%= pagePermalink %>" title="View page <%= pageNumber %> of <%- docTitle %> on DocumentCloud in new window or tab" target="_blank">Page <%= pageNumber %> of <%- docTitle %></a></p>
-  <img src="<%= pageImageUrl %>" srcset="<%= pageImageUrl %> 700w, <%= pageImageLargeUrl %> 1000w" alt="Page <%= pageNumber %> of <%- docTitle %>" style="border:1px solid #ccc;-webkit-box-sizing:border-box;box-sizing:border-box;width:100%;max-width:700px;">
-  <p>Contributed to DocumentCloud by <%- docContributor %> of <%- docOrganization %> &bull; <a href="<%= pageTextUrl %>" title="View text of page <%= pageNumber %> of <%- docTitle %> in a new window or tab" target="_blank">View page as text</a></p>
+<div class="DC-embed" data-version="1.1"<% if (optionsJSON != '{}') { %> data-options='<%= optionsJSON %>'<% } %>>
+  <div style="font-size:10pt;line-height:14pt;">
+    Page <%= pageNumber %> of <a class="DC-embed-resource" href="<%= pagePermalink %>" title="View entire <%- docTitle %> on DocumentCloud in new window or tab" target="_blank"><%- docTitle %></a>
+  </div>
+  <img src="<%= pageImageUrl %>" srcset="<%= pageImageUrl %> 700w, <%= pageImageLargeUrl %> 1000w" alt="Page <%= pageNumber %> of <%- docTitle %>" style="max-width:100%;height:auto;margin:0.5em 0;border:1px solid #ccc;-webkit-box-sizing:border-box;box-sizing:border-box;clear:both">
+  <div style="font-size:8pt;line-height:12pt;text-align:center">
+    Contributed to
+    <a href="https://www.documentcloud.org/" title="Go to DocumentCloud in new window or tab" target="_blank" style="font-weight:700;font-family:Gotham,inherit,sans-serif;color:inherit;text-decoration:none">DocumentCloud</a> by
+    <a href="<%= docContributorDocumentsUrl %>" title="View documents contributed to DocumentCloud by <%- docContributor %> in new window or tab" target="_blank"><%- docContributor %></a> of
+    <a href="<%= docOrganizationDocumentsUrl %>" title="View documents contributed to DocumentCloud by <%- docOrganization %> in new window or tab" target="_blank"><%- docOrganization %></a> &bull;
+    <a href="<%= pagePermalink %>" title="View entire <%- docTitle %> on DocumentCloud in new window or tab" target="_blank">View document</a> or
+    <a href="<%= pageTextUrl %>" title="Read the text of page <%= pageNumber %> of <%- docTitle %> on DocumentCloud in new window or tab" target="_blank">read text</a>
+  </div>
 </div>
 <script src="<%= window.ASSET_ROOT %>/embed/loader/enhance.js"></script>

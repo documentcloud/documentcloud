@@ -89,10 +89,19 @@ In the dialog box that appears next, select the number of the page to embed. A p
 
 Click "Next" to move to Step 2 and generate the HTML embed code. Here is a sample of what it will look like:
 
-    <div class="DC-embed" data-version="1.0" style="font-size:10pt">
-      <p><a class="DC-embed-resource" href="https://www.documentcloud.org/documents/282753-lefler-thesis.html#document/p57" title="View page 57 of Lefler Thesis on DocumentCloud in new window or tab" target="_blank">Page 57 of Lefler Thesis</a></p>
-      <img src="//www.documentcloud.org/documents/282753/pages/lefler-thesis-p57-normal.gif" alt="Page 57 of Lefler Thesis" style="border:1px solid #ccc;-webkit-box-sizing:border-box;box-sizing:border-box;width:100%;max-width:700px;">
-      <p>Contributed to DocumentCloud by Ted Han of DocumentCloud &bull; <a href="https://www.documentcloud.org/documents/282753/pages/lefler-thesis-p57.txt" title="View text of page 57 of Lefler Thesis in a new window or tab" target="_blank">View page as text</a></p>
+    <div class="DC-embed" data-version="1.1">
+      <div style="font-size:10pt;line-height:14pt;">
+        Page 57 of <a class="DC-embed-resource" href="https://www.documentcloud.org/documents/282753-lefler-thesis.html#document/p57" title="View entire Lefler Thesis on DocumentCloud in new window or tab" target="_blank">Lefler Thesis</a>
+      </div>
+      <img src="//www.documentcloud.org/documents/282753/pages/lefler-thesis-p57-normal.gif" srcset="//www.documentcloud.org/documents/282753/pages/lefler-thesis-p57-normal.gif 700w, //www.documentcloud.org/documents/282753/pages/lefler-thesis-p57-large.gif 1000w" alt="Page 57 of Lefler Thesis" style="max-width:100%;height:auto;margin:0.5em 0;border:1px solid #ccc;-webkit-box-sizing:border-box;box-sizing:border-box;clear:both">
+      <div style="font-size:8pt;line-height:12pt;text-align:center">
+        Contributed to
+        <a href="https://www.documentcloud.org/" title="Go to DocumentCloud in new window or tab" target="_blank" style="font-weight:700;font-family:Gotham,inherit,sans-serif;color:inherit;text-decoration:none">DocumentCloud</a> by
+        <a href="https://www.documentcloud.org/public/search/Account:2258-ted-han" title="View documents contributed to DocumentCloud by Ted Han in new window or tab" target="_blank">Ted Han</a> of
+        <a href="https://www.documentcloud.org/public/search/Group:dcloud" title="View documents contributed to DocumentCloud by DocumentCloud in new window or tab" target="_blank">DocumentCloud</a> &bull;
+        <a href="https://www.documentcloud.org/documents/282753-lefler-thesis.html#document/p57" title="View entire Lefler Thesis on DocumentCloud in new window or tab" target="_blank">View document</a> or
+        <a href="https://www.documentcloud.org/documents/282753/pages/lefler-thesis-p57.txt" title="Read the text of page 57 of Lefler Thesis on DocumentCloud in new window or tab" target="_blank">read text</a>
+      </div>
     </div>
     <script src="//assets.documentcloud.org/embed/loader/enhance.js"></script>
 
