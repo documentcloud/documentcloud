@@ -1,14 +1,17 @@
-jammit_config = YAML.load ERB.new(File.read(File.join(Rails.root, 'config', 'assets.yml'))).result(binding)
-
-engines = DC::Application.railties.select{ |t| t.kind_of? Rails::Engine and t.respond_to? :jammit_config }
-engines.each do |engine|
-  engine_jammit_config = engine.jammit_config
-  jammit_config["javascripts"] = jammit_config["javascripts"].merge(engine_jammit_config["javascripts"])
-  jammit_config["stylesheets"] = jammit_config["stylesheets"].merge(engine_jammit_config["stylesheets"])
-  jammit_config["asset_roots"] = [jammit_config["asset_roots"], engine_jammit_config["asset_roots"]].flatten.compact.uniq
+module DC
+  def self.jammit_configuration
+    jammit_config_paths = []
+    
+    engines = DC::Application.railties.select{ |t| t.kind_of? Rails::Engine and t.respond_to? :jammit_config_path }
+    engines.each do |engine|
+      jammit_config_paths.push engine.jammit_config_path
+    end
+    jammit_config_paths.push File.join(Rails.root, 'config', 'assets.yml')
+    jammit_config_paths
+  end
 end
 
-Jammit.load_configuration(jammit_config)
+Jammit.load_configuration(DC.jammit_configuration)
 
 module Jammit
   def self.reload!

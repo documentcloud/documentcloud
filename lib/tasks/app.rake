@@ -64,8 +64,10 @@ namespace :app do
 
   desc "Repackage static assets"
   task :jammit do
+    require File.join(Rails.root, 'config', 'initializers', 'configure_jammit')
     config = YAML.load(ERB.new(File.read("#{Rails.root}/config/document_cloud.yml")).result(binding))[Rails.env]
-    sh "jammit -u http://#{config['server_root']}"
+    #sh "jammit -u http://#{config['server_root']}"
+    Jammit.package!(base_url: "http://#{config['server_root']}", config_paths: DC.jammit_configuration)
   end
 
   desc "Publish all documents with expired publish_at timestamps"
