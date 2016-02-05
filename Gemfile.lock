@@ -1,4 +1,12 @@
 GIT
+  remote: git://github.com/documentcloud/jammit.git
+  revision: dd3cd8fedb79fa7bb08b29d9fa12efc9da87dfc4
+  specs:
+    jammit (0.7.1)
+      cssmin (~> 1.0)
+      jsmin (~> 1.0)
+
+GIT
   remote: git://github.com/documentcloud/open_calais.git
   revision: e29a75f1793e0a24f5f3a5af1d46b28f4a37b3f3
   branch: fuzziness
@@ -14,7 +22,7 @@ GIT
 
 GIT
   remote: git@github.com:documentcloud/bull_proof_china_shop
-  revision: be0d7f029b364fd75c4e27978f52e4f18a59c7ce
+  revision: 8ca5b47092d14f94e577ffa7ef3e7ca63325dfae
   branch: master
   specs:
     bull_proof_china_shop (0.0.1)
@@ -173,9 +181,6 @@ GEM
     i18n (0.7.0)
     i18n_data (0.7.0)
     iconv (1.0.4)
-    jammit (0.7.0)
-      cssmin (~> 1.0)
-      jsmin (~> 1.0)
     jsmin (1.0.1)
     json (1.8.3)
     jwt (1.5.2)
@@ -374,7 +379,7 @@ DEPENDENCIES
   guard-minitest
   highline
   iconv
-  jammit (~> 0.7.0)
+  jammit!
   minitest
   minitest-spec-rails
   net-ssh-shell

@@ -190,4 +190,5 @@ DC::Application.routes.draw do
 
 end
 
+# Magic invocation to ask engines to add their routes.
 Rails.application.load_additional_routes

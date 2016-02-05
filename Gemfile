@@ -35,7 +35,7 @@ gem 'sanitize',               '~> 2.0.6'
 gem 'rdiscount',              '~> 2.1.6'
 gem 'rake'
 gem 'actionpack-page_caching'
-gem 'jammit',                 '~> 0.7.0'
+gem 'jammit',                 :github => "documentcloud/jammit"
 gem 'nokogiri',               '~> 1.6.0'
 gem 'net-ssh-shell'
 gem 'country_select',         '~> 2.2.0'
