@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/documentcloud/jammit.git
-  revision: f09582a275990f745f98f839d259d19889d64281
+  revision: 5ddcf9c415b2e3985628c35e2ea5bdf94a383284
   branch: master
   specs:
     jammit (0.7.1)
@@ -23,7 +23,7 @@ GIT
 
 GIT
   remote: git@github.com:documentcloud/bull_proof_china_shop
-  revision: 9c9b7985531264517e7726e6e2371ce006882aa1
+  revision: 2513cd62d6328579993be58d7ca5610eb9a22caa
   branch: master
   specs:
     bull_proof_china_shop (0.0.1)
