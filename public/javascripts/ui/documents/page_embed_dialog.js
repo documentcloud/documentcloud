@@ -145,14 +145,13 @@ dc.ui.PageEmbedDialog = dc.ui.Dialog.extend({
     }));
   },
 
-  // TODO: Replace contextual page URL with canonical
   _pagePermalink: function() {
-    return this.doc.get('document_viewer_url') + '#document/p' + this._selectedPage;
+    return (this.doc.get('canonical_url') + '#document/p' + this._selectedPage).replace('http:', 'https:');
   },
 
   _pageImageUrl: function(pageNumber, size) {
     size = size || 'normal';
-    return this.doc.get('page_image_url').replace('{page}', pageNumber).replace('{size}', size);
+    return this.doc.get('page_image_url').replace('{page}', pageNumber).replace('{size}', size).replace(/^https?:/, '');
   },
 
   _pageTextUrl: function(pageNumber) {
