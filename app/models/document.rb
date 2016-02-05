@@ -617,11 +617,11 @@ class Document < ActiveRecord::Base
     "#{DC.server_root}/notes/print?docs[]=#{id}"
   end
 
-  def organization_search_url
+  def organization_documents_url
     "#{DC.server_root}/public/search/Group:#{organization_slug}"
   end
 
-  def account_search_url
+  def account_documents_url
     "#{DC.server_root}/public/search/Account:#{account_slug}"
   end
 
@@ -918,10 +918,8 @@ class Document < ActiveRecord::Base
       :description         => description,
       :organization_name   => organization_name,
       :organization_slug   => organization_slug,
-      :organization_search_url => organization_search_url,
       :account_name        => account_name,
       :account_slug        => account_slug,
-      :account_search_url  => account_search_url,
       :related_article     => related_article,
       :pdf_url             => pdf_url,
       :thumbnail_url       => thumbnail_url( { :cache_busting => opts[:cache_busting] } ),
@@ -985,8 +983,10 @@ class Document < ActiveRecord::Base
     if options[:contributor]
       doc['contributor']                   = account_name
       doc['contributor_slug']              = account_slug
+      doc['contributor_documents_url']     = account_documents_url
       doc['contributor_organization']      = organization_name
       doc['contributor_organization_slug'] = organization_slug
+      doc['contributor_organization_documents_url'] = organization_documents_url
     end
     doc['display_language']   = display_language
     doc['resources']          = res = ActiveSupport::OrderedHash.new
