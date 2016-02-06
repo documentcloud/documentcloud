@@ -99,10 +99,6 @@ class AdminController < ApplicationController
     end
   end
 
-  def charge
-    render :layout => 'admin_empty'
-  end
-
   # Attempt a new signup for DocumentCloud -- includes both the organization and
   # its first account. If everything's kosher, the journalist is logged in.
   # NB: This needs to stay access controlled by the bouncer throughout the beta.

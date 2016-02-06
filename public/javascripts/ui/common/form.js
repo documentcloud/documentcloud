@@ -1,6 +1,6 @@
 dc.ui.FormModel = Backbone.Model.extend({
 
-  VALIDATORS: {
+  _VALIDATORS: {
     isntBlank: function(val) {
       var valid = Backbone.$.trim(val) != '';
       return valid || "We need this info.";
@@ -9,21 +9,6 @@ dc.ui.FormModel = Backbone.Model.extend({
       var pattern = dc.app.validator.email;
       var valid   = pattern.test(val);
       return valid || "We need a valid email.";
-    },
-    isInteger: function(val) {
-      var pattern = /^[0-9]+$/;
-      var valid   = pattern.test(val);
-      return valid || "Enter numbers only.";
-    },
-    isCurrency: function(val) {
-      var pattern = /^[0-9]+(\.[0-9]{1,2})?$/;
-      var valid   = pattern.test(val);
-      return valid || "Enter a valid dollar amount.";
-    },
-    isMMYY: function(val) {
-      var pattern = /^[0-9]{2}\/[0-9]{2}$/;
-      var valid   = pattern.test(val);
-      return valid || "Enter date as MM/YY.";
     },
     isChosen: function(val) {
       var valid = !!val;
@@ -47,7 +32,7 @@ dc.ui.FormModel = Backbone.Model.extend({
   //     'conditions': { 'married': 1 },
   //  }],
   // TODO: Rewrite these to be properly declarative and take function conditions
-  VALIDATIONS: {},
+  _VALIDATIONS: {},
 
   initialize: function() {},
 
@@ -59,15 +44,22 @@ dc.ui.FormModel = Backbone.Model.extend({
   // single-attribute validation checks the model via `get()` for any of its 
   // conditional validations.
   validate: function(attrs, options) {
+    attrs   = attrs || {};
+    options = options || {};
+
     var errors = {};
 
-    var validations = options.only ? _.pick(this.VALIDATIONS, options.only) : this.VALIDATIONS;
+    // Combine original class validations/validators with instance ones
+    var _validations = _.extend({}, this._VALIDATIONS, this.VALIDATIONS);
+    var _validators  = _.extend({}, this._VALIDATORS,  this.VALIDATORS);
+
+    var validations = options.only ? _.pick(_validations, options.only) : _validations;
     _.each(validations, function(validators, attr) {
       var value = options.only ? attrs[attr] : this.get(attr);
       validators = _.isArray(validators) ? validators : ([]).push(validators);
       _.each(validators, function(validator) {
         if (typeof validator === 'string') {
-          var valid = this.VALIDATORS[validator](value);
+          var valid = _validators[validator](value);
           if (valid !== true) { (errors[attr] = (errors[attr] || [])).push(valid); }
         } else {
           var conditions_passed = true;
@@ -77,7 +69,7 @@ dc.ui.FormModel = Backbone.Model.extend({
           if (conditions_passed) {
             var conditional_validators = _.isArray(validator['validators']) ? validator['validators'] : ([]).push(validator['validators']);
             _.each(conditional_validators, function(conditional_validator) {
-              var valid = this.VALIDATORS[conditional_validator](value);
+              var valid = _validators[conditional_validator](value);
               if (valid !== true) { (errors[attr] = (errors[attr] || [])).push(valid); }
             }, this);
           }
@@ -95,16 +87,30 @@ dc.ui.FormModel = Backbone.Model.extend({
 dc.ui.FormView = Backbone.View.extend({
 
   events: {
-    'focus  .field':                 'toggleFocusFilledState',
-    'blur   .field':                 'toggleFocusFilledState',
-    'change .field':                 'checkForUserInput',
-    'change input[type="radio"]':    'checkForUserInput',
-    'change input[type="checkbox"]': 'checkForUserInput',
+    'focus.dcForm .field':                  'toggleFocusFilledState',
+    'blur.dcForm  .field':                  'toggleFocusFilledState',
+    'change.dcForm input[type="radio"]':    'checkForUserInput',
+    'change.dcForm input[type="checkbox"]': 'checkForUserInput',
   },
 
   initialize: function(options) {
     this.model = options.model || new dc.ui.FormModel({});
+
+    if (!options.ownCheckUserInputFields) {
+      this.events = _.extend({}, this.events, {
+        'keyup.dcForm  .field': 'checkForUserInputLive',
+        'change.dcForm .field': 'checkForUserInput',
+      });
+    }
+
+    // http://stackoverflow.com/a/17545857/5071070
+    this.on('render', this.afterRender);
+    this.render();
   },
+
+  render: function() { this.trigger('render'); },
+  
+  afterRender: function() {},
 
   // Saves current `disabled` property to a data attribute so the form can be
   // re-enabled to its previous state.
@@ -123,9 +129,16 @@ dc.ui.FormView = Backbone.View.extend({
     });
   },
 
+  // Turn on live, keyup-triggered validation; we turn this on upon a form 
+  // submission.
+  enableLiveValidation: function() {
+    this.$('.field').data('validate-live', true);
+  },
+
   displayValidationErrors: function() {
     _.each(this.model.validationError, function(messages, attr) {
       var $element = this.$('[name="' + attr + '"]');
+      if ($element.length === 0) { $element = this.$('#' + attr); }
 
       if ($element.hasClass('field')) {
         var $fieldwrap = $element.closest('.fieldwrap').addClass('invalid').removeClass('valid');
@@ -153,9 +166,9 @@ dc.ui.FormView = Backbone.View.extend({
     var $target = this.$(event.target);
     var value   = $target.val();
     if ($target.is(':focus') || value) {
-      $target.closest('.fieldwrap').addClass('filled');
+      $target.closest('.fieldwrap, .hiddenwrap').addClass('filled');
     } else {
-      $target.closest('.fieldwrap').removeClass('filled');
+      $target.closest('.fieldwrap, .hiddenwrap').removeClass('filled');
     }
   },
 
@@ -164,10 +177,12 @@ dc.ui.FormView = Backbone.View.extend({
   // clears old validation errors.
   checkForUserInput: function(event) {
     var $target = this.$(event.target);
-    var attr    = $target.attr('name');
+    var attr    = $target.attr('name') || $target.attr('id');
     var value   = $target.is('[type="checkbox"]') ? $target.prop('checked') : $target.val();
-
     this.toggleFocusFilledState(event);
+
+    // For `checkForUserInputLive()`
+    $target.data('validate-live', true);
 
     // Don't set the model if we're just tabbing through
     if (value || this.model.get(attr)) {
@@ -178,7 +193,7 @@ dc.ui.FormView = Backbone.View.extend({
       this.model.set(attrs);
       this.model._validate(attrs, { validate: true, only: attr });
 
-      var $fieldwrap = $target.closest('.fieldwrap, .checkwrap, .radioset');
+      var $fieldwrap = $target.closest('.fieldwrap, .checkwrap, .radioset, .hiddenwrap');
 
       if (this.model.validationError) {
         this.displayValidationErrors();
@@ -193,6 +208,15 @@ dc.ui.FormView = Backbone.View.extend({
     }
   },
 
+  // We want to revalidate input fields as each key is pressed, but only after 
+  // the first time through the field, because otherwise it's annoying.
+  checkForUserInputLive: function(event) {
+    var $target = this.$(event.target);
+    if ($target.data('validate-live')) {
+      this.checkForUserInput(event);
+    }
+  },
+
   // `.val()` on checkboxes returns `on` instead of useful information about 
   // checked state. Fill model with boolean based on `.prop('checked')` instead.
   // On view instead of model because we have to interact with the DOM.
@@ -200,7 +224,8 @@ dc.ui.FormView = Backbone.View.extend({
     var checkboxes = {};
     this.$('[type="checkbox"]').each(function(i, checkbox) {
       var $checkbox = $(checkbox);
-      checkboxes[$checkbox.attr('name')] = $checkbox.prop('checked');
+      var attr = $checkbox.attr('name') || $checkbox.attr('id');
+      checkboxes[attr] = $checkbox.prop('checked');
     });
     this.model.set(checkboxes);
   },

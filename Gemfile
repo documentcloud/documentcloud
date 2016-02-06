@@ -1,4 +1,13 @@
 source 'https://rubygems.org'
+
+def you_are_documentcloud?
+  File.exists? File.join(File.dirname(__FILE__), 'secrets', 'documentcloud.yep')
+end
+
+if you_are_documentcloud?
+  gem "bull_proof_china_shop", :git => "git@github.com:documentcloud/bull_proof_china_shop", :branch => "master" # Must include branch explicitly for bundler's local config override
+end
+
 gem 'iconv'
 gem 'rails',                  '~>4.2.0'
 gem 'curb',                   '~>0.8.4'
@@ -26,7 +35,7 @@ gem 'sanitize',               '~> 2.0.6'
 gem 'rdiscount',              '~> 2.1.6'
 gem 'rake'
 gem 'actionpack-page_caching'
-gem 'jammit',                 '~> 0.7.0'
+gem 'jammit',                 :github => "documentcloud/jammit", :branch => "master"
 gem 'nokogiri',               '~> 1.6.0'
 gem 'net-ssh-shell'
 gem 'country_select',         '~> 2.2.0'

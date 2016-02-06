@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160120214245) do
+ActiveRecord::Schema.define(version: 20160129000705) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -49,6 +49,63 @@ ActiveRecord::Schema.define(version: 20160120214245) do
   create_table "app_constants", force: :cascade do |t|
     t.string "key",   limit: 255
     t.string "value", limit: 255
+  end
+
+  create_table "bull_proof_china_shop_account_requests", force: :cascade do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "requester_email",      limit: 255
+    t.string   "requester_first_name", limit: 255
+    t.string   "requester_last_name",  limit: 255
+    t.text     "requester_notes"
+    t.string   "organization_name",    limit: 255
+    t.string   "organization_url",     limit: 255
+    t.string   "approver_email",       limit: 255
+    t.string   "approver_first_name",  limit: 255
+    t.string   "approver_last_name",   limit: 255
+    t.string   "country",              limit: 255,                 null: false
+    t.text     "verification_notes"
+    t.integer  "status",                           default: 1
+    t.boolean  "agreed_to_terms",                  default: false
+    t.boolean  "authorized_posting",               default: false
+    t.string   "token",                limit: 255
+    t.string   "industry",             limit: 255
+    t.text     "use_case"
+    t.text     "reference_links"
+    t.boolean  "marketing_optin",                  default: false
+    t.boolean  "in_market",                        default: false
+    t.string   "requester_position"
+  end
+
+  create_table "bull_proof_china_shop_accounts", force: :cascade do |t|
+    t.string   "stripe_customer_id"
+    t.text     "billing_email"
+    t.integer  "dc_membership_id"
+    t.integer  "dc_membership_role"
+    t.integer  "dc_organization_id"
+    t.integer  "dc_account_id"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+  end
+
+  create_table "bull_proof_china_shop_permits", force: :cascade do |t|
+    t.string   "stripe_plan_id"
+    t.string   "stripe_customer_id"
+    t.string   "stripe_card_id"
+    t.integer  "dc_membership_id"
+    t.integer  "dc_account_id"
+    t.integer  "dc_organization_id"
+    t.integer  "dc_membership_role"
+    t.integer  "status",                 default: 1
+    t.datetime "created_at",                         null: false
+    t.datetime "updated_at",                         null: false
+    t.string   "stripe_subscription_id"
+    t.string   "stripe_customer_email"
+    t.integer  "stripe_card_last4"
+    t.integer  "account_id"
+    t.datetime "start_date"
+    t.datetime "end_date_scheduled"
+    t.datetime "end_date_actual"
   end
 
   create_table "collaborations", force: :cascade do |t|
@@ -237,33 +294,6 @@ ActiveRecord::Schema.define(version: 20160120214245) do
     t.string  "securable_type", limit: 40, null: false
     t.integer "securable_id",              null: false
     t.string  "key",            limit: 40
-  end
-
-  create_table "verification_requests", force: :cascade do |t|
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "requester_email",      limit: 255
-    t.string   "requester_first_name", limit: 255
-    t.string   "requester_last_name",  limit: 255
-    t.text     "requester_notes"
-    t.string   "organization_name",    limit: 255
-    t.string   "organization_url",     limit: 255
-    t.string   "approver_email",       limit: 255
-    t.string   "approver_first_name",  limit: 255
-    t.string   "approver_last_name",   limit: 255
-    t.string   "country",              limit: 255,                 null: false
-    t.text     "verification_notes"
-    t.integer  "status",                           default: 1
-    t.boolean  "agreed_to_terms",                  default: false
-    t.boolean  "authorized_posting",               default: false
-    t.string   "signup_key",           limit: 255
-    t.integer  "account_id"
-    t.string   "industry",             limit: 255
-    t.text     "use_case"
-    t.text     "reference_links"
-    t.boolean  "marketing_optin",                  default: false
-    t.boolean  "in_market",                        default: false
-    t.string   "requester_position"
   end
 
 end

@@ -14,8 +14,8 @@
     <script>window.location = '/workspace/upgrade';</script>
   <![endif]-->
   <!--[if lt IE 9]>
-    <%= include_stylesheets :ie_only, :embed_assets => false %>
-    <%= include_javascripts :ie_only %>
+    <%= include_stylesheets :lt_ie_9, :embed_assets => false %>
+    <%= include_javascripts :lt_ie_9 %>
   <![endif]-->
   <% if Rails.env.development? %>
     <%= include_javascripts :dev_only %>

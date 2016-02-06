@@ -8,10 +8,7 @@
 
 .form_v2 button {
   display: inline-block;
-  -webkit-box-sizing: border-box;
-     -moz-box-sizing: border-box;
-          box-sizing: border-box;
-  font: 600 1em/1.2em Gotham, 'Proxima Nova', 'Avenir Next', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font: 700 1em/1.2em 'Gotham SSm A', 'Gotham SSm B', 'Gotham A', 'Gotham B', Gotham, 'Proxima Nova', 'Avenir Next', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   height: 3em;
   padding: 0 0.8em;
   vertical-align: middle;
@@ -20,14 +17,19 @@
   border-radius: 5px;
   border: none;
   border-bottom: 2px solid #56ba47;
-  color: white;
+  color: #ffffff;
   background-color: #87d37c;
-  -webkit-font-smoothing: antialiased;
+  -webkit-transition: background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease;
+          transition: background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease;
   -moz-osx-font-smoothing: grayscale;
+   -webkit-font-smoothing: antialiased;
   -webkit-user-select: none;
      -moz-user-select: none;
       -ms-user-select: none;
           user-select: none;
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
 }
 
 .form_v2 button:focus {
@@ -35,12 +37,18 @@
   border-bottom-color: #4e7a48;
 }
 
+.form_v2 button:disabled {
+  background-color: #d0d1d0;
+  color: #8c8e8e;
+  border-bottom-color: rgb(125, 127, 127);
+}
+
 .form_v2 button::-moz-inner-focus {
   outline: none;
   border: none;
 }
 
-.form_v2 .fieldwrap button {
+.form_v2 .buttonwrap button {
   width: 100%;
 }
 
@@ -58,12 +66,6 @@
 
 .form_v2 button[type=submit] {
   cursor: pointer;
-}
-
-.form_v2 button[type=submit]:disabled {
-  background-color: #d0d1d0;
-  color: #8c8e8e;
-  border-bottom-color: rgb(125, 127, 127);
 }
 
 .form_v2 .radioset,
@@ -127,33 +129,36 @@
   line-height: 1.5em;
 
 	-webkit-transition: background-color 0.25s, border-color 0.25s, color 0.25s;
-	transition: background-color 0.25s, border-color 0.25s, color 0.25s;
+          transition: background-color 0.25s, border-color 0.25s, color 0.25s;
 }
 
 .form_v2 .radiowrap input[type="radio"] + label::before {
-  border: 0.2em dotted transparent;
+  border: 0.2em solid transparent;
   border-radius: 0.85em;
 }
 
 .form_v2 .checkwrap input[type="checkbox"] + label::before {
-  border: 0.2em dotted transparent;
+  border: 0.2em solid transparent;
   border-radius: 5px;
 }
 
 .form_v2 .radiowrap input[type="radio"]:focus + label::before,
 .form_v2 .checkwrap input[type="checkbox"]:focus + label::before {
-  border-color: rgb(125, 127, 127);
-  border-style: dotted !important;
+  border-color: rgb(90, 118, 160);
+}
+
+.form_v2 .radiowrap.invalid input[type="radio"]:focus + label::before,
+.form_v2 .checkwrap.invalid input[type="checkbox"]:focus + label::before {
+  background-color: #df5454;
 }
 
 .form_v2 .radiowrap input[type="radio"]:checked + label::before,
 .form_v2 .checkwrap input[type="checkbox"]:checked + label::before {
-  background-color: white;
-  border-color: #87d37c !important;
-  border-style: solid;
-  color: #87d37c;
-  box-shadow: inset 0 0 1px 0px rgba(125, 127, 127, 0.1);
+  background-color: #87d37c;
+  color: #ffffff;
+  box-shadow: none;
 }
+
 .form_v2 .radiowrap input[type="radio"]:checked + label::before {
   content: '•';
 }
@@ -181,16 +186,17 @@
 
 .form_v2 .fieldalert {
   font-size: 0.9em;
-  font-weight: 600;
+  font-weight: 700;
+  line-height: 1.5em;
 }
 
 .form_v2 .invalid .fieldalert {
   font-size: 0.9em;
-  font-weight: 600;
+  font-weight: 700;
   background-color: #df5454;
-  color: white;
-  -webkit-font-smoothing: antialiased;
+  color: #ffffff;
   -moz-osx-font-smoothing: grayscale;
+   -webkit-font-smoothing: antialiased;
 }
 
 .form_v2 .fieldwrap .fieldalert {
@@ -202,7 +208,7 @@
   width: 100%;
 
 	-webkit-transition: opacity 0.25s, max-height 0.25s ease-out;
-	transition: opacity 0.25s, max-height 0.25s ease-out;
+	        transition: opacity 0.25s, max-height 0.25s ease-out;
 
   margin: -3px 0 0 0;
   padding: 0 1em;
@@ -218,7 +224,7 @@
 .form_v2 .field:focus ~ .fieldalert {
   max-height: 150px;
 	-webkit-transition: opacity 0.25s, max-height 0.25s ease-in;
-	transition: opacity 0.25s, max-height 0.25s ease-in;
+         	transition: opacity 0.25s, max-height 0.25s ease-in;
 }
 
 .form_v2 .radioset.invalid .fieldalert,
@@ -264,21 +270,22 @@
   height: 3em;
 	color: #4b4b4b;
   background-color: #ffffff;
-  box-shadow: inset 0 1px 5px 0px rgba(125, 127, 127, 0.25);
+  box-shadow: inset 0 1px 2px 0px rgba(125, 127, 127, 0.25);
 	border-radius: 5px;
 	border: none;
 	border-bottom: 2px solid rgb(125, 127, 127);
-	font: 400 1em/1.2em Gotham, 'Proxima Nova', 'Avenir Next', 'Helvetica Neue', Helvetica, Arial, sans-serif !important;
+	font: 300 1em/1.2em 'Gotham SSm A', 'Gotham SSm B', 'Gotham A', 'Gotham B', Gotham, 'Proxima Nova', 'Avenir Next', 'Helvetica Neue', Helvetica, Arial, sans-serif !important;
 	-webkit-appearance: none; /* for box shadows to show on iOS */
-	-webkit-transition: box-shadow 0.25s, border-color 0.25s;
-	transition: box-shadow 0.25s, border-color 0.25s;
+	-webkit-transition: border-color 0.25s;
+        	transition: border-color 0.25s;
 }
 .form_v2 select.field {
   font-size: 1em;
   height: 3em;
 }
 
-.form_v2 .field:focus {
+.form_v2 .field:focus,
+.form_v2 .filled .field {
   outline: none;
   box-shadow: inset 0 0 2px 0px rgba(125, 127, 127, 0.25);
 }
@@ -294,7 +301,7 @@
   padding: 0 0.4em;
   line-height: 1em;
 	-webkit-transform: translate3d(0, 1.45em, 0);
-	transform: translate3d(0, 1.45em, 0);
+        	transform: translate3d(0, 1.45em, 0);
 }
 
 .form_v2 textarea.field {
@@ -303,15 +310,15 @@
 
 .form_v2 .fieldlabel {
   display: inline-block;
-	font-weight: 500;
+	font-weight: 300;
 	font-size: 0.9em;
   line-height: 1em;
 	-webkit-touch-callout: none;
-	-webkit-user-select: none;
-	-khtml-user-select: none;
-	-moz-user-select: none;
-	-ms-user-select: none;
-	user-select: none;
+ 	-webkit-user-select: none;
+   -khtml-user-select: none;
+	   -moz-user-select: none;
+	    -ms-user-select: none;
+        	user-select: none;
 
   white-space: nowrap;
 
@@ -322,11 +329,11 @@
 	overflow: hidden;
   padding: 0 0.8em;
 	-webkit-transform: translate3d(0, 2.25em, 0);
-	transform: translate3d(0, 2.25em, 0);
+        	transform: translate3d(0, 2.25em, 0);
 	-webkit-transition: -webkit-transform 0.25s;
-	transition: transform 0.25s ;
+        	transition: transform 0.25s ;
 	-webkit-transition-timing-function: ease-in-out;
-	transition-timing-function: ease-in-out;
+        	transition-timing-function: ease-in-out;
 }
 
 .form_v2 .fieldlabel_content {
@@ -335,13 +342,13 @@
 
   color: #6e6f6f;
   line-height: 1.3em;
-  -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+   -webkit-font-smoothing: antialiased;
 
 	-webkit-transition: -webkit-transform 0.25s, color 0.25s;
-	transition: transform 0.25s, color 0.25s;
+        	transition: transform 0.25s, color 0.25s;
 	-webkit-transition-timing-function: ease-in-out;
-	transition-timing-function: ease-in-out;
+          transition-timing-function: ease-in-out;
 }
 .form_v2 .valid > .fieldlabel > .fieldlabel_content {
 	color: #87d37c;
@@ -368,13 +375,13 @@
 .form_v2 .field:focus + .fieldlabel,
 .form_v2 .filled .fieldlabel {
 	-webkit-transform: translate3d(0, 0, 0);
-	transform: translate3d(0, 0, 0);
+	        transform: translate3d(0, 0, 0);
 }
 
 .form_v2 .field:focus + .fieldlabel .fieldlabel_content,
 .form_v2 .filled .fieldlabel_content {
   -webkit-transform: translate3d(0, 100%, 0);
-  transform: translate3d(0, 100%, 0);
+          transform: translate3d(0, 100%, 0);
 }
 
 .form_v2 .field:focus,
@@ -401,6 +408,10 @@
   padding: 0.8em 0.4em;
   height: 100%;
   top: 0;
+  content: ''; /* Must exist so opacity transition will take effect. */
+  opacity: 0;
+  -webkit-transition: opacity 0.25s ease;
+          transition: opacity 0.25s ease;
 }
 
 .form_v2 .fieldwrap.inline:after {
@@ -411,11 +422,13 @@
 .form_v2 .fieldwrap.valid:after {
   content: "✓";
   color: #87d37c;
+  opacity: 1;
 }
 
 .form_v2 .fieldwrap.invalid:after {
   content: "✘";
   color: #df5454;
+  opacity: 1;
 }
 
 .form_v2 .togglewrap {
