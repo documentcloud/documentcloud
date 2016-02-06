@@ -42,7 +42,7 @@
       <% if @current_account %>
         <a href="/logout" class="text_link"><%= DC.t( @current_account, 'log_out') %></a>
       <% else %>
-        <a href="/contact" class="text_link">Join</a>
+        <a href="/apply" class="text_link">Join</a>
         &nbsp;/&nbsp;
         <a href="<%= DC.server_root(:force_ssl => true) %>/login" class="text_link">Log In</a>
       <% end %>
