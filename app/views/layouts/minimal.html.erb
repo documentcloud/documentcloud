@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="v2 empty">
 <head>
   <%= render :partial => 'common/meta_tags' %>
   <%= render :partial => 'common/oembed' if @oembeddable_resource %>
@@ -14,7 +14,7 @@
   <% javascripts_header = (@javascripts_header || []) %>
   <%= javascript_include_tag *javascripts_header %>
 </head>
-<body class="v2 empty">
+<body>
 
   <%= yield %>
 

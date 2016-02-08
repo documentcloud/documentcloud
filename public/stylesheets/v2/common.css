@@ -17,91 +17,19 @@
 
 */
 
-.v2 {
+.v2 body {
   margin: 0;
   padding: 0 1em;
   background: #ffffff url(/images/embed/home/stripes.png);
   font: 300 16px/1.5em 'Gotham SSm A', 'Gotham SSm B', 'Gotham A', 'Gotham B', Gotham, 'Proxima Nova', 'Avenir Next', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
-.v2.empty {
+.v2.empty body {
   padding: 0;
   background-image: none;
 }
 
-section {
+.v2 section {
   margin-bottom: 3em;
-}
-
-.embed-preview-container {
-  margin-top: 30px;
-  background-color: white;
-  padding: 30px 40px;
-  box-shadow: 0 0 20px #aaa;
-  border-radius: 6px;
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
-}
-
-#header_primary {
-  position: relative;
-  background-color: rgb(90, 118, 160);
-  color: #ffffff;
-  padding: 1em;
-  margin: 0 -1em; /* Negative of body's side padding */
-  font-weight: 700;
-  -moz-osx-font-smoothing: grayscale;
-   -webkit-font-smoothing: antialiased;
-}
-.v2.empty #return_to_v1 {
-  margin-left: 0;
-  margin-right: 0;
-}
-
-#header_primary .container {
-  position: relative;
-  min-height: 2em;
-}
-
-#header_primary h1 {
-  float: left;
-  margin: 0;
-  font-size: 1em;
-}
-
-#header_primary a {
-  color: inherit;
-  text-decoration: none;
-}
-
-#header_primary h1 a {
-  display: block;
-  background: transparent url('/images/common/document_cloud_logo_white@2x.png') 0 0 no-repeat;
-  background-size: 9.375em 2em;
-  width: 9.375em;
-  height: 2em;
-  text-indent: -10000px;
-  overflow: hidden;
-}
-
-#header_primary h1 a:focus {
-  background-color: rgb(119, 147, 189);
-}
-
-#nav_single {
-  float: right;
-}
-
-#nav_single a {
-  display: inline-block;
-  font-size: 0.75em;
-  padding: 1em;
-  line-height: 1em;
-  text-transform: uppercase;
-}
-
-#nav_single a:hover,
-#nav_single a:focus {
-  background-color: rgb(119, 147, 189);
 }
 
 .v2 h1,
@@ -165,24 +93,7 @@ section {
   background-color: rgb(119, 147, 189);
 }
 
-/*------------------------------ iframe embeds -------------------------------*/
-
-/* We don't even generate these elements when the embedder has iframed the
-   correct version of the resource, but in case they just iframe the canonical
-   resource URL, strip it down.
-*/
-.DC-embed-iframe #return_to_v1 {
-  display: none;
-}
-
-.DC-embed-iframe .embed-preview-container {
-  margin: 0;
-  padding: 0;
-  box-shadow: none;
-  border-radius: 0;
-}
-
-.badge {
+.v2 .badge {
   padding: 0.25em;
   border-radius: 3px;
 
@@ -192,33 +103,149 @@ section {
    -webkit-font-smoothing: antialiased;
 }
 
-.badge.danger {
+.v2 .badge.danger {
   background-color: #d85157;
   color: white;
 }
 
-.badge.warning {
+.v2 .badge.warning {
   background-color: #d89f37;
   color: white;
 }
 
-.badge.good {
+.v2 .badge.good {
   background-color: #78bb6e;
   color: white;
 }
 
-.badge_group .badge {
+.v2 .badge_group .badge {
   border-radius: 0;
   margin-right: 1px;
 }
 
-.badge_group .badge:first-child {
+.v2 .badge_group .badge:first-child {
   border-top-left-radius:    3px;
   border-bottom-left-radius: 3px;
 }
 
-.badge_group .badge:last-child {
+.v2 .badge_group .badge:last-child {
   border-top-right-radius:    3px;
   border-bottom-right-radius: 3px;
   margin-right: 0;
+}
+
+/*---------------------------------- header ----------------------------------*/
+
+.v2 .header_primary {
+  position: relative;
+  background-color: rgb(90, 118, 160);
+  color: #ffffff;
+  padding: 1em;
+  margin: 0 -1em; /* Negative of body's side padding */
+  font-weight: 700;
+  -moz-osx-font-smoothing: grayscale;
+   -webkit-font-smoothing: antialiased;
+}
+.v2.empty .header_primary {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.v2 .header_primary .container {
+  position: relative;
+  min-height: 2em;
+}
+
+.v2 .header_primary h1 {
+  float: left;
+  margin: 0;
+  font-size: 1em;
+}
+.v2 .reverse_order.header_primary h1 {
+  float: right;
+}
+
+.v2 .header_primary a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.v2 .header_primary h1 a {
+  display: block;
+  background: transparent url('/images/common/document_cloud_logo_white@2x.png') 0 0 no-repeat;
+  background-size: 9.375em 2em;
+  width: 9.375em;
+  height: 2em;
+  text-indent: -10000px;
+  overflow: hidden;
+}
+
+.v2 .header_primary h1 a:focus {
+  background-color: rgb(119, 147, 189);
+}
+
+.v2 .header_nav {
+  float: right;
+}
+.v2 .reverse_order .header_nav {
+  float: left;
+}
+
+.v2 .header_nav a {
+  display: inline-block;
+  font-size: 0.75em;
+  padding: 1em;
+  line-height: 1em;
+  text-transform: uppercase;
+}
+
+.v2 .header_nav a.active {
+  background-color: rgb(104, 129, 167);
+}
+
+.v2 .header_nav a:hover,
+.v2 .header_nav a:focus {
+  background-color: rgb(119, 147, 189);
+}
+
+/*--------------------------------- embeds -----------------------------------*/
+
+.v2 .embed-preview-container {
+  background-color: white;
+  padding: 30px 40px;
+  box-shadow: 0 0 20px #aaa;
+  border-radius: 6px;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+/* We don't even generate these elements when the embedder has iframed the
+   correct version of the resource, but in case they just iframe the canonical
+   resource URL, strip it down.
+*/
+.v2.DC-embed-iframe .header_primary {
+  display: none;
+}
+
+.v2.DC-embed-iframe .embed-preview-container {
+  margin: 0;
+  padding: 0;
+  box-shadow: none;
+  border-radius: 0;
+}
+
+/* Small devices (tablets, 768px and up) */
+@media (min-width: 768px) {
+  .v2 .embed-preview-container {
+    margin-top: 30px;
+    margin-bottom: 30px;
+  }
+}
+
+/* Medium devices (desktops, 992px and up) */
+@media (min-width: 992px) {
+}
+
+/* Large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {
 }

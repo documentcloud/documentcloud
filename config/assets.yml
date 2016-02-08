@@ -1,7 +1,8 @@
 javascript_compressor: closure
-css_compressor: sass
-template_function: _.template
-embed_assets: datauri
+css_compressor:        sass
+template_function:     _.template
+gzip_assets:           off
+embed_assets:          datauri
 
 javascripts:
   core:
@@ -63,7 +64,6 @@ stylesheets:
     - public/javascripts/vendor/visualsearch/build-min/visualsearch-datauri.css
   ui_v2:
     - public/stylesheets/common/reset.css
-    - public/stylesheets/v2/*.css
     - public/stylesheets/v2/**/*.css
   authentication:
     - public/stylesheets/pages/workspace.css

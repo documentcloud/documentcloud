@@ -23,7 +23,7 @@ GIT
 
 GIT
   remote: git@github.com:documentcloud/bull_proof_china_shop
-  revision: 30a3af7e59788e775eebb1b11ac2406f496e46fb
+  revision: 0e65946bd2b6dbc42b4fe2ba364fcbe5a6415909
   branch: master
   specs:
     bull_proof_china_shop (0.0.1)
@@ -211,7 +211,7 @@ GEM
     multi_json (1.11.2)
     multi_xml (0.5.5)
     multipart-post (2.0.0)
-    nenv (0.2.0)
+    nenv (0.3.0)
     net-ssh (2.1.4)
     net-ssh-shell (0.2.0)
       net-ssh (~> 2.1.0)
@@ -291,7 +291,7 @@ GEM
       thor (>= 0.18.1, < 2.0)
     rake (10.5.0)
     rb-fsevent (0.9.7)
-    rb-inotify (0.9.5)
+    rb-inotify (0.9.7)
       ffi (>= 0.5.0)
     rdiscount (2.1.8)
     rest-client (1.8.0)

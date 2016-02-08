@@ -1,12 +1,14 @@
-<div id="return_to_v1">
-  <%= link_to '⬅︎ Read full document', @current_annotation.contextual_path, id: 'return_to_v1_text' %>
-  <a id="return_to_v1_logo" href="/home"><img src="/images/common/document_cloud_logo_white@2x.png" width="150" height="32"></a>
-</div>
+<header class="header_primary reverse_order">
+  <div class="container">
+    <nav class="header_nav">
+      <%= link_to '⬅︎ Read full document', @current_annotation.contextual_path %>
+    </nav>
+    <h1><%= link_to 'DocumentCloud', '/' %></h1>
+  </div>
+</header>
 
 <div class="container">
-
   <div id="DC-note-<%= @current_annotation.id %>" class="DC-note-container" style="background:white"></div>
-
 </div>
 
 <%

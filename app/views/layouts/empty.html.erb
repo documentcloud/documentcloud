@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="v2">
 <head>
   <%= render :partial => 'common/meta_tags' %>
   <title><%= compose_title(@title) %></title>
@@ -10,7 +10,7 @@
   <%= include_javascripts :core %>
   <%= csrf_meta_tag %> 
 </head>
-<body class="v2">
+<body>
 
   <div class="container">
     <%= yield %>
