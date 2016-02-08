@@ -1,7 +1,6 @@
 javascript_compressor: closure
 css_compressor:        sass
 template_function:     _.template
-gzip_assets:           off
 embed_assets:          datauri
 
 javascripts:
