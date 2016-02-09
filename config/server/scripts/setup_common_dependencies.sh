@@ -115,7 +115,7 @@ installer_tmp="/home/$USERNAME/downloads/"
 mkdir -p $installer_tmp
 cd $installer_tmp
 
-ruby_install_version='0.5.0'
+ruby_install_version='0.6.0'
 chruby_version='0.3.9'
 
 wget -O ruby-install-$ruby_install_version.tar.gz https://github.com/postmodern/ruby-install/archive/v$ruby_install_version.tar.gz
@@ -152,7 +152,7 @@ echo 'if [ -n "$BASH_VERSION" ] || [ -n "$ZSH_VERSION" ]; then
 fi' > /etc/profile.d/chruby.sh
 
 # Install the current stable version of ruby.
-ruby-install ruby 2.2.4
+ruby-install ruby 2.3.0
 
 # turn off rdoc/ri generation for gems
 echo 'gem: --no-document' > /home/$USERNAME/.gemrc
