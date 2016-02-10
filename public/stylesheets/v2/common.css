@@ -89,12 +89,14 @@
 }
 
 .v2 a:focus {
-  color: white;
   background-color: rgb(119, 147, 189);
+  color: white;
+  -moz-osx-font-smoothing: grayscale;
+   -webkit-font-smoothing: antialiased;
 }
 
 .v2 .badge {
-  padding: 0.25em;
+  padding: 0.25em 0.4em;
   border-radius: 3px;
 
   background-color: rgb(119, 147, 189);
@@ -116,6 +118,11 @@
 .v2 .badge.good {
   background-color: #78bb6e;
   color: white;
+}
+
+.v2 .badge.suppressed {
+  background-color: rgb(235, 235, 235);
+  color: black;
 }
 
 .v2 .badge_group .badge {
