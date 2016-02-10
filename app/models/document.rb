@@ -556,11 +556,11 @@ class Document < ActiveRecord::Base
   def page_image_url(page, size, options={} )
     path = page_image_path(page, size)
     if public?
-      url = File.join( DC.cdn_root(:force_ssl=>true), path )
+      url = File.join(DC.cdn_root(:force_ssl=>true), path)
       url << "?#{updated_at.to_i}" if options[:cache_busting]
       url
     else
-      DC::Store::AssetStore.new.authorized_url path
+      File.join(DC.server_root, path)
     end
   end
 
