@@ -23,7 +23,7 @@ GIT
 
 GIT
   remote: git@github.com:documentcloud/bull_proof_china_shop
-  revision: cec13707cc400d0a397ff0102d4d274e27c3ec0c
+  revision: 708dd24c734f423b5305680e226a1c93b56f4328
   branch: master
   specs:
     bull_proof_china_shop (0.0.1)
@@ -175,7 +175,7 @@ GEM
       minitest (>= 3.0)
     has_secure_token (1.0.0)
       activerecord (>= 3.0)
-    hashdiff (0.2.3)
+    hashdiff (0.3.0)
     hashie (3.4.3)
     highline (1.7.8)
     http-cookie (1.0.2)
@@ -188,9 +188,9 @@ GEM
     jwt (1.5.1)
     launchy (2.4.3)
       addressable (~> 2.3)
-    listen (3.0.5)
+    listen (3.0.6)
       rb-fsevent (>= 0.9.3)
-      rb-inotify (>= 0.9)
+      rb-inotify (>= 0.9.7)
     little-plugger (1.1.4)
     logging (2.0.0)
       little-plugger (~> 1.1)
