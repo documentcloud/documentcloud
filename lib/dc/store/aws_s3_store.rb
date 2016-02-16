@@ -103,6 +103,16 @@ module DC
         remove_file(document.page_text_path(page_number))
       end
       
+      def save_tabula_page(document, page_number, data, access=DEFAULT_ACCESS)
+        tabula_page_path = document.page_text_path(page_number).sub(/txt$/, 'csv')
+        save_file(data, tabula_page_path, access, :string => true)
+      end
+      
+      def delete_tabula_page(document, page_number)
+        tabula_page_path = document.page_text_path(page_number).sub(/txt$/, 'csv')
+        remove_file(tabula_page_path)
+      end
+      
       def save_backup(src, dest)
         bucket.objects["backups/#{dest}"].write(File.open(src))
       end

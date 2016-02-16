@@ -91,6 +91,16 @@ module DC
       def delete_page_text(document, page_number)
         FileUtils.rm(local(document.page_text_path(page_number)))
       end
+      
+      def save_tabula_page(document, page_number, data, access=nil)
+        tabula_page_path = document.page_text_path(page_number).sub(/txt$/, 'csv')
+        ensure_directory(File.dirname(tabula_page_path))
+        File.open(local(tabula_page_path), 'w+') {|f| f.write(data) }
+      end
+      
+      def delete_tabula_page(document, page_number)
+        FileUtils.rm(local(document.page_text_path(page_number).sub(/txt$/, 'csv')))
+      end
 
       def save_backup(src, dest)
         ensure_directory("backups/#{File.dirname(dest)}")
