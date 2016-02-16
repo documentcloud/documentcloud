@@ -48,8 +48,6 @@ class ExtractTables < CloudCrowd::Action
   
   def store_spreadsheet(page_number, data)
     # replace this with a less ridiculous API.
-    Rails.logger.info("LOGGING TABULA DATA")
-    Rails.logger.info(data)
     asset_store.save_tabula_page(document, page_number, data)
   end
 end
