@@ -13,7 +13,7 @@ of API responsibilities between DocumentCloud and a processing job author.
 Also, to process documents through tabula w/o any additional input from users (yet).
 
 You can test it in the Rails console like this:
-job = ExtractTables.new(CloudCrowd::PROCESSING, ['24'], {'id' =>'24', 'job_id'=>1, 'work_unit_id' => 1, 'attempts'=> 0}, CloudCrowd::AssetStore.new); job.process
+job = ExtractTables.new(CloudCrowd::PROCESSING, ['25'], {'id' =>'25', 'job_id'=>1, 'work_unit_id' => 1, 'attempts'=> 0}, CloudCrowd::AssetStore.new); job.process
 
 =end
 
@@ -24,7 +24,8 @@ class ExtractTables < CloudCrowd::Action
     pdf_contents = asset_store.read_pdf document
     File.open(pdf_name, 'wb') {|f| f.write(pdf_contents) }
     File.open(pdf_name) do |pdf|
-      tabula_jar = '/Users/ted/dc/tabula-java/target/tabula-0.8.0-jar-with-dependencies.jar'
+      tabula_jar = '/usr/local/lib/tabula-0.8.0-jar-with-dependencies.jar'
+      raise RuntimeError, "Can't find Tabula jar file at #{tabula_jar}" unless File.exists? tabula_jar
       # iterate from 1 to page_count and with each page
       (1..document.page_count).each do |page_number|
         cmd = "java -jar #{tabula_jar} #{pdf_name} --spreadsheet --pages #{page_number}"
