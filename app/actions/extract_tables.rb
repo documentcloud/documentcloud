@@ -27,7 +27,7 @@ class ExtractTables < CloudCrowd::Action
       tabula_jar = '/Users/ted/dc/tabula-java/target/tabula-0.8.0-jar-with-dependencies.jar'
       # iterate from 1 to page_count and with each page
       (1..document.page_count).each do |page_number|
-        cmd = "java -jar #{tabula_jar} #{pdf_name} --guess --pages #{page_number}"
+        cmd = "java -jar #{tabula_jar} #{pdf_name} --spreadsheet --pages #{page_number}"
         # produce a spreadsheet for page
         maybe_table = `#{cmd}`
         # store spreadsheet
