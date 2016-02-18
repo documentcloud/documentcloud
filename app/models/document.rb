@@ -1004,11 +1004,7 @@ class Document < ActiveRecord::Base
     res['page']['text']       = page_text_url_template(:local => options[:local])
     res['related_article']    = related_article if related_article
     res['annotations_url']    = annotations_url if commentable?(options[:account])
-    if options[:allow_detected]
-      res['published_url']    = published_url if published_url
-    else
-      res['published_url']    = remote_url if remote_url
-    end
+    res['published_url']      = published_url || canonical_url(:html)
     doc['sections']           = ordered_sections.map {|s| s.canonical } if options[:sections]
     doc['data']               = data if options[:data]
     if options[:annotations] && (options[:allowed_to_edit] || options[:allowed_to_review])
