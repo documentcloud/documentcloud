@@ -1,3 +1,5 @@
+<% (@stylesheets_header ||= []).push File.join(DC.cdn_root(:agnostic => true), "/note_embed/note_embed.css") %>
+
 <header class="header_primary reverse_order">
   <div class="container">
     <nav class="header_nav">
@@ -8,11 +10,23 @@
 </header>
 
 <div class="container">
-  <div id="DC-note-<%= @current_annotation.id %>" class="DC-note-container"></div>
+  <div class="DC-note <%#= extraClasses %>" data-version="1.1" style="background-image:url('<%= @current_annotation.page.image_url %>')">
+    <div class="DC-note-header">
+      <a class="DC-note-embed-resource" href="<%= @current_annotation.contextual_path %>" title="View the note '<%= @current_annotation.title %>' in its original document context">
+        <span class="DC-note-title"><%= @current_annotation.title %></span>
+        <span class="DC-note-page-number">(p. <%= @current_annotation.page_number %>)</span>
+      </a>
+    </div>
+    <% if (@current_annotation_dimensions) %>
+    <div class="DC-note-image-max-bounds" style="max-height:<%= @current_annotation_dimensions[:height_pixel] %>px;max-width:<%= @current_annotation_dimensions[:width_pixel] %>px">
+      <div class="DC-note-image-aspect-ratio" style="padding-bottom:<%= @current_annotation_dimensions[:aspect_ratio] %>%">
+        <a class="DC-note-image-link DC-note-image-space-filler" href="<%= @current_annotation.contextual_path %>" title="View the note '<%= @current_annotation.title %>' in its original document context">
+          <img class="DC-note-image" width="<%= @current_annotation_dimensions[:width_pixel] %>" height="<%= @current_annotation_dimensions[:height_pixel] %>" src="<%= @current_annotation.page.image_url %>" alt="Selected portion of a source document hosted by DocumentCloud" style="top:<%= @current_annotation_dimensions[:offset_top_percent] %>%;left:<%= @current_annotation_dimensions[:offset_left_percent] %>%;width:<%= @current_annotation_dimensions[:width_percent] %>%;">
+        </a>
+      </div>
+    </div>
+    <% end %>
+    <div class="DC-note-body"><%= @current_annotation.content %></div>
+    <div class="DC-note-background-fader"></div>
+  </div>
 </div>
-
-<%
-  @javascript_footer_inline = <<-EOS
-    dc.embed.loadNote("#{@current_annotation.canonical_url(:js)}");
-  EOS
-%>

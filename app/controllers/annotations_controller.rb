@@ -5,6 +5,7 @@ class AnnotationsController < ApplicationController
 
   before_action :login_required, :except => [:index, :show, :print, :cors_options]
   skip_before_action :verify_authenticity_token
+  after_action  :allow_iframe, :only => [:show]
 
   READONLY_ACTIONS = [
     :index, :show, :print, :cors_options
@@ -19,6 +20,7 @@ class AnnotationsController < ApplicationController
 
   def show
     return not_found unless current_annotation
+
     respond_to do |format|
       format.json do
         @response = current_annotation.canonical(:include_image_url => true, :include_document_url => true)
@@ -33,11 +35,18 @@ class AnnotationsController < ApplicationController
         render :js => js
       end
       format.html do
-        make_oembeddable(current_annotation)
-        @stylesheets_header = ["#{DC.cdn_root}/note_embed/note_embed.css"]
-        @javascripts_footer = ["#{DC.cdn_root}/note_embed/note_embed.js",
-                               "#{DC.cdn_root}/notes/loader.js"]
-        render :layout => 'minimal'
+        @current_annotation_dimensions = current_annotation.embed_dimensions
+        if params[:embed] == 'embed'
+          # TODO: Create a route that actually works (see pages example).
+          # We have a special, extremely stripped-down show page for when we're
+          # being iframed. The normal show page can also be iframed, but there
+          # will be a flash of unwanted layout elements before the JS/CSS 
+          # arrives which removes them.
+          render template: 'annotations/show_embedded', layout: 'minimal'
+        else
+          make_oembeddable(current_annotation)
+          render layout: 'minimal'
+        end
       end
     end
   end

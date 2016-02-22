@@ -130,6 +130,32 @@ class Annotation < ActiveRecord::Base
     PUBLIC_LEVELS.include?(access) && document.cacheable?
   end
 
+  def coordinates
+    {} unless location
+    coords = location.split(',').map { |loc| loc.to_i }
+    transform_coordinates_to_legacy({
+      top:    coords[0],
+      left:   coords[3],
+      right:  coords[1],
+      height: coords[2] - coords[0],
+      width:  coords[1] - coords[3],
+    })
+  end
+
+  def embed_dimensions
+    page_width = Page::IMAGE_SIZES['normal'].gsub(/x$/, '').to_i
+    coords     = coordinates
+
+    {
+      aspect_ratio:        100.0 * coords[:height] / coords[:width],
+      height_pixel:        coords[:height],
+      width_pixel:         coords[:width],
+      width_percent:       100.0 * page_width / coords[:width],
+      offset_top_percent:  -100.0 * coords[:top] / coords[:height],
+      offset_left_percent: -100.0 * coords[:left] / coords[:width],
+    }
+  end
+
   # `contextual` means "show this thing in the context of its document parent",
   # which right now correlates to its page-anchored version.
   def contextual_url
@@ -165,6 +191,10 @@ class Annotation < ActiveRecord::Base
     [canonical_js_cache_path, canonical_json_cache_path]
   end
 
+  def anchored_published_url
+    "#{document.published_url}\#document/p#{page_number}/a#{id}"
+  end
+
   def canonical(opts={})
     data = {'id' => id, 'page' => page_number, 'title' => title, 'content' => content, 'access' => access_name.to_s }
     data['location'] = {'image' => location} if location
@@ -196,6 +226,17 @@ class Annotation < ActiveRecord::Base
   end
 
   private
+
+  # For unknown reasons, we do this
+  def transform_coordinates_to_legacy(coords)
+    {
+      top:    coords[:top]    + 1,
+      left:   coords[:left]   - 2,
+      right:  coords[:right]     ,
+      height: coords[:height]    ,
+      width:  coords[:width]  - 8,
+    }
+  end
 
   def ensure_title
     self.title = "Untitled Annotation" if title.blank?
