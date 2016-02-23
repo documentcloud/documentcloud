@@ -316,7 +316,7 @@ class ApplicationController < ActionController::Base
     respond_to do |format|
       format.js   { render_cross_origin_json(obj, {:status => status}) }
       format.json { render_cross_origin_json(obj, {:status => status}) }
-      format.any  { render :file => "#{Rails.root}/public/#{options[:template]}.html", :locals => options[:locals], :status => status }
+      format.any  { render :file => "#{Rails.root}/public/#{options[:template]}.html", :locals => options[:locals], :status => status, :layout => nil }
     end
 
     false
