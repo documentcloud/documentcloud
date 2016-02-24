@@ -215,6 +215,27 @@
   background-color: rgb(119, 147, 189);
 }
 
+/*------------------------------- error pages --------------------------------*/
+
+.v2 .error_page {
+  text-align: center;
+  padding: 1rem;
+  color: #333;
+}
+
+@media (min-width: 768px) {
+  .v2 .error_page {
+    text-align: center;
+    padding: 1rem;
+    color: #333;
+  }
+
+  .v2 .error_page h1 {
+    font-size: 4rem;
+  }
+}
+
+
 /*--------------------------------- embeds -----------------------------------*/
 
 .v2 .embed-preview-container {

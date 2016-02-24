@@ -305,8 +305,7 @@ class ApplicationController < ActionController::Base
   # Generic error response helper. Defaults to 200 because never called directly
   def error_response(status=200, options={})
     options = {
-      :template => status, # Exists only for `doc_404`
-      :locals   => {}
+      :locals => {}
     }.merge(options)
 
     obj          = {}
