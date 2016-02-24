@@ -26,7 +26,8 @@ class DocumentsController < ApplicationController
     options = {data: true}.merge(pick(params, :data))
     respond_to do |format|
       format.html do
-        @no_sidebar = (params[:sidebar] || '').match /no|false/
+        @sidebar    = !(params[:sidebar] || '').match(/no|false/)
+        @responsive = (params[:responsive] || '').match /yes|true/
         populate_editor_data if current_account && current_organization
         return if date_requested?
         return if entity_requested?

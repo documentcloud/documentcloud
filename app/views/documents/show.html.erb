@@ -41,7 +41,8 @@
         :access => true,
         :cache_busting => @allowed_to_edit
       }).to_json.html_safe %>, {
-        <% if @no_sidebar %>sidebar: false,<% end %>
+        <% unless @sidebar %>sidebar: false,<% end %>
+        <% if @responsive %>responsive: true, responsiveOffset: 0,<% end %>
         container: '#viewer'
       });
     <% end %>
