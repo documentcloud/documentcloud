@@ -51,7 +51,7 @@ namespace :app do
   task :update do
     sh 'cd secrets && git pull && cd ..'
     sh 'git pull'
-    sleep 0.2
+    sleep 0.2 # TODO: make this event driven not just waiting for .2 seconds
     sh 'bundle install'
   end
 
