@@ -496,7 +496,7 @@ class Document < ActiveRecord::Base
   def pages_path
     File.join(path, 'pages')
   end
-
+  
   def annotations_path
     File.join(path, 'annotations')
   end
@@ -633,6 +633,13 @@ class Document < ActiveRecord::Base
   def page_text_path(page_number)
     File.join(pages_path, "#{slug}-p#{page_number}.txt")
   end
+  
+  # Temporarily used for tabula processing
+  # intended to be extracted into a tabula namespace
+  # in future.
+  def page_csv_path(page_number)
+    File.join(pages_path, "#{slug}-p#{page_number}.csv")
+  end
 
   def public_page_image_template
     File.join(DC.cdn_root(:force_ssl=>true), File.join(pages_path, page_image_template))
@@ -658,7 +665,7 @@ class Document < ActiveRecord::Base
     return File.join(slug, page_text_template) if opts[:local]
     File.join(DC.server_root, File.join(pages_path, page_text_template))
   end
-
+  
   def reviewers
     return [] unless reviewer_projects.empty?
     reviewer_projects.map{ |project| project.collaborators }.flatten.uniq
