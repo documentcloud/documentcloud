@@ -50,6 +50,7 @@ group :development, :test do
   gem 'byebug' # Debugger
   gem 'factory_girl_rails' # Mocking out objects
   gem 'ruby-debug-passenger'
+  gem 'rspec-rails', '~> 3.0'
 end
 
 group :development do
