@@ -49,8 +49,7 @@ group :development, :test do
   gem 'pry'
   gem 'byebug' # Debugger
   gem 'factory_girl_rails' # Mocking out objects
-  gem 'ruby-debug-passenger'
-  gem 'rspec-rails', '~> 3.0'
+  gem 'ruby-debug-passenger'  
 end
 
 group :development do
@@ -67,4 +66,9 @@ group :test do
   gem 'guard-minitest'
   gem 'vcr'
   gem 'webmock'
+  gem 'rspec-rails', '~> 3.0'
+  gem 'rspec-mocks'
+  gem 'rspec-activemodel-mocks'
+  gem 'rspec-collection_matchers'
+  gem 'rspec-its'
 end

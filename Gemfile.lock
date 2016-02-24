@@ -302,11 +302,20 @@ GEM
     retriable (1.4.1)
     rsolr (1.0.13)
       builder (>= 2.1.2)
+    rspec-activemodel-mocks (1.0.3)
+      activemodel (>= 3.0)
+      activesupport (>= 3.0)
+      rspec-mocks (>= 2.99, < 4.0)
+    rspec-collection_matchers (1.1.2)
+      rspec-expectations (>= 2.99.0.beta1)
     rspec-core (3.4.3)
       rspec-support (~> 3.4.0)
     rspec-expectations (3.4.0)
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.4.0)
+    rspec-its (1.2.0)
+      rspec-core (>= 3.0.0)
+      rspec-expectations (>= 3.0.0)
     rspec-mocks (3.4.1)
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.4.0)
@@ -418,6 +427,10 @@ DEPENDENCIES
   rake
   rdiscount (~> 2.1.6)
   rest-client (~> 1.8.0)
+  rspec-activemodel-mocks
+  rspec-collection_matchers
+  rspec-its
+  rspec-mocks
   rspec-rails (~> 3.0)
   ruby-debug-passenger
   rubyzip (~> 1.1.0)
