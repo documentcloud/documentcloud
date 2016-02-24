@@ -3,6 +3,7 @@ require 'cgi'
 class RemoteUrl < ActiveRecord::Base
  
   self.establish_connection( DC::ANALYTICS_DB ) unless Rails.env.testing?
+  
   belongs_to :document
   belongs_to :note, :class_name=>'Annotation'
   DOCUMENT_CLOUD_URL = /^https?:\/\/(www\.)?documentcloud.org/

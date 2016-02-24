@@ -1,0 +1,7 @@
+# This file configures your CloudCrowd installation, and should be consistent
+# between your server and all of your nodes. For more information, see:
+# http://wiki.github.com/documentcloud/cloud-crowd/the-configuration-folder
+
+:central_server:    http://localhost:9173
+:max_workers:       5
+:storage:           filesystem
