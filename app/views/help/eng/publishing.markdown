@@ -5,6 +5,7 @@ Ready to share your documents with readers? Either by embedding our custom viewe
 ## Contents
 
 * [Making documents public](#public)
+* [Linking to a Document, Page or Note](#linking)
 * Generating embed codes:
   * [Documents](#embed-document)
   * [Pages](#embed-page)
@@ -20,6 +21,25 @@ Before you publish a document, page, note or document set, you'll want to make s
 
 * Edit the "Access Level" (from the "Edit" menu).
 * Set a publication date (from the "Publish" menu).
+
+<a name="linking"></a>
+# Linking to a Document, Page or Note</span>
+
+The most simple way to share your work in DocumentCloud with readers is to publish a URL to a document. You can modify the URL to have the document open to a specific page or note. Follow these URL formats:
+
+### Full document:
+
+`https://www.documentcloud.org/documents/282753-lefler-thesis.html`
+
+### Document open to a specific page:
+
+`https://www.documentcloud.org/documents/282753-lefler-thesis.html#document/p22`
+
+### Document open to a specific note:
+
+`https://www.documentcloud.org/documents/282753-lefler-thesis.html#document/p57/a42283`
+
+To find the URL (or permalink) of a note, open the note and select the link icon <span class="icon permalink" style="padding-left:16px;position:relative;top: -2px;">&#65279;</span>. Your browser's address bar will be updated to display the full URL of the annotation.
 
 <a name="embed-document"></a>
 # Embed Codes for Individual Documents

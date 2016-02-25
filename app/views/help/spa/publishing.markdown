@@ -5,6 +5,7 @@ Listo para compartir sus documentos con los lectores? Ya sea por la incorporaci�
 ## Contents
 
 * [Haciendo documentos públicos](#public)
+* [Enlace a un documento, página o nota](#linking)
 * Generar códigos embed:
   * [Documentos](#embed-document)
   * [Páginas](#embed-page)
@@ -17,6 +18,25 @@ Listo para compartir sus documentos con los lectores? Ya sea por la incorporaci�
 # Haciendo documentos públicos
 
 Antes de publicar un documento, página, nota o conjunto de documentos, usted querrá asegurarse de que el documento o los documentos son públicos. Haga público un documento mediante la opción "Nivel de Accesol" (en el menú "Editar") o mediante la selección de una fecha de publicación (en el menú "Publicar").
+
+<a name="linking"></a>
+# Enlace a un documento, página o nota
+
+La forma más sencilla de compartir su trabajo en DocumentCloud con los lectores es publicar un enlace a un documento. Puede modificar la dirección URL para que el documento abierto en una página o una nota específica. Siga estos formatos de URL:
+
+### Documento completo:
+
+`https://www.documentcloud.org/documents/282753-lefler-thesis.html`
+
+### Documento abierto a una página específica:
+
+`https://www.documentcloud.org/documents/282753-lefler-thesis.html#document/p22`
+
+### Documento abierto a una nota específica:
+
+`https://www.documentcloud.org/documents/282753-lefler-thesis.html#document/p57/a42283`
+
+Para encontrar la dirección URL (o enlace permanente) de una nota, abra la nota y seleccione el icono de enlace <span class="icon permalink" style="padding-left:16px;position:relative;top: -2px;">&#65279;</span>. Barra de direcciones del navegador se actualiza para mostrar la URL completa de la anotación.
 
 <a name="embed-document"></a>
 # Publicando documentos individuales
