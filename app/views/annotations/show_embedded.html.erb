@@ -16,6 +16,6 @@
     </div>
   </div>
   <% end %>
-  <div class="DC-note-body"><%= @current_annotation.content %></div>
+  <div class="DC-note-body"><%= @current_annotation.content.html_safe %></div>
   <div class="DC-note-background-fader"></div>
 </div>
