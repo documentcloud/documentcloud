@@ -49,7 +49,7 @@ group :development, :test do
   gem 'pry'
   gem 'byebug' # Debugger
   gem 'factory_girl_rails' # Mocking out objects
-  gem 'ruby-debug-passenger'  
+  gem 'ruby-debug-passenger'
 end
 
 group :development do
@@ -58,6 +58,8 @@ group :development do
   # by a developer on their local machine before committing the compiled strings
   gem 'google_drive',         '~> 1.0.0'
   gem 'highline'
+  gem "better_errors"
+  gem "binding_of_caller"
 end
 
 group :test do
@@ -71,4 +73,5 @@ group :test do
   gem 'rspec-activemodel-mocks'
   gem 'rspec-collection_matchers'
   gem 'rspec-its'
+  gem 'simplecov', :require => false
 end
