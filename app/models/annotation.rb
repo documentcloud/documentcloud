@@ -131,7 +131,7 @@ class Annotation < ActiveRecord::Base
   end
 
   def coordinates
-    {} unless location
+    return nil unless location
     coords = location.split(',').map { |loc| loc.to_i }
     transform_coordinates_to_legacy({
       top:    coords[0],
@@ -143,9 +143,8 @@ class Annotation < ActiveRecord::Base
   end
 
   def embed_dimensions
+    return nil unless coords = coordinates
     page_width = Page::IMAGE_SIZES['normal'].gsub(/x$/, '').to_i
-    coords     = coordinates
-
     {
       aspect_ratio:        100.0 * coords[:height] / coords[:width],
       height_pixel:        coords[:height],
