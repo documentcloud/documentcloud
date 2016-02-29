@@ -5,3 +5,7 @@ Disallow: /*{page}
 Disallow: /*{query}
 Disallow: /*{realm}
 Disallow: /*{language}
+
+User-agent: *
+Disallow: /util/
+Noindex: /util/
