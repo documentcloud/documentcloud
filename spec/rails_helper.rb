@@ -6,6 +6,17 @@ abort("The Rails environment is running in production mode!") if Rails.env.produ
 require 'spec_helper'
 require 'rspec/rails'
 # Add additional requires below this line. Rails is not loaded until this point!
+require 'sunspot/rails/spec_helper'
+
+require 'simplecov'
+SimpleCov.profiles.define 'documentcloud' do
+  load_profile 'rails'
+
+  add_group "Long files" do |src_file|
+    src_file.lines.count > 100
+  end
+  add_filter 'vendor'
+end
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
 # spec/support/ and its subdirectories. Files matching `spec/**/*_spec.rb` are
@@ -54,4 +65,14 @@ RSpec.configure do |config|
   config.filter_rails_from_backtrace!
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
+  
+  # Stubs sunspot during testing
+  config.before(:each) do
+    ::Sunspot.session = ::Sunspot::Rails::StubSessionProxy.new(::Sunspot.session)
+  end
+
+  config.after(:each) do
+    ::Sunspot.session = ::Sunspot.session.original_session
+  end
+  
 end
