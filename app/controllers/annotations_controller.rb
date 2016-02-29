@@ -53,6 +53,7 @@ class AnnotationsController < ApplicationController
 
   # Print out all the annotations for a document (or documents.)
   def print
+    return bad_request unless params[:docs].is_a?(Array)
     docs = Document.accessible(current_account, current_organization).where( :id => params[:docs] )
     Document.populate_annotation_counts(current_account, docs)
     @documents_json = docs.map {|doc| doc.to_json(:annotations => true, :account => current_account) }
