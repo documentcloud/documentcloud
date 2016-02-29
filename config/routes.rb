@@ -171,15 +171,18 @@ DC::Application.routes.draw do
   get '/multilanguage' => 'home#multilanguage', :as => :multilanguage
 
   # Redirects.
-  get '/faq.php'     => 'redirect#index',                     :url => '/faq'
-  get '/who.php'     => 'redirect#index', :as => :who,        :url => '/about'
-  get '/who-we-are'  => 'redirect#index', :as => :who_we_are, :url => '/about'
-  get '/partner.php' => 'redirect#index', :as => :partner,    :url => '/contributors'
-  get '/blog/feed'   => 'redirect#index', :as => :feed,       :url => 'https://blog.documentcloud.org/feed'
-  get '/feed'        => 'redirect#index', :as => :root_feed,  :url => 'https://blog.documentcloud.org/feed'
-  get '/blog/*parts' => 'redirect#index', :as => :blog,       :url => 'https://blog.documentcloud.org/'
-  get '/clips.php'   => 'redirect#index', :as => :clips,      :url => 'https://blog.documentcloud.org/'
-  get '/news'        => 'redirect#index', :as => :news,       :url => 'https://blog.documentcloud.org/'
+  get '/index.php'             => 'redirect#index',                     :url => '/'
+  get '/document-contributors' => 'redirect#index',                     :url => '/contributors'
+  get '/faq.php'               => 'redirect#index',                     :url => '/faq'
+  get '/who.php'               => 'redirect#index', :as => :who,        :url => '/about'
+  get '/who-we-are'            => 'redirect#index', :as => :who_we_are, :url => '/about'
+  get '/partner.php'           => 'redirect#index', :as => :partner,    :url => '/contributors'
+  get '/blog/feed'             => 'redirect#index', :as => :feed,       :url => 'https://blog.documentcloud.org/feed'
+  get '/feed'                  => 'redirect#index', :as => :root_feed,  :url => 'https://blog.documentcloud.org/feed'
+  get '/blog/*parts'           => 'redirect#index', :as => :blog,       :url => 'https://blog.documentcloud.org/'
+  get '/clips.php'             => 'redirect#index', :as => :clips,      :url => 'https://blog.documentcloud.org/'
+  get '/news'                  => 'redirect#index', :as => :news,       :url => 'https://blog.documentcloud.org/'
+  get '/blog'                  => 'redirect#index',                     :url => 'https://blog.documentcloud.org/'
 
   get '/admin' => 'admin#index'
   get '/admin/health_check/:subject/:env', to: 'admin#health_check', subject: /page_embed/, env: /production|staging/
