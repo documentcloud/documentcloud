@@ -36,8 +36,7 @@ class AnnotationsController < ApplicationController
       end
       format.html do
         @current_annotation_dimensions = current_annotation.embed_dimensions
-        if params[:embed] == 'embed'
-          # TODO: Create a route that actually works (see pages example).
+        if params[:embed] == 'true'
           # We have a special, extremely stripped-down show page for when we're
           # being iframed. The normal show page can also be iframed, but there
           # will be a flash of unwanted layout elements before the JS/CSS 

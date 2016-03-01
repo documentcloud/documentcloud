@@ -1,21 +1,45 @@
+<% @html_classes = ['DC-embed-iframed'] %>
 <% (@stylesheets_header ||= []).push File.join(DC.cdn_root(:agnostic => true), "/note_embed/note_embed.css") %>
 
-<div class="DC-note <%#= extraClasses %>" data-version="1.1" style="background-image:url('<%= @current_annotation.page.image_url %>')">
-  <div class="DC-note-header">
-    <a class="DC-note-embed-resource" href="<%= @current_annotation.contextual_path %>" title="View the note '<%= @current_annotation.title %>' in its original document context">
-      <span class="DC-note-title"><%= @current_annotation.title %></span>
-      <span class="DC-note-page-number">(p. <%= @current_annotation.page_number %>)</span>
-    </a>
-  </div>
-  <% if (@current_annotation_dimensions) %>
-  <div class="DC-note-image-max-bounds" style="max-height:<%= @current_annotation_dimensions[:height_pixel] %>px;max-width:<%= @current_annotation_dimensions[:width_pixel] %>px">
-    <div class="DC-note-image-aspect-ratio" style="padding-bottom:<%= @current_annotation_dimensions[:aspect_ratio] %>%">
-      <a class="DC-note-image-link DC-note-image-space-filler" href="<%= @current_annotation.contextual_path %>" title="View the note '<%= @current_annotation.title %>' in its original document context">
-        <img class="DC-note-image" width="<%= @current_annotation_dimensions[:width_pixel] %>" height="<%= @current_annotation_dimensions[:height_pixel] %>" src="<%= @current_annotation.page.image_url %>" alt="Selected portion of a source document hosted by DocumentCloud" style="top:<%= @current_annotation_dimensions[:offset_top_percent] %>%;left:<%= @current_annotation_dimensions[:offset_left_percent] %>%;width:<%= @current_annotation_dimensions[:width_percent] %>%;">
-      </a>
-    </div>
-  </div>
-  <% end %>
-  <div class="DC-note-body"><%= @current_annotation.content.html_safe %></div>
-  <div class="DC-note-background-fader"></div>
+<div class="DC-note">
+<% if (@current_annotation_dimensions) %>
+  <a class="DC-note-image-link DC-note-image-space-filler" href="<%= @current_annotation.contextual_url %>" title="View the note '<%= @current_annotation.title %>' in its original document context in a new window or tab" target="_blank">
+    <img class="DC-note-image" width="<%= @current_annotation_dimensions[:width_pixel] %>" height="<%= @current_annotation_dimensions[:height_pixel] %>" src="<%= @current_annotation.page.image_url %>" alt="Selected portion of a source document hosted by DocumentCloud" style="top:<%= @current_annotation_dimensions[:offset_top_percent] %>%;left:<%= @current_annotation_dimensions[:offset_left_percent] %>%;width:<%= @current_annotation_dimensions[:width_percent] %>%;">
+  </a>
+<% end %>
 </div>
+
+<%
+  @javascript_footer_inline = <<-EOS
+    // Pixel ping, stolen from documentcloud-pages until unified
+    var isIframed = function() {
+      try {
+          return window.self !== window.top;
+      } catch (e) {
+          return true;
+      }
+    };
+    var getSourceUrl = function() {
+      var source, sourceUrl;
+      if (isIframed()) {
+        source      = document.createElement('A');
+        source.href = document.referrer;
+      } else {
+        source      = window.location;
+      }
+      sourceUrl = source.protocol + '//' + source.host;
+      if (source.pathname.indexOf('/') !== 0) {
+        sourceUrl += '/';
+      };
+      sourceUrl += source.pathname;
+      sourceUrl = sourceUrl.replace(/[\/]+$/, '');
+      return sourceUrl;
+    };
+    var pingUrl   = '#{DC.server_root(agnostic: true)}/pixel.gif';
+    var sourceUrl = getSourceUrl();
+    var key       = encodeURIComponent('note:#{@current_annotation.id}:' + sourceUrl);
+    var image     = '<img src="' + pingUrl + '?key=' + key + '" width="1" height="1" class="DC-embed-pixel-ping" alt="Anonymous hit counter for DocumentCloud">';
+    var container = document.querySelector('.DC-note');
+    container.insertAdjacentHTML('afterend', image);
+  EOS
+%>

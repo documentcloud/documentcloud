@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="v2 empty">
+<html lang="en" class="v2 empty <%= compose_html_classes(@html_classes) %>">
 <head>
   <%= render :partial => 'common/meta_tags' %>
   <%= render :partial => 'common/oembed' if @oembeddable_resource %>
