@@ -6,6 +6,25 @@ require "minitest/autorun"
 require 'pry'
 require 'vcr'
 
+require 'simplecov'
+
+SimpleCov.profiles.define 'documentcloud' do
+  load_profile 'rails'
+
+  add_group 'DC Lib', 'lib/dc'
+  add_group 'Actions', 'actions'
+  
+  add_group "Long files" do |src_file|
+    src_file.lines.count > 100
+  end
+
+  add_filter 'vendor'
+  add_filter 'solr'
+end
+
+SimpleCov.command_name 'test'
+SimpleCov.start 'documentcloud'
+
 VCR.configure do |config|
   config.cassette_library_dir = "test/vcr_cassettes"
   config.allow_http_connections_when_no_cassette = true

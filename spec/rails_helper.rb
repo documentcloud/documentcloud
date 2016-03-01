@@ -9,14 +9,23 @@ require 'rspec/rails'
 require 'sunspot/rails/spec_helper'
 
 require 'simplecov'
+
 SimpleCov.profiles.define 'documentcloud' do
   load_profile 'rails'
 
+  add_group 'DC Lib', 'lib/dc'
+  add_group 'Actions', 'actions'
   add_group "Long files" do |src_file|
     src_file.lines.count > 100
   end
+
   add_filter 'vendor'
+  add_filter 'solr'
 end
+
+SimpleCov.command_name "rspec"
+
+SimpleCov.start 'documentcloud'
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
 # spec/support/ and its subdirectories. Files matching `spec/**/*_spec.rb` are
