@@ -2,11 +2,7 @@ require 'cgi'
 
 class RemoteUrl < ActiveRecord::Base
  
-<<<<<<< HEAD
   self.establish_connection( DC::ANALYTICS_DB ) unless Rails.env.testing?
-=======
-  #self.establish_connection( DC::ANALYTICS_DB ) unless Rails.env.testing?
->>>>>>> 11f484f1f7999a2ab667adcf0f3e004d7f50a6cc
   
   belongs_to :document
   belongs_to :note, :class_name=>'Annotation'
