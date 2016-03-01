@@ -10,6 +10,7 @@ require 'sunspot/rails/spec_helper'
 
 require 'simplecov'
 
+
 SimpleCov.profiles.define 'documentcloud' do
   load_profile 'rails'
 
@@ -26,6 +27,7 @@ end
 SimpleCov.command_name "rspec"
 
 SimpleCov.start 'documentcloud'
+
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
 # spec/support/ and its subdirectories. Files matching `spec/**/*_spec.rb` are
