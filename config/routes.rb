@@ -107,8 +107,7 @@ DC::Application.routes.draw do
       get  'pages/:page_name.txt', :action=>:send_page_text
       post 'pages/:page_name.txt', :action=>:set_page_text
       get  'pages/:page_name.gif', :action=>:send_page_image
-      get  'pages/:page_number.:format',        to: "pages#show"
-      get  'pages/:page_number/:embed.:format', to: "pages#show", format: 'html'
+      get  'pages/:page_number.:format', to: "pages#show"
       get  ':slug.pdf', :action=>:send_pdf
       get  ':slug.txt', :action=>:send_full_text
     end

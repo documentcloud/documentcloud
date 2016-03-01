@@ -16,12 +16,12 @@ class PagesController < ApplicationController
 
     respond_to do |format|
       format.html do
-        if params[:embed] == 'embed'
+        if params[:embed] == 'true'
           # We have a special, extremely stripped-down show page for when we're
           # being iframed. The normal show page can also be iframed, but there
           # will be a flash of unwanted layout elements before the JS/CSS 
           # arrives which removes them.
-          render :template => 'pages/show_embedded'
+          render template: 'pages/show_embedded'
         else
           make_oembeddable(current_page)
         end
