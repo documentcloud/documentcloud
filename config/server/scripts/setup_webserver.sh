@@ -52,11 +52,11 @@ test -e /etc/nginx/sites-enabled/default && rm /etc/nginx/sites-enabled/default
 # then copy our nginx configuration into the system directory
 cd /home/$USERNAME/documentcloud
 sudo cp config/server/files/nginx/*.conf                 /etc/nginx/
-sudo cp -r config/server/files/nginx/env                 /etc/nginx/env
+sudo cp -r config/server/files/nginx/documentcloud       /etc/nginx/documentcloud
 sudo cp config/server/files/nginx/sites-available/*.conf /etc/nginx/sites-available/
 
 # and link up the environment specific config file and the server configuration.
-ln -fs /etc/nginx/env/vagrant.conf                   /etc/nginx/env.conf
+ln -fs /etc/nginx/documentcloud/env/vagrant.conf                   /etc/nginx/documentcloud/env.conf
 ln -fs /etc/nginx/sites-available/documentcloud.conf /etc/nginx/sites-enabled/documentcloud.conf
 ln -fs /var/log/nginx                                /etc/nginx/logs
 
