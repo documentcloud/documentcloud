@@ -9,37 +9,4 @@
 <% end %>
 </div>
 
-<%
-  @javascript_footer_inline = <<-EOS
-    // Pixel ping, stolen from documentcloud-pages until unified
-    var isIframed = function() {
-      try {
-          return window.self !== window.top;
-      } catch (e) {
-          return true;
-      }
-    };
-    var getSourceUrl = function() {
-      var source, sourceUrl;
-      if (isIframed()) {
-        source      = document.createElement('A');
-        source.href = document.referrer;
-      } else {
-        source      = window.location;
-      }
-      sourceUrl = source.protocol + '//' + source.host;
-      if (source.pathname.indexOf('/') !== 0) {
-        sourceUrl += '/';
-      };
-      sourceUrl += source.pathname;
-      sourceUrl = sourceUrl.replace(/[\/]+$/, '');
-      return sourceUrl;
-    };
-    var pingUrl   = '#{DC.server_root(agnostic: true)}/pixel.gif';
-    var sourceUrl = getSourceUrl();
-    var key       = encodeURIComponent('note:#{@current_annotation.id}:' + sourceUrl);
-    var image     = '<img src="' + pingUrl + '?key=' + key + '" width="1" height="1" class="DC-embed-pixel-ping" alt="Anonymous hit counter for DocumentCloud">';
-    var container = document.querySelector('.DC-note');
-    container.insertAdjacentHTML('afterend', image);
-  EOS
-%>
+<img src="<%= DC.server_root(agnostic: true) %>/pixel.gif?key=<%= CGI.escape("note:#{@current_annotation.id}:#{request.referer.sub(/[\/]{1}$/, '')}") %>" width="1" height="1" class="DC-embed-pixel-ping" alt="STATIC Anonymous hit counter for DocumentCloud">
