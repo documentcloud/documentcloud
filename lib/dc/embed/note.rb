@@ -30,7 +30,7 @@ module DC
       def template
         unless @template
           @template = ERB.new(File.read(@template_path))
-          #@template.location = @template_path # uncomment this once deployed onto Ruby 2.2
+          @template.location = @template_path
         end
         @template
       end
