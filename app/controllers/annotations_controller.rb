@@ -41,6 +41,7 @@ class AnnotationsController < ApplicationController
           # being iframed. The normal show page can also be iframed, but there
           # will be a flash of unwanted layout elements before the JS/CSS 
           # arrives which removes them.
+          @pixel_ping_key = CGI.escape("note:#{@current_annotation.id}:#{request.referer.sub(/[\/]{1}$/, '')}") if request.referer
           render template: 'annotations/show_embedded', layout: 'minimal'
         else
           make_oembeddable(current_annotation)

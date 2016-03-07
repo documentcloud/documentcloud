@@ -9,4 +9,6 @@
 <% end %>
 </div>
 
-<img src="<%= DC.server_root(agnostic: true) %>/pixel.gif?key=<%= CGI.escape("note:#{@current_annotation.id}:#{request.referer.sub(/[\/]{1}$/, '')}") %>" width="1" height="1" class="DC-embed-pixel-ping" alt="STATIC Anonymous hit counter for DocumentCloud">
+<% if @pixel_ping_key %>
+<img src="<%= DC.server_root(agnostic: true) %>/pixel.gif?key=<%= @pixel_ping_key %>" width="1" height="1" class="DC-embed-pixel-ping" alt="STATIC Anonymous hit counter for DocumentCloud">
+<% end %>
