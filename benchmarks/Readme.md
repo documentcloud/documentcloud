@@ -34,7 +34,7 @@ Add to it to your Gemfile and then `bundle install` or simply require rubygems a
 
 Also, there is a rake task to generate test plan from a ruby-jmeter rb file and then runs the test.
 
-`bundle exec rake benchmark:run_testplan path/to/testplan.rb`
+`bundle exec rake benchmark:run_testplan['path/to/testplan.rb']`
 
 
 ### Reports
