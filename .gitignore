@@ -31,5 +31,5 @@ public/javascripts/vendor/*/
 Vagrantfile
 
 # Exclude JMeter Benchmarks
-#benchmarks/*/*.jtl
-#benchmarks/*/*.csv
+benchmarks/*/*.jtl
+benchmarks/*/*.csv
