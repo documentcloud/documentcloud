@@ -58,6 +58,7 @@ group :development do
   # by a developer on their local machine before committing the compiled strings
   gem 'google_drive',         '~> 1.0.0'
   gem 'highline'
+  gem 'ruby-jmeter'
 end
 
 group :test do

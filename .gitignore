@@ -29,3 +29,7 @@ public/javascripts/vendor/*/
 .vagrant
 .tm_properties
 Vagrantfile
+
+# Exclude JMeter Benchmarks
+#benchmarks/*/*.jtl
+#benchmarks/*/*.csv

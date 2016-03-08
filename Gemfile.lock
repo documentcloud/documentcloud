@@ -302,6 +302,9 @@ GEM
     rsolr (1.0.13)
       builder (>= 2.1.2)
     ruby-debug-passenger (0.2.0)
+    ruby-jmeter (2.13.10)
+      nokogiri
+      rest-client
     rubyzip (1.1.7)
     safe_yaml (1.0.4)
     sanitize (2.0.6)
@@ -401,6 +404,7 @@ DEPENDENCIES
   rdiscount (~> 2.1.6)
   rest-client (~> 1.8.0)
   ruby-debug-passenger
+  ruby-jmeter
   rubyzip (~> 1.1.0)
   sanitize (~> 2.0.6)
   spring
