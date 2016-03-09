@@ -26,7 +26,7 @@ module DC
       end
       
       def code
-        [bootstrap_markup, content_markup].join("\n")
+        [bootstrap_markup, content_markup].join("\n").squish
       end
       
       def self.config_keys

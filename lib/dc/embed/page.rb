@@ -60,7 +60,7 @@ module DC
       # Page embed uses a noscript-style enhancer, which prefers content markup 
       # before bootstrap markup
       def code
-        content_markup
+        content_markup.squish
       end
 
       def content_markup
