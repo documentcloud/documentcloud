@@ -3,10 +3,10 @@ module DC
     class Page < Base
       class Config < Base::Config
         define_attributes do
-          number  :maxheight
-          number  :maxwidth
+          number  :maxheight,      output_as: :height
+          number  :maxwidth,       output_as: :width
           boolean :credit
-          boolean :pageNavigator
+          boolean :page_navigator, output_as: :pageNavigator
           boolean :text
         end
       end
