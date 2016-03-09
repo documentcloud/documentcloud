@@ -133,8 +133,9 @@ class Page < ActiveRecord::Base
     File.join(DC.server_root, contextual_path)
   end
 
-  def iframe_embed_src_url
-    "#{canonical_url(:html)}?embed=true"
+  def iframe_embed_src_url(options={})
+    options.merge!(embed: true)
+    "#{canonical_url(:html)}?#{options.to_query}"
   end
   
   def oembed_url

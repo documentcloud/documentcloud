@@ -3,7 +3,7 @@
     Page <%= options[:page].page_number %> of <a class="DC-embed-resource" href="<%= options[:page].contextual_url %>" title="View entire <%= options[:document].title %> on DocumentCloud in new window or tab" target="_blank"><%= options[:document].title %></a>
   </div>
   <div style="position:relative;padding-bottom:<%= options[:page].inverted_aspect_ratio * 100 %>%;height:0;overflow:hidden;max-width:100%;margin:0.5em 0;border:1px solid #ccc;-webkit-box-sizing:border-box;clear:both">
-    <iframe src="<%= options[:page].iframe_embed_src_url %>" title="Page <%= options[:page].page_number %> of <%= options[:document].title %>" frameborder="0" allowfullscreen style="position:absolute;top:0;left:0;width:100%;height:100%"></iframe>
+    <iframe src="<%= options[:page].iframe_embed_src_url(data) %>" title="Page <%= options[:page].page_number %> of <%= options[:document].title %>" frameborder="0" allowfullscreen style="position:absolute;top:0;left:0;width:100%;height:100%"></iframe>
   </div>
   <div style="font-size:8pt;line-height:12pt;text-align:center">
     Contributed to
