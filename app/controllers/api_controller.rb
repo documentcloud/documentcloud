@@ -202,8 +202,7 @@ class ApiController < ApplicationController
     
     respond_to do |format|
       format.json do
-        @response = embed.as_json.to_json
-        render_cross_origin_json
+        render_cross_origin_json embed.as_json.to_json
       end
       format.all do
         # Per the oEmbed spec, unrecognized formats should trigger a 501
