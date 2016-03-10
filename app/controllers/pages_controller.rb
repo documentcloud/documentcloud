@@ -8,6 +8,7 @@ class PagesController < ApplicationController
   before_action :set_p3p_header,      :only => [:show]
   after_action  :allow_iframe,        :only => [:show]
   #skip_before_action :verify_authenticity_token, :only => [:send_page_text]
+  before_filter :clean_params,        :only => [:show]
   
   def show
     document_id = (params[:id] || params[:document_id]).to_i
@@ -16,6 +17,7 @@ class PagesController < ApplicationController
 
     respond_to do |format|
       format.html do
+        @embed_options = {container: '#DC-embed-container'}.merge(pick(params, :credit, :pageNavigator, :text))
         if params[:embed] == 'true'
           # We have a special, extremely stripped-down show page for when we're
           # being iframed. The normal show page can also be iframed, but there
@@ -46,6 +48,16 @@ class PagesController < ApplicationController
   
   private
   
+  # This exists essentially to recompose query param values from strings to 
+  # native variable types so that when the JSON object is passed to the 
+  # `load()` function, `"true"` is `true`. There is definitely redundancy 
+  # between here and `DC::Embed::Page` that should be reduced.
+  def clean_params
+    [:credit, :pageNavigator, :text].each do |key|
+      params[key] = (params[key] == 'true') unless params[key].nil?
+    end
+  end
+
   def current_document_json
     current_document.canonical.merge({page: (params[:page_number] || params[:id])}).to_json
   end
