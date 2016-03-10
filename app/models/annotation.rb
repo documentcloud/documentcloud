@@ -126,8 +126,20 @@ class Annotation < ActiveRecord::Base
     ACCESS_NAMES[access]
   end
 
+  def public?
+    PUBLIC_LEVELS.include?(access)
+  end
+
+  def private?
+    access == PRIVATE
+  end
+
+  def draft?
+    access == EXCLUSIVE
+  end
+
   def cacheable?
-    PUBLIC_LEVELS.include?(access) && document.cacheable?
+    public? && document.cacheable?
   end
 
   def coordinates
@@ -153,6 +165,13 @@ class Annotation < ActiveRecord::Base
       offset_top_percent:  -100.0 * coords[:top] / coords[:height],
       offset_left_percent: -100.0 * coords[:left] / coords[:width],
     }
+  end
+
+  def embed_classes
+    classes = []
+    classes.push 'draft'   if draft?
+    classes.push 'private' if private?
+    classes.map{ |cls| "DC-note-#{cls}" }.join(' ')
   end
 
   # `contextual` means "show this thing in the context of its document parent",
