@@ -22,7 +22,7 @@ DocumentCloud's API provides resources to search, upload, edit, and organize doc
   * [Documents](#oembed-documents)
   * [Pages](#oembed-pages)
   * [Notes](#oembed-notes)
-* [API Wrappers](#api-wrappers)
+* [API Wrappers and Utilities](#api-wrappers)
 
 <a name="guidelines"></a>
 # API Guidelines and Terms of Service
