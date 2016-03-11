@@ -9,6 +9,7 @@ class ApplicationController < ActionController::Base
   skip_before_action :verify_authenticity_token, if: :embeddable?
 
   before_action :set_ssl
+  before_action :set_cache_statement
 
   if Rails.env.development?
     around_action :perform_profile
@@ -84,6 +85,11 @@ class ApplicationController < ActionController::Base
     headers['Access-Control-Allow-Origin'] = '*' if options[:cors] && !headers.has_key?('Access-Control-Allow-Origin')
 
     render response
+  end
+  
+  def set_cache_statement(options={})
+    statement = "public, max-age=5"
+    headers['Cache-Control'] = statement
   end
 
   def has_callback?
