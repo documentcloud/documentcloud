@@ -341,13 +341,18 @@ url              | **(required)** URL-escaped document to embed     | https%3A%2
 container        | (optional) Specify the DOM container in which to embed the viewer | #my-document-div
 
 <a name="api-wrappers"></a>
-# API Wrappers
+# API Wrappers and Utilities
 
 The open-source community has contributed several helpful libraries for interacting with DocumentCloud's API. See their documentation for examples and more information:
 
-**Python:** [python-documentcloud](http://python-documentcloud.readthedocs.org/en/latest/)
+**Python:**
 
-**Ruby:** [Documentcloud gem](https://rubygems.org/gems/documentcloud/)
+* [python-documentcloud](http://python-documentcloud.readthedocs.org/en/latest/): A simple Python wrapper for the DocumentCloud API.
+* [pneumatic](http://pneumatic.readthedocs.org/en/latest/): A bulk-upload library for DocumentCloud.
+
+**Ruby:**
+
+* [Documentcloud](https://rubygems.org/gems/documentcloud/): RubyGem for interacting with the DocumentCloud API.
 
 # Questions?
 

@@ -347,9 +347,14 @@ container        | (optional) Especifique el contenedor DOM en el que se incorpo
 
 La comunidad de código abierto ha contribuido varias aplicaciones votos para interactuar con el API del DocumentCloud. Ver la documentación de ejemplos y más información:
 
-**Python:** [python-documentcloud](http://python-documentcloud.readthedocs.org/en/latest/)
+**Python:**
 
-**Ruby:** [Documentcloud gem](https://rubygems.org/gems/documentcloud/)
+* [python-documentcloud](http://python-documentcloud.readthedocs.org/en/latest/): Un envoltorio de Python simple para la API DocumentCloud.
+* [pneumatic](http://pneumatic.readthedocs.org/en/latest/): Una biblioteca de carga para cargas masivas de DocumentCloud.
+
+**Ruby:**
+
+* [Documentcloud](https://rubygems.org/gems/documentcloud/): Rubygem para interactuar con el API DocumentCloud.
 
 # Preguntas?
 
