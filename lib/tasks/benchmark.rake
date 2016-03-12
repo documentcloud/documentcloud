@@ -30,7 +30,3 @@ namespace :benchmark do
     jmeter = jmeter_executable.strip == '/usr/local/bin/jmeter' ? '/usr/local/Cellar/jmeter/2.13/libexec' : '/usr/share/jmeter'
   end
 end
-
-
-
-#git commit benchmarks/Readme.md benchmarks/jmeter/user.properties -m "296 adds more jmeter plugin configs, updates readme, tweaks test plan to output more interesting results"
