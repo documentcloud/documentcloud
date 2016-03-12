@@ -59,6 +59,7 @@ group :development do
   gem 'google_drive',         '~> 1.0.0'
   gem 'highline'
   gem 'ruby-jmeter'
+  gem 'rubocop', require: false
 end
 
 group :test do

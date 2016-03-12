@@ -2,12 +2,13 @@ require 'rubygems'
 require 'ruby-jmeter'
 
 test do
-  threads count: 5 do
-    visit name: 'DocumentCloud Home', url: 'https://staging.documentcloud.org'
+  threads count: 5, rampup: 10 do
+    visit name: 'DocumentCloud', url: 'https://staging.documentcloud.org'
+    visit name: 'DocumentCloud Home', url: 'https://staging.documentcloud.org/home'
   end
   
   
-  threads count: 50 do
+  threads count: 50, rampup: 10  do
     # 296 Reliably cache/expire:
     # JS/JSON endpoints
     visit name: 'JSON', url: 'https://staging.documentcloud.org/documents/282753-lefler-thesis.json'
@@ -30,8 +31,13 @@ test do
   generate_summary_results
   summary_report
 
-  latencies_over_time 'Response Latencies Over Time'
   active_threads 'Active Threads'
+  latencies_over_time 'Response Latencies Over Time'
+  response_codes_per_second 'Response Codes per Second'
+  response_times_distribution 'Response Times Distribution'
+  response_times_over_time 'Response Times Over Time'
+  response_times_percentiles 'Response Times Percentiles'
+  transactions_per_second 'Transactions per Second'
   
   composite 'Composite Graph', [
     {
@@ -49,5 +55,4 @@ end.run(
   log: './log/jmeter.log',
   jtl: './benchmarks/296_cache/results-staging.jtl',
   properties: './benchmarks/jmeter/user.properties',
-  path:  '/usr/bin/', gui: false) # ubuntu/vagrant'
-  # path:  '/usr/local/bin/') # local MacOSX
+  path:  `which jmeter`.strip == '/usr/local/bin/jmeter' ? '/usr/local/bin/' : '/usr/bin/', gui: false)
