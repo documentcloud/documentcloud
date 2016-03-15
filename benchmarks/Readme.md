@@ -13,8 +13,9 @@ http://jmeter.apache.org/
 
 To install the plugins (Standard and Extras), go to http://jmeter-plugins.org/wiki/PluginInstall
 
-When downloading and extrackign the packages ensure that you save the plugin's bin and lib contents in the same directory structure (e.g. within /usr/share/jmeter)
+When downloading and extracting the packages ensure that you save the plugin's bin and lib contents in the same directory structure (e.g. within /usr/share/jmeter)
 
+```
 |-usr/share/jmeter
 | |-bin
 | | |-jmeter.bat
@@ -31,6 +32,7 @@ When downloading and extrackign the packages ensure that you save the plugin's b
 | |-...
 |-...
 
+```
 More on JMeter Plugins here http://jmeter-plugins.org/wiki/PluginInstall/
 
 ### OSX
@@ -59,13 +61,11 @@ Also, there is a rake task to generate test plan from a ruby-jmeter rb file and 
 
 `bundle exec rake benchmark:run_testplan['path/to/testplan.rb']`
 
-
+or 
 
 #### On development/vagrant
 
 http://manpages.ubuntu.com/manpages/vivid/man1/jmeter.1.html
-
-@TODO fix rake task
 
 /usr/bin/jmeter  -t ./benchmarks/296_cache/testplan.jmx -j ./log/jmeter.log -l ./benchmarks/296_cache/results-staging.jtl -q ./benchmarks/jmeter/user.properties --nongui
 
@@ -81,7 +81,9 @@ bundle exec rake benchmark:generate_reports['LatenciesOverTime', './benchmarks/2
 
 will run
 
-`java -Djava.awt.headless=true -jar /usr/local/Cellar/jmeter/2.13/libexec/lib/ext/CMDRunner.jar --tool Reporter  --input-jtl ./benchmarks/296_cache/results-staging.jtl  --plugin-type LatenciesOverTime --generate-png ./benchmarks/296_cache/LatenciesOverTime.png --width 800 --height 600 --generate-csv ./benchmarks/296_cache/LatenciesOverTime.csv`
+```
+java -Djava.awt.headless=true -jar /usr/local/Cellar/jmeter/2.13/libexec/lib/ext/CMDRunner.jar --tool Reporter  --input-jtl ./benchmarks/296_cache/results-staging.jtl  --plugin-type LatenciesOverTime --generate-png ./benchmarks/296_cache/LatenciesOverTime.png --width 800 --height 600 --generate-csv ./benchmarks/296_cache/LatenciesOverTime.csv
+```
 
 `java -Djava.awt.headless=true -jar /usr/share/jmeter/lib/ext/CMDRunner.jar --tool Reporter  --input-jtl ./benchmarks/296_cache/results-staging.jtl  --plugin-type LatenciesOverTime --generate-png ./benchmarks/296_cache/LatenciesOverTime.png --width 800 --height 600 --generate-csv ./benchmarks/296_cache/LatenciesOverTime.csv`
 
