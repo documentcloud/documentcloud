@@ -30,13 +30,13 @@ gpg --keyserver keyserver.ubuntu.com --recv-keys 561F9B9CAC40B2F7
 gpg --armor --export 561F9B9CAC40B2F7 | sudo apt-key add -
 
 # fetch metadata so that we can find the passenger package
-apt-get update
+apt update
 
 # and install it.
-apt-get install nginx-extras passenger -y
+apt install nginx-extras passenger -y
 
 # also, install node and coffeescript, so that we can install pixel-ping and bower.
-apt-get install nodejs -y
+apt install nodejs -y
 npm install -g coffee-script
 
 # clone pixel-ping
@@ -58,6 +58,8 @@ sudo cp config/server/files/nginx/sites-available/*.conf /etc/nginx/sites-availa
 # and link up the environment specific config file and the server configuration.
 ln -fs /etc/nginx/documentcloud/env/vagrant.conf                   /etc/nginx/documentcloud/env.conf
 ln -fs /etc/nginx/sites-available/documentcloud.conf /etc/nginx/sites-enabled/documentcloud.conf
+ln -fs /etc/nginx/documentcloud/env/vagrant.conf                   /etc/nginx/documentcloud/env.conf
+ln -fs /etc/nginx/sites-available/documentcloud_cache.conf /etc/nginx/sites-enabled/documentcloud_cache.conf
 ln -fs /var/log/nginx                                /etc/nginx/logs
 
 ! test -e /usr/share/nginx/logs && mkdir /usr/share/nginx/logs

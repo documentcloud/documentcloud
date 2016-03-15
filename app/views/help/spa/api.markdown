@@ -22,7 +22,7 @@ El API proporciona recursos para buscar, cargar, editar y organizar documentos, 
   * [Documentos](#oembed-documents)
   * [Páginas](#oembed-pages)
   * [Notas](#oembed-notes)
-* [API Envolturas](#api-wrappers)
+* [Envolturas de la API y Utilidades](#api-wrappers)
 
 <a name="guidelines"></a>
 # Directrices y Condiciones del Servicio de API
@@ -343,13 +343,18 @@ url              | **(required)** De escape de URL documento para incrustar     
 container        | (optional) Especifique el contenedor DOM en el que se incorporará al espectador | #my-document-div
 
 <a name="api-wrappers"></a>
-# API Envolturas
+# Envolturas de la API y Utilidades
 
 La comunidad de código abierto ha contribuido varias aplicaciones votos para interactuar con el API del DocumentCloud. Ver la documentación de ejemplos y más información:
 
-**Python:** [python-documentcloud](http://python-documentcloud.readthedocs.org/en/latest/)
+**Python:**
 
-**Ruby:** [Documentcloud gem](https://rubygems.org/gems/documentcloud/)
+* [python-documentcloud](http://python-documentcloud.readthedocs.org/en/latest/): Un envoltorio de Python simple para la API DocumentCloud.
+* [pneumatic](http://pneumatic.readthedocs.org/en/latest/): Una biblioteca de carga para cargas masivas de DocumentCloud.
+
+**Ruby:**
+
+* [Documentcloud](https://rubygems.org/gems/documentcloud/): Rubygem para interactuar con el API DocumentCloud.
 
 # Preguntas?
 
