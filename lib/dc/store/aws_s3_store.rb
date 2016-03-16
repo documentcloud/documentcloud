@@ -45,8 +45,19 @@ module DC
         bucket.objects[path].content_length
       end
       
-      def authorized_url(path)
-        bucket.objects[path].url_for(:read, :secure => Thread.current[:ssl], :expires => AUTH_PERIOD).to_s
+      # Returns a temporary S3 URL.
+      #
+      # Caller may specify content type to override whatever the server sends.
+      # (We don't just calculate the MIME type from the filename, because we
+      # may want "text/plain; charset=utf-8".)
+      def authorized_url(path, opts={})
+        request_options = {
+          :secure => Thread.current[:ssl],
+          :expires => AUTH_PERIOD
+        }
+        request_options[:response_content_type] = opts[:content_type] if opts[:content_type]
+
+        bucket.objects[path].url_for(:read, request_options).to_s
       end
       
       def list(path)
