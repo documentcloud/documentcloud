@@ -192,7 +192,7 @@ class DocumentsController < ApplicationController
 
   def send_pdf
     return not_found unless current_document(true)
-    redirect_to current_document.pdf_url(:direct)
+    redirect_to current_document.pdf_url(direct: true)
   end
 
   def send_page_image
