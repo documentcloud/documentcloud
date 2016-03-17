@@ -572,7 +572,7 @@ class Document < ActiveRecord::Base
     File.join(DC.server_root, full_text_path)
   end
 
-  def full_text_url(direct=false)
+  def full_text_url(direct: false)
     return public_full_text_url if public? || Rails.env.development?
     return private_full_text_url unless direct
     DC::Store::AssetStore.new.authorized_url(full_text_path)

@@ -205,7 +205,7 @@ class DocumentsController < ApplicationController
   def send_full_text
     maybe_set_cors_headers
     return not_found unless current_document(true)
-    redirect_to current_document.full_text_url(:direct)
+    redirect_to current_document.full_text_url(direct: true)
   end
 
   def send_page_text
