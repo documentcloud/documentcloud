@@ -45,8 +45,15 @@ module DC
         bucket.objects[path].content_length
       end
       
-      def authorized_url(path)
-        bucket.objects[path].url_for(:read, :secure => Thread.current[:ssl], :expires => AUTH_PERIOD).to_s
+      def authorized_url(path, opts={})
+        options = {
+          secure: Thread.current[:ssl],
+          expires: AUTH_PERIOD
+        }
+        # We only want to interject a content type if it's specified; otherwise,
+        # let S3 serve whatever content type the file was stored with.
+        options[:response_content_type] = opts[:content_type] if opts[:content_type]
+        bucket.objects[path].url_for(:read, options).to_s
       end
       
       def list(path)
