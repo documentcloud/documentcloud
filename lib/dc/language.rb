@@ -14,6 +14,7 @@ module DC
       'eng' => 'English',
       'fra' => 'French',
       'deu' => 'German',
+      'heb' => 'Hebrew',
       'hun' => 'Hungarian',
       'ind' => 'Indonesian',
       'ita' => 'Italian',
