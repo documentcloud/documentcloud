@@ -32,7 +32,7 @@
   </script>
 <% end %>
 
-  <%= render :partial => 'common/google' %>
+  <%= render :partial => 'common/google' unless @exclude_analytics %>
 
 </body>
 </html>
