@@ -4,11 +4,6 @@
   <%= render :partial => 'common/meta_tags' %>
   <meta http-equiv="ClearType" content="true">
   <title><%= @query %></title>
-
-  <% if Rails.env.production? %>
-    <% @pageview_url = '/search/preview' %>
-    <%= render :partial => 'common/google' %>
-  <% end %>
 </head>
 <body style="margin:0; padding:0;">
 
@@ -20,5 +15,9 @@
     </script>
   </div>
 
+<% if Rails.env.production? %>
+  <% @pageview_url = '/search/preview' %>
+  <%= render :partial => 'common/google' %>
+<% end %>
 </body>
 </html>
