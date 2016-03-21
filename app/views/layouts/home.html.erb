@@ -8,9 +8,6 @@
     <%= include_stylesheets :lt_ie_9, :embed_assets => false %>
   <![endif]-->
   <%= include_javascripts :core, :home %>
-  <% if Rails.env.production? %>
-    <%= render :partial => 'common/google' %>
-  <% end %>
   <%= csrf_meta_tag %> 
 </head>
 <body class="<%= @bodyclass %>">
@@ -48,5 +45,8 @@
 
   <%= render :partial => 'common/bootstrap', :locals => {:workspace => false} %>
 
+<% if Rails.env.production? %>
+  <%= render :partial => 'common/google' %>
+<% end %>
 </body>
 </html>

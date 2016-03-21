@@ -19,9 +19,6 @@
   <% if Rails.env.development? %>
     <%= include_javascripts :dev_only %>
   <% end %>
-  <% if @include_analytics && Rails.env.production? %>
-    <%= render :partial => 'common/google' %>
-  <% end %>
   <%= csrf_meta_tag %> 
 </head>
 <body class="<%= @bodyclass %> <%= @current_account ? 'logged_in' : '' %>">
@@ -60,5 +57,8 @@
 
   <%= render :partial => 'common/bootstrap', :locals => {:workspace => true} %>
 
+<% if @include_analytics && Rails.env.production? %>
+  <%= render :partial => 'common/google' %>
+<% end %>
 </body>
 </html>
