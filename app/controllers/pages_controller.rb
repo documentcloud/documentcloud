@@ -21,6 +21,7 @@ class PagesController < ApplicationController
           # being iframed. The normal show page can also be iframed, but there
           # will be a flash of unwanted layout elements before the JS/CSS 
           # arrives which removes them.
+          @exclude_analytics = true
           render template: 'pages/show_embedded'
         else
           make_oembeddable(current_page)
