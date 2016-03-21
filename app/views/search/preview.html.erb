@@ -15,9 +15,7 @@
     </script>
   </div>
 
-<% if Rails.env.production? %>
-  <% @pageview_url = '/search/preview' %>
-  <%= render :partial => 'common/google' %>
-<% end %>
+  <%= render :partial => 'common/google', :locals => { :pageview_url => '/search/preview' } %>
+
 </body>
 </html>

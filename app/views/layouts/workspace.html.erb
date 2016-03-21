@@ -57,8 +57,9 @@
 
   <%= render :partial => 'common/bootstrap', :locals => {:workspace => true} %>
 
-<% if @include_analytics && Rails.env.production? %>
+<% if @include_analytics %>
   <%= render :partial => 'common/google' %>
 <% end %>
+
 </body>
 </html>
