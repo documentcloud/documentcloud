@@ -347,6 +347,10 @@ container        | (optional) Especifique el contenedor DOM en el que se incorpo
 
 La comunidad de código abierto ha contribuido varias aplicaciones votos para interactuar con el API del DocumentCloud. Ver la documentación de ejemplos y más información:
 
+**Node**
+
+* [node-documentcloud](https://github.com/rdmurphy/node-documentcloud): Una envoltura alrededor de la API Node.js DocumentCloud.
+
 **Python:**
 
 * [python-documentcloud](http://python-documentcloud.readthedocs.org/en/latest/): Un envoltorio de Python simple para la API DocumentCloud.

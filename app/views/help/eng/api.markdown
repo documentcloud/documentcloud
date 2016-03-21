@@ -345,6 +345,10 @@ container        | (optional) Specify the DOM container in which to embed the vi
 
 The open-source community has contributed several helpful libraries for interacting with DocumentCloud's API. See their documentation for examples and more information:
 
+**Node.js**
+
+* [node-documentcloud](https://github.com/rdmurphy/node-documentcloud): A Node.js wrapper around the DocumentCloud API.
+
 **Python:**
 
 * [python-documentcloud](http://python-documentcloud.readthedocs.org/en/latest/): A simple Python wrapper for the DocumentCloud API.
