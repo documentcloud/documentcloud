@@ -56,11 +56,11 @@ sudo cp -r config/server/files/nginx/documentcloud       /etc/nginx/documentclou
 sudo cp config/server/files/nginx/sites-available/*.conf /etc/nginx/sites-available/
 
 # and link up the environment specific config file and the server configuration.
-ln -fs /etc/nginx/documentcloud/env/vagrant.conf                   /etc/nginx/documentcloud/env.conf
-ln -fs /etc/nginx/sites-available/documentcloud.conf /etc/nginx/sites-enabled/documentcloud.conf
-ln -fs /etc/nginx/documentcloud/env/vagrant.conf                   /etc/nginx/documentcloud/env.conf
-ln -fs /etc/nginx/sites-available/documentcloud_cache.conf /etc/nginx/sites-enabled/documentcloud_cache.conf
-ln -fs /var/log/nginx                                /etc/nginx/logs
+ln -fs /etc/nginx/documentcloud/env/$RAILS_ENVIRONMENT.conf        /etc/nginx/documentcloud/env.conf
+ln -fs /etc/nginx/sites-available/documentcloud.conf               /etc/nginx/sites-enabled/documentcloud.conf
+ln -fs /etc/nginx/documentcloud/cache_env/$RAILS_ENVIRONMENT.conf  /etc/nginx/documentcloud/cache_env.conf
+ln -fs /etc/nginx/sites-available/documentcloud_cache.conf         /etc/nginx/sites-enabled/documentcloud_cache.conf
+ln -fs /var/log/nginx                                              /etc/nginx/logs
 
 ! test -e /usr/share/nginx/logs && mkdir /usr/share/nginx/logs
 ! test -e /home/$USERNAME/documentcloud/log && mkdir /home/$USERNAME/documentcloud/log
