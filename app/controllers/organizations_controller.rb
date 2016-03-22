@@ -1,6 +1,6 @@
 # The OrganizationsController is responsible for organization management
 class OrganizationsController < ApplicationController
-  layout 'workspace'
+  layout nil
 
   before_action :login_required
   before_action :read_only_error if read_only?

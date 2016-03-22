@@ -11,8 +11,8 @@ class FeaturedController < ApplicationController
       format.any(:js, :json) do
         json @reports
       end
-      format.html { render :layout=>'home' }
-      format.rss  { render :layout=>false }
+      format.html { render :layout => 'home' }
+      format.rss  { render :layout => nil }
     end
   end
 

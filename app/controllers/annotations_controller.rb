@@ -57,7 +57,7 @@ class AnnotationsController < ApplicationController
     docs = Document.accessible(current_account, current_organization).where( :id => params[:docs] )
     Document.populate_annotation_counts(current_account, docs)
     @documents_json = docs.map {|doc| doc.to_json(:annotations => true, :account => current_account) }
-    render :layout => false
+    render :layout => nil
   end
 
   # Any account can create a private note on any document.
