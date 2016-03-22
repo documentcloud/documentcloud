@@ -57,9 +57,7 @@
 
   <%= render :partial => 'common/bootstrap', :locals => {:workspace => true} %>
 
-<% if @include_analytics %>
-  <%= render :partial => 'common/google' %>
-<% end %>
+  <%= render :partial => 'common/google' if @include_analytics %>
 
 </body>
 </html>
