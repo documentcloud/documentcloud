@@ -3,8 +3,8 @@ class ApiController < ApplicationController
   include DC::Access
   include DC::Search::Controller
 
-  layout 'workspace'
-  
+  layout nil
+
   READONLY_ACTIONS = [
     :index, :search, :documents, :pending, :notes, :entities, :project, :projects, :oembed,
     :cors_options, :logger

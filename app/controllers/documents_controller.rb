@@ -39,6 +39,7 @@ class DocumentsController < ApplicationController
         return if date_requested?
         return if entity_requested?
         make_oembeddable(doc)
+        render :layout => nil
       end
       format.pdf  { redirect_to(doc.pdf_url) }
       format.text { redirect_to(doc.full_text_url) }
