@@ -10,12 +10,12 @@ module DC
       end
 
       def initialize(resource, embed_config={}, options={})
-        # resource should be a wrapper object around a model 
+        # resource should be a wrapper object around a model
         # which plucks out relevant metadata
         # Consider ActiveModel::Serializers for this purpose.
-        # N.B. we should be able to generate oembed codes for things that are 
+        # N.B. we should be able to generate oembed codes for things that are
         # basically mocks of a document, not just for real documents
-        [:id, :resource_url].each do |attribute| 
+        [:id, :resource_url].each do |attribute|
           raise ArgumentError, "Embed resource must `respond_to?` an ':#{attribute}' attribute" unless resource.respond_to?(attribute)
         end
         @resource      = resource
@@ -62,11 +62,11 @@ module DC
         <script type="text/javascript" src="#{DC.cdn_root(agnostic: true)}/note_embed/note_embed.js"></script>
         SCRIPT
       end
-  
+
       def static_loader
         %(<script type="text/javascript" src="#{DC.cdn_root(agnostic: true)}/notes/loader.js"></script>)
       end
-  
+
       # intended for use in the static deployment to s3.
       def self.static_loader(options={})
         template_path = "#{Rails.root}/app/views/annotations/embed_loader.js.erb"
