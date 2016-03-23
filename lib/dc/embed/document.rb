@@ -39,7 +39,14 @@ module DC
 
         @template_path = options[:template_path] || "#{Rails.root}/app/views/documents/_embed_code.html.erb"
         @template      = options[:template]
+
+        # document_id = @resource.id[/^[0-9]+/]
+        # @document   = ::Document.find document_id
       end
+
+      # def accessible?
+      #   @document.public?
+      # end
 
       def template
         unless @template

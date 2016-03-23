@@ -25,7 +25,13 @@ module DC
 
         @template_path = options[:template_path] || "#{Rails.root}/app/views/annotations/_embed_code.html.erb"
         @template      = options[:template]
+
+        # @note = ::Annotation.find @resource.id
       end
+
+      # def accessible?
+      #   @note.public?
+      # end
 
       def template
         unless @template
