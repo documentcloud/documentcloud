@@ -35,10 +35,14 @@ module DC
         # Fetch page from database to populate embed code with page/doc data.
         # `resource_params` were already recognized in `ApiController#oembed`,
         # but unless we want to pass them to this method, we gotta do it again.
-        resource_params = Rails.application.routes.recognize_path(resource.resource_url) rescue nil
-        document_id     = resource.id[/^[0-9]+/]
+        resource_params = Rails.application.routes.recognize_path(@resource.resource_url) rescue nil
+        document_id     = @resource.id[/^[0-9]+/]
         page_number     = resource_params[:page_number]
         @page           = ::Page.where(document_id: document_id, page_number: page_number).first
+      end
+
+      def accessible?
+        @page.document.public?
       end
 
       def template

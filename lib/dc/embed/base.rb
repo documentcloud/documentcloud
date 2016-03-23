@@ -32,6 +32,10 @@ module DC
         [bootstrap_markup, content_markup].join("\n").squish
       end
       
+      def accessible?
+        true
+      end
+      
       def self.config_keys
         Config.keys
       end

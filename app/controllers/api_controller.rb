@@ -200,6 +200,8 @@ class ApiController < ApplicationController
     config = pick(params, *DC::Embed.embed_klass(resource.type).config_keys)
     embed = DC::Embed.embed_for(resource, config, {:strategy => :oembed})
     
+    return forbidden unless embed.accessible?
+
     respond_to do |format|
       format.json do
         render_cross_origin_json embed.as_json.to_json
