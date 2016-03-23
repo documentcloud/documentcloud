@@ -9,7 +9,7 @@ class ApplicationController < ActionController::Base
   skip_before_action :verify_authenticity_token, if: :embeddable?
 
   before_action :set_ssl
-  before_action :set_cache_statement
+  after_action :set_cache_statement
 
   if Rails.env.development?
     around_action :perform_profile
@@ -38,6 +38,14 @@ class ApplicationController < ActionController::Base
     request.format.txt? or
     request.format.xml?
   end
+  
+  def cachable?
+    public?
+  end
+  
+  def public?
+    
+  end
 
   def make_oembeddable(resource)
     # Resource should have both an `oembed_url` and a `title`
@@ -51,7 +59,18 @@ class ApplicationController < ActionController::Base
     headers['Access-Control-Allow-Headers'] = 'Accept,Authorization,Content-Length,Content-Type,Cookie'
     headers['Access-Control-Allow-Credentials'] = 'true'
   end
-
+  
+  def set_cache_statement(options={})
+    # https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/http-caching
+    # https://www.digitalocean.com/community/tutorials/understanding-nginx-http-proxying-load-balancing-buffering-and-caching
+    headers['Cache-Control'] = case
+    when request.get? and not current_account
+      "public, s-maxage=5"
+    else
+      "no-cache"
+    end
+  end
+  
   # Convenience method for responding with JSON. Supports empty responses, 
   # specifying status codes, and adding CORS headers. If JSONing an 
   # ActiveRecord object with errors, a 400 Bad Request will be returned with a
@@ -85,11 +104,6 @@ class ApplicationController < ActionController::Base
     headers['Access-Control-Allow-Origin'] = '*' if options[:cors] && !headers.has_key?('Access-Control-Allow-Origin')
 
     render response
-  end
-  
-  def set_cache_statement(options={})
-    statement = "public, max-age=5"
-    headers['Cache-Control'] = statement
   end
 
   def has_callback?
