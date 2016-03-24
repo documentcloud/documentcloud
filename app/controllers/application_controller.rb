@@ -142,7 +142,11 @@ class ApplicationController < ActionController::Base
     # explanation of what these mean: http://www.p3pwriter.com/LRN_111.asp
     headers['P3P'] = 'CP="IDC DSP COR ADM DEVi TAIi PSA PSD IVAi IVDi CONi HIS OUR IND CNT"'
   end
-
+  
+  def allow_iframe
+    response.headers.except! 'X-Frame-Options'
+  end
+  
   def expire_pages(paths)
     [paths].flatten.each { |path| expire_page path }
   end
@@ -194,10 +198,6 @@ class ApplicationController < ActionController::Base
     end
   end
   
-  def allow_iframe
-    response.headers.except! 'X-Frame-Options'
-  end
-
   def admin_required
     ( logged_in? && current_account.dcloud_admin? ) || forbidden
   end
