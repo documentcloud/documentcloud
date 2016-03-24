@@ -102,6 +102,7 @@ class Account < ActiveRecord::Base
 
   # Reset the logged-in cookie.
   def refresh_credentials(cookies)
+    # we condition HTTP caching based on logged in status as indicated by this cookie!
     cookies['dc_logged_in'] = {:value => 'true', :expires => 1.month.from_now, :httponly => true}
   end
 

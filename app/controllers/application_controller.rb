@@ -9,6 +9,7 @@ class ApplicationController < ActionController::Base
   skip_before_action :verify_authenticity_token, if: :embeddable?
 
   before_action :set_ssl
+  before_action :validate_session
   after_action :set_cache_statement
 
   if Rails.env.development?
@@ -158,6 +159,15 @@ class ApplicationController < ActionController::Base
     hash.each {|key, value| filtered[key.to_sym] = value if keys.include?(key.to_sym) }
     filtered
   end
+  
+  def session_valid?
+    # session is valid if and only if user is logged_in? and cookies['dc_logged_in']
+    (logged_in? and cookies['dc_logged_in']) or (not logged_in? and not cookies['dc_logged_in'])
+  end
+  
+  def validate_session
+    clear_login_state unless session_valid?
+  end
 
   def logged_in?
     !!current_account
@@ -170,7 +180,7 @@ class ApplicationController < ActionController::Base
 
   def login_required
     return true if logged_in?
-    cookies.delete 'dc_logged_in'
+    clear_login_state
     forbidden
   end
 
@@ -203,7 +213,7 @@ class ApplicationController < ActionController::Base
   end
 
   def prefer_secure
-    secure_only(302) if cookies['dc_logged_in'] == 'true'
+    secure_only(302) if logged_in?
   end
 
   def secure_only(status=301)

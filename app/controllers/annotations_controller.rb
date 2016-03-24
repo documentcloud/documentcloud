@@ -4,6 +4,7 @@ class AnnotationsController < ApplicationController
   layout false
 
   before_action :login_required, :except => [:index, :show, :print, :cors_options]
+  before_action :prefer_secure, :only => [:show]
   skip_before_action :verify_authenticity_token
   after_action  :allow_iframe, :only => [:show]
 
