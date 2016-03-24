@@ -38,15 +38,11 @@ class ApplicationController < ActionController::Base
     request.format.txt? or
     request.format.xml?
   end
-  
-  def cachable?
-    public?
-  end
-  
-  def public?
-    
-  end
 
+  def cachable?
+    request.get? and not logged_in?
+  end
+  
   def make_oembeddable(resource)
     # Resource should have both an `oembed_url` and a `title`
     @oembeddable_resource = resource
@@ -64,7 +60,7 @@ class ApplicationController < ActionController::Base
     # https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/http-caching
     # https://www.digitalocean.com/community/tutorials/understanding-nginx-http-proxying-load-balancing-buffering-and-caching
     headers['Cache-Control'] = case
-    when request.get? and not current_account
+    when cachable?
       "public, s-maxage=5"
     else
       "no-cache"
