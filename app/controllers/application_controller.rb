@@ -163,6 +163,11 @@ class ApplicationController < ActionController::Base
     !!current_account
   end
 
+  def clear_login_state
+    cookies.delete 'dc_logged_in'
+    reset_session
+  end
+
   def login_required
     return true if logged_in?
     cookies.delete 'dc_logged_in'

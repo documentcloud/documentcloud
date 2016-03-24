@@ -217,9 +217,4 @@ class AuthenticationController < ApplicationController
     return data
   end
 
-  def clear_login_state
-    reset_session
-    cookies.delete 'dc_logged_in'
-  end
-
 end
