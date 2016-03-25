@@ -6,6 +6,7 @@ class SearchController < ApplicationController
   FIELD_STRIP = /\S+:\s*/
 
   def documents
+    set_cache_statement("public, max-age=60") unless logged_in?
     perform_search pick(params, :mentions)
     results = {:query => @query, :documents => @documents}
     respond_to do |format|

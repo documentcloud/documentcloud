@@ -57,10 +57,12 @@ class ApplicationController < ActionController::Base
     headers['Access-Control-Allow-Credentials'] = 'true'
   end
   
-  def set_cache_statement(options={})
+  def set_cache_statement(statement=nil)
     # https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/http-caching
     # https://www.digitalocean.com/community/tutorials/understanding-nginx-http-proxying-load-balancing-buffering-and-caching
     headers['Cache-Control'] = case
+    when statement
+      statement
     when cachable?
       "public, s-maxage=5"
     else
