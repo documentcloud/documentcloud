@@ -4,7 +4,7 @@
     <%= link_to options[:document].title, options[:page].contextual_url, { class: 'DC-embed-resource', title: "View entire #{options[:document].title} on DocumentCloud in new window or tab", target: '_blank' } %>
   </div>
   <div style="position:relative;padding-bottom:<%= options[:page].inverted_aspect_ratio * 100 %>%;height:0;overflow:hidden;max-width:100%;margin:0.5em 0;border:1px solid #ccc;-webkit-box-sizing:border-box;clear:both">
-    <%= content_tag :iframe, nil, { src: options[:page].iframe_embed_src_url(data), title: "Page #{options[:page].page_number} of #{options[:document].title}", sandbox: ['allow-scripts', 'allow-same-origin'], frameborder: '0', style: 'position:absolute;top:0;left:0;width:100%;height:100%' } %>
+    <%= content_tag :iframe, nil, { src: options[:page].iframe_embed_src_url(data), title: "Page #{options[:page].page_number} of #{options[:document].title}", sandbox: ['allow-scripts', 'allow-same-origin', 'allow-popups'], frameborder: '0', style: 'position:absolute;top:0;left:0;width:100%;height:100%' } %>
   </div>
   <div style="font-size:8pt;line-height:12pt;text-align:center">
     Contributed to
