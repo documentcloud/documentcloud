@@ -60,7 +60,7 @@ class ApplicationController < ActionController::Base
   def set_cache_statement(statement=nil)
     # https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/http-caching
     # https://www.digitalocean.com/community/tutorials/understanding-nginx-http-proxying-load-balancing-buffering-and-caching
-    headers['Cache-Control'] = case
+    headers['Cache-Control'] ||= case
     when statement
       statement
     when cachable?
