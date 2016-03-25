@@ -151,7 +151,7 @@ class Page < ActiveRecord::Base
   end
 
   def safe_aspect_ratio
-    aspect_ratio || 8.5/11
+    aspect_ratio || (document.calculate_aspect_ratios && 8.5/11)
   end
 
   def inverted_aspect_ratio

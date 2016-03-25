@@ -711,6 +711,12 @@ class Document < ActiveRecord::Base
     queue_import :images_only => true, :secure => !calais_id
   end
 
+  def calculate_aspect_ratios
+    # TODO: Queue up an aspect ratio calculation, UNLESS one is already in 
+    # process (which will often be the case)
+    true
+  end
+
   def reindex_all!(access=nil)
     Page.refresh_page_map(self)
     EntityDate.reset(self)
