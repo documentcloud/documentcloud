@@ -150,10 +150,16 @@ class Page < ActiveRecord::Base
     "page #{page_number} of #{document.title}"
   end
 
+  # We only recently started calculating aspect ratios, and haven't 
+  # back-calculated all aspect ratios. Return one if we have; otherwise, queue 
+  # up a document process action to calculate the ratios and temporarily return 
+  # the most common size, 8.5x11.
   def safe_aspect_ratio
     aspect_ratio || (document.calculate_aspect_ratios && 8.5/11)
   end
 
+  # Normal aspect ratio is `width / height`, but for the purposes of the 
+  # `padding-bottom` responsive trick, we need `height / width`.
   def inverted_aspect_ratio
     1 / safe_aspect_ratio
   end
