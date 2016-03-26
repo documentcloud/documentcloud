@@ -24,11 +24,12 @@ class DocumentsController < ApplicationController
     return forbidden if doc.nil? && Document.exists?(params[:id].to_i)
     return not_found unless doc
     options = {data: true}.merge(pick(params, :data))
+    #fresh_when last_modified: (current_document.updated_at || Time.now).utc, etag: current_document
     respond_to do |format|
       format.html do
         @sidebar    = !(params[:sidebar] || '').match(/no|false/)
         @responsive = (params[:responsive] || '').match /yes|true/
-        populate_editor_data if current_account && current_organization
+        populate_editor_data if logged_in?
         return if date_requested?
         return if entity_requested?
         make_oembeddable(doc)
