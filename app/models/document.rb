@@ -713,8 +713,25 @@ class Document < ActiveRecord::Base
 
   def calculate_aspect_ratios
     # TODO: Queue up an aspect ratio calculation, UNLESS one is already in 
-    # process (which will often be the case)
-    true
+    # process (which will often be the case) 
+    if existing_jobs(:calculate_aspect_ratios).present? 
+      true
+    else
+      enqueue_calculate_aspect_ratios
+    end
+  end
+
+  def existing_jobs(action)
+    processing_jobs.where(action: action, complete: false)
+  end
+
+  def enqueue_calculate_aspect_ratios
+    self.processing_jobs.new(
+      action: 'calculate_aspect_ratios',
+      title: title, 
+      account_id: account_id,
+      options: { id: id }
+    ).queue
   end
 
   def reindex_all!(access=nil)
@@ -737,6 +754,7 @@ class Document < ActiveRecord::Base
   end
 
   # Keep a local ProcessingJob record of this active CloudCrowd Job.
+  # Use record_job
   def record_job(job_json)
     job = JSON.parse(job_json)
     processing_jobs.create!(
