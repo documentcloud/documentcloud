@@ -26,8 +26,15 @@ class DocumentsController < ApplicationController
     options = {data: true}.merge(pick(params, :data))
     respond_to do |format|
       format.html do
-        @sidebar    = !(params[:sidebar] || '').match(/no|false/)
-        @responsive = (params[:responsive] || '').match /yes|true/
+        @embed_options = {
+          container: '#viewer',
+          sidebar:   !(params[:sidebar] || '').match(/no|false/) # For Overview
+        }
+        if params[:embed]
+          # This should take advantage of DC::Embed::Document::Config
+          @embed_options[:page]    = params[:page] || nil
+          @embed_options[:note]    = params[:note] || nil
+        end
         populate_editor_data if current_account && current_organization
         return if date_requested?
         return if entity_requested?

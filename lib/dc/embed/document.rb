@@ -40,13 +40,13 @@ module DC
         @template_path = options[:template_path] || "#{Rails.root}/app/views/documents/_embed_code.html.erb"
         @template      = options[:template]
 
-        # document_id = @resource.id[/^[0-9]+/]
-        # @document   = ::Document.find document_id
+        document_id = @resource.id[/^[0-9]+/]
+        @document   = ::Document.find document_id
       end
 
-      # def accessible?
-      #   @document.public?
-      # end
+      def accessible?
+        @document.public?
+      end
 
       def template
         unless @template
@@ -60,14 +60,19 @@ module DC
         template.result(binding)
       end
 
+      def code
+        content_markup.squish
+      end
+
       def content_markup
         template_options = {
-          default_container_id: "DV-viewer-#{@resource.id}",
-          resource_url:         @resource.resource_url
+          # default_container_id: "DV-viewer-#{@resource.id}",
+          resource_url: @resource.resource_url,
+          document:     @document
         }
-        template_options[:generate_default_container] = @embed_config[:container].nil? || @embed_config[:container].empty? || @embed_config[:container] == '#' + template_options[:default_container_id]
+        # template_options[:generate_default_container] = @embed_config[:container].nil? || @embed_config[:container].empty? || @embed_config[:container] == '#' + template_options[:default_container_id]
+        # @embed_config[:container] ||= '#' + template_options[:default_container_id]
 
-        @embed_config[:container] ||= '#' + template_options[:default_container_id]
         render(@embed_config.dump, template_options)
       end
 

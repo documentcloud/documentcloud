@@ -40,11 +40,7 @@
         :data => true,
         :access => true,
         :cache_busting => @allowed_to_edit
-      }).to_json.html_safe %>, {
-        <% unless @sidebar %>sidebar: false,<% end %>
-        <% if @responsive %>responsive: true, responsiveOffset: 0,<% end %>
-        container: '#viewer'
-      });
+      }).to_json.html_safe %>, <%=raw @embed_options.to_json %>);
     <% end %>
   </script>
   <noscript>

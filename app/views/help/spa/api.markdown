@@ -298,7 +298,7 @@ Generar un código de inserción para un recurso (un documento o una nota) utili
 <a name="oembed-documents"></a>
 ### Ejemplo petición documento
 
-    /api/oembed.json?url=https%3A%2F%2Fwww.documentcloud.org%2Fdocuments%2Fdoc-name.html&responsive=true
+    /api/oembed.json?url=https%3A%2F%2Fwww.documentcloud.org%2Fdocuments%2Fdoc-name.html
 
 ### Parámetros para documentos
 

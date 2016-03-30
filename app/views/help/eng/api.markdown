@@ -296,7 +296,7 @@ Generate an embed code for a resource (a document or a note) using our [oEmbed](
 <a name="oembed-documents"></a>
 ### Example document request
 
-    /api/oembed.json?url=https%3A%2F%2Fwww.documentcloud.org%2Fdocuments%2Fdoc-name.html&responsive=true
+    /api/oembed.json?url=https%3A%2F%2Fwww.documentcloud.org%2Fdocuments%2Fdoc-name.html
 
 ### Parameters for documents
 
