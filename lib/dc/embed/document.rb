@@ -18,18 +18,18 @@ module DC
           number  :responsive_offset, output_as: :responsiveOffset
         end
       end
-      
+
       def self.config_keys
         Config.keys
       end
-  
+
       def initialize(resource, embed_config={}, options={})
-        # resource should be a wrapper object around a model 
+        # resource should be a wrapper object around a model
         # which plucks out relevant metadata
         # Consider ActiveModel::Serializers for this purpose.
-        # N.B. we should be able to generate oembed codes for things that are 
+        # N.B. we should be able to generate oembed codes for things that are
         # basically mocks of a document, not just for real documents
-        [:id, :resource_url].each do |attribute| 
+        [:id, :resource_url].each do |attribute|
           raise ArgumentError, "Embed resource must `respond_to?` an ':#{attribute}' attribute" unless resource.respond_to?(attribute)
         end
         @resource      = resource
@@ -39,7 +39,14 @@ module DC
 
         @template_path = options[:template_path] || "#{Rails.root}/app/views/documents/_embed_code.html.erb"
         @template      = options[:template]
+
+        # document_id = @resource.id[/^[0-9]+/]
+        # @document   = ::Document.find document_id
       end
+
+      # def accessible?
+      #   @document.public?
+      # end
 
       def template
         unless @template
@@ -67,7 +74,7 @@ module DC
       def bootstrap_markup
         @strategy == :oembed ? inline_loader : static_loader
       end
-  
+
       def inline_loader
         <<-SCRIPT
         <script>
@@ -76,17 +83,17 @@ module DC
         <script type="text/javascript" src="#{DC.cdn_root(agnostic: true)}/viewer/viewer.js"></script>
         SCRIPT
       end
-  
+
       def static_loader
         %(<script type="text/javascript" src="#{DC.cdn_root(agnostic: true)}/viewer/loader.js"></script>)
       end
-  
+
       # intended for use in the static deployment to s3.
       def self.static_loader(options={})
         template_path = "#{Rails.root}/app/views/documents/embed_loader.js.erb"
         ERB.new(File.read(template_path)).result(binding)
       end
-  
+
       def as_json
         if @strategy == :oembed
           {

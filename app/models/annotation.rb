@@ -126,8 +126,20 @@ class Annotation < ActiveRecord::Base
     ACCESS_NAMES[access]
   end
 
+  def public?
+    PUBLIC_LEVELS.include?(access)
+  end
+
+  def private?
+    access == PRIVATE
+  end
+
+  def draft?
+    access == EXCLUSIVE
+  end
+
   def cacheable?
-    PUBLIC_LEVELS.include?(access) && document.cacheable?
+    public? && document.cacheable?
   end
 
   def coordinates
@@ -155,6 +167,13 @@ class Annotation < ActiveRecord::Base
     }
   end
 
+  def embed_classes
+    classes = []
+    classes.push 'draft'   if draft?
+    classes.push 'private' if private?
+    classes.map{ |cls| "DC-note-#{cls}" }.join(' ')
+  end
+
   # `contextual` means "show this thing in the context of its document parent",
   # which right now correlates to its page-anchored version.
   def contextual_url
@@ -173,6 +192,11 @@ class Annotation < ActiveRecord::Base
     "/documents/#{document.canonical_id}/annotations/#{id}.#{format}"
   end
 
+  def iframe_embed_src_url(options={})
+    options.merge!(embed: true)
+    "#{canonical_url(:html)}?#{options.to_query}"
+  end
+  
   def oembed_url
     "#{DC.server_root}/api/oembed.json?url=#{CGI.escape(self.canonical_url(:html))}"
   end
@@ -192,6 +216,10 @@ class Annotation < ActiveRecord::Base
 
   def anchored_published_url
     "#{document.published_url}\#document/p#{page_number}/a#{id}"
+  end
+
+  def page_image_url(size: 'normal')
+    document.page_image_url_template.gsub('{page}', page_number.to_s).gsub('{size}', size)
   end
 
   def canonical(opts={})

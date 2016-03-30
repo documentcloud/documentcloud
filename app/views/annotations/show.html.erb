@@ -10,7 +10,7 @@
 </header>
 
 <div class="container">
-  <div class="DC-note <%#= extraClasses %>" data-version="1.1" style="background-image:url('<%= @current_annotation.page.image_url %>')">
+  <div class="DC-note <%= @current_annotation.embed_classes %>" data-version="1.1" style="background-image:url('<%= @current_annotation.page.image_url %>')">
     <div class="DC-note-header">
       <a class="DC-note-embed-resource" href="<%= @current_annotation.contextual_path %>" title="View the note '<%= @current_annotation.title %>' in its original document context">
         <span class="DC-note-title"><%= @current_annotation.title %></span>

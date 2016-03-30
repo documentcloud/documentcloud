@@ -6,6 +6,9 @@
 module DC
   module Embed
     class Base
+      include ActionView::Helpers::UrlHelper
+      include ActionView::Helpers::TagHelper
+
       attr_accessor :strategy, :dom_mechanism, :template
       attr_reader   :resource, :embed_config
 
@@ -26,7 +29,11 @@ module DC
       end
       
       def code
-        [bootstrap_markup, content_markup].join("\n")
+        [bootstrap_markup, content_markup].join("\n").squish
+      end
+      
+      def accessible?
+        true
       end
       
       def self.config_keys
