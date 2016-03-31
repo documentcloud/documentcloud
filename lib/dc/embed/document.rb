@@ -34,10 +34,10 @@ module DC
         end
         @resource      = resource
         @embed_config  = Config.new(embed_config)
-        @strategy      = options[:strategy]      || :literal # :oembed is the other option.
-        @dom_mechanism = options[:dom_mechanism] || :direct
+        @strategy      = options[:strategy]      || :literal # or :oembed
+        @dom_mechanism = options[:dom_mechanism] || :iframe  # or :direct
 
-        @template_path = options[:template_path] || "#{Rails.root}/app/views/documents/_embed_code.html.erb"
+        @template_path = options[:template_path] || "#{Rails.root}/app/views/documents/_#{@dom_mechanism}_embed_code.html.erb"
         @template      = options[:template]
 
         @document   = ::Document.find @resource.id
