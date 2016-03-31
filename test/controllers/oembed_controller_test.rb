@@ -7,9 +7,9 @@ class OembedControllerTest < ActionController::TestCase
   include Rails.application.routes.url_helpers
   default_url_options[:host] = DC::CONFIG['server_root']
 
-  let(:missing_url) { CGI.escape(url_for controller: 'documents', action: 'show', id: '3-the-magic-number', format: 'html') }
   let(:public_document_url) { CGI.escape(documents(:tv_manual).canonical_url(:html)) }
   let(:private_document_url) { CGI.escape(documents(:top_secret).canonical_url(:html)) }
+  let(:missing_url) { CGI.escape(url_for controller: 'documents', action: 'show', id: '404-not-found', format: 'html') }
   let(:unsupported_format_url) { CGI.escape(documents(:tv_manual).canonical_url(:lol)) }
   let(:external_url) { CGI.escape('http://www2.warnerbros.com/spacejam/movie/jam.htm') }
 
