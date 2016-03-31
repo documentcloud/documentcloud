@@ -1,4 +1,4 @@
-<div class="embed-container" style="position:relative;padding-bottom:<%= options[:document].inverted_aspect_ratio * 100 %>%;height:0;overflow:hidden;max-width:100%;">
+<div style="position:relative;padding-bottom:<%= options[:document].inverted_aspect_ratio * 100 %>%;height:0;overflow:hidden;max-width:100%;">
   <%= content_tag :iframe, nil, { 
         src: options[:document].iframe_embed_src_url(data), 
         title: "Document “#{options[:document].title}” hosted by DocumentCloud", 
