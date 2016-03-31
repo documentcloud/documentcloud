@@ -25,7 +25,7 @@ class OembedControllerTest < ActionController::TestCase
     assert_response 400
   end
 
-  it "shouldn't support wacky formats" do
+  it "shouldn't support wacky oEmbed response formats" do
     get :oembed, format: "lol", url: public_document_url
     assert_response 501
   end
