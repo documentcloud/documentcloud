@@ -228,6 +228,7 @@ class ApiController < ApplicationController
 
   def resource_embeddable?(resource_params)
     resource_params and
+    resource_params[:format] == 'html' and
     resource_params[:id] and
     (
       (

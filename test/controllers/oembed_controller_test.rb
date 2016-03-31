@@ -7,9 +7,9 @@ class OembedControllerTest < ActionController::TestCase
   include Rails.application.routes.url_helpers
   default_url_options[:host] = DC::CONFIG['server_root']
 
-  let(:public_document_url) { CGI.escape(documents(:tv_manual).canonical_url) }
   let(:missing_url) { CGI.escape(url_for controller: 'documents', action: 'show', id: '3-the-magic-number', format: 'html') }
-  let(:unsupported_format_url) { CGI.escape(documents(:tv_manual).canonical_url(:json)) }
+  let(:public_document_url) { CGI.escape(documents(:tv_manual).canonical_url(:html)) }
+  let(:unsupported_format_url) { CGI.escape(documents(:tv_manual).canonical_url(:lol)) }
   let(:external_url) { CGI.escape('http://www2.warnerbros.com/spacejam/movie/jam.htm') }
 
   it "should understand a valid oEmbed request" do
@@ -35,8 +35,7 @@ class OembedControllerTest < ActionController::TestCase
     assert_response 404
   end
 
-  it "shouldn't find unsupported URLs" do
-    skip "Need to reimplement this check"
+  it "should only find HTML resources" do
     get :oembed, format: "json", url: unsupported_format_url
     assert_response 404
   end
