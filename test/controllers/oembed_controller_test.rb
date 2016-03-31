@@ -9,6 +9,7 @@ class OembedControllerTest < ActionController::TestCase
 
   let(:missing_url) { CGI.escape(url_for controller: 'documents', action: 'show', id: '3-the-magic-number', format: 'html') }
   let(:public_document_url) { CGI.escape(documents(:tv_manual).canonical_url(:html)) }
+  let(:private_document_url) { CGI.escape(documents(:top_secret).canonical_url(:html)) }
   let(:unsupported_format_url) { CGI.escape(documents(:tv_manual).canonical_url(:lol)) }
   let(:external_url) { CGI.escape('http://www2.warnerbros.com/spacejam/movie/jam.htm') }
 
@@ -23,6 +24,11 @@ class OembedControllerTest < ActionController::TestCase
   it "should require a URL parameter" do
     get :oembed, format: "json"
     assert_response 400
+  end
+
+  it "shouldn't find private documents" do
+    get :oembed, format: "json", url: private_document_url
+    assert_response 403
   end
 
   it "shouldn't support wacky oEmbed response formats" do
