@@ -5,7 +5,7 @@ describe DC::Embed::Document do
   
   let(:resource) do
     doc_url = doc.canonical_url(:html)
-    Struct.new(:id, :resource_url, :type).new(doc.id.to_s, doc_url, :document)
+    Struct.new(:id, :resource_url, :type).new(doc.id, doc_url, :document)
   end
   let(:config_data) do
     {
@@ -25,7 +25,17 @@ describe DC::Embed::Document do
     DC::Embed::Document.new(resource, {}).must_be_kind_of DC::Embed::Document
   end
   
-  it "should output HTML markup" do
+  it "should output HTML markup for iframe based embedding" do
+    embed_code = Nokogiri::HTML(DC::Embed::Document.new(resource, {}).code)
+    iframe = embed_code.css("iframe")
+    iframe.wont_be_empty
+    iframe = iframe.first
+    
+    iframe.attribute("src").value.must_match /^#{resource.resource_url}/
+  end
+
+  it "should output HTML for JS based embedding" do
+    skip # until embed dom mechanism is configurable
     embed_code = Nokogiri::HTML(DC::Embed::Document.new(resource, {}).code)
     embed_code.css("#DV-viewer-#{resource.id}").wont_be_empty
     
@@ -38,7 +48,8 @@ describe DC::Embed::Document do
     code_scripts.count.must_equal 1
   end
 
-  it "should output an oembed response as json" do
+  it "should output an oembed response for a JS Embed as json" do
+    skip # until embed dom mechanism is configurable
     oembed_data = DC::Embed::Document.new(resource, {:sidebar=>false}, {:strategy=>:oembed}).as_json
     html = Nokogiri::HTML(oembed_data[:html])
     
