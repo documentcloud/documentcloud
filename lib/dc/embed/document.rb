@@ -40,8 +40,7 @@ module DC
         @template_path = options[:template_path] || "#{Rails.root}/app/views/documents/_embed_code.html.erb"
         @template      = options[:template]
 
-        document_id = @resource.id[/^[0-9]+/]
-        @document   = ::Document.find document_id
+        @document   = ::Document.find @resource.id
       end
 
       def accessible?
