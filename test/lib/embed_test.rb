@@ -3,7 +3,20 @@ require 'pry'
 
 describe DC::Embed::Document do
   
-  let(:resource) { Struct.new(:id, :resource_url, :type).new("123", "https://dev.dcloud.org/documents/123-foo.html", :document) }
+  let(:resource) do
+    doc_url = doc.canonical_url(:html)
+    Struct.new(:id, :resource_url, :type).new(doc.id.to_s, doc_url, :document)
+  end
+  let(:config_data) do
+    {
+      :sidebar           => false,
+      :pdf               => true,
+      :maxwidth          => 400,
+      :maxheight         => 500,
+      :responsive_offset => 12,
+      :container         => ".hi"
+    }
+  end
   
   it "should require a resource" do
     Proc.new{ DC::Embed::Document.new(nil, {}) }.must_raise ArgumentError
@@ -49,20 +62,12 @@ describe DC::Embed::Document do
   end
   
   it "should convert string values to their literal values" do
-    input_config = {
-      :sidebar           => false,
-      :pdf               => true,
-      :maxwidth          => 400,
-      :maxheight         => 500,
-      :responsive_offset => 12,
-      :container         => ".hi"
-    }
-    string_config_values = Hash[input_config.map{ |k,v| [k, v.to_s] }]
+    string_config_values = Hash[config_data.map{ |k,v| [k, v.to_s] }]
     embed = DC::Embed::Document.new(resource, string_config_values)
     
     config = embed.embed_config
-    input_config.keys.each do |key|
-      config[key].must_equal input_config[key]
+    config_data.keys.each do |key|
+      config[key].must_equal config_data[key]
     end
   end
   
