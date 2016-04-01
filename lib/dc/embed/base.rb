@@ -125,8 +125,9 @@ module DC
         
         # When initializing search the input arguments for fields which
         # this configuration class accepts
-        def initialize(args={})
-          self.class.keys.each{ |attribute| self[attribute] = args[attribute] }
+        def initialize(data:{}, options:{map_keys: true})
+          @options = options
+          self.class.keys.each{ |attribute| self[attribute] = data[attribute] }
         end
         
         # store attributes as instance variables
@@ -147,10 +148,13 @@ module DC
         end
         
         def dump
-          attribute_pairs = self.compact.map do |attribute, value|
-            # replace input keys with output keys as specified
-            attribute = self.class.attribute_map[attribute] if self.class.attribute_map.keys.include? attribute
-            [attribute, value]
+          attribute_pairs = self.compact
+          if @options[:map_keys]
+            attribute_pairs = Hash[attribute_pairs].map do |attribute, value|
+              # replace input keys with output keys as specified
+              attribute = self.class.attribute_map[attribute] if self.class.attribute_map.keys.include? attribute
+              [attribute, value]
+            end
           end
           Hash[attribute_pairs]
         end

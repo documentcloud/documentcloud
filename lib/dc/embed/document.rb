@@ -33,9 +33,10 @@ module DC
           raise ArgumentError, "Embed resource must `respond_to?` an ':#{attribute}' attribute" unless resource.respond_to?(attribute)
         end
         @resource      = resource
-        @embed_config  = Config.new(embed_config)
         @strategy      = options[:strategy]      || :literal # or :oembed
         @dom_mechanism = options[:dom_mechanism] || :iframe  # or :direct
+        config_options = (@dom_mechanism == :iframe ? {map_keys: false} : {map_keys: true}).merge(options)
+        @embed_config  = Config.new(data: embed_config, options: config_options)
 
         @template_path = options[:template_path] || "#{Rails.root}/app/views/documents/_#{@dom_mechanism}_embed_code.html.erb"
         @template      = options[:template]
