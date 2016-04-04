@@ -64,7 +64,7 @@ class ApplicationController < ActionController::Base
     when statement
       statement
     when cachable?
-      "public, max-age=5"
+      "public, max-age=10"
     else
       "no-cache"
     end
