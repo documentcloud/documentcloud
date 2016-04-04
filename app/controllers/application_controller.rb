@@ -295,7 +295,7 @@ class ApplicationController < ActionController::Base
   end
 
   def self.exclusive_access?
-    Rails.env.staging? and false
+    Rails.env.staging?
   end
 
   def set_ssl
