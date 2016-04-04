@@ -13,7 +13,7 @@ dc.controllers.Workspace = Backbone.Router.extend({
     this.renderSubViews();
     dc.app.searcher = new dc.controllers.Searcher;
     if (!Backbone.history.start({pushState : true, root : dc.account ? '/' : '/public/'})) {
-      dc.app.searcher.loadDefault({showHelp: true});
+      dc.app.searcher.loadDefault({showHelp: !(dc.account && window.location.pathname.indexOf('/public/') === 0)});
     }
   },
 
