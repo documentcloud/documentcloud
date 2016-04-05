@@ -27,6 +27,9 @@ class HomeController < ApplicationController
     @contributors = yaml['contributors']
   end
 
+  def terms_new
+    render layout: 'minimal'
+  end
 
   private
 

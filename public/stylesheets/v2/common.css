@@ -238,6 +238,7 @@
 
 /*--------------------------------- embeds -----------------------------------*/
 
+.v2 .paper-box,
 .v2 .embed-preview-container {
   background-color: white;
   padding: 30px 40px;
@@ -245,6 +246,11 @@
   border-radius: 6px;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
+}
+
+.v2 .paper-box > h1,
+.v2 .embed-preview-container > h1 {
+  margin-top: 0.5em;
 }
 
 /* We don't even generate these elements when the embedder has iframed the
@@ -264,7 +270,8 @@
 
 /* Small devices (tablets, 768px and up) */
 @media (min-width: 768px) {
-  .v2 .embed-preview-container {
+  .v2 .embed-preview-container,
+  .v2 .paper-box {
     margin-top: 30px;
     margin-bottom: 30px;
   }

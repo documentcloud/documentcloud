@@ -166,6 +166,7 @@ DC::Application.routes.draw do
   get '/contributors',  to: 'home#contributors',  as: 'contributors'
   get '/faq',           to: 'home#faq'
   get '/terms',         to: 'home#terms',         as: 'terms'
+  get '/terms_new',     to: 'home#terms_new',     as: 'terms_new'
   get '/privacy',       to: 'home#privacy',       as: 'privacy'
   get '/p3p.:format',   to: 'home#p3p',           as: 'p3p'
   get '/home',          to: 'home#index',         as: 'home'
