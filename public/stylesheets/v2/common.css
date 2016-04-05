@@ -76,6 +76,36 @@
   text-transform: uppercase;
 }
 
+.v2 p {
+  margin: 1.5em 0;
+}
+
+.v2 .underline {
+  text-decoration: underline;
+}
+
+.v2 ol {
+  margin-left: 2em;
+  padding-left: 0;
+}
+
+.v2 li {
+  margin-left: 0;
+  padding-left: 0;
+}
+
+.v2 ol.lower-alpha {
+  list-style-type: lower-alpha;
+}
+
+.v2 ol.upper-alpha {
+  list-style-type: upper-alpha;
+}
+
+.v2 ol.decimal {
+  list-style-type: decimal;
+}
+
 .v2 a:link {
   color: rgb(119, 147, 189);
 }
