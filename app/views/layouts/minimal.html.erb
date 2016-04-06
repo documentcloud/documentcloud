@@ -4,6 +4,7 @@
   <%= render :partial => 'common/meta_tags' %>
   <%= render :partial => 'common/oembed' if @oembeddable_resource %>
   <title><%= compose_title(@title) %></title>
+  <%= stylesheet_link_tag('//cloud.typography.com/6952374/728448/css/fonts.css') unless @embedded %>
   <%# CSS Jammit's aware of %>
   <% stylesheets_jammit = [:ui_v2] + (@stylesheets_jammit || []) %>
   <%= include_stylesheets *stylesheets_jammit %>
