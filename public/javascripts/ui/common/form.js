@@ -139,6 +139,7 @@ dc.ui.FormView = Backbone.View.extend({
     _.each(this.model.validationError, function(messages, attr) {
       var $element = this.$('[name="' + attr + '"]');
       if ($element.length === 0) { $element = this.$('#' + attr); }
+      if ($element.length === 0) { return; }
 
       if ($element.hasClass('field')) {
         var $fieldwrap = $element.closest('.fieldwrap').addClass('invalid').removeClass('valid');
