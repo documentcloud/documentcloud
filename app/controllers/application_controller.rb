@@ -5,10 +5,12 @@ class ApplicationController < ActionController::Base
 
   BasicAuth = ActionController::HttpAuthentication::Basic
 
-  protect_from_forgery
+  protect_from_forgery with: :exception
   skip_before_action :verify_authenticity_token, if: :embeddable?
 
   before_action :set_ssl
+  before_action :validate_session
+  after_action :set_cache_statement
 
   if Rails.env.development?
     around_action :perform_profile
@@ -38,6 +40,10 @@ class ApplicationController < ActionController::Base
     request.format.xml?
   end
 
+  def cachable?
+    request.get? and not logged_in?
+  end
+  
   def make_oembeddable(resource)
     # Resource should have both an `oembed_url` and a `title`
     @oembeddable_resource = resource
@@ -50,7 +56,20 @@ class ApplicationController < ActionController::Base
     headers['Access-Control-Allow-Headers'] = 'Accept,Authorization,Content-Length,Content-Type,Cookie'
     headers['Access-Control-Allow-Credentials'] = 'true'
   end
-
+  
+  def set_cache_statement(statement=nil)
+    # https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/http-caching
+    # https://www.digitalocean.com/community/tutorials/understanding-nginx-http-proxying-load-balancing-buffering-and-caching
+    headers['Cache-Control'] ||= case
+    when statement
+      statement
+    when cachable?
+      "public, max-age=10"
+    else
+      "no-cache"
+    end
+  end
+  
   # Convenience method for responding with JSON. Supports empty responses, 
   # specifying status codes, and adding CORS headers. If JSONing an 
   # ActiveRecord object with errors, a 400 Bad Request will be returned with a
@@ -126,7 +145,11 @@ class ApplicationController < ActionController::Base
     # explanation of what these mean: http://www.p3pwriter.com/LRN_111.asp
     headers['P3P'] = 'CP="IDC DSP COR ADM DEVi TAIi PSA PSD IVAi IVDi CONi HIS OUR IND CNT"'
   end
-
+  
+  def allow_iframe
+    response.headers.except! 'X-Frame-Options'
+  end
+  
   def expire_pages(paths)
     [paths].flatten.each { |path| expire_page path }
   end
@@ -138,14 +161,28 @@ class ApplicationController < ActionController::Base
     hash.each {|key, value| filtered[key.to_sym] = value if keys.include?(key.to_sym) }
     filtered
   end
+  
+  def session_valid?
+    # session is valid if and only if user is logged_in? and cookies['dc_logged_in']
+    (logged_in? and cookies['dc_logged_in']) or (not logged_in? and not cookies['dc_logged_in'])
+  end
+  
+  def validate_session
+    clear_login_state unless session_valid?
+  end
 
   def logged_in?
     !!current_account
   end
 
+  def clear_login_state
+    cookies.delete 'dc_logged_in'
+    reset_session
+  end
+
   def login_required
     return true if logged_in?
-    cookies.delete 'dc_logged_in'
+    clear_login_state
     forbidden
   end
 
@@ -173,16 +210,12 @@ class ApplicationController < ActionController::Base
     end
   end
   
-  def allow_iframe
-    response.headers.except! 'X-Frame-Options'
-  end
-
   def admin_required
     ( logged_in? && current_account.dcloud_admin? ) || forbidden
   end
 
   def prefer_secure
-    secure_only(302) if cookies['dc_logged_in'] == 'true'
+    secure_only(302) if logged_in?
   end
 
   def secure_only(status=301)
@@ -262,7 +295,7 @@ class ApplicationController < ActionController::Base
   end
 
   def self.exclusive_access?
-    Rails.env.staging? and false
+    Rails.env.staging?
   end
 
   def set_ssl

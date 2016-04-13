@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
   <%= render :partial => 'common/meta_tags' %>
@@ -14,12 +13,7 @@
   <![endif]-->
   <link href="<%= DC.cdn_root(:agnostic => true) %>/viewer/printviewer.css" media="print" rel="stylesheet" type="text/css" />
   <script src="<%= DC.cdn_root(:agnostic => true) %>/viewer/viewer.js" type="text/javascript"></script>
-  <% if Rails.env.production? && @current_document %>
-    <% @pageview_url = '/documents/show' %>
-    <%= render :partial => 'common/google' %>
-  <% end %>
   <%= csrf_meta_tag %>
-
   <%= render(:partial => 'viewer_editing_head') if @edits_enabled %>
 </head>
 <body style="margin:0; padding:0;">
@@ -32,5 +26,10 @@
   <% end %>
 
   <%= render(:partial => 'viewer_editing') if @edits_enabled %>
+
+<% if @current_document %>
+  <%= render partial: 'common/google', locals: { pageview_url: '/documents/show' } %>
+<% end %>
+
 </body>
 </html>

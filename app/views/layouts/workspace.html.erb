@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
   <%= render :partial => 'common/meta_tags' %>
@@ -19,9 +18,6 @@
   <![endif]-->
   <% if Rails.env.development? %>
     <%= include_javascripts :dev_only %>
-  <% end %>
-  <% if @include_analytics && Rails.env.production? %>
-    <%= render :partial => 'common/google' %>
   <% end %>
   <%= csrf_meta_tag %> 
 </head>
@@ -60,6 +56,8 @@
   </iframe>
 
   <%= render :partial => 'common/bootstrap', :locals => {:workspace => true} %>
+
+  <%= render :partial => 'common/google' if @include_analytics %>
 
 </body>
 </html>

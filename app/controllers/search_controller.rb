@@ -6,6 +6,7 @@ class SearchController < ApplicationController
   FIELD_STRIP = /\S+:\s*/
 
   def documents
+    set_cache_statement("public, max-age=600") unless logged_in?
     perform_search pick(params, :mentions)
     results = {:query => @query, :documents => @documents}
     respond_to do |format|
@@ -17,6 +18,7 @@ class SearchController < ApplicationController
 
   def embed
     return bad_request unless params[:options]
+    set_cache_statement("public, max-age=600") unless logged_in?
     groups = params[:options].match(/p-(\d+)-per-(\d+)-order-(\w+)-org-(\d+)/)
     _, params[:page], params[:per_page], params[:order], params[:organization_id] = *groups
     perform_search
@@ -34,7 +36,8 @@ class SearchController < ApplicationController
     if params[:q].length > 255
       head :bad_request and return
     end
-    cache_page js unless request.ssl?
+    #cache_page js unless request.ssl?
+    set_cache_statement("public, max-age=150") unless logged_in?
     render :js => js
   end
 

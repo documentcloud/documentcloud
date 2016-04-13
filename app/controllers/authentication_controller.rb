@@ -14,13 +14,13 @@ class AuthenticationController < ApplicationController
 
   # Display the signup information page.
   def signup_info
-    render :layout => "workspace.html.erb"
+    render :layout => 'workspace'
   end
 
   # /login handles both the login form and the login request.
   def login
     return redirect_to '/' if current_account && current_account.refresh_credentials(cookies) && !current_account.reviewer? && current_account.active?
-    return render(:layout => "workspace") unless request.post?
+    return render(:layout => 'workspace') unless request.post?
     next_url = (params[:next] && CGI.unescape(params[:next])) || '/'
     account = Account.log_in(params[:email], params[:password], session, cookies)
     return redirect_to(next_url) if account && account.active?
@@ -215,11 +215,6 @@ class AuthenticationController < ApplicationController
     end
 
     return data
-  end
-
-  def clear_login_state
-    reset_session
-    cookies.delete 'dc_logged_in'
   end
 
 end

@@ -32,7 +32,7 @@ class StatisticsTest < ActiveSupport::TestCase
 
   def test_weekly_hits_on_documents
     hits = DC::Statistics.weekly_hits_on_documents
-    assert_equal [122, 18], hits.values
+    assert_equal [18, 122], hits.values
   end
 
   def test_daily_hits_on_notes

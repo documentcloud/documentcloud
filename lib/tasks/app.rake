@@ -4,8 +4,10 @@ namespace :app do
 
     desc "Backup a file to the asset store that corresponds to the current environment."
     task :logfile, [:type, :src_file]=>:environment do |t, args|
-      dest = "#{args[:type]}/#{Date.today}.log"
-      DC::Store::AssetStore.new.save_backup(args[:src_file], dest)
+      source = args[:src_file]
+      source_name = File.basename(source).sub(/\.1$/, '')
+      target_name = "#{args[:type]}/#{Date.today}.#{`hostname`.chomp}.#{source_name}"
+      DC::Store::AssetStore.new.save_backup(args[:src_file], target_name)
     end
 
   end

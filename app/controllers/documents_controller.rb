@@ -24,6 +24,7 @@ class DocumentsController < ApplicationController
     return forbidden if doc.nil? && Document.exists?(params[:id].to_i)
     return not_found unless doc
     options = {data: true}.merge(pick(params, :data))
+    #fresh_when last_modified: (current_document.updated_at || Time.now).utc, etag: current_document
     respond_to do |format|
       format.html do
         @embed_options = {
@@ -39,6 +40,7 @@ class DocumentsController < ApplicationController
         return if date_requested?
         return if entity_requested?
         make_oembeddable(doc)
+        render :layout => nil
       end
       format.pdf  { redirect_to(doc.pdf_url) }
       format.text { redirect_to(doc.full_text_url) }
@@ -199,7 +201,7 @@ class DocumentsController < ApplicationController
 
   def send_pdf
     return not_found unless current_document(true)
-    redirect_to current_document.pdf_url(:direct)
+    redirect_to current_document.pdf_url(direct: true)
   end
 
   def send_page_image
@@ -212,7 +214,7 @@ class DocumentsController < ApplicationController
   def send_full_text
     maybe_set_cors_headers
     return not_found unless current_document(true)
-    redirect_to current_document.full_text_url(:direct)
+    redirect_to current_document.full_text_url(direct: true)
   end
 
   def send_page_text

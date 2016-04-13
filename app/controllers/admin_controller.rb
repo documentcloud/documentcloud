@@ -315,23 +315,23 @@ class AdminController < ApplicationController
   end
 
   def test_embedded_viewer
-    render :layout => false
+    render :layout => nil
   end
 
   def test_embedded_page
-    render :layout => false
+    render :layout => nil
   end
 
   def test_embedded_note
-    render :layout => false
+    render :layout => nil
   end
 
   def test_embedded_search
-    render :layout => false
+    render :layout => nil
   end
 
   def health_check
-    render :template => "admin/health_check/#{params[:subject]}_#{params[:env]}", :layout =>false
+    render :template => "admin/health_check/#{params[:subject]}_#{params[:env]}", :layout => nil
   end
 
   private

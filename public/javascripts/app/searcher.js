@@ -25,8 +25,10 @@ dc.controllers.Searcher = Backbone.Router.extend({
   flags         : {},
 
   routes        : {
-    'search/*query/p:page':  'searchByHash',
-    'search/*query':         'searchByHash'
+    'search/*query/p:page':        'searchByHash',
+    'search/*query':               'searchByHash',
+    'public/search/*query/p:page': 'dummyPublicSearch',
+    'public/search/*query':        'dummyPublicSearch'
   },
 
   // Creating a new SearchBox registers #search page fragments.
@@ -253,6 +255,14 @@ dc.controllers.Searcher = Backbone.Router.extend({
   loadFacet : function(facet) {
     dc.ui.spinner.show();
     this.currentSearch = $.get(this.FACETS_URL, {q : this.searchBox.value(), facet : facet}, this._loadFacetResults, 'json');
+  },
+
+  // This exists to handle authenticated requests to `/public/search/`, which 
+  // otherwise have no route defined because `dc.controllers.Workspace`'s 
+  // initializer tries to boot at `/` and finds no `/public/search/` routes.
+  // See https://github.com/documentcloud/documentcloud/issues/375
+  dummyPublicSearch : function(query, page) {
+    this.searchByHash(query, page);
   },
 
   // When searching by the URL's hash value, we need to unescape first.

@@ -4,6 +4,7 @@ class AnnotationsController < ApplicationController
   layout false
 
   before_action :login_required, :except => [:index, :show, :print, :cors_options]
+  before_action :prefer_secure, :only => [:show]
   skip_before_action :verify_authenticity_token
   after_action  :allow_iframe, :only => [:show]
 
@@ -41,6 +42,7 @@ class AnnotationsController < ApplicationController
           # being iframed. The normal show page can also be iframed, but there
           # will be a flash of unwanted layout elements before the JS/CSS 
           # arrives which removes them.
+          @exclude_analytics = true
           render template: 'annotations/show_embedded', layout: 'minimal'
         else
           make_oembeddable(current_annotation)
@@ -56,7 +58,7 @@ class AnnotationsController < ApplicationController
     docs = Document.accessible(current_account, current_organization).where( :id => params[:docs] )
     Document.populate_annotation_counts(current_account, docs)
     @documents_json = docs.map {|doc| doc.to_json(:annotations => true, :account => current_account) }
-    render :layout => false
+    render :layout => nil
   end
 
   # Any account can create a private note on any document.

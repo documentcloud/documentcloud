@@ -16,8 +16,7 @@
     <%= yield %>
   </div>
 
-<% if Rails.env.production? %>
   <%= render :partial => 'common/google' %>
-<% end %>
+
 </body>
 </html>

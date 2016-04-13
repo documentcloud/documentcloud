@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
   <%= render :partial => 'common/meta_tags' %>
@@ -9,9 +8,6 @@
     <%= include_stylesheets :lt_ie_9, :embed_assets => false %>
   <![endif]-->
   <%= include_javascripts :core, :home %>
-  <% if Rails.env.production? %>
-    <%= render :partial => 'common/google' %>
-  <% end %>
   <%= csrf_meta_tag %> 
 </head>
 <body class="<%= @bodyclass %>">
@@ -48,6 +44,8 @@
   <%= render :partial => 'home/footer' %>
 
   <%= render :partial => 'common/bootstrap', :locals => {:workspace => false} %>
+
+  <%= render :partial => 'common/google' %>
 
 </body>
 </html>

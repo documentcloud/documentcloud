@@ -1,15 +1,9 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
   <%= render :partial => 'common/meta_tags' %>
   <meta http-equiv="ClearType" content="true">
   <title><%= @query %></title>
-
-  <% if Rails.env.production? %>
-    <% @pageview_url = '/search/preview' %>
-    <%= render :partial => 'common/google' %>
-  <% end %>
 </head>
 <body style="margin:0; padding:0;">
 
@@ -20,6 +14,8 @@
       dc.embed.load("<%= DC.server_root %>/search/embed/", <%=raw @options %>);
     </script>
   </div>
+
+  <%= render :partial => 'common/google', :locals => { :pageview_url => '/search/preview' } %>
 
 </body>
 </html>

@@ -13,7 +13,7 @@ class AuthenticationControllerTest < ActionController::TestCase
 
   def test_signup_info
     get :signup_info
-    assert_template layout: "workspace.html.erb"
+    assert_template layout: 'workspace'
   end
 
   def test_redirects_to_home_for_logged_accounts_attempting_to_login

@@ -49,7 +49,7 @@ class AccountsController < ApplicationController
             @current_organization = current_account.organization
             @organizations = Organization.all_slugs
             @has_documents = Document.owned_by(current_account).count(:limit => 1) > 0
-            return render :layout => 'workspace'
+            return render
           else
             return redirect_to '/public/search'
           end

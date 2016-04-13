@@ -555,7 +555,7 @@ class Document < ActiveRecord::Base
     File.join(DC.server_root, pdf_path)
   end
 
-  def pdf_url(direct=false)
+  def pdf_url(direct: false)
     return public_pdf_url  if public? || Rails.env.development?
     return private_pdf_url unless direct
     DC::Store::AssetStore.new.authorized_url(pdf_path)
@@ -584,10 +584,10 @@ class Document < ActiveRecord::Base
     File.join(DC.server_root, full_text_path)
   end
 
-  def full_text_url(direct=false)
+  def full_text_url(direct: false)
     return public_full_text_url if public? || Rails.env.development?
     return private_full_text_url unless direct
-    DC::Store::AssetStore.new.authorized_url(full_text_path)
+    DC::Store::AssetStore.new.authorized_url(full_text_path, content_type: 'text/plain; charset=utf-8')
   end
 
   def document_viewer_url(opts={})
@@ -1009,7 +1009,7 @@ class Document < ActiveRecord::Base
       :organization_name   => organization_name,
       :page_count          => page_count,
       :thumbnail_url       => thumbnail_url,
-      :pdf_url             => pdf_url(:direct),
+      :pdf_url             => pdf_url(direct: true),
       :public              => public?,
       :title               => public? ? title : nil,
       :source              => public? ? source : nil,

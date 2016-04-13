@@ -32,8 +32,7 @@
   </script>
 <% end %>
 
-<% if Rails.env.production? %>
-  <%= render :partial => 'common/google' %>
-<% end %>
+  <%= render :partial => 'common/google' unless @exclude_analytics %>
+
 </body>
 </html>
