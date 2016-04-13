@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
 
   BasicAuth = ActionController::HttpAuthentication::Basic
 
-  protect_from_forgery
+  protect_from_forgery with: :exception
   skip_before_action :verify_authenticity_token, if: :embeddable?
 
   before_action :set_ssl
