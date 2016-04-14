@@ -178,12 +178,14 @@ class ApiController < ApplicationController
     resource_params = Rails.application.routes.recognize_path(url.path) rescue nil
     return not_found unless url.host == DC::CONFIG['server_root'] and resource_embeddable?(resource_params)
 
+    # Map Rails Controller names to embed type
     controller_embed_map = {
       'annotations' => :note,
       'documents'   => :document,
       'pages'       => :page
     }
 
+    # specify the default resource type.
     canonical_format_map = {
       'annotations' => :js,
       'documents'   => :js,
