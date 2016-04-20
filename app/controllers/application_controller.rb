@@ -17,9 +17,7 @@ class ApplicationController < ActionController::Base
     after_action :debug_api
   end
 
-  if Rails.env.production?
-    around_action :notify_exceptions
-  end
+  around_action :notify_exceptions
 
   protected
   
@@ -301,13 +299,20 @@ class ApplicationController < ActionController::Base
   def set_ssl
     Thread.current[:ssl] = request.ssl?
   end
+  
+  ERRORS_TO_IGNORE = [
+    AbstractController::ActionNotFound, 
+    ActionController::RoutingError, 
+    ActiveRecord::RecordNotFound,
+    ActionController::UnknownFormat
+  ]
 
   # Email production exceptions to us. Once every 2 minutes at most, per process.
   def notify_exceptions
     begin
       yield
     rescue Exception => e
-      ignore = e.is_a?(AbstractController::ActionNotFound) || e.is_a?(ActionController::RoutingError)
+      ignore = ERRORS_TO_IGNORE.any?{ |kind| e.is_a? kind }
       LifecycleMailer.exception_notification(e, params).deliver_now unless ignore
       raise e
     end
