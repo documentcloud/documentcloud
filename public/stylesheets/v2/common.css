@@ -45,6 +45,10 @@
   font-size: 2em;
 }
 
+.v2 h1 small {
+  font-size: 0.7em;
+}
+
 .v2 h2 {
   font-size: 1.625em;
 }
@@ -94,8 +98,18 @@
   padding-left: 0;
 }
 
+.v2 ul.disc {
+  margin-left: 2em;
+  padding-left: 0;
+  list-style-type: disc;
+}
+
 .v2 ol.lower-alpha {
   list-style-type: lower-alpha;
+}
+
+.v2 ol.lower-roman {
+  list-style-type: lower-roman;
 }
 
 .v2 ol.upper-alpha {

@@ -2,10 +2,10 @@
 
 DocumentCloud's API provides resources to search, upload, edit, and organize documents as well as to work with projects. In addition, an oEmbed service provides easy integration of embedding documents, pages and notes.
 
+Use of the DocumentCloud API indicates you have read and agree to our [API Guidelines and Terms of Service](/terms/api).
+
 ## Contents
 
-* General:
-  * [API Guidelines and Terms of Service](#guidelines)
 * Document methods:
   * [Search](#search-documents)
   * [Upload](#upload-documents)
@@ -23,23 +23,6 @@ DocumentCloud's API provides resources to search, upload, edit, and organize doc
   * [Pages](#oembed-pages)
   * [Notes](#oembed-notes)
 * [API Wrappers and Utilities](#api-wrappers)
-
-<a name="guidelines"></a>
-# API Guidelines and Terms of Service
-
-A limited portion of DocumentCloud's API is available for public use, including document search and individual document data retrieval. All other resources require authentication via a DocumentCloud account. No API key is required.
-
-Please be considerate and don't hammer our servers. Also:
-
-* You may not recreate DocumentCloud.org in its entirety or build an application that simply displays the complete set of documents. You may not build an application that displays the document set of a contributing organization.
-
-* If your project allows users to interact with data from DocumentCloud, you must cite DocumentCloud as the source of your data. If your project allows users to view or browse specific documents, you must cite DocumentCloud and the contributing organizations as identified in the API.
-
-* You may not use the API commercially; you may not charge people money to look at the data or sell advertising specifically against it.
-
-* You understand and acknowledge that any data provided by our API may contain errors and omissions.
-
-_Restrictions on the use of the DocumentCloud API do not apply to participating organizations working with documents uploaded by their own users. We reserve the right to revise these guidelines. If you violate the spirit of these terms, especially if you use the API to systematically access and reprint documents that you or your newsroom didn't contribute, expect to be blocked without advance warning._
 
 # Document Methods
 
