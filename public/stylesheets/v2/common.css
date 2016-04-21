@@ -45,6 +45,10 @@
   font-size: 2em;
 }
 
+.v2 h1 small {
+  font-size: 0.7em;
+}
+
 .v2 h2 {
   font-size: 1.625em;
 }
@@ -74,6 +78,46 @@
 .v2 h6 {
   font-size: 0.6em;
   text-transform: uppercase;
+}
+
+.v2 p {
+  margin: 1.5em 0;
+}
+
+.v2 .underline {
+  text-decoration: underline;
+}
+
+.v2 ol {
+  margin-left: 2em;
+  padding-left: 0;
+}
+
+.v2 li {
+  margin-left: 0;
+  padding-left: 0;
+}
+
+.v2 ul.disc {
+  margin-left: 2em;
+  padding-left: 0;
+  list-style-type: disc;
+}
+
+.v2 ol.lower-alpha {
+  list-style-type: lower-alpha;
+}
+
+.v2 ol.lower-roman {
+  list-style-type: lower-roman;
+}
+
+.v2 ol.upper-alpha {
+  list-style-type: upper-alpha;
+}
+
+.v2 ol.decimal {
+  list-style-type: decimal;
 }
 
 .v2 a:link {
@@ -238,6 +282,7 @@
 
 /*--------------------------------- embeds -----------------------------------*/
 
+.v2 .paper-box,
 .v2 .embed-preview-container {
   background-color: white;
   padding: 30px 40px;
@@ -245,6 +290,11 @@
   border-radius: 6px;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
+}
+
+.v2 .paper-box > h1,
+.v2 .embed-preview-container > h1 {
+  margin-top: 0.5em;
 }
 
 /* We don't even generate these elements when the embedder has iframed the
@@ -264,7 +314,8 @@
 
 /* Small devices (tablets, 768px and up) */
 @media (min-width: 768px) {
-  .v2 .embed-preview-container {
+  .v2 .embed-preview-container,
+  .v2 .paper-box {
     margin-top: 30px;
     margin-bottom: 30px;
   }

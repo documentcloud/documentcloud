@@ -10,6 +10,11 @@
           box-sizing: border-box;
 }
 
+.v2 .container.content {
+  padding-left: 40px;
+  padding-right: 40px;
+}
+
 .v2 .container.container_thin {
   max-width: 720px;
 }
@@ -95,6 +100,26 @@
 
   .v2 .col_6 {
     width: 50%;
+  }
+
+  .v2 .col_7 {
+    width: 58.333333333333333333%;
+  }
+
+  .v2 .col_8 {
+    width: 66.666666666666666666%;
+  }
+
+  .v2 .col_9 {
+    width: 75%;
+  }
+
+  .v2 .col_10 {
+    width: 83.333333333333333333%;
+  }
+
+  .v2 .col_11 {
+    width: 91.666666666666666666%;
   }
 
 }

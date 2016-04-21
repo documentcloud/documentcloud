@@ -9,9 +9,13 @@
   line-height: 1.5em;
   font-weight: 300;
 
-  background-color: #b5d8f4;
-  color: #333;
+  background-color: #d0e1f4;
+  color: #000;
 }
+.alert_v2:first-child {
+  margin-top: 0;
+}
+
 .alert_v2:first-child {
   margin-top: 0;
 }
@@ -43,4 +47,9 @@
 }
 .alert_v2.success:before {
   content: '✔︎';
+}
+
+.alert_v2.small {
+  font-size: 14px;
+  line-height: 1.5em;
 }

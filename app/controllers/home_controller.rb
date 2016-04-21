@@ -27,6 +27,29 @@ class HomeController < ApplicationController
     @contributors = yaml['contributors']
   end
 
+  def terms
+    @current_version = '1'
+    @version = params[:version] || @current_version
+    return not_found unless %w[1 2].include? @version
+
+    @canonical_url = terms_url if @version == @current_version
+
+    render layout: 'minimal', template: "home/terms/v#{@version}"
+  end
+
+  def api_terms
+    @current_version = '1'
+    @version = params[:version] || @current_version
+    return not_found unless %w[1].include? @version
+
+    @canonical_url = api_terms_url if @version == @current_version
+
+    render layout: 'minimal', template: "home/api_terms/v#{@version}"
+  end
+
+  def privacy
+    render layout: 'minimal'
+  end
 
   private
 

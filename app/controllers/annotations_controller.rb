@@ -42,6 +42,7 @@ class AnnotationsController < ApplicationController
           # being iframed. The normal show page can also be iframed, but there
           # will be a flash of unwanted layout elements before the JS/CSS 
           # arrives which removes them.
+          @embedded = true
           @exclude_analytics = true
           render template: 'annotations/show_embedded', layout: 'minimal'
         else
