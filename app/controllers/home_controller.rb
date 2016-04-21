@@ -28,13 +28,18 @@ class HomeController < ApplicationController
   end
 
   def terms
-    @current_version = '1'
-    @version = params[:version] || @current_version
-    return not_found unless %w[1 2].include? @version
+    @versions = yaml_for('terms/changelog')['versions'].sort { |a, b| b['version'] <=> a['version'] }
 
-    @canonical_url = terms_url if @version == @current_version
+    @current_terms  = @versions.find { |v| v['current'] }
 
-    render layout: 'minimal', template: "home/terms/v#{@version}"
+    version = (params[:version] || @current_terms['version'])
+    version_numbers = @versions.map { |v| v['version'] }
+    return not_found unless version_numbers.include? version
+
+    @canonical_url = terms_url if version == @current_terms['version']
+    @viewing_terms = @versions.find { |v| v['version'] == version }
+
+    render layout: 'minimal', template: "home/terms/show"
   end
 
   def api_terms

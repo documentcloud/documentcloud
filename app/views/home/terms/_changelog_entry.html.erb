@@ -1,0 +1,17 @@
+<h2 <%= 'class="active"'.html_safe if changelog_entry['version'] == viewing['version'] %>><%= link_to changelog_entry['label'], terms_path(changelog_entry['current'] ? {} : {version: changelog_entry['version']}) %></h2>
+<div class="term_duration">
+  <%= 'Effective ' unless (changelog_entry['current'] || changelog_entry['end']) %>
+  <%= changelog_entry['start'] %>
+  <%= "– #{changelog_entry['end']}" if changelog_entry['end'] %>
+  <%= '– <span class="badge good">Current</span>'.html_safe if changelog_entry['current'] %>
+</div>
+<% if changelog_entry['description'] %>
+  <p><%= changelog_entry['description'].html_safe %></p>
+<% end %>
+<% if changelog_entry['items'] %>
+  <ul class="disc">
+  <% changelog_entry['items'].each do |item| %>
+    <li><%= item.html_safe %></li>
+  <% end %>
+  </ul>
+<% end %>
