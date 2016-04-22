@@ -165,8 +165,8 @@ DC::Application.routes.draw do
   # Home pages
   get '/contributors',          to: 'home#contributors',  as: 'contributors'
   get '/faq',                   to: 'home#faq'
-  get '/terms/api/(/:version)', to: 'home#api_terms',     as: 'api_terms', version: /\d+/
-  get '/terms(/:version)',      to: 'home#terms',         as: 'terms',     version: /\d+/
+  get '/terms/api/(/:version)', to: 'home#api_terms',     as: 'api_terms', version: /[\d\.]+/
+  get '/terms(/:version)',      to: 'home#terms',         as: 'terms',     version: /[\d\.]+/
   get '/privacy',               to: 'home#privacy',       as: 'privacy'
   get '/p3p.:format',           to: 'home#p3p',           as: 'p3p'
   get '/home',                  to: 'home#index',         as: 'home'

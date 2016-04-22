@@ -17,14 +17,14 @@
       <div class="alert_v2 small">
         <% if @viewing_terms['current'] %>
           These are the <b>current</b> terms of service. See other versions in the <a href="#terms_changelog">Changelog</a>.
-        <% elsif @viewing_terms['end'] %>
+        <% elsif @viewing_terms['old'] %>
           These are <b>old</b> terms of service. <%= link_to "Read the current Terms of Service here.", terms_url %>
-        <% elsif @viewing_terms['start'] %>
-          These terms of service will go into effect <b><%= @viewing_terms['start'] %></b>.
+        <% elsif @viewing_terms['pending'] %>
+          These terms of service will go into effect <b><%= @viewing_terms['start'].to_s(:long) %></b>.
           <%= link_to "Read the current Terms of Service here.", terms_url %>
         <% end %>
       </div>
-      <%= render partial: "home/terms/#{@viewing_terms['label']}" %>
+      <%= render partial: "home/terms/v#{@viewing_terms['version']}" %>
     </section>
   </div>
 

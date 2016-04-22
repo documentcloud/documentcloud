@@ -1,10 +1,6 @@
-versions:
-  - version: '1'
-    current: true
-    label:   'v1.0'
-    description: 'Original terms that governed from launch.'
-    start:       'Launch'
-  - version: '2'
-    label:   'v2.0'
-    description: 'Many changes, see <a href="https://blog.documentcloud.org/blog/2016/04/updating-documentcloud-terms-of-service/">blog post</a> for details.'
-    start:       'May 25, 2016'
+- version:     1.0
+  current:     true
+  description: Original terms that governed from launch.
+- version:     2.0
+  description: 'Many changes, see <a href="https://blog.documentcloud.org/blog/2016/04/updating-documentcloud-terms-of-service/">blog post</a> for details.'
+  start:       '2016-05-25'

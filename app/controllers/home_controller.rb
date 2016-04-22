@@ -28,17 +28,14 @@ class HomeController < ApplicationController
   end
 
   def terms
-    @versions = yaml_for('terms/changelog')['versions'].sort { |a, b| b['version'] <=> a['version'] }
+    # We launched with versions `1`/`2`, but converted to `1.0`/`2.0` same day.
+    # Still need to support any incoming requests for `/terms/2` for a while.
+    return redirect_to terms_path(version: "#{params[:version]}.0") if %w[1 2].include? params[:version]
 
-    @current_terms  = @versions.find { |v| v['current'] }
+    prepare_term_versions(changelog: 'terms/changelog')
+    return not_found unless @version_numbers.include? @version
 
-    version = (params[:version] || @current_terms['version'])
-    version_numbers = @versions.map { |v| v['version'] }
-    return not_found unless version_numbers.include? version
-
-    @canonical_url = terms_url if version == @current_terms['version']
-    @viewing_terms = @versions.find { |v| v['version'] == version }
-
+    @canonical_url = terms_url if @version == @current_terms['version']
     render layout: 'minimal', template: "home/terms/show"
   end
 
@@ -64,6 +61,26 @@ class HomeController < ApplicationController
 
   def yaml_for(action)
     YAML.load_file("#{Rails.root}/app/views/home/#{action}.yml")
+  end
+
+  def prepare_term_versions(changelog:)
+    @versions = yaml_for(changelog).sort { |a, b| b['version'] <=> a['version'] }
+
+    today           = Date.today
+    @version_numbers = []
+    @versions.map! do |v|
+      v['version'] = v['version'].to_s
+      v['start']   = Date.parse(v['start']) rescue nil
+      v['end']     = Date.parse(v['end'])   rescue nil
+      v['old']     = !v['current'] && (!v['start'] || v['start'] < today)
+      v['pending'] = !v['current'] && v['start'] && today < v['start']
+      @version_numbers.push v['version']
+      v
+    end
+
+    @current_terms  = @versions.find { |v| v['current'] }
+    @version = (params[:version] || @current_terms['version'])
+    @viewing_terms = @versions.find { |v| v['version'] == @version }
   end
 
 end
