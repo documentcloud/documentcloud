@@ -40,13 +40,11 @@ class HomeController < ApplicationController
   end
 
   def api_terms
-    @current_version = '1'
-    @version = params[:version] || @current_version
-    return not_found unless %w[1].include? @version
+    prepare_term_versions(changelog: 'api_terms/changelog')
+    return not_found unless @version_numbers.include? @version
 
-    @canonical_url = api_terms_url if @version == @current_version
-
-    render layout: 'minimal', template: "home/api_terms/v#{@version}"
+    @canonical_url = api_terms_url if @version == @current_terms['version']
+    render layout: 'minimal', template: "home/api_terms/show"
   end
 
   def privacy

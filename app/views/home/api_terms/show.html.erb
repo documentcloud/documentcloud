@@ -1,0 +1,28 @@
+<% @title  = "API Guidelines and Terms of Service" %>
+
+<header class="header_primary">
+  <div class="container">
+    <h1><%= link_to "DocumentCloud", "/" %></h1>
+    <nav class="header_nav">
+      <%= link_to "What is DocumentCloud?", home_url %>
+    </nav>
+  </div>
+</header>
+
+<div class="row container">
+
+  <div class="col col_9">
+    <section id="terms_body" class="paper-box">
+      <h1>API Guidelines and Terms of Service</h1>
+      <%= render partial: "home/api_terms/v#{@viewing_terms['version']}" %>
+    </section>
+  </div>
+
+  <div class="col col_3">
+    <section id="terms_changelog">
+      <h1>Changelog</h1>
+      <%= render partial: "home/terms/changelog_entry", collection: @versions, locals: { viewing: @viewing_terms } %>
+    </section>
+  </div>
+
+</div>
