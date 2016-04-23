@@ -252,7 +252,7 @@ dc.ui.Toolbar = Backbone.View.extend({
     if (/\S/.test(query)) {
       dc.ui.Dialog.confirm(
         _.t('export_to_overview_explain'),
-        function() { window.open("https://www.overviewproject.org/imports/documentcloud/new/" + encodeURIComponent(query), '_blank'); },
+        function() { window.open("https://www.overviewdocs.com/imports/documentcloud/new/" + encodeURIComponent(query), '_blank'); },
         {
           saveText: _.t('export'),
           closeText: _.t('cancel')
