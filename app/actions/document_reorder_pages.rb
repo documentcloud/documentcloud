@@ -14,7 +14,7 @@ class DocumentReorderPages < DocumentAction
       end
     rescue Exception => e
       fail_document
-      LifecycleMailer.exception_notification(e,options).deliver
+      LifecycleMailer.exception_notification(e,options).deliver_now
       raise e
     end
     document.id
@@ -67,7 +67,7 @@ class DocumentReorderPages < DocumentAction
           :document => document,
           :page_count => document.page_count,
           :page_order => page_order
-        }).deliver
+        }).deliver_now
       end
       page_length = (page.end_offset - page.start_offset)
       page.end_offset = offset + page_length

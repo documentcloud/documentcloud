@@ -65,7 +65,7 @@ class ProcessingJob < ActiveRecord::Base
       # We've collected all the info we need, so
       save # it and retain the lock on the document.
     rescue Errno::ECONNREFUSED, RestClient::Exception => error
-      LifecycleMailer.exception_notification(error).deliver
+      LifecycleMailer.exception_notification(error).deliver_now
       # In the event of an error while communicating with CloudCrowd, unlock the document.
       self.update_attributes :complete => true
       #document.update :status => AVAILABLE
