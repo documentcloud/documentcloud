@@ -180,7 +180,7 @@ class DocumentImport < DocumentAction
     UPDATE pages 
       SET text = input.text
       FROM (SELECT unnest(ARRAY[?]) as id, unnest(ARRAY[?]) as text) AS input
-      WHERE pages.id = input.id
+      WHERE pages.id = input.id::int
     QUERY
     query = Page.send(:replace_bind_variables, query_template, [ids, page_texts])
     Page.connection.execute(query)
@@ -193,7 +193,7 @@ class DocumentImport < DocumentAction
     UPDATE pages 
       SET aspect_ratio = input.aspect_ratio
       FROM (SELECT unnest(ARRAY[?]) as id, unnest(ARRAY[?]) as aspect_ratio) AS input
-      WHERE pages.id = input.id
+      WHERE pages.id = input.id::int
     QUERY
     query = Page.send(:replace_bind_variables, query_template, [ids, @page_aspect_ratios])
     Page.connection.execute(query)

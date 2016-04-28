@@ -30,7 +30,7 @@ class CalculateAspectRatios < CloudCrowd::Action
     UPDATE pages 
       SET aspect_ratio = input.aspect_ratio
       FROM (SELECT unnest(ARRAY[?]) as id, unnest(ARRAY[?]) as aspect_ratio) AS input
-      WHERE pages.id = input.id
+      WHERE pages.id = input.id::int
     QUERY
     query = Page.send(:replace_bind_variables, query_template, [ids, @page_aspect_ratios])
     Page.connection.execute(query)
