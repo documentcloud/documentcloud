@@ -193,7 +193,7 @@ class Document < ActiveRecord::Base
       :secure          => params[:secure],
       :organization_id => organization.id,
       :account_id      => account.id,
-      :force_ocr       => !!params[:force_ocr]
+      :force_ocr       => params[:force_ocr]
     }
     if params[:url]
       import_options.merge!(:url => params[:url])
