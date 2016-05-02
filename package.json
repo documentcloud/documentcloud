@@ -1,0 +1,10 @@
+{
+  "name":    "documentcloud-platform",
+  "version": "0.0.1",
+  "private": true,
+  "license": "MIT",
+  "dependencies": {
+    "bower":    "~1.7.7",
+    "broccoli": "~0.16.9"
+  }
+}

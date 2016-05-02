@@ -23,6 +23,7 @@ gem install bundler
 bundle
 
 # Install bower
+# TODO: Use package.json
 sudo npm install -g bower
 bower install --config.interactive=false
 
