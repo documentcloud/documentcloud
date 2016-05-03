@@ -56,6 +56,7 @@ class Organization < ActiveRecord::Base
 
   # Populates the members accessor with all the organizaton's accounts
   def self.populate_members_info( organizations, except_account=nil)
+    return [] if organizations.empty?
     sql = <<-EOS
     select
       memberships.organization_id, memberships.role,
