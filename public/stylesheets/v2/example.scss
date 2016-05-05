@@ -1,0 +1,14 @@
+.outer {
+  color: red;
+  .inner {
+    color: blue;
+    &:hover {
+      color: yellow;
+    }
+  }
+}
+
+// The above should generate the following output (whitespace excepting):
+// .outer { color: red; }
+// .outer .inner { color: blue; }
+// .outer .inner:hover { color: yellow; }
