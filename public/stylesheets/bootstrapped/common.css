@@ -1,0 +1,86 @@
+/* 
+$dcBrandBlue:      rgb(90, 118, 160);
+$dcBrandBlueLight: rgb(119, 147, 189);
+ */
+
+/*--------------------------------- layout -----------------------------------*/
+
+.bootstrapped {
+  font-size: 15px;
+}
+
+.bootstrapped body {
+  background: white url(/images/embed/home/stripes.png) 0 0 repeat;
+  font-weight: 300;
+  font-family: 'Gotham SSm A', 'Gotham SSm B', 'Gotham A', 'Gotham B', Gotham, 'Proxima Nova', 'Avenir Next', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+.bootstrapped main {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+/*--------------------------------- navbar -----------------------------------*/
+
+.bootstrapped .dc-navbar#page-header {
+  border-radius: 0;
+}
+
+.bootstrapped .dc-navbar {
+  background-color: rgb(90, 118, 160);
+  color: white;
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  -moz-osx-font-smoothing: grayscale;
+   -webkit-font-smoothing: antialiased;
+}
+
+.bootstrapped .dc-navbar a {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.bootstrapped .dc-navbar a.active {
+  color: white;
+}
+
+.bootstrapped .dc-navbar .nav-link {
+  padding-left: 0.25rem;
+  padding-right: 0.25rem;
+}
+
+.bootstrapped .dc-navbar .nav-link:hover {
+  background-color: rgba(255, 255, 255, 0.25);
+}
+.bootstrapped .dc-navbar .nav-link.dc-logo:hover {
+  background-color: transparent;
+}
+
+.bootstrapped .dc-logo {
+  background: transparent url('/images/common/document_cloud_logo_white@2x.png') left center no-repeat;
+  color: transparent !important;
+  background-size: contain;
+}
+
+/*-------------------------------- elements ----------------------------------*/
+
+.bootstrapped .paper {
+  background-color: white;
+  padding: 2rem;
+  box-shadow: 0 0 1rem #aaa;
+  border-radius: 0.5rem;
+}
+
+.bootstrapped .paper   > *:first-child,
+.bootstrapped .sidebar > *:first-child {
+  margin-top: 0;
+}
+.bootstrapped .paper   > *:last-child,
+.bootstrapped .sidebar > *:last-child {
+  margin-bottom: 0;
+}
+
+.bootstrapped .sidebar {
+  padding-top:    2rem;
+  padding-bottom: 2rem;
+}

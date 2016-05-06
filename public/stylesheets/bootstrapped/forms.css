@@ -1,0 +1,125 @@
+/*--------------------------------- forms ------------------------------------*/
+
+.bootstrapped .form-group {
+  position: relative;
+  margin-top:    0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.bootstrapped .form-group label {
+  display: inline-block;
+  position: absolute;
+  bottom: 100%;
+  width: 100%;
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+  overflow: hidden;
+
+  -webkit-transform: translate3d(0, 2.2rem, 0);
+          transform: translate3d(0, 2.2rem, 0);
+  -webkit-transition: -webkit-transform 0.25s;
+          transition: transform 0.25s ;
+  -webkit-transition-timing-function: ease-in-out;
+          transition-timing-function: ease-in-out;
+
+  pointer-events: none;
+  -webkit-touch-callout: none;
+   -webkit-user-select: none;
+   -khtml-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+
+  font-weight: 300;
+  font-size: 0.9rem;
+  line-height: 1rem;
+  white-space: nowrap;
+}
+
+.bootstrapped .form-group label span[data-content] {
+  position: relative;
+  display: block;
+
+  line-height: 1rem;
+  -moz-osx-font-smoothing: grayscale;
+   -webkit-font-smoothing: antialiased;
+
+  -webkit-transition: -webkit-transform 0.25s, color 0.25s;
+          transition: transform 0.25s, color 0.25s;
+  -webkit-transition-timing-function: ease-in-out;
+          transition-timing-function: ease-in-out;
+}
+.bootstrapped .form-group label span[data-content]:after {
+  position: absolute;
+  bottom: 100%;
+  left: 0;
+  height: 100%;
+  width: 100%;
+
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  white-space: nowrap;
+
+  content: attr(data-content);
+}
+
+.bootstrapped .form-group.filled label,
+.bootstrapped .form-control:focus + label {
+	-webkit-transform: translate3d(0, 0.3rem, 0);
+	        transform: translate3d(0, 0.3rem, 0);
+}
+
+.bootstrapped .form-group.filled label span[data-content],
+.bootstrapped .form-control:focus + label span[data-content] {
+  -webkit-transform: translate3d(0, 100%, 0);
+          transform: translate3d(0, 100%, 0);
+}
+
+.bootstrapped .form-group.has-danger label {
+  color: #d9534f;
+}
+
+.bootstrapped .form-group.has-success label {
+  color: #5cb85c;
+}
+
+.bootstrapped .form-group-alert {
+  font-weight: 700;
+  font-size: 0.9rem;
+
+  position: absolute;
+  top: 100%;
+  z-index: 1000;
+  max-height: 0;
+  overflow: hidden;
+  width: 100%;
+
+  -webkit-transition: opacity 0.25s, max-height 0.25s ease-out;
+          transition: opacity 0.25s, max-height 0.25s ease-out;
+
+  margin: -0.25rem 0 0 0;
+  padding: 0 0.75rem;
+  list-style-type: none;
+
+  border-bottom-left-radius: 0.25rem;
+  border-bottom-right-radius: 0.25rem;
+}
+
+.bootstrapped .form-group-alert li {
+  margin: 0.5rem 0;
+}
+
+.bootstrapped .form-control:focus ~ .form-group-alert {
+  max-height: 150px;
+	-webkit-transition: opacity 0.25s, max-height 0.25s ease-in;
+         	transition: opacity 0.25s, max-height 0.25s ease-in;
+}
+
+.bootstrapped .has-danger .form-group-alert {
+  background-color: #d9534f;
+  color: white;
+  -moz-osx-font-smoothing: grayscale;
+   -webkit-font-smoothing: antialiased;
+}
