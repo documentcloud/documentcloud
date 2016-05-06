@@ -1,0 +1,24 @@
+/*----------------------------------- buttons --------------------------------*/
+
+.bootstrapped .btn {
+  border-bottom: 2px solid black;
+  border-radius: 4px;
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: 0.85rem;
+  -webkit-transition: background-color 100ms, border-color 100ms;
+          transition: background-color 100ms, border-color 100ms;
+}
+.bootstrapped .btn:hover {
+  padding-bottom: calc(0.375rem - 2px);
+  border-bottom-width: 4px;
+}
+
+.bootstrapped .btn-success {
+  border-bottom-color: green;
+  -moz-osx-font-smoothing: grayscale;
+   -webkit-font-smoothing: antialiased;
+}
+.bootstrapped .btn-success:hover {
+  border-bottom-color: darkgreen;
+}
