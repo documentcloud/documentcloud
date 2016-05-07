@@ -5,6 +5,11 @@
   "license": "MIT",
   "devDependencies": {
     "bower":    "~1.7.7",
-    "broccoli": "~0.16.9"
+    "broccoli": "~0.16.9",
+    "broccoli-funnel": "~1.0.1",
+    "broccoli-descriptive-merge-trees": "~0.0.1",
+    "broccoli-sass": "~0.7.0",
+    "broccoli-bower": "~0.2.1",
+    "broccoli-uglify-js": "~0.1.3"
   }
 }
