@@ -25,7 +25,7 @@ dc.language = {
     'swe' : 'Swedish',
     'ukr' : 'Ukrainian'
   },
-  USER: ['dan','eng','rus','spa','ukr']
+  USER: ['dan','eng','fra','rus','spa','ukr']
 };
 
 dc.language.SUPPORTED = _.keys(dc.language.NAMES);

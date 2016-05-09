@@ -65,6 +65,7 @@ namespace :translations do
 
     languages = {
       "eng" => "English",
+      "fra" => "French",
       "spa" => "Spanish",
       "dan" => "Danish",
       "rus" => "Russian",
