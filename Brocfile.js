@@ -9,19 +9,29 @@ var appRoot = 'public'; // Set up the base directory for all of our source files
 // Collect all of our javascripts and map them into an output directory called "javascripts"
 var app = funnel(appRoot, {
   srcDir: 'javascripts',
-  destDir: 'javascripts'
+  destDir: 'javascripts',
+  include: ["**/*.js"]
 });
 
 // Collect all of our stylesheets and map them into an output directory called "stylesheets"
 var css = funnel(appRoot, {
   srcDir: 'stylesheets',
   destDir: 'stylesheets',
-  exclude: ["**/*.scss"]
+  include: ["**/*.css"]
 });
 
 // Compile master sass file into assets
+
+// NB: SCSS @import statements first search relative to the parent (importing) 
+// file, then looks relative to these roots, in order. We include the 
+// `javascripts/vendor` directory here because some Bower-installed packages 
+// (VisualSearch, Bootstrap) contain CSS files we want.
 var sassDependencies = ['public'];
-var sass = compileSass(sassDependencies, 'stylesheets/v2/example.scss', 'stylesheets/v2/example.css');
+
+// NB: No matter how many paths `sassDependencies` contains, `compileSass()` 
+// will only search the first one for the input/output files (second/third args)
+var sass = compileSass(sassDependencies, 'stylesheets/bootstrapped/primary.scss', 'styles/primary.css');
+
 
 // coalesce all the different assets into one directory.
-module.exports = mergeTrees([app, css, sass]);
+module.exports = mergeTrees([sass]);

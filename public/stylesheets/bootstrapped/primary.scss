@@ -1,0 +1,10 @@
+@import "variables";
+@import "javascripts/vendor/bootstrap/scss/bootstrap";
+
+.bootstrapped {
+  @import "common";
+  @import "alerts";
+  @import "buttons";
+  @import "forms";
+}
+
