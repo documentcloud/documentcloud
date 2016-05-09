@@ -1,55 +1,55 @@
 /*----------------------------------- alerts ---------------------------------*/
 
-.bootstrapped .alert {
+.alert {
   border-width: 0;
   position: relative;
   padding-left: 2.75rem;
 }
 
-.bootstrapped .alert:before {
+.alert:before {
   position: absolute;
   font-size: 2rem;
   top: 0.25rem;
 }
 
-.bootstrapped .alert-large {
+.alert-large {
   font-size: 1.5rem;
 }
-.bootstrapped .alert-large:before {
+.alert-large:before {
   top: 0.5rem;
 }
 
-.bootstrapped .alert-info {
+.alert-info {
   color: #333;
 }
-.bootstrapped .alert-info:before {
+.alert-info:before {
   content: '✱';
   left: 0.75rem;
 }
 
-.bootstrapped .alert-warning:before {
+.alert-warning:before {
   content: '✱';
   left: 0.75rem;
 }
 
-.bootstrapped .alert-danger {
+.alert-danger {
   background-color: #d85157;
   color: white;
   -moz-osx-font-smoothing: grayscale;
    -webkit-font-smoothing: antialiased;
 }
-.bootstrapped .alert-danger:before {
+.alert-danger:before {
   content: '✘';
   left: 0.85rem;
 }
 
-.bootstrapped .alert-success {
+.alert-success {
   background-color: #78bb6e;
   color: white;
   -moz-osx-font-smoothing: grayscale;
    -webkit-font-smoothing: antialiased;
 }
-.bootstrapped .alert-success:before {
+.alert-success:before {
   content: '✔︎';
   left: 0.65rem;
 }

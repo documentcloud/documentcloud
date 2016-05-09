@@ -1,6 +1,6 @@
 /*----------------------------------- buttons --------------------------------*/
 
-.bootstrapped .btn {
+.btn {
   border-bottom: 2px solid black;
   border-radius: 4px;
   text-transform: uppercase;
@@ -9,16 +9,16 @@
   -webkit-transition: background-color 100ms, border-color 100ms;
           transition: background-color 100ms, border-color 100ms;
 }
-.bootstrapped .btn:hover {
+.btn:hover {
   padding-bottom: calc(0.375rem - 2px);
   border-bottom-width: 4px;
 }
 
-.bootstrapped .btn-success {
+.btn-success {
   border-bottom-color: green;
   -moz-osx-font-smoothing: grayscale;
    -webkit-font-smoothing: antialiased;
 }
-.bootstrapped .btn-success:hover {
+.btn-success:hover {
   border-bottom-color: darkgreen;
 }

@@ -1,12 +1,12 @@
 /*--------------------------------- forms ------------------------------------*/
 
-.bootstrapped .form-group {
+.form-group {
   position: relative;
   margin-top:    0.5rem;
   margin-bottom: 1.5rem;
 }
 
-.bootstrapped .form-group label {
+.form-group label {
   display: inline-block;
   position: absolute;
   bottom: 100%;
@@ -36,7 +36,7 @@
   white-space: nowrap;
 }
 
-.bootstrapped .form-group label span[data-content] {
+.form-group label span[data-content] {
   position: relative;
   display: block;
 
@@ -49,7 +49,7 @@
   -webkit-transition-timing-function: ease-in-out;
           transition-timing-function: ease-in-out;
 }
-.bootstrapped .form-group label span[data-content]:after {
+.form-group label span[data-content]:after {
   position: absolute;
   bottom: 100%;
   left: 0;
@@ -65,27 +65,27 @@
   content: attr(data-content);
 }
 
-.bootstrapped .form-group.filled label,
-.bootstrapped .form-control:focus + label {
+.form-group.filled label,
+.form-control:focus + label {
 	-webkit-transform: translate3d(0, 0.3rem, 0);
 	        transform: translate3d(0, 0.3rem, 0);
 }
 
-.bootstrapped .form-group.filled label span[data-content],
-.bootstrapped .form-control:focus + label span[data-content] {
+.form-group.filled label span[data-content],
+.form-control:focus + label span[data-content] {
   -webkit-transform: translate3d(0, 100%, 0);
           transform: translate3d(0, 100%, 0);
 }
 
-.bootstrapped .form-group.has-danger label {
+.form-group.has-danger label {
   color: #d9534f;
 }
 
-.bootstrapped .form-group.has-success label {
+.form-group.has-success label {
   color: #5cb85c;
 }
 
-.bootstrapped .form-group-alert {
+.form-group-alert {
   font-weight: 700;
   font-size: 0.9rem;
 
@@ -107,17 +107,17 @@
   border-bottom-right-radius: 0.25rem;
 }
 
-.bootstrapped .form-group-alert li {
+.form-group-alert li {
   margin: 0.5rem 0;
 }
 
-.bootstrapped .form-control:focus ~ .form-group-alert {
+.form-control:focus ~ .form-group-alert {
   max-height: 150px;
 	-webkit-transition: opacity 0.25s, max-height 0.25s ease-in;
          	transition: opacity 0.25s, max-height 0.25s ease-in;
 }
 
-.bootstrapped .has-danger .form-group-alert {
+.has-danger .form-group-alert {
   background-color: #d9534f;
   color: white;
   -moz-osx-font-smoothing: grayscale;
