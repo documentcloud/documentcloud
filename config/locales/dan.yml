@@ -82,8 +82,8 @@
   - 'TRUE': SAND
   - access: 'Adgang '
   - access_level: Adgangsrettighed
-  - access_level_edit_closing: "Ændring af adgangs-rettigheder tager et øjeblik. Dokumentet
-      lukker, mens det bliver behandlet."
+  - access_level_edit_closing: Ændring af adgangs-rettigheder tager et øjeblik. Dokumentet
+      lukker, mens det bliver behandlet.
   - account: Konto
   - account_add_failure: Kunne ikke tilføje kontoen.
   - account_is_disabled: "%s er blevet deaktiveret."
@@ -133,7 +133,7 @@
   - bad_data_key: "%s kan ikke bruges som en nøgle"
   - before_continue: Før du fortsætter, kan du bruge et øjeblik til %s
   - black: sort
-  - broken_document: "Ødelagt dokument"
+  - broken_document: Ødelagt dokument
   - by_date: efter dato
   - by_length: efter længde
   - by_relevance: efter relevans
@@ -188,7 +188,7 @@
       vores %sforslag til at løse problemet%s eller %skontakt os%s for øjeblikkelig
       hjælp.
   - document_has_no_public_notes: Dette dokument har ingen offentlige noter.
-  - document_modification: "Ændring af dokument"
+  - document_modification: Ændring af dokument
   - document_processing_count:
     - Der er et dokument, der bliver behandlet
     - Der er %d dokumenter, der bliver behandlet
@@ -421,10 +421,10 @@
       mens redigering finder sted.
   - of: af
   - ok: OK
-  - open: "Åbn"
-  - open_in_viewer: "Åben alle sider i ​​Document Viewer"
-  - open_published: "Åbn offentliggjort version"
-  - open_published_version: "Åbn offentliggjort version"
+  - open: Åbn
+  - open_in_viewer: Åben alle sider i ​​Document Viewer
+  - open_published: Åbn offentliggjort version
+  - open_published_version: Åbn offentliggjort version
   - optional: Valgfrit
   - or: eller
   - or_remove_all_data: eller %sfjern alle data%s.
@@ -541,7 +541,7 @@
     - Fjernede %1$d dokumenter fra %2$s
   - removing: Fjerner...
   - reorder_hint: Omarranger sider ved at trække og slippe.
-  - reorder_pages: "Ændrer rækkefølge af sider"
+  - reorder_pages: Ændrer rækkefølge af sider
   - reorder_pages_done: Når du er færdig med at ændre på rækkefølgen, så klik på "Gem
       side-rækkefølge" knappen for at gemme dine ændringer.
   - reorder_pages_instructions: Træk og slip siderne for at ændre deres placering
