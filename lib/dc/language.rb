@@ -32,7 +32,7 @@ module DC
     SUPPORTED = NAMES.keys
     DEFAULT = 'eng'
 
-    USER = ['dan','eng','rus','spa','ukr']
+    USER = ['dan','eng','fra','rus','spa','ukr']
 
     # For user facing purposes, documents are considered to have only a language.
     # In reality documents possess two distinct properties a language
