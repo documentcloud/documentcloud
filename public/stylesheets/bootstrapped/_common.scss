@@ -6,76 +6,74 @@
 
 body {
   background: white url(/images/embed/home/stripes.png) 0 0 repeat;
-  font-weight: 300;
+  font-weight: $font-weight-light;
   font-family: 'Gotham SSm A', 'Gotham SSm B', 'Gotham A', 'Gotham B', Gotham, 'Proxima Nova', 'Avenir Next', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
 main {
-  margin-top: 1rem;
-  margin-bottom: 1rem;
+  margin-top:    $spacer-y;
+  margin-bottom: $spacer-y;
 }
 
 /*--------------------------------- navbar -----------------------------------*/
 
-.dc-navbar#page-header {
-  border-radius: 0;
-}
-
 .dc-navbar {
-  background-color: $dcBrandBlue;
-  color: white;
-  font-weight: 700;
+  @include white-on-($dc-brand-blue);
+  font-weight: $font-weight-bold;
   text-transform: uppercase;
   font-size: 0.85rem;
-  -moz-osx-font-smoothing: grayscale;
-   -webkit-font-smoothing: antialiased;
-}
 
-.dc-navbar a {
-  color: rgba(255, 255, 255, 0.6);
-}
+  a {
+    color: rgba(255, 255, 255, 0.6);
+    text-decoration: none;
 
-.dc-navbar a.active {
-  color: white;
-}
+    &.active {
+      color: white;
+    }
+  }
 
-.dc-navbar .nav-link {
-  padding-left: 0.25rem;
-  padding-right: 0.25rem;
-}
+  .nav-link {
+    padding-left: 0.25rem;
+    padding-right: 0.25rem;
 
-.dc-navbar .nav-link:hover {
-  background-color: rgba(255, 255, 255, 0.25);
-}
-.dc-navbar .nav-link.dc-logo:hover {
-  background-color: transparent;
-}
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.25);
+    }
 
-.dc-logo {
-  background: transparent url('/images/common/document_cloud_logo_white@2x.png') left center no-repeat;
-  color: transparent !important;
-  background-size: contain;
+    &.dc-logo:hover {
+      background-color: transparent;
+    }
+  }
 }
 
 /*-------------------------------- elements ----------------------------------*/
 
-.paper {
-  background-color: white;
-  padding: 2rem;
-  box-shadow: 0 0 1rem #aaa;
-  border-radius: 0.5rem;
+.dc-logo {
+  background: transparent url('//dev.dcloud.org/images/common/document_cloud_logo_white@2x.png') left center no-repeat;
+  color: transparent !important;
+  background-size: contain;
 }
 
-.paper   > *:first-child,
-.sidebar > *:first-child {
-  margin-top: 0;
-}
-.paper   > *:last-child,
-.sidebar > *:last-child {
-  margin-bottom: 0;
+.paper {
+  background-color: white;
+  padding: $spacer * 2;
+  box-shadow: 0 0 1rem #aaa;
+  border-radius: 0.5rem;
+  z-index: 2;
 }
 
 .sidebar {
   padding-top:    2rem;
   padding-bottom: 2rem;
+  z-index: 1;
+}
+
+.paper,
+.sidebar {
+  > *:first-child {
+    margin-top: 0;
+  }
+  > *:last-child {
+    margin-bottom: 0;
+  }
 }
