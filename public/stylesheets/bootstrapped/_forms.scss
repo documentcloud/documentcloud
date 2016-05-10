@@ -108,15 +108,16 @@
     margin: 0.5rem 0;
   }
 
-  .form-control:focus ~ & {
-    max-height: 150px;
-  	-webkit-transition: opacity $transition-speed-normal, max-height $transition-speed-normal ease-in;
-           	transition: opacity $transition-speed-normal, max-height $transition-speed-normal ease-in;
-  }
-
-  .has-danger & {
-    @include white-on-($brand-danger);
-  }
+  // These should work, but in testing they don't. TODO: Investigate
+//  .form-control:focus ~ & {
+//    max-height: 150px;
+//    -webkit-transition: opacity $transition-speed-normal, max-height $transition-speed-normal ease-in;
+//             transition: opacity $transition-speed-normal, max-height $transition-speed-normal ease-in;
+//  }
+//
+//  .has-danger & {
+//    @include white-on-($brand-danger);
+//  }
 }
 
 .form-control:focus ~ .form-group-alert {
