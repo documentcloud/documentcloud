@@ -4,7 +4,10 @@ var compileSass = require('broccoli-sass');
 var bower       = require('broccoli-bower');
 var uglify      = require('broccoli-uglify-js');
 
-var appRoot = 'public'; // Set up the base directory for all of our source files
+var path = require('path');
+
+var appRoot = path.join(__dirname, 'public'); // Set up the base directory for all of our source files
+console.log("Building from "+appRoot);
 
 // Collect all of our javascripts and map them into an output directory called "javascripts"
 var app = funnel(appRoot, {
