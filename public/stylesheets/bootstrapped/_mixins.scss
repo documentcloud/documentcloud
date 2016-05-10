@@ -1,0 +1,16 @@
+@mixin antialiased {
+  -moz-osx-font-smoothing: grayscale;
+   -webkit-font-smoothing: antialiased;
+}
+
+@mixin white-on-($background-color) {
+  background-color: $background-color;
+  color: white;
+  @include antialiased;
+}
+
+@mixin untouchable() {
+  pointer-events: none; // Pass clicks on to things behind it
+  -webkit-touch-callout: none; // Don't bring up iOS select/action callouts
+  user-select: none; // Don't let users select this text
+}

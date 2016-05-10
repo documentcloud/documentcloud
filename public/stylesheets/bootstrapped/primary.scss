@@ -1,4 +1,22 @@
+/*
+
+  TYPE STYLE GUIDE
+
+  - Use Gotham ScreenSmart (`'Gotham SSm A', 'Gotham SSm B'`) for normal sizes
+    (<=18px), which effectively means everything except H1-H3
+  - Use Gotham (`'Gotham A', 'Gotham B'`) for large headlines (>18px)
+  - Use font weight 300 (light) for most text
+  - Use font weight 700 (bold) for bold text
+  - Don't use bold in H1-H3; if it becomes necessary, we'll need to add 
+    Gotham's 700 variant to the font package
+  - Fall back to the opposite package (ScreenSmart falls back to non-ScreenSmart
+    and vice versa), then fall back to system Gotham, then to acceptable Gotham
+    substitutes that maybe two designers will have installed
+
+*/
+
 @import "variables";
+@import "mixins";
 @import "javascripts/vendor/bootstrap/scss/bootstrap";
 
 .bootstrapped {

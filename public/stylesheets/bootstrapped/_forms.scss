@@ -2,67 +2,73 @@
 
 .form-group {
   position: relative;
-  margin-top:    0.5rem;
-  margin-bottom: 1.5rem;
-}
+  margin-top:    $spacer-y;
+  margin-bottom: $spacer-y;
 
-.form-group label {
-  display: inline-block;
-  position: absolute;
-  bottom: 100%;
-  width: 100%;
-  padding-left: 0.75rem;
-  padding-right: 0.75rem;
-  overflow: hidden;
+  label {
+    display: inline-block;
+    position: absolute;
+    bottom: 100%;
+    width: 100%;
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+    overflow: hidden;
+    @include untouchable;
 
-  -webkit-transform: translate3d(0, 2.2rem, 0);
-          transform: translate3d(0, 2.2rem, 0);
-  -webkit-transition: -webkit-transform 0.25s;
-          transition: transform 0.25s ;
-  -webkit-transition-timing-function: ease-in-out;
-          transition-timing-function: ease-in-out;
+    -webkit-transform: translate3d(0, 2.2rem, 0);
+            transform: translate3d(0, 2.2rem, 0);
+    -webkit-transition: -webkit-transform $transition-speed-normal;
+            transition: transform $transition-speed-normal;
+    -webkit-transition-timing-function: ease-in-out;
+            transition-timing-function: ease-in-out;
 
-  pointer-events: none;
-  -webkit-touch-callout: none;
-   -webkit-user-select: none;
-   -khtml-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
+    font-weight: $font-weight-light;
+    font-size: 0.9rem;
+    line-height: 1rem;
+    white-space: nowrap;
 
-  font-weight: 300;
-  font-size: 0.9rem;
-  line-height: 1rem;
-  white-space: nowrap;
-}
+    span[data-content] {
+      position: relative;
+      display: block;
 
-.form-group label span[data-content] {
-  position: relative;
-  display: block;
+      line-height: 1rem;
+      @include antialiased;
 
-  line-height: 1rem;
-  -moz-osx-font-smoothing: grayscale;
-   -webkit-font-smoothing: antialiased;
+      -webkit-transition: -webkit-transform $transition-speed-normal, color $transition-speed-normal;
+              transition: transform $transition-speed-normal, color $transition-speed-normal;
+      -webkit-transition-timing-function: ease-in-out;
+              transition-timing-function: ease-in-out;
 
-  -webkit-transition: -webkit-transform 0.25s, color 0.25s;
-          transition: transform 0.25s, color 0.25s;
-  -webkit-transition-timing-function: ease-in-out;
-          transition-timing-function: ease-in-out;
-}
-.form-group label span[data-content]:after {
-  position: absolute;
-  bottom: 100%;
-  left: 0;
-  height: 100%;
-  width: 100%;
+      &:after {
+        position: absolute;
+        bottom: 100%;
+        left: 0;
+        height: 100%;
+        width: 100%;
 
-  font-size: 0.8rem;
-  font-weight: 700;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  white-space: nowrap;
+        font-size: 0.8rem;
+        font-weight: $font-weight-bold;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        white-space: nowrap;
 
-  content: attr(data-content);
+        content: attr(data-content);
+      }
+    }
+  }
+
+  &.has-danger {
+    label {
+      color: $brand-danger;
+    }
+  }
+
+  &.has-success {
+    label {
+      color: $brand-success;
+    }
+  }
+
 }
 
 .form-group.filled label,
@@ -77,16 +83,8 @@
           transform: translate3d(0, 100%, 0);
 }
 
-.form-group.has-danger label {
-  color: #d9534f;
-}
-
-.form-group.has-success label {
-  color: #5cb85c;
-}
-
 .form-group-alert {
-  font-weight: 700;
+  font-weight: $font-weight-bold;
   font-size: 0.9rem;
 
   position: absolute;
@@ -96,8 +94,8 @@
   overflow: hidden;
   width: 100%;
 
-  -webkit-transition: opacity 0.25s, max-height 0.25s ease-out;
-          transition: opacity 0.25s, max-height 0.25s ease-out;
+  -webkit-transition: opacity $transition-speed-normal, max-height $transition-speed-normal ease-out;
+          transition: opacity $transition-speed-normal, max-height $transition-speed-normal ease-out;
 
   margin: -0.25rem 0 0 0;
   padding: 0 0.75rem;
@@ -105,21 +103,28 @@
 
   border-bottom-left-radius: 0.25rem;
   border-bottom-right-radius: 0.25rem;
-}
 
-.form-group-alert li {
-  margin: 0.5rem 0;
+  > li {
+    margin: 0.5rem 0;
+  }
+
+  .form-control:focus ~ & {
+    max-height: 150px;
+  	-webkit-transition: opacity $transition-speed-normal, max-height $transition-speed-normal ease-in;
+           	transition: opacity $transition-speed-normal, max-height $transition-speed-normal ease-in;
+  }
+
+  .has-danger & {
+    @include white-on-($brand-danger);
+  }
 }
 
 .form-control:focus ~ .form-group-alert {
   max-height: 150px;
-	-webkit-transition: opacity 0.25s, max-height 0.25s ease-in;
-         	transition: opacity 0.25s, max-height 0.25s ease-in;
+	-webkit-transition: opacity $transition-speed-normal, max-height $transition-speed-normal ease-in;
+         	transition: opacity $transition-speed-normal, max-height $transition-speed-normal ease-in;
 }
 
 .has-danger .form-group-alert {
-  background-color: #d9534f;
-  color: white;
-  -moz-osx-font-smoothing: grayscale;
-   -webkit-font-smoothing: antialiased;
+  @include white-on-($brand-danger);
 }
