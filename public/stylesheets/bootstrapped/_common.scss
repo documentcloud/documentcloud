@@ -21,25 +21,61 @@ main {
   @include white-on-($dc-brand-blue);
   font-weight: $font-weight-bold;
   text-transform: uppercase;
-  font-size: 0.85rem;
+  font-size: 0.75rem;
+  line-height: 1.5rem;
 
   .nav-link {
-    color: rgba(255, 255, 255, 0.6);
+    color: white;
     text-decoration: none;
+    padding: $nav-link-padding;
+
+    &:hover {
+      @include white-on-($dc-brand-blue-light);
+    }
 
     &.active {
-      color: white;
+      @include white-on-($dc-brand-blue-light);
+      &:hover {
+        background-color: rgba(255, 255, 255, 0.25);
+      }
     }
-    &:hover {
-      background-color: rgba(255, 255, 255, 0.25);
+
+    + .nav-link {
+      margin-left: $nav-item-inline-spacer / 2;
     }
   }
 
-  .dropdown-item {
-    font-weight: $font-weight-bold;
-    font-size: 0.85rem;
-    text-transform: none;
-    text-decoration: none;
+  .nav-item {
+    + .nav-item {
+      margin-left: $nav-item-inline-spacer / 2;
+    }
+  }
+
+  .dropdown {
+    
+    &.open {
+      .nav-link {
+        // Same as .active above
+        @include white-on-($dc-brand-blue-light);
+      }
+    }
+
+    .dropdown-item {
+      font-weight: $font-weight-bold;
+      font-size: 0.85rem;
+      text-transform: none;
+      text-decoration: none;
+    }
+
+  }
+
+  .navbar-brand {
+    padding-top: 0.4rem;
+    padding-bottom: 0.4rem;
+  }
+
+  .navbar-toggler {
+    color: inherit;
   }
 
 }
