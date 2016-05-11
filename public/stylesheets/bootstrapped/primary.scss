@@ -16,9 +16,9 @@
 */
 
 @import "variables";
-@import "mixins";
-@import "javascripts/vendor/bootstrap/scss/bootstrap";
 
+@import "variables_bootstrap"; // Override Bootstrap
+@import "javascripts/vendor/bootstrap/scss/bootstrap";
 
 @import "mixins";
 @import "common";
