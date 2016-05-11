@@ -23,27 +23,25 @@ main {
   text-transform: uppercase;
   font-size: 0.85rem;
 
-  a {
+  .nav-link {
     color: rgba(255, 255, 255, 0.6);
     text-decoration: none;
 
     &.active {
       color: white;
     }
-  }
-
-  .nav-link {
-    padding-left: 0.25rem;
-    padding-right: 0.25rem;
-
     &:hover {
       background-color: rgba(255, 255, 255, 0.25);
     }
-
-    &.dc-logo:hover {
-      background-color: transparent;
-    }
   }
+
+  .dropdown-item {
+    font-weight: $font-weight-bold;
+    font-size: 0.85rem;
+    text-transform: none;
+    text-decoration: none;
+  }
+
 }
 
 /*-------------------------------- elements ----------------------------------*/
