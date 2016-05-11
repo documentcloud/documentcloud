@@ -37,4 +37,4 @@ var sass = compileSass(sassDependencies, 'stylesheets/bootstrapped/primary.scss'
 
 
 // coalesce all the different assets into one directory.
-module.exports = mergeTrees([sass]);
+module.exports = mergeTrees([app, sass]);
