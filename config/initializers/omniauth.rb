@@ -11,6 +11,7 @@ else
     provider :twitter  , secrets['twitter']['key'], secrets['twitter']['secret']
     provider :facebook , secrets['facebook']['key'], secrets['facebook']['secret'], { :scope => 'email' }
     provider :google_oauth2, secrets['google']['key'], secrets['google']['secret'], { :access_type=>'online',:approval_prompt=>''}
+    provider :circlet, secrets['documentcloud']['key'], secrets['documentcloud']['secret']
   end
 
 

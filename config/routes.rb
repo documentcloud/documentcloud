@@ -1,5 +1,11 @@
 DC::Application.routes.draw do
 
+  devise_for :account
+  
+  devise_scope :user do
+    delete 'sign_out', to: 'devise/sessions#destroy', as: :destroy_user_session
+  end
+
   # Homepage
   get '/', to: 'workspace#index'
 
@@ -33,6 +39,8 @@ DC::Application.routes.draw do
     match '/auth/:action', via: [:get, :post]
     get '/auth/:provider',          action: 'blank'
     get '/auth/:provider/callback', action: 'callback'
+    # circlet specific
+    get '/auth/circlet/callback', to: 'authentication#create'
   end
 
   # Public search
@@ -143,7 +151,7 @@ DC::Application.routes.draw do
     end
   end
   match '/accounts/enable/:key', to: 'accounts#enable', via: [:get, :post], as: 'enable_account'
-  match '/reset_password',       to: 'accounts#reset',  via: [:get, :post], as: 'reset_password'
+  match '/reset_password',     to: 'accounts#reset',  via: [:get, :post], as: 'reset_password'
 
   # Account requests
   get '/signup', to: 'redirect#index', url: '/plans/apply'
