@@ -5,9 +5,11 @@
   border-width:  2px;
   border-radius: 4px;
   text-transform: uppercase;
+  text-decoration: none;
   font-weight: $font-weight-bold;
   font-size: 0.85rem;
   @include transition(background-color 1000ms, border-color 1000ms, border-width 1000ms);
+  @include antialiased;
 
   &:hover {
     padding-bottom: calc(#{$btn-padding-y} - 2px);
@@ -17,9 +19,21 @@
 
 .btn-success {
   border-bottom-color: darken($brand-success, 15%);
-  @include antialiased;
-
   &:hover {
     border-bottom-color: darken($brand-success, 25%);
+  }
+}
+
+.btn-danger {
+  border-bottom-color: darken($brand-danger, 15%);
+  &:hover {
+    border-bottom-color: darken($brand-danger, 25%);
+  }
+}
+
+.btn-primary {
+  border-bottom-color: darken($brand-primary, 15%);
+  &:hover {
+    border-bottom-color: darken($brand-primary, 25%);
   }
 }

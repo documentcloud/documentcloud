@@ -36,7 +36,7 @@ main {
     &.active {
       @include white-on-($dc-brand-blue-light);
       &:hover {
-        background-color: rgba(255, 255, 255, 0.25);
+        background-color: $dc-brand-blue-light;
       }
     }
 
