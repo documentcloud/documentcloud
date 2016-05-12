@@ -15,6 +15,11 @@ main {
   margin-bottom: $spacer-y;
 }
 
+.container.thin {
+  max-width: 40rem;
+  @include make-container();
+}
+
 /*--------------------------------- navbar -----------------------------------*/
 
 .dc-navbar {
