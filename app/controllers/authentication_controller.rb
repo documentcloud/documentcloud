@@ -169,6 +169,13 @@ class AuthenticationController < ApplicationController
       render :action=>:login
     end
   end
+  
+  # Circlet specific
+  def create
+    @user = User.find_or_create_from_auth_hash(auth_hash)
+    self.current_user = @user
+    redirect_to '/'
+  end
 
   def record_user_information
     account = current_account
@@ -188,7 +195,13 @@ class AuthenticationController < ApplicationController
     flash[:error] = params[:message]
     redirect_to :action=>'login'
   end
+  
+  protected
 
+  def auth_hash
+    request.env['omniauth.auth']
+  end
+  
   private
 
   def allow_iframe
