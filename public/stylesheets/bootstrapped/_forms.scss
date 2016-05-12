@@ -1,13 +1,26 @@
 /*--------------------------------- forms ------------------------------------*/
 
+@mixin label-decorative($font-size: 0.8rem) {
+  font-size: $font-size;
+  font-weight: $font-weight-bold;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.form-columned {
+  .form-control-label {
+    @include label-decorative;
+  }
+}
+
 .form-fancy {
 
   .form-group {
     position: relative;
-    margin-top:    $spacer-y;
-    margin-bottom: $spacer-y;
+    margin-top:    $spacer-y * 1.5;
+    margin-bottom: $spacer-y * 1.5;
 
-    label {
+    .form-control-label {
       display: inline-block;
       position: absolute;
       bottom: 100%;
@@ -48,10 +61,7 @@
           height: 100%;
           width: 100%;
 
-          font-size: 0.8rem;
-          font-weight: $font-weight-bold;
-          letter-spacing: 1px;
-          text-transform: uppercase;
+          @include label-decorative;
           white-space: nowrap;
 
           content: attr(data-content);
@@ -60,27 +70,27 @@
     }
 
     &.has-danger {
-      label {
+      .form-control-label {
         color: $brand-danger;
       }
     }
 
     &.has-success {
-      label {
+      .form-control-label {
         color: $brand-success;
       }
     }
 
   }
 
-  .form-group.filled label,
-  .form-control:focus + label {
+  .form-group.filled .form-control-label,
+  .form-control:focus + .form-control-label {
   	-webkit-transform: translate3d(0, 0.3rem, 0);
   	        transform: translate3d(0, 0.3rem, 0);
   }
 
-  .form-group.filled label span[data-content],
-  .form-control:focus + label span[data-content] {
+  .form-group.filled .form-control-label span[data-content],
+  .form-control:focus + .form-control-label span[data-content] {
     -webkit-transform: translate3d(0, 100%, 0);
             transform: translate3d(0, 100%, 0);
   }
