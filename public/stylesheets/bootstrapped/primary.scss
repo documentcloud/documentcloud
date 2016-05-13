@@ -1,22 +1,16 @@
 /*
 
-  TYPE STYLE GUIDE
+  PRIMARY DOCUMENTCLOUD STYLES
 
-  - Use Gotham ScreenSmart (`'Gotham SSm A', 'Gotham SSm B'`) for normal sizes
-    (<=18px), which effectively means everything except H1-H3
-  - Use Gotham (`'Gotham A', 'Gotham B'`) for large headlines (>18px)
-  - Use font weight 300 (light) for most text
-  - Use font weight 700 (bold) for bold text
-  - Don't use bold in H1-H3; if it becomes necessary, we'll need to add 
-    Gotham's 700 variant to the font package
-  - Fall back to the opposite package (ScreenSmart falls back to non-ScreenSmart
-    and vice versa), then fall back to system Gotham, then to acceptable Gotham
-    substitutes that maybe two designers will have installed
+  - Use Bootstrap and reasonably follow Bootstrap's class semantics
+  - Put our SCSS variables in _variables.scss
+  - Override Bootstrap in _variables_bootstrap.scss, imported after our
+    variables since we reference some of them
+  - Separate element definitions reasonably into their own imported files
 
 */
 
-@import "variables";
-
+@import "variables"; // Ours first, since variables_bootstrap references some
 @import "variables_bootstrap"; // Override Bootstrap
 @import "javascripts/vendor/bootstrap/scss/bootstrap";
 

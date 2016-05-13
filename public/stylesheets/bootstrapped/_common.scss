@@ -1,13 +1,26 @@
-/*--------------------------------- layout -----------------------------------*/
+/*
 
-html {
-  font-size: 15px;
-}
+  TYPE STYLE GUIDE
+
+  - Use Gotham ScreenSmart (`'Gotham SSm A', 'Gotham SSm B'`) for normal sizes
+    (<=18px), which effectively means everything except H1-H3
+  - Use Gotham (`'Gotham A', 'Gotham B'`) for large headlines (>18px)
+  - Use font weight 300 (light) for most text
+  - Use font weight 700 (bold) for bold text
+  - Don't use bold in H1-H3; if it becomes necessary, we'll need to add 
+    Gotham's 700 variant to the font package
+  - Fall back to the opposite package (ScreenSmart falls back to non-ScreenSmart
+    and vice versa), then fall back to system Gotham, then to acceptable Gotham
+    substitutes that maybe two designers will have installed
+
+*/
+
+/*--------------------------------- layout -----------------------------------*/
 
 body {
   background: white url('//dev.dcloud.org/images/embed/home/stripes.png') 0 0 repeat;
   font-weight: $font-weight-light;
-  font-family: 'Gotham SSm A', 'Gotham SSm B', 'Gotham A', 'Gotham B', Gotham, 'Proxima Nova', 'Avenir Next', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-family: $font-family-sans-serif;
 }
 
 main {
