@@ -4,12 +4,8 @@
   border-bottom: 2px solid transparent;
   border-width:  2px;
   border-radius: 4px;
-  text-transform: uppercase;
-  text-decoration: none;
-  font-weight: $font-weight-bold;
-  font-size: 0.85rem;
+  @include decorative-type($font-size: 0.85rem, $letter-spacing: 0);
   @include transition(background-color 1000ms, border-color 1000ms, border-width 1000ms);
-  @include antialiased;
 
   &:hover {
     padding-bottom: calc(#{$btn-padding-y} - 2px);

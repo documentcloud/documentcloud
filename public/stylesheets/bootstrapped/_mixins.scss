@@ -3,6 +3,15 @@
    -webkit-font-smoothing: antialiased;
 }
 
+@mixin decorative-type($font-size: 0.8rem, $letter-spacing: 1px) {
+  font-size: $font-size;
+  font-weight: $font-weight-bold;
+  letter-spacing: $letter-spacing;
+  text-transform: uppercase;
+  text-decoration: none;
+  @include antialiased;
+}
+
 @mixin white-on-($background-color) {
   background-color: $background-color;
   color: white;

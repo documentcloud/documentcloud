@@ -37,9 +37,7 @@ main {
 
 .dc-navbar {
   @include white-on-($dc-brand-blue);
-  font-weight: $font-weight-bold;
-  text-transform: uppercase;
-  font-size: 0.75rem;
+  @include decorative-type($font-size: $font-size-xs, $letter-spacing: 0);
   line-height: 1.5rem;
 
   .nav-link {
