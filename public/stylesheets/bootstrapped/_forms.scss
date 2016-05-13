@@ -1,84 +1,72 @@
 /*--------------------------------- forms ------------------------------------*/
 
-@mixin label-decorative($font-size: 0.8rem) {
-  font-size: $font-size;
-  font-weight: $font-weight-bold;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-}
-
 .form-columned {
   .form-control-label {
-    @include label-decorative;
+    @include decorative-type;
   }
 }
 
 .form-fancy {
 
-  $fancy-input-top-padding:    1.5rem;
-  $fancy-input-bottom-padding: $input-padding-y;
-  $fancy-input-line-height:    1.5; // 1.25
-  $fancy-input-height:         $fancy-input-top-padding + $fancy-input-line-height + $fancy-input-bottom-padding;
+  $border-bottom-width: 2px;
 
   .form-group {
     position: relative;
+  }
 
-    .form-control {
-      padding: $fancy-input-top-padding $input-padding-x $fancy-input-bottom-padding $input-padding-x;
+  .form-control {
+    border-left-width: 0;
+    border-right-width: 0;
+    border-top-width: 0;
+    border-bottom-width: $border-bottom-width;
+    border-bottom-color: lighten($gray, 15%);
+    box-shadow: inset 0 ($border-bottom-width/2) $border-bottom-width 0 rgba(125, 127, 127, 0.25);
+
+    &.form-control-danger {
+      border-bottom-color: $brand-danger;
     }
-
-    .form-control-label {
-      display: inline-block;
-      position: absolute;
-      width: 100%;
-      padding-left: $input-padding-x;
-      padding-right: $input-padding-x;
-      @include untouchable;
-
-      transform: translate3d(0, -($fancy-input-height - $fancy-input-line-height/2), 0);
-      transition: transform $transition-speed-normal, color $transition-speed-normal;
-
-      @include antialiased;
-      @include label-decorative(0.75rem);
-      line-height: $fancy-input-line-height;
-      color: $gray;
-      white-space: nowrap;
+    &.form-control-success {
+      border-bottom-color: $brand-success;
     }
+  }
 
-    &.has-danger {
-      .form-control-label {
-        color: $brand-danger;
-      }
-    }
+  .form-group.filled .form-control,
+  .form-control:focus {
+    outline: none;
+    box-shadow: inset 0 0 $border-bottom-width 0 rgba(125, 127, 127, 0.25);
+  }
 
-    &.has-success {
-      .form-control-label {
-        color: $brand-success;
-      }
-    }
+  .form-control-label {
+    $label-font-size: $font-size-xs;
+    $label-padding-x: $input-padding-x / 2;
+    $label-padding-y: $input-padding-y / 4;
+    $label-height: $label-font-size * $input-line-height;
 
+    display: inline-block;
+    position: absolute;
+    left: $label-padding-x;
+    padding: $label-padding-y $label-padding-x;
+    @include untouchable;
+
+    transform: translate3d(0, -($input-height * 0.5 + $label-height * 0.5 + $label-padding-y), 0);
+    transition-property: transform, color, background-color;
+    transition-duration: $transition-speed-normal;
+    transition-timing-function: ease-in-out;
+
+    @include decorative-type($font-size: $label-font-size);
+    background-color: transparent;
+    white-space: nowrap;
   }
 
   .form-group.filled .form-control-label,
   .form-control:focus + .form-control-label {
-    color: $gray-light;
-    -webkit-transform: translate3d(0, -($fancy-input-height), 0);
-            transform: translate3d(0, -($fancy-input-height), 0);
-  }
-
-  .has-danger.form-group.filled .form-control-label,
-  .has-danger .form-control:focus + .form-control-label {
-    color: $brand-danger;
-  }
-
-  .has-success.form-group.filled .form-control-label,
-  .has-success .form-control:focus + .form-control-label {
-    color: $brand-success;
+    background-color: rgba(255, 255, 255, 0.95);
+    transform: translate3d(0, -($input-height + ($input-line-height / 2)), 0);
   }
 
   .form-group-alert {
     font-weight: $font-weight-bold;
-    font-size: 0.9rem;
+    font-size: $font-size-sm;
 
     position: absolute;
     top: 100%;
@@ -90,12 +78,12 @@
     -webkit-transition: opacity $transition-speed-normal, max-height $transition-speed-normal ease-out;
             transition: opacity $transition-speed-normal, max-height $transition-speed-normal ease-out;
 
-    margin: -0.25rem 0 0 0;
-    padding: 0 0.75rem;
+    margin: -$border-bottom-width 0 0 0;
+    padding: 0 $input-padding-x;
     list-style-type: none;
 
-    border-bottom-left-radius: 0.25rem;
-    border-bottom-right-radius: 0.25rem;
+    border-bottom-left-radius: $border-radius;
+    border-bottom-right-radius: $border-radius;
 
     > li {
       margin: 0.5rem 0;
