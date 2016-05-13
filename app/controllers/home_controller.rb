@@ -51,6 +51,10 @@ class HomeController < ApplicationController
     render layout: 'minimal'
   end
 
+  def faq
+    render layout: 'minimal'
+  end
+
   private
 
   def date_sorted(list)
