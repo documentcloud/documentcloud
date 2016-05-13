@@ -15,58 +15,34 @@
 
 .form-fancy {
 
+  $fancy-input-top-padding:    1.5rem;
+  $fancy-input-bottom-padding: $input-padding-y;
+  $fancy-input-line-height:    1.5; // 1.25
+  $fancy-input-height:         $fancy-input-top-padding + $fancy-input-line-height + $fancy-input-bottom-padding;
+
   .form-group {
     position: relative;
-    margin-top:    $spacer-y * 1.5;
-    margin-bottom: $spacer-y * 1.5;
+
+    .form-control {
+      padding: $fancy-input-top-padding $input-padding-x $fancy-input-bottom-padding $input-padding-x;
+    }
 
     .form-control-label {
       display: inline-block;
       position: absolute;
-      bottom: 100%;
       width: 100%;
-      padding-left: 0.75rem;
-      padding-right: 0.75rem;
-      overflow: hidden;
+      padding-left: $input-padding-x;
+      padding-right: $input-padding-x;
       @include untouchable;
 
-      -webkit-transform: translate3d(0, 2.2rem, 0);
-              transform: translate3d(0, 2.2rem, 0);
-      -webkit-transition: -webkit-transform $transition-speed-normal;
-              transition: transform $transition-speed-normal;
-      -webkit-transition-timing-function: ease-in-out;
-              transition-timing-function: ease-in-out;
+      transform: translate3d(0, -($fancy-input-height - $fancy-input-line-height/2), 0);
+      transition: transform $transition-speed-normal, color $transition-speed-normal;
 
-      font-weight: $font-weight-light;
-      font-size: 0.9rem;
-      line-height: 1rem;
+      @include antialiased;
+      @include label-decorative(0.75rem);
+      line-height: $fancy-input-line-height;
+      color: $gray;
       white-space: nowrap;
-
-      span[data-content] {
-        position: relative;
-        display: block;
-
-        line-height: 1rem;
-        @include antialiased;
-
-        -webkit-transition: -webkit-transform $transition-speed-normal, color $transition-speed-normal;
-                transition: transform $transition-speed-normal, color $transition-speed-normal;
-        -webkit-transition-timing-function: ease-in-out;
-                transition-timing-function: ease-in-out;
-
-        &:after {
-          position: absolute;
-          bottom: 100%;
-          left: 0;
-          height: 100%;
-          width: 100%;
-
-          @include label-decorative;
-          white-space: nowrap;
-
-          content: attr(data-content);
-        }
-      }
     }
 
     &.has-danger {
@@ -85,14 +61,19 @@
 
   .form-group.filled .form-control-label,
   .form-control:focus + .form-control-label {
-  	-webkit-transform: translate3d(0, 0.3rem, 0);
-  	        transform: translate3d(0, 0.3rem, 0);
+    color: $gray-light;
+    -webkit-transform: translate3d(0, -($fancy-input-height), 0);
+            transform: translate3d(0, -($fancy-input-height), 0);
   }
 
-  .form-group.filled .form-control-label span[data-content],
-  .form-control:focus + .form-control-label span[data-content] {
-    -webkit-transform: translate3d(0, 100%, 0);
-            transform: translate3d(0, 100%, 0);
+  .has-danger.form-group.filled .form-control-label,
+  .has-danger .form-control:focus + .form-control-label {
+    color: $brand-danger;
+  }
+
+  .has-success.form-group.filled .form-control-label,
+  .has-success .form-control:focus + .form-control-label {
+    color: $brand-success;
   }
 
   .form-group-alert {
