@@ -28,8 +28,18 @@ main {
   margin-bottom: $spacer-y;
 }
 
-.container.thin {
-  max-width: 40rem;
+.container-sm {
+  max-width: map-get($container-max-widths, 'sm');
+  @include make-container();
+}
+
+.container-md {
+  max-width: map-get($container-max-widths, 'md');
+  @include make-container();
+}
+
+.container-lg {
+  max-width: map-get($container-max-widths, 'lg');
   @include make-container();
 }
 
@@ -39,6 +49,8 @@ main {
   @include white-on-($dc-brand-blue);
   @include decorative-type($font-size: $font-size-xs, $letter-spacing: 0);
   line-height: 1.5rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
 
   .nav-link {
     color: white;
@@ -86,8 +98,10 @@ main {
   }
 
   .navbar-brand {
+    font-size: 1rem;
     padding-top: 0.4rem;
     padding-bottom: 0.4rem;
+    margin-right: 2rem;
   }
 
   .navbar-toggler {
