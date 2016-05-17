@@ -88,6 +88,30 @@
   text-decoration: underline;
 }
 
+.v2 dl {
+  
+}
+
+.v2 dt {
+  font-weight: 700;
+  margin-bottom: 0;
+}
+
+.v2 dd {
+  margin-top: 0;
+  margin-bottom: 2em;
+}
+.v2 dd:last-child {
+  margin-bottom: 0;
+}
+
+.v2 dd p:first-child {
+  margin-top: 0;
+}
+.v2 dd p:last-child {
+  margin-bottom: 0;
+}
+
 .v2 ol {
   margin-left: 2em;
   padding-left: 0;
@@ -327,4 +351,23 @@
 
 /* Large devices (large desktops, 1200px and up) */
 @media (min-width: 1200px) {
+}
+
+/*----------------------------------- FAQ ------------------------------------*/
+
+.v2 #faq-links h4 {
+  margin-bottom: 0;
+  font-size: 0.8em;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.v2 #faq-links ol {
+  margin-left: 0;
+}
+
+.v2 #faq section {
+  border-bottom: 1px solid #ddd;
+  margin: 3em 0;
+  padding: 0 0 3em 0;
 }
