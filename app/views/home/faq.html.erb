@@ -1,58 +1,660 @@
-<%
-  @title  = "Frequently Asked Questions"
-  @header = "Frequently Asked Questions"
-%>
+<% @title  = 'Frequently Asked Questions' %>
 
-<div id="content">
+<header class="header_primary">
+  <div class="container">
+    <h1><%= link_to 'DocumentCloud', '/' %></h1>
+    <nav class="header_nav">
+      <%= link_to 'What is DocumentCloud?', home_url %>
+    </nav>
+  </div>
+</header>
 
-  <h6>What is it? </h6>
-  <p>DocumentCloud is both a repository of primary source documents and a tool for document-based investigative reporting. Think of the repository as a card catalog for primary source documents. Our tools accelerate the work of reporters who need to make sense of large sets of documents. (You can use it on small sets, too.) </p>
-  
-  <h6>Yes, but what <i>is</i> it?</h6>
-  <p>Ruby (<a href="http://rubyonrails.org/">Rails</a>, <a href="http://www.sinatrarb.com/">Sinatra</a>) and JavaScript. We're using <a href="http://en.wikipedia.org/wiki/Tesseract_%28software%29">Tesseract</a> for OCR and <a href="http://www.opencalais.com/">OpenCalais</a> for entity extraction. Take a look at <a href="http://github.com/documentcloud">our GitHub projects</a> and <a href="https://blog.documentcloud.org">our blog</a> to get a better sense of the tools we’re using.</p>
-  
-  <h6>What can I do with it?</h6>
-  <p>Take a look at <a href="/featured">what other reporters are doing</a> with it! And that's just the beginning. When you upload a document to DocumentCloud, you can annotate it, share it with colleagues in your newsroom or beyond your newsroom, view lists of people and places named in it, plot the dates it contains on a timeline and more. </p> 
-  
-  <h6>How do I get an account?</h6>
-  <p>Learn more about getting accounts via our <a href="/contact">Contact</a> page. When you're ready, fill out an <a href="/apply">application</a>.</p>
-  
-  <h6>Is there an API?</h6>
-  <p><a href="/help/api">Yes.</a> </p>
-  
-  <h6>Are my documents automatically public?</h6>
-  <p>No. DocumentCloud was started by journalists who understand journalism. Documents you upload aren't public until you make them public.</p>
-  
-  <h6>Can I keep documents behind a pay wall?</h6>
-  <p>Sure. Other reporters who are DocumentCloud users can view your public documents from our workspace, but your public facing copy can sit behind a paywall. If the general public has no access to your reporting, however, you probably aren't a good fit -- DocumentCloud is intended as a public catalog.</p>
-  
-  <h6>What does it cost?</h6>
-  <p>Currently, DocumentCloud is a free service. In the future, we will develop models to ensure the platform's sustainability. See the next section for more.</p>
-  
-  <h6>Who funds it? </h6>
-  <p>DocumentCloud has been funded by generous grants from the <a href="http://www.knightfoundation.org/">John S. and James L. Knight Foundation</a>. Initial funding came in 2009, when DocumentCloud was the winner of a <a href="http://www.knightfoundation.org/grants/20083268/">Knight News Challenge</a> grant. The Knight Foundation awarded subsequent grants in <a href="http://www.knightfoundation.org/grants/20110146/">2011</a> and <a href="http://www.knightfoundation.org/press-room/press-release/documentcloud-annotation-tool-journalists-improve-/">2014</a> to further develop the platform. The latest grant is designed to expand the DocumentCloud team, improve the service and find revenue models that can help DocumentCloud reach sustainability. Finally, in 2011, DocumentCloud <a href="https://blog.documentcloud.org/blog/2011/06/new-home-at-ire/">merged with Investigative Reporters and Editors</a>, a nonprofit grassroots organization committed to fostering excellence in investigative journalism. IRE, itself housed at the Missouri School of Journalism at the University of Missouri in Columbia, provides staff support and guidance to the team while connecting us strongly to the journalists whose work is at the core of the platform.</p>
-  
-  <h6>Why would I want to share my documents? </h6>
-  <p>Because it makes your documents and your reporting more findable, more useful and ultimately more popular. </p>
-  <p>We know that many journalists want to share their source materials. It’s one of the reasons why most news organizations post source documents alongside news stories on their websites. DocumentCloud makes it easy to make those documents useful or even findable after the story fades from the headlines.</p>
-  <p>Many other organizations (bloggers, watchdog groups, citizen journalists) are in that same boat. They have a wealth of documents but are only able to post them as individual PDF files. This is the problem DocumentCloud solves. </p>
-  
-  <h6>Can’t I already find documents using a search engine? </h6>
-  <p>Search engines are very powerful; our goal is to make documents even easier to find on search engines. DocumentCloud has information about documents and relations between them, for example what locations, people, or organizations a group of documents have in common. </p>
-  
-  <h6>How do you guarantee authenticity?</h6>
-  <p>Currently, we limit access to journalists and other researchers who have an established editorial process and a history of publishing high quality reporting. Each contributing organization takes responsibility for ensuring that the documents it uploads to DocumentCloud are what they say they are.</p>
-  
-<div id="faqs">
-<h6>Find more answers to new questions on <a href="https://blog.documentcloud.org/blog/tag/faq/">our blog</a>.</h6> 
+<div id="faq" class="container paper-box">
 
-    <ul>
-        <li><a href="https://blog.documentcloud.org/blog/2011/08/getting-the-most-out-of-documentcloud/">Where to find examples of our API in action</a></li>
-        <li><a href="https://blog.documentcloud.org/blog/2011/05/faq-blogs/">Blog software and other CMSs</a></li>
-        <li><a href="https://blog.documentcloud.org/blog/2011/04/long_wait/">Uploads that take too long</a></li>
-        <li><a href="https://blog.documentcloud.org/blog/2011/01/frequently-asked-questions-journalism-school-edition/">How we work with journalism schools</a></li>
-        <li><a href="https://blog.documentcloud.org/blog/2010/12/frequently-asked-questions-wikileaks-edition/">WikiLeaks</a></li>
-    </ul>
+<h1>Frequently Asked Questions</h1>
 
-</div>
+<section id="faq-links">
+
+  <h4>General</h4>
+  <ol>
+    <li><a href="#faq-general-1">What is DocumentCloud?</a></li>
+    <li><a href="#faq-general-2">How much does it cost?</a></li>
+    <li><a href="#faq-general-3">Who can have accounts?</a></li>
+    <li><a href="#faq-general-4">Where can I get help?</a></li>
+    <li><a href="#faq-general-5">Where can I read your Terms of Service?</a></li>
+  </ol>
+
+  <h4>Privacy</h4>
+  <ol>
+    <li><a href="#faq-privacy-1">What is DocumentCloud’s privacy policy?</a></li>
+    <li><a href="#faq-privacy-2">Who can see documents in my account?</a></li>
+  </ol>
+
+  <h4>Accounts</h4>
+  <ol>
+    <li><a href="#faq-accounts-1">How do I get an account?</a></li>
+    <li><a href="#faq-accounts-2">How does DocumentCloud organize accounts?</a></li>
+    <li><a href="#faq-accounts-3">How do I log in and log out?</a></li>
+    <li><a href="#faq-accounts-4">How do I reset my password?</a></li>
+    <li><a href="#faq-accounts-5">How do I change my email address and password?</a></li>
+    <li><a href="#faq-accounts-6">Do I have to use my real name for my account?</a></li>
+    <li><a href="#faq-accounts-7">How can I get accounts for others in my organization?</a></li>
+    <li><a href="#faq-accounts-8">What are the differences between admin, contributor and freelancer accounts?</a></li>
+    <li><a href="#faq-accounts-9">Can I have more than one account with the same email?</a></li>
+    <li><a href="#faq-accounts-10">How many user accounts can an organization have under its account?</a></li>
+    <li><a href="#faq-accounts-11">What happens if my organization closes?</a></li>
+    <li><a href="#faq-accounts-12">What happens to my documents and account if I leave my current organization?</a></li>
+    <li><a href="#faq-accounts-13">Can I delete my account?</a></li>
+  </ol>
+
+  <h4>Search</h4>
+  <ol>
+    <li><a href="#faq-search-1">What can I find in the <%= link_to 'public catalog', '/public/search' %>?</a></li>
+    <li><a href="#faq-search-2">Do I need an account to search the <%= link_to 'public catalog', '/public/search' %>?</a></li>
+    <li><a href="#faq-search-3">Will getting a DocumentCloud account allow me to see more documents?</a></li>
+    <li><a href="#faq-search-4">How can I search documents?</a></li>
+    <li><a href="#faq-search-5">Can I contribute documents to your public catalog?</a></li>
+  </ol>
+
+  <h4>Uploading</h4>
+  <ol>
+    <li><a href="#faq-uploading-1">What kinds of file types can I upload?</a></li>
+    <li><a href="#faq-uploading-2">Is there a limit on the size of a file I can upload?</a></li>
+    <li><a href="#faq-uploading-3">Are there restrictions on the content of documents I can upload?</a></li>
+    <li><a href="#faq-uploading-4">How long does it take to process a document?</a></li>
+    <li><a href="#faq-uploading-5">What does DocumentCloud do with the documents I upload?</a></li>
+    <li><a href="#faq-uploading-6">When I upload a document, can anyone else see it?</a></li>
+    <li><a href="#faq-uploading-7">Can I OCR my documents in languages other than English?</a></li>
+    <li><a href="#faq-uploading-8">I don’t see the language I need for OCR. Can you add it?</a></li>
+  </ol>
+
+  <h4>Working with Documents</h4>
+  <ol>
+    <li><a href="#faq-documents-1">What information can I add to my documents?</a></li>
+    <li><a href="#faq-documents-2">What is the difference between Related Article URL and Published URL?</a></li>
+    <li><a href="#faq-documents-3">How can I add custom data (tags) to organize and search my documents?</a></li>
+    <li><a href="#faq-documents-4">How do I change the order of pages in a document I uploaded?</a></li>
+    <li><a href="#faq-documents-5">How do I insert or replace pages in a document I uploaded?</a></li>
+    <li><a href="#faq-documents-6">How do I remove pages from a document I uploaded?</a></li>
+    <li><a href="#faq-documents-7">How do I redact portions of my document?</a></li>
+    <li><a href="#faq-documents-8">Does redacting a document also remove the text extracted from it?</a></li>
+    <li><a href="#faq-documents-9">Can I change the orientation of a page in a document?</a></li>
+    <li><a href="#faq-documents-10">How do I delete documents?</a></li>
+    <li><a href="#faq-documents-11">Once I delete a document, can I get it back?</a></li>
+  </ol>
+
+  <h4>Analyzing Data in Documents</h4>
+  <ol>
+    <li><a href="#faq-analyzing-1">How can I see entities extracted from my documents?</a></li>
+    <li><a href="#faq-analyzing-2">How can I see a timeline of the dates in a document?</a></li>
+  </ol>
+
+  <h4>Working With OCR and Document Text</h4>
+  <ol>
+    <li><a href="#faq-ocr-1">What kind of OCR software does DocumentCloud use?</a></li>
+    <li><a href="#faq-ocr-2">Do you OCR every document I upload?</a></li>
+    <li><a href="#faq-ocr-3">Can I OCR a document even if it has text embedded in it?</a></li>
+    <li><a href="#faq-ocr-4">How do I edit the text extracted from my document?</a></li>
+    <li><a href="#faq-ocr-5">How do I download all the text from a document?</a></li>
+  </ol>
+
+  <h4>Annotating</h4>
+  <ol>
+    <li><a href="#faq-annotate-1">What are notes?</a></li>
+    <li><a href="#faq-annotate-2">How do I add a note?</a></li>
+    <li><a href="#faq-annotate-3">How do I edit an existing note?</a></li>
+    <li><a href="#faq-annotate-4">What is a draft note?</a></li>
+    <li><a href="#faq-annotate-5">What is the difference between public and private notes?</a></li>
+    <li><a href="#faq-annotate-6">Can I make a private note public or vice-versa?</a></li>
+    <li><a href="#faq-annotate-7">What is a page note, and how do I add one?</a></li>
+    <li><a href="#faq-annotate-8">How can I format the text of notes to make words bold, italic, etc.?</a></li>
+    <li><a href="#faq-annotate-9">How do I publish a note?</a></li>
+    <li><a href="#faq-annotate-10">How do I link directly to a note from a website?</a></li>
+    <li><a href="#faq-annotate-11">How do I embed a note on a website?</a></li>
+  </ol>
+
+  <h4>Projects</h4>
+  <ol>
+    <li><a href="#faq-projects-1">What are projects?</a></li>
+    <li><a href="#faq-projects-2">How do I create a project?</a></li>
+    <li><a href="#faq-projects-3">Can I create sub-projects inside a project?</a></li>
+    <li><a href="#faq-projects-4">How do I add documents to a project?</a></li>
+    <li><a href="#faq-projects-5">How do I remove documents from a project?</a></li>
+    <li><a href="#faq-projects-6">How do I share a project with others?</a></li>
+    <li><a href="#faq-projects-7">Can I make all documents in a project public at once?</a></li>
+  </ol>
+
+  <h4>Collaboration</h4>
+  <ol>
+    <li><a href="#faq-collaborate-1">How can I see documents others in my organization have uploaded?</a></li>
+    <li><a href="#faq-collaborate-2">Can I let someone see a private document without letting them make changes to it?</a></li>
+  </ol>
+
+  <h4>Embedding and Sharing documents</h4>
+  <ol>
+    <li><a href="#faq-embed-1">What options do I have for embedding documents?</a></li>
+    <li><a href="#faq-embed-2">How do I embed a document, page, notes or collection of documents on my website?</a></li>
+    <li><a href="#faq-embed-3">How do I make a document visible to the public?</a></li>
+    <li><a href="#faq-embed-4">How do I set a time for a document to become public?</a></li>
+    <li><a href="#faq-embed-5">How do I get the URL of a document I want to share?</a></li>
+    <li><a href="#faq-embed-6">Will DocumentCloud work with my CMS?</a></li>
+    <li><a href="#faq-embed-7">Do embeds work on phones?</a></li>
+    <li><a href="#faq-embed-8">How do I embed documents using WordPress?</a></li>
+    <li><a href="#faq-embed-9">How do I change the width or height of an embed on my site?</a></li>
+    <li><a href="#faq-embed-10">Can readers make changes to documents I embed?</a></li>
+    <li><a href="#faq-embed-11">Can I prevent people from downloading my original document?</a></li>
+    <li><a href="#faq-embed-12">How do I make the sidebar show or hide in the document viewer?</a></li>
+  </ol>
+
+  <h4>DocumentCloud's API</h4>
+  <ol>
+    <li><a href="#faq-api-1">What is the DocumentCloud API?</a></li>
+    <li><a href="#faq-api-2">Do you need a DocumentCloud account to use the API?</a></li>
+    <li><a href="#faq-api-3">What libraries are available for working with the API?</a></li>
+    <li><a href="#faq-api-4">Are there limits on API use?</a></li>
+  </ol>
+
+</section>
+
+<section>
+  <h2>General</h2>
+  <dl>
+    <dt id="faq-general-1">What is DocumentCloud?</dt>
+    <dd>
+      <p>DocumentCloud is a web-based software platform for organizing, researching, annotating, and publishing primary source documents. We offer a set of tools that help you find and tell stories in your documents.</p>
+    </dd>
+    <dt id="faq-general-2">How much does it cost?</dt>
+    <dd>
+      <p>Thanks to generous funding from the Knight Foundation, DocumentCloud since its launch in 2010 has been offered for free exclusively to journalism organizations. We are currently developing a paid model to ensure the DocumentCloud platform's sustainability, an effort you can read more about at the <a href="https://blog.documentcloud.org/blog/2015/12/making-documentcloud-sustainable/">DocumentCloud blog</a>.</p>
+    </dd>
+    <dt id="faq-general-3">Who can have accounts?</dt>
+    <dd>
+      <p>Currently, we are offering accounts to journalists &mdash; both those within news organizations and those with a demonstrated freelance portfolio. In addition, we are opening the platform on a trial basis to users in related industries who work with public documents. Please <%= link_to 'apply', '/plans/apply' %>.</p>
+    </dd>
+    <dt id="faq-general-4">Where can I get help?</dt>
+    <dd>
+      <p>You can find answers to most questions you have either in this FAQ or our <%= link_to 'Help documentation', '/help' %>. If you can’t find the answer, or if you’re having trouble using DocumentCloud, please email us at <a href="mailto:support@documentcloud.org">support@documentcloud.org</a>.
+    </dd>
+    <dt id="faq-general-5">Where can I read your Terms of Service?</dt>
+    <dd>
+      <p>The current version, as well as past versions, are <%= link_to 'here', '/terms' %>.</p>
+    </dd>
+  </dl>
+</section>
+
+<section>
+  <h2>Privacy</h2>
+  <dl>
+    <dt id="faq-privacy-1">What is DocumentCloud’s privacy policy?</dt>
+    <dd>
+      <p>Please read our complete <%= link_to 'Privacy Policy', '/privacy' %> for details.</p>
+    </dd>
+    <dt id="faq-privacy-2">Who can see documents in my account?</dt>
+    <dd>
+      <p>By default, any document you upload is set to "private" access and is viewable only by you. If you set the access level to "private to [your organization name]," then other DocumentCloud users in your organization can view the document, but not the public.</p>
+    </dd>
+  </dl>
+</section>
+
+<section>
+  <h2>Accounts</h2>
+  <dl>
+    <dt id="faq-accounts-1">How do I get an account?</dt>
+    <dd>
+      <p>Start by filling out an <%= link_to 'application', '/plans/apply' %>. Learn more about getting accounts at our <%= link_to 'contact', '/contact' %> page.</p>
+    </dd>
+    <dt id="faq-accounts-2">How does DocumentCloud organize accounts?</dt>
+    <dd>
+      <p>Currently, we create accounts under the umbrella of an organization. That is, each user account is tied to at least one organization. This allows, for example, users within that organization to collaborate privately on documents.</p>
+    </dd>
+    <dt id="faq-accounts-3">How do I log in and log out?</dt>
+    <dd>
+      <p>To log in, on the DocumentCloud home page, enter your account email address and password in the login box. To log out, click the "Log Out" link at the top right of the workspace. <i>Note: Always log out when you’re done working if you’re logged in on a shared computer.</i></p>
+    </dd>
+    <dt id="faq-accounts-4">How do I reset my password?</dt>
+    <dd>
+      <p>If you’ve forgotten your password, go to our <%= link_to 'password reset page', '/reset_password' %>.</p>
+    </dd>
+    <dt id="faq-accounts-5">How do I change my email address and password?</dt>
+    <dd>
+      <p>To change your email address, in the workspace, click the "Accounts" tab at top. Enter a new email address in the email box and click "Save." To change your password, Click the "Change Password" button, type your new password, and click "Save."</p>
+    </dd>
+    <dt id="faq-accounts-6">Do I have to use my real name for my account?</dt>
+    <dd>
+      <p>Yes, the DocumentCloud <%= link_to 'Terms of Service', '/terms' %> require that accounts use real names and valid email addresses. However, we allow organizations to create one shared account for posting documents and another shared account for use with automation technology or our API. These accounts should have an appropriate name, such as "[Organization name] Documents."</p>
+    </dd>
+    <dt id="faq-accounts-7">How can I get accounts for others in my organization?</dt>
+    <dd>
+      <p>Anyone in your organization who has a DocumentCloud account with administrator privileges can create accounts. Check around your organization, but if you’re not sure, email us at <a href="mailto:support@documentcloud.org">support@documentcloud.org</a></p>
+    </dd>
+    <dt id="faq-accounts-8">What are the differences between admin, contributor and freelancer accounts?</dt>
+    <dd>
+      <p>The abilities are largely similar but with some notable exceptions:</p>
+      <table class="table">
+        <thead>
+          <tr>
+            <th class="right">Feature</th>
+            <th class="center">Administrator</th>
+            <th class="center">Contributor</th>
+            <th class="center">Freelancer</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th class="right">Add, modify or disable accounts</th>
+            <td class="td-yes">Yes</td>
+            <td class="td-no">No</td>
+            <td class="td-no">No</td>
+          </tr>
+          <tr>
+            <th class="right">Access documents shared across an organization</th>
+            <td class="td-yes">Yes</td>
+            <td class="td-yes">Yes</td>
+            <td class="td-no">No</td>
+          </tr>
+          <tr>
+            <th class="right">Upload, annotate, edit, publish documents</th>
+            <td class="td-yes">Yes</td>
+            <td class="td-yes">Yes</td>
+            <td class="td-yes">Yes</td>
+          </tr>
+        </tbody>
+      </table>
+    </dd>
+    <dt id="faq-accounts-9">Can I have more than one account with the same email?</dt>
+    <dd>
+      <p>Yes, it is possible to use the same email with accounts under more than one organization. However, one of those organizations will be set as your default for uploading. We recommend using a different email for additional accounts.</p>
+    </dd>
+    <dt id="faq-accounts-10">How many user accounts can an organization have under its account?</dt>
+    <dd>
+      <p>Currently, there is no limit.</p>
+    </dd>
+    <dt id="faq-accounts-11">What happens if my organization closes?</dt>
+    <dd>
+      <p>Please notify DocumentCloud at <a href="mailto:support@documentcloud.org">support@documentcloud.org</a> if your organization is closing, changing its name or experiencing another significant change. We value the documents uploaded and made public by our contributors and ask that you do not delete them. We will be glad to work with you on a transition plan.</p>
+    </dd>
+    <dt id="faq-accounts-12">What happens to my documents and account if I leave my current organization?</dt>
+    <dd>
+      <p>You are able at any time to download the original documents you uploaded to our service. Generally, we defer to each organization regarding disposition of the documents you uploaded to DocumentCloud while in their employment. Every organization has its own rules governing ownership of material generated while in their employment or service.</p>
+    </dd>
+    <dt id="faq-accounts-13">Can I delete my account?</dt>
+    <dd>
+      <p>Accounts cannot be deleted, but they can be disabled by another user within your organization who has administrator-level privileges. We (and the public) value the documents you uploaded and made public and are glad to continue to host them.</p>
+    </dd>
+  </dl>
+</section>
+
+<section>
+  <h2>Search</h2>
+  <dl>
+    <dt id="faq-search-1">What can I find in the <%= link_to 'public catalog', '/public/search' %>?</dt>
+    <dd>
+      <p>We feature more than a million documents provided by contributors ranging from The New York Times to The Guardian and hundreds of large and small news organizations, freelance journalists and others who report using public documents.</p>
+    </dd>
+    <dt id="faq-search-2">Do I need an account to search the <%= link_to 'public catalog', '/public/search' %>?</dt>
+    <dd>
+      <p>No, you do not. We are proud to provide a valuable public resource at no cost.</p>
+    </dd>
+    <dt id="faq-search-3">Will getting a DocumentCloud account allow me to see more documents?</dt>
+    <dd>
+      <p>No, whether you have an account or not, the only documents available for viewing are those explicitly shared by the users who upload them.</p>
+    </dd>
+    <dt id="faq-search-4">How can I search documents?</dt>
+    <dd>
+      <p>Using the search bar in the workspace, type the text you'd like to find in documents or search by attributes including Title, Account, Project and Group. Click once in the search bar to see available attributes, then select the value. Learn more in our Help document on <%= link_to 'searching', '/help/searching' %></p>
+    </dd>
+    <dt id="faq-search-5">Can I contribute documents to your public catalog?</dt>
+    <dd>
+      <p>To start contributing, please apply for an account. You will need an active account to contribute documents. You can apply here.</p>
+   </dd>
+  </dl>
+</section>
+
+<section>
+  <h2>Uploading</h2>
+  <dl>
+    <dt id="faq-uploading-1">What kinds of file types can I upload?</dt>
+    <dd>
+      <p>The most common file type our users upload is PDF, but DocumentCloud can process any file that LibreOffice can convert into a PDF. This includes Word documents, Excel spreadsheets, PowerPoint presentations, HTML and image files. We cannot process video, audio or closed-format files such as Outlook PST files.</p>
+    </dd>
+    <dt id="faq-uploading-2">Is there a limit on the size of a file I can upload?</dt>
+    <dd>
+      <p>Yes, 400 MB is the largest file you can upload.</p>
+    </dd>
+    <dt id="faq-uploading-3">Are there restrictions on the content of documents I can upload?</dt>
+    <dd>
+      <p>DocumentCloud is intended to be a repository of public documents. Our <%= link_to 'Terms of Service', '/terms' %> prohibits uploading copyrighted material that is not yours.</p>
+    </dd>
+    <dt id="faq-uploading-4">How long does it take to process a document?</dt>
+    <dd>
+      <p>Processing times will vary depending on the size of the file, whether or not it needs to be OCR’d, and current activity on the platform. Small documents are usually processed in a minute or less; larger documents can take significantly longer.</p>
+    </dd>
+    <dt id="faq-uploading-5">What does DocumentCloud do with the documents I upload?</dt>
+    <dd>
+      <p>When you upload a document, we save the original file. We extract images of each page in several sizes for our workspace and embeds. If there is a text layer embedded in the document, we retrieve that and store it in a database for searching. If there isn’t, we OCR the document to capture text. Finally, we pass the extracted text to the OpenCalais API to locate entities such as names, places and organizations.</p>
+    </dd>
+    <dt id="faq-uploading-6">When I upload a document, can anyone else see it?</dt>
+    <dd>
+      <p>By default, documents are set to private access upon upload. That means only you can see it. You have the option of setting access to "private to your organization," meaning anyone else with a DocumentCloud account in your organization can see it, or "public," meaning it’s viewable by everyone.</p>
+    </dd>
+    <dt id="faq-uploading-7">Can I OCR my documents in languages other than English?</dt>
+    <dd>
+      <p>Yes, we offer OCR in more than 20 languages via the Tesseract OCR engine’s language packs. In the workspace under the "Accounts" tab, choose your preferred language for OCR under the "New documents" drop down. Then click "Save."</p>
+    </dd>
+    <dt id="faq-uploading-8">I don’t see the language I need for OCR. Can you add it?</dt>
+    <dd>
+      <p>We are glad to add languages supported by Tesseract, the OCR engine we use. Please see <a href="https://en.wikipedia.org/wiki/Tesseract_(software)">en.wikipedia.org/wiki/Tesseract_(software)</a> for a list of languages and contact us at <a href="mailto:support@documentcloud.org">support@documentcloud.org</a> to discuss your needs.</p>
+    </dd>
+  </dl>
+</section>
+
+<section>
+  <h2>Working with Documents</h2>
+  <dl>
+    <dt id="faq-documents-1">What information can I add to my documents?</dt>
+    <dd>
+      <p>You can add several pieces of information either before or after uploading. These include a source, description, published URL and related article URL. To access these fields after you’ve uploaded a document, select the document and choose "Edit Document Information."</p>
+    </dd>
+    <dt id="faq-documents-2">What is the difference between Related Article URL and Published URL?</dt>
+    <dd>
+      <p>Use the Related Article URL to tell readers the location of the article that uses this document as source material. Adding a URL in this field creates a Related Article link in the sidebar of the full viewer. The Published URL is the page where the document is embedded. Most users won't need to provide this — our platform can usually detect where the document is embedded. If a document might be accessed at more than one URL, however, you can specify the URL we should send users to if they find the document through a search of DocumentCloud.</p>
+    </dd>
+    <dt id="faq-documents-3">How can I add custom data (tags) to organize and search my documents?</dt>
+    <dd>
+      <p>DocumentCloud allows you to define and search your own set of custom data (key/value pairs) associated with specific documents. To edit data for individual documents in the workspace, select the documents you wish to update, and choose "Edit Document Data" from the "Edit" menu. See "Editing and Searching your own Custom Data" in our <%= link_to 'Help', '/help/searching' %> section to learn more.</p>
+    </dd>
+    <dt id="faq-documents-4">How do I change the order of pages in a document I uploaded?</dt>
+    <dd>
+      <p>Double-click the document to open it in the document workspace. In the sidebar, click "Reorder Pages." You’ll see thumbnails of all the pages in your document. Drag and drop pages into the order you’d like, then click "Save Page Order."</p>
+    </dd>
+    <dt id="faq-documents-5">How do I insert or replace pages in a document I uploaded?</dt>
+    <dd>
+      <p>To insert one or more pages:</p>
+      <ul style="list-style-type: disc;margin-left:20px">
+          <li>Double-click the document to open it in the document workspace.</li>
+          <li>In the sidebar, click "Insert/Replace Pages." You’ll see thumbnails of all the pages in your document.</li>
+          <li>To insert new pages at a specific position within the document, click between the pages above. If you'd like to replace a   specific page with a new copy, click on the page you'd like to remove. Hold down the shift key to select multiple pages to replace at once.</li>
+          <li>When you're ready, click the "Upload Pages" button.</li>
+      </ul>
+    </dd>
+    <dt id="faq-documents-6">How do I remove pages from a document I uploaded?</dt>
+    <dd>
+      <p>We recommend you retain a backup of your document before removing pages. To remove one or more pages:</p>
+      <ul style="list-style-type: disc;margin-left:20px">
+          <li>Double-click the document to open it in the document workspace. In the sidebar, click "Remove Pages." You’ll see thumbnails   of all the pages in your document.</li>
+          <li>Select the pages you’d like to delete from your document, and then click "Remove [X] Pages."</li>
+          <li>Note that once you remove pages they are permanently deleted and your original document is replaced.</li>
+      </ul>
+    </dd>
+    <dt id="faq-documents-7">How do I redact portions of my document?</dt>
+    <dd>
+      <p>We recommend you retain a backup of your document before making redactions. To redact a portion of a document:</p>
+      <ul style="list-style-type: disc;margin-left:20px">
+          <li>Double-click the document to open it in the document workspace. In the sidebar, click "Redact Document."</li>
+          <li>Click and drag to draw a black rectangle over each portion of the document you'd like to redact. (You can redact more than one section at a time.)</li>
+          <li>When finished, click "Save Redactions."</li>
+      </ul>
+    </dd>
+    <dt id="faq-documents-8">Does redacting a document also remove the text extracted from it?</dt>
+    <dd>
+      <p>When you redact a portion of a document, we erase all data related to the redacted information, create a new redacted document, and delete the original document. Any text that was part of the redacted portion is deleted.</p>
+    </dd>
+    <dt id="faq-documents-9">Can I change the orientation of a page in a document?</dt>
+    <dd>
+      <p>Currently, we do not support this. We recommend that you change the orientation of the page before uploading your document.</p>
+    </dd>
+    <dt id="faq-documents-10">How do I delete documents?</dt>
+    <dd>
+      <p>In the workspace, right-click a document and select "Delete Document." You’ll be asked to confirm your choice.</p>
+    </dd>
+    <dt id="faq-documents-11">Once I delete a document, can I get it back?</dt>
+    <dd>
+      <p>No, once you delete a document it’s permanently deleted from our platform.</p>
+    </dd>
+  </dl>
+</section>
+
+<section>
+  <h2>Analyzing Data in Documents</h2>
+    <dl>
+    <dt id="faq-analyzing-1">How can I see entities extracted from my documents?</dt>
+      <dd>
+        <p>Select one or more documents in the workspace. Under the "Analyze" menu, select "View Entities."</p>
+      </dd>
+      <dt id="faq-analyzing-1">How can I see a timeline of the dates in a document?</dt>
+      <dd>
+        <p>Select one or more documents in the workspace. Under the "Analyze" menu, select "View Timeline." To zoom in on a time period, drag your cursor over a selection of dates.</p>
+      </dd>
+    </dl>
+</section>
+
+<section>
+  <h2>Working With OCR and Document Text</h2>
+    <dl>
+    <dt id="faq-ocr-1">What kind of OCR software does DocumentCloud use?</dt>
+    <dd>
+      <p>We use Tesseract, an open-source OCR engine. Google currently sponsors development.</p>
+    </dd>
+    <dt id="faq-ocr-2">Do you OCR every document I upload?</dt>
+    <dd>
+      <p>No. If your document contains embedded text, we save that in our database. We use OCR only when there’s no text layer.</p>
+    </dd>
+    <dt id="faq-ocr-3">Can I OCR a document even if it has text embedded in it?</dt>
+    <dd>
+      <p>Yes. Double-click the document to open it in the document workspace. In the sidebar, click "Reprocess Text." In the dialog, click "Force OCR."</p>
+    </dd>
+    <dt id="faq-ocr-4">How do I edit the text extracted from my document?</dt>
+    <dd>
+      <p>To edit text:</p>
+      <ul style="list-style-type: disc;margin-left:20px">
+          <li>Double-click the document to open it in the document workspace. In the sidebar, click "Edit Page Text."</li>
+          <li>Navigate through pages in your document using the arrows.</li>
+          <li>Save your edits by clicking "Save Text."</li>
+      </ul>
+    </dd>
+    <dt id="faq-ocr-5">How do I download all the text from a document?</dt>
+    <dd>
+      <p>Select the document in the workspace. Under the "Publish" menu, choose "Download Full Text." Your browser will open a separate window or tab open to a URL that contains all the text. You can save it or copy and paste into a text editor.</p>
+    </dd>
+    </dl>
+</section>
+
+<section>
+  <h2>Annotating</h2>
+  <dl>
+    <dt id="faq-annotate-1">What are notes?</dt>
+    <dd>
+      <p>In DocumentCloud, notes are a way to highlight important sections of documents with a short headline and explanatory text. Notes can either be private &mdash; viewable only by you &mdash; or public, meaning if you share your document with others in your organization or make it fully public, then readers will see your notes.</p>
+    </dd>
+    <dt id="faq-annotate-2">How do I add a note?</dt>
+    <dd>
+      <p>To add a note:</p>
+      <ul style="list-style-type: disc;margin-left:20px">
+          <li>Double-click the document to open it in the document workspace. In the sidebar, click either "Add a Public Note" or "Add a   Private Note."</li>
+          <li>Drag your cursor to draw a box over the area of the document you want to highlight.</li>
+          <li>When you release your cursor, you’ll see a dialog box that lets you add a short headline and some explanatory text.</li>
+          <li>When done, click "Save."</li>
+      </ul>
+    </dd>
+    <dt id="faq-annotate-3">How do I edit an existing note?</dt>
+    <dd>
+      <p>Find the note on your document and select it. Click the pencil icon to the right of the headline to edit the note.</p>
+    </dd>
+    <dt id="faq-annotate-4">What is a draft note?</dt>
+    <dd>
+      <p>You can save a public note as "Draft" if you’re not ready to publish it yet. While it’s in draft mode, the note will not be visible to others and will show a "Draft" icon in its header. You can switch the note to public by selecting it and clicking "Publish."</p>
+    </dd>
+    <dt id="faq-annotate-5">What is the difference between public and private notes?</dt>
+    <dd>
+      <p>Public notes are visible to anyone who has access to the document. Private notes are viewable only by the person who uploaded the document.</p>
+    </dd>
+    <dt id="faq-annotate-6">Can I make a private note public or vice-versa?</dt>
+    <dd>
+      <p>Not at this time. If you need to change the status of a note from public to private, or vice-versa, edit the note, copy the contents, and delete it. Then re-draw a new public or private note and add the information you copied.</p>
+    </dd>
+    <dt id="faq-annotate-7">What is a page note, and how do I add one?</dt>
+    <dd>
+      <p>Instead of highlighting a portion of a document, you can create a note that appears at the top of a page. To do this, follow the directions for creating a note and, rather than drawing a box on a page, click in between any two pages (or above the first page).</p>
+    </dd>
+    <dt id="faq-annotate-8">How can I format the text of notes to make words bold, italic, etc.?</dt>
+    <dd>
+      <p>You can format text in notes by using some basic HTML codes. For example, to bold a phrase, precede it with &lt;b&gt; and end it with &lt;/b&gt;.</p>
+    </dd>
+    <dt id="faq-annotate-9">How do I publish a note?</dt>
+    <dd>
+      <p>Any public notes you create are visible (i.e., published) as soon as you set the document’s access level to "public."</p>
+    </dd>
+    <dt id="faq-annotate-10">How do I link directly to a note from a website?</dt>
+    <dd>
+      <p>Each public note has a specific URL that you can share. To find it, select the note. Then click the chain-link icon to the right of the small headline. In your browser, the URL will change to the note link. Copy that and use it on your website. When a reader clicks the link, they’ll be directed to the document with the note open.</p>
+    </dd>
+    <dt id="faq-annotate-11">How do I embed a note on a website?</dt>
+    <dd>
+      <p>In the workspace, select a document that has notes. Under the "Publish" menu, choose "Embed a Note." That will launch a dialog box to lead you through creating an embed code. For more on publishing notes and other assets, please consult our Help documents.</p>
+    </dd>
+  <dl>
+</section>
+
+<section>
+  <h2>Projects</h2>
+  <dl>
+    <dt id="faq-projects-1">What are projects?</dt>
+    <dd>
+      <p>Projects are labels you can apply to groups of documents to organize them by topic or project. A document can live in more than one project.</p>
+    </dd>
+    <dt id="faq-projects-2">How do I create a project?</dt>
+    <dd>
+      <p>In the workspace at left, click the "New Project" button. Give your project a name and click "Save."</p>
+    </dd>
+    <dt id="faq-projects-3">Can I create sub-projects inside a project?</dt>
+    <dd>
+      <p>Not at this time. However, if you are looking for a way to easily organize, filter or search your documents, we recommend you add custom data.</p>
+    </dd>
+    <dt id="faq-projects-4">How do I add documents to a project?</dt>
+    <dd>
+      <p>You can drag and drop the file icon on the project title at the left of the workspace. Or highlight the file in the workspace, click the "Projects" icon, and choose the name of a project.</p>
+    </dd>
+    <dt id="faq-projects-5">How do I remove documents from a project?</dt>
+    <dd>
+      <p>Select a document in the workspace. Click the "Projects" menu, which displays all your project titles. You’ll see a check mark next to each project the document belongs to. Find the project that you want to remove the document from, and click the title to remove the check mark.</p>
+    </dd>
+    <dt id="faq-projects-6">How do I share a project with others?</dt>
+    <dd>
+      <p>In the workspace, hover over the name of your project in the project list, then click the pencil icon to show the project editing dialog. Click "Add a collaborator to this project." You can add email addresses of people who have DocumentCloud accounts &mdash; whether they belong to your organization or another.</p>
+    </dd>
+    <dt id="faq-projects-7">Can I make all documents in a project public at once?</dt>
+    <dd>
+      <p>At this time, no. You can edit up to 30 documents at a time in the workspace by setting the view to thumbnails and selecting all documents with your cursor. If you have a large number of documents, please contact us at support@documentcloud.org to discuss other options.</p>
+    </dd>
+  </dl>
+</section>
+
+<section>
+  <h2>Collaboration</h2>
+  <dl>
+    <dt id="faq-collaborate-1">How can I see documents others in my organization have uploaded?</dt>
+    <dd>
+      <p>At the top left of the workspace is a link to view all documents that users have either set to "public" access or "private to your organization." Clicking the arrow next to your organization name will reveal each user, and you can then click their name to see their documents.</p>
+    </dd>
+    <dt id="faq-collaborate-2">Can I let someone see a private document without letting them make changes to it?</dt>
+    <dd>
+      <p>Yes, you can do this by granting them "reviewer" access. To do so:</p>
+      <ul style="list-style-type: disc;margin-left:20px">
+          <li>Select one or more documents in the workspace. Under the "Analyze" menu, select "Share this document."</li>
+          <li>In the dialog box that opens, click "Add Reviewer" and provide an email address and name for the person.</li>
+          <li>Provide an optional message and click "Send."</li>
+          <li>They’ll receive an email with a unique link to access the document.</li>
+      </ul>
+    </dd>
+    <dl>
+</section>
+
+<section>
+  <h2>Embedding and Sharing documents</h2>
+  <dl>
+    <dt id="faq-embed-1">What options do I have for embedding documents?</dt>
+    <dd>
+      <p>We currently offer four embed types:</p>
+      <ul style="list-style-type: disc;margin-left:20px">
+          <li><b>Document</b>: A viewer that shows the complete document, including attribution, all notes, and an available sidebar with  navigation and attribution.</li>
+          <li><b>Page</b>: A lightweight, responsive single page that includes attribution and click-through to the full document.</li>
+          <li><b>Note</b>: A single annotation that includes attribution and click-through to the full document.</li>
+          <li><b>Document Set</b>: A collection of documents, based on result of a search or a project. Includes a search widget and ability to click through to each document.</b></li>
+      </ul>
+      <p>Please see our help section on <%= link_to 'Embedding and Publishing', '/help/publishing' %> for details.</p>
+    </dd>
+    <dt id="faq-embed-2">How do I embed a document, page, notes or collection of documents on my website?</dt>
+    <dd>
+      <p>DocumentCloud provides a wizard that walks you through the steps of generating codes for each type of embed. You then typically add the embed code to your website using your content management system’s embed function. Please see our help section on <%= link_to 'Embedding and Publishing', '/help/publishing' %> for details.</p>
+    </dd>
+    <dt id="faq-embed-3">How do I make a document visible to the public?</dt>
+    <dd>
+      <p>In the workspace, select one or more documents. Under the "Edit" menu, choose "Access Level." Pick one of the three options. "Public Access" means anyone on the internet can search for and view the document. "Private Access" means only you and people with explicit permission (via collaboration) have access. "Private to [Organization Name]" means only the people in your organization have access. (No freelancers.)</p>
+    </dd>
+    <dt id="faq-embed-4">How do I set a time for a document to become public?</dt>
+    <dd>
+      <p>If your document is private, you can set a publication date for it:</p>
+      <ul style="list-style-type: disc;margin-left:20px">
+          <li>Select one or more documents in the workspace. Under the "Publish" menu, select "Set Publication Date."</li>
+          <li>Choose the date and time for publication and press "Save."</li>
+      </ul>
+      <p>The date and time set will show in the workspace. If you change your mind, re-open the publication date dialog and choose "Cancel."</p>
+    </dd>
+    <dt id="faq-embed-5">How do I get the URL of a document I want to share?</dt>
+    <dd>
+      <p>Make sure you have set the document’s access to "public." Double-click a document to open it in the document workspace. The URL for sharing the document is now in your browser’s URL bar. The format is https://www.documentcloud.org/documents/[ID Number]-[document-title-words].html</p>
+    </dd>
+    <dt id="faq-embed-6">Will DocumentCloud work with my CMS?</dt>
+    <dd>
+      <p>DocumentCloud’s used by hundreds of organizations worldwide with many different content management systems. If your CMS offers the ability to embed snippets of JavaScript and HTML, you should be fine. We’re available to talk with your CMS’s developers to iron out any questions. Please contact us at <a href="mailto:support@documentcloud.org">support@documentcloud.org</a></p>
+    </dd>
+    <dt id="faq-embed-7">Do embeds work on phones?</dt>
+    <dd>
+      <p>Yes, all of our embed types can be viewed on phone or tablet screens. However, our page and note embeds are responsive and are the best choice for display on those devices.</p>
+    </dd>
+    <dt id="faq-embed-8">How do I embed documents using WordPress?</dt>
+    <dd>
+      <p>The best way is to install our custom WordPress plugin, which lets you embed by entering shortcodes into your text. See the documentation for details.</p>
+    </dd>
+    <dt id="faq-embed-9">How do I change the width or height of an embed on my site?</dt>
+    <dd>
+      <p>You can set the width and height while creating it using the embed wizard.</p>
+    </dd>
+    <dt id="faq-embed-10">Can readers make changes to documents I embed?</dt>
+    <dd>
+      <p>No, only you or DocumentCloud users in your organization can make changes to your documents.</p>
+    </dd>
+    <dt id="faq-embed-11">Can I prevent people from downloading my original document?</dt>
+    <dd>
+      <p>If you embed a document with our full viewer, you can disable the link to the original PDF that appears in the sidebar by unchecking the "Link to the original PDF" box in the embed wizard. Nevertheless, once you set your document to public access, it will appear in Internet search results, and people will be able to download it.</p>
+    </dd>
+    <dt id="faq-embed-12">How do I make the sidebar show or hide in the document viewer?</dt>
+    <dd>
+      <p>Check or uncheck the "Show the Sidebar" option in the embed wizard. When embedding the viewer at narrow widths, hiding the sidebar is usually a good idea.</p>
+    </dd>
+  </dl>
+</section>
+
+<section>
+  <h2>DocumentCloud's API</h2>
+  <dl>
+    <dt id="faq-api-1">What is the DocumentCloud API?</dt>
+    <dd>
+      <p>DocumentCloud's API provides resources to search, upload, edit, and organize documents as well as to work with projects. In addition, an oEmbed service provides easy integration of embedding documents, pages and notes. Full <%= link_to 'documentation', '/help/api' %> is available.</p>
+    </dd>
+    <dt id="faq-api-2">Do you need a DocumentCloud account to use the API?</dt>
+    <dd>
+      <p>As with DocumentCloud’s workspace, you need an account to use the API to upload, update or delete documents, or create and modify projects. Other API functions, such as search, do not require an account. Consult the <%= link_to 'documentation', '/help/api' %> for details.</p>
+    </dd>
+    <dt id="faq-api-3">What libraries are available for working with the API?</dt>
+    <dd>
+      <p>The open-source community has contributed several helpful libraries for interacting with DocumentCloud's API. These include Python, Ruby and Node.js wrappers. See the listing in the API <%= link_to 'documentation', '/help/api' %>.</p>
+    </dd>
+    <dt id="faq-api-4">Are there limits on API use?</dt>
+    <dd>
+      <p>Yes. Please read our complete <%= link_to 'API Guidelines and Terms of Service', '/terms/api' %>.</p>
+    </dd>
+  </dl>
+</section>
+
 </div>
