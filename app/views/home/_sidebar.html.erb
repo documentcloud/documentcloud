@@ -17,33 +17,33 @@
       If you're reporting on or publishing primary source documents, we can help.
       <a href="/apply"><span class="minibutton default">Join DocumentCloud</span></a>
     </div>
-
-    <div class="sidebar_section login_section">
+  
+  <div class="sidebar_section login_section">
       <% if flash[:error] %>
         <div class="error">
           <%= flash[:error] %>
         </div>
       <% end %>
-      <form id="login_form" action="<%= DC.server_root(:force_ssl => true) %>/login" method="POST">
+      <form id="login_form" action="<%= DC.server_root(:force_ssl => true) %>/account/auth/circlet" method="POST">
         <%= token_tag %>
         <div class="text_input first light">
           <div class="inner">
-           <input type="text" name="email" placeholder="Email" id="account_email" />
+           <input type="text" name="username" placeholder="Email" id="account_email" />
           </div>
         </div>
-        <div class="text_input light">
+        <!-- <div class="text_input light">
           <div class="inner">
             <input type="password" name="password" placeholder="Password" id="account_password" />
           </div>
-        </div>
-        <span class="minibutton" id="login_button">Log in</span>
-        <%= link_to 'Forgot your password?', reset_password_path, class: 'reset_password' %>
+        </div> -->
+        <%= link_to 'Login', account_circlet_omniauth_authorize_path(scope: 'documentcloud'), method: :post, class: 'minibutton', id: 'login_button' %>
+        <%= link_to 'Forgot your password?', "#{DC::SECRETS['omniauth']['documentcloud']['site']}/users/password/new", class: 'reset_password', target: '_blank' %>
         <input type="submit" class="hidden_submit" />
       </form>
     </div>
 
   <% end %>
-
+  
   <div id="search_wrapper" class="sidebar_section">
     <div id="search_desc">
       Search thousands of public documents<br />

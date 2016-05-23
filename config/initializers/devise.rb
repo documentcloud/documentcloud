@@ -242,7 +242,6 @@ Devise.setup do |config|
   # Add a new OmniAuth provider. Check the wiki for more information on setting
   # up on your models and hooks.
   # config.omniauth :github, 'APP_ID', 'APP_SECRET', scope: 'user,public_repo'
-  binding.pry
    config.omniauth :circlet,  DC::SECRETS['omniauth']['documentcloud']['key'],
                                 DC::SECRETS['omniauth']['documentcloud']['secret'],
                                 # strategy_class: OmniAuth::Strategies::Circlet,
