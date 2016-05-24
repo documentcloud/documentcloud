@@ -15,29 +15,20 @@
     <div id="join" class="sidebar_section">
       DocumentCloud is a tool for journalists.<br />
       If you're reporting on or publishing primary source documents, we can help.
-      <a href="/apply"><span class="minibutton default">Join DocumentCloud</span></a>
+      <!-- <a href="/apply"><span class="minibutton default">Join DocumentCloud</span></a> -->
+      <%= link_to 'Join DocumentCloud', "#{DC::SECRETS['omniauth']['documentcloud']['site']}/users/sign_up", class: 'minibutton default', target: '_blank' %>
     </div>
   
   <div class="sidebar_section login_section">
       <% if flash[:error] %>
         <div class="error">
-          <%= flash[:error] %>
+          <strong><%= flash[:error] %></strong>
         </div>
       <% end %>
-      <form id="login_form" action="<%= DC.server_root(:force_ssl => true) %>/account/auth/circlet" method="POST">
+      <form id="login_form" action="<%= account_dc_auth_omniauth_authorize_path(scope: 'documentcloud') %>" method="post">
         <%= token_tag %>
-        <div class="text_input first light">
-          <div class="inner">
-           <input type="text" name="username" placeholder="Email" id="account_email" />
-          </div>
-        </div>
-        <!-- <div class="text_input light">
-          <div class="inner">
-            <input type="password" name="password" placeholder="Password" id="account_password" />
-          </div>
-        </div> -->
-        <%= link_to 'Login', account_circlet_omniauth_authorize_path(scope: 'documentcloud'), method: :post, class: 'minibutton', id: 'login_button' %>
-        <%= link_to 'Forgot your password?', "#{DC::SECRETS['omniauth']['documentcloud']['site']}/users/password/new", class: 'reset_password', target: '_blank' %>
+        <%= link_to 'Login', account_dc_auth_omniauth_authorize_path, method: :post, class: 'minibutton', id: 'login_button' %>
+        <%= link_to 'Forgot your password?', forgot_path, class: 'reset_password', target: '_blank' %>
         <input type="submit" class="hidden_submit" />
       </form>
     </div>

@@ -176,6 +176,7 @@ class ApplicationController < ActionController::Base
   def clear_login_state
     cookies.delete 'dc_logged_in'
     reset_session
+    # expire_tokens
   end
 
   def login_required

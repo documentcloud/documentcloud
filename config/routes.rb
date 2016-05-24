@@ -1,9 +1,19 @@
 DC::Application.routes.draw do
 
-  devise_for :account
+# /login
+# /login/forgot                 # forgot password
+# /login/reset                  # screen you return to from forgot password
+# /logout                       # just an action, but surfaced for sending via email/etc.
+
+  devise_for :accounts, :controllers => { omniauth_callbacks: "omniauth_callbacks" }
   
-  devise_scope :user do
+  # get '/login' => redirect("#{DC::SECRETS['omniauth']['documentcloud']['site']}/login"), as: :login
+  get '/login/forgot' => redirect("#{DC::SECRETS['omniauth']['documentcloud']['site']}/login/forgot"), as: :forgot
+  get '/logout' => redirect("#{DC::SECRETS['omniauth']['documentcloud']['site']}/logout"), as: :logout
+
+  devise_scope :account do
     delete 'sign_out', to: 'devise/sessions#destroy', as: :destroy_user_session
+    get 'accounts/auth/failure', to: 'omniauth_callbacks#failure', as: :dc_auth_omniauth_failure
   end
 
   # Homepage
@@ -31,16 +41,16 @@ DC::Application.routes.draw do
 
   # Authentication
   scope(controller: 'authentication') do
-    match '/login',                       action: 'login', via: [:get, :post]
-    get '/logout',                        action: 'logout'
+    # match '/login',                       action: 'login', via: [:get, :post]
+    # get '/logout',                        action: 'logout'
     get '/auth/remote_data/:document_id', action: 'remote_data'
 
     # Third party auth via OmniAuth
-    match '/auth/:action', via: [:get, :post]
-    get '/auth/:provider',          action: 'blank'
-    get '/auth/:provider/callback', action: 'callback'
-    # circlet specific
-    get '/auth/circlet/callback', to: 'authentication#create'
+    # match '/auth/:action', via: [:get, :post]
+    # get '/auth/:provider',          action: 'blank'
+    # get '/auth/:provider/callback', action: 'callback'
+    # dc_auth/circlet specific
+    # get '/auth/dc_auth/callback', to: 'authentication#create'
   end
 
   # Public search
@@ -141,7 +151,13 @@ DC::Application.routes.draw do
   # Bulk downloads
   get '/download/*args.zip', to: 'download#bulk_download', as: 'bulk_download'
 
-  # Accounts and account management
+  # # Accounts and account management
+  # devise_for :account
+  
+  # devise_scope :account do
+  #   delete 'sign_out', to: 'devise/sessions#destroy', as: :destroy_account_session
+  # end
+
   resources :accounts do
     collection do
       get 'logged_in'

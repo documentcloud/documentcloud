@@ -1,0 +1,34 @@
+inherit_from: .rubocop_todo.yml
+AllCops:
+  Include:
+    - Rakefile
+    - config.ru
+  Exclude:
+    - db/schema.rb
+    - 'vendor/**/*'
+Rails:
+  Enabled: true
+
+Style/ClassAndModuleChildren:
+  # Checks the style of children definitions at classes and modules.
+  #
+  # Basically there are two different styles:
+  #
+  # `nested` - have each child on a separate line
+  #   class Foo
+  #     class Bar
+  #     end
+  #   end
+  #
+  # `compact` - combine definitions as much as possible
+  #   class Foo::Bar
+  #   end
+  #
+  # The compact style is only forced, for classes / modules with one child.
+  EnforcedStyle: compact
+  SupportedStyles:
+    - nested
+    - compact
+
+# gem install rubocop
+# rubocop --auto-gen-config

@@ -23,6 +23,7 @@ solr/collection1
 cloud_crowd.db
 .DS_Store
 public/search
+vendor/cache/*
 vendor/solr-4.0.0/solr-webapp/webapp/*
 .bundle
 public/javascripts/vendor/*/
@@ -31,4 +32,3 @@ public/javascripts/vendor/*/
 Vagrantfile
 
 *.sublime*
-vendor/cache
