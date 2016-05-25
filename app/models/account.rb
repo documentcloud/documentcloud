@@ -8,7 +8,7 @@ class Account < ActiveRecord::Base
   
   # devise :database_authenticatable, :registerable,
   #        :recoverable, :rememberable, :trackable, :validatable
-  devise  :omniauthable, omniauth_providers: [:circlet]
+  devise  :omniauthable, omniauth_providers: [:dc_auth]
 
   attr_accessor :password, :password_confirmation
 

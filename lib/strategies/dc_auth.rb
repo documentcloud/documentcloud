@@ -2,10 +2,10 @@ require 'omniauth-oauth2'
 
 module OmniAuth
   module Strategies
-    class Circlet < OmniAuth::Strategies::OAuth2
+    class DCAuth < OmniAuth::Strategies::OAuth2
       #include OmniAuth::Strategy
       # change the class name and the :name option to match your application name
-      option :name, :circlet
+      option :name, :dc_auth
 
       uid { raw_info["id"] }
 
@@ -25,4 +25,4 @@ module OmniAuth
   end
 end
 
-# OmniAuth.config.add_camelization 'circlet', 'Circlet'
+OmniAuth.config.add_camelization 'dc_auth', 'DCAuth'

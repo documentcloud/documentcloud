@@ -1,11 +1,5 @@
 DC::Application.routes.draw do
 
-  devise_for :account
-  
-  devise_scope :user do
-    delete 'sign_out', to: 'devise/sessions#destroy', as: :destroy_user_session
-  end
-
   # Homepage
   get '/', to: 'workspace#index'
 
@@ -31,8 +25,8 @@ DC::Application.routes.draw do
 
   # Authentication
   scope(controller: 'authentication') do
-    match '/login',                       action: 'login', via: [:get, :post]
-    get '/logout',                        action: 'logout'
+    # match '/login',                       action: 'login', via: [:get, :post]
+    # get '/logout',                        action: 'logout'
     get '/auth/remote_data/:document_id', action: 'remote_data'
 
     # Third party auth via OmniAuth
@@ -40,7 +34,7 @@ DC::Application.routes.draw do
     get '/auth/:provider',          action: 'blank'
     get '/auth/:provider/callback', action: 'callback'
     # circlet specific
-    get '/auth/circlet/callback', to: 'authentication#create'
+    get '/auth/dc_auth/callback', to: 'authentication#create'
   end
 
   # Public search
@@ -142,6 +136,12 @@ DC::Application.routes.draw do
   get '/download/*args.zip', to: 'download#bulk_download', as: 'bulk_download'
 
   # Accounts and account management
+  devise_for :account
+  
+  devise_scope :account do
+    delete 'sign_out', to: 'devise/sessions#destroy', as: :destroy_account_session
+  end
+
   resources :accounts do
     collection do
       get 'logged_in'
