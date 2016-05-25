@@ -1,4 +1,5 @@
 class Accounts:OmniauthCallbacksController < Devise::OmniauthCallbacksController
+
   def dc_auth
     # You need to implement the method below in your model (e.g. app/models/user.rb)
     @user = Account.from_omniauth(request.env["omniauth.auth"])

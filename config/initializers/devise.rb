@@ -243,10 +243,9 @@ Devise.setup do |config|
   # up on your models and hooks.
   # config.omniauth :github, 'APP_ID', 'APP_SECRET', scope: 'user,public_repo'
    config.omniauth :dc_auth,  DC::SECRETS['omniauth']['documentcloud']['key'],
-                                DC::SECRETS['omniauth']['documentcloud']['secret'],
-                                # strategy_class: OmniAuth::Strategies::Circlet,
-                                client_options: { site: DC::SECRETS['omniauth']['documentcloud']['site'],
-                                                  authorize_url: DC::SECRETS['omniauth']['documentcloud']['authorize_url'] }
+                              DC::SECRETS['omniauth']['documentcloud']['secret'],
+                              client_options: { site: DC::SECRETS['omniauth']['documentcloud']['site'],
+                                                authorize_url: DC::SECRETS['omniauth']['documentcloud']['authorize_url'] }
 
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or

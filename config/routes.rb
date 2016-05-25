@@ -1,5 +1,11 @@
 DC::Application.routes.draw do
 
+  devise_for :account
+  
+  devise_scope :user do
+    delete 'sign_out', to: 'devise/sessions#destroy', as: :destroy_user_session
+  end
+
   # Homepage
   get '/', to: 'workspace#index'
 
@@ -33,8 +39,9 @@ DC::Application.routes.draw do
     match '/auth/:action', via: [:get, :post]
     get '/auth/:provider',          action: 'blank'
     get '/auth/:provider/callback', action: 'callback'
-    # circlet specific
+    # dc_auth/circlet specific
     get '/auth/dc_auth/callback', to: 'authentication#create'
+
   end
 
   # Public search

@@ -1,6 +1,6 @@
 module OmniAuth
   module Strategies
-    autoload :DCAuth, Rails.root.join('lib', 'strategies', 'dc_auth') 
+    autoload :DCAuth, Rails.root.join('lib', 'strategies', 'dc_auth')
   end
 end
 
@@ -18,9 +18,10 @@ else
     provider :twitter  , secrets['twitter']['key'], secrets['twitter']['secret']
     provider :facebook , secrets['facebook']['key'], secrets['facebook']['secret'], { :scope => 'email' }
     provider :google_oauth2, secrets['google']['key'], secrets['google']['secret'], { :access_type=>'online',:approval_prompt=>''}
-    provider :dc_auth,  secrets['documentcloud']['key'],  secrets['documentcloud']['secret'], 
+    provider :dc_auth,  secrets['documentcloud']['key'],  secrets['documentcloud']['secret'],
                         client_options: { site: secrets['documentcloud']['site'],
                                           authorize_url: secrets['documentcloud']['authorize_url'] }
+
   end
 
   OmniAuth.config.add_camelization 'oauth', 'OAuth'
