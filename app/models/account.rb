@@ -64,6 +64,26 @@ class Account < ActiveRecord::Base
       user.last_name = auth.info.last_name
     end
   end
+  
+  def self.find_for_dc_auth(access_token, signed_in_resource=nil)
+    data = access_token.info
+    user = User.where(:provider => access_token.provider, :uid => access_token.uid ).first
+    if user
+      return user
+    else
+      registered_user = User.where(:email => access_token.info.email).first
+      if registered_user
+        return registered_user
+      else
+        user = User.create(name: data["name"],
+          provider:access_token.provider,
+          email: data["email"],
+          uid: access_token.uid ,
+          password: Devise.friendly_token[0,20],
+        )
+      end
+    end
+  end
 
   # Populates the organization#members accessor with all the organizaton's accounts
   def organizations_with_accounts

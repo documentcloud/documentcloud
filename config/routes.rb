@@ -1,9 +1,10 @@
 DC::Application.routes.draw do
 
-  devise_for :account
-  
-  devise_scope :user do
+  devise_for :accounts, :controllers => { omniauth_callbacks: "omniauth_callbacks" }
+
+  devise_scope :account do
     delete 'sign_out', to: 'devise/sessions#destroy', as: :destroy_user_session
+    get 'accounts/auth/failure', to: 'omniauth_callbacks#failure', as: :dc_auth_omniauth_failure
   end
 
   # Homepage
@@ -40,7 +41,7 @@ DC::Application.routes.draw do
     get '/auth/:provider',          action: 'blank'
     get '/auth/:provider/callback', action: 'callback'
     # dc_auth/circlet specific
-    get '/auth/dc_auth/callback', to: 'authentication#create'
+    # get '/auth/dc_auth/callback', to: 'authentication#create'
 
   end
 
@@ -142,12 +143,12 @@ DC::Application.routes.draw do
   # Bulk downloads
   get '/download/*args.zip', to: 'download#bulk_download', as: 'bulk_download'
 
-  # Accounts and account management
-  devise_for :account
+  # # Accounts and account management
+  # devise_for :account
   
-  devise_scope :account do
-    delete 'sign_out', to: 'devise/sessions#destroy', as: :destroy_account_session
-  end
+  # devise_scope :account do
+  #   delete 'sign_out', to: 'devise/sessions#destroy', as: :destroy_account_session
+  # end
 
   resources :accounts do
     collection do

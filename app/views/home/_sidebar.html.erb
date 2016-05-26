@@ -21,7 +21,7 @@
   <div class="sidebar_section login_section">
       <% if flash[:error] %>
         <div class="error">
-          <%= flash[:error] %>
+          <strong><%= flash[:error] %></strong>
         </div>
       <% end %>
       <form id="login_form" action="<%= account_dc_auth_omniauth_authorize_path %>" method="post">

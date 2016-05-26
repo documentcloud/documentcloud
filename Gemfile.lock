@@ -86,6 +86,12 @@ GEM
       json (~> 1.4)
       nokogiri (>= 1.4.4)
     bcrypt (3.1.10)
+    better_errors (2.1.1)
+      coderay (>= 1.0.0)
+      erubis (>= 2.6.6)
+      rack (>= 0.9.0)
+    binding_of_caller (0.7.2)
+      debug_inspector (>= 0.0.1)
     builder (3.2.2)
     byebug (8.2.2)
     closure-compiler (1.1.12)
@@ -111,6 +117,7 @@ GEM
     curb (0.8.8)
     currencies (0.4.2)
     daemons (1.2.3)
+    debug_inspector (0.0.2)
     devise (4.1.1)
       bcrypt (~> 3.0)
       orm_adapter (~> 0.1)
@@ -267,6 +274,9 @@ GEM
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
       slop (~> 3.4)
+    pry-remote (0.1.8)
+      pry (~> 0.9)
+      slop (~> 3.0)
     rack (1.6.4)
     rack-protection (1.5.3)
       rack
@@ -378,6 +388,8 @@ DEPENDENCIES
   actionpack-page_caching
   aws-sdk (~> 1.30)
   bcrypt (~> 3.1.1)
+  better_errors
+  binding_of_caller
   bull_proof_china_shop!
   byebug
   closure-compiler
@@ -409,6 +421,7 @@ DEPENDENCIES
   pg
   progress_bar
   pry
+  pry-remote
   rails (~> 4.2.0)
   rake
   rdiscount (~> 2.1.6)

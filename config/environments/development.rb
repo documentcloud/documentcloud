@@ -26,6 +26,9 @@ DC::Application.configure do
   # This option may cause significant delays in view rendering with a large
   # number of complex assets.
   config.assets.debug = true
+  
+  # Adds TaggedLogging timestamps to Rails.logger
+  config.log_tags = [ lambda {|r| DateTime.now } ]
 
   # Put the site into a read-only mode for database updates
   # config.read_only = false
