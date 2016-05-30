@@ -249,6 +249,9 @@ GEM
       omniauth-oauth (~> 1.1)
     options (2.3.2)
     os (0.9.6)
+    passenger (5.0.28)
+      rack
+      rake (>= 0.8.1)
     pdfshaver (0.0.3)
     pdftailor (0.0.5)
     pg (0.18.4)
@@ -365,6 +368,7 @@ PLATFORMS
 
 DEPENDENCIES
   actionpack-page_caching
+  active_model_serializers (~> 0.9.0)
   aws-sdk (~> 1.30)
   bcrypt (~> 3.1.1)
   bull_proof_china_shop!
@@ -391,6 +395,7 @@ DEPENDENCIES
   omniauth-google-oauth2 (~> 0.2)
   omniauth-twitter (~> 1.0)
   open_calais!
+  passenger
   pdfshaver (>= 0.0.2)
   pdftailor
   pg
@@ -411,4 +416,4 @@ DEPENDENCIES
   webmock
 
 BUNDLED WITH
-   1.11.2
+   1.12.4
