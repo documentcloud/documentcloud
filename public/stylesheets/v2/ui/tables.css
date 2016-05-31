@@ -3,11 +3,7 @@
   border-collapse: collapse;
 }
 
-.table-zebra > tbody > tr:nth-child(even) {
-  background-color: transparent;
-}
-
-.table-zebra > tbody > tr:nth-child(odd) {
+.table-striped > tbody > tr:nth-of-type(odd) {
   background-color: #f5f5f5;
 }
 
