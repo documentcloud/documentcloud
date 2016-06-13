@@ -68,8 +68,8 @@ group :test do
 end
 
 gem 'cloud-crowd',            '~>0.7.6'
-group :pdf_processing do
+#group :pdf_processing do
   gem 'docsplit',               '0.8.0.alpha1'
   gem 'pdftailor'
   gem 'pdfshaver',              '>=0.0.2'
-end
+#end
