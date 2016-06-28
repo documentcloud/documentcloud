@@ -166,7 +166,10 @@ class ApplicationController < ActionController::Base
   end
   
   def validate_session
-    clear_login_state unless session_valid?
+    unless session_valid?
+      clear_login_state
+      forbidden 
+    end
   end
 
   def logged_in?
