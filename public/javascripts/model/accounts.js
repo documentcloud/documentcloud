@@ -38,7 +38,7 @@ dc.model.Account = Backbone.Model.extend({
   },
 
   openDocuments : function(options) {
-    options || (options = {});
+    options = (options || {});
     var suffix = options.published ? ' ' + _.t('filter') +':' + ' ' + _.t('published') : '';
     dc.app.searcher.search(_.t('account') + ':' + this.get('slug') + suffix);
   },
@@ -168,8 +168,9 @@ dc.model.AccountSet = Backbone.Collection.extend({
 
   // If the contributor has logged-out of the workspace in a different tab,
   // force the logout here.
-  forceLogout : function() {
-    dc.ui.Dialog.alert('You are no longer logged in to DocumentCloud.', {onClose : function() {
+  forceLogout : function(messageStr) {
+    var message = (messageStr || 'You are no longer logged in to DocumentCloud.');
+    dc.ui.Dialog.alert(message, {onClose : function() {
       window.location = '/logout';
     }});
   }
