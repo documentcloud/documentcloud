@@ -5,6 +5,14 @@
 class Account < ActiveRecord::Base
   include DC::Access
   include DC::Roles
+  
+  # devise :database_authenticatable, :registerable,
+  #        :recoverable, :rememberable, :trackable, :validatable
+
+  devise  :omniauthable, omniauth_providers: [:dc_auth]
+
+
+  attr_accessor :password, :password_confirmation
 
   # devise :database_authenticatable, :registerable,
   #        :recoverable, :rememberable, :trackable, :validatable

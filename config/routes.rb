@@ -1,5 +1,6 @@
 DC::Application.routes.draw do
 
+<<<<<<< HEAD
 # /login
 # /login/forgot                 # forgot password
 # /login/reset                  # screen you return to from forgot password
@@ -10,6 +11,9 @@ DC::Application.routes.draw do
   # get '/login' => redirect("#{DC::SECRETS['omniauth']['documentcloud']['site']}/login"), as: :login
   get '/login/forgot' => redirect("#{DC::SECRETS['omniauth']['documentcloud']['site']}/login/forgot"), as: :forgot
   get '/logout' => redirect("#{DC::SECRETS['omniauth']['documentcloud']['site']}/logout"), as: :logout
+=======
+  devise_for :accounts, :controllers => { omniauth_callbacks: "omniauth_callbacks" }
+>>>>>>> 9edda164b2ab478ca5799fc97ea5d0f3db7e610a
 
   devise_scope :account do
     delete 'sign_out', to: 'devise/sessions#destroy', as: :destroy_user_session
@@ -46,11 +50,20 @@ DC::Application.routes.draw do
     get '/auth/remote_data/:document_id', action: 'remote_data'
 
     # Third party auth via OmniAuth
+<<<<<<< HEAD
     # match '/auth/:action', via: [:get, :post]
     # get '/auth/:provider',          action: 'blank'
     # get '/auth/:provider/callback', action: 'callback'
     # dc_auth/circlet specific
     # get '/auth/dc_auth/callback', to: 'authentication#create'
+=======
+    match '/auth/:action', via: [:get, :post]
+    get '/auth/:provider',          action: 'blank'
+    get '/auth/:provider/callback', action: 'callback'
+    # dc_auth/circlet specific
+    # get '/auth/dc_auth/callback', to: 'authentication#create'
+
+>>>>>>> 9edda164b2ab478ca5799fc97ea5d0f3db7e610a
   end
 
   # Public search

@@ -87,7 +87,11 @@ GEM
     aws-sdk-v1 (1.66.0)
       json (~> 1.4)
       nokogiri (>= 1.4.4)
+<<<<<<< HEAD
     bcrypt (3.1.11)
+=======
+    bcrypt (3.1.10)
+>>>>>>> 9edda164b2ab478ca5799fc97ea5d0f3db7e610a
     better_errors (2.1.1)
       coderay (>= 1.0.0)
       erubis (>= 2.6.6)
@@ -379,10 +383,17 @@ GEM
       unf_ext
     unf_ext (0.0.7.2)
     unicode_utils (1.4.0)
+<<<<<<< HEAD
     vcr (3.0.3)
     warden (1.2.6)
       rack (>= 1.0)
     webmock (2.1.0)
+=======
+    vcr (3.0.1)
+    warden (1.2.6)
+      rack (>= 1.0)
+    webmock (1.24.0)
+>>>>>>> 9edda164b2ab478ca5799fc97ea5d0f3db7e610a
       addressable (>= 2.3.6)
       crack (>= 0.3.2)
       hashdiff
