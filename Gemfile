@@ -19,13 +19,9 @@ gem 'aws-sdk',                '~> 1.30', :require => 'aws'
 gem 'pg'
 
 gem 'closure-compiler'
-gem 'docsplit',               '0.8.0.alpha1'
 gem 'sunspot_rails',          '2.2.0'
 gem 'sunspot_solr',           '2.2.0'
 gem 'progress_bar' # Optional, used by sunspot to show progress while re-indexing
-gem 'cloud-crowd',            '~>0.7.6'
-gem 'pdftailor'
-gem 'pdfshaver',              '>=0.0.2'
 
 gem 'devise'
 gem 'omniauth',               '~> 1.2.1'
@@ -42,6 +38,9 @@ gem 'jammit',                 :github => "documentcloud/jammit", :branch => "mas
 gem 'nokogiri',               '~> 1.6.0'
 gem 'net-ssh-shell'
 gem 'country_select',         '~> 2.2.0'
+
+gem 'active_model_serializers', '~>0.9.0'
+gem 'passenger'
 
 group :development, :test do
   gem 'guard-bundler'
@@ -73,3 +72,10 @@ group :test do
   gem 'vcr'
   gem 'webmock'
 end
+
+gem 'cloud-crowd',            '~>0.7.6'
+#group :pdf_processing do
+  gem 'docsplit',               '0.8.0.alpha1'
+  gem 'pdftailor'
+  gem 'pdfshaver',              '>=0.0.2'
+#end
