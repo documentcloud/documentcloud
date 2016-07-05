@@ -25,23 +25,11 @@
           <strong><%= flash[:error] %></strong>
         </div>
       <% end %>
-<<<<<<< HEAD
+
       <form id="login_form" action="<%= account_dc_auth_omniauth_authorize_path(scope: 'documentcloud') %>" method="post">
         <%= token_tag %>
         <%= link_to 'Login', account_dc_auth_omniauth_authorize_path, method: :post, class: 'minibutton', id: 'login_button' %>
         <%= link_to 'Forgot your password?', forgot_path, class: 'reset_password', target: '_blank' %>
-=======
-      <form id="login_form" action="<%= account_dc_auth_omniauth_authorize_path %>" method="post">
-        <%= token_tag %>
-        <div class="text_input first light">
-          <div class="inner">
-           <input type="text" name="username" placeholder="Email" id="account_email" />
-           <input type="hidden" name="scope" value="documentcloud" />
-          </div>
-        </div>
-        <%= link_to 'Login', account_dc_auth_omniauth_authorize_path, method: :post, class: 'minibutton', id: 'login_button' %>
-        <%= link_to 'Forgot your password?', "#{DC::SECRETS['omniauth']['documentcloud']['site']}/users/password/new", class: 'reset_password', target: '_blank' %>
->>>>>>> 9edda164b2ab478ca5799fc97ea5d0f3db7e610a
         <input type="submit" class="hidden_submit" />
       </form>
     </div>

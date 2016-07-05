@@ -218,11 +218,8 @@ Devise.setup do |config|
 
   # Configure the default scope given to Warden. By default it's the first
   # devise role declared in your routes (usually :user).
-<<<<<<< HEAD
+
   config.default_scope = :account
-=======
-  # config.default_scope = :user
->>>>>>> 9edda164b2ab478ca5799fc97ea5d0f3db7e610a
 
   # Set this configuration to false if you want /users/sign_out to sign out
   # only the current scope. By default, Devise signs out all scopes.
@@ -246,18 +243,10 @@ Devise.setup do |config|
   # Add a new OmniAuth provider. Check the wiki for more information on setting
   # up on your models and hooks.
   # config.omniauth :github, 'APP_ID', 'APP_SECRET', scope: 'user,public_repo'
-<<<<<<< HEAD
-  config.omniauth :dc_auth,  DC::SECRETS['omniauth']['documentcloud']['key'],
-                                DC::SECRETS['omniauth']['documentcloud']['secret'],
-                                # strategy_class: OmniAuth::Strategies::Circlet,
-                                client_options: { site: DC::SECRETS['omniauth']['documentcloud']['site'],
-                                                  authorize_url: DC::SECRETS['omniauth']['documentcloud']['authorize_url'] }
-=======
    config.omniauth :dc_auth,  DC::SECRETS['omniauth']['documentcloud']['key'],
                               DC::SECRETS['omniauth']['documentcloud']['secret'],
                               client_options: { site: DC::SECRETS['omniauth']['documentcloud']['site'],
                                                 authorize_url: DC::SECRETS['omniauth']['documentcloud']['authorize_url'] }
->>>>>>> 9edda164b2ab478ca5799fc97ea5d0f3db7e610a
 
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or
