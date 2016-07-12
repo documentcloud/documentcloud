@@ -35,6 +35,7 @@ class DocumentsController < ApplicationController
         make_oembeddable(doc)
         render :layout => nil
       end
+      format.htm  { redirect_to(doc.canonical_url(:html)) }
       format.pdf  { redirect_to(doc.pdf_url) }
       format.text { redirect_to(doc.full_text_url) }
       format.json do
