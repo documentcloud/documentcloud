@@ -108,7 +108,7 @@ class AdminController < ApplicationController
   }
   def signup
     unless request.post?
-      @params = DEFAULT_SIGNUP_PARAMS.dup
+      @params = DEFAULT_SIGNUP_PARAMS.dup.merge(pick(params, :organization, :account))
       return render
     end
     @params = params
