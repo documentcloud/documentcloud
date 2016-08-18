@@ -90,8 +90,8 @@ TESSERACT_LANGUAGES='tesseract-ocr-*'
 FONT_PACKAGES='
 ttf-wqy-microhei
 ttf-wqy-zenhei
-ttf-kochi-gothic
-ttf-kochi-mincho
+fonts-ipafont-gothic
+fonts-ipafont-mincho
 fonts-nanum
 ttf-baekmuk
 '
