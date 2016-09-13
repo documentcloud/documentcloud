@@ -15,7 +15,7 @@ test $USER = 'root' || { echo run this as root >&2; exit 1; }
 # but the user we actually care about is the login user.
 LOGINUSER=$(logname)      # login user is ubuntu for a vanilla ubuntu installation.
 USERNAME=${1:-$LOGINUSER} # but this can be overridden by passing a username as the first argument.
-DISTRO_NAME=trusty
+DISTRO_NAME=xenial
 
 #################################
 # INSTALL SYSTEM DEPENDENCIES
