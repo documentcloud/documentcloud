@@ -680,7 +680,7 @@ iframe.hidden_iframe {
   position: absolute;
   z-index: 100;
   border: 1px solid #09f;
-  background: url(/images/embed/ui/semiwhite.png);
+  background-color: rgba(234, 239, 255, 0.33);
 }
 
 /*------------------------------ Occurrences ----------------------------------*/

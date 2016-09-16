@@ -3,10 +3,39 @@
 --
 
 SET statement_timeout = 0;
+SET lock_timeout = 0;
 SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
 SET check_function_bodies = false;
 SET client_min_messages = warning;
+
+--
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: -
+--
+
+CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
+
+
+--
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: -
+--
+
+COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+
+
+--
+-- Name: dblink; Type: EXTENSION; Schema: -; Owner: -
+--
+
+CREATE EXTENSION IF NOT EXISTS dblink WITH SCHEMA public;
+
+
+--
+-- Name: EXTENSION dblink; Type: COMMENT; Schema: -; Owner: -
+--
+
+COMMENT ON EXTENSION dblink IS 'connect to other PostgreSQL databases from within a database';
+
 
 SET search_path = public, pg_catalog;
 
@@ -566,6 +595,138 @@ ALTER SEQUENCE app_constants_id_seq OWNED BY app_constants.id;
 
 
 --
+-- Name: bull_proof_china_shop_account_requests; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE bull_proof_china_shop_account_requests (
+    id integer NOT NULL,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone,
+    requester_email character varying(255),
+    requester_first_name character varying(255),
+    requester_last_name character varying(255),
+    requester_notes text,
+    organization_name character varying(255),
+    organization_url character varying(255),
+    approver_email character varying(255),
+    approver_first_name character varying(255),
+    approver_last_name character varying(255),
+    country character varying(255) NOT NULL,
+    verification_notes text,
+    status integer DEFAULT 1,
+    agreed_to_terms boolean DEFAULT false,
+    authorized_posting boolean DEFAULT false,
+    token character varying(255),
+    industry character varying(255),
+    use_case text,
+    reference_links text,
+    marketing_optin boolean DEFAULT false,
+    in_market boolean DEFAULT false,
+    requester_position character varying
+);
+
+
+--
+-- Name: bull_proof_china_shop_account_requests_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE bull_proof_china_shop_account_requests_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: bull_proof_china_shop_account_requests_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE bull_proof_china_shop_account_requests_id_seq OWNED BY bull_proof_china_shop_account_requests.id;
+
+
+--
+-- Name: bull_proof_china_shop_accounts; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE bull_proof_china_shop_accounts (
+    id integer NOT NULL,
+    stripe_customer_id character varying,
+    billing_email text,
+    dc_membership_id integer,
+    dc_membership_role integer,
+    dc_organization_id integer,
+    dc_account_id integer,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+--
+-- Name: bull_proof_china_shop_accounts_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE bull_proof_china_shop_accounts_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: bull_proof_china_shop_accounts_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE bull_proof_china_shop_accounts_id_seq OWNED BY bull_proof_china_shop_accounts.id;
+
+
+--
+-- Name: bull_proof_china_shop_permits; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE bull_proof_china_shop_permits (
+    id integer NOT NULL,
+    stripe_plan_id character varying,
+    stripe_customer_id character varying,
+    stripe_card_id character varying,
+    dc_membership_id integer,
+    dc_account_id integer,
+    dc_organization_id integer,
+    dc_membership_role integer,
+    status integer DEFAULT 1,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL,
+    stripe_subscription_id character varying,
+    stripe_customer_email character varying,
+    stripe_card_last4 integer,
+    account_id integer,
+    start_date timestamp without time zone,
+    end_date_scheduled timestamp without time zone,
+    end_date_actual timestamp without time zone
+);
+
+
+--
+-- Name: bull_proof_china_shop_permits_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE bull_proof_china_shop_permits_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: bull_proof_china_shop_permits_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE bull_proof_china_shop_permits_id_seq OWNED BY bull_proof_china_shop_permits.id;
+
+
+--
 -- Name: collaborations; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -941,7 +1102,8 @@ CREATE TABLE pages (
     page_number integer NOT NULL,
     text text NOT NULL,
     start_offset integer,
-    end_offset integer
+    end_offset integer,
+    aspect_ratio double precision
 );
 
 
@@ -1104,58 +1266,6 @@ ALTER SEQUENCE security_keys_id_seq OWNED BY security_keys.id;
 
 
 --
--- Name: verification_requests; Type: TABLE; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE TABLE verification_requests (
-    id integer NOT NULL,
-    created_at timestamp without time zone,
-    updated_at timestamp without time zone,
-    requester_email character varying(255),
-    requester_first_name character varying(255),
-    requester_last_name character varying(255),
-    requester_notes text,
-    organization_name character varying(255),
-    organization_url character varying(255),
-    approver_email character varying(255),
-    approver_first_name character varying(255),
-    approver_last_name character varying(255),
-    country character varying(255) NOT NULL,
-    verification_notes text,
-    status integer DEFAULT 1,
-    agreed_to_terms boolean DEFAULT false,
-    authorized_posting boolean DEFAULT false,
-    signup_key character varying(255),
-    account_id integer,
-    industry character varying(255),
-    use_case text,
-    reference_links text,
-    marketing_optin boolean DEFAULT false,
-    in_market boolean DEFAULT false,
-    requester_position character varying
-);
-
-
---
--- Name: verification_requests_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE verification_requests_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: verification_requests_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE verification_requests_id_seq OWNED BY verification_requests.id;
-
-
---
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -1174,6 +1284,27 @@ ALTER TABLE ONLY annotations ALTER COLUMN id SET DEFAULT nextval('annotations_id
 --
 
 ALTER TABLE ONLY app_constants ALTER COLUMN id SET DEFAULT nextval('app_constants_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY bull_proof_china_shop_account_requests ALTER COLUMN id SET DEFAULT nextval('bull_proof_china_shop_account_requests_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY bull_proof_china_shop_accounts ALTER COLUMN id SET DEFAULT nextval('bull_proof_china_shop_accounts_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY bull_proof_china_shop_permits ALTER COLUMN id SET DEFAULT nextval('bull_proof_china_shop_permits_id_seq'::regclass);
 
 
 --
@@ -1282,13 +1413,6 @@ ALTER TABLE ONLY security_keys ALTER COLUMN id SET DEFAULT nextval('security_key
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY verification_requests ALTER COLUMN id SET DEFAULT nextval('verification_requests_id_seq'::regclass);
-
-
---
 -- Name: accounts_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -1310,6 +1434,30 @@ ALTER TABLE ONLY annotations
 
 ALTER TABLE ONLY app_constants
     ADD CONSTRAINT app_constants_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: bull_proof_china_shop_account_requests_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY bull_proof_china_shop_account_requests
+    ADD CONSTRAINT bull_proof_china_shop_account_requests_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: bull_proof_china_shop_accounts_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY bull_proof_china_shop_accounts
+    ADD CONSTRAINT bull_proof_china_shop_accounts_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: bull_proof_china_shop_permits_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY bull_proof_china_shop_permits
+    ADD CONSTRAINT bull_proof_china_shop_permits_pkey PRIMARY KEY (id);
 
 
 --
@@ -1430,14 +1578,6 @@ ALTER TABLE ONLY sections
 
 ALTER TABLE ONLY security_keys
     ADD CONSTRAINT security_keys_pkey PRIMARY KEY (id);
-
-
---
--- Name: verification_requests_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
---
-
-ALTER TABLE ONLY verification_requests
-    ADD CONSTRAINT verification_requests_pkey PRIMARY KEY (id);
 
 
 --
@@ -1665,152 +1805,16 @@ CREATE UNIQUE INDEX unique_schema_migrations ON schema_migrations USING btree (v
 
 
 --
--- PostgreSQL database dump complete
+-- Name: public; Type: ACL; Schema: -; Owner: -
 --
 
-SET search_path TO public;
-
-INSERT INTO schema_migrations (version) VALUES ('1');
-
-INSERT INTO schema_migrations (version) VALUES ('20100108163304');
-
-INSERT INTO schema_migrations (version) VALUES ('20100108172251');
-
-INSERT INTO schema_migrations (version) VALUES ('20100109025746');
-
-INSERT INTO schema_migrations (version) VALUES ('20100109035508');
-
-INSERT INTO schema_migrations (version) VALUES ('20100109041445');
-
-INSERT INTO schema_migrations (version) VALUES ('20100112143144');
-
-INSERT INTO schema_migrations (version) VALUES ('20100114170350');
-
-INSERT INTO schema_migrations (version) VALUES ('20100120194128');
-
-INSERT INTO schema_migrations (version) VALUES ('20100120205426');
-
-INSERT INTO schema_migrations (version) VALUES ('20100125165305');
-
-INSERT INTO schema_migrations (version) VALUES ('20100208131000');
-
-INSERT INTO schema_migrations (version) VALUES ('20100208151651');
-
-INSERT INTO schema_migrations (version) VALUES ('20100212130932');
-
-INSERT INTO schema_migrations (version) VALUES ('20100218193708');
-
-INSERT INTO schema_migrations (version) VALUES ('20100219175757');
-
-INSERT INTO schema_migrations (version) VALUES ('20100301200857');
-
-INSERT INTO schema_migrations (version) VALUES ('20100304154343');
-
-INSERT INTO schema_migrations (version) VALUES ('20100316001441');
-
-INSERT INTO schema_migrations (version) VALUES ('20100317145034');
-
-INSERT INTO schema_migrations (version) VALUES ('20100317181051');
-
-INSERT INTO schema_migrations (version) VALUES ('20100401192921');
-
-INSERT INTO schema_migrations (version) VALUES ('20100413132825');
-
-INSERT INTO schema_migrations (version) VALUES ('20100607182008');
-
-INSERT INTO schema_migrations (version) VALUES ('20100624142442');
-
-INSERT INTO schema_migrations (version) VALUES ('20100625143140');
-
-INSERT INTO schema_migrations (version) VALUES ('20100630131224');
-
-INSERT INTO schema_migrations (version) VALUES ('20100701132413');
-
-INSERT INTO schema_migrations (version) VALUES ('20100823172339');
-
-INSERT INTO schema_migrations (version) VALUES ('20100928204710');
-
-INSERT INTO schema_migrations (version) VALUES ('20101025202334');
-
-INSERT INTO schema_migrations (version) VALUES ('20101028194006');
-
-INSERT INTO schema_migrations (version) VALUES ('20101101192020');
-
-INSERT INTO schema_migrations (version) VALUES ('20101103173409');
-
-INSERT INTO schema_migrations (version) VALUES ('20101110170100');
-
-INSERT INTO schema_migrations (version) VALUES ('20101207203607');
-
-INSERT INTO schema_migrations (version) VALUES ('20101209175540');
-
-INSERT INTO schema_migrations (version) VALUES ('20101214171909');
-
-INSERT INTO schema_migrations (version) VALUES ('20110111192934');
-
-INSERT INTO schema_migrations (version) VALUES ('20110113204915');
-
-INSERT INTO schema_migrations (version) VALUES ('20110114143536');
-
-INSERT INTO schema_migrations (version) VALUES ('20110207212034');
-
-INSERT INTO schema_migrations (version) VALUES ('20110216180521');
-
-INSERT INTO schema_migrations (version) VALUES ('20110217161649');
-
-INSERT INTO schema_migrations (version) VALUES ('20110217171353');
-
-INSERT INTO schema_migrations (version) VALUES ('20110224153154');
-
-INSERT INTO schema_migrations (version) VALUES ('20110303200824');
-
-INSERT INTO schema_migrations (version) VALUES ('20110303202721');
-
-INSERT INTO schema_migrations (version) VALUES ('20110304213500');
-
-INSERT INTO schema_migrations (version) VALUES ('20110308170707');
-
-INSERT INTO schema_migrations (version) VALUES ('20110310000919');
-
-INSERT INTO schema_migrations (version) VALUES ('20110429150927');
-
-INSERT INTO schema_migrations (version) VALUES ('20110502200512');
-
-INSERT INTO schema_migrations (version) VALUES ('20110505172648');
-
-INSERT INTO schema_migrations (version) VALUES ('20110512193718');
-
-INSERT INTO schema_migrations (version) VALUES ('20110603223356');
-
-INSERT INTO schema_migrations (version) VALUES ('20111026200513');
-
-INSERT INTO schema_migrations (version) VALUES ('20120131180323');
-
-INSERT INTO schema_migrations (version) VALUES ('20120927202457');
-
-INSERT INTO schema_migrations (version) VALUES ('20121108160450');
-
-INSERT INTO schema_migrations (version) VALUES ('20130107193641');
-
-INSERT INTO schema_migrations (version) VALUES ('20130108201748');
-
-INSERT INTO schema_migrations (version) VALUES ('20130109194211');
-
-INSERT INTO schema_migrations (version) VALUES ('20130327170939');
-
-INSERT INTO schema_migrations (version) VALUES ('20150603190250');
-
-INSERT INTO schema_migrations (version) VALUES ('20150612202649');
-
-INSERT INTO schema_migrations (version) VALUES ('20150617201312');
-
-INSERT INTO schema_migrations (version) VALUES ('20150629180149');
-
-INSERT INTO schema_migrations (version) VALUES ('20150629210433');
-
-INSERT INTO schema_migrations (version) VALUES ('20150713194717');
-
-INSERT INTO schema_migrations (version) VALUES ('20150812163030');
-
-INSERT INTO schema_migrations (version) VALUES ('20151111214857');
+REVOKE ALL ON SCHEMA public FROM PUBLIC;
+REVOKE ALL ON SCHEMA public FROM postgres;
+GRANT ALL ON SCHEMA public TO postgres;
+GRANT ALL ON SCHEMA public TO PUBLIC;
+
+
+--
+-- PostgreSQL database dump complete
+--
 

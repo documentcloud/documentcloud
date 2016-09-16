@@ -1,29 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <%= render :partial => 'common/meta_tags' %>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta http-equiv="ClearType" content="true">
   <title><%= @current_document && @current_document.title %></title>
-  <%= render :partial => 'accounts/language_settings' if @edits_enabled %>
-  <%= render :partial => 'common/oembed' if @oembeddable_resource %>
+  <%= render partial: 'accounts/language_settings' if @edits_enabled %>
+  <%= render partial: 'common/oembed' if @oembeddable_resource %>
   <!--[if (!IE)|(gte IE 8)]><!-->
-    <link href="<%= DC.cdn_root(:agnostic => true) %>/viewer/viewer-datauri.css" media="screen" rel="stylesheet" type="text/css" />
+    <link href="<%= DC.cdn_root(agnostic: true) %>/viewer/viewer-datauri.css" media="screen" rel="stylesheet" type="text/css" />
   <!--<![endif]-->
   <!--[if lte IE 7]>
-    <link href="<%= DC.cdn_root(:agnostic => true) %>/viewer/viewer.css" media="screen" rel="stylesheet" type="text/css" />
+    <link href="<%= DC.cdn_root(agnostic: true) %>/viewer/viewer.css" media="screen" rel="stylesheet" type="text/css" />
   <![endif]-->
-  <link href="<%= DC.cdn_root(:agnostic => true) %>/viewer/printviewer.css" media="print" rel="stylesheet" type="text/css" />
-  <script src="<%= DC.cdn_root(:agnostic => true) %>/viewer/viewer.js"></script>
+  <link href="<%= DC.cdn_root(agnostic: true) %>/viewer/printviewer.css" media="print" rel="stylesheet" type="text/css" />
+  <script src="<%= DC.cdn_root(agnostic: true) %>/viewer/viewer.js"></script>
   <% if Rails.env.production? %>
     <script>
-      window.DV.recordHit = "<%= DC.server_root(:agnostic => true).html_safe %>/pixel.gif";
+      window.DV.recordHit = "<%= DC.server_root(agnostic: true).html_safe %>/pixel.gif";
     </script>
   <% end %>
   <% unless @local %>
     <%= csrf_meta_tag %>
   <% end %>
 
-  <%= render(:partial => 'viewer_editing_head') if @edits_enabled %>
+  <%= render partial: 'viewer_editing_head' if @edits_enabled %>
 </head>
 <body style="margin:0; padding:0;">
   <div id="viewer"></div>
@@ -31,14 +32,14 @@
   <script type="text/javascript">
     <% if @current_document %>
       window.currentDocument = DV.load(<%= @current_document.canonical({
-        :account => @current_account,
-        :local => @local,
-        :contributor => true,
-        :allowed_to_edit => @allowed_to_edit,
-        :allowed_to_review => @allowed_to_review,
-        :data => true,
-        :access => true,
-        :cache_busting => @allowed_to_edit
+        account: @current_account,
+        local: @local,
+        contributor: true,
+        allowed_to_edit: @allowed_to_edit,
+        allowed_to_review: @allowed_to_review,
+        data: true,
+        access: true,
+        cache_busting: @allowed_to_edit
       }).to_json.html_safe %>, {
         <% unless @sidebar %>sidebar: false,<% end %>
         <% if @responsive %>responsive: true, responsiveOffset: 0,<% end %>
@@ -54,6 +55,6 @@
     <% end %>
   </noscript>
 
-  <%= render(:partial => 'viewer_editing') if @edits_enabled %>
+  <%= render partial: 'viewer_editing' if @edits_enabled %>
 </body>
 </html>

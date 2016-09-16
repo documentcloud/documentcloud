@@ -11,6 +11,7 @@ test $USER = 'root' || { echo run this as root >&2; exit 1; }
 # but the user we actually care about is the login user.
 LOGINUSER=$(logname)      # login user is ubuntu for a vanilla ubuntu installation.
 USERNAME=${2:-$LOGINUSER} # but this can be overridden by passing a username as the second argument.
+DISTRO_NAME=xenial
 
 RAILS_ENVIRONMENT=${1:-"$RAILS_ENV"}
 
@@ -21,11 +22,11 @@ if [ ! -n "$RAILS_ENVIRONMENT" ]; then
 fi
 
 # update certificates
-apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 561F9B9CAC40B2F7
+apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 561F9B9CAC40B2F7
 apt-get install apt-transport-https ca-certificates -y
 
 # Add Passenger's apt server
-echo "deb https://oss-binaries.phusionpassenger.com/apt/passenger trusty main" | tee /etc/apt/sources.list.d/passenger.list
+echo "deb https://oss-binaries.phusionpassenger.com/apt/passenger $DISTRO_NAME main" | tee /etc/apt/sources.list.d/passenger.list
 gpg --keyserver keyserver.ubuntu.com --recv-keys 561F9B9CAC40B2F7
 gpg --armor --export 561F9B9CAC40B2F7 | sudo apt-key add -
 
