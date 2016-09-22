@@ -9,6 +9,7 @@ class HomeController < ApplicationController
   before_action :bouncer if exclusive_access?
 
   def index
+    redirect_to search_url if logged_in? and env["PATH_INFO"].slice(0,5) != "/home"
     @document = Rails.cache.fetch( "homepage/featured_document" ) do
       time = Rails.env.production? ? 2.weeks.ago : nil
       Document.unrestricted.published.popular.random.since(time).first
