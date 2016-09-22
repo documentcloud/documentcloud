@@ -1,7 +1,7 @@
 DC::Application.routes.draw do
 
   # Homepage
-  get '/', to: 'home#index'
+  get '/', to: 'home#index', as: 'homepage'
 
   # Embed loaders
   get '/embed/loader/enhance', to: 'embed#enhance', as: 'embed_enhance'
