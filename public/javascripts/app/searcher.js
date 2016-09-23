@@ -25,10 +25,10 @@ dc.controllers.Searcher = Backbone.Router.extend({
   flags         : {},
 
   routes        : {
-    'search/*query/p:page':        'searchByHash',
-    'search/*query':               'searchByHash',
-    'public/search/*query/p:page': 'dummyPublicSearch',
-    'public/search/*query':        'dummyPublicSearch'
+    'search(/*query/p:page)':        'searchByHash',
+    'search(/*query)':               'searchByHash',
+    'public/search(/*query/p:page)': 'dummyPublicSearch',
+    'public/search(/*query)':        'dummyPublicSearch'
   },
 
   // Creating a new SearchBox registers #search page fragments.
