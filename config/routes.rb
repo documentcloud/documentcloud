@@ -18,7 +18,7 @@ DC::Application.routes.draw do
   get '/search',                  to: 'workspace#index', as: 'search'
   get '/search/preview',          to: 'search#preview', as: 'preview'
   get '/search/restricted_count', to: 'search#restricted_count'
-  get '/search/:query',           to: 'workspace#index', query: /.*/
+  get '/search(/:query)',         to: 'workspace#index'
   get '/help',                    to: 'workspace#help'
   get '/help/:page',              to: 'workspace#help'
   get '/results',                 to: 'workspace#index', as: 'results'
@@ -36,8 +36,7 @@ DC::Application.routes.draw do
   end
 
   # Public search
-  get '/public/search',        to: 'public#index', as: 'public_search'
-  get '/public/search/:query', to: 'public#index', query: /.*/, as: 'public_search_with_query'
+  get '/public/search(/:query)', to: 'public#index', as: 'public_search'
 
   # API
   scope(:api, controller: 'api') do

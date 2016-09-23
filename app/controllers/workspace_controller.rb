@@ -21,7 +21,7 @@ class WorkspaceController < ApplicationController
       return render :template => 'workspace/index'
     end
     Rails.logger.info(params)
-    redirect_to public_search_with_query_url(query: params[:query])
+    redirect_to public_search_url(query: params[:query])
   end
 
   # Render a help page as regular HTML, including correctly re-directed links.
