@@ -36,9 +36,9 @@ class ProcessingJob < ActiveRecord::Base
     def callback_url
       case object.action
       when "update_access"
-        "#{DC.server_root(:ssl => false)}/import/update_access"
+        "#{DC.server_root(:ssl => false)}/import/update_access?secret=#{DC::SECRETS['cloud_crowd_secret']}"
       else
-        "#{DC.server_root(:ssl => false)}/import/cloud_crowd"
+        "#{DC.server_root(:ssl => false)}/import/cloud_crowd?secret=#{DC::SECRETS['cloud_crowd_secret']}"
       end
     end
   end

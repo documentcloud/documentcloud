@@ -21,9 +21,10 @@ class ImportController < ApplicationController
       # Render the HTML/script...
     end
   end
-
+  
   # Returning a "201 Created" ack tells CloudCrowd to clean up the job.
   def cloud_crowd
+    return forbidden unless correct_cloud_crowd_secret?
     cloud_crowd_job = JSON.parse(params[:job])
     if processing_job = ProcessingJob.lookup_by_remote(cloud_crowd_job)
       processing_job.resolve(cloud_crowd_job) do |pj| 
@@ -38,6 +39,7 @@ class ImportController < ApplicationController
   # CloudCrowd is done changing the document's asset access levels.
   # 201 created cleans up the job.
   def update_access
+    return forbidden unless correct_cloud_crowd_secret?
     cloud_crowd_job = JSON.parse(params[:job])
     if processing_job = ProcessingJob.lookup_by_remote(cloud_crowd_job)
       processing_job.resolve(cloud_crowd_job) do |pj| 
@@ -46,6 +48,12 @@ class ImportController < ApplicationController
     end
 
     render :plain => '201 Created', :status => 201
+  end
+  
+  private
+  
+  def correct_cloud_crowd_secret?
+    params[:secret] == DC::SECRETS['cloud_crowd_secret']
   end
 
   def expire_document_cache(document)
