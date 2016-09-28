@@ -65,7 +65,15 @@ class ImportController < ApplicationController
     mailbox = UploadMailbox.lookup(sender, key)
     return forbidden unless mailbox
     
+    membership = mailbox.membership
+    account = membership.account, membership.organization
+    
     # Okay!  We're in the clear!  PROCEED WITH UPLOADS
+    (metadata[:file_paths] || []).each do |file_path|
+      (bucket.objects[file_path])
+      Document.upload(attributes, account, organization)
+    end
+    
     
     # get list of files
     file_paths = email[:files]
