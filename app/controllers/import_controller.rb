@@ -66,11 +66,15 @@ class ImportController < ApplicationController
     return forbidden unless mailbox
     
     membership = mailbox.membership
-    account = membership.account, membership.organization
+    account, organization = membership.account, membership.organization
     
     # Okay!  We're in the clear!  PROCEED WITH UPLOADS
     (metadata[:file_paths] || []).each do |file_path|
-      (bucket.objects[file_path])
+      attributes = {
+        # Assume that CloudCrowd will get to the email before 24 hours are through.
+        url: bucket.objects[file_path].url_for(:read, {secure: Thread.current[:ssl], expires: 24.hours}).to_s,
+        email_me: metadata[:file_paths].size
+      }
       Document.upload(attributes, account, organization)
     end
     
