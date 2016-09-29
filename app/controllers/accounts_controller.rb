@@ -136,6 +136,16 @@ class AccountsController < ApplicationController
     LifecycleMailer.login_instructions( account, current_organization, current_account ).deliver_now
     json nil
   end
+  
+  def mailboxes
+    # code goes here.
+  end
+  
+  def create_mailbox
+  end
+  
+  def destroy_mailbox
+  end
 
   # Removing an account only changes their role so that they cannot
   # login. Ther documents, projects, and name remain.
