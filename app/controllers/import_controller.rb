@@ -28,19 +28,6 @@ class ImportController < ApplicationController
     email = JSON.parse(params[:email])
     uploader           = email[:from]
     uploader_recipient = email[:to]
-    # 
-    # Query: How to validate that the email we have stored, and the password we have here
-    # are the same and both valid?
-    #
-    # Answer: 
-    #  -  process the email on the uploader side, and push it to a known layout, including the JSON blob.
-    #  - submit request with to/from pair & authenticate Rails request w/ that pair.
-    #  - initiate job which pulls and validates JSON blob from s3 (at known location) and uses that to
-    #    validate whether job should proceed or abort.
-    #
-    # user specifies FROM (the white list)
-    #
-    # we specify TO email address with the format :organization_slug-:key@upload.documentcloud.org
     
     # fetch message metadata
     s3 = AWS::S3.new
@@ -63,7 +50,7 @@ class ImportController < ApplicationController
     key, domain = address_key.split('@')
     
     mailbox = UploadMailbox.lookup(sender, key)
-    return forbidden unless mailbox
+    return forbidden unless mailbox and mailbox.recipient == key and mailbox.sender == sender
     
     membership = mailbox.membership
     account, organization = membership.account, membership.organization
@@ -72,7 +59,7 @@ class ImportController < ApplicationController
     (metadata[:file_paths] || []).each do |file_path|
       attributes = {
         # Assume that CloudCrowd will get to the email before 24 hours are through.
-        url: bucket.objects[file_path].url_for(:read, {secure: Thread.current[:ssl], expires: 24.hours}).to_s,
+        url:      bucket.objects[file_path].url_for(:read, {secure: Thread.current[:ssl], expires: 24.hours}).to_s,
         email_me: metadata[:file_paths].size
       }
       Document.upload(attributes, account, organization)
