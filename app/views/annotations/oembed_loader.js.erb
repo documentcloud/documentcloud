@@ -7,10 +7,11 @@
   if (window.dc) { if (window.dc.noteEmbedLoaded) { return; } }
 
   window.dc = window.dc || {};
+  window.dc.embed = window.dc.embed || {};
   window.dc.recordHit = "<%= server_root %>/pixel.gif";
 
   var pendingQueue = window.dc._notesWaitingForAppLoad = [];
-  window.dc.load = function(resource_url, options) {
+  window.dc.embed.loadNotes = function(resource_url, options) {
     pendingQueue.push({resource_url: resource_url, options: options});
   };
 
