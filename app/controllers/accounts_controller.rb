@@ -134,6 +134,7 @@ class AccountsController < ApplicationController
   end
   
   def mailboxes
+    @mailboxes = UploadMailbox.where(membership_id:@current_account.memberships.pluck(:id))
     set_minimal_nav text: 'workspace', link: '/search/'
     render layout: 'new'
   end

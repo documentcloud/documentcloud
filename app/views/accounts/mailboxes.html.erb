@@ -21,32 +21,20 @@
             <button class="btn btn-sm btn-link btn-danger mailbox-revoke">Revoke</button>
           </div>
         </li>
+        <% @mailboxes.each do |mailbox| %>
         <li class="mailbox row">
           <div class="mailbox-addresses col-sm-8 col-xs-12">
-            <a class="mailbox-to-address" href="mailto:#">documentcloud-a03928280f8294g8@upload.documentcloud.org</a>
-            <span class="mailbox-from-address">&uarr; send from a@b.com</span>
+            <%= mail_to mailbox.recipient_address,  mailbox.recipient_address, { "class": "mailbox-to-address" } %>
+            <span class="mailbox-from-address">&uarr; send from <%= mailbox.sender %></span>
           </div>
           <div class="col-sm-2 col-xs-6">
-            <button class="btn btn-sm btn-secondary">43 uploads</button>
+            <button class="btn btn-sm btn-secondary"><%= mailbox.upload_count %> uploads</button>
           </div>
           <div class="col-sm-2 col-xs-6">
             <button class="btn btn-sm btn-link btn-danger mailbox-revoke">Revoke</button>
           </div>
         </li>
-        <li class="mailbox row">
-          <div class="mailbox-addresses col-sm-8 col-xs-12">
-            <a class="mailbox-to-address" href="mailto:#">documentcloud-a8f728280f8294g8@upload.documentcloud.org</a>
-            <span class="mailbox-from-address">&uarr; send from b@c.com</span>
-          </div>
-          <div class="col-sm-2 col-xs-6">
-            <div class="btn-group">
-              <button class="btn btn-sm btn-secondary">8 uploads</button>
-            </div>
-          </div>
-          <div class="col-sm-2 col-xs-6">
-            <button class="btn btn-sm btn-link btn-danger mailbox-revoke">Revoke</button>
-          </div>
-        </li>
+        <% end %>
       </ul>
       </div>
 
