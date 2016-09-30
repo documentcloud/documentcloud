@@ -54,7 +54,7 @@ class HomeController < ApplicationController
   end
 
   def faq
-    render layout: 'minimal'
+    render layout: 'new'
   end
 
   private
