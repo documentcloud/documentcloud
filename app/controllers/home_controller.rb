@@ -50,7 +50,7 @@ class HomeController < ApplicationController
   end
 
   def privacy
-    render layout: 'minimal'
+    render layout: 'new'
   end
 
   def faq
