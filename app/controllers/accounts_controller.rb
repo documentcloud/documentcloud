@@ -50,7 +50,7 @@ class AccountsController < ApplicationController
           @has_documents = Document.owned_by(current_account).exists?
           return render :template => 'workspace/index'
         end
-        redirect_to home_path
+        redirect_to public_search_url(query: params[:query])
       end
       format.json do
         json current_organization.accounts.active
