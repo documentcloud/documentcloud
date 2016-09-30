@@ -19,8 +19,8 @@
       <div class="col-xs-12 col-md-9">
         <div id="dc-main-nav" class="collapse navbar-toggleable-sm">
           <nav class="nav navbar-nav pull-sm-right">
-          
-          </nav>
+          <%= render "common/new/nav_#{'un' unless @current_account}authenticated" %>
+        </nav>
         </div>
       </div>
     </div>
