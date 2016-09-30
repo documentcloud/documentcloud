@@ -133,6 +133,7 @@ DC::Application.routes.draw do
   get '/download/*args.zip', to: 'download#bulk_download', as: 'bulk_download'
 
   # Accounts and account management
+  get '/accounts/mailboxes', to: 'accounts#mailboxes', as: 'mailboxes'
   resources :accounts do
     collection do
       get 'logged_in'

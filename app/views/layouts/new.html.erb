@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" class="<%= compose_html_classes(@html_classes) %> dc-design-transition">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title><%= compose_title(@title) %></title>
+  <%= stylesheet_link_tag "https://assets.dcloud.org/css/platform.css" %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+  <%= render 'common/new/header' %>
+
+  <main>
+    <%= yield %>
+  </main>
+
+  <%= render 'common/new/footer' %>
+</body>
+</html>

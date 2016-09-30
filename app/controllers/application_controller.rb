@@ -341,6 +341,11 @@ class ApplicationController < ActionController::Base
     response.content_type = 'text/plain' if params[:debug]
   end
 
+  def set_minimal_back_to(text:, link:)
+    @minimal_back_text = text
+    @minimal_back_link = link
+  end
+
   private
   
   # Generic error response helper. Defaults to 200 because never called directly

@@ -1,0 +1,102 @@
+  <div class="content">
+
+      <div class="container-sm">
+        <h4>Upload via email</h4>
+        <p>Securely upload documents via email (up to 30MB per message) by sending them to your unique mailbox address. We create a mailbox for each email address you send from, and you can revoke mailboxes at any time.</p>
+      </div>
+
+      <div class="container-lg">
+      <ul id="upload-mailbox-list" class="list-unstyled">
+        <li id="new-mailbox-template" class="mailbox fresh row" style="display:none">
+          <div class="mailbox-addresses col-sm-8 col-xs-12">
+            <a class="mailbox-to-address" href="mailto:#">documentcloud-736228280f8294g8@upload.documentcloud.org</a>
+            <span class="mailbox-from-address"></span>
+          </div>
+          <div class="col-sm-2 col-xs-6">
+            <div class="btn-group">
+              <button class="btn btn-sm btn-secondary" disabled>no uploads yet</button>
+            </div>
+          </div>
+          <div class="col-sm-2 col-xs-6">
+            <button class="btn btn-sm btn-link btn-danger mailbox-revoke">Revoke</button>
+          </div>
+        </li>
+        <li class="mailbox row">
+          <div class="mailbox-addresses col-sm-8 col-xs-12">
+            <a class="mailbox-to-address" href="mailto:#">documentcloud-a03928280f8294g8@upload.documentcloud.org</a>
+            <span class="mailbox-from-address">&uarr; send from a@b.com</span>
+          </div>
+          <div class="col-sm-2 col-xs-6">
+            <button class="btn btn-sm btn-secondary">43 uploads</button>
+          </div>
+          <div class="col-sm-2 col-xs-6">
+            <button class="btn btn-sm btn-link btn-danger mailbox-revoke">Revoke</button>
+          </div>
+        </li>
+        <li class="mailbox row">
+          <div class="mailbox-addresses col-sm-8 col-xs-12">
+            <a class="mailbox-to-address" href="mailto:#">documentcloud-a8f728280f8294g8@upload.documentcloud.org</a>
+            <span class="mailbox-from-address">&uarr; send from b@c.com</span>
+          </div>
+          <div class="col-sm-2 col-xs-6">
+            <div class="btn-group">
+              <button class="btn btn-sm btn-secondary">8 uploads</button>
+            </div>
+          </div>
+          <div class="col-sm-2 col-xs-6">
+            <button class="btn btn-sm btn-link btn-danger mailbox-revoke">Revoke</button>
+          </div>
+        </li>
+      </ul>
+      </div>
+
+      <div class="container-sm">
+        <form id="create-new-mailbox-form" style="display:none">
+          <div class="input-group">
+            <input id="new-mailbox-send-address" type="email" class="form-control" placeholder="Email address you'll send from" required>
+            <span class="input-group-btn">
+              <button class="btn btn-success" type="submit">Add</button>
+            </span>
+          </div>
+        </form>
+
+        <p id="create-new-mailbox-trigger-wrapper">
+          <a id="create-new-mailbox-trigger" class="btn btn-success" href="#">Add a new "send from" address</a>
+        </p>
+      </div>
+
+    </div>
+  </div>
+
+<%
+  @javascript_footer_inline = <<-EOS
+    $('#create-new-mailbox-form').on('submit', function(e){
+      e.preventDefault();
+      var $new = $('#new-mailbox-template').clone();
+      $('#upload-mailbox-list').append($new);
+      $new.show().removeClass('fresh').find('.mailbox-from-address').html('&uarr; send from ' + $('#new-mailbox-send-address').val());
+      $(this).trigger('reset');
+      $('#create-new-mailbox-trigger-wrapper').show();
+    }).on('reset', function(e){
+      $(this).hide();
+      $('#create-new-mailbox-trigger-wrapper').show();
+    });
+    $('#new-mailbox-send-address').on('keyup', function(e){
+      if (e.which == 27) {
+        $('#create-new-mailbox-form').trigger('reset');
+      }
+    });
+    $('#create-new-mailbox-trigger').on('click', function(e){
+      e.preventDefault();
+      $('#create-new-mailbox-form').show();
+      $('#new-mailbox-send-address').trigger('focus');
+      $('#create-new-mailbox-trigger-wrapper').hide();
+    });
+    $(document).on('click', '.mailbox-revoke', function(e){
+      e.preventDefault();
+      if (confirm('Are you sure you want to revoke this mailbox?')) {
+        $(this).closest('.mailbox').remove();
+      }
+    });
+  EOS
+%>
