@@ -11,11 +11,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160129000705) do
+ActiveRecord::Schema.define(version: 20160929174005) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-  enable_extension "hstore"
 
   create_table "accounts", force: :cascade do |t|
     t.string   "first_name",        limit: 40
@@ -295,6 +294,15 @@ ActiveRecord::Schema.define(version: 20160129000705) do
     t.string  "securable_type", limit: 40, null: false
     t.integer "securable_id",              null: false
     t.string  "key",            limit: 40
+  end
+
+  create_table "upload_mailboxes", force: :cascade do |t|
+    t.integer  "membership_id",                         null: false
+    t.string   "sender",        limit: 255,             null: false
+    t.string   "recipient",     limit: 255,             null: false
+    t.integer  "upload_count",              default: 0
+    t.datetime "created_at",                            null: false
+    t.datetime "updated_at",                            null: false
   end
 
 end
