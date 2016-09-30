@@ -20,7 +20,6 @@ class WorkspaceController < ApplicationController
       @has_documents = Document.owned_by(current_account).exists?
       return render :template => 'workspace/index'
     end
-    Rails.logger.info(params)
     redirect_to public_search_url(query: params[:query])
   end
 
