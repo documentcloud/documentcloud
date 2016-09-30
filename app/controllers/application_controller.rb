@@ -341,9 +341,10 @@ class ApplicationController < ActionController::Base
     response.content_type = 'text/plain' if params[:debug]
   end
 
-  def set_minimal_back_to(text:, link:)
-    @minimal_back_text = text
-    @minimal_back_link = link
+  def set_minimal_nav(text:, link:)
+    @use_minimal_nav   = true
+    @minimal_back_text = text || 'home'
+    @minimal_back_link = link || '/'
   end
 
   private

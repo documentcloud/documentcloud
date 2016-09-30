@@ -3,10 +3,4 @@
   @minimal_back_link ||= '/'
 %>
 <header id="page-header" class="navbar navbar-full dc-navbar-primary dc-navbar" role="banner">
-  <nav class="nav navbar-nav pull-xs-right">
-    <%= link_to 'DocumentCloud', '/', class: 'nav-item nav-link dc-logo' %>
-  </nav>
-  <nav class="nav navbar-nav pull-xs-left">
-    <%= link_to "&larr; Back to #{@minimal_back_text}".html_safe, @minimal_back_link, class: 'nav-item nav-link' %>
-  </nav>
 </header>

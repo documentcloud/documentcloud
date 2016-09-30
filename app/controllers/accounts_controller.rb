@@ -138,9 +138,8 @@ class AccountsController < ApplicationController
   end
   
   def mailboxes
-    set_minimal_back_to text: 'workspace', link: '/search/'
-
-    render layout: 'new_minimal'
+    set_minimal_nav text: 'workspace', link: '/search/'
+    render layout: 'new'
   end
   
   def create_mailbox
