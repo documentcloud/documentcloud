@@ -28,10 +28,10 @@
             <span class="mailbox-from-address">&uarr; send from <%= mailbox.sender %></span>
           </div>
           <div class="col-sm-2 col-xs-6">
-            <button class="btn btn-sm btn-secondary"><%= mailbox.upload_count %> uploads</button>
+            <%= button_to "#{mailbox.upload_count} uploads", "#", class: "btn btn-sm btn-secondary" %>
           </div>
           <div class="col-sm-2 col-xs-6">
-            <button class="btn btn-sm btn-link btn-danger mailbox-revoke">Revoke</button>
+            <%= button_to "Revoke", destroy_mailbox_url(mailbox), class: "btn btn-sm btn-link btn-danger mailbox-revoke" %>
           </div>
         </li>
         <% end %>
