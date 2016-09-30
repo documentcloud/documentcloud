@@ -56,15 +56,19 @@ class ImportController < ApplicationController
     account, organization = membership.account, membership.organization
     
     # Okay!  We're in the clear!  PROCEED WITH UPLOADS
-    (metadata[:file_paths] || []).each do |file_path|
+    paths = (metadata[:file_paths] || [])
+    paths.each do |file_path|
       attributes = {
         # Assume that CloudCrowd will get to the email before 24 hours are through.
         url:      bucket.objects[file_path].url_for(:read, {secure: Thread.current[:ssl], expires: 24.hours}).to_s,
-        email_me: metadata[:file_paths].size
+        email_me: paths.size
       }
       Document.upload(attributes, account, organization)
+      # this is really inefficient. fix this.
     end
     
+    mailbox.upload_count += paths.size
+    mailbox.save
     
     # get list of files
     file_paths = email[:files]
