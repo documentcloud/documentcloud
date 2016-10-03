@@ -16,6 +16,7 @@ class PagesController < ApplicationController
 
     respond_to do |format|
       format.html do
+        @exclude_platformjs = true
         if params[:embed] == 'true'
           # We have a special, extremely stripped-down show page for when we're
           # being iframed. The normal show page can also be iframed, but there

@@ -20,7 +20,9 @@
 
   <%= render 'common/new/footer' %>
 
-  <% javascripts_footer = [File.join(DC.workspace_asset_root, "/js/platform.js")] + (@javascripts_footer || []) %>
+  <%# TODO: stop the `@exclude_platformjs` by fixing platform.js and dc-pages %>
+  <% javascripts_footer = @exclude_platformjs ? [] : [File.join(DC.workspace_asset_root, "/js/platform.js")] %>
+  <% javascripts_footer += (@javascripts_footer || []) %>
   <%= javascript_include_tag *javascripts_footer %>
 
   <% if @javascript_footer_inline %>
