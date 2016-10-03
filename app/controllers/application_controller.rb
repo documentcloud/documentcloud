@@ -343,7 +343,7 @@ class ApplicationController < ActionController::Base
 
   def set_minimal_nav(text:, link:)
     @use_minimal_nav   = true
-    @minimal_back_text = text || 'home'
+    @minimal_back_text = text || 'Go to home'
     @minimal_back_link = link || '/'
   end
 
