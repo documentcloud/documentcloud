@@ -27,9 +27,12 @@
 
   <% if @javascript_footer_inline %>
   <script>
-  $(document).ready(function() {
-    <%= raw @javascript_footer_inline %>
-  });
+    var $ = window.$ || (window.DocumentCloud && window.DocumentCloud.$) || (window.Backbone && window.Backbone.$);
+    if ($ !== void 0) {
+      $(document).ready(function() {
+        <%= raw @javascript_footer_inline %>
+      });
+    }
   </script>
   <% end %>
 </body>
