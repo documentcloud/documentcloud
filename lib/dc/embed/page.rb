@@ -69,7 +69,7 @@ module DC
       end
   
       def static_loader
-        %(<script type="text/javascript" src="#{DC.cdn_root(agnostic: true)}/embed/loader/enhance.js"></script>)
+        %(<script type="text/javascript" src="#{DC.asset_root(agnostic: true)}/embed/loader/enhance.js"></script>)
       end
 
       # intended for use in the static deployment to s3.

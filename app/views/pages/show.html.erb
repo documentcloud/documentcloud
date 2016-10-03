@@ -1,4 +1,4 @@
-<% (@stylesheets_header ||= []).push File.join(DC.cdn_root(:agnostic => true), "/embed/page/page_embed.css") %>
+<% (@stylesheets_header ||= []).push File.join(DC.asset_root(:agnostic => true), "/embed/page/page_embed.css") %>
 
 <header class="header_primary reverse_order">
   <div class="container">
@@ -26,7 +26,7 @@
   </div>
 </div>
 
-<% (@javascripts_footer ||= []).push File.join(DC.cdn_root(:agnostic => true), "/embed/page/page_embed.js") %>
+<% (@javascripts_footer ||= []).push File.join(DC.asset_root(:agnostic => true), "/embed/page/page_embed.js") %>
 <%
   @javascript_footer_inline = <<-EOS
     DocumentCloud.embed.load('#{@current_page.canonical_url}', {
