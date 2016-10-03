@@ -7,13 +7,3 @@
     <%= link_to 'Privacy Policy', "/privacy", class: 'nav-link' %>
   </nav>
 </footer>
-
-<%= javascript_include_tag File.join(DC.workspace_asset_root, "/js/platform.js") %>
-
-<% if @javascript_footer_inline %>
-<script>
-$(document).ready(function() {
-  <%= raw @javascript_footer_inline %>
-});
-</script>
-<% end %>
