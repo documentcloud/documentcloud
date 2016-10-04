@@ -13,6 +13,7 @@
 </head>
 <body>
   <%= render 'common/new/header' %>
+  <%= render partial: 'common/new/flash_messages', flash: flash %>
 
   <main>
     <%= yield %>

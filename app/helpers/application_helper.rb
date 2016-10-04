@@ -14,4 +14,13 @@ module ApplicationHelper
     html_classes.push("env-#{Rails.env}").flatten.join(' ')
   end
 
+  def bootstrap_alert_class_for(flash_type)
+    {
+      :success => 'alert-success',
+      :error   => 'alert-danger',
+      :alert   => 'alert-warning',
+      :notice  => 'alert-info'
+    }[flash_type.to_sym] || flash_type.to_s
+  end
+
 end
