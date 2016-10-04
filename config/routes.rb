@@ -25,8 +25,8 @@ DC::Application.routes.draw do
 
   # Authentication
   scope(controller: 'authentication') do
-    match '/login',                       action: 'login', via: [:get, :post]
-    get '/logout',                        action: 'logout'
+    match '/login',                       action: 'login', via: [:get, :post], as: 'login'
+    get '/logout',                        action: 'logout', as: 'logout'
     get '/auth/remote_data/:document_id', action: 'remote_data'
 
     # Third party auth via OmniAuth
@@ -148,8 +148,8 @@ DC::Application.routes.draw do
   match '/reset_password',       to: 'accounts#reset',  via: [:get, :post], as: 'reset_password'
 
   # Account requests
-  get '/signup', to: 'redirect#index', url: '/plans/apply'
-  get '/apply',  to: 'redirect#index', url: '/plans/apply'
+  get '/signup', to: 'redirect#index', url: '/plans/apply', as: 'signup'
+  get '/apply',  to: 'redirect#index', url: '/plans/apply', as: 'apply'
 
   # Organizations management
   resources :organizations, only: [:update]
