@@ -15,17 +15,24 @@ class AccountsController < ApplicationController
   # Enabling an account continues the second half of the signup process,
   # allowing the journalist to set their password, and logging them in.
   def enable
-    render and return if request.get?
-
-    @failure = 'Please accept the Terms of Service.' and return render unless params[:acceptance]
     key = SecurityKey.find_by_key(params[:key])
-    @failure = 'The account is invalid, or has already been activated.' and return render unless key
-    account = key.securable
-    account.password = params[:password]
-    account.save
-    account.authenticate(session, cookies)
-    key.destroy
-    redirect_to '/'
+    if key
+      if request.post?
+        if params[:acceptance]
+          account = key.securable
+          account.password = params[:password]
+          account.save
+          account.authenticate(session, cookies)
+          key.destroy
+          redirect_to homepage_url and return
+        else
+          flash.now[:error] = 'Please accept the Terms of Service.'
+        end
+      end
+    else
+      redirect_to login_url, flash: {error: 'That account is invalid or has already been activated.'} and return
+    end
+    render layout: 'new'
   end
 
   # Show the "Reset Password" screen for an account holder.
@@ -36,7 +43,7 @@ class AccountsController < ApplicationController
       end
       # So as not to confirm/deny presence of a given account, show this flash 
       # regardless.
-      flash[:notice] = "Please check the email address you provided for further instructions."
+      flash.now[:notice] = "Please check the email address you provided for further instructions."
     end
     render layout: 'new'
   end
