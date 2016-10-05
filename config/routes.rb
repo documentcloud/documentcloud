@@ -133,9 +133,9 @@ DC::Application.routes.draw do
   get '/download/*args.zip', to: 'download#bulk_download', as: 'bulk_download'
 
   # Accounts and account management
-  get '/accounts/mailboxes', to: 'accounts#mailboxes', as: 'mailboxes'
-  post   "/accounts/mailboxes/:id", to: 'accounts#create_mailbox', as: 'create_mailbox'
-  delete "/accounts/mailboxes/:id", to: 'accounts#destroy_mailbox', as: 'destroy_mailbox'
+  get    '/accounts/mailboxes',     to: 'accounts#mailboxes',       as: 'mailboxes'
+  post   '/accounts/mailboxes',     to: 'accounts#create_mailbox',  as: 'create_mailbox'
+  delete '/accounts/mailboxes/:id', to: 'accounts#revoke_mailbox',  as: 'revoke_mailbox'
   resources :accounts do
     collection do
       get 'logged_in'

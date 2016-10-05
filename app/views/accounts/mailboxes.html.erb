@@ -5,52 +5,40 @@
         <p>Securely upload documents via email – up to 30MB per message – by sending them to your personal mailboxes. We create a mailbox for each email address you send from, and you can revoke any mailbox at any time.</p>
       </div>
 
-      <div class="container-lg">
-      <ul id="upload-mailbox-list" class="list-unstyled">
-        <li id="new-mailbox-template" class="mailbox fresh row" style="display:none">
-          <div class="mailbox-addresses col-sm-8 col-xs-12">
-            <a class="mailbox-to-address" href="mailto:#">documentcloud-736228280f8294g8@upload.documentcloud.org</a>
-            <span class="mailbox-from-address"></span>
-          </div>
-          <div class="col-sm-2 col-xs-6">
-            <div class="btn-group">
-              <button class="btn btn-sm btn-secondary" disabled>no uploads yet</button>
-            </div>
-          </div>
-          <div class="col-sm-2 col-xs-6">
-            <button class="btn btn-sm btn-link btn-danger mailbox-revoke">Revoke</button>
-          </div>
-        </li>
-        <% @mailboxes.each do |mailbox| %>
-        <li class="mailbox row">
-          <div class="mailbox-addresses col-sm-8 col-xs-12">
-            <%= mail_to mailbox.recipient_address,  mailbox.recipient_address, { "class": "mailbox-to-address" } %>
-            <span class="mailbox-from-address">&uarr; send from <%= mailbox.sender %></span>
-          </div>
-          <div class="col-sm-2 col-xs-6">
-            <%= button_to "#{mailbox.upload_count} uploads", "#", class: "btn btn-sm btn-secondary" %>
-          </div>
-          <div class="col-sm-2 col-xs-6">
-            <%= button_to "Revoke", destroy_mailbox_url(mailbox), class: "btn btn-sm btn-link btn-danger mailbox-revoke" %>
-          </div>
-        </li>
-        <% end %>
-      </ul>
-      </div>
+      <% if @mailboxes.present? %>
+        <div class="container-lg">
+          <ul id="upload-mailbox-list" class="list-unstyled">
+            <% @mailboxes.each do |mailbox| %>
+            <li class="mailbox row">
+              <div class="mailbox-addresses col-sm-7 col-xs-12">
+                <%= mail_to mailbox.recipient_address, mailbox.recipient_address, class: 'mailbox-to-address' %>
+                <span class="mailbox-from-address">&uarr; send from <%= mailbox.sender %></span>
+              </div>
+              <div class="col-sm-3 col-xs-6">
+                <% if mailbox.upload_count > 0 %>
+                  <%= link_to "#{mailbox.upload_count} uploads", '/search', class: 'btn btn-sm btn-secondary' %>
+                <% else %>
+                  <%= link_to 'No uploads yet', '#', {class: 'btn btn-sm btn-secondary disabled', disabled: true} %>
+                <% end %>
+              </div>
+              <div class="col-sm-2 col-xs-6">
+                <%= button_to 'Revoke', revoke_mailbox_url(mailbox), method: 'delete', class: 'btn btn-sm btn-link btn-danger mailbox-revoke' %>
+              </div>
+            </li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
 
       <div class="container-sm">
-        <form id="create-new-mailbox-form" style="display:none">
+        <%= form_tag create_mailbox_path do %>
           <div class="input-group">
-            <input id="new-mailbox-send-address" type="email" class="form-control" placeholder="Email address you'll send from" required>
+            <input name="email" type="text" class="form-control" placeholder="Enter a new “send from” email address">
             <span class="input-group-btn">
               <button class="btn btn-success" type="submit">Add</button>
             </span>
           </div>
-        </form>
-
-        <p id="create-new-mailbox-trigger-wrapper">
-          <a id="create-new-mailbox-trigger" class="btn btn-success" href="#">Add a new "send from" address</a>
-        </p>
+        <% end %>
       </div>
 
     </div>
@@ -58,32 +46,10 @@
 
 <%
   @javascript_footer_inline = <<-EOS
-    $('#create-new-mailbox-form').on('submit', function(e){
-      e.preventDefault();
-      var $new = $('#new-mailbox-template').clone();
-      $('#upload-mailbox-list').append($new);
-      $new.show().removeClass('fresh').find('.mailbox-from-address').html('&uarr; send from ' + $('#new-mailbox-send-address').val());
-      $(this).trigger('reset');
-      $('#create-new-mailbox-trigger-wrapper').show();
-    }).on('reset', function(e){
-      $(this).hide();
-      $('#create-new-mailbox-trigger-wrapper').show();
-    });
-    $('#new-mailbox-send-address').on('keyup', function(e){
-      if (e.which == 27) {
-        $('#create-new-mailbox-form').trigger('reset');
-      }
-    });
-    $('#create-new-mailbox-trigger').on('click', function(e){
-      e.preventDefault();
-      $('#create-new-mailbox-form').show();
-      $('#new-mailbox-send-address').trigger('focus');
-      $('#create-new-mailbox-trigger-wrapper').hide();
-    });
     $(document).on('click', '.mailbox-revoke', function(e){
       e.preventDefault();
       if (confirm('Are you sure you want to revoke this mailbox?')) {
-        $(this).closest('.mailbox').remove();
+        $(this).closest('form').trigger('submit');
       }
     });
   EOS

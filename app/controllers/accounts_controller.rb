@@ -147,9 +147,26 @@ class AccountsController < ApplicationController
   end
   
   def create_mailbox
+    @mailbox = UploadMailbox.create(membership: @current_account.memberships.default.first, sender: params[:email])
+    if @mailbox.valid?
+      flash[:success] = 'You’ve created a new upload mailbox!'
+    else
+      flash[:error] = 'Sorry, something went wrong creating that mailbox.'
+    end
+    @mailboxes = UploadMailbox.where(membership_id: @current_account.memberships.pluck(:id))
+    redirect_to :mailboxes
   end
   
-  def destroy_mailbox
+  def revoke_mailbox
+    @mailbox = UploadMailbox.find(params[:id])
+    return forbidden unless @mailbox.membership.account == @current_account
+
+    if @mailbox.destroy
+      flash[:success] = 'You’ve successfully revoked that mailbox.'
+    else
+      flash[:error] = 'Sorry, something went wrong revoking that mailbox.'
+    end
+    redirect_to :mailboxes
   end
 
   # Removing an account only changes their role so that they cannot
