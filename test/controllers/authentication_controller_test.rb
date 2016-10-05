@@ -5,15 +5,8 @@ class AuthenticationControllerTest < ActionController::TestCase
   let(:read_only?) { Rails.application.config.read_only }
 
   it "responds to read-only mode" do
-    get :signup_info
-    assert_response :success
     get :iframe
     assert_response read_only? ? 503 : :success
-  end
-
-  def test_signup_info
-    get :signup_info
-    assert_template layout: 'workspace'
   end
 
   def test_redirects_to_home_for_logged_accounts_attempting_to_login
