@@ -18,7 +18,7 @@ class AccountsController < ApplicationController
     key = SecurityKey.find_by_key(params[:key])
     if key
       if request.post?
-        if params[:acceptance]
+        if params[:acceptance] == 'yes'
           account = key.securable
           account.password = params[:password]
           account.save

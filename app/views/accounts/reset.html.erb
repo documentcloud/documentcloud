@@ -3,20 +3,17 @@
 %>
 
 <div class="container-sm content paper">
-  <%= form_tag reset_password_url, method: :post, autocomplete: 'off' do %>
+  <%= bootstrap_form_tag url: reset_password_url, autocomplete: 'off' do |f| %>
     <%= token_tag %>
     <h1 class="h3">Reset your password</h1>
-    <div class="form-group">
-      <label class="form-control-label">Email address</label>
-      <input id="account_email" name="email" type="email" class="form-control">
-    </div>
+    <%= f.email_field :email, autofocus: true %>
     <p class="note">
       Not sure what email address you use to log in?
       Here's a tip: anyone else in your office with a
       DocumentCloud account can look up your email address under the Accounts tab.
     </p>
     <div class="btn-group-set">
-      <button class="btn btn-success btn-block" type="submit">Send reset instructions</button>
+      <%= f.submit 'Send reset instructions', class: 'btn btn-success btn-block' %>
       <%= link_to 'Return to login', login_url, class: 'btn btn-link' %>
     </div>
   <% end %>

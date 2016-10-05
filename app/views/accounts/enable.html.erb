@@ -3,7 +3,7 @@
 %>
 
 <div class="container-sm content paper">
-  <%= form_tag enable_account_url(params[:key]), method: :post, autocomplete: 'off' do %>
+  <%= bootstrap_form_tag url: enable_account_url(params[:key]), autocomplete: 'off' do |f| %>
     <%= token_tag %>
     <h1 class="h3">Welcome to DocumentCloud</h1>
     <p>
@@ -11,18 +11,10 @@
       Once you log in, you'll be able to add additional accounts for people in your newsroom.
       You can also use this form to reset the password on an existing account.
     </p>
-    <div class="form-group">
-      <label class="form-control-label">Password</label>
-      <input name="password" type="password" class="form-control">
-    </div>
-    <div class="checkbox">
-      <label for="acceptance" style="font-size:0.9rem">
-        <input id="acceptance" name="acceptance" type="checkbox">
-        I understand and accept the DocumentCloud <%= link_to 'Terms of Service', terms_path, target: '_blank' %>
-      </label>
-    </div>
+    <%= f.password_field :password, autocomplete: 'off' %>
+    <%= f.check_box :acceptance, {label: "I understand and accept the DocumentCloud <a href='/terms'>Terms of Service</a>".html_safe}, 'yes' %>
     <div class="btn-group-set">
-      <button class="btn btn-success btn-block" type="submit">Enable account &amp; log in</button>
+      <%= f.submit 'Enable account &amp; log in'.html_safe, class: 'btn btn-success btn-lg btn-block' %>
     </div>
   <% end %>
 </div>
