@@ -1,7 +1,7 @@
 # The AccountsController is responsible for account management -- adding users
 # activating accounts, updating email addresses and the like.
 class AccountsController < ApplicationController
-  layout 'workspace'
+  layout 'new'
 
   before_action :secure_only, :only => [:enable, :reset]
   before_action :login_required, :except => [:enable, :reset, :logged_in]
@@ -32,7 +32,6 @@ class AccountsController < ApplicationController
     else
       redirect_to login_url, flash: {error: 'That account is invalid or has already been activated.'} and return
     end
-    render layout: 'new'
   end
 
   # Show the "Reset Password" screen for an account holder.
@@ -45,7 +44,6 @@ class AccountsController < ApplicationController
       # regardless.
       flash.now[:notice] = "Please check the email address you provided for further instructions."
     end
-    render layout: 'new'
   end
 
   # Requesting /accounts returns the list of accounts in your logged-in organization.
@@ -58,7 +56,7 @@ class AccountsController < ApplicationController
           @current_organization = current_account.organization
           @organizations = Organization.all_slugs
           @has_documents = Document.owned_by(current_account).exists?
-          return render :template => 'workspace/index'
+          return render template: 'workspace/index', layout: 'workspace'
         end
         redirect_to public_search_url(query: params[:query])
       end
@@ -146,7 +144,6 @@ class AccountsController < ApplicationController
   def mailboxes
     @mailboxes = UploadMailbox.where(membership_id:@current_account.memberships.pluck(:id))
     set_minimal_nav text: 'Back to workspace', link: '/search/'
-    render layout: 'new'
   end
   
   def create_mailbox
