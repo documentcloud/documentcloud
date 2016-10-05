@@ -5,17 +5,21 @@ def you_are_documentcloud?
 end
 
 if you_are_documentcloud?
-  gem "bull_proof_china_shop", :git => "git@github.com:documentcloud/bull_proof_china_shop", :branch => "master" # Must include branch explicitly for bundler's local config override
+  # Must include branch explicitly for bundler's local config override
+  gem 'bull_proof_china_shop',
+      git: 'git@github.com:documentcloud/bull_proof_china_shop',
+      branch: 'master'
 end
 
 gem 'iconv'
 gem 'rails',                  '~>4.2.0'
 gem 'curb',                   '~>0.8.4'
-gem 'open_calais',            :github => 'documentcloud/open_calais', :branch => 'fuzziness' # Supports Open Calais v2
+gem 'open_calais',            github: 'documentcloud/open_calais',
+                              branch: 'fuzziness' # Supports Open Calais v2
 gem 'rest-client',            '~> 1.8.0'
-gem 'bcrypt',                 '~> 3.1.1', :require => 'bcrypt'
+gem 'bcrypt',                 '~> 3.1.1', require: 'bcrypt'
 gem 'rubyzip',                '~> 1.1.0'
-gem 'aws-sdk',                '~> 1.30', :require => 'aws'
+gem 'aws-sdk',                '~> 1.30',  require: 'aws'
 gem 'pg'
 
 gem 'closure-compiler'
@@ -31,7 +35,7 @@ gem 'sanitize',               '~> 2.0.6'
 gem 'rdiscount',              '~> 2.1.6'
 gem 'rake'
 gem 'actionpack-page_caching'
-gem 'jammit',                 :github => "documentcloud/jammit", :branch => "master"
+gem 'jammit',                 github: 'documentcloud/jammit', branch: 'master'
 gem 'nokogiri',               '~> 1.6.0'
 gem 'net-ssh-shell'
 gem 'country_select',         '~> 2.2.0'
