@@ -8,14 +8,9 @@ class AuthenticationController < ApplicationController
   before_action :secure_only,     :only => [:login, :logout]
   
   READONLY_ACTIONS = [
-    :signup_info, :login, :logout, :blank, :remote_data
+    :login, :logout, :blank, :remote_data
   ]
   before_action :read_only_error, :except => READONLY_ACTIONS if read_only?
-
-  # Display the signup information page.
-  def signup_info
-    render :layout => 'workspace'
-  end
 
   # /login handles both the login form and the login request.
   def login
