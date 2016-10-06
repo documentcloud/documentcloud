@@ -44,14 +44,3 @@
   </div>
 
 </div>
-
-<%
-  @javascript_footer_inline = <<-EOS
-    $(document).on('click', '.mailbox-revoke', function(e){
-      e.preventDefault();
-      if (confirm('Are you sure you want to revoke this mailbox?')) {
-        $(this).closest('form').trigger('submit');
-      }
-    });
-  EOS
-%>
