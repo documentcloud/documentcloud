@@ -142,6 +142,7 @@ class AccountsController < ApplicationController
   end
   
   def mailboxes
+    # TODO: Filter by status, once that exists
     @mailboxes = UploadMailbox.where(membership_id: @current_account.memberships.pluck(:id))
     set_minimal_nav text: 'Back to workspace', link: '/search/'
   end
@@ -153,7 +154,6 @@ class AccountsController < ApplicationController
     else
       flash[:error] = 'Sorry, something went wrong creating that mailbox.'
     end
-    @mailboxes = UploadMailbox.where(membership_id: @current_account.memberships.pluck(:id))
     redirect_to :mailboxes
   end
   
@@ -161,6 +161,7 @@ class AccountsController < ApplicationController
     @mailbox = UploadMailbox.find(params[:id])
     return forbidden unless @mailbox.membership.account == @current_account
 
+    # TODO: Replace destroy with status update
     if @mailbox.destroy
       flash[:success] = 'You’ve successfully revoked that mailbox.'
     else
