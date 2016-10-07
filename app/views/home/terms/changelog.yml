@@ -1,7 +1,7 @@
 - version:     1.0
   description: Original terms that governed from launch.
   start:       '2010-03-01'
-  end:         '2015-05-24'
+  end:         '2016-05-24'
 - version:     2.0
   current:     true
   description: 'See <a href="https://blog.documentcloud.org/blog/2016/04/updating-documentcloud-terms-of-service/">blog post</a> for details on changes.'
