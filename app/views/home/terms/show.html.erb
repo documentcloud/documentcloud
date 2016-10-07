@@ -6,7 +6,7 @@
       <h1>Terms of Service</h1>
       <div id="terms-alert" class="alert alert-info alert-sm">
         <% if @viewing_terms['current'] %>
-          These are the <b>current</b> terms of service. See other versions in the <a href="#terms_changelog">Changelog</a>.
+          These are the <b>current</b> terms of service. See other versions in the <a href="#terms-changelog">Changelog</a>.
         <% elsif @viewing_terms['old'] %>
           These are <b>old</b> terms of service. <%= link_to "Read the current Terms of Service here.", terms_url %>
         <% elsif @viewing_terms['pending'] %>
