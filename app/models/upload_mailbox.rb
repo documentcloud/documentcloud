@@ -8,7 +8,11 @@ class UploadMailbox < ActiveRecord::Base
 
   # TODO: Add email format validation here
   validates :sender, :recipient, presence: true
-
+  
+  def self.lookup(sender, key)
+    (self.where(sender:sender, recipient: key) || []).first
+  end
+  
   def recipient_address
     "#{self.recipient}@#{EMAIL_DOMAIN}"
   end
