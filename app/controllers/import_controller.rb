@@ -72,6 +72,8 @@ class ImportController < ApplicationController
     
     # get list of files
     file_paths = email[:files]
+    
+    json({message: "success!"})
   end
   
   # Returning a "201 Created" ack tells CloudCrowd to clean up the job.
