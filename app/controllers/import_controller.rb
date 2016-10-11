@@ -23,34 +23,37 @@ class ImportController < ApplicationController
   end
   
   def upload_from_email
-    return forbidden unless correct_email_upload_secret?(params[:secret])
+    (Rails.logger.info("Failed on secret") and return forbidden) unless correct_email_upload_secret?(params[:secret])
     # take JSON blob
-    email = JSON.parse(params[:email])
-    uploader           = email[:from]
-    uploader_recipient = email[:to]
+    email               = params[:email]
+    
+    (Rails.logger.error("More than one sender in email (#{email[:from]})") and return forbidden) if email[:from].size > 1
+    uploader            = email[:from].first['address']
+    uploader_recipients = email[:to].map{ |blob| blob['address'] }
     
     # fetch message metadata
-    s3 = AWS::S3.new
-    bucket = s3.buckets['dc-email-uploads']
+    s3                  = AWS::S3.new
+    bucket              = s3.buckets['dc-email-uploads']
     email_metadata_path = "emails/processed/#{email['id']}/#{email['id']}.json"
-    metadata = JSON.parse(bucket.objects[email_metadata_path].read)
-    recipients = metadata["to"]
-    sender = metadata["from"]
+    metadata            = JSON.parse(bucket.objects[email_metadata_path].read)
+    recipients          = metadata['to'].map{ |blob| blob['address']}
+    sender              = metadata['from'].first['address']
     
     # check for shenanigans and if someone is trying to send in json blobs for someone else's email
     return forbidden unless sender == uploader
     
     # verify recipient email address
-    address_key = recipients.find do |address| 
-      address == uploader_recipient and address.split('@').last == 'upload.documentcloud.org'
+    address_key = recipients.find do |address|
+      Rails.logger.info("Checking #{address} against #{uploader_recipients}")
+      uploader_recipients.include?(address) and (address.split('@').last == 'upload.documentcloud.org')
     end
     
-    return forbidden unless address_key
+    (Rails.logger.info("Failed on address_key (Searched through #{recipients.join(", ")})") and return forbidden) unless address_key
     # verify key against sender
     key, domain = address_key.split('@')
     
     mailbox = UploadMailbox.lookup(sender, key)
-    return forbidden unless mailbox and mailbox.recipient == key and mailbox.sender == sender
+    (Rails.logger.info("Failed on mailbox match (#{sender.inspect}, #{mailbox.inspect}, #{key.inspect}, #{sender.inspect})") and return forbidden) unless mailbox and mailbox.recipient == key and mailbox.sender == sender
     
     membership = mailbox.membership
     account, organization = membership.account, membership.organization
