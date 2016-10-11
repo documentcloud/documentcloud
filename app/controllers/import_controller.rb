@@ -4,7 +4,7 @@ class ImportController < ApplicationController
 
   layout nil
 
-  skip_before_action :verify_authenticity_token, :only => [:cloud_crowd, :update_access]
+  skip_before_action :verify_authenticity_token, :only => [:cloud_crowd, :update_access, :upload_from_email]
 
   before_action :secure_only,    :only => [:upload_document]
   before_action :login_required, :only => [:upload_document]
