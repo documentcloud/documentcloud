@@ -34,7 +34,8 @@ class ImportController < ApplicationController
     # fetch message metadata
     s3                  = AWS::S3.new
     bucket              = s3.buckets['dc-email-uploads']
-    email_metadata_path = "emails/processed/#{email['id']}/#{email['id']}.json"
+    email_dir           = "emails/processed/#{email['id']}"
+    email_metadata_path = File.join(email_dir, "#{email['id']}.json")
     metadata            = JSON.parse(bucket.objects[email_metadata_path].read)
     recipients          = metadata['to'].map{ |blob| blob['address']}
     sender              = metadata['from'].first['address']
@@ -59,22 +60,20 @@ class ImportController < ApplicationController
     account, organization = membership.account, membership.organization
     
     # Okay!  We're in the clear!  PROCEED WITH UPLOADS
-    paths = (metadata['file_paths'] || [])
-    paths.each do |file_path|
+    names = (metadata['file_names'] || [])
+    names.each do |name|
+      file_path = File.join(email_dir, name)
       attributes = {
         # Assume that CloudCrowd will get to the email before 24 hours are through.
         url:      bucket.objects[file_path].url_for(:read, {secure: Thread.current[:ssl], expires: 24.hours}).to_s,
-        email_me: paths.size
+        email_me: names.size
       }
       Document.upload(attributes, account, organization)
       # this is really inefficient. fix this.
     end
     
-    mailbox.upload_count += paths.size
+    mailbox.upload_count += names.size
     mailbox.save
-    
-    # get list of files
-    file_paths = email[:files]
     
     json({message: "success!"})
   end
