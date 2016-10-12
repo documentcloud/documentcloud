@@ -59,7 +59,7 @@ class ImportController < ApplicationController
     account, organization = membership.account, membership.organization
     
     # Okay!  We're in the clear!  PROCEED WITH UPLOADS
-    paths = (metadata[:file_paths] || [])
+    paths = (metadata['file_paths'] || [])
     paths.each do |file_path|
       attributes = {
         # Assume that CloudCrowd will get to the email before 24 hours are through.
