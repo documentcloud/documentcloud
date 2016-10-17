@@ -33,7 +33,7 @@
   <% end %>
 
   <div class="container-sm">
-    <%= form_tag create_mailbox_path do %>
+    <%= form_tag create_mailbox_path, id: 'create_new_upload_mailbox_form' do %>
       <div class="input-group">
         <input name="email" type="email" class="form-control" placeholder="Enter a new “send from” email address" required>
         <span class="input-group-btn">
@@ -44,3 +44,9 @@
   </div>
 
 </div>
+
+<%
+  @javascript_footer_inline = <<-EOS
+    $('#create_new_upload_mailbox_form').blockMultipleSubmits();
+  EOS
+%>
