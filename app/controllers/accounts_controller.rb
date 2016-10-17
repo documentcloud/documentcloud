@@ -143,12 +143,12 @@ class AccountsController < ApplicationController
   
   def mailboxes
     # TODO: Filter by status, once that exists
-    @mailboxes = UploadMailbox.where(membership_id: @current_account.memberships.pluck(:id))
+    @mailboxes = UploadMailbox.where(membership_id: current_account.memberships.pluck(:id))
     set_minimal_nav text: 'Back to workspace', link: '/search/'
   end
   
   def create_mailbox
-    @mailbox = UploadMailbox.create(membership: @current_account.memberships.default.first, sender: params[:email])
+    @mailbox = UploadMailbox.create(membership: current_account.memberships.default.first, sender: params[:email])
     if @mailbox.valid?
       flash[:success] = 'You’ve created a new upload mailbox!'
     else
@@ -159,7 +159,7 @@ class AccountsController < ApplicationController
   
   def revoke_mailbox
     @mailbox = UploadMailbox.find(params[:id])
-    return forbidden unless @mailbox.membership.account == @current_account
+    return forbidden unless @mailbox.membership.account == current_account
 
     # TODO: Replace destroy with status update
     if @mailbox.destroy
