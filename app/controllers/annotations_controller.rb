@@ -44,10 +44,12 @@ class AnnotationsController < ApplicationController
           # arrives which removes them.
           @embedded = true
           @exclude_analytics = true
-          render template: 'annotations/show_embedded', layout: 'minimal'
+          render template: 'annotations/show_embedded', layout: 'new'
         else
           make_oembeddable(current_annotation)
-          render layout: 'minimal'
+          set_minimal_nav text: 'Read the full document',
+                          link: current_annotation.contextual_url
+          render layout: 'new'
         end
       end
     end

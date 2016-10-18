@@ -4,6 +4,7 @@ defaults: &defaults
   cloud_crowd_console:  http://dev.dcloud.org:8080
   server_root:          dev.dcloud.org
   asset_root:           dev.dcloud.org
+  workspace_asset_root: assets.dcloud.org
   large_file_storage:   /mnt/large_files
   aws_region:           us-east-1
   aws_zone:             us-east-1c
@@ -15,17 +16,19 @@ development:
 
 staging:
   <<: *defaults
-  cloud_crowd_server:  <%= secrets['db_host'] %>:8080
-  cloud_crowd_console: staging.documentcloud.org:8080
-  server_root:         staging.documentcloud.org
-  asset_root:          s3.amazonaws.com/dcloud_staging
+  cloud_crowd_server:   <%= secrets['db_host'] %>:8080
+  cloud_crowd_console:  staging.documentcloud.org:8080
+  server_root:          staging.documentcloud.org
+  asset_root:           s3.amazonaws.com/dcloud_staging
+  workspace_asset_root: s3.amazonaws.com/dcloud_staging
 
 production:
   <<: *defaults
-  cloud_crowd_server:  <%= secrets['db_host'] %>:8080
-  cloud_crowd_console: db01.documentcloud.org:8080
-  server_root:         www.documentcloud.org
-  asset_root:          assets.documentcloud.org
+  cloud_crowd_server:   <%= secrets['db_host'] %>:8080
+  cloud_crowd_console:  db01.documentcloud.org:8080
+  server_root:          www.documentcloud.org
+  asset_root:           assets.documentcloud.org
+  workspace_asset_root: assets.documentcloud.org
 
 test:
   <<: *defaults

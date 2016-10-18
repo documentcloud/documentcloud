@@ -1,52 +1,24 @@
 <%
-  @title      = "Login"
-  @bodyclass  = "full_page_background"
+  @title = "Login"
 %>
 
-<div id="full_screen_form" class="full_page_background">
-  <form action="<%= DC.server_root(:force_ssl => true) %>/login" method="POST">
+<div class="container-sm content paper">
+  <%= bootstrap_form_tag url: login_url do |f| %>
     <%= token_tag %>
-    <% if flash[:error] %>
-      <div class="form_error login_error">
-        <span>
-          <%= flash[:error] %>
-        </span>
+    <input type="hidden" name="next" value="<%= defined?( @next_url ) ? @next_url : params[:next] %>">
+    <h1 class="h3">Log in to DocumentCloud</h1>
+    <div class="row">
+      <div class="col-xs-12 col-sm-6">
+        <%= f.email_field :email, autofocus: true %>
       </div>
-    <% end %>
-    <div class="line">
-      <div class="text_input">
-        <div class="background">
-          <div class="inner">
-           <input type="text" name="email" id="account_email" />
-          </div>
-        </div>
+      <div class="col-xs-12 col-sm-6">
+        <%= f.password_field :password, autocomplete: 'off' %>
       </div>
-      <label for="account_email">
-        Email Address:<br /><span class="example"><a href="/apply" tabindex="-1">Need an Account?</a></span>
-      </label>
     </div>
-    <div class="line">
-      <div class="text_input">
-        <div class="background">
-          <div class="inner">
-            <input type="password" name="password" id="account_password" />
-          </div>
-        </div>
-      </div>
-      <label for="account_password">
-        Password:<br /><span class="example"><a href="/reset_password" tabindex="-1">Forgot your Password?</a></span>
-      </label>
+    <div class="btn-group-set">
+      <%= f.submit 'Log in', class: 'btn btn-success btn-block' %>
+      <%= link_to 'Forgot your password?', reset_password_url, class: 'btn btn-link' %>
+      <%= link_to 'Need an account?', apply_url, class: 'btn btn-link' %>
     </div>
-    <div class="line">
-      <input type="hidden" name="next" value="<%= defined?( @next_url ) ? @next_url : params[:next] %>">
-      <div class="minibutton submit">Log in</div>
-    </div>
-  </form>
+  <% end %>
 </div>
-
-<script type="text/javascript">
-  $('#full_screen_form form').keypress(function(e) {
-    if (e.which == 13) this.submit();
-  });
-  $('.minibutton.submit').click(function(){ $('#full_screen_form form').submit(); });
-</script>

@@ -1,5 +1,5 @@
-<% @html_classes = ['DC-embed-iframed'] %>
-<% (@stylesheets_header ||= []).push File.join(DC.cdn_root(:agnostic => true), "/note_embed/note_embed.css") %>
+<% (@html_classes ||= []).push('DC-embed-iframed') %>
+<% (@stylesheets_header ||= []).push File.join(DC.asset_root(:agnostic => true), "/note_embed/note_embed.css") %>
 
 <div class="DC-note">
 <% if (@current_annotation_dimensions) %>

@@ -1,0 +1,28 @@
+<header id="page-header" class="navbar navbar-full dc-navbar-primary dc-navbar" role="banner">
+  <% if @use_minimal_nav %>
+    <nav class="nav navbar-nav pull-xs-right">
+      <%= link_to 'DocumentCloud', '/', class: 'nav-item nav-link dc-logo' %>
+    </nav>
+    <nav class="nav navbar-nav pull-xs-left">
+      <%= link_to "&larr; #{@minimal_back_text}".html_safe, @minimal_back_link, class: 'nav-item nav-link' %>
+    </nav>
+  <% else %>
+    <div class="row">
+      <div class="col-xs-10 col-md-3">
+        <nav class="nav navbar-nav">
+          <%= link_to 'DocumentCloud', '/', class: 'nav-item nav-link dc-logo' %>
+        </nav>
+      </div>
+      <div class="col-xs-2 hidden-md-up">
+        <button id="dc-main-nav-toggler" class="navbar-toggler pull-sm-right" type="button" data-toggle="collapse" data-target="#dc-main-nav">☰</button>
+      </div>
+      <div class="col-xs-12 col-md-9">
+        <div id="dc-main-nav" class="collapse navbar-toggleable-sm">
+          <nav class="nav navbar-nav pull-sm-right">
+          <%= render "common/new/nav_#{'un' unless @current_account}authenticated" %>
+        </nav>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</header>

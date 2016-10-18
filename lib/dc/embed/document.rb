@@ -73,12 +73,12 @@ module DC
         <script>
         #{ERB.new(File.read("#{Rails.root}/app/views/documents/oembed_loader.js.erb")).result(binding)}
         </script>
-        <script type="text/javascript" src="#{DC.cdn_root(agnostic: true)}/viewer/viewer.js"></script>
+        <script type="text/javascript" src="#{DC.asset_root(agnostic: true)}/viewer/viewer.js"></script>
         SCRIPT
       end
   
       def static_loader
-        %(<script type="text/javascript" src="#{DC.cdn_root(agnostic: true)}/viewer/loader.js"></script>)
+        %(<script type="text/javascript" src="#{DC.asset_root(agnostic: true)}/viewer/loader.js"></script>)
       end
   
       # intended for use in the static deployment to s3.

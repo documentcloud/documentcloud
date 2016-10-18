@@ -1,15 +1,6 @@
-<% (@stylesheets_header ||= []).push File.join(DC.cdn_root(:agnostic => true), "/embed/page/page_embed.css") %>
+<% (@stylesheets_header ||= []).push File.join(DC.asset_root(:agnostic => true), "/embed/page/page_embed.css") %>
 
-<header class="header_primary reverse_order">
-  <div class="container">
-    <nav class="header_nav">
-      <%= link_to '⬅︎ Read full document', @current_page.contextual_path %>
-    </nav>
-    <h1><%= link_to 'DocumentCloud', '/' %></h1>
-  </div>
-</header>
-
-<div class="container embed-preview-container">
+<div class="container-lg content paper">
   <div id="DC-embed-container" data-version="1.1">
     <div style="font-size:10pt;line-height:14pt;">
       Page <%= @current_page.page_number %> of <a class="DC-embed-resource" href="<%= @current_page.contextual_url %>" title="View entire <%= @current_document.title %> on DocumentCloud in new window or tab" target="_blank"><%= @current_document.title %></a>
@@ -26,7 +17,7 @@
   </div>
 </div>
 
-<% (@javascripts_footer ||= []).push File.join(DC.cdn_root(:agnostic => true), "/embed/page/page_embed.js") %>
+<% (@javascripts_footer ||= []).push File.join(DC.asset_root(:agnostic => true), "/embed/page/page_embed.js") %>
 <%
   @javascript_footer_inline = <<-EOS
     DocumentCloud.embed.load('#{@current_page.canonical_url}', {

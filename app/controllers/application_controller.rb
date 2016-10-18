@@ -341,6 +341,12 @@ class ApplicationController < ActionController::Base
     response.content_type = 'text/plain' if params[:debug]
   end
 
+  def set_minimal_nav(text:, link:)
+    @use_minimal_nav   = true
+    @minimal_back_text = text || 'Go to home'
+    @minimal_back_link = link || '/'
+  end
+
   private
   
   # Generic error response helper. Defaults to 200 because never called directly

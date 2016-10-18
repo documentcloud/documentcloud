@@ -1,5 +1,5 @@
 class PagesController < ApplicationController
-  layout 'minimal'
+  layout 'new'
 
   before_action :bouncer,             :only => [:show] if exclusive_access?
   #before_action :login_required,      :only => [:update, :destroy]
@@ -16,6 +16,7 @@ class PagesController < ApplicationController
 
     respond_to do |format|
       format.html do
+        @exclude_platformjs = true
         if params[:embed] == 'true'
           # We have a special, extremely stripped-down show page for when we're
           # being iframed. The normal show page can also be iframed, but there
@@ -26,6 +27,8 @@ class PagesController < ApplicationController
           render template: 'pages/show_embedded'
         else
           make_oembeddable(current_page)
+          set_minimal_nav text: 'Read the full document',
+                          link: current_page.contextual_url
         end
       end
       

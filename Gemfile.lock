@@ -22,6 +22,13 @@ GIT
       multi_xml
 
 GIT
+  remote: git://github.com/documentcloud/rails-bootstrap-forms.git
+  revision: 3e1d9727b452595433cac0618a6660b4b1318e89
+  branch: bootstrap-v4
+  specs:
+    bootstrap_form (2.4.0)
+
+GIT
   remote: git@github.com:documentcloud/bull_proof_china_shop
   revision: 0460788877a7a0b6c8ba3eea9eace96f2083e4ad
   branch: master
@@ -373,6 +380,7 @@ DEPENDENCIES
   active_model_serializers (~> 0.9.0)
   aws-sdk (~> 1.30)
   bcrypt (~> 3.1.1)
+  bootstrap_form!
   bull_proof_china_shop!
   byebug
   closure-compiler
