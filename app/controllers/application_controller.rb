@@ -251,9 +251,12 @@ class ApplicationController < ActionController::Base
   # Return forbidden when the access is unauthorized.
   def forbidden(options = {})
     options = {
-      :error  => "Forbidden",
-      :locals => { post_login_url: CGI.escape(request.original_url) }
-    }.merge(options)
+      error: "Forbidden",
+      locals: {
+        post_login_url: CGI.escape(request.original_url),
+        is_document: false
+      }
+    }.deep_merge(options)
     error_response 403, options
   end
 
