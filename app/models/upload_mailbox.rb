@@ -5,10 +5,11 @@ class UploadMailbox < ActiveRecord::Base
   belongs_to :membership
 
   before_validation :ensure_recipient
+  validates :recipient, presence: true
+  validates :sender, {
+    presence: true, format: {with: DC::Validators::EMAIL}
+  }
 
-  # TODO: Add email format validation here
-  validates :sender, :recipient, presence: true
-  
   def self.lookup(sender, key)
     (self.where(sender:sender, recipient: key) || []).first
   end
