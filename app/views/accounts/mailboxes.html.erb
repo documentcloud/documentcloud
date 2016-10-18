@@ -18,7 +18,7 @@
           </div>
           <div class="col-sm-3 col-xs-6">
             <% if mailbox.upload_count > 0 %>
-              <%= link_to "#{mailbox.upload_count} #{'upload'.pluralize(mailbox.upload_count)}", '/search', class: 'btn btn-sm btn-secondary' %>
+              <%= link_to "#{mailbox.upload_count} #{'upload'.pluralize(mailbox.upload_count)}", '/search/', class: 'btn btn-sm btn-secondary' %>
             <% else %>
               <%= link_to 'No uploads yet', '#', {class: 'btn btn-sm btn-secondary disabled', disabled: true} %>
             <% end %>
