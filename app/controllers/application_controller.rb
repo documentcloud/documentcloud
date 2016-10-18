@@ -341,10 +341,13 @@ class ApplicationController < ActionController::Base
     response.content_type = 'text/plain' if params[:debug]
   end
 
-  def set_minimal_nav(text:, link:)
+  def set_minimal_nav(text: 'Go to home', xs_text: false, link: '/')
     @use_minimal_nav   = true
-    @minimal_back_text = text || 'Go to home'
-    @minimal_back_link = link || '/'
+    @minimal_back_text = text
+    @minimal_back_link = link
+    if xs_text
+      @minimal_back_text = "<span class='hidden-xs-down'>#{@minimal_back_text}</span> <span class='hidden-sm-up'>#{xs_text}</span>"
+    end
   end
 
   private

@@ -47,8 +47,9 @@ class AnnotationsController < ApplicationController
           render template: 'annotations/show_embedded', layout: 'new'
         else
           make_oembeddable(current_annotation)
-          set_minimal_nav text: 'Read the full document',
-                          link: current_annotation.contextual_url
+          set_minimal_nav text:    'Read the full document',
+                          xs_text: 'Full document',
+                          link:    current_annotation.contextual_url
           render layout: 'new'
         end
       end

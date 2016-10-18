@@ -144,7 +144,9 @@ class AccountsController < ApplicationController
   def mailboxes
     # TODO: Filter by status, once that exists
     @mailboxes = UploadMailbox.where(membership_id: current_account.memberships.pluck(:id))
-    set_minimal_nav text: 'Back to workspace', link: '/search/'
+    set_minimal_nav text:    'Back to the workspace',
+                    xs_text: 'Workspace',
+                    link:    '/search/'
   end
   
   def create_mailbox

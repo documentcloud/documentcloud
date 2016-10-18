@@ -27,8 +27,9 @@ class PagesController < ApplicationController
           render template: 'pages/show_embedded'
         else
           make_oembeddable(current_page)
-          set_minimal_nav text: 'Read the full document',
-                          link: current_page.contextual_url
+          set_minimal_nav text:    'Read the full document',
+                          xs_text: 'Full document',
+                          link:    current_page.contextual_url
         end
       end
       
