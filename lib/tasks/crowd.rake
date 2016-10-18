@@ -82,6 +82,8 @@ def crowd_folder
       'reindex'
     when File.exists?('API')
       'api'
+    when File.exists?('MAINTENANCE')
+      'maintenance'
     else
       Rails.env
   end
