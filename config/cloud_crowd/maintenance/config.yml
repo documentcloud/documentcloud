@@ -3,10 +3,21 @@
 :central_server:      <%= secrets['central_server'] %>
 
 :disabled_actions:
-  - backup_database
   - api_document_import
-  - reindex_everything
   - calculate_aspect_ratios
+  - document_import
+  - document_insert_pages
+  - document_remove_pages
+  - document_reorder_pages
+  - duplicate_documents
+  - extract_tables
+  - large_document_import
+  - redact_pages
+  - regenerate_thumbnails
+  - reindex_document
+  - reindex_everything
+  - reprocess_entities
+  - reprocess_images_with_gm
 
 # The following settings allow you to control the number of workers that can run
 # on a given node, to prevent the node from becoming overloaded. 'max_workers'
