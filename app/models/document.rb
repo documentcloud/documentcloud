@@ -731,13 +731,7 @@ class Document < ActiveRecord::Base
   end
 
   def calculate_aspect_ratios
-    # TODO: Queue up an aspect ratio calculation, UNLESS one is already in 
-    # process (which will often be the case) 
-    if existing_jobs(:calculate_aspect_ratios).present? 
-      true
-    else
-      enqueue_calculate_aspect_ratios
-    end
+    existing_jobs(:calculate_aspect_ratios).present? ? true : enqueue_calculate_aspect_ratios
   end
 
   def existing_jobs(action)
