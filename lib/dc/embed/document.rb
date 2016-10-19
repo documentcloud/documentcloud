@@ -61,7 +61,11 @@ module DC
       end
 
       def code
-        content_markup.squish
+        if @dom_mechanism == :direct
+          [bootstrap_markup, content_markup].join("\n").squish
+        else
+          content_markup.squish
+        end
       end
 
       def content_markup
