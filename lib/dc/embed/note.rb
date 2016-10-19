@@ -19,11 +19,12 @@ module DC
           raise ArgumentError, "Embed resource must `respond_to?` an ':#{attribute}' attribute" unless resource.respond_to?(attribute)
         end
         @resource      = resource
-        @embed_config  = Config.new(embed_config)
-        @strategy      = options[:strategy]      || :literal # :oembed is the other option.
-        @dom_mechanism = options[:dom_mechanism] || :direct
+        @strategy      = options[:strategy]      || :literal # or :oembed
+        @dom_mechanism = options[:dom_mechanism] || :iframe  # or :direct
+        config_options = (@dom_mechanism == :iframe ? {map_keys: false} : {map_keys: true}).merge(options)
+        @embed_config  = Config.new(data: embed_config, options: config_options)
 
-        @template_path = options[:template_path] || "#{Rails.root}/app/views/annotations/_embed_code.html.erb"
+        @template_path = options[:template_path] || "#{Rails.root}/app/views/annotations/_#{@dom_mechanism}_embed_code.html.erb"
         @template      = options[:template]
 
         @note = ::Annotation.find @resource.id
@@ -46,17 +47,24 @@ module DC
       end
 
       def code
-        content_markup.squish
+        if @dom_mechanism == :direct
+          [bootstrap_markup, content_markup].join("\n").squish
+        else
+          content_markup.squish
+        end
       end
 
       def content_markup
         template_options = {
-          # default_container_id: "DC-note-#{@resource.id}",
           resource_url: @resource.resource_url,
           note:         @note,
         }
-        # template_options[:generate_default_container] = @embed_config[:container].nil? || @embed_config[:container].empty? || @embed_config[:container] == '#' + template_options[:default_container_id]
-        # @embed_config[:container] ||= '#' + template_options[:default_container_id]
+
+        if @dom_mechanism == :direct
+          template_options[:default_container_id] = "DC-note-#{@resource.id}"
+          template_options[:generate_default_container] = !@embed_config[:container].present? || @embed_config[:container] == '#' + template_options[:default_container_id]
+          @embed_config[:container] ||= '#' + template_options[:default_container_id]
+        end
 
         render(@embed_config.dump, template_options)
       end
@@ -68,7 +76,7 @@ module DC
       def inline_loader
         <<-SCRIPT
         <script>
-        #{ERB.new(File.read("#{Rails.root}/app/views/annotations/oembed_loader.js.erb")).result(binding)}
+          #{ERB.new(File.read("#{Rails.root}/app/views/annotations/oembed_loader.js.erb")).result(binding)}
         </script>
         <script type="text/javascript" src="#{DC.cdn_root(agnostic: true)}/note_embed/note_embed.js"></script>
         SCRIPT

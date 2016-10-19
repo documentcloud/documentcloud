@@ -1,0 +1,6 @@
+<% if options[:generate_default_container] %>
+<div id="<%= options[:default_container_id] %>" class="DC-note-container"></div>
+<% end %>
+<script type="text/javascript">
+  dc.embed.loadNote("<%= options[:resource_url] %>", <%= data.to_json %>);
+</script>

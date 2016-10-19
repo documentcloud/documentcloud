@@ -25,11 +25,12 @@ module DC
           raise ArgumentError, "Embed resource must `respond_to?` an ':#{attribute}' attribute" unless resource.respond_to?(attribute)
         end
         @resource      = resource
-        @embed_config  = Config.new(embed_config)
-        @strategy      = options[:strategy]      || :literal # :oembed is the other option.
-        @dom_mechanism = options[:dom_mechanism] || :direct
+        @strategy      = options[:strategy]      || :literal # or :oembed
+        @dom_mechanism = options[:dom_mechanism] || :iframe  # or :direct
+        config_options = (@dom_mechanism == :iframe ? {map_keys: false} : {map_keys: true}).merge(options)
+        @embed_config  = Config.new(data: embed_config, options: config_options)
 
-        @template_path = options[:template_path] || "#{Rails.root}/app/views/pages/_embed_code.html.erb"
+        @template_path = options[:template_path] || "#{Rails.root}/app/views/pages/_#{@dom_mechanism}_embed_code.html.erb"
         @template      = options[:template]
 
         # Fetch page from database to populate embed code with page/doc data.
@@ -57,14 +58,10 @@ module DC
         template.result(binding)
       end
 
-      # TODO: Consider how page embed works (HTML + enhancer), and customize
-      # `content_markup` and `bootstrap_markup` accordingly. See
-      # `DC::Embed::Base#code`
-
       # Page embed uses a noscript-style enhancer, which prefers content markup
       # before bootstrap markup
       def code
-        content_markup.squish
+        [content_markup, bootstrap_markup].join("\n").squish
       end
 
       def content_markup
@@ -78,7 +75,7 @@ module DC
       end
 
       def bootstrap_markup
-        @strategy == :oembed ? inline_loader : static_loader
+        (@strategy == :oembed && @dom_mechanism == :direct) ? inline_loader : static_loader
       end
 
       def inline_loader
@@ -90,7 +87,7 @@ module DC
       end
 
       def static_loader
-        %(<script type="text/javascript" src="#{DC.cdn_root(agnostic: true)}/embed/loader/enhance.js"></script>)
+        %(<script type="text/javascript" src="#{DC.cdn_root(agnostic: true)}/embed/loader/enhance.js" async></script>)
       end
 
       # intended for use in the static deployment to s3.
