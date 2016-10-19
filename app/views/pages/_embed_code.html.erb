@@ -15,4 +15,4 @@
     <%= link_to 'read text', options[:page].text_url, { title: "Read the text of page #{options[:page].page_number} of #{options[:document].title} on DocumentCloud in new window or tab", target: '_blank' } %>
   </div>
 </div>
-<script src="<%= DC.cdn_root(:agnostic => true) %>/embed/loader/enhance.js"></script>
+<script src="<%= DC.cdn_root(:agnostic => true) %>/embed/loader/enhance.js" async></script>
