@@ -617,7 +617,7 @@ class Document < ActiveRecord::Base
   end
   
   def oembed_url
-    "#{DC.server_root}/api/oembed.json?url=#{CGI.escape(self.canonical_url('html'))}"
+    "#{DC.server_root}/api/oembed.json?url=#{CGI.escape(self.canonical_url(:html))}"
   end
 
   def search_url
