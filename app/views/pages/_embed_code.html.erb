@@ -1,4 +1,4 @@
-<div id="DC-embed" data-version="2.0" data-options='<%= data.to_json %>'>
+<div class="DC-embed" data-version="2.0" data-options='<%= data.to_json %>'>
   <div>
     Page <%= options[:page].page_number %> of
     <%= link_to options[:document].title, options[:page].contextual_url, { class: 'DC-embed-resource', title: "View entire #{options[:document].title} on DocumentCloud in new window or tab", target: '_blank' } %>
