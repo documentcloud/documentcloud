@@ -1,13 +1,4 @@
-<% (@stylesheets_header ||= []).push File.join(DC.cdn_root(:agnostic => true), "/note_embed/note_embed.css") %>
-
-<header class="header_primary reverse_order">
-  <div class="container">
-    <nav class="header_nav">
-      <%= link_to '⬅︎ Read full document', @current_annotation.contextual_path %>
-    </nav>
-    <h1><%= link_to 'DocumentCloud', '/' %></h1>
-  </div>
-</header>
+<% (@stylesheets_header ||= []).push File.join(DC.asset_root(:agnostic => true), "/note_embed/note_embed.css") %>
 
 <div class="container">
   <div class="DC-note <%= @current_annotation.embed_classes %>" data-version="1.1" style="background-image:url('<%= @current_annotation.page.image_url %>')">

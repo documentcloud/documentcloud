@@ -101,6 +101,7 @@ dc.ui.FormView = Backbone.View.extend({
         'keyup.dcForm  .field': 'checkForUserInputLive',
         'change.dcForm .field': 'checkForUserInput',
       });
+      this.delegateEvents();
     }
 
     // http://stackoverflow.com/a/17545857/5071070

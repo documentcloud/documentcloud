@@ -42,11 +42,15 @@ class AnnotationsController < ApplicationController
           # being iframed. The normal show page can also be iframed, but there
           # will be a flash of unwanted layout elements before the JS/CSS 
           # arrives which removes them.
+          @embedded = true
           @exclude_analytics = true
-          render template: 'annotations/show_embedded', layout: 'minimal'
+          render template: 'annotations/show_embedded', layout: 'new'
         else
           make_oembeddable(current_annotation)
-          render layout: 'minimal'
+          set_minimal_nav text:    'Read the full document',
+                          xs_text: 'Full document',
+                          link:    current_annotation.contextual_url
+          render layout: 'new'
         end
       end
     end

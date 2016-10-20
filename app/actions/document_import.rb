@@ -10,12 +10,13 @@ class DocumentImport < DocumentAction
       file = File.basename(options['url'])
       File.open(file, 'wb') do |f|
         url = URI.parse(options['url'])
-        Net::HTTP.start(url.host, url.port) do |http|
-          http.request_get(url.path) do |res|
-            res.read_body do |seg|
-              f << seg
-              sleep 0.005 # To allow the buffer to fill (more).
-            end
+        http = Net::HTTP.new(url.host, url.port)
+        (http.use_ssl = true) if url.port == 443
+        req = Net::HTTP::Get.new(url.request_uri)
+        http.request(req) do |res|
+          res.read_body do |seg|
+            f << seg
+            sleep 0.005 # To allow the buffer to fill (more).
           end
         end
       end
@@ -180,7 +181,7 @@ class DocumentImport < DocumentAction
     UPDATE pages 
       SET text = input.text
       FROM (SELECT unnest(ARRAY[?]) as id, unnest(ARRAY[?]) as text) AS input
-      WHERE pages.id = input.id
+      WHERE pages.id = input.id::int
     QUERY
     query = Page.send(:replace_bind_variables, query_template, [ids, page_texts])
     Page.connection.execute(query)
@@ -193,7 +194,7 @@ class DocumentImport < DocumentAction
     UPDATE pages 
       SET aspect_ratio = input.aspect_ratio
       FROM (SELECT unnest(ARRAY[?]) as id, unnest(ARRAY[?]) as aspect_ratio) AS input
-      WHERE pages.id = input.id
+      WHERE pages.id = input.id::int
     QUERY
     query = Page.send(:replace_bind_variables, query_template, [ids, @page_aspect_ratios])
     Page.connection.execute(query)

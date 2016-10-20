@@ -21,7 +21,7 @@ class DocumentsController < ApplicationController
   def show
     Account.login_reviewer(params[:key], session, cookies) if params[:key]
     doc = current_document(true)
-    return forbidden if doc.nil? && Document.exists?(params[:id].to_i)
+    return forbidden(locals: {is_document: true}) if doc.nil? && Document.exists?(params[:id].to_i)
     return not_found unless doc
     options = {data: true}.merge(pick(params, :data))
     #fresh_when last_modified: (current_document.updated_at || Time.now).utc, etag: current_document
@@ -42,6 +42,7 @@ class DocumentsController < ApplicationController
         make_oembeddable(doc)
         render :layout => nil
       end
+      format.htm  { redirect_to(doc.canonical_url(:html)) }
       format.pdf  { redirect_to(doc.pdf_url) }
       format.text { redirect_to(doc.full_text_url) }
       format.json do

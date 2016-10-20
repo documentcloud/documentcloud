@@ -1,0 +1,24 @@
+<% @title = "Terms of Service" %>
+
+<div class="container">
+  <div class="row">
+    <div id="terms-content" class="col-xs-12 col-sm-8 content paper">
+      <h1>Terms of Service</h1>
+      <div id="terms-alert" class="alert alert-info alert-sm">
+        <% if @viewing_terms['current'] %>
+          These are the <b>current</b> terms of service. See other versions in the <a href="#terms-changelog">Changelog</a>.
+        <% elsif @viewing_terms['old'] %>
+          These are <b>old</b> terms of service. <%= link_to "Read the current Terms of Service here.", terms_url %>
+        <% elsif @viewing_terms['pending'] %>
+          These terms of service will go into effect <b><%= @viewing_terms['start'].to_s(:long) %></b>.
+          <%= link_to "Read the current Terms of Service here.", terms_url %>
+        <% end %>
+      </div>
+      <%= render partial: "home/terms/v#{@viewing_terms['version']}" %>
+    </div>
+    <div id="terms-changelog" class="col-xs-12 col-sm-4 sidebar beside-paper">
+      <h1 class="h5">Changelog</h1>
+      <%= render partial: "home/terms/changelog_entry", collection: @versions, locals: { viewing: @viewing_terms } %>
+    </div>
+  </div>
+</div>

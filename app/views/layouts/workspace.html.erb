@@ -52,9 +52,6 @@
   <div class="selection" style="display:none;"></div>
   <div id="spinner" style="display:none;"></div>
 
-  <iframe src ="about:blank" width="0" height="0" id="hidden_iframe" name="hidden_iframe" class="hidden_iframe">
-  </iframe>
-
   <%= render :partial => 'common/bootstrap', :locals => {:workspace => true} %>
 
   <%= render :partial => 'common/google' if @include_analytics %>

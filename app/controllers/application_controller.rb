@@ -17,9 +17,7 @@ class ApplicationController < ActionController::Base
     after_action :debug_api
   end
 
-  if Rails.env.production?
-    around_action :notify_exceptions
-  end
+  around_action :notify_exceptions
 
   protected
   
@@ -168,7 +166,10 @@ class ApplicationController < ActionController::Base
   end
   
   def validate_session
-    clear_login_state unless session_valid?
+    unless session_valid?
+      clear_login_state
+      forbidden 
+    end
   end
 
   def logged_in?
@@ -250,9 +251,12 @@ class ApplicationController < ActionController::Base
   # Return forbidden when the access is unauthorized.
   def forbidden(options = {})
     options = {
-      :error  => "Forbidden",
-      :locals => { post_login_url: CGI.escape(request.original_url) }
-    }.merge(options)
+      error: "Forbidden",
+      locals: {
+        post_login_url: CGI.escape(request.original_url),
+        is_document: false
+      }
+    }.deep_merge(options)
     error_response 403, options
   end
 
@@ -301,13 +305,20 @@ class ApplicationController < ActionController::Base
   def set_ssl
     Thread.current[:ssl] = request.ssl?
   end
+  
+  ERRORS_TO_IGNORE = [
+    AbstractController::ActionNotFound, 
+    ActionController::RoutingError, 
+    ActiveRecord::RecordNotFound,
+    ActionController::UnknownFormat
+  ]
 
   # Email production exceptions to us. Once every 2 minutes at most, per process.
   def notify_exceptions
     begin
       yield
     rescue Exception => e
-      ignore = e.is_a?(AbstractController::ActionNotFound) || e.is_a?(ActionController::RoutingError)
+      ignore = ERRORS_TO_IGNORE.any?{ |kind| e.is_a? kind }
       LifecycleMailer.exception_notification(e, params).deliver_now unless ignore
       raise e
     end
@@ -331,6 +342,12 @@ class ApplicationController < ActionController::Base
   # the JSON visible in the browser.
   def debug_api
     response.content_type = 'text/plain' if params[:debug]
+  end
+
+  def set_minimal_nav(text: 'Go to home', xs_text: false, link: '/')
+    @use_minimal_nav   = true
+    @minimal_back_text = xs_text ? "<span class='hidden-xs-down'>#{text}</span> <span class='hidden-sm-up'>#{xs_text}</span>" : text
+    @minimal_back_link = link
   end
 
   private

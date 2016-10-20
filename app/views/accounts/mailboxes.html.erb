@@ -1,0 +1,52 @@
+<% @title = 'Upload Mailboxes' %>
+
+<div class="content">
+
+  <div class="container-sm">
+    <h4>Upload via email</h4>
+    <p>Securely upload documents via email – up to 30MB per message – by sending them to your personal mailboxes. We create a mailbox for each email address you send from. You can safely revoke a mailbox at any time; the documents you upload will still be around.</p>
+  </div>
+
+  <% if @mailboxes.present? %>
+    <div class="container-lg">
+      <ul id="upload-mailbox-list" class="list-unstyled">
+        <% @mailboxes.each do |mailbox| %>
+        <li class="mailbox row">
+          <div class="mailbox-addresses col-sm-7 col-xs-12">
+            <%= mail_to mailbox.recipient_address, mailbox.recipient_address, class: 'mailbox-to-address' %>
+            <span class="mailbox-from-address">&uarr; send from <%= mailbox.sender %></span>
+          </div>
+          <div class="col-sm-3 col-xs-6">
+            <% if mailbox.upload_count > 0 %>
+              <%= link_to "#{mailbox.upload_count} #{'upload'.pluralize(mailbox.upload_count)}", '/search/', {class: 'btn btn-sm btn-secondary disabled', disabled: true} %>
+            <% else %>
+              <%= link_to 'No uploads yet', '#', {class: 'btn btn-sm btn-secondary disabled', disabled: true} %>
+            <% end %>
+          </div>
+          <div class="col-sm-2 col-xs-6">
+            <%= button_to 'Revoke', revoke_mailbox_url(mailbox), method: 'delete', class: 'btn btn-sm btn-link btn-danger mailbox-revoke' %>
+          </div>
+        </li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="container-sm">
+    <%= form_tag create_mailbox_path, id: 'create_new_upload_mailbox_form' do %>
+      <div class="input-group">
+        <input name="email" type="email" class="form-control" placeholder="Enter a new “send from” email address" required>
+        <span class="input-group-btn">
+          <button class="btn btn-success" type="submit">Add</button>
+        </span>
+      </div>
+    <% end %>
+  </div>
+
+</div>
+
+<%
+  @javascript_footer_inline = <<-EOS
+    $('#create_new_upload_mailbox_form').blockMultipleSubmits();
+  EOS
+%>

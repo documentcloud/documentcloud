@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" class="<%= compose_html_classes(@html_classes) %> dc-design-transition">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title><%= compose_title(@title) %></title>
+  <link rel="canonical" href="<%= compose_canonical_url(@canonical_url) %>">
+  <%= render :partial => 'common/oembed' if @oembeddable_resource %>
+  <% stylesheets_header = [File.join(DC.workspace_asset_root, "/css/platform.css")] + (@stylesheets_header || []) %>
+  <%= stylesheet_link_tag *stylesheets_header %>
+  <% javascripts_header = (@javascripts_header || []) %>
+  <%= javascript_include_tag *javascripts_header %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+  <%= render 'common/new/header' %>
+  <%= render partial: 'common/new/flash_messages', flash: flash %>
+
+  <main>
+    <%= yield %>
+  </main>
+
+  <%= render 'common/new/footer' %>
+
+  <%# TODO: stop the `@exclude_platformjs` by fixing platform.js and dc-pages %>
+  <% javascripts_footer = @exclude_platformjs ? [] : [File.join(DC.workspace_asset_root, "/js/shared-templates.js"), File.join(DC.workspace_asset_root, "/js/platform.js")] %>
+  <% javascripts_footer += (@javascripts_footer || []) %>
+  <%= javascript_include_tag *javascripts_footer %>
+
+  <% if @javascript_footer_inline %>
+  <script>
+    var $ = window.$ || (window.DocumentCloud && window.DocumentCloud.$) || (window.Backbone && window.Backbone.$);
+    if ($ !== void 0) {
+      $(document).ready(function() {
+        <%= raw @javascript_footer_inline %>
+      });
+    }
+  </script>
+  <% end %>
+</body>
+</html>

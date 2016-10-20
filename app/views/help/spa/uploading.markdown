@@ -17,7 +17,7 @@ Como usuario DocumentCloud, usted quiere construir una colección de archivos a 
 
 Hay dos formas de subir en el workspace:
 
-* Arrastre y suelte los documentos en el propio espacio de trabajo. *Nota: nuevo navegador de Microsoft Windows 10, Edge, no soporta arrastrar y soltar actualmente.*
+* Arrastre y suelte los documentos en el propio espacio de trabajo.
 * Alternativamente, haga clic en el botón "Documentos nuevos" en la barra lateral y seleccione los archivos que desea cargar. En Windows, mantenga presionada la tecla `ctrl` para seleccionar más de un documento. En un Mac, mantenga presionada `command`. *Nota: solo se pueden cargar múltiples documentos a la vez usando navegadores que no sean Internet Explorer.*
 
 <img src="/images/help/upload_dialog.png" class="full_line" />

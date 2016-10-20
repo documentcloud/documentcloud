@@ -110,3 +110,6 @@ ul.bullet, #help ul {
 .document .entity_rule {
   top: 10px; 
 }
+.selection {
+  background: transparent url(/images/embed/ui/semiwhite.png) 0 0 repeat;
+}

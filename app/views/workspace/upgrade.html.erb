@@ -1,73 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <%= render :partial => 'common/meta_tags' %>
+  <%= render partial: 'common/meta_tags' %>
   <title>Please Upgrade Your Browser</title>
-
   <style>
-    html {
-      height: 100%;
-      margin: 0; padding: 0;
-      text-align: center;
-      font: 16px Helvetica, Arial, sans-serif;
-    }
     body {
-      height: 100%;
-      margin: 0; padding: 0;
+      text-align: center;
+      padding: 10%;
+      font: 48px/64px Georgia;
     }
-    #container {
-      position: absolute;
-      width: 400px; height: 200px;
-      top: 50%; left: 50%;
-      margin: -100px 0 0 -200px;
-    }
-    a img {
-      border: 0 none transparent;
-      outline: 0;
-    }
-    .intro {
-      font-weight: bold;
-    }
-    .browsers {
-      margin: 20px 20px;
-      height: 90px;
-    }
-    .browser {
-      float: left;
-      width: 70px;
-      margin: 0 20px;
-      line-height: 30px;
-    }
-      .browser img {
-        clear: both;
-      }
   </style>
 </head>
 <body>
-
-  <div id="container">
-    <div class="intro">
-      To use DocumentCloud you need to upgrade your browser:
-    </div>
-    <div class="browsers">
-      <div class="browser">
-        <a href="http://www.google.com/chrome/">
-          <img src="/images/home/browsers/chrome.gif" alt="Chrome logo" /><br />Chrome
-        </a>
-      </div>
-      <div class="browser">
-        <a href="http://www.apple.com/safari/">
-          <img src="/images/home/browsers/safari.gif" alt="Safari logo" /><br />Safari
-        </a>
-      </div>
-      <div class="browser">
-        <a href="https://www.mozilla.org/en-US/firefox/new/">
-          <img src="/images/home/browsers/firefox.gif" alt="Firefox logo" /><br />Firefox
-        </a>
-      </div>
-      <br style="clear:both;" />
-    </div>
-  </div>
-
+  To use DocumentCloud, please <a href="http://browsehappy.com/" target="_blank">upgrade your browser</a>.
 </body>
 </html>

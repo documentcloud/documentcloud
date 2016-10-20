@@ -1,0 +1,10 @@
+<% flash.each do |type, message| %>
+<% if message.is_a?(String) && !message.blank? %>
+  <div class="alert alert-dismissible alert-banner <%= bootstrap_alert_class_for(type) %>" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    <%= message.html_safe %>
+  </div>
+<% end %>
+<% end %>

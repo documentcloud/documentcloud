@@ -3,6 +3,7 @@
 <head>
   <%= render :partial => 'common/meta_tags' %>
   <title><%= compose_title(@title) %></title>
+  <link rel="canonical" href="<%= compose_canonical_url(@canonical_url) %>">
   <%= include_stylesheets :ui, :home %>
   <!--[if lt IE 9]>
     <%= include_stylesheets :lt_ie_9, :embed_assets => false %>

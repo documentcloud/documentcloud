@@ -1,0 +1,11 @@
+window.I18n.load({
+  namespace: '<%= js_namespace %>',
+  code: 'fra',
+  nplurals: 2,
+  pluralizer: function(n){
+    return (n != 1) ? 1 : 0;
+  },
+
+  strings: <%= translation_strings.to_json %>
+
+});

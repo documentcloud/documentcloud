@@ -2,10 +2,12 @@
 
 El API proporciona recursos para buscar, cargar, editar y organizar documentos, así como para trabajar con proyectos. Además, un servicio oEmbed proporciona una fácil integración de incrustación de documentos, páginas y notas.
 
+Use of the DocumentCloud API indicates you have read and agree to our [Directrices y Condiciones del Servicio de API](/terms/api).
+
 ## Contenido
 
 * General:
-  * [Directrices y Condiciones del Servicio de API](#guidelines)
+  * [Directrices y Condiciones del Servicio de API](/terms/api)
 * Métodos de Documento:
   * [Busque](#search-documents)
   * [Cargar](#upload-documents)
@@ -23,20 +25,6 @@ El API proporciona recursos para buscar, cargar, editar y organizar documentos, 
   * [Páginas](#oembed-pages)
   * [Notas](#oembed-notes)
 * [Envolturas de la API y Utilidades](#api-wrappers)
-
-<a name="guidelines"></a>
-# Directrices y Condiciones del Servicio de API
-
-Una porción limitada de la API de DocumentCloud está disponible para el uso público, incluyendo la búsqueda y recuperación de documentos de datos documento individual. El resto de los recursos requieren autenticación a través de una cuenta de DocumentCloud. No se requiere ninguna clave de API.
-
-Por favor sea considerado y no martillar nuestros servidores.
-
- * Bajo ninguna circunstancia se permitirá la reproducción de DocumentCloud.org en su totalidad o construir una aplicación que simplemente muestre el conjunto completo de documentos. Tiene prohibido crear una aplicación que muestre el conjunto de documentos de una organización aportadora.
- * Si su proyecto permite a los usuarios interactuar con los datos de DocumentCloud, está obligado a citar DocumentCloud como la fuente de sus datos. Si su proyecto permite a los usuarios ver o explorar documentos específicos, debe citar DocumentCloud, así como a las organizaciones aportadoras pertinentes, identificadas en el API.
- * No se permite utilizar la API comercialmente, lo que significa que no se permite cobrar dinero a la gente para mirar los datos, o vender publicidad con dicha información.
- * Usted entiende y acepta que los datos proporcionados por nuestro API pueden contener errores y omisiones.
-
-_Restricciones en el uso de la API DocumentCloud no se aplican a las organizaciones participantes que trabajan con documentos cargados por sus propios usuarios. Nos reservamos el derecho de modificar estas directrices. Si usted viola el espíritu de estos términos, sobre todo si se utiliza la API para acceder y reimprimir documentos que usted o su sala de redacción no contribuyeron de forma sistemática, esperar ser bloqueados sin previo aviso._
 
 # Métodos de Documento
 

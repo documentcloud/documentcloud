@@ -69,21 +69,21 @@ end
 
 def central_servers
   case RAILS_ENV
-  when 'staging'    then ['54.157.241.4']
+  when 'staging'    then ['staging.documentcloud.org']
   when 'production' then ['db01.documentcloud.org']
   end
 end
 
 def search_servers
   case RAILS_ENV
-  when 'staging'    then ['54.157.241.4']
+  when 'staging'    then ['staging.documentcloud.org']
   when 'production' then ['solr01.documentcloud.org']
   end
 end
 
 def worker_servers
   case RAILS_ENV
-  when 'staging'    then ['54.157.241.4']
+  when 'staging'    then ['staging.documentcloud.org']
   when 'production' then ['worker01.documentcloud.org', 'worker02.documentcloud.org', 'worker03.documentcloud.org', 'worker04.documentcloud.org', 'worker05.documentcloud.org', 'worker06.documentcloud.org']
   end
 end

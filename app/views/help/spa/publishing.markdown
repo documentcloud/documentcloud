@@ -85,10 +85,6 @@ Haga clic en el botón "Next" para continuar con el paso 3, y veráx el código 
 
 Coloque el código de inserción en su página, en la ubicación en la que desea que aparezca el visor. La próxima vez que se cargue la página, el visor deberá estar en funcionamiento. 
 
-## <span id="testing">Probando documentos Incrustados</span>
-
-En ocasiones es posible que haya incorporado/incrustado documentos que le gustaría mantener privados mientras que prueba como aparecen en nueva función o diseño de página. Usted puede ver sus documentos incrustados privados -siempre y cuando haya iniciado una sesión- al cambiar el protocolo "http" a "https" en el código de inserción en el URL del documento incrustado (véase la línea que empieza con "DV.load"). **Por favor asegúrese de cambiar sus códigos de inserción a HTTP de nuevo, cuando haga sus documentos públicos.**
-
 ## <span id="intouch">Manténgase en contacto</span>
 
 [¡Cuéntenos acerca de sus reportajes!](javascript:dc.ui.Dialog.contact(\))

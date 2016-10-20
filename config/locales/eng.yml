@@ -337,7 +337,7 @@
   - insert_last_page: Insert after last page
   - insert_pages_instructions: To insert new pages at a specific position within the
       document, click in between the pages above. If you'd like to replace a specific
-      page with a new copy, cick on the page you'd like to remove.
+      page with a new copy, click on the page you'd like to remove.
   - insert_pages_message: This document will close while it's being rebuilt.  Long
       documents may take a long time to rebuild.
   - insert_pages_shift_key: Hold down the shift key to select multiple pages to replace

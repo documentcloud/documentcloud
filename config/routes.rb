@@ -1,7 +1,7 @@
 DC::Application.routes.draw do
 
   # Homepage
-  get '/', to: 'workspace#index'
+  get '/', to: 'home#index', as: 'homepage'
 
   # Embed loaders
   get '/embed/loader/enhance', to: 'embed#enhance', as: 'embed_enhance'
@@ -15,18 +15,18 @@ DC::Application.routes.draw do
   get '/search/embed/:options.:format',    to: 'search#embed', q: /[^\/;,?]*/, options: /p-(\d+)-per-(\d+)-order-(\w+)-org-(\d+)(-secure)?/
 
   # Journalist workspace and surrounding HTML
-  get '/search',                  to: 'workspace#index'
+  get '/search',                  to: 'workspace#index', as: 'search'
   get '/search/preview',          to: 'search#preview', as: 'preview'
   get '/search/restricted_count', to: 'search#restricted_count'
-  get '/search/:query',           to: 'workspace#index', query: /.*/
+  get '/search(/:query)',         to: 'workspace#index'
   get '/help',                    to: 'workspace#help'
   get '/help/:page',              to: 'workspace#help'
   get '/results',                 to: 'workspace#index', as: 'results'
 
   # Authentication
   scope(controller: 'authentication') do
-    match '/login',                       action: 'login', via: [:get, :post]
-    get '/logout',                        action: 'logout'
+    match '/login',                       action: 'login', via: [:get, :post], as: 'login'
+    get '/logout',                        action: 'logout', as: 'logout'
     get '/auth/remote_data/:document_id', action: 'remote_data'
 
     # Third party auth via OmniAuth
@@ -36,8 +36,7 @@ DC::Application.routes.draw do
   end
 
   # Public search
-  get '/public/search',        to: 'public#index', as: 'public_search'
-  get '/public/search/:query', to: 'public#index', query: /.*/
+  get '/public/search(/:query)', to: 'public#index', as: 'public_search'
 
   # API
   scope(:api, controller: 'api') do
@@ -134,6 +133,9 @@ DC::Application.routes.draw do
   get '/download/*args.zip', to: 'download#bulk_download', as: 'bulk_download'
 
   # Accounts and account management
+  get    '/accounts/mailboxes',     to: 'accounts#mailboxes',       as: 'mailboxes'
+  post   '/accounts/mailboxes',     to: 'accounts#create_mailbox',  as: 'create_mailbox'
+  delete '/accounts/mailboxes/:id', to: 'accounts#revoke_mailbox',  as: 'revoke_mailbox'
   resources :accounts do
     collection do
       get 'logged_in'
@@ -146,8 +148,8 @@ DC::Application.routes.draw do
   match '/reset_password',       to: 'accounts#reset',  via: [:get, :post], as: 'reset_password'
 
   # Account requests
-  get '/signup', to: 'redirect#index', url: '/plans/apply'
-  get '/apply',  to: 'redirect#index', url: '/plans/apply'
+  get '/signup', to: 'redirect#index', url: '/plans/apply', as: 'signup'
+  get '/apply',  to: 'redirect#index', url: '/plans/apply', as: 'apply'
 
   # Organizations management
   resources :organizations, only: [:update]
@@ -163,18 +165,19 @@ DC::Application.routes.draw do
   end
 
   # Home pages
-  get '/contributors',  to: 'home#contributors',  as: 'contributors'
-  get '/faq',           to: 'home#faq'
-  get '/terms',         to: 'home#terms',         as: 'terms'
-  get '/privacy',       to: 'home#privacy',       as: 'privacy'
-  get '/p3p.:format',   to: 'home#p3p',           as: 'p3p'
-  get '/home',          to: 'home#index',         as: 'home'
-  get '/opensource',    to: 'home#opensource',    as: 'opensource'
-  get '/about',         to: 'home#about',         as: 'about'
-  get '/contact',       to: 'home#contact',       as: 'contact'
-  get '/help',          to: 'home#help'
-  get '/help/:page',    to: 'home#help'
-  get '/multilanguage', to: 'home#multilanguage', as: 'multilanguage'
+  get '/contributors',          to: 'home#contributors',  as: 'contributors'
+  get '/faq',                   to: 'home#faq'
+  get '/terms/api/(/:version)', to: 'home#api_terms',     as: 'api_terms', version: /[\d\.]+/
+  get '/terms(/:version)',      to: 'home#terms',         as: 'terms',     version: /[\d\.]+/
+  get '/privacy',               to: 'home#privacy',       as: 'privacy'
+  get '/p3p.:format',           to: 'home#p3p',           as: 'p3p'
+  get '/home',                  to: 'home#index',         as: 'home'
+  get '/opensource',            to: 'home#opensource',    as: 'opensource'
+  get '/about',                 to: 'home#about',         as: 'about'
+  get '/contact',               to: 'home#contact',       as: 'contact'
+  get '/help',                  to: 'home#help'
+  get '/help/:page',            to: 'home#help'
+  get '/multilanguage',         to: 'home#multilanguage', as: 'multilanguage'
 
   # Redirects
   get '/index.php',             to: 'redirect#index',                     url: '/'
@@ -193,6 +196,7 @@ DC::Application.routes.draw do
   # Admin section
   get '/admin', to: 'admin#index'
   get '/admin/health_check/:subject/:env', to: 'admin#health_check', subject: /page_embed/, env: /production|staging/
+  get '/admin/signup', to: 'admin#signup', as: 'admin_signup'
   
   # Standard fallback routes
   match '/:controller(/:action(/:id))', via: [:get, :post]
