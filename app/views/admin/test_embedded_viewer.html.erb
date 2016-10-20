@@ -5,44 +5,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>DocumentCloud Viewer Embed Test</title>
-    <style type="text/css" media="screen">
-      body {
-        font: 400 1em/1.4em Gotham, sans-serif;
-      }
-      .embed-section {
-        float: left;
-        width: 30%;
-        min-width: 200px;
-        margin-right: 3%;
-      }
-      .embed-section:last-child {
-        margin-right: 0;
-      }
-    </style>
+    <%= stylesheet_link_tag File.join(DC.workspace_asset_root, "/css/platform.css") %>
   </head>
   <body>
+    <div class="container-md" style="margin-top:3rem">
+      <h1>Test embedded notes</h1>
+      <p>Change loader (local, staging, production) by editing the source of this page.</p>
 
-    <div class="embed-section">
-      <h1>Local loader:</h1>
-      <div id="DV-viewer-2451427-screen-shot-2015-10-07-at-12-59-46-pm" class="DV-container"></div>
-      <script src="/documents/loader.js"></script>
-      <script>
-        DV.load("https://www.documentcloud.org/documents/2451427-screen-shot-2015-10-07-at-12-59-46-pm.js", {
-          responsive: true,
-          container: "#DV-viewer-2451427-screen-shot-2015-10-07-at-12-59-46-pm"
-        });
-      </script>
-      <noscript>
-        <a href="https://assets.documentcloud.org/documents/2451427/screen-shot-2015-10-07-at-12-59-46-pm.pdf">Screen Shot 2015 10 07 at 12 59 46 PM (PDF)</a>
-        <br />
-        <a href="https://assets.documentcloud.org/documents/2451427/screen-shot-2015-10-07-at-12-59-46-pm.txt">Screen Shot 2015 10 07 at 12 59 46 PM (Text)</a>
-      </noscript>
-    </div>
-
-    <div class="embed-section">
-      <h1>Staging loader:</h1>
-      <div id="DV-viewer-1659580-economic-analysis-of-the-south-pole-traverse" class="DV-container"></div>
-      <script src="//s3.amazonaws.com/dcloud_staging/viewer/loader.js"></script>
+      <div style="margin-top:3rem">
+        <div id="DV-viewer-1659580-economic-analysis-of-the-south-pole-traverse" class="DV-container"></div>
+        <script src="/viewer/loader.js"></script>
+<!--        <script src="//s3.amazonaws.com/dcloud_staging/viewer/loader.js"> -->
+<!--        <script src="//assets.documentcloud.org/viewer/loader.js"> -->
       <script>
         DV.load("https://www.documentcloud.org/documents/1659580-economic-analysis-of-the-south-pole-traverse.js", {
           responsive: true,
@@ -54,24 +28,8 @@
         <br />
         <a href="https://assets.documentcloud.org/documents/1659580/economic-analysis-of-the-south-pole-traverse.txt">Economic Analysis of the South Pole Traverse (Text)</a>
       </noscript>
-    </div>
+      </div>
 
-    <div class="embed-section">
-      <h1>Production loader:</h1>
-      <div id="DV-viewer-282753-lefler-thesis" class="DV-container"></div>
-      <script src="//assets.documentcloud.org/viewer/loader.js"></script>
-      <script>
-        DV.load("https://www.documentcloud.org/documents/282753-lefler-thesis.js", {
-          responsive: true,
-          container: "#DV-viewer-282753-lefler-thesis"
-        });
-      </script>
-      <noscript>
-        <a href="https://assets.documentcloud.org/documents/282753/lefler-thesis.pdf">Lefler Thesis (PDF)</a>
-        <br />
-        <a href="https://assets.documentcloud.org/documents/282753/lefler-thesis.txt">Lefler Thesis (Text)</a>
-      </noscript>
     </div>
-
   </body>
 </html>
