@@ -36,7 +36,7 @@ DC::Application.routes.draw do
   end
 
   # Public search
-  get '/public/search(/:query)', to: 'public#index', as: 'public_search'
+  get '/public/search(/:query)(/:page)', to: 'public#index', as: 'public_search'
 
   # API
   scope(:api, controller: 'api') do
