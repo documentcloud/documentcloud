@@ -72,7 +72,3 @@ dc.ui.Admin = Backbone.View.extend({
   },
 
 });
-
-$(function() {
-  window.dcAdmin = new dc.ui.Admin;
-});

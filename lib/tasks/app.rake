@@ -4,8 +4,10 @@ namespace :app do
 
     desc "Backup a file to the asset store that corresponds to the current environment."
     task :logfile, [:type, :src_file]=>:environment do |t, args|
-      dest = "#{args[:type]}/#{Date.today}.log"
-      DC::Store::AssetStore.new.save_backup(args[:src_file], dest)
+      source = args[:src_file]
+      source_name = File.basename(source).sub(/\.1$/, '')
+      target_name = "#{args[:type]}/#{Date.today}.#{`hostname`.chomp}.#{source_name}"
+      DC::Store::AssetStore.new.save_backup(args[:src_file], target_name)
     end
 
   end
@@ -18,6 +20,11 @@ namespace :app do
     invoke 'sunspot:solr:start'
     invoke 'crowd:server:start'
     invoke 'crowd:node:start'
+  end
+
+  task :devrestart do
+    invoke 'app:restart'
+    invoke 'crowd:node:restart'
   end
 
   task :restart_solr do
@@ -46,7 +53,7 @@ namespace :app do
   task :update do
     sh 'cd secrets && git pull && cd ..'
     sh 'git pull'
-    sleep 0.2
+    sleep 0.2 # TODO: make this event driven not just waiting for .2 seconds
     sh 'bundle install'
   end
 
@@ -59,8 +66,10 @@ namespace :app do
 
   desc "Repackage static assets"
   task :jammit do
+    require File.join(Rails.root, 'config', 'initializers', 'configure_jammit')
     config = YAML.load(ERB.new(File.read("#{Rails.root}/config/document_cloud.yml")).result(binding))[Rails.env]
-    sh "jammit -u http://#{config['server_root']}"
+    #sh "jammit -u http://#{config['server_root']}"
+    Jammit.package!(base_url: "http://#{config['server_root']}", config_paths: DC.jammit_configuration)
   end
 
   desc "Publish all documents with expired publish_at timestamps"

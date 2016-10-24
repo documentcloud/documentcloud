@@ -1,7 +1,7 @@
 javascript_compressor: closure
-css_compressor: sass
-template_function: _.template
-embed_assets: datauri
+css_compressor:        sass
+template_function:     _.template
+embed_assets:          datauri
 
 javascripts:
   core:
@@ -40,10 +40,10 @@ javascripts:
   admin:
     - public/javascripts/admin/*.js
     - app/views/admin/*.jst
-  admin_v2:
-    - public/javascripts/admin/charge.js
-  ie_only:
-    - public/javascripts/ie/*.js
+  html5shiv:
+    - public/javascripts/vendor/html5shiv/dist/html5shiv.js
+  lt_ie_9:
+    - public/javascripts/ie/excanvas.js
   dev_only:
     - public/javascripts/dev/*.js
   home:
@@ -63,9 +63,7 @@ stylesheets:
     - public/javascripts/vendor/visualsearch/build-min/visualsearch-datauri.css
   ui_v2:
     - public/stylesheets/common/reset.css
-    - public/stylesheets/v2/common.css
-    - public/stylesheets/v2/ui/forms.css
-    - public/stylesheets/v2/ui/alerts.css
+    - public/stylesheets/v2/**/*.css
   authentication:
     - public/stylesheets/pages/workspace.css
   workspace:
@@ -82,5 +80,5 @@ stylesheets:
     - public/stylesheets/pages/embedded_login.css
   viewer_editing:
     - public/stylesheets/pages/viewer_editing.css
-  ie_only:
-    - public/stylesheets/common/ie.css
+  lt_ie_9:
+    - public/stylesheets/common/lt_ie_9.css

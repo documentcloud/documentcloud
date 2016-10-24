@@ -1,0 +1,115 @@
+a {
+  color: #000;
+}
+select {
+  font-size: 11px;
+  height: 20px !important;
+}
+
+/*------------------------------ Specific tweaks ---------------------------------*/
+body.workspace {
+  overflow: auto;
+}
+.minibutton {
+  line-height: 12px;
+}
+.document .metalines {
+  font-size: 11px;
+}
+#edit_document_dialog {
+  width: 500px;
+}
+.embed_dialog {
+  height: 465px;
+}
+  .embed_dialog label {
+    font-weight: normal;
+  }
+  .embed_dialog input[type="checkbox"] {
+    margin-top: 4px;
+  }
+#new_document {
+  margin-right: 12px;
+}
+  #new_document_form {
+    width: 140px;
+  }
+#section_editor {
+  width: 450px;
+}
+  #section_editor ul {
+    width: 455px;
+    padding: 1px 0;
+    list-style-type: none;
+  }
+    #section_editor li {
+      width: 450px;
+    }
+#paginator .current_page {
+  top: 5px;
+  margin-top: -4px;
+}
+#account_list .row.pending .pending_badge,
+#account_list .admin.pending .pending_badge {
+  display: none;
+}
+#organizer .box {
+  background-image: url(/images/embed/ui/box_back_wide.png);
+}
+  #organizer .box .edit_glyph {
+    width: 16px;
+    margin: 0;
+  }
+.account_list img.avatar,
+.collaborator_list img.avatar {
+  position: static;
+}
+body.minidocs #document_list .document {
+  margin-bottom: 0px;
+}
+#entities .row {
+  margin-top: 0;
+  margin-bottom: -1px;
+}
+  #entities .row:hover,
+  #entities .row.active {
+    padding-top: 0px;
+    margin-bottom: -1px;
+    margin-top: -1px;
+  }
+.document .page {
+  margin-top: 0;
+}
+div.text_input.search input {
+  line-height: 16px;
+}
+div.text_input.search .search_facet .category {
+  line-height: 12px;
+}
+#upload_dialog .line {
+  display: none;
+}
+#tooltip {
+  border: 1px solid #ccc;
+}
+.arrow {
+  top: 0;
+}
+ul.bullet, #help ul {
+  list-style-type: none !important;
+}
+.api_search_form {
+  display: none;
+}
+.datalog .icon.minus {
+  margin-left: 3px;
+}
+.VS-search .search_facet .category {
+  line-height: 12px;
+}
+.document .entity_rule {
+  top: 10px; 
+}
+.selection {
+  background: transparent url(/images/embed/ui/semiwhite.png) 0 0 repeat;
+}

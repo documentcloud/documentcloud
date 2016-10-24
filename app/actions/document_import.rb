@@ -10,12 +10,13 @@ class DocumentImport < DocumentAction
       file = File.basename(options['url'])
       File.open(file, 'wb') do |f|
         url = URI.parse(options['url'])
-        Net::HTTP.start(url.host, url.port) do |http|
-          http.request_get(url.path) do |res|
-            res.read_body do |seg|
-              f << seg
-              sleep 0.005 # To allow the buffer to fill (more).
-            end
+        http = Net::HTTP.new(url.host, url.port)
+        (http.use_ssl = true) if url.port == 443
+        req = Net::HTTP::Get.new(url.request_uri)
+        http.request(req) do |res|
+          res.read_body do |seg|
+            f << seg
+            sleep 0.005 # To allow the buffer to fill (more).
           end
         end
       end
@@ -24,20 +25,33 @@ class DocumentImport < DocumentAction
       file = File.basename document.original_file_path
       File.open(file, 'wb'){ |f| f << DC::Store::AssetStore.new.read_original(document) }
     end
+    
+    build_pages = (document.page_count == 0 or options['rebuild'])
 
     # Calculate the file hash for the document's original_file so that duplicates can be found
-    document.update_file_metadata
+    data = File.open(file, 'rb').read
+    attributes = {
+      file_size: data.bytesize,
+      file_hash: Digest::SHA1.hexdigest(data)
+    }
+    document.update_attributes(attributes)
+
     if duplicate = document.duplicates.first
       Rails.logger.info "Duplicate found, copying pdf"
       asset_store.copy_pdf( duplicate, document, access )
+      document.update_attributes(page_count: duplicate.page_count) if build_pages
     else
       Rails.logger.info "Building PDF"
       File.open(file, 'r') do |f|
         DC::Import::PDFWrangler.new.ensure_pdf(f, file) do |path|
+          document.update_attributes(page_count: Docsplit.extract_length(file)) if build_pages
           DC::Store::AssetStore.new.save_pdf(document, path, access)
         end
       end
     end
+    
+    create_pages! if build_pages
+    
     tasks = []
     tasks << {'task' => 'text'} unless options['images_only']
     tasks << {'task' => 'images'} unless options['text_only']
@@ -71,22 +85,30 @@ class DocumentImport < DocumentAction
 
   def process_images
     if duplicate = document.duplicates.first
+      @page_aspect_ratios = duplicate.pages.order(:page_number).pluck(:aspect_ratio).map{ |n| n.nil? ? 0 : n }
       asset_store.copy_images( duplicate, document, access )
     else
       Docsplit.extract_images(@pdf, :format => :gif, :size => Page::IMAGE_SIZES.values, :rolling => true, :output => 'images')
-      Dir['images/700x/*.gif'].length.times do |i|
+      
+      page_image_paths = Dir['images/700x/*.gif']
+      @page_aspect_ratios = page_image_paths.map do |image_path|
+        cmd = %(gm identify #{image_path} | egrep -o "[[:digit:]]+x[[:digit:]]+")
+        width, height = `#{cmd}`.split("x").map(&:to_f)
+        width / height
+      end
+      page_count = page_image_paths.length
+      page_count.times do |i|
         number = i + 1
         image  = "#{document.slug}_#{number}.gif"
         DC::Import::Utils.save_page_images(asset_store, document, number, image, access)
       end
     end
+    save_page_aspect_ratios!
   end
 
   def process_text
     @pages = []
-    # Destroy existing text and pages to make way for the new.
-    document.pages.destroy_all if document.pages.count > 0
-    if duplicate = document.duplicates.first
+    if (duplicate = document.duplicates.first) and !options['force_ocr']
       asset_store.copy_text( duplicate, document, access )
       Docsplit.extract_length(@pdf).times do |i|
         page_number = i + 1
@@ -139,12 +161,43 @@ class DocumentImport < DocumentAction
   def queue_page_text(text, page_number)
     @pages.push({:text => text, :number => page_number})
   end
+  
+  def create_pages!
+    rows = (1..document.page_count).map do |page_number|
+      "(#{document.organization_id}, #{document.account_id}, #{document.id}, #{access}, #{page_number}, '')"
+    end
+    Page.connection.execute "insert into pages (organization_id, account_id, document_id, access, page_number, text) values #{rows.join(",\n")};"
+  end
 
   def save_page_text!
     rows = @pages.map do |page|
       "(#{document.organization_id}, #{document.account_id}, #{document.id}, #{access}, #{page[:number]}, '#{PGconn.escape(DC::Search.clean_text(page[:text]))}')"
     end
-    Page.connection.execute "insert into pages (organization_id, account_id, document_id, access, page_number, text) values #{rows.join(",\n")};"
+    
+    page_texts = @pages.map{ |page| DC::Search.clean_text(page[:text]) }
+    ids        = document.pages.order(:page_number).pluck(:id)
+    
+    query_template = <<-QUERY
+    UPDATE pages 
+      SET text = input.text
+      FROM (SELECT unnest(ARRAY[?]) as id, unnest(ARRAY[?]) as text) AS input
+      WHERE pages.id = input.id::int
+    QUERY
+    query = Page.send(:replace_bind_variables, query_template, [ids, page_texts])
+    Page.connection.execute(query)
+  end
+  
+  def save_page_aspect_ratios!
+    ids = document.pages.order(:page_number).pluck(:id)
+    
+    query_template = <<-QUERY
+    UPDATE pages 
+      SET aspect_ratio = input.aspect_ratio
+      FROM (SELECT unnest(ARRAY[?]) as id, unnest(ARRAY[?]) as aspect_ratio) AS input
+      WHERE pages.id = input.id::int
+    QUERY
+    query = Page.send(:replace_bind_variables, query_template, [ids, @page_aspect_ratios])
+    Page.connection.execute(query)
   end
 
   # Our heuristic for this will be ... 100 bytes of text / page.

@@ -15,7 +15,7 @@ module DC
     end
     
     def sluggify(string)
-      slugged = string
+      slugged = string.dup
       slugged.gsub!(/[^\p{Letter}\p{Number}]/, ' ') # All non-word characters become spaces.
       slugged.squeeze!(' ')     # Squeeze out runs of spaces.
       slugged.strip!            # Strip surrounding whitespace

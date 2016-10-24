@@ -6,7 +6,7 @@ module DC
       API_OPTIONS = {:sections => false, :annotations => false, :access => true, :contributor => false}
 
       def perform_search(opts={})
-        opts[:facet]      = params[:facet]
+        #opts[:facet]      = params[:facet]
         opts.merge!({:account => current_account, :organization => current_organization}) if logged_in?
         @query            = DC::Search::Parser.new.parse(params[:q] || '')
         @query.per_page   = per_page

@@ -9,7 +9,7 @@ Hello! A DocumentCloud account has been created for you and <%= @organization.na
 Set your password and get started at:
 <%= DC.server_root(:force_ssl => true) %>/accounts/enable/<%= @account.security_key.key %>
 
-Once you've set your password, you can login at <%= DC.server_root(:ssl => false) %>/login using <%= @account.email %> as your username. Information about using the workspace, creating accounts, searching the repository and more is available on the help tab.
+Once you've set your password, you can login at <%= DC.server_root %>/login using <%= @account.email %> as your username. Information about using the workspace, creating accounts, searching the repository and more is available on the help tab.
 
 We're always adding features and listening to your requests. To join the conversation:
 

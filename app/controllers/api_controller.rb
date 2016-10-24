@@ -3,8 +3,8 @@ class ApiController < ApplicationController
   include DC::Access
   include DC::Search::Controller
 
-  layout 'workspace'
-  
+  layout nil
+
   READONLY_ACTIONS = [
     :index, :search, :documents, :pending, :notes, :entities, :project, :projects, :oembed,
     :cors_options, :logger
@@ -81,7 +81,7 @@ class ApiController < ApplicationController
     respond_to do |format|
       format.text do
         direct = [PRIVATE, ORGANIZATION, EXCLUSIVE].include? current_document.access
-        redirect_to(current_document.full_text_url(direct))
+        redirect_to(current_document.full_text_url(direct: direct))
       end
       format.json { render_cross_origin_json }
       format.js { render_cross_origin_json }
@@ -202,8 +202,7 @@ class ApiController < ApplicationController
     
     respond_to do |format|
       format.json do
-        @response = embed.as_json.to_json
-        render_cross_origin_json
+        render_cross_origin_json embed.as_json.to_json
       end
       format.all do
         # Per the oEmbed spec, unrecognized formats should trigger a 501

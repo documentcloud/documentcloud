@@ -1,11 +1,13 @@
 # El API de DocumentCloud
 
-El API de DocumentCloud permite a los usuarios buscar, cargar, editar y organizar documentos. Además, un servicio oEmbed proporciona una fácil integración de incrustación de documentos, páginas y notas.
+El API proporciona recursos para buscar, cargar, editar y organizar documentos, así como para trabajar con proyectos. Además, un servicio oEmbed proporciona una fácil integración de incrustación de documentos, páginas y notas.
+
+Use of the DocumentCloud API indicates you have read and agree to our [Directrices y Condiciones del Servicio de API](/terms/api).
 
 ## Contenido
 
 * General:
-  * [Directrices y Condiciones del Servicio de API](#guidelines)
+  * [Directrices y Condiciones del Servicio de API](/terms/api)
 * Métodos de Documento:
   * [Busque](#search-documents)
   * [Cargar](#upload-documents)
@@ -22,19 +24,7 @@ El API de DocumentCloud permite a los usuarios buscar, cargar, editar y organiza
   * [Documentos](#oembed-documents)
   * [Páginas](#oembed-pages)
   * [Notas](#oembed-notes)
-* [API Envolturas](#api-wrappers)
-
-<a name="guidelines"></a>
-# Directrices y Condiciones del Servicio de API
-
-No se requiere ninguna clave de API, por lo cual realizar búsquedas directamente desde JavaScript es válido. Por favor sea amable, y no sobrecargue nuestros servidores. Restricciones sobre el uso de la API de DocumentCloud no aplican a las organizaciones aportadoras que trabajan con documentos cargados por sus propios usuarios.
-
- * Bajo ninguna circunstancia se permitirá la reproducción de DocumentCloud.org en su totalidad o construir una aplicación que simplemente muestre el conjunto completo de documentos. Tiene prohibido crear una aplicación que muestre el conjunto de documentos de una organización aportadora.
- * Si su proyecto permite a los usuarios interactuar con los datos de DocumentCloud, está obligado a citar DocumentCloud como la fuente de sus datos. Si su proyecto permite a los usuarios ver o explorar documentos específicos, debe citar DocumentCloud, así como a las organizaciones aportadoras pertinentes, identificadas en el API.
- * No se permite utilizar la API comercialmente, lo que significa que no se permite cobrar dinero a la gente para mirar los datos, o vender publicidad con dicha información.
- * Usted entiende y acepta que los datos proporcionados por nuestro API pueden contener errores y omisiones.
-
-_Nos reservamos el derecho de modificar estas directrices. Si usted infringe el espíritu de estas condiciones, sobre todo si utiliza la API para acceder e imprimir de forma sistemática los documentos que usted o su sala de redacción no contribuyó, anticipe ser bloqueado sin previo aviso._
+* [Envolturas de la API y Utilidades](#api-wrappers)
 
 # Métodos de Documento
 
@@ -105,7 +95,9 @@ published_url   |   (opcional) la dirección URL de la página en la que se inte
 access		    |(opcional), una de "publico", "privado", "organización",público predeterminado como  "privado" |
 project		    | (opcional) una identificación de proyectos numérica, para cargar el documento en un proyecto existente.   |       1012
 data 		    | (opcional) una mezcla  de pares clave / valor de datos {"data": {"status": "active"}} (json) arbitrarios | data[status]=active (query string)
-secure	        |   (opcional) Si está trabajando con un documento  realmente sensible, pase el parámetro "seguro" con el fin de evitar que el documento sea enviado a OpenCalais para extracción de entidades. | verdadero
+secure	        |   (opcional) Si está trabajando con un documento  realmente sensible, pase el parámetro "seguro" con el fin de evitar que el documento sea enviado a OpenCalais para extracción de entidades. | true
+force_ocr | (opcional) especifica que un documento debe OCR'd incluso si tiene texto en él (default is "false") | true
+
 
 ### Consejos
 
@@ -185,7 +177,7 @@ published_url   |   (opcional) la dirección URL de la página en la que se inte
 access		    |(opcional), una de "publico", "privado", "organización",público predeterminado como  "privado" |
 project		    | (opcional) una identificación de proyectos numérica, para cargar el documento en un proyecto existente.   |       1012
 data 		    | (opcional) una mezcla  de pares clave / valor de datos {"data": {"status": "active"}} (json) arbitrarios | data[status]=active (query string)
-secure	        |   (opcional) Si está trabajando con un documento  realmente sensible, pase el parámetro "seguro" con el fin de evitar que el documento sea enviado a OpenCalais para extracción de entidades. | verdadero
+secure	        |   (opcional) Si está trabajando con un documento  realmente sensible, pase el parámetro "seguro" con el fin de evitar que el documento sea enviado a OpenCalais para extracción de entidades. | true
 
 El valor en la respuesta de este método será la representación JSON de su documento (como se ve en el método GET arriba), con todos las actualizaciones aplicadas.
 
@@ -339,13 +331,22 @@ url              | **(required)** De escape de URL documento para incrustar     
 container        | (optional) Especifique el contenedor DOM en el que se incorporará al espectador | #my-document-div
 
 <a name="api-wrappers"></a>
-# API Envolturas
+# Envolturas de la API y Utilidades
 
 La comunidad de código abierto ha contribuido varias aplicaciones votos para interactuar con el API del DocumentCloud. Ver la documentación de ejemplos y más información:
 
-**Python:** [python-documentcloud](http://python-documentcloud.readthedocs.org/en/latest/)
+**Node**
 
-**Ruby:** [Documentcloud gem](https://rubygems.org/gems/documentcloud/)
+* [node-documentcloud](https://github.com/rdmurphy/node-documentcloud): Una envoltura alrededor de la API Node.js DocumentCloud.
+
+**Python:**
+
+* [python-documentcloud](http://python-documentcloud.readthedocs.org/en/latest/): Un envoltorio de Python simple para la API DocumentCloud.
+* [pneumatic](http://pneumatic.readthedocs.org/en/latest/): Una biblioteca de carga para cargas masivas de DocumentCloud.
+
+**Ruby:**
+
+* [Documentcloud](https://rubygems.org/gems/documentcloud/): Rubygem para interactuar con el API DocumentCloud.
 
 # Preguntas?
 

@@ -160,6 +160,10 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
       // call the success handler if there were no errors
       if ( !completed.error.length ){
         this._onAllSuccess();
+      } else {
+        // handle errors
+        var request_forbidden = _.any(completed.error, function(model){ return model.get('error') == 'Forbidden'; });
+        if (request_forbidden) { Accounts.forceLogout(); }
       }
     } else {
       // files were added to queue while upload was progressing

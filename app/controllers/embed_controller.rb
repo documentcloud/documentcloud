@@ -1,5 +1,5 @@
 class EmbedController < ApplicationController
-  layout false
+  layout nil
 
   # In development/test only, let us directly access the embed loaders.
   # In real life, these are only accessed from the CDN root.

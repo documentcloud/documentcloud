@@ -39,8 +39,10 @@ class ActionController::TestCase
     account = accounts(login)
     @request.headers['HTTP_AUTHORIZATION'] = ActionController::HttpAuthentication::Basic
       .encode_credentials( account.email, password )
-    @request.session['account_id']      = account.id,
+    @request.session['account_id']      = account.id
     @request.session['organization_id'] = account.organization_id
+    # Make session valid also
+    @request.cookies['dc_logged_in']    = true
   end
 
   def json_body

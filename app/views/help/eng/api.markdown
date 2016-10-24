@@ -1,11 +1,11 @@
 # The DocumentCloud API
 
-DocumentCloud's API allows users to search, upload, edit, and organize documents. In addition, an oEmbed service provides easy integration of embedding documents, pages and notes.
+DocumentCloud's API provides resources to search, upload, edit, and organize documents as well as to work with projects. In addition, an oEmbed service provides easy integration of embedding documents, pages and notes.
+
+Use of the DocumentCloud API indicates you have read and agree to our [API Guidelines and Terms of Service](/terms/api).
 
 ## Contents
 
-* General:
-  * [API Guidelines and Terms of Service](#guidelines)
 * Document methods:
   * [Search](#search-documents)
   * [Upload](#upload-documents)
@@ -22,22 +22,7 @@ DocumentCloud's API allows users to search, upload, edit, and organize documents
   * [Documents](#oembed-documents)
   * [Pages](#oembed-pages)
   * [Notes](#oembed-notes)
-* [API Wrappers](#api-wrappers)
-
-<a name="guidelines"></a>
-# API Guidelines and Terms of Service
-
-No API key is required, so performing searches directly from JavaScript is fair game. Please be considerate and don't hammer our servers. _Restrictions on the use of the DocumentCloud API do not apply to participating organizations working with documents uploaded by their own users._
-
- * You may not recreate DocumentCloud.org in its entirety or build an application that simply displays the complete set of documents. You may not build an application that displays the document set of a contributing organization.
-
- * If your project allows users to interact with data from DocumentCloud, you must cite DocumentCloud as the source of your data. If your project allows users to view or browse specific documents, you must cite DocumentCloud and the relevant contributing organizations, as identified in the API.
-
- * You may not use the API commercially, by which we mean you may not charge people money to look at the data or sell advertising specifically against it.
-
- * You understand and acknowledge that any data provided by our API may contain errors and omissions.
-
-_We reserve the right to revise these guidelines. If you violate the spirit of these terms, especially if you use the API to systematically access and reprint documents that you or your newsroom didn't contribute, expect to be blocked without advance warning._
+* [API Wrappers and Utilities](#api-wrappers)
 
 # Document Methods
 
@@ -106,9 +91,10 @@ language        | (optional) The language of the document.  Will be used to dete
 related_article | (optional) the URL of the article associated with the document | http://example.com/news/blago/2010-5-3.html
 published_url   | (optional) the URL of the page on which the document will be embedded | http://documents.example.com/blago-transcript.html
 access          | (optional) one of "public", "private", "organization", defaults to "private" | public
-project         | (optional) a numeric Project id, to upload the document into an existing project. | 1012
+project         | (optional) a numeric Project id, to upload the document into an existing project | 1012
 data            | (optional) a hash of arbitrary key/value data pairs | {"data": {"status": "active"}} (json) <br /> data[status]=active (query string)
 secure          | (optional) If you're dealing with a truly sensitive document, pass the "secure" parameter in order to prevent the document from being sent to OpenCalais for entity extraction. | true
+force_ocr | (optional) specify that a document should be OCR'd even if it has text in it (default is "false") | true
 
 ### Tips
 
@@ -338,13 +324,22 @@ url              | **(required)** URL-escaped document to embed     | https%3A%2
 container        | (optional) Specify the DOM container in which to embed the viewer | #my-document-div
 
 <a name="api-wrappers"></a>
-# API Wrappers
+# API Wrappers and Utilities
 
 The open-source community has contributed several helpful libraries for interacting with DocumentCloud's API. See their documentation for examples and more information:
 
-**Python:** [python-documentcloud](http://python-documentcloud.readthedocs.org/en/latest/)
+**Node.js**
 
-**Ruby:** [Documentcloud gem](https://rubygems.org/gems/documentcloud/)
+* [node-documentcloud](https://github.com/rdmurphy/node-documentcloud): A Node.js wrapper around the DocumentCloud API.
+
+**Python:**
+
+* [python-documentcloud](http://python-documentcloud.readthedocs.org/en/latest/): A simple Python wrapper for the DocumentCloud API.
+* [pneumatic](http://pneumatic.readthedocs.org/en/latest/): A bulk-upload library for DocumentCloud.
+
+**Ruby:**
+
+* [Documentcloud](https://rubygems.org/gems/documentcloud/): RubyGem for interacting with the DocumentCloud API.
 
 # Questions?
 

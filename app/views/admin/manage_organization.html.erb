@@ -62,7 +62,7 @@
             </tr>
         </thead>
         <tbody>
-          <% @organization.memberships.each do | membership | %>
+          <% @organization.memberships.order(:role).each do | membership | %>
             <tr>
               <td><%= membership.account.full_name %></td>
               <td><%= mail_to membership.account.email %></td>

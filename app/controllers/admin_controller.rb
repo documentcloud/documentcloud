@@ -5,13 +5,13 @@ class AdminController < ApplicationController
   skip_before_action :verify_authenticity_token, :only => [:save_analytics, :queue_length]
 
   before_action :secure_only,    :only   => [:index, :signup, :login_as]
-  before_action :admin_required, :except => [:save_analytics, :queue_length, :test_embedded_search, :test_embedded_note, :test_embedded_page, :test_embedded_viewer]
+  before_action :admin_required, :except => [:save_analytics, :queue_length, :test_embedded_search, :test_embedded_note, :test_embedded_page, :test_embedded_viewer, :health_check]
   
   READONLY_ACTIONS = [
     :index, :expire_stats, :hits_on_documents, :all_accounts, :top_documents_csv, :accounts_csv,
     :charge, :download_document_hits, :organization_statistics, :account_statistics, :queue_length,
     :launch_worker, :terminate_instance, :login_as, :test_exception_notifier, :test_embedded_viewer,
-    :test_embedded_page, :test_embedded_note, :test_embedded_search
+    :test_embedded_page, :test_embedded_note, :test_embedded_search, :health_check
   ]
   before_action :read_only_error, :except => READONLY_ACTIONS if read_only?
 
@@ -99,10 +99,6 @@ class AdminController < ApplicationController
     end
   end
 
-  def charge
-    render :layout => 'admin_empty'
-  end
-
   # Attempt a new signup for DocumentCloud -- includes both the organization and
   # its first account. If everything's kosher, the journalist is logged in.
   # NB: This needs to stay access controlled by the bouncer throughout the beta.
@@ -112,7 +108,7 @@ class AdminController < ApplicationController
   }
   def signup
     unless request.post?
-      @params = DEFAULT_SIGNUP_PARAMS.dup
+      @params = DEFAULT_SIGNUP_PARAMS.dup.merge(pick(params, :organization, :account))
       return render
     end
     @params = params
@@ -319,19 +315,23 @@ class AdminController < ApplicationController
   end
 
   def test_embedded_viewer
-    render :layout => false
+    render :layout => nil
   end
 
   def test_embedded_page
-    render :layout => false
+    render :layout => nil
   end
 
   def test_embedded_note
-    render :layout => false
+    render :layout => nil
   end
 
   def test_embedded_search
-    render :layout => false
+    render :layout => nil
+  end
+
+  def health_check
+    render :template => "admin/health_check/#{params[:subject]}_#{params[:env]}", :layout => nil
   end
 
   private

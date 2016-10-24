@@ -45,8 +45,15 @@ module DC
         bucket.objects[path].content_length
       end
       
-      def authorized_url(path)
-        bucket.objects[path].url_for(:read, :secure => Thread.current[:ssl], :expires => AUTH_PERIOD).to_s
+      def authorized_url(path, opts={})
+        options = {
+          secure: Thread.current[:ssl],
+          expires: AUTH_PERIOD
+        }
+        # We only want to interject a content type if it's specified; otherwise,
+        # let S3 serve whatever content type the file was stored with.
+        options[:response_content_type] = opts[:content_type] if opts[:content_type]
+        bucket.objects[path].url_for(:read, options).to_s
       end
       
       def list(path)
@@ -101,6 +108,16 @@ module DC
       
       def delete_page_text(document, page_number)
         remove_file(document.page_text_path(page_number))
+      end
+      
+      def save_tabula_page(document, page_number, data, access=DEFAULT_ACCESS)
+        tabula_page_path = document.page_text_path(page_number).sub(/txt$/, 'csv')
+        save_file(data, tabula_page_path, access, :string => true)
+      end
+      
+      def delete_tabula_page(document, page_number)
+        tabula_page_path = document.page_text_path(page_number).sub(/txt$/, 'csv')
+        remove_file(tabula_page_path)
       end
       
       def save_backup(src, dest)

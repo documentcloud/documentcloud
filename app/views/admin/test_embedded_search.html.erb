@@ -4,83 +4,35 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>DocumentCloud Search Embed Test</title>
-    <style type="text/css" media="screen">
-      body {
-        font: 400 1em/1.4em Gotham, sans-serif;
-      }
-      .embed-section {
-        float: left;
-        width: 30%;
-        min-width: 200px;
-        margin-right: 3%;
-      }
-      .embed-section:last-child {
-        margin-right: 0;
-      }
-    </style>
+    <title>DocumentCloud Viewer Embed Test</title>
+    <%= stylesheet_link_tag File.join(DC.workspace_asset_root, "/css/platform.css") %>
   </head>
   <body>
+    <div class="container-md" style="margin-top:3rem">
+      <h1>Test embedded notes</h1>
+      <p>Change loader (local, staging, production) by editing the source of this page.</p>
 
-    <div class="embed-section">
-      <h1>Local loader:</h1>
-      <div id="DC-search-projectid-23310-screen-shot-project" class="DC-search-container"></div>
-      <script src="/embed/loader.js"></script>
-      <script>
-        dc.embed.load('http://www.documentcloud.org/search/embed/', {
-          q: "projectid: 23310-screen-shot-project ",
-          container: "#DC-search-projectid-23310-screen-shot-project",
-          title: "",
-          order: "created_at",
-          per_page: 12,
-          search_bar: true,
-          organization: 1
-        });
-      </script>
-      <noscript>
-        <a href="https://www.documentcloud.org/public/search/projectid%3A%2023310-screen-shot-project%20">View/search document collection</a>
-      </noscript>
+      <div style="margin-top:3rem">
+        <div id="DC-search-projectid-29777-test" class="DC-search-container"></div>
+        <script src="/embed/loader.js"></script>
+<!--   <script src="//s3.amazonaws.com/dcloud_staging/embed/loader.js"> -->
+<!--   <script src="//assets.documentcloud.org/embed/loader.js"> -->
+        <script>
+          dc.embed.load('https://www.documentcloud.org/search/embed/', {
+            q: "projectid: 29777-test ",
+            container: "#DC-search-projectid-29777-test",
+            title: "",
+            order: "created_at",
+            per_page: 12,
+            search_bar: true,
+            organization: 1
+          });
+        </script>
+        <noscript>
+          <a href="https://www.documentcloud.org/public/search/projectid%3A%2029777-test%20">View/search document collection</a>
+        </noscript>
+      </div>
+
     </div>
-
-    <div class="embed-section">
-      <h1>Staging loader:</h1>
-      <div id="DC-search-projectid-23309-lefler-thesis-backup-project" class="DC-search-container"></div>
-      <script src="//s3.amazonaws.com/dcloud_staging/embed/loader.js"></script>
-      <script>
-        dc.embed.load('http://www.documentcloud.org/search/embed/', {
-          q: "projectid: 23309-lefler-thesis-backup-project ",
-          container: "#DC-search-projectid-23309-lefler-thesis-backup-project",
-          title: "",
-          order: "created_at",
-          per_page: 12,
-          search_bar: true,
-          organization: 1
-        });
-      </script>
-      <noscript>
-        <a href="https://www.documentcloud.org/public/search/projectid%3A%2023309-lefler-thesis-backup-project%20">View/search document collection</a>
-      </noscript>
-    </div>
-
-    <div class="embed-section">
-      <h1>Production loader:</h1>
-      <div id="DC-search-projectid-20037-lefler-thesis-project" class="DC-search-container"></div>
-      <script src="//assets.documentcloud.org/embed/loader.js"></script>
-      <script>
-        dc.embed.load('http://www.documentcloud.org/search/embed/', {
-          q: "projectid: 20037-lefler-thesis-project ",
-          container: "#DC-search-projectid-20037-lefler-thesis-project",
-          title: "",
-          order: "created_at",
-          per_page: 12,
-          search_bar: true,
-          organization: 1
-        });
-      </script>
-      <noscript>
-        <a href="https://www.documentcloud.org/public/search/projectid%3A%2020037-lefler-thesis-project%20">View/search document collection</a>
-      </noscript>
-    </div>
-
   </body>
 </html>

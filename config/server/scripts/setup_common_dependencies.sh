@@ -15,7 +15,7 @@ test $USER = 'root' || { echo run this as root >&2; exit 1; }
 # but the user we actually care about is the login user.
 LOGINUSER=$(logname)      # login user is ubuntu for a vanilla ubuntu installation.
 USERNAME=${1:-$LOGINUSER} # but this can be overridden by passing a username as the first argument.
-DISTRO_NAME=trusty
+DISTRO_NAME=xenial
 
 #################################
 # INSTALL SYSTEM DEPENDENCIES
@@ -90,8 +90,8 @@ TESSERACT_LANGUAGES='tesseract-ocr-*'
 FONT_PACKAGES='
 ttf-wqy-microhei
 ttf-wqy-zenhei
-ttf-kochi-gothic
-ttf-kochi-mincho
+fonts-ipafont-gothic
+fonts-ipafont-mincho
 fonts-nanum
 ttf-baekmuk
 '
@@ -101,8 +101,8 @@ echo $PACKAGES $TESSERACT_LANGUAGES $RUBY_DEPENDENCIES $FONT_PACKAGES | xargs ap
 
 # Install pdfium https://github.com/documentcloud/pdfshaver
 # TODO Should we allow user to specifiy pdfium version?
-wget 'https://assets.documentcloud.org/pdfium/libpdfium-dev_20151024.163326_amd64.deb'
-dpkg -i libpdfium-dev_20151024.163326_amd64.deb
+wget 'https://assets.documentcloud.org/pdfium/libpdfium-dev_20151208.015427_amd64.deb'
+dpkg -i libpdfium-dev_20151208.015427_amd64.deb
 
 #################################
 # INSTALL RUBY SWITCHER
@@ -115,7 +115,7 @@ installer_tmp="/home/$USERNAME/downloads/"
 mkdir -p $installer_tmp
 cd $installer_tmp
 
-ruby_install_version='0.5.0'
+ruby_install_version='0.6.0'
 chruby_version='0.3.9'
 
 wget -O ruby-install-$ruby_install_version.tar.gz https://github.com/postmodern/ruby-install/archive/v$ruby_install_version.tar.gz
@@ -152,7 +152,7 @@ echo 'if [ -n "$BASH_VERSION" ] || [ -n "$ZSH_VERSION" ]; then
 fi' > /etc/profile.d/chruby.sh
 
 # Install the current stable version of ruby.
-ruby-install ruby 2.2.4
+ruby-install ruby 2.3.0
 
 # turn off rdoc/ri generation for gems
 echo 'gem: --no-document' > /home/$USERNAME/.gemrc

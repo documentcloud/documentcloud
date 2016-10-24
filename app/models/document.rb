@@ -188,11 +188,12 @@ class Document < ActiveRecord::Base
       :original_extension => file_ext
     )
     import_options = {
-      :access => access,
-      :email_me => email_me,
-      :secure => params[:secure],
+      :access          => access,
+      :email_me        => email_me,
+      :secure          => params[:secure],
       :organization_id => organization.id,
-      :account_id => account.id
+      :account_id      => account.id,
+      :force_ocr       => params[:force_ocr]
     }
     if params[:url]
       import_options.merge!(:url => params[:url])
@@ -495,7 +496,7 @@ class Document < ActiveRecord::Base
   def pages_path
     File.join(path, 'pages')
   end
-
+  
   def annotations_path
     File.join(path, 'annotations')
   end
@@ -535,14 +536,14 @@ class Document < ActiveRecord::Base
   end
 
   def public_pdf_url
-    File.join(DC.cdn_root(:force_ssl=>true), pdf_path)
+    File.join(DC.asset_root(:force_ssl=>true), pdf_path)
   end
 
   def private_pdf_url
     File.join(DC.server_root, pdf_path)
   end
 
-  def pdf_url(direct=false)
+  def pdf_url(direct: false)
     return public_pdf_url  if public? || Rails.env.development?
     return private_pdf_url unless direct
     DC::Store::AssetStore.new.authorized_url(pdf_path)
@@ -555,26 +556,26 @@ class Document < ActiveRecord::Base
   def page_image_url(page, size, options={} )
     path = page_image_path(page, size)
     if public?
-      url = File.join( DC.cdn_root(:force_ssl=>true), path )
+      url = File.join(DC.asset_root(:force_ssl=>true), path)
       url << "?#{updated_at.to_i}" if options[:cache_busting]
       url
     else
-      DC::Store::AssetStore.new.authorized_url path
+      File.join(DC.server_root, path)
     end
   end
 
   def public_full_text_url
-    File.join(DC.cdn_root(:force_ssl=>true), full_text_path)
+    File.join(DC.asset_root(:force_ssl=>true), full_text_path)
   end
 
   def private_full_text_url
     File.join(DC.server_root, full_text_path)
   end
 
-  def full_text_url(direct=false)
+  def full_text_url(direct: false)
     return public_full_text_url if public? || Rails.env.development?
     return private_full_text_url unless direct
-    DC::Store::AssetStore.new.authorized_url(full_text_path)
+    DC::Store::AssetStore.new.authorized_url(full_text_path, content_type: 'text/plain; charset=utf-8')
   end
 
   def document_viewer_url(opts={})
@@ -616,6 +617,14 @@ class Document < ActiveRecord::Base
     "#{DC.server_root}/notes/print?docs[]=#{id}"
   end
 
+  def organization_documents_url
+    "#{DC.server_root}/public/search/Group:#{organization_slug}"
+  end
+
+  def account_documents_url
+    "#{DC.server_root}/public/search/Account:#{account_slug}"
+  end
+
   # Internally used image path, not to be confused with page_image_template()
   def page_image_path(page_number, size)
     File.join(pages_path, "#{slug}-p#{page_number}-#{size}.gif")
@@ -624,9 +633,16 @@ class Document < ActiveRecord::Base
   def page_text_path(page_number)
     File.join(pages_path, "#{slug}-p#{page_number}.txt")
   end
+  
+  # Temporarily used for tabula processing
+  # intended to be extracted into a tabula namespace
+  # in future.
+  def page_csv_path(page_number)
+    File.join(pages_path, "#{slug}-p#{page_number}.csv")
+  end
 
   def public_page_image_template
-    File.join(DC.cdn_root(:force_ssl=>true), File.join(pages_path, page_image_template))
+    File.join(DC.asset_root(:force_ssl=>true), File.join(pages_path, page_image_template))
   end
 
   def private_page_image_template
@@ -649,7 +665,7 @@ class Document < ActiveRecord::Base
     return File.join(slug, page_text_template) if opts[:local]
     File.join(DC.server_root, File.join(pages_path, page_text_template))
   end
-
+  
   def reviewers
     return [] unless reviewer_projects.empty?
     reviewer_projects.map{ |project| project.collaborators }.flatten.uniq
@@ -909,14 +925,17 @@ class Document < ActiveRecord::Base
       :description         => description,
       :organization_name   => organization_name,
       :organization_slug   => organization_slug,
+      :organization_documents_url => organization_documents_url,
       :account_name        => account_name,
       :account_slug        => account_slug,
+      :account_documents_url => account_documents_url,
       :related_article     => related_article,
       :pdf_url             => pdf_url,
       :thumbnail_url       => thumbnail_url( { :cache_busting => opts[:cache_busting] } ),
       :full_text_url       => full_text_url,
       :page_image_url      => page_image_url_template( { :cache_busting => opts[:cache_busting] } ),
       :page_text_url       => page_text_url_template( { :cache_busting => opts[:cache_busting] } ),
+      :canonical_url       => canonical_url(:html),
       :document_viewer_url => document_viewer_url,
       :document_viewer_js  => canonical_url(:js),
       :reviewer_count      => reviewer_count,
@@ -947,7 +966,7 @@ class Document < ActiveRecord::Base
       :organization_name   => organization_name,
       :page_count          => page_count,
       :thumbnail_url       => thumbnail_url,
-      :pdf_url             => pdf_url(:direct),
+      :pdf_url             => pdf_url(direct: true),
       :public              => public?,
       :title               => public? ? title : nil,
       :source              => public? ? source : nil,
@@ -974,8 +993,10 @@ class Document < ActiveRecord::Base
     if options[:contributor]
       doc['contributor']                   = account_name
       doc['contributor_slug']              = account_slug
+      doc['contributor_documents_url']     = account_documents_url
       doc['contributor_organization']      = organization_name
       doc['contributor_organization_slug'] = organization_slug
+      doc['contributor_organization_documents_url'] = organization_documents_url
     end
     doc['display_language']   = display_language
     doc['resources']          = res = ActiveSupport::OrderedHash.new
@@ -990,11 +1011,7 @@ class Document < ActiveRecord::Base
     res['page']['text']       = page_text_url_template(:local => options[:local])
     res['related_article']    = related_article if related_article
     res['annotations_url']    = annotations_url if commentable?(options[:account])
-    if options[:allow_detected]
-      res['published_url']    = published_url if published_url
-    else
-      res['published_url']    = remote_url if remote_url
-    end
+    res['published_url']      = published_url || canonical_url(:html)
     doc['sections']           = ordered_sections.map {|s| s.canonical } if options[:sections]
     doc['data']               = data if options[:data]
     if options[:annotations] && (options[:allowed_to_edit] || options[:allowed_to_review])
@@ -1011,7 +1028,7 @@ class Document < ActiveRecord::Base
   # Updates file_size and file_hash
   # Will default to reading the data from the asset_store
   # or can be passed arbitrary data such as from a file on disk
-  def update_file_metadata( data = asset_store.read_original(self) )
+  def update_file_metadata(data)
     update_attributes!( :file_size => data.bytesize, :file_hash => Digest::SHA1.hexdigest( data ) )
   end
 

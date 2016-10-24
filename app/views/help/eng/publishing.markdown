@@ -5,6 +5,7 @@ Ready to share your documents with readers? Either by embedding our custom viewe
 ## Contents
 
 * [Making documents public](#public)
+* [Linking to a Document, Page or Note](#linking)
 * Generating embed codes:
   * [Documents](#embed-document)
   * [Pages](#embed-page)
@@ -20,6 +21,25 @@ Before you publish a document, page, note or document set, you'll want to make s
 
 * Edit the "Access Level" (from the "Edit" menu).
 * Set a publication date (from the "Publish" menu).
+
+<a name="linking"></a>
+# Linking to a Document, Page or Note</span>
+
+The most simple way to share your work in DocumentCloud with readers is to publish a URL to a document. You can modify the URL to have the document open to a specific page or note. Follow these URL formats:
+
+### Full document:
+
+`https://www.documentcloud.org/documents/282753-lefler-thesis.html`
+
+### Document open to a specific page:
+
+`https://www.documentcloud.org/documents/282753-lefler-thesis.html#document/p22`
+
+### Document open to a specific note:
+
+`https://www.documentcloud.org/documents/282753-lefler-thesis.html#document/p57/a42283`
+
+To find the URL (or permalink) of a note, open the note and select the link icon <span class="icon permalink" style="padding-left:16px;position:relative;top: -2px;">&#65279;</span>. Your browser's address bar will be updated to display the full URL of the annotation.
 
 <a name="embed-document"></a>
 # Embed Codes for Individual Documents
@@ -68,10 +88,6 @@ Click on the "Next" button to proceed to step 3, and you'll see the embed code: 
 
 Place the embed code on your page, in the location where you would like the viewer to appear. The next time you load the page, the viewer should be up and running.
 
-## <span id="testing">Testing Embedded Documents</span>
-
-On occasion you may have embedded documents which you would like to remain private while you test them in a new feature or page layout.  You can view your private embedded documents when logged in by changing the embedded document's url in the embed code (see the line beginning with "DV.load") from the "http" protocol to "https".  **Please make sure to set your embed codes back to HTTP when you set your documents to public.**
-
 ## <span id="intouch">Stay in Touch</span>
 
 [Let us know][] about your reporting!
@@ -89,10 +105,19 @@ In the dialog box that appears next, select the number of the page to embed. A p
 
 Click "Next" to move to Step 2 and generate the HTML embed code. Here is a sample of what it will look like:
 
-    <div class="DC-embed" data-version="1.0" style="font-size:10pt">
-      <p><a class="DC-embed-resource" href="https://www.documentcloud.org/documents/282753-lefler-thesis.html#document/p57" title="View page 57 of Lefler Thesis on DocumentCloud in new window or tab" target="_blank">Page 57 of Lefler Thesis</a></p>
-      <img src="//www.documentcloud.org/documents/282753/pages/lefler-thesis-p57-normal.gif" alt="Page 57 of Lefler Thesis" style="border:1px solid #ccc;-webkit-box-sizing:border-box;box-sizing:border-box;width:100%;max-width:700px;">
-      <p>Contributed to DocumentCloud by Ted Han of DocumentCloud &bull; <a href="https://www.documentcloud.org/documents/282753/pages/lefler-thesis-p57.txt" title="View text of page 57 of Lefler Thesis in a new window or tab" target="_blank">View page as text</a></p>
+    <div class="DC-embed" data-version="1.1">
+      <div style="font-size:10pt;line-height:14pt;">
+        Page 57 of <a class="DC-embed-resource" href="https://www.documentcloud.org/documents/282753-lefler-thesis.html#document/p57" title="View entire Lefler Thesis on DocumentCloud in new window or tab" target="_blank">Lefler Thesis</a>
+      </div>
+      <img src="//www.documentcloud.org/documents/282753/pages/lefler-thesis-p57-normal.gif" srcset="//www.documentcloud.org/documents/282753/pages/lefler-thesis-p57-normal.gif 700w, //www.documentcloud.org/documents/282753/pages/lefler-thesis-p57-large.gif 1000w" alt="Page 57 of Lefler Thesis" style="max-width:100%;height:auto;margin:0.5em 0;border:1px solid #ccc;-webkit-box-sizing:border-box;box-sizing:border-box;clear:both">
+      <div style="font-size:8pt;line-height:12pt;text-align:center">
+        Contributed to
+        <a href="https://www.documentcloud.org/" title="Go to DocumentCloud in new window or tab" target="_blank" style="font-weight:700;font-family:Gotham,inherit,sans-serif;color:inherit;text-decoration:none">DocumentCloud</a> by
+        <a href="https://www.documentcloud.org/public/search/Account:2258-ted-han" title="View documents contributed to DocumentCloud by Ted Han in new window or tab" target="_blank">Ted Han</a> of
+        <a href="https://www.documentcloud.org/public/search/Group:dcloud" title="View documents contributed to DocumentCloud by DocumentCloud in new window or tab" target="_blank">DocumentCloud</a> &bull;
+        <a href="https://www.documentcloud.org/documents/282753-lefler-thesis.html#document/p57" title="View entire Lefler Thesis on DocumentCloud in new window or tab" target="_blank">View document</a> or
+        <a href="https://www.documentcloud.org/documents/282753/pages/lefler-thesis-p57.txt" title="Read the text of page 57 of Lefler Thesis on DocumentCloud in new window or tab" target="_blank">read text</a>
+      </div>
     </div>
     <script src="//assets.documentcloud.org/embed/loader/enhance.js"></script>
 

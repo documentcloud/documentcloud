@@ -30,8 +30,9 @@
       %sinstalar Google Chrome Frame%s.
   - link_to_note: Crear enlace a esta nota
   - loading: Cargando
-  - log_in: |
-      Iniciar sesión
+  - log_in: 'Iniciar sesión
+
+'
   - log_out: Terminar la sesión
   - logged_in_as: Conectado como %s
   - must_upgrade: 'Necesitas actualizar tu navegador para usar el marco de inspectar
@@ -366,8 +367,9 @@
   - link_to_pdf: Enlace al PDF original
   - link_to_pdf_help: Haz clic en esta caja para quitar el enlace al PDF original
       del marco.
-  - log_in: |
-      Iniciar sesión
+  - log_in: 'Iniciar sesión
+
+'
   - log_out: Terminar la sesión
   - logged_in_as: Conectado como %s
   - make_document_public: Permitir acceso público al documento
@@ -402,6 +404,7 @@
   - no_duplicate_section: No se puede duplicar una sección.
   - no_embed_permission: Usted no tiene permiso para insertar el documento.
   - no_entities_found: Ninguna entidad resultó relacionada con tu búsqueda.
+  - no_notes_to_embed: Este documento no tiene notas para incrustar
   - no_past_publication: No puedes designar que se publique un documento en el pasado.
   - no_permission_to_edit_x: Usted no tiene permiso para edita "%s".
   - no_project_doc_selected: No has seleccionado un proyecto o documentos
@@ -559,6 +562,7 @@
   - reprocess_text: Reprocesar Texto
   - resend_instructions: Reenviar Instrucciones
   - resend_welcome_email: Reenviar Correo de Bienvenida
+  - responsive: Adaptable
   - restricted: Restringido
   - review_x_documents:
     - Crítica "%2$s" en DocumentCloud
@@ -680,7 +684,7 @@
   - welcome_message_sent_to: Un mensaje de bienvenida se envió a  %s.
   - welcome_to_document_cloud: 'Bienvenido a DocumentCloud '
   - width: Anchura
-  - workspace: "Área de trabajo"
+  - workspace: Área de trabajo
   - wp_shortcode_plugin_docs_link: "%sPrograma adicional requerida%s."
   - x_accounts:
     - "%d cuenta "

@@ -99,6 +99,10 @@ class Page < ActiveRecord::Base
     start_offset <= occurrence.offset && end_offset > occurrence.offset
   end
 
+  def image_url(size = 'normal')
+    document.page_image_url(page_number, size)
+  end
+
   def authorized_image_url(size)
     DC::Store::AssetStore.new.authorized_url(document.page_image_path(page_number, size))
   end
@@ -135,6 +139,18 @@ class Page < ActiveRecord::Base
   
   def title
     "Page #{page_number} of #{document.title}"
+  end
+
+  def title_lower
+    "page #{page_number} of #{document.title}"
+  end
+
+  def safe_aspect_ratio
+    aspect_ratio || 8.5/11
+  end
+
+  def inverted_aspect_ratio
+    1 / safe_aspect_ratio
   end
 
   private

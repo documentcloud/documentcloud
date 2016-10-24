@@ -1,0 +1,11 @@
+# https://github.com/documentcloud/documentcloud/issues/350
+User-agent: *
+Disallow: /*{size}
+Disallow: /*{page}
+Disallow: /*{query}
+Disallow: /*{realm}
+Disallow: /*{language}
+
+User-agent: *
+Disallow: /util/
+Noindex: /util/

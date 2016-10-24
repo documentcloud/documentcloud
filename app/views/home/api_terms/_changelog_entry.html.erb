@@ -1,0 +1,21 @@
+<section class="terms-changelog-entry <%= 'active' if changelog_entry['version'] == viewing['version'] %>">
+  <h2 class="h6">
+    <%= link_to "v#{changelog_entry['version']}", api_terms_path(changelog_entry['current'] ? {} : {version: changelog_entry['version']}) %>
+  </h2>
+  <div class="terms-duration">
+    <%= 'Effective ' if changelog_entry['pending'] %>
+    <%= changelog_entry['start'].to_s(:long) if changelog_entry['start'] %>
+    <%= "– #{changelog_entry['end'].to_s(:long)}" if changelog_entry['end'] %>
+    <%= '<span class="tag tag-success">Current</span>'.html_safe if changelog_entry['current'] %>
+  </div>
+  <% if changelog_entry['description'] %>
+    <p><%= changelog_entry['description'].html_safe %></p>
+  <% end %>
+  <% if changelog_entry['items'] %>
+    <ul>
+    <% changelog_entry['items'].each do |item| %>
+      <li><%= item.html_safe %></li>
+    <% end %>
+    </ul>
+  <% end %>
+</section>

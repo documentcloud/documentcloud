@@ -179,7 +179,7 @@ class DocumentsControllerTest < ActionController::TestCase
 
   def test_send_pdf
     get :send_pdf, :id=>doc.id
-    assert_redirected_to doc.pdf_url(:direct)
+    assert_redirected_to doc.pdf_url(direct: true)
   end
 
   def test_send_page_image

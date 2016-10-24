@@ -5,6 +5,7 @@ Listo para compartir sus documentos con los lectores? Ya sea por la incorporaci�
 ## Contents
 
 * [Haciendo documentos públicos](#public)
+* [Enlace a un documento, página o nota](#linking)
 * Generar códigos embed:
   * [Documentos](#embed-document)
   * [Páginas](#embed-page)
@@ -17,6 +18,25 @@ Listo para compartir sus documentos con los lectores? Ya sea por la incorporaci�
 # Haciendo documentos públicos
 
 Antes de publicar un documento, página, nota o conjunto de documentos, usted querrá asegurarse de que el documento o los documentos son públicos. Haga público un documento mediante la opción "Nivel de Accesol" (en el menú "Editar") o mediante la selección de una fecha de publicación (en el menú "Publicar").
+
+<a name="linking"></a>
+# Enlace a un documento, página o nota
+
+La forma más sencilla de compartir su trabajo en DocumentCloud con los lectores es publicar un enlace a un documento. Puede modificar la dirección URL para que el documento abierto en una página o una nota específica. Siga estos formatos de URL:
+
+### Documento completo:
+
+`https://www.documentcloud.org/documents/282753-lefler-thesis.html`
+
+### Documento abierto a una página específica:
+
+`https://www.documentcloud.org/documents/282753-lefler-thesis.html#document/p22`
+
+### Documento abierto a una nota específica:
+
+`https://www.documentcloud.org/documents/282753-lefler-thesis.html#document/p57/a42283`
+
+Para encontrar la dirección URL (o enlace permanente) de una nota, abra la nota y seleccione el icono de enlace <span class="icon permalink" style="padding-left:16px;position:relative;top: -2px;">&#65279;</span>. Barra de direcciones del navegador se actualiza para mostrar la URL completa de la anotación.
 
 <a name="embed-document"></a>
 # Publicando documentos individuales
@@ -65,10 +85,6 @@ Haga clic en el botón "Next" para continuar con el paso 3, y veráx el código 
 
 Coloque el código de inserción en su página, en la ubicación en la que desea que aparezca el visor. La próxima vez que se cargue la página, el visor deberá estar en funcionamiento. 
 
-## <span id="testing">Probando documentos Incrustados</span>
-
-En ocasiones es posible que haya incorporado/incrustado documentos que le gustaría mantener privados mientras que prueba como aparecen en nueva función o diseño de página. Usted puede ver sus documentos incrustados privados -siempre y cuando haya iniciado una sesión- al cambiar el protocolo "http" a "https" en el código de inserción en el URL del documento incrustado (véase la línea que empieza con "DV.load"). **Por favor asegúrese de cambiar sus códigos de inserción a HTTP de nuevo, cuando haga sus documentos públicos.**
-
 ## <span id="intouch">Manténgase en contacto</span>
 
 [¡Cuéntenos acerca de sus reportajes!](javascript:dc.ui.Dialog.contact(\))
@@ -78,7 +94,7 @@ En ocasiones es posible que haya incorporado/incrustado documentos que le gustar
 
 ![Embed Page Menu](/images/help/embed_page_menu.png)
 
-DocumentCloud ofrece un visor ligero, sensible que pone de relieve una sola página (incluyendo las anotaciones) con un mínimo de cromo extra. Está diseñado para funcionar igual de bien en móviles y de escritorio y es perfecto para su uso en aplicaciones de noticias personalizadas o de formato largo presentaciones de periodismo. Próximamente: opciones para permitir que los lectores tengan acceso a todas las páginas en el documento o leer el texto extraído.
+DocumentCloud ofrece un visor ligero, adaptive que pone de relieve una sola página (incluyendo las anotaciones) con un mínimo de cromo extra. Está diseñado para funcionar igual de bien en móviles y de escritorio y es perfecto para su uso en aplicaciones de noticias personalizadas o de formato largo presentaciones de periodismo. Próximamente: opciones para permitir que los lectores tengan acceso a todas las páginas en el documento o leer el texto extraído.
 
 Incorporación de una página es similar a la incorporación de un documento: Seleccione un documento, abra el menú "Publicar" y haga clic en "Incrustar una página." Alternativamente, haga clic en el documento y seleccione "Incrustar una página."
 
@@ -86,10 +102,19 @@ En el cuadro de diálogo que aparece a continuación, seleccione el número de l
 
 Haga clic en "Siguiente" para pasar al paso 2 y generar el código HTML empotrable. He aquí una muestra de lo que se verá así:
 
-    <div class="DC-embed" data-version="1.0" style="font-size:10pt">
-      <p><a class="DC-embed-resource" href="https://www.documentcloud.org/documents/282753-lefler-thesis.html#document/p57" title="View page 57 of Lefler Thesis on DocumentCloud in new window or tab" target="_blank">Page 57 of Lefler Thesis</a></p>
-      <img src="//www.documentcloud.org/documents/282753/pages/lefler-thesis-p57-normal.gif" alt="Page 57 of Lefler Thesis" style="border:1px solid #ccc;-webkit-box-sizing:border-box;box-sizing:border-box;width:100%;max-width:700px;">
-      <p>Contributed to DocumentCloud by Ted Han of DocumentCloud &bull; <a href="https://www.documentcloud.org/documents/282753/pages/lefler-thesis-p57.txt" title="View text of page 57 of Lefler Thesis in a new window or tab" target="_blank">View page as text</a></p>
+    <div class="DC-embed" data-version="1.1">
+      <div style="font-size:10pt;line-height:14pt;">
+        Page 57 of <a class="DC-embed-resource" href="https://www.documentcloud.org/documents/282753-lefler-thesis.html#document/p57" title="View entire Lefler Thesis on DocumentCloud in new window or tab" target="_blank">Lefler Thesis</a>
+      </div>
+      <img src="//www.documentcloud.org/documents/282753/pages/lefler-thesis-p57-normal.gif" srcset="//www.documentcloud.org/documents/282753/pages/lefler-thesis-p57-normal.gif 700w, //www.documentcloud.org/documents/282753/pages/lefler-thesis-p57-large.gif 1000w" alt="Page 57 of Lefler Thesis" style="max-width:100%;height:auto;margin:0.5em 0;border:1px solid #ccc;-webkit-box-sizing:border-box;box-sizing:border-box;clear:both">
+      <div style="font-size:8pt;line-height:12pt;text-align:center">
+        Contributed to
+        <a href="https://www.documentcloud.org/" title="Go to DocumentCloud in new window or tab" target="_blank" style="font-weight:700;font-family:Gotham,inherit,sans-serif;color:inherit;text-decoration:none">DocumentCloud</a> by
+        <a href="https://www.documentcloud.org/public/search/Account:2258-ted-han" title="View documents contributed to DocumentCloud by Ted Han in new window or tab" target="_blank">Ted Han</a> of
+        <a href="https://www.documentcloud.org/public/search/Group:dcloud" title="View documents contributed to DocumentCloud by DocumentCloud in new window or tab" target="_blank">DocumentCloud</a> &bull;
+        <a href="https://www.documentcloud.org/documents/282753-lefler-thesis.html#document/p57" title="View entire Lefler Thesis on DocumentCloud in new window or tab" target="_blank">View document</a> or
+        <a href="https://www.documentcloud.org/documents/282753/pages/lefler-thesis-p57.txt" title="Read the text of page 57 of Lefler Thesis on DocumentCloud in new window or tab" target="_blank">read text</a>
+      </div>
     </div>
     <script src="//assets.documentcloud.org/embed/loader/enhance.js"></script>
 
@@ -163,7 +188,7 @@ Por ejemplo, si desea incrustar un documento a 800px de ancho, pre-desplazado a 
 
     [documentcloud url="https://www.documentcloud.org/documents/282753-lefler-thesis.html" width="800" default_page="3"]
 
-Si usted no indica una anchura (o manualmente deshabilitar anchos de respuesta con `responsive="false"`), el documento automáticamente estrecho y ampliar para llenar el ancho disponible.
+Si usted no indica una anchura (o manualmente deshabilitar anchos de adaptive con `responsive="false"`), el documento automáticamente estrecho y ampliar para llenar el ancho disponible.
 
 Para una página, utilice cualquier URL específica de la página:
 

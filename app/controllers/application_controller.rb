@@ -5,19 +5,19 @@ class ApplicationController < ActionController::Base
 
   BasicAuth = ActionController::HttpAuthentication::Basic
 
-  protect_from_forgery
+  protect_from_forgery with: :exception
   skip_before_action :verify_authenticity_token, if: :embeddable?
 
   before_action :set_ssl
+  before_action :validate_session
+  after_action :set_cache_statement
 
   if Rails.env.development?
     around_action :perform_profile
     after_action :debug_api
   end
 
-  if Rails.env.production?
-    around_action :notify_exceptions
-  end
+  around_action :notify_exceptions
 
   protected
   
@@ -38,6 +38,10 @@ class ApplicationController < ActionController::Base
     request.format.xml?
   end
 
+  def cachable?
+    request.get? and not logged_in?
+  end
+  
   def make_oembeddable(resource)
     # Resource should have both an `oembed_url` and a `title`
     @oembeddable_resource = resource
@@ -50,7 +54,20 @@ class ApplicationController < ActionController::Base
     headers['Access-Control-Allow-Headers'] = 'Accept,Authorization,Content-Length,Content-Type,Cookie'
     headers['Access-Control-Allow-Credentials'] = 'true'
   end
-
+  
+  def set_cache_statement(statement=nil)
+    # https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/http-caching
+    # https://www.digitalocean.com/community/tutorials/understanding-nginx-http-proxying-load-balancing-buffering-and-caching
+    headers['Cache-Control'] ||= case
+    when statement
+      statement
+    when cachable?
+      "public, max-age=10"
+    else
+      "no-cache"
+    end
+  end
+  
   # Convenience method for responding with JSON. Supports empty responses, 
   # specifying status codes, and adding CORS headers. If JSONing an 
   # ActiveRecord object with errors, a 400 Bad Request will be returned with a
@@ -126,7 +143,11 @@ class ApplicationController < ActionController::Base
     # explanation of what these mean: http://www.p3pwriter.com/LRN_111.asp
     headers['P3P'] = 'CP="IDC DSP COR ADM DEVi TAIi PSA PSD IVAi IVDi CONi HIS OUR IND CNT"'
   end
-
+  
+  def allow_iframe
+    response.headers.except! 'X-Frame-Options'
+  end
+  
   def expire_pages(paths)
     [paths].flatten.each { |path| expire_page path }
   end
@@ -138,14 +159,31 @@ class ApplicationController < ActionController::Base
     hash.each {|key, value| filtered[key.to_sym] = value if keys.include?(key.to_sym) }
     filtered
   end
+  
+  def session_valid?
+    # session is valid if and only if user is logged_in? and cookies['dc_logged_in']
+    (logged_in? and cookies['dc_logged_in']) or (not logged_in? and not cookies['dc_logged_in'])
+  end
+  
+  def validate_session
+    unless session_valid?
+      clear_login_state
+      forbidden 
+    end
+  end
 
   def logged_in?
     !!current_account
   end
 
+  def clear_login_state
+    cookies.delete 'dc_logged_in'
+    reset_session
+  end
+
   def login_required
     return true if logged_in?
-    cookies.delete 'dc_logged_in'
+    clear_login_state
     forbidden
   end
 
@@ -173,20 +211,16 @@ class ApplicationController < ActionController::Base
     end
   end
   
-  def allow_iframe
-    response.headers.except! 'X-Frame-Options'
-  end
-
   def admin_required
     ( logged_in? && current_account.dcloud_admin? ) || forbidden
   end
 
   def prefer_secure
-    secure_only(302) if cookies['dc_logged_in'] == 'true'
+    secure_only(302) if logged_in?
   end
 
   def secure_only(status=301)
-    if !request.ssl? && (request.format.html? || request.format.nil?)
+    if !request.ssl?
       redirect_to DC.server_root(:force_ssl => true) + request.original_fullpath, :status => status
     end
   end
@@ -217,9 +251,12 @@ class ApplicationController < ActionController::Base
   # Return forbidden when the access is unauthorized.
   def forbidden(options = {})
     options = {
-      :error  => "Forbidden",
-      :locals => { post_login_url: CGI.escape(request.original_url) }
-    }.merge(options)
+      error: "Forbidden",
+      locals: {
+        post_login_url: CGI.escape(request.original_url),
+        is_document: false
+      }
+    }.deep_merge(options)
     error_response 403, options
   end
 
@@ -262,19 +299,26 @@ class ApplicationController < ActionController::Base
   end
 
   def self.exclusive_access?
-    Rails.env.staging? and false
+    Rails.env.staging?
   end
 
   def set_ssl
     Thread.current[:ssl] = request.ssl?
   end
+  
+  ERRORS_TO_IGNORE = [
+    AbstractController::ActionNotFound, 
+    ActionController::RoutingError, 
+    ActiveRecord::RecordNotFound,
+    ActionController::UnknownFormat
+  ]
 
   # Email production exceptions to us. Once every 2 minutes at most, per process.
   def notify_exceptions
     begin
       yield
     rescue Exception => e
-      ignore = e.is_a?(AbstractController::ActionNotFound) || e.is_a?(ActionController::RoutingError)
+      ignore = ERRORS_TO_IGNORE.any?{ |kind| e.is_a? kind }
       LifecycleMailer.exception_notification(e, params).deliver_now unless ignore
       raise e
     end
@@ -300,13 +344,18 @@ class ApplicationController < ActionController::Base
     response.content_type = 'text/plain' if params[:debug]
   end
 
+  def set_minimal_nav(text: 'Go to home', xs_text: false, link: '/')
+    @use_minimal_nav   = true
+    @minimal_back_text = xs_text ? "<span class='hidden-xs-down'>#{text}</span> <span class='hidden-sm-up'>#{xs_text}</span>" : text
+    @minimal_back_link = link
+  end
+
   private
   
   # Generic error response helper. Defaults to 200 because never called directly
   def error_response(status=200, options={})
     options = {
-      :template => status, # Exists only for `doc_404`
-      :locals   => {}
+      :locals => {}
     }.merge(options)
 
     obj          = {}
@@ -316,7 +365,7 @@ class ApplicationController < ActionController::Base
     respond_to do |format|
       format.js   { render_cross_origin_json(obj, {:status => status}) }
       format.json { render_cross_origin_json(obj, {:status => status}) }
-      format.any  { render :file => "#{Rails.root}/public/#{options[:template]}.html", :locals => options[:locals], :status => status }
+      format.any  { render :file => "#{Rails.root}/public/#{status}.html", :locals => options[:locals], :status => status, :layout => nil }
     end
 
     false

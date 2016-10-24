@@ -119,7 +119,7 @@ dc.ui.FeaturedReporting = Backbone.View.extend({
   },
 
   render: function() {
-    this.$el.html( JST.featured_reporting( {} ) );
+    this.$el.html(JST['featured_reporting']({}));
 
     this.collection.each( this.appendReport );
     this.$('.listing').sortable({

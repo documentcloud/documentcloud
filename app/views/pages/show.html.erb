@@ -1,18 +1,27 @@
-<div id="return_to_v1">
-  <%= link_to '⬅︎ Read full document', @current_page.contextual_path, id: 'return_to_v1_text' %>
-  <a id="return_to_v1_logo" href="/home"><img src="/images/common/document_cloud_logo_white@2x.png" width="150" height="32"></a>
-</div>
+<% (@stylesheets_header ||= []).push File.join(DC.asset_root(:agnostic => true), "/embed/page/page_embed.css") %>
 
-<div class="container embed-preview-container">
-
-  <div class="DC-embed" data-version="1.0" style="font-size:10pt">
-    <p><a class="DC-embed-resource" href="<%= @current_page.contextual_url %>" title="View <%= @current_page.title %> on DocumentCloud in new window or tab" target="_blank"><%= @current_page.title %></a></p>
-    <img src="<%= @current_document.page_image_url(@current_page.page_number, 'normal') %>" alt="<%= @current_page.title %>" style="border:1px solid #ccc;-webkit-box-sizing:border-box;box-sizing:border-box;width:100%;max-width:700px;">
-    <p>
-      Contributed to DocumentCloud by <%= @current_document.account_name %> of <%= @current_document.organization_name %> &bull;
-      <a href="<%= @current_page.text_url %>" title="View text of <%= @current_page.title %> in a new window or tab" target="_blank">View page as text</a>
-    </p>
+<div class="container-lg content paper">
+  <div id="DC-embed-container" data-version="1.1">
+    <div style="font-size:10pt;line-height:14pt;">
+      Page <%= @current_page.page_number %> of <a class="DC-embed-resource" href="<%= @current_page.contextual_url %>" title="View entire <%= @current_document.title %> on DocumentCloud in new window or tab" target="_blank"><%= @current_document.title %></a>
+    </div>
+    <img src="<%= @current_document.page_image_url(@current_page.page_number, 'normal') %>" srcset="<%= @current_document.page_image_url(@current_page.page_number, 'normal') %> 700w, <%= @current_document.page_image_url(@current_page.page_number, 'large') %> 1000w" alt="Page <%= @current_page.page_number %> of <%= @current_document.title %>" style="max-width:100%;height:auto;margin:0.5em 0;border:1px solid #ccc;-webkit-box-sizing:border-box;box-sizing:border-box;clear:both">
+    <div style="font-size:8pt;line-height:12pt;text-align:center">
+      Contributed to
+      <a href="https://www.documentcloud.org/" title="Go to DocumentCloud in new window or tab" target="_blank" style="font-weight:700;font-family:Gotham,inherit,sans-serif;color:inherit;text-decoration:none">DocumentCloud</a> by
+      <a href="<%= @current_document.account_documents_url %>" title="View documents contributed to DocumentCloud by <%= @current_document.account_name %> in new window or tab" target="_blank"><%= @current_document.account_name %></a> of
+      <a href="<%= @current_document.organization_documents_url %>" title="View documents contributed to DocumentCloud by <%= @current_document.organization_name %> in new window or tab" target="_blank"><%= @current_document.organization_name %></a> &bull;
+      <a href="<%= @current_page.contextual_url %>" title="View entire <%= @current_document.title %> on DocumentCloud in new window or tab" target="_blank">View document</a> or
+      <a href="<%= @current_page.text_url %>" title="Read the text of page <%= @current_page.page_number %> of <%= @current_document.title %> on DocumentCloud in new window or tab" target="_blank">read text</a>
+    </div>
   </div>
-  <script src="<%= File.join(DC.cdn_root(:agnostic => true), "/embed/loader/enhance.js") %>"></script>
-
 </div>
+
+<% (@javascripts_footer ||= []).push File.join(DC.asset_root(:agnostic => true), "/embed/page/page_embed.js") %>
+<%
+  @javascript_footer_inline = <<-EOS
+    DocumentCloud.embed.load('#{@current_page.canonical_url}', {
+      container: '#DC-embed-container'
+    });
+  EOS
+%>

@@ -10,6 +10,9 @@
   window.FailedDocuments      = new dc.model.DocumentSet();
 
   $(function(){
+    // Initialize the whole admin interface
+    window.dcAdmin = new dc.ui.Admin;
+
     $.ajax({
       url: "/admin/index.json", 
       success: function(data, status, xhr) {

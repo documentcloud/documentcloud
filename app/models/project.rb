@@ -34,6 +34,18 @@ class Project < ActiveRecord::Base
 
   attr_writer :annotation_count
 
+  def slug
+    "#{id}-#{sluggify(title)}"
+  end
+
+  def public_path
+    "/public/search/projectid:#{slug}"
+  end
+
+  def public_url
+    File.join(DC.server_root, public_path)
+  end
+
   # Load all of the projects belonging to an account in one fell swoop.
   def self.load_for(account)
     self.visible.accessible(account).includes( :account, :collaborations )
@@ -139,7 +151,8 @@ class Project < ActiveRecord::Base
     data = {
       'id'          => id,
       'title'       => title,
-      'description' => description
+      'description' => description,
+      'public_url'  => public_url
     }
     if options.fetch(:include_document_ids, true)
       data['document_ids'] = canonical_document_ids
@@ -154,7 +167,8 @@ class Project < ActiveRecord::Base
     attrs = attributes.merge(
       :account_full_name  => account_full_name,
       :annotation_count   => annotation_count(acc),
-      :document_count     => project_memberships.count
+      :document_count     => project_memberships.count,
+      :public_url         => public_url
     )
     if opts[:include_collaborators]
       attrs[:collaborators] = other_collaborators(acc).map {|c| c.canonical(:include_organization => true) }

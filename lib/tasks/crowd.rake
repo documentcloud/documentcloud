@@ -42,7 +42,7 @@ namespace :crowd do
     desc "Handy unix shotgun for culling zombie crowd worker processes"
     task :cull do
       `ps aux | egrep "crowd|pdftk|pdftailor|tesseract|gm|soffice" | ruby -e 'STDIN.read.split("\n").each{ |line| puts line.split[1] unless line =~ /rake|grep/ }' | xargs kill`
-      `if [ -e tmp/pids/node.pid ] ; then; rm tmp/pids/node.pid ; fi`
+      `if [ -e tmp/pids/node.pid ] ; then rm tmp/pids/node.pid ; fi`
     end
 
     task :cleanup_tmp do
@@ -82,6 +82,8 @@ def crowd_folder
       'reindex'
     when File.exists?('API')
       'api'
+    when File.exists?('MAINTENANCE')
+      'maintenance'
     else
       Rails.env
   end

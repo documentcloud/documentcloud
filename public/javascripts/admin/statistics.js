@@ -52,7 +52,7 @@ dc.ui.AdminStatistics = Backbone.View.extend({
   },
 
   render : function() {
-    $(this.el).html(JST.statistics(this.data()));
+    $(this.el).html(JST['statistics'](this.data()));
     _.defer(this.renderCharts);
     if (Accounts.length) _.defer(this._loadAllAccounts);
 

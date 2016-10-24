@@ -6,7 +6,10 @@
 </div>
 
 <div class="slug">
-  <span style="padding-right: 10px;" class="selectable_text"><%= _.t( 'project_id', model.slug() ) %></span>
+  <span class="selectable_text">
+    <%= _.t( 'project_id', model.slug() ) %> |
+    <a class="text_link" href="<%= model.get('public_url') %>">Public link to the project</a>
+  </span>
 </div>
 
 <div class="collaboration">

@@ -8,7 +8,7 @@ dc.ui.AdminAccounts = Backbone.View.extend({
   FREELANCER    : 4,
 
   render : function() {
-    $(this.el).html(JST.admin_accounts({}));
+    $(this.el).html(JST['admin_accounts']({}));
     var rows = Accounts.map(function(account) {
       return (new dc.ui.AccountView({model : account, kind : 'admin'})).render().el;
     });

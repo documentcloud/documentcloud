@@ -6,6 +6,7 @@ class SearchController < ApplicationController
   FIELD_STRIP = /\S+:\s*/
 
   def documents
+    set_cache_statement("public, max-age=600") unless logged_in?
     perform_search pick(params, :mentions)
     results = {:query => @query, :documents => @documents}
     respond_to do |format|
@@ -17,6 +18,7 @@ class SearchController < ApplicationController
 
   def embed
     return bad_request unless params[:options]
+    set_cache_statement("public, max-age=600") unless logged_in?
     groups = params[:options].match(/p-(\d+)-per-(\d+)-order-(\w+)-org-(\d+)/)
     _, params[:page], params[:per_page], params[:order], params[:organization_id] = *groups
     perform_search
@@ -27,14 +29,15 @@ class SearchController < ApplicationController
     results[:per_page]  = @query.per_page
     results[:documents] = @documents.map do |d|
       not_owned = d.organization_id != params[:organization_id].to_i
-      d.canonical API_OPTIONS.merge(:contributor => not_owned, :allow_detected => true, :allow_ssl => true)
+      d.canonical API_OPTIONS.merge(:contributor => not_owned, :allow_ssl => true)
     end
     results[:dc_url] = "#{DC.server_root}"
     js = "dc.embed.callback(#{results.to_json});"
     if params[:q].length > 255
       head :bad_request and return
     end
-    cache_page js unless request.ssl?
+    #cache_page js unless request.ssl?
+    set_cache_statement("public, max-age=150") unless logged_in?
     render :js => js
   end
 

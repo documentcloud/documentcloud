@@ -17,7 +17,7 @@ As a DocumentCloud user, you'll want to build a collection of files to research,
 
 There are two ways to upload in the workspace:
 
-* Drag and drop the documents onto the workspace itself. *Note: Microsoft's new Windows 10 browser, Edge, does not support drag and drop currently.*
+* Drag and drop the documents onto the workspace itself.
 * Alternately, click the "New Documents" button in the sidebar and select the files you'd like to upload. In Windows, hold down the `ctrl` key to select more than one document. On a Mac, hold down `command`. *Note: multiple document upload is not supported in older versions of Internet Explorer.*
 
 <img src="/images/help/upload_dialog.png" class="full_line" />

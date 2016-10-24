@@ -1,0 +1,133 @@
+/* Extra small devices (phones, less than 768px) */
+/* No media query since this is the default */
+
+.v2 .container {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 960px;
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+.v2 .container.content {
+  padding-left: 40px;
+  padding-right: 40px;
+}
+
+.v2 .container.container_thin {
+  max-width: 720px;
+}
+
+.v2 .container:before,
+.v2 .container:after  {
+  content: " ";
+  display: table;
+}
+.v2 .container:after  {
+  clear: both;
+}
+
+.v2 .row:before,
+.v2 .row:after  {
+  content: " ";
+  display: table;
+}
+.v2 .row:after  {
+  clear: both;
+}
+
+.v2 .row {
+  overflow: visible;
+}
+
+.v2 .col {
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+.v2 .col_xs_12 {
+  float: left;
+  width: 100%;
+}
+
+.v2 .row.rtl .col_xs_12 {
+  float: right;
+}
+
+/* Small devices (tablets, 768px and up) */
+@media (min-width: 768px) {
+  .v2 .col {
+    float: left;
+    padding-left:  3%;
+    padding-right: 3%;
+  }
+  .v2 .col:first-child {
+    padding-left: 0;
+  }
+  .v2 .col:last-child {
+    padding-right: 0;
+  }
+
+  .v2 .row.rtl .col {
+    float: right;
+  }
+  .v2 .row.rtl .col:first-child {
+    padding-left: 3%;
+    padding-right: 0;
+  }
+  .v2 .row.rtl .col:last-child {
+    padding-left: 0;
+    padding-right: 3%;
+  }
+
+  .v2 .col_2 {
+    width: 16.5%;
+  }
+
+  .v2 .col_3 {
+    width: 25%;
+  }
+
+  .v2 .col_4 {
+    width: 33.25%;
+  }
+
+  .v2 .col_5 {
+    width: 41.5%;
+  }
+
+  .v2 .col_6 {
+    width: 50%;
+  }
+
+  .v2 .col_7 {
+    width: 58.333333333333333333%;
+  }
+
+  .v2 .col_8 {
+    width: 66.666666666666666666%;
+  }
+
+  .v2 .col_9 {
+    width: 75%;
+  }
+
+  .v2 .col_10 {
+    width: 83.333333333333333333%;
+  }
+
+  .v2 .col_11 {
+    width: 91.666666666666666666%;
+  }
+
+}
+
+/* Medium devices (desktops, 992px and up) */
+@media (min-width: 992px) {
+}
+
+/* Large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {
+}

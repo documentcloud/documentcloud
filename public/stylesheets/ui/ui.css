@@ -42,6 +42,20 @@ input.hidden_submit {
   -moz-user-select: none;
   user-select: none;
 }
+.mark_responsive:after {
+  content: attr(data-responsive-text);
+  background-color: orange;
+  color: white;
+  font-weight: bold;
+  text-transform: uppercase;
+  padding: 2px 4px;
+  margin-left: 6px;
+  border-radius: 2px;
+  -webkit-font-smoothing: antialiased;
+}
+.mark_responsive.disabled:after {
+  display: none;
+}
 
 /*------------------------------ Gradients ---------------------------------*/
 .gradient_white {
@@ -666,7 +680,7 @@ iframe.hidden_iframe {
   position: absolute;
   z-index: 100;
   border: 1px solid #09f;
-  background: url(/images/embed/ui/semiwhite.png);
+  background-color: rgba(234, 239, 255, 0.33);
 }
 
 /*------------------------------ Occurrences ----------------------------------*/

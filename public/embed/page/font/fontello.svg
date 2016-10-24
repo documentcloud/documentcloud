@@ -4,7 +4,7 @@
 <metadata>Copyright (C) 2015 by original authors @ fontello.com</metadata>
 <defs>
 <font id="fontello" horiz-adv-x="1000" >
-<font-face font-family="fontello" font-weight="400" font-stretch="normal" units-per-em="1000" ascent="850" descent="-150" />
+<font-face font-family="DC-fontello" font-weight="400" font-stretch="normal" units-per-em="1000" ascent="850" descent="-150" />
 <missing-glyph horiz-adv-x="1000" />
 <glyph glyph-name="list" unicode="&#xe800;" d="m143 118v-107q0-7-5-13t-13-5h-107q-7 0-13 5t-5 13v107q0 7 5 12t13 6h107q7 0 13-6t5-12z m0 214v-107q0-7-5-13t-13-5h-107q-7 0-13 5t-5 13v107q0 7 5 13t13 5h107q7 0 13-5t5-13z m0 214v-107q0-7-5-12t-13-6h-107q-7 0-13 6t-5 12v107q0 8 5 13t13 5h107q7 0 13-5t5-13z m857-428v-107q0-7-5-13t-13-5h-750q-7 0-12 5t-6 13v107q0 7 6 12t12 6h750q7 0 13-6t5-12z m-857 643v-107q0-8-5-13t-13-5h-107q-7 0-13 5t-5 13v107q0 7 5 12t13 6h107q7 0 13-6t5-12z m857-429v-107q0-7-5-13t-13-5h-750q-7 0-12 5t-6 13v107q0 7 6 13t12 5h750q7 0 13-5t5-13z m0 214v-107q0-7-5-12t-13-6h-750q-7 0-12 6t-6 12v107q0 8 6 13t12 5h750q7 0 13-5t5-13z m0 215v-107q0-8-5-13t-13-5h-750q-7 0-12 5t-6 13v107q0 7 6 12t12 6h750q7 0 13-6t5-12z" horiz-adv-x="1000" />
 <glyph glyph-name="list-bullet" unicode="&#xe801;" d="m214 64q0-44-31-76t-76-31-76 31-31 76 31 76 76 31 76-31 31-76z m0 286q0-45-31-76t-76-31-76 31-31 76 31 76 76 31 76-31 31-76z m786-232v-107q0-7-5-13t-13-5h-678q-8 0-13 5t-5 13v107q0 7 5 12t13 6h678q7 0 13-6t5-12z m-786 518q0-45-31-76t-76-31-76 31-31 76 31 76 76 31 76-31 31-76z m786-232v-108q0-7-5-12t-13-5h-678q-8 0-13 5t-5 12v108q0 7 5 12t13 5h678q7 0 13-5t5-12z m0 285v-107q0-7-5-12t-13-6h-678q-8 0-13 6t-5 12v107q0 8 5 13t13 5h678q7 0 13-5t5-13z" horiz-adv-x="1000" />

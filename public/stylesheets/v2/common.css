@@ -1,76 +1,52 @@
 /*----------------------------------- v2 -------------------------------------*/
 
+/*
 
+  TYPE STYLE GUIDE
 
-.v2 {
+  - Use Gotham ScreenSmart (`'Gotham SSm A', 'Gotham SSm B'`) for normal sizes
+    (<=18px), which effectively means everything except H1-H3
+  - Use Gotham (`'Gotham A', 'Gotham B'`) for large headlines (>18px)
+  - Use font weight 300 (light) for most text
+  - Use font weight 700 (bold) for bold text
+  - Don't use bold in H1-H3; if it becomes necessary, we'll need to add 
+    Gotham's 700 variant to the font package
+  - Fall back to the opposite package (ScreenSmart falls back to non-ScreenSmart
+    and vice versa), then fall back to system Gotham, then to acceptable Gotham
+    substitutes that maybe two designers will have installed
+
+*/
+
+.v2 body {
+  margin: 0;
   padding: 0 1em;
-  background: #fff url(/images/embed/home/stripes.png);
-
-  font: 16px/1.6em Gotham, 'Proxima Nova', 'Avenir Next', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  font-weight: 400;
+  background: #ffffff url(/images/embed/home/stripes.png);
+  font: 300 16px/1.5em 'Gotham SSm A', 'Gotham SSm B', 'Gotham A', 'Gotham B', Gotham, 'Proxima Nova', 'Avenir Next', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+.v2.empty body {
+  padding: 0;
+  background-image: none;
 }
 
-.container {
-  min-width: 300px;
-  max-width: 720px;
-  margin: 0 auto;
-}
-
-.embed-preview-container {
-  margin-top: 30px;
-  background: white;
-  padding: 30px 40px;
-  box-shadow: 0 0 20px #aaa;
-  border-radius: 6px;
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
-}
-
-#return_to_v1 {
-  position: relative;
-  background-color: rgb(90, 118, 160);
-  color: white;
-  padding: 1.5em;
-  font-size: 0.75em;
-  text-transform: uppercase;
-  font-weight: 700;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  margin-left: -1.3em;
-  margin-right: -1.3em;
-}
-
-#return_to_v1 a:link,
-#return_to_v1 a:visited {
-  color: white;
-  text-decoration: none;
-}
-
-#return_to_v1_logo {
-  position: absolute;
-  right: 1.5em;
-  bottom: 1.5em;
-}
-
-#return_to_v1_logo,
-#return_to_v1_logo > img {
-  display: block;
-  border: 0;
+.v2 section {
+  margin-bottom: 3em;
 }
 
 .v2 h1,
 .v2 h2,
-.v2 h3,
-.v2 h4,
-.v2 h5,
-.v2 h6 {
-  line-height: 1.6em;
-  margin: 1.6em 0;
+.v2 h3 {
+  font-family: 'Gotham A', 'Gotham B', 'Gotham SSm A', 'Gotham SSm B', Gotham, 'Proxima Nova', 'Avenir Next', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-weight: 300;
+  line-height: 1.4em;
+  margin: 1.4em 0;
 }
-
 
 .v2 h1 {
   font-size: 2em;
+}
+
+.v2 h1 small {
+  font-size: 0.7em;
 }
 
 .v2 h2 {
@@ -81,21 +57,91 @@
   font-size: 1.25em;
 }
 
+.v2 h4,
+.v2 h5,
+.v2 h6 {
+  font-family: 'Gotham SSm A', 'Gotham SSm B', 'Gotham A', 'Gotham B', Gotham, 'Proxima Nova', 'Avenir Next', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-weight: 700;
+  line-height: 1.4em;
+  margin: 1.4em 0;
+}
+
 .v2 h4 {
-  font-weight: 600;
   font-size: 1em;
 }
 
 .v2 h5 {
   font-size: 0.75em;
-  font-weight: 600;
   text-transform: uppercase;
 }
 
 .v2 h6 {
   font-size: 0.6em;
-  font-weight: 600;
   text-transform: uppercase;
+}
+
+.v2 p {
+  margin: 1.5em 0;
+}
+
+.v2 .underline {
+  text-decoration: underline;
+}
+
+.v2 dl {
+  
+}
+
+.v2 dt {
+  font-weight: 700;
+  margin-bottom: 0;
+}
+
+.v2 dd {
+  margin-top: 0;
+  margin-bottom: 2em;
+}
+.v2 dd:last-child {
+  margin-bottom: 0;
+}
+
+.v2 dd p:first-child {
+  margin-top: 0;
+}
+.v2 dd p:last-child {
+  margin-bottom: 0;
+}
+
+.v2 ol {
+  margin-left: 2em;
+  padding-left: 0;
+}
+
+.v2 li {
+  margin-left: 0;
+  padding-left: 0;
+}
+
+.v2 ul.disc {
+  margin-left: 2em;
+  padding-left: 0;
+  list-style-type: disc;
+}
+
+.v2 ol.lower-alpha {
+  list-style-type: lower-alpha;
+}
+
+.v2 ol.lower-roman {
+  list-style-type: lower-roman;
+}
+
+.v2 ol.upper-alpha {
+  list-style-type: upper-alpha;
+}
+
+.v2 ol.decimal {
+  list-style-type: decimal;
 }
 
 .v2 a:link {
@@ -111,5 +157,217 @@
 }
 
 .v2 a:focus {
-  outline: 2px dotted rgb(90, 118, 160);
+  background-color: rgb(119, 147, 189);
+  color: white;
+  -moz-osx-font-smoothing: grayscale;
+   -webkit-font-smoothing: antialiased;
+}
+
+.v2 .badge {
+  padding: 0.25em 0.4em;
+  border-radius: 3px;
+
+  background-color: rgb(119, 147, 189);
+  color: white;
+  -moz-osx-font-smoothing: grayscale;
+   -webkit-font-smoothing: antialiased;
+}
+
+.v2 .badge.danger {
+  background-color: #d85157;
+  color: white;
+}
+
+.v2 .badge.warning {
+  background-color: #d89f37;
+  color: white;
+}
+
+.v2 .badge.good {
+  background-color: #78bb6e;
+  color: white;
+}
+
+.v2 .badge.suppressed {
+  background-color: rgb(235, 235, 235);
+  color: black;
+}
+
+.v2 .badge_group .badge {
+  border-radius: 0;
+  margin-right: 1px;
+}
+
+.v2 .badge_group .badge:first-child {
+  border-top-left-radius:    3px;
+  border-bottom-left-radius: 3px;
+}
+
+.v2 .badge_group .badge:last-child {
+  border-top-right-radius:    3px;
+  border-bottom-right-radius: 3px;
+  margin-right: 0;
+}
+
+/*---------------------------------- header ----------------------------------*/
+
+.v2 .header_primary {
+  position: relative;
+  background-color: rgb(90, 118, 160);
+  color: #ffffff;
+  padding: 1em;
+  margin: 0 -1em; /* Negative of body's side padding */
+  font-weight: 700;
+  -moz-osx-font-smoothing: grayscale;
+   -webkit-font-smoothing: antialiased;
+}
+.v2.empty .header_primary {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.v2 .header_primary .container {
+  position: relative;
+  min-height: 2em;
+}
+
+.v2 .header_primary h1 {
+  float: left;
+  margin: 0;
+  font-size: 1em;
+}
+.v2 .reverse_order.header_primary h1 {
+  float: right;
+}
+
+.v2 .header_primary a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.v2 .header_primary h1 a {
+  display: block;
+  background: transparent url('/images/common/document_cloud_logo_white@2x.png') 0 0 no-repeat;
+  background-size: 9.375em 2em;
+  width: 9.375em;
+  height: 2em;
+  text-indent: -10000px;
+  overflow: hidden;
+}
+
+.v2 .header_primary h1 a:focus {
+  background-color: rgb(119, 147, 189);
+}
+
+.v2 .header_nav {
+  float: right;
+}
+.v2 .reverse_order .header_nav {
+  float: left;
+}
+
+.v2 .header_nav a {
+  display: inline-block;
+  font-size: 0.75em;
+  padding: 1em;
+  line-height: 1em;
+  text-transform: uppercase;
+}
+
+.v2 .header_nav a.active {
+  background-color: rgb(104, 129, 167);
+}
+
+.v2 .header_nav a:hover,
+.v2 .header_nav a:focus {
+  background-color: rgb(119, 147, 189);
+}
+
+/*------------------------------- error pages --------------------------------*/
+
+.v2 .error_page {
+  text-align: center;
+  padding: 1rem;
+  color: #333;
+}
+
+@media (min-width: 768px) {
+  .v2 .error_page {
+    text-align: center;
+    padding: 1rem;
+    color: #333;
+  }
+
+  .v2 .error_page h1 {
+    font-size: 4rem;
+  }
+}
+
+
+/*--------------------------------- embeds -----------------------------------*/
+
+.v2 .paper-box,
+.v2 .embed-preview-container {
+  background-color: white;
+  padding: 30px 40px;
+  box-shadow: 0 0 20px #aaa;
+  border-radius: 6px;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+.v2 .paper-box > h1,
+.v2 .embed-preview-container > h1 {
+  margin-top: 0.5em;
+}
+
+/* We don't even generate these elements when the embedder has iframed the
+   correct version of the resource, but in case they just iframe the canonical
+   resource URL, strip it down.
+*/
+.v2.DC-embed-iframe .header_primary {
+  display: none;
+}
+
+.v2.DC-embed-iframe .embed-preview-container {
+  margin: 0;
+  padding: 0;
+  box-shadow: none;
+  border-radius: 0;
+}
+
+/* Small devices (tablets, 768px and up) */
+@media (min-width: 768px) {
+  .v2 .embed-preview-container,
+  .v2 .paper-box {
+    margin-top: 30px;
+    margin-bottom: 30px;
+  }
+}
+
+/* Medium devices (desktops, 992px and up) */
+@media (min-width: 992px) {
+}
+
+/* Large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {
+}
+
+/*----------------------------------- FAQ ------------------------------------*/
+
+.v2 #faq-links h4 {
+  margin-bottom: 0;
+  font-size: 0.8em;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.v2 #faq-links ol {
+  margin-left: 0;
+}
+
+.v2 #faq section {
+  border-bottom: 1px solid #ddd;
+  margin: 3em 0;
+  padding: 0 0 3em 0;
 }

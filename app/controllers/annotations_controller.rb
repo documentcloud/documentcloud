@@ -4,7 +4,9 @@ class AnnotationsController < ApplicationController
   layout false
 
   before_action :login_required, :except => [:index, :show, :print, :cors_options]
+  before_action :prefer_secure, :only => [:show]
   skip_before_action :verify_authenticity_token
+  after_action  :allow_iframe, :only => [:show]
 
   READONLY_ACTIONS = [
     :index, :show, :print, :cors_options
@@ -19,6 +21,7 @@ class AnnotationsController < ApplicationController
 
   def show
     return not_found unless current_annotation
+
     respond_to do |format|
       format.json do
         @response = current_annotation.canonical(:include_image_url => true, :include_document_url => true)
@@ -33,21 +36,33 @@ class AnnotationsController < ApplicationController
         render :js => js
       end
       format.html do
-        make_oembeddable(current_annotation)
-        @stylesheets_header = ["#{DC.cdn_root}/note_embed/note_embed.css"]
-        @javascripts_footer = ["#{DC.cdn_root}/note_embed/note_embed.js",
-                               "#{DC.cdn_root}/notes/loader.js"]
-        render :layout => 'minimal'
+        @current_annotation_dimensions = current_annotation.embed_dimensions
+        if params[:embed] == 'true'
+          # We have a special, extremely stripped-down show page for when we're
+          # being iframed. The normal show page can also be iframed, but there
+          # will be a flash of unwanted layout elements before the JS/CSS 
+          # arrives which removes them.
+          @embedded = true
+          @exclude_analytics = true
+          render template: 'annotations/show_embedded', layout: 'new'
+        else
+          make_oembeddable(current_annotation)
+          set_minimal_nav text:    'Read the full document',
+                          xs_text: 'Full document',
+                          link:    current_annotation.contextual_url
+          render layout: 'new'
+        end
       end
     end
   end
 
   # Print out all the annotations for a document (or documents.)
   def print
+    return bad_request unless params[:docs].is_a?(Array)
     docs = Document.accessible(current_account, current_organization).where( :id => params[:docs] )
     Document.populate_annotation_counts(current_account, docs)
     @documents_json = docs.map {|doc| doc.to_json(:annotations => true, :account => current_account) }
-    render :layout => false
+    render :layout => nil
   end
 
   # Any account can create a private note on any document.

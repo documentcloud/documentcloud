@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
   <%= render :partial => 'common/meta_tags' %>
@@ -14,14 +13,11 @@
     <script>window.location = '/workspace/upgrade';</script>
   <![endif]-->
   <!--[if lt IE 9]>
-    <%= include_stylesheets :ie_only, :embed_assets => false %>
-    <%= include_javascripts :ie_only %>
+    <%= include_stylesheets :lt_ie_9, :embed_assets => false %>
+    <%= include_javascripts :lt_ie_9 %>
   <![endif]-->
   <% if Rails.env.development? %>
     <%= include_javascripts :dev_only %>
-  <% end %>
-  <% if @include_analytics && Rails.env.production? %>
-    <%= render :partial => 'common/google' %>
   <% end %>
   <%= csrf_meta_tag %> 
 </head>
@@ -42,7 +38,7 @@
       <% if @current_account %>
         <a href="/logout" class="text_link"><%= DC.t( @current_account, 'log_out') %></a>
       <% else %>
-        <a href="/contact" class="text_link">Join</a>
+        <a href="/apply" class="text_link">Join</a>
         &nbsp;/&nbsp;
         <a href="<%= DC.server_root(:force_ssl => true) %>/login" class="text_link">Log In</a>
       <% end %>
@@ -56,10 +52,9 @@
   <div class="selection" style="display:none;"></div>
   <div id="spinner" style="display:none;"></div>
 
-  <iframe src ="about:blank" width="0" height="0" id="hidden_iframe" name="hidden_iframe" class="hidden_iframe">
-  </iframe>
-
   <%= render :partial => 'common/bootstrap', :locals => {:workspace => true} %>
+
+  <%= render :partial => 'common/google' if @include_analytics %>
 
 </body>
 </html>

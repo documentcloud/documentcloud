@@ -74,20 +74,20 @@ module DC
           private
           def number(name, options={})
             attr_reader name
-            @attributes[name] = :number
-            @attribute_map[:name] = options[:output_as] if options[:output_as]
+            @attributes[name]    = :number
+            @attribute_map[name] = options[:output_as] if options[:output_as]
           end
     
           def string(name, options={})
             attr_reader name
-            @attributes[name] = :string
-            @attribute_map[:name] = options[:output_as] if options[:output_as]
+            @attributes[name]    = :string
+            @attribute_map[name] = options[:output_as] if options[:output_as]
           end
     
           def boolean(name, options={})
             attr_reader name
-            @attributes[name] = :boolean
-            @attribute_map[:name] = options[:output_as] if options[:output_as]
+            @attributes[name]    = :boolean
+            @attribute_map[name] = options[:output_as] if options[:output_as]
           end
         end
         
