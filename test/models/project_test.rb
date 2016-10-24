@@ -105,8 +105,8 @@ class ProjectTest < ActiveSupport::TestCase
 
   it "generates canonical representation" do
     assert subject.canonical['document_ids']
-    assert_equal ['id','title','description','document_ids'], subject.canonical.keys
-    assert_equal ['id','title','description', 'document_count'], subject.canonical(:include_document_ids=>false).keys
+    assert_equal ['id','title','description', 'public_url', 'document_ids'], subject.canonical.keys
+    assert_equal ['id','title','description', 'public_url', 'document_count'], subject.canonical(:include_document_ids=>false).keys
   end
 
   it "generates json" do
