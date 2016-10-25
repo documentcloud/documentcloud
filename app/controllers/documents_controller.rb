@@ -27,15 +27,8 @@ class DocumentsController < ApplicationController
     #fresh_when last_modified: (current_document.updated_at || Time.now).utc, etag: current_document
     respond_to do |format|
       format.html do
-        @embed_options = {
-          container: '#viewer',
-          sidebar:   !(params[:sidebar] || '').match(/no|false/) # For Overview
-        }
-        if params[:embed]
-          # This should take advantage of DC::Embed::Document::Config
-          @embed_options[:page]    = params[:page] || nil
-          @embed_options[:note]    = params[:note] || nil
-        end
+        @embed_options = DC::Embed::Document::Config.new(data: pick(params, *DC::Embed::Document.config_keys)).dump
+        @embed_options[:container] = '#viewer'
         populate_editor_data if current_account && current_organization
         return if date_requested?
         return if entity_requested?

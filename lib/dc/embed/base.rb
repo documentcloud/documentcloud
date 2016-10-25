@@ -106,7 +106,7 @@ module DC
             case
             when (value.kind_of? TrueClass or value.kind_of? FalseClass); then value
             when value == "true"; then true
-            when value == "false"; then false
+            when (value || '').match(/no|false/); then false # For Overview
             else; value
             end
           when :number
