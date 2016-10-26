@@ -21,7 +21,7 @@ class PagesController < ApplicationController
           container: '#DC-embed-container',
         }
         if params[:embed] == 'true'
-          merge_embed_config(DC::Embed::Page)
+          merge_embed_config
           # We have a special, extremely stripped-down show page for when we're
           # being iframed. The normal show page can also be iframed, but there
           # will be a flash of unwanted layout elements before the JS/CSS 
@@ -75,4 +75,11 @@ class PagesController < ApplicationController
     return false unless current_document
     @current_page ||= current_document.pages.find_by_page_number(num.to_i)
   end
+
+  def merge_embed_config
+    (@embed_options ||= {}).merge!(DC::Embed::Page::Config.new(
+      data: pick(params, *presenter.config_keys)
+    ).dump)
+  end
+
 end

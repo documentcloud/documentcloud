@@ -31,7 +31,7 @@ class DocumentsController < ApplicationController
           container: '#viewer',
           sidebar:   !(params[:sidebar] || '').match(/no|false/) # For Overview
         }
-        merge_embed_config(DC::Embed::Document) if params[:embed] == 'true'
+        merge_embed_config if params[:embed] == 'true'
         populate_editor_data if current_account && current_organization
         return if date_requested?
         return if entity_requested?
@@ -288,4 +288,11 @@ class DocumentsController < ApplicationController
     paths = current_document.cache_paths + current_document.annotations.map(&:cache_paths)
     expire_pages paths
   end
+
+  def merge_embed_config
+    (@embed_options ||= {}).merge!(DC::Embed::Document::Config.new(
+      data: pick(params, *presenter.config_keys)
+    ).dump)
+  end
+
 end

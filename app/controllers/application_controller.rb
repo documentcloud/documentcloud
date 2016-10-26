@@ -29,12 +29,6 @@ class ApplicationController < ActionController::Base
     service_unavailable(:error => 'Sorry, actions that write to the database are currently disabled for maintenance.')
   end
 
-  def merge_embed_config(presenter)
-    (@embed_options ||= {}).merge!(presenter::Config.new(
-      data: pick(params, *presenter.config_keys)
-    ).dump)
-  end
-
   def embeddable?
     request.format.json? or 
     request.format.jsonp? or 

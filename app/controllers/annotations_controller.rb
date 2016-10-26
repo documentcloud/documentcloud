@@ -38,7 +38,7 @@ class AnnotationsController < ApplicationController
       format.html do
         @current_annotation_dimensions = current_annotation.embed_dimensions
         if params[:embed] == 'true'
-          merge_embed_config(DC::Embed::Note)
+          merge_embed_config
           # We have a special, extremely stripped-down show page for when we're
           # being iframed. The normal show page can also be iframed, but there
           # will be a flash of unwanted layout elements before the JS/CSS 
@@ -119,6 +119,12 @@ class AnnotationsController < ApplicationController
 
   def current_document
     @current_document ||= Document.accessible(current_account, current_organization).find(params[:document_id])
+  end
+
+  def merge_embed_config
+    (@embed_options ||= {}).merge!(DC::Embed::Note::Config.new(
+      data: pick(params, *presenter.config_keys)
+    ).dump)
   end
 
 end
