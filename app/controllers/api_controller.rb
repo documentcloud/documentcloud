@@ -180,24 +180,24 @@ class ApiController < ApplicationController
 
     # Map Rails Controller names to embed type
     controller_embed_map = {
-      'annotations' => :note,
-      'documents'   => :document,
-      'pages'       => :page
+      annotations: :note,
+      documents:   :document,
+      pages:       :page
     }
 
     # specify the default resource type.
     canonical_format_map = {
-      'annotations' => :js,
-      'documents'   => :js,
-      'pages'       => :html
+      annotations: :js,
+      documents:   :js,
+      pages:       :html
     }
 
     resource_controller = resource_params[:controller]
-    resource_url = url_for(resource_params.merge(:format => canonical_format_map[resource_controller]))
+    resource_url = url_for(resource_params.merge(:format => canonical_format_map[resource_controller.to_sym]))
 
     # create a serializer mock/class/struct for temporary use
     resource_serializer_klass = Struct.new(:id, :resource_url, :type)
-    resource = resource_serializer_klass.new(resource_params[:id], resource_url, controller_embed_map[resource_controller])
+    resource = resource_serializer_klass.new(resource_params[:id], resource_url, controller_embed_map[resource_controller.to_sym])
     
     config_params = Rack::Utils.parse_query(url.query)
     embed_config  = pick(config_params, *DC::Embed.embed_klass(resource.type).config_keys)
