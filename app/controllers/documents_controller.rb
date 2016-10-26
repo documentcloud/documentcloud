@@ -27,8 +27,11 @@ class DocumentsController < ApplicationController
     #fresh_when last_modified: (current_document.updated_at || Time.now).utc, etag: current_document
     respond_to do |format|
       format.html do
-        @embed_options = DC::Embed::Document::Config.new(data: pick(params, *DC::Embed::Document.config_keys)).dump
-        @embed_options[:container] = '#viewer'
+        @embed_options = {
+          container: '#viewer',
+          sidebar:   !(params[:sidebar] || '').match(/no|false/) # For Overview
+        }
+        merge_embed_config   if params[:embed]
         populate_editor_data if current_account && current_organization
         return if date_requested?
         return if entity_requested?
@@ -243,6 +246,12 @@ class DocumentsController < ApplicationController
 
 
   private
+
+  def merge_embed_config
+    @embed_options.merge!(DC::Embed::Document::Config.new(
+      data: pick(params, *DC::Embed::Document.config_keys)
+    ).dump)
+  end
 
   def populate_editor_data
     @edits_enabled = true
