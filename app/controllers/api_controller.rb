@@ -199,7 +199,12 @@ class ApiController < ApplicationController
     resource_serializer_klass = Struct.new(:id, :resource_url, :type)
     resource = resource_serializer_klass.new(resource_params[:id], resource_url, controller_embed_map[resource_controller.to_sym])
     
-    config_params = Rack::Utils.parse_query(url.query)
+    # The embed should be configured using params encoded on the `url` itself, 
+    # but for backwards compatibility with the WordPress plugin before 0.4.3, 
+    # we have to expect params on the endpoint request itself. We can reduce 
+    # this to just the `parse_query` stuff once we're sure most people are on 
+    # wordpress-documentcloud >=0.4.3.
+    config_params = params.merge(Rack::Utils.parse_query(url.query))
     embed_config  = pick(config_params, *DC::Embed.embed_klass(resource.type).config_keys)
     embed = DC::Embed.embed_for(resource, embed_config, {strategy: :oembed})
     

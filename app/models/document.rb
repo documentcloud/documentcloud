@@ -612,7 +612,8 @@ class Document < ActiveRecord::Base
   def iframe_embed_src_url(options={})
     # TODO: Remove `sidebar: false` and have the viewer handle sidebar hiding 
     # when iframed
-    options.merge!({embed: true, sidebar: false})
+    forced_options = {embed: true, sidebar: false, responsive: false}
+    options.merge!(forced_options).except!(:maxheight, :maxwidth)
     "#{canonical_url(:html)}?#{options.to_query}"
   end
   
