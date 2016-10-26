@@ -15,7 +15,7 @@ class OrganizationsController < ApplicationController
 
     if membership.organization.language != params[:language]
       Document.where({ :organization_id=>membership.organization_id }).each do | doc |
-        expire_pages doc.cache_paths if doc.cacheable?
+        # TODO: Can we remove this block now that we're not expiring the cache?
       end
     end
 

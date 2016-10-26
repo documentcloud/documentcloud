@@ -84,7 +84,7 @@ class ImportController < ApplicationController
     cloud_crowd_job = JSON.parse(params[:job])
     if processing_job = ProcessingJob.lookup_by_remote(cloud_crowd_job)
       processing_job.resolve(cloud_crowd_job) do |pj| 
-        expire_document_cache pj.document
+        # TODO: Can we remove this block now that we're not expiring the cache?
       end
     end
     
@@ -99,7 +99,7 @@ class ImportController < ApplicationController
     cloud_crowd_job = JSON.parse(params[:job])
     if processing_job = ProcessingJob.lookup_by_remote(cloud_crowd_job)
       processing_job.resolve(cloud_crowd_job) do |pj| 
-        expire_document_cache pj.document
+        # TODO: Can we remove this block now that we're not expiring the cache?
       end
     end
 
@@ -116,10 +116,4 @@ class ImportController < ApplicationController
     secret.kind_of? String and secret == DC::SECRETS['cloud_crowd_secret']
   end
 
-  def expire_document_cache(document)
-    if document
-      paths = document.cache_paths + document.annotations.map(&:cache_paths)
-      expire_pages paths
-    end
-  end
 end

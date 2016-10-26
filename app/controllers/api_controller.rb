@@ -116,7 +116,6 @@ class ApiController < ApplicationController
     attrs = pick(params, :access, :title, :description, :source, :related_article, :published_url, :data)
     attrs[:access] = ACCESS_MAP[attrs[:access].to_sym] if attrs[:access]
     return json(doc, 403) unless doc.secure_update attrs, current_account
-    expire_pages doc.cache_paths if doc.cacheable?
     @response = {'document' => doc.canonical(:access => true, :sections => true, :annotations => true)}
     render_cross_origin_json
   end

@@ -36,7 +36,6 @@ class SearchController < ApplicationController
     if params[:q].length > 255
       head :bad_request and return
     end
-    #cache_page js unless request.ssl?
     set_cache_statement("public, max-age=150") unless logged_in?
     render :js => js
   end

@@ -9,7 +9,6 @@ class SectionsController < ApplicationController
     return forbidden unless current_account.allowed_to_edit?(doc)
     doc.sections.destroy_all
     sections.each {|s| doc.sections.create(pick(s, :title, :page_number)) }
-    expire_pages doc.cache_paths if doc.cacheable?
     json nil
   end
 
