@@ -291,7 +291,7 @@ class DocumentsController < ApplicationController
 
   def merge_embed_config
     (@embed_options ||= {}).merge!(DC::Embed::Document::Config.new(
-      data: pick(params, *presenter.config_keys)
+      data: pick(params, *DC::Embed::Document.config_keys)
     ).dump)
   end
 

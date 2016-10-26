@@ -78,7 +78,7 @@ class PagesController < ApplicationController
 
   def merge_embed_config
     (@embed_options ||= {}).merge!(DC::Embed::Page::Config.new(
-      data: pick(params, *presenter.config_keys)
+      data: pick(params, *DC::Embed::Page.config_keys)
     ).dump)
   end
 

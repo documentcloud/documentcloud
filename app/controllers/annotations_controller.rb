@@ -123,7 +123,7 @@ class AnnotationsController < ApplicationController
 
   def merge_embed_config
     (@embed_options ||= {}).merge!(DC::Embed::Note::Config.new(
-      data: pick(params, *presenter.config_keys)
+      data: pick(params, *DC::Embed::Note.config_keys)
     ).dump)
   end
 
