@@ -1,5 +1,5 @@
 <link rel="stylesheet" href="<%= DC.asset_root(:agnostic => true) %>/note_embed/note_embed.css" type="text/css">
-<div class="DC-note" data-version="2.0" data-options='<%= data.to_json %>' style="background-image:url('<%= options[:note].page_image_url %>')">
+<div class="DC-note" data-version="2.0" style="background-image:url('<%= options[:note].page_image_url %>')">
   <div class="DC-note-header">
     <% title    = content_tag :span, options[:note].title, { class: 'DC-note-title' } %>
     <% page_num = content_tag :span, "(p. #{options[:note].page_number})", { class: 'DC-note-page-number' } %>
