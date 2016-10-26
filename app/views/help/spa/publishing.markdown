@@ -186,7 +186,7 @@ Una vez activado, puede incrustar recursos con un shortcode, que se puede agarra
 
 Por ejemplo, si desea incrustar un documento a 800px de ancho, pre-desplazado a la página 3:
 
-    [documentcloud url="https://www.documentcloud.org/documents/282753-lefler-thesis.html" width="800" default_page="3"]
+    [documentcloud url="https://www.documentcloud.org/documents/282753-lefler-thesis.html" width="800" page="3"]
 
 Si usted no indica una anchura (o manualmente deshabilitar anchos de adaptive con `responsive="false"`), el documento automáticamente estrecho y ampliar para llenar el ancho disponible.
 

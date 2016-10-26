@@ -468,6 +468,18 @@ class Document < ActiveRecord::Base
     self.docdata.update_attributes :data => hash
   end
 
+  # Documents don't themselves have an aspect ratio, as individual pages can 
+  # have differing aspect ratios. We should considering calculating and storing 
+  # an ideal aspect ratio that will be wrong for the least number of pages. 
+  # Until then, we just return the first page's aspect ratio.
+  def safe_aspect_ratio
+    pages.first.safe_aspect_ratio
+  end
+
+  def inverted_aspect_ratio
+    1 / safe_aspect_ratio
+  end
+
   # Ex: docs/1011
   def path
     File.join('documents', id.to_s)
@@ -597,8 +609,16 @@ class Document < ActiveRecord::Base
     File.join(DC.server_root(:ssl => allow_ssl, :agnostic => format == :js), canonical_path(format))
   end
 
+  def iframe_embed_src_url(options={})
+    # TODO: Remove `sidebar: false` and have the viewer handle sidebar hiding 
+    # when iframed
+    forced_options = {embed: true, sidebar: false, responsive: false}
+    options.merge!(forced_options).except!(:maxheight, :maxwidth)
+    "#{canonical_url(:html)}?#{options.to_query}"
+  end
+  
   def oembed_url
-    "#{DC.server_root}/api/oembed.json?url=#{CGI.escape(self.canonical_url('html'))}&responsive=true"
+    "#{DC.server_root}/api/oembed.json?url=#{CGI.escape(self.canonical_url(:html))}"
   end
 
   def search_url
@@ -711,6 +731,23 @@ class Document < ActiveRecord::Base
     queue_import :images_only => true, :secure => !calais_id
   end
 
+  def calculate_aspect_ratios
+    existing_jobs(:calculate_aspect_ratios).present? ? true : enqueue_calculate_aspect_ratios
+  end
+
+  def existing_jobs(action)
+    processing_jobs.where(action: action, complete: false)
+  end
+
+  def enqueue_calculate_aspect_ratios
+    self.processing_jobs.new(
+      action: 'calculate_aspect_ratios',
+      title: title, 
+      account_id: account_id,
+      options: { id: id }
+    ).queue
+  end
+
   def reindex_all!(access=nil)
     Page.refresh_page_map(self)
     EntityDate.reset(self)
@@ -731,6 +768,7 @@ class Document < ActiveRecord::Base
   end
 
   # Keep a local ProcessingJob record of this active CloudCrowd Job.
+  # Use record_job
   def record_job(job_json)
     job = JSON.parse(job_json)
     processing_jobs.create!(

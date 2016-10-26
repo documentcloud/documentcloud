@@ -178,28 +178,38 @@ class ApiController < ApplicationController
     resource_params = Rails.application.routes.recognize_path(url.path) rescue nil
     return not_found unless url.host == DC::CONFIG['server_root'] and resource_embeddable?(resource_params)
 
+    # Map Rails Controller names to embed type
     controller_embed_map = {
-      'annotations' => :note,
-      'documents'   => :document,
-      'pages'       => :page
+      annotations: :note,
+      documents:   :document,
+      pages:       :page
     }
 
+    # specify the default resource type.
     canonical_format_map = {
-      'annotations' => :js,
-      'documents'   => :js,
-      'pages'       => :html
+      annotations: :js,
+      documents:   :js,
+      pages:       :html
     }
 
     resource_controller = resource_params[:controller]
-    resource_url = url_for(resource_params.merge(:format => canonical_format_map[resource_controller]))
+    resource_url = url_for(resource_params.merge(:format => canonical_format_map[resource_controller.to_sym]))
 
     # create a serializer mock/class/struct for temporary use
     resource_serializer_klass = Struct.new(:id, :resource_url, :type)
-    resource = resource_serializer_klass.new(resource_params[:id], resource_url, controller_embed_map[resource_controller])
+    resource = resource_serializer_klass.new(resource_params[:id], resource_url, controller_embed_map[resource_controller.to_sym])
     
-    config = pick(params, *DC::Embed.embed_klass(resource.type).config_keys)
-    embed = DC::Embed.embed_for(resource, config, {:strategy => :oembed})
+    # The embed should be configured using params encoded on the `url` itself, 
+    # but for backwards compatibility with the WordPress plugin before 0.4.3, 
+    # we have to expect params on the endpoint request itself. We can reduce 
+    # this to just the `parse_query` stuff once we're sure most people are on 
+    # wordpress-documentcloud >=0.4.3.
+    config_params = params.merge(Rack::Utils.parse_query(url.query))
+    embed_config  = pick(config_params, *DC::Embed.embed_klass(resource.type).config_keys)
+    embed = DC::Embed.embed_for(resource, embed_config, {strategy: :oembed})
     
+    return forbidden unless embed.accessible?
+
     respond_to do |format|
       format.json do
         render_cross_origin_json embed.as_json.to_json
@@ -226,16 +236,18 @@ class ApiController < ApplicationController
 
   def resource_embeddable?(resource_params)
     resource_params and
+    resource_params[:format] == 'html' and
     resource_params[:id] and
     (
       (
         %w[documents pages].include?(resource_params[:controller]) and
         resource_params[:id] =~ DC::Validators::SLUG # and
-        # Document.accessible(nil, nil).exists?(params[:id].to_i) 
+        # Document.accessible(nil, nil).exists?(resource_params[:id])
       ) or
       (
         resource_params[:controller] == "annotations" and
-        resource_params[:document_id] =~ DC::Validators::SLUG
+        resource_params[:document_id] =~ DC::Validators::SLUG # and
+        # Annotation.accessible(nil).exists?(resource_params[:id])
       )
     )
   end
