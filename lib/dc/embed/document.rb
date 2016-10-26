@@ -4,8 +4,8 @@ module DC
       class Config < Base::Config
         define_attributes do
           string  :container
-          number  :default_page,      output_as: :page
-          number  :default_note,      output_as: :note
+          number  :page
+          number  :note
           number  :maxheight,         output_as: :height
           number  :maxwidth,          output_as: :width
           number  :zoom

@@ -188,7 +188,7 @@ Once activated, you can embed resources with a simple shortcode, which you can g
 
 For example, if you want to embed a document at 800px wide, pre-scrolled to page 3:
 
-    [documentcloud url="https://www.documentcloud.org/documents/282753-lefler-thesis.html" width="800" default_page="3"]
+    [documentcloud url="https://www.documentcloud.org/documents/282753-lefler-thesis.html" width="800" page="3"]
 
 If you don't indicate a width (or manually disable responsive widths with `responsive="false"`), then the document will automatically narrow and widen to fill available width.
 

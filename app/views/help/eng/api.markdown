@@ -297,8 +297,8 @@ sidebar          | (optional) Show the sidebar    | true (default)
 pdf              | (optional) Include a link to the original PDF    | true (default)
 responsive       | (optional) Make the viewer responsive    | false (default)
 responsive_offset| (optional) Specify header height (pixels)    | 4
-default_note     | (optional) Open the document to a specific note. An integer representing the note ID | 214279
-default_page     | (optional) Open the document to a specific page   | 3
+note             | (optional) Open the document to a specific note. An integer representing the note ID | 214279
+page             | (optional) Open the document to a specific page   | 3
 
 <a name="oembed-pages"></a>
 ### Example pages request
