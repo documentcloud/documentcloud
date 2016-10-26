@@ -6,6 +6,9 @@
 module DC
   module Embed
     class Base
+      include ActionView::Helpers::UrlHelper
+      include ActionView::Helpers::TagHelper
+
       attr_accessor :strategy, :dom_mechanism, :template
       attr_reader   :resource, :embed_config
 
@@ -26,7 +29,11 @@ module DC
       end
       
       def code
-        [bootstrap_markup, content_markup].join("\n")
+        [bootstrap_markup, content_markup].join("\n").squish
+      end
+      
+      def accessible?
+        true
       end
       
       def self.config_keys
@@ -99,7 +106,7 @@ module DC
             case
             when (value.kind_of? TrueClass or value.kind_of? FalseClass); then value
             when value == "true"; then true
-            when value == "false"; then false
+            when (value || '').match(/no|false/); then false # For Overview
             else; value
             end
           when :number
@@ -118,8 +125,9 @@ module DC
         
         # When initializing search the input arguments for fields which
         # this configuration class accepts
-        def initialize(args={})
-          self.class.keys.each{ |attribute| self[attribute] = args[attribute] }
+        def initialize(data:{}, options:{map_keys: true})
+          @options = options
+          self.class.keys.each{ |attribute| self[attribute] = data[attribute] }
         end
         
         # store attributes as instance variables
@@ -140,10 +148,13 @@ module DC
         end
         
         def dump
-          attribute_pairs = self.compact.map do |attribute, value|
-            # replace input keys with output keys as specified
-            attribute = self.class.attribute_map[attribute] if self.class.attribute_map.keys.include? attribute
-            [attribute, value]
+          attribute_pairs = self.compact
+          if @options[:map_keys]
+            attribute_pairs = Hash[attribute_pairs].map do |attribute, value|
+              # replace input keys with output keys as specified
+              attribute = self.class.attribute_map[attribute] if self.class.attribute_map.keys.include? attribute
+              [attribute, value]
+            end
           end
           Hash[attribute_pairs]
         end

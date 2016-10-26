@@ -2,7 +2,7 @@
 
 # Thoughts
 
-Embeds can be categorized along three dimensions:
+Embeds can be categorized along four dimensions:
 
 ## Resource
 
