@@ -199,8 +199,9 @@ class ApiController < ApplicationController
     resource_serializer_klass = Struct.new(:id, :resource_url, :type)
     resource = resource_serializer_klass.new(resource_params[:id], resource_url, controller_embed_map[resource_controller])
     
-    config = pick(params, *DC::Embed.embed_klass(resource.type).config_keys)
-    embed = DC::Embed.embed_for(resource, config, {:strategy => :oembed})
+    config_params = Rack::Utils.parse_query(url.query)
+    embed_config  = pick(config_params, *DC::Embed.embed_klass(resource.type).config_keys)
+    embed = DC::Embed.embed_for(resource, embed_config, {strategy: :oembed})
     
     return forbidden unless embed.accessible?
 
