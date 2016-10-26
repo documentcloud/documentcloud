@@ -25,7 +25,6 @@ class AnnotationsController < ApplicationController
     respond_to do |format|
       format.json do
         @response = current_annotation.canonical(:include_image_url => true, :include_document_url => true)
-        # TODO: https://github.com/documentcloud/documentcloud/issues/291
         render_cross_origin_json
       end
       format.js do
