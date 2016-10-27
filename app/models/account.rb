@@ -5,6 +5,7 @@
 class Account < ActiveRecord::Base
   include DC::Access
   include DC::Roles
+  include FeatureFlags
 
   # Associations:
   has_many :memberships,     :dependent => :destroy
@@ -25,7 +26,8 @@ class Account < ActiveRecord::Base
     :format     =>{ :with => DC::Validators::EMAIL },
     :if         => Proc.new{ |user| user.has_memberships? || user.email.present? }
 
-  validate :validate_identity_is_unique
+  # TODO: omniauth remove me
+  # validate :validate_identity_is_unique
   validates :language, :inclusion=>{ :in => DC::Language::USER,
             :message => "must be one of: (#{DC::Language::USER.join(', ')})" }
   validates :document_language,  :inclusion=>{ :in => DC::Language::SUPPORTED,
@@ -43,9 +45,10 @@ class Account < ActiveRecord::Base
   scope :active,  -> { with_memberships.where( ["memberships.role is NULL or memberships.role != ?", DISABLED] ) }
   scope :real,    -> { with_memberships.where( ["memberships.role in (?)", REAL_ROLES] ) }
   scope :reviewer,-> { with_memberships.where( ["memberships.role = ?",    REVIEWER] ) }
-  scope :with_identity, lambda { | provider, id |
-     where("identities @> hstore(:provider, :id)", :provider=>provider.to_s,:id=>id.to_s )
-  }
+  # TODO - omniauth remove me
+  # scope :with_identity, lambda { | provider, id |
+  #    where("identities @> hstore(:provider, :id)", :provider=>provider.to_s,:id=>id.to_s )
+  # }
 
   # Populates the organization#members accessor with all the organizaton's accounts
   def organizations_with_accounts
@@ -80,16 +83,36 @@ class Account < ActiveRecord::Base
     Account.where(['lower(email) = ?', email.downcase]).first
   end
 
-  #
-  def self.from_identity( identity )
+  # TODO - omniauth remove me 
+  # def self.from_identity( identity )
 
-    unless account = Account.with_identity( identity['provider'],  identity['uid'] ).first
-      account = Account.new({ :document_language=>'eng', :language=>'eng' })
+  #   unless account = Account.with_identity( identity['provider'],  identity['uid'] ).first
+  #     account = Account.new({ :document_language=>'eng', :language=>'eng' })
+  #   end
+
+  #   account.record_identity_attributes( identity )
+  #   account.save! if account.changed?
+  #   account
+  # end
+
+  def self.create_with_omniauth(auth_hash)
+    account = Account.find_or_initialize_by(email: auth_hash['info']['email'])
+
+    account.provider = auth_hash['provider']
+    account.uid = auth_hash['uid']
+
+    if auth_hash['info']
+      account.first_name = auth_hash['info']['first_name'] || ''
+      account.last_name = auth_hash['info']['first_name'] || ''
     end
-
-    account.record_identity_attributes( identity )
-    account.save! if account.changed?
+    account.save!
     account
+  end
+
+  def self.find_or_create_from_auth_hash(auth_hash)
+    where(provider:  auth_hash['provider'],
+          uid: auth_hash['uid'].to_s,
+          email: auth_hash['info']['email]']).first || Account.create_with_omniauth(auth_hash)
   end
 
   # Save this account as the current account in the session. Logs a visitor in.
@@ -331,16 +354,17 @@ class Account < ActiveRecord::Base
     self.hashed_password = @password
   end
 
-  def validate_identity_is_unique
-    return if self.identities.blank?
-    condition = self.identities.map{ | provider, id | "identities @> hstore(?,?)" }.join(' or ')
-    condition << " and id<>#{self.id}" unless new_record?
-    values = self.identities.map{|k,v| [k.to_s,v.to_s] }.flatten
-    if account = Account.where( [ condition, *values ] ).first
-      duplicated = account.identities.to_set.intersection( self.identities ).map{|k,v| k}.join(',')
-      errors.add(:identities, "An account exists with the same id for #{account.id} #{account.identities.to_json} #{duplicated}")
-    end
-  end
+  # TODO - omniauth cleanup remove me
+  # def validate_identity_is_unique
+  #   return if self.identities.blank?
+  #   condition = self.identities.map{ | provider, id | "identities @> hstore(?,?)" }.join(' or ')
+  #   condition << " and id<>#{self.id}" unless new_record?
+  #   values = self.identities.map{|k,v| [k.to_s,v.to_s] }.flatten
+  #   if account = Account.where( [ condition, *values ] ).first
+  #     duplicated = account.identities.to_set.intersection( self.identities ).map{|k,v| k}.join(',')
+  #     errors.add(:identities, "An account exists with the same id for #{account.id} #{account.identities.to_json} #{duplicated}")
+  #   end
+  # end
 
   # Set the default membership.  Will mark the given membership as the default
   # and the other memberships (if any) as non-default
@@ -351,28 +375,29 @@ class Account < ActiveRecord::Base
     end
   end
 
-  def record_identity_attributes( identity )
-    current_identities = ( self.identities ||= {} )
-    current_identities[ identity['provider'] ] = identity['uid']
-    write_attribute( :identities, DC::Hstore.to_sql(  current_identities ) )
+  # TODO - omniauth cleanup remove me
+  # def record_identity_attributes( identity )
+  #   current_identities = ( self.identities ||= {} )
+  #   current_identities[ identity['provider'] ] = identity['uid']
+  #   write_attribute( :identities, DC::Hstore.to_sql(  current_identities ) )
 
-    info = identity['info']
+  #   info = identity['info']
 
-    # only overwrite account's email if it is blank no-one else is using it
-    self.email = info['email'] if info['email'] && self.email.blank? && Account.lookup( info['email'] ).nil?
+  #   # only overwrite account's email if it is blank no-one else is using it
+  #   self.email = info['email'] if info['email'] && self.email.blank? && Account.lookup( info['email'] ).nil?
 
-    %w{ first_name last_name }.each do | attr |
-      write_attribute( attr, info[attr] ) if read_attribute(attr).blank? && info[attr]
-    end
-    if self.first_name.blank? && ! info['name'].blank?
-      self.first_name = info['name'].split(' ').first
-    end
-    if self.last_name.blank? && ! info['name'].blank?
-      self.last_name = info['name'].split(' ').last
-    end
+  #   %w{ first_name last_name }.each do | attr |
+  #     write_attribute( attr, info[attr] ) if read_attribute(attr).blank? && info[attr]
+  #   end
+  #   if self.first_name.blank? && ! info['name'].blank?
+  #     self.first_name = info['name'].split(' ').first
+  #   end
+  #   if self.last_name.blank? && ! info['name'].blank?
+  #     self.last_name = info['name'].split(' ').last
+  #   end
 
-    self
-  end
+  #   self
+  # end
 
   # Create default organization to preserve backwards compatability.
   def canonical(options = {})

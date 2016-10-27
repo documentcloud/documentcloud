@@ -27,10 +27,16 @@ gem 'sunspot_rails',          '2.2.0'
 gem 'sunspot_solr',           '2.2.0'
 gem 'progress_bar' # Optional, used by sunspot to show progress while re-indexing
 
-gem 'omniauth',               '~> 1.2.1'
-gem 'omniauth-twitter',       '~> 1.0'
-gem 'omniauth-facebook',      '~> 1.6'
-gem 'omniauth-google-oauth2', '~> 0.2'
+# TODO: omniauth cleanup remove me
+# gem 'omniauth',               
+# gem 'omniauth-twitter',       '~> 1.0'
+# gem 'omniauth-facebook',      '~> 1.6'
+# gem 'omniauth-google-oauth2', '~> 0.2'
+
+# Auth
+gem 'omniauth', '~> 1.3.1'
+gem 'omniauth-oauth2'
+
 gem 'sanitize',               '~> 2.0.6'
 gem 'rdiscount',              '~> 2.1.6'
 gem 'rake'
@@ -58,6 +64,7 @@ group :development, :test do
   gem 'byebug' # Debugger
   gem 'factory_girl_rails' # Mocking out objects
   gem 'ruby-debug-passenger'
+  
 end
 
 group :development do
@@ -66,6 +73,8 @@ group :development do
   # by a developer on their local machine before committing the compiled strings
   gem 'google_drive',         '~> 1.0.0'
   gem 'highline'
+  gem 'better_errors'
+  gem 'binding_of_caller'
 end
 
 group :test do

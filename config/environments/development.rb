@@ -29,4 +29,7 @@ DC::Application.configure do
 
   # Put the site into a read-only mode for database updates
   # config.read_only = false
+  
+  # Adds TaggedLogging timestamps to Rails.logger
+  config.log_tags = [ lambda {|r| DateTime.now } ]
 end
