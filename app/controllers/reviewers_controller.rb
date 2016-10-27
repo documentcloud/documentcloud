@@ -11,7 +11,7 @@ class ReviewersController < ApplicationController
   def index
     reviewers = {}
     @documents.each {|doc| reviewers[doc.id] = doc.reviewers }
-    json reviewers:  reviewers
+    json reviewers: reviewers
   end
 
   def create
