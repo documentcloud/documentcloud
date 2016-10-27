@@ -46,8 +46,8 @@ class ReviewersController < ApplicationController
   end
 
   def preview_email
-    @email = sanitize LifecycleMailer.create_reviewer_instructions(@documents, current_account, nil, params[:message]).body
-    render :layout => nil
+    @email = LifecycleMailer.reviewer_instructions(@documents, current_account, nil, params[:message]).body
+    render layout: nil
   end
 
   def send_email
