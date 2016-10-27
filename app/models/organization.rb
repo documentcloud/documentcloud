@@ -62,7 +62,7 @@ class Organization < ActiveRecord::Base
       memberships.organization_id, memberships.role,
       accounts.id,                 accounts.email,
       accounts.first_name,         accounts.last_name,
-      accounts.hashed_password,    accounts.identities,
+      accounts.hashed_password,
       accounts.language
     from memberships
       inner join accounts on accounts.id = memberships.account_id
@@ -143,5 +143,9 @@ class Organization < ActiveRecord::Base
     attrs
   end
 
-
+  # TODO: add ability to pass and organization slug (from params)
+  # TODO: add ability to create organization if it does not exist
+  def self.find_first_organization_for_auth(account)
+    account.organizations.first
+  end
 end

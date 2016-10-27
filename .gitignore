@@ -24,8 +24,11 @@ cloud_crowd.db
 .DS_Store
 public/search
 vendor/solr-4.0.0/solr-webapp/webapp/*
+vendor/cache/*
 .bundle
 public/javascripts/vendor/*/
 .vagrant
 .tm_properties
 Vagrantfile
+*.sublime-*
+.byebug_history
