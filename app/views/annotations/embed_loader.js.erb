@@ -5,8 +5,8 @@
 (function() {
   window.dc           = window.dc || {};
   window.dc.noteQueue = window.dc.noteQueue || [];
-  window.dc.embed     = window.dc.embed     || {};
   window.dc.recordHit = "<%= server_root %>/pixel.gif";
+  window.dc.embed     = window.dc.embed || {};
 
   /* `loadNote()` used to be defined in `note_embed.js`, but we've renamed it to
      `immediatelyLoadNote()` and turned this into a queuing function. */
