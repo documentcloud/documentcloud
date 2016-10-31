@@ -9,10 +9,10 @@
   window.dc.recordHit = "<%= server_root %>/pixel.gif";
 
   /* `loadNote()` used to be defined in `note_embed.js`, but we've renamed it to
-     `actuallyLoadNote()` and turned this into a queuing function. */
+     `immediatelyLoadNote()` and turned this into a queuing function. */
   window.dc.embed.loadNote = function(url, options) {
-    if (window.dc.embed.actuallyLoadNote !== void 0) {
-      window.dc.embed.actuallyLoadNote(url, options);
+    if (window.dc.embed.immediatelyLoadNote !== void 0) {
+      window.dc.embed.immediatelyLoadNote(url, options);
     } else {
       /* 1. Define our note-loading utility functions */
       var on = function (el, eventName, handler) {
@@ -43,21 +43,21 @@
           document.querySelector('body').appendChild(script);
         }
       };
-      var loadNotes = function() {
+      var loadQueuedNotes = function() {
         var q = window.dc.noteQueue;
         for (var i = 0, qLength = q.length; i < qLength; i++) {
-          window.dc.embed.actuallyLoadNote(q[i].url, q[i].options);
+          window.dc.embed.immediatelyLoadNote(q[i].url, q[i].options);
         }
         window.dc.noteQueue = [];
       };
 
-      /* 2. Add this note to the queue that `loadNotes()` will use */
+      /* 2. Add this note to the queue that `loadQueuedNotes()` will use */
       window.dc.noteQueue.push({url: url, options: options});
 
-      /* 3. Insert the styles and scripts needed, with `loadNotes()` fired
+      /* 3. Insert the styles and scripts needed, with `loadQueuedNotes()` fired
             after the script has finished loading */
       insertStylesheet('<%= asset_root %>/note_embed/note_embed.css');
-      insertJavaScript('<%= asset_root %>/note_embed/note_embed.js', loadNotes);
+      insertJavaScript('<%= asset_root %>/note_embed/note_embed.js', loadQueuedNotes);
     }
   }
 })();
