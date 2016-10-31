@@ -8,10 +8,10 @@
   window.DV.recordHit     = "<%= server_root %>/pixel.gif";
 
   /* `load()` used to be defined in `document_viewer.js`, but we've renamed it
-     to `privateLoadDocument()` and turned this into a queuing function. */
+     to `immediatelyLoadDocument()` and turned this into a queuing function. */
   window.DV.load = function(url, options) {
-    if (window.DV.privateLoadDocument !== void 0) {
-      window.DV.privateLoadDocument(url, options);
+    if (window.DV.immediatelyLoadDocument !== void 0) {
+      window.DV.immediatelyLoadDocument(url, options);
     } else {
       /* 1. Define our note-loading utility functions */
       var on = function (el, eventName, handler) {
@@ -46,7 +46,7 @@
       var loadQueuedDocuments = function() {
         var q = window.DV.documentQueue;
         for (var i = 0, qLength = q.length; i < qLength; i++) {
-          window.DV.privateLoadDocument(q[i].url, q[i].options);
+          window.DV.immediatelyLoadDocument(q[i].url, q[i].options);
         }
         window.DV.documentQueue = [];
       };
