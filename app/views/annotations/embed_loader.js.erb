@@ -1,47 +1,35 @@
 <%
-  server_root = DC.server_root(agnostic: true)
-  asset_root  = DC.asset_root(agnostic: true)
+  asset_root = DC.asset_root(:agnostic => true)
 %>
+
 (function() {
-  window.dc                = window.dc || {};
-  window.dc.noteQueue      = window.dc.noteQueue || [];
-  window.dc.recordHit      = "<%= server_root %>/pixel.gif";
-  window.dc.embed          = window.dc.embed || {};
-  window.dc.embed.loadNote = function(url, options) {
-    if (window.dc.embed.immediatelyLoadNote !== void 0) {
-      window.dc.embed.immediatelyLoadNote(url, options);
-    } else {
-      var insertStylesheet = function(href) {
-        if (!document.querySelector('link[href$="' + href + '"]')) {
-          var stylesheet       = document.createElement('link');
-              stylesheet.rel   = 'stylesheet';
-              stylesheet.type  = 'text/css';
-              stylesheet.media = 'screen';
-              stylesheet.href  = href;
-          document.querySelector('head').appendChild(stylesheet);
-        }
-      };
-      var insertJavaScript = function(src, onLoadCallback) {
-        if (!document.querySelector('script[src$="' + src + '"]')) {
-          var script       = document.createElement('script');
-              script.src   = src;
-              script.async = true;
-          if (script.addEventListener) {
-            script.addEventListener('load', onLoadCallback);
-          }
-          document.querySelector('body').appendChild(script);
-        }
-      };
-      var loadQueuedNotes = function() {
-        var q = window.dc.noteQueue;
-        for (var i = 0, qLength = q.length; i < qLength; i++) {
-          window.dc.embed.immediatelyLoadNote(q[i].url, q[i].options);
-        }
-        window.dc.noteQueue = [];
-      };
-      window.dc.noteQueue.push({url: url, options: options});
-      insertStylesheet('<%= asset_root %>/note_embed/note_embed-datauri.css');
-      insertJavaScript('<%= asset_root %>/note_embed/note_embed.js', loadQueuedNotes);
-    }
-  }
+  // If the note embed is already loaded, don't repeat the process.
+  if (window.dc) { if (window.dc.noteEmbedLoaded) { return; } }
+
+  window.dc = window.dc || {};
+  window.dc.recordHit = "<%= DC.server_root(:agnostic=>true) %>/pixel.gif";
+
+  var loadCSS = function(url, media) {
+    var link   = document.createElement('link');
+    link.rel   = 'stylesheet';
+    link.type  = 'text/css';
+    link.media = media || 'screen';
+    link.href  = url;
+    var head   = document.getElementsByTagName('head')[0];
+    head.appendChild(link);
+  };
+
+  /*@cc_on
+  /*@if (@_jscript_version < 5.8)
+    loadCSS("<%= asset_root %>/note_embed/note_embed.css");
+  @else @*/
+    loadCSS("<%= asset_root %>/note_embed/note_embed-datauri.css");
+  /*@end
+  @*/
+
+  // Record the fact that the note embed is loaded.
+  dc.noteEmbedLoaded = true;
+
+  // Request the embed JavaScript.
+  document.write('<script type="text/javascript" src="<%= asset_root %>/note_embed/note_embed.js"></scr' + 'ipt>');
 })();
