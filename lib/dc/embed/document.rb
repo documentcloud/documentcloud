@@ -70,12 +70,15 @@ module DC
 
       def content_markup
         template_options = {
-          # default_container_id: "DV-viewer-#{@resource.id}",
           resource_url: @resource.resource_url,
           document:     @document
         }
-        # template_options[:generate_default_container] = @embed_config[:container].nil? || @embed_config[:container].empty? || @embed_config[:container] == '#' + template_options[:default_container_id]
-        # @embed_config[:container] ||= '#' + template_options[:default_container_id]
+
+        if @dom_mechanism == :direct
+          template_options[:default_container_id] = "DV-viewer-#{@resource.id}"
+          template_options[:generate_default_container] = !@embed_config[:container].present? || @embed_config[:container] == '#' + template_options[:default_container_id]
+          @embed_config[:container] ||= '#' + template_options[:default_container_id]
+        end
 
         render(@embed_config.dump, template_options)
       end
