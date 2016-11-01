@@ -88,9 +88,8 @@ module DC
       def inline_loader
         <<-SCRIPT
         <script>
-        #{ERB.new(File.read("#{Rails.root}/app/views/documents/embed_loader.js.erb")).result(binding)}
+          #{ERB.new(File.read("#{Rails.root}/app/views/documents/embed_loader.js.erb")).result(binding)}
         </script>
-        <script type="text/javascript" src="#{DC.asset_root(agnostic: true)}/viewer/viewer.js"></script>
         SCRIPT
       end
 
