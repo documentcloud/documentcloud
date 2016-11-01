@@ -1,35 +1,48 @@
 <%
-  asset_root = DC.asset_root(:agnostic => true)
+  server_root = DC.server_root(agnostic: true)
+  asset_root  = DC.asset_root(agnostic: true)
 %>
-
 (function() {
-  // If the search embed is already loaded, don't repeat the process.
-  if (window.dc && window.dc.loaded) return;
-
-  window.dc = window.dc || {};
-  window.dc.recordHit = "<%= DC.server_root(:agnostic=>true) %>/pixel.gif";
-
-  var loadCSS = function(url, media) {
-    var link   = document.createElement('link');
-    link.rel   = 'stylesheet';
-    link.type  = 'text/css';
-    link.media = media || 'screen';
-    link.href  = url;
-    var head   = document.getElementsByTagName('head')[0];
-    head.appendChild(link);
-  };
-
-  /*@cc_on
-  /*@if (@_jscript_version < 5.8)
-    loadCSS('<%= asset_root %>/search_embed/search_embed.css');
-  @else @*/
-    loadCSS('<%= asset_root %>/search_embed/search_embed-datauri.css');
-  /*@end
-  @*/
-
-  // Record the fact that the embed is loaded.
-  dc.loaded = true;
-
-  // Request the embed JavaScript.
-  document.write('<script type="text/javascript" src="<%= asset_root %>/search_embed/search_embed.js"></scr' + 'ipt>');
+  window.dc             = window.dc || {};
+  window.dc.searchQueue = window.dc.searchQueue || [];
+  window.dc.recordHit   = "<%= server_root %>/pixel.gif";
+  window.dc.embed       = window.dc.embed || {};
+  window.dc.embed.load  = function(url, options) {
+    if (window.dc.embed.immediatelyLoadSearch !== void 0) {
+      window.dc.embed.immediatelyLoadSearch(url, options);
+    } else {
+      var insertStylesheet = function(href, media) {
+        if (!document.querySelector('link[href$="' + href + '"]')) {
+          media = media || 'screen';
+          var stylesheet       = document.createElement('link');
+              stylesheet.rel   = 'stylesheet';
+              stylesheet.type  = 'text/css';
+              stylesheet.media = media;
+              stylesheet.href  = href;
+          document.querySelector('head').appendChild(stylesheet);
+        }
+      };
+      var insertJavaScript = function(src, onLoadCallback) {
+        if (!document.querySelector('script[src$="' + src + '"]')) {
+          var script       = document.createElement('script');
+              script.src   = src;
+              script.async = true;
+          if (script.addEventListener) {
+            script.addEventListener('load', onLoadCallback);
+          }
+          document.querySelector('body').appendChild(script);
+        }
+      };
+      var loadQueuedSearches = function() {
+        var q = window.dc.searchQueue;
+        for (var i = 0, qLength = q.length; i < qLength; i++) {
+          window.dc.embed.immediatelyLoadSearch(q[i].url, q[i].options);
+        }
+        window.dc.searchQueue = [];
+      };
+      window.dc.searchQueue.push({url: url, options: options});
+      insertStylesheet('<%= asset_root %>/search_embed/search_embed-datauri.css');
+      insertJavaScript('<%= asset_root %>/search_embed/search_embed.js', loadQueuedSearches);
+    }
+  }
 })();

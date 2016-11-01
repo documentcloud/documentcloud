@@ -70,15 +70,15 @@ module DC
       end
 
       def bootstrap_markup
+        # TODO: Investigate if we actually need to make this distinction [JR]
         @strategy == :oembed ? inline_loader : static_loader
       end
 
       def inline_loader
         <<-SCRIPT
         <script>
-          #{ERB.new(File.read("#{Rails.root}/app/views/annotations/oembed_loader.js.erb")).result(binding)}
+          #{ERB.new(File.read("#{Rails.root}/app/views/annotations/embed_loader.js.erb")).result(binding)}
         </script>
-        <script type="text/javascript" src="#{DC.asset_root(agnostic: true)}/note_embed/note_embed.js"></script>
         SCRIPT
       end
 

@@ -70,26 +70,29 @@ module DC
 
       def content_markup
         template_options = {
-          # default_container_id: "DV-viewer-#{@resource.id}",
           resource_url: @resource.resource_url,
           document:     @document
         }
-        # template_options[:generate_default_container] = @embed_config[:container].nil? || @embed_config[:container].empty? || @embed_config[:container] == '#' + template_options[:default_container_id]
-        # @embed_config[:container] ||= '#' + template_options[:default_container_id]
+
+        if @dom_mechanism == :direct
+          template_options[:default_container_id] = "DV-viewer-#{@resource.id}"
+          template_options[:generate_default_container] = !@embed_config[:container].present? || @embed_config[:container] == '#' + template_options[:default_container_id]
+          @embed_config[:container] ||= '#' + template_options[:default_container_id]
+        end
 
         render(@embed_config.dump, template_options)
       end
 
       def bootstrap_markup
+        # TODO: Investigate if we actually need to make this distinction [JR]
         @strategy == :oembed ? inline_loader : static_loader
       end
 
       def inline_loader
         <<-SCRIPT
         <script>
-        #{ERB.new(File.read("#{Rails.root}/app/views/documents/oembed_loader.js.erb")).result(binding)}
+          #{ERB.new(File.read("#{Rails.root}/app/views/documents/embed_loader.js.erb")).result(binding)}
         </script>
-        <script type="text/javascript" src="#{DC.asset_root(agnostic: true)}/viewer/viewer.js"></script>
         SCRIPT
       end
 
