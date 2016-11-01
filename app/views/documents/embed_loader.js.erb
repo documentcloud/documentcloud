@@ -6,14 +6,10 @@
   window.DV               = window.DV || {};
   window.DV.documentQueue = window.DV.documentQueue || [];
   window.DV.recordHit     = "<%= server_root %>/pixel.gif";
-
-  /* `load()` used to be defined in `document_viewer.js`, but we've renamed it
-     to `immediatelyLoadDocument()` and turned this into a queuing function. */
-  window.DV.load = function(url, options) {
+  window.DV.load          = function(url, options) {
     if (window.DV.immediatelyLoadDocument !== void 0) {
       window.DV.immediatelyLoadDocument(url, options);
     } else {
-      /* 1. Define our note-loading utility functions */
       var insertStylesheet = function(href, media) {
         if (!document.querySelector('link[href$="' + href + '"]')) {
           media = media || 'screen';
@@ -43,21 +39,9 @@
         }
         window.DV.documentQueue = [];
       };
-
-      /* 2. Add this note to the queue that `loadQueuedDocuments()` will use */
       window.DV.documentQueue.push({url: url, options: options});
-
-      /* 3. Insert the styles and scripts needed, with `loadQueuedDocuments()`
-            fired after the script has finished loading */
-      /*@cc_on
-      /*@if (@_jscript_version < 5.8)
-        insertStylesheet('<%= asset_root %>/viewer/viewer.css');
-      @else @*/
-        insertStylesheet('<%= asset_root %>/viewer/viewer-datauri.css');
-      /*@end
-      @*/
+      insertStylesheet('<%= asset_root %>/viewer/viewer-datauri.css');
       insertStylesheet('<%= asset_root %>/viewer/printviewer.css', 'print');
-
       insertJavaScript('<%= asset_root %>/viewer/viewer.js', loadQueuedDocuments);
     }
   }

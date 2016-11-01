@@ -7,14 +7,10 @@
   window.dc.searchQueue = window.dc.searchQueue || [];
   window.dc.recordHit   = "<%= server_root %>/pixel.gif";
   window.dc.embed       = window.dc.embed || {};
-
-  /* `load()` used to be defined in `document_viewer.js`, but we've renamed it
-     to `immediatelyLoadDocument()` and turned this into a queuing function. */
-  window.dc.embed.load = function(url, options) {
+  window.dc.embed.load  = function(url, options) {
     if (window.dc.embed.immediatelyLoadSearch !== void 0) {
       window.dc.embed.immediatelyLoadSearch(url, options);
     } else {
-      /* 1. Define our note-loading utility functions */
       var insertStylesheet = function(href, media) {
         if (!document.querySelector('link[href$="' + href + '"]')) {
           media = media || 'screen';
@@ -44,20 +40,8 @@
         }
         window.dc.searchQueue = [];
       };
-
-      /* 2. Add this note to the queue that `loadQueuedSearches()` will use */
       window.dc.searchQueue.push({url: url, options: options});
-
-      /* 3. Insert the styles and scripts needed, with `loadQueuedSearches()`
-            fired after the script has finished loading */
-      /*@cc_on
-      /*@if (@_jscript_version < 5.8)
-        insertStylesheet('<%= asset_root %>/search_embed/search_embed.css');
-      @else @*/
-        insertStylesheet('<%= asset_root %>/search_embed/search_embed-datauri.css');
-      /*@end
-      @*/
-
+      insertStylesheet('<%= asset_root %>/search_embed/search_embed-datauri.css');
       insertJavaScript('<%= asset_root %>/search_embed/search_embed.js', loadQueuedSearches);
     }
   }
