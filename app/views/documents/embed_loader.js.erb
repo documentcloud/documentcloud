@@ -7,41 +7,43 @@
   window.DV.documentQueue = window.DV.documentQueue || [];
   window.DV.recordHit     = "<%= server_root %>/pixel.gif";
   window.DV.load          = function(url, options) {
+    var insertStylesheet = function(href, media) {
+      if (!document.querySelector('link[href$="' + href + '"]')) {
+        media = media || 'screen';
+        var stylesheet       = document.createElement('link');
+            stylesheet.rel   = 'stylesheet';
+            stylesheet.type  = 'text/css';
+            stylesheet.media = media;
+            stylesheet.href  = href;
+        document.querySelector('head').appendChild(stylesheet);
+      }
+    };
+    var insertJavaScript = function(src, onLoadCallback) {
+      var script = document.querySelector('script[src$="' + src + '"]');
+      if (!script) {
+        script       = document.createElement('script');
+        script.src   = src;
+        script.async = true;
+        document.querySelector('head').appendChild(script);
+      }
+      if (script.addEventListener && !script.getAttribute('data-listening')) {
+        script.setAttribute('data-listening', true);
+        script.addEventListener('load', onLoadCallback);
+      }
+    };
+    var loadQueuedDocuments = function() {
+      var q = window.DV.documentQueue;
+      for (var i = 0, qLength = q.length; i < qLength; i++) {
+        window.DV.immediatelyLoadDocument(q[i].url, q[i].options);
+      }
+      window.DV.documentQueue = [];
+    };
+    insertStylesheet('<%= asset_root %>/viewer/viewer-datauri.css');
+    insertStylesheet('<%= asset_root %>/viewer/printviewer.css', 'print');
     if (window.DV.immediatelyLoadDocument !== void 0) {
       window.DV.immediatelyLoadDocument(url, options);
     } else {
-      var insertStylesheet = function(href, media) {
-        if (!document.querySelector('link[href$="' + href + '"]')) {
-          media = media || 'screen';
-          var stylesheet       = document.createElement('link');
-              stylesheet.rel   = 'stylesheet';
-              stylesheet.type  = 'text/css';
-              stylesheet.media = media;
-              stylesheet.href  = href;
-          document.querySelector('head').appendChild(stylesheet);
-        }
-      };
-      var insertJavaScript = function(src, onLoadCallback) {
-        if (!document.querySelector('script[src$="' + src + '"]')) {
-          var script       = document.createElement('script');
-              script.src   = src;
-              script.async = true;
-          if (script.addEventListener) {
-            script.addEventListener('load', onLoadCallback);
-          }
-          document.querySelector('body').appendChild(script);
-        }
-      };
-      var loadQueuedDocuments = function() {
-        var q = window.DV.documentQueue;
-        for (var i = 0, qLength = q.length; i < qLength; i++) {
-          window.DV.immediatelyLoadDocument(q[i].url, q[i].options);
-        }
-        window.DV.documentQueue = [];
-      };
       window.DV.documentQueue.push({url: url, options: options});
-      insertStylesheet('<%= asset_root %>/viewer/viewer-datauri.css');
-      insertStylesheet('<%= asset_root %>/viewer/printviewer.css', 'print');
       insertJavaScript('<%= asset_root %>/viewer/viewer.js', loadQueuedDocuments);
     }
   }

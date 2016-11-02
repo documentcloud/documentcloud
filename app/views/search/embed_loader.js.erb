@@ -8,40 +8,42 @@
   window.dc.recordHit   = "<%= server_root %>/pixel.gif";
   window.dc.embed       = window.dc.embed || {};
   window.dc.embed.load  = function(url, options) {
+    var insertStylesheet = function(href, media) {
+      if (!document.querySelector('link[href$="' + href + '"]')) {
+        media = media || 'screen';
+        var stylesheet       = document.createElement('link');
+            stylesheet.rel   = 'stylesheet';
+            stylesheet.type  = 'text/css';
+            stylesheet.media = media;
+            stylesheet.href  = href;
+        document.querySelector('head').appendChild(stylesheet);
+      }
+    };
+    var insertJavaScript = function(src, onLoadCallback) {
+      var script = document.querySelector('script[src$="' + src + '"]');
+      if (!script) {
+        script       = document.createElement('script');
+        script.src   = src;
+        script.async = true;
+        document.querySelector('head').appendChild(script);
+      }
+      if (script.addEventListener && !script.getAttribute('data-listening')) {
+        script.setAttribute('data-listening', true);
+        script.addEventListener('load', onLoadCallback);
+      }
+    };
+    var loadQueuedSearches = function() {
+      var q = window.dc.searchQueue;
+      for (var i = 0, qLength = q.length; i < qLength; i++) {
+        window.dc.embed.immediatelyLoadSearch(q[i].url, q[i].options);
+      }
+      window.dc.searchQueue = [];
+    };
+    insertStylesheet('<%= asset_root %>/search_embed/search_embed-datauri.css');
     if (window.dc.embed.immediatelyLoadSearch !== void 0) {
       window.dc.embed.immediatelyLoadSearch(url, options);
     } else {
-      var insertStylesheet = function(href, media) {
-        if (!document.querySelector('link[href$="' + href + '"]')) {
-          media = media || 'screen';
-          var stylesheet       = document.createElement('link');
-              stylesheet.rel   = 'stylesheet';
-              stylesheet.type  = 'text/css';
-              stylesheet.media = media;
-              stylesheet.href  = href;
-          document.querySelector('head').appendChild(stylesheet);
-        }
-      };
-      var insertJavaScript = function(src, onLoadCallback) {
-        if (!document.querySelector('script[src$="' + src + '"]')) {
-          var script       = document.createElement('script');
-              script.src   = src;
-              script.async = true;
-          if (script.addEventListener) {
-            script.addEventListener('load', onLoadCallback);
-          }
-          document.querySelector('body').appendChild(script);
-        }
-      };
-      var loadQueuedSearches = function() {
-        var q = window.dc.searchQueue;
-        for (var i = 0, qLength = q.length; i < qLength; i++) {
-          window.dc.embed.immediatelyLoadSearch(q[i].url, q[i].options);
-        }
-        window.dc.searchQueue = [];
-      };
       window.dc.searchQueue.push({url: url, options: options});
-      insertStylesheet('<%= asset_root %>/search_embed/search_embed-datauri.css');
       insertJavaScript('<%= asset_root %>/search_embed/search_embed.js', loadQueuedSearches);
     }
   }
