@@ -3,10 +3,10 @@
   asset_root  = DC.asset_root(agnostic: true)
 %>
 (function() {
-  window.DV               = window.DV || {};
-  window.DV.documentQueue = window.DV.documentQueue || [];
-  window.DV.recordHit     = "<%= server_root %>/pixel.gif";
-  window.DV.load          = function(url, options) {
+  var DV = window.DV = window.DV        || {};
+  DV.documentQueue   = DV.documentQueue || [];
+  DV.recordHit       = "<%= server_root %>/pixel.gif";
+  DV.load            = function(url, options) {
     var insertStylesheet = function(href, media) {
       if (!document.querySelector('link[href$="' + href + '"]')) {
         media = media || 'screen';
@@ -15,7 +15,7 @@
             stylesheet.type  = 'text/css';
             stylesheet.media = media;
             stylesheet.href  = href;
-        document.querySelector('head').appendChild(stylesheet);
+        document.getElementsByTagName('head')[0].appendChild(stylesheet);
       }
     };
     var insertJavaScript = function(src, onLoadCallback) {
@@ -24,7 +24,7 @@
         script       = document.createElement('script');
         script.src   = src;
         script.async = true;
-        document.querySelector('head').appendChild(script);
+        document.getElementsByTagName('head')[0].appendChild(script);
       }
       if (script.addEventListener && !script.getAttribute('data-listening')) {
         script.setAttribute('data-listening', true);
@@ -32,18 +32,23 @@
       }
     };
     var loadQueuedDocuments = function() {
-      var q = window.DV.documentQueue;
-      for (var i = 0, qLength = q.length; i < qLength; i++) {
-        window.DV.immediatelyLoadDocument(q[i].url, q[i].options);
+      var loadDocument = DV.immediatelyLoadDocument || (DV.viewers && DV.load ? DV.load : false);
+      if (loadDocument) {
+        var q = DV.documentQueue;
+        for (var i = 0, qLength = q.length; i < qLength; i++) {
+          loadDocument(q[i].url, q[i].options);
+        }
+        DV.documentQueue = [];
+      } else if (window.console) {
+        console.error("DocumentCloud embed can't load because of missing components.");
       }
-      window.DV.documentQueue = [];
     };
     insertStylesheet('<%= asset_root %>/viewer/viewer-datauri.css');
     insertStylesheet('<%= asset_root %>/viewer/printviewer.css', 'print');
-    if (window.DV.immediatelyLoadDocument !== void 0) {
-      window.DV.immediatelyLoadDocument(url, options);
+    if (DV.immediatelyLoadDocument) {
+      DV.immediatelyLoadDocument(url, options);
     } else {
-      window.DV.documentQueue.push({url: url, options: options});
+      DV.documentQueue.push({url: url, options: options});
       insertJavaScript('<%= asset_root %>/viewer/viewer.js', loadQueuedDocuments);
     }
   }
