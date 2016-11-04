@@ -3,7 +3,7 @@
   asset_root  = DC.asset_root(agnostic: true)
 %>
 (function() {
-  var DV = window.DV = window.DV        || {};
+  var DV = window.DV = window.DV || {};
   DV.documentQueue   = DV.documentQueue || [];
   DV.recordHit       = "<%= server_root %>/pixel.gif";
   DV.load            = function(url, options) {

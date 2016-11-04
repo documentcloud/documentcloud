@@ -3,11 +3,11 @@
   asset_root  = DC.asset_root(agnostic: true)
 %>
 (function() {
-  window.dc                = window.dc || {};
-  window.dc.noteQueue      = window.dc.noteQueue || [];
-  window.dc.recordHit      = "<%= server_root %>/pixel.gif";
-  window.dc.embed          = window.dc.embed || {};
-  window.dc.embed.loadNote = function(url, options) {
+  var dc = window.dc = window.dc || {};
+  dc.noteQueue       = dc.noteQueue || [];
+  dc.recordHit       = "<%= server_root %>/pixel.gif";
+  dc.embed           = dc.embed || {};
+  dc.embed.loadNote  = function(url, options) {
     var insertStylesheet = function(href, media) {
       if (!document.querySelector('link[href$="' + href + '"]')) {
         media = media || 'screen';
@@ -16,7 +16,7 @@
             stylesheet.type  = 'text/css';
             stylesheet.media = media;
             stylesheet.href  = href;
-        document.querySelector('head').appendChild(stylesheet);
+        document.getElementsByTagName('head')[0].appendChild(stylesheet);
       }
     };
     var insertJavaScript = function(src, onLoadCallback) {
@@ -25,7 +25,7 @@
         script       = document.createElement('script');
         script.src   = src;
         script.async = true;
-        document.querySelector('head').appendChild(script);
+        document.getElementsByTagName('head')[0].appendChild(script);
       }
       if (script.addEventListener && !script.getAttribute('data-listening')) {
         script.setAttribute('data-listening', true);
@@ -33,17 +33,22 @@
       }
     };
     var loadQueuedNotes = function() {
-      var q = window.dc.noteQueue;
-      for (var i = 0, qLength = q.length; i < qLength; i++) {
-        window.dc.embed.immediatelyLoadNote(q[i].url, q[i].options);
+      var loadNote = dc.embed.immediatelyLoadNote || (dc.embed.noteCallback && dc.embed.loadNote ? dc.embed.loadNote : false);
+      if (loadNote) {
+        var q = dc.noteQueue;
+        for (var i = 0, qLength = q.length; i < qLength; i++) {
+          loadNote(q[i].url, q[i].options);
+        }
+        dc.noteQueue = [];
+      } else if (window.console) {
+        console.error("DocumentCloud embed can't load because of missing components.");
       }
-      window.dc.noteQueue = [];
     };
     insertStylesheet('<%= asset_root %>/note_embed/note_embed-datauri.css');
-    if (window.dc.embed.immediatelyLoadNote !== void 0) {
-      window.dc.embed.immediatelyLoadNote(url, options);
+    if (dc.embed.immediatelyLoadNote) {
+      dc.embed.immediatelyLoadNote(url, options);
     } else {
-      window.dc.noteQueue.push({url: url, options: options});
+      dc.noteQueue.push({url: url, options: options});
       insertJavaScript('<%= asset_root %>/note_embed/note_embed.js', loadQueuedNotes);
     }
   }
