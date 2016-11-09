@@ -158,12 +158,13 @@ class Annotation < ActiveRecord::Base
     return nil unless coords = coordinates
     page_width = Page::IMAGE_SIZES['normal'].gsub(/x$/, '').to_i
     {
-      aspect_ratio:        100.0 * coords[:height] / coords[:width],
-      height_pixel:        coords[:height],
-      width_pixel:         coords[:width],
-      width_percent:       100.0 * page_width / coords[:width],
-      offset_top_percent:  -100.0 * coords[:top] / coords[:height],
-      offset_left_percent: -100.0 * coords[:left] / coords[:width],
+      aspect_ratio:          1.0 * coords[:width]  / coords[:height],
+      inverted_aspect_ratio: 1.0 * coords[:height] / coords[:width],
+      height_pixel:          coords[:height],
+      width_pixel:           coords[:width],
+      width_percent:         100.0 * page_width / coords[:width],
+      offset_top_percent:    -100.0 * coords[:top] / coords[:height],
+      offset_left_percent:   -100.0 * coords[:left] / coords[:width],
     }
   end
 

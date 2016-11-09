@@ -8,7 +8,7 @@
     </div>
     <% dimensions = options[:note].embed_dimensions %>
     <div class="DC-note-image-max-bounds" style="max-height:<%= dimensions[:height_pixel] %>px;max-width:<%= dimensions[:width_pixel] %>px;">
-      <div class="DC-note-image-aspect-ratio" style="padding-bottom:<%= dimensions[:aspect_ratio] %>%;">
+      <div class="DC-note-image-aspect-ratio" style="padding-bottom:<%= dimensions[:inverted_aspect_ratio] * 100 %>%;">
         <%= content_tag :iframe, nil, { class: 'DC-note-image-space-filler', src: options[:note].iframe_embed_src_url(data), title: "Note “#{options[:note].title}” on document “#{options[:note].document.title}”", sandbox: ['allow-scripts', 'allow-same-origin', 'allow-popups'], frameborder: '0' } %>
       </div>
     </div>
