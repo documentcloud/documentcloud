@@ -14,6 +14,7 @@
       url:         @current_document.published_url || @current_document.canonical_url(:html),
       description: truncate(@current_document.description || "Source document hosted on #{DC::CONFIG['platform_name']}.", length: 200, separator: ' '),
       image:       @current_document.page_image_url(1, 'normal'),
+      image_alt:   "The first page of #{@current_document.title}",
       twitter: {
         card:   "summary_large_image",
         site:   DC::CONFIG['twitter_username'],

@@ -6,6 +6,7 @@
     url:         @current_document.published_url || @current_page.canonical_url(:html),
     description: truncate(@current_document.description || "Source document hosted on #{DC::CONFIG['platform_name']}.", length: 200, separator: ' '),
     image:       @current_page.image_url,
+    image_alt:   "Page #{@current_page.page_number} of #{@current_document.title}",
     twitter: {
       card:   "summary_large_image",
       site:   DC::CONFIG['twitter_username'],
