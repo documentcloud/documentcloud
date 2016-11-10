@@ -6,7 +6,8 @@
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   <title><%= compose_title(@title) %></title>
   <link rel="canonical" href="<%= compose_canonical_url(@canonical_url) %>">
-  <%= render :partial => 'common/oembed' if @oembeddable_resource %>
+  <%= render partial: 'common/oembed' if @oembeddable_resource %>
+  <%= render partial: 'common/sharing_meta_tags' if @sharing_meta_tags.present? %>
   <% stylesheets_header = [File.join(DC.workspace_asset_root, "/css/platform.css")] + (@stylesheets_header || []) %>
   <%= stylesheet_link_tag *stylesheets_header %>
   <% javascripts_header = (@javascripts_header || []) %>

@@ -10,6 +10,9 @@ defaults: &defaults
   aws_zone:             us-east-1c
   preconfigured_ami_id: <%= secrets['ami'] %>
   google_analytics_id:  <%= secrets['google_analytics_id'] %>
+  twitter_username:     '@documentcloud'
+  platform_domain:      documentcloud.org
+  platform_name:        DocumentCloud
 
 development:
   <<: *defaults
