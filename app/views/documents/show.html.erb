@@ -28,7 +28,7 @@
         image_type:  "image/gif",
         image_width: Page::IMAGE_SIZES['normal'].gsub(/x$/, ''),
       }
-    }
+    } unless @local
   %>
   <%= render partial: 'common/sharing_meta_tags' if @sharing_meta_tags.present? %>
   <!--[if (!IE)|(gte IE 8)]><!-->
