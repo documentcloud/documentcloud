@@ -2,7 +2,7 @@
   (@stylesheets_header ||= []).push File.join(DC.asset_root(:agnostic => true), "/embed/page/page_embed.css")
   @sharing_meta_tags = {
     author:      "#{@current_document.account_name} (#{@current_document.organization_name})",
-    title:       "Page #{@current_page.page_number} of #{truncate(@current_document.title, length: 70, separator: ' ')}",
+    title:       truncate("Page #{@current_page.page_number} of #{@current_document.title}", length: 70, separator: ' '),
     url:         @current_document.published_url || @current_page.canonical_url(:html),
     description: truncate(@current_document.description || "Source document hosted on #{DC::CONFIG['platform_name']}.", length: 200, separator: ' '),
     image:       @current_page.image_url,
