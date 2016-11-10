@@ -115,7 +115,7 @@ module DC
       end
 
       def calculate_dimensions
-        default_width = 500
+        default_width = ::Page::IMAGE_SIZES['normal'].gsub(/x$/, '').to_i
         @dimensions = {
           height: @embed_config[:maxheight] || ((@embed_config[:maxwidth] || default_width) / @page.safe_aspect_ratio).round,
           width:  @embed_config[:maxwidth]  || (@embed_config[:maxheight] ? (@embed_config[:maxheight] * @page.safe_aspect_ratio).round : default_width)
