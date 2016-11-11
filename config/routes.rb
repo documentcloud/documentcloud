@@ -70,6 +70,7 @@ DC::Application.routes.draw do
     end
   end
 
+  get '/documents', to: redirect('/public/search')
   resources :documents do
 
     resources :annotations do
