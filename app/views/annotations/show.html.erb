@@ -29,7 +29,7 @@
     </div>
     <% if (@current_annotation_dimensions) %>
     <div class="DC-note-image-max-bounds" style="max-height:<%= @current_annotation_dimensions[:height_pixel] %>px;max-width:<%= @current_annotation_dimensions[:width_pixel] %>px">
-      <div class="DC-note-image-aspect-ratio" style="padding-bottom:<%= @current_annotation_dimensions[:aspect_ratio] %>%">
+      <div class="DC-note-image-aspect-ratio" style="padding-bottom:<%= @current_annotation_dimensions[:inverted_aspect_ratio] * 100 %>%">
         <a class="DC-note-image-link DC-note-image-space-filler" href="<%= @current_annotation.contextual_path %>" title="View the note '<%= @current_annotation.title %>' in its original document context">
           <img class="DC-note-image" width="<%= @current_annotation_dimensions[:width_pixel] %>" height="<%= @current_annotation_dimensions[:height_pixel] %>" src="<%= @current_annotation.page.image_url %>" alt="Selected portion of a source document hosted by DocumentCloud" style="top:<%= @current_annotation_dimensions[:offset_top_percent] %>%;left:<%= @current_annotation_dimensions[:offset_left_percent] %>%;width:<%= @current_annotation_dimensions[:width_percent] %>%;">
         </a>
