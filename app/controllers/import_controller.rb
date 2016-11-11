@@ -83,9 +83,7 @@ class ImportController < ApplicationController
     return forbidden unless correct_cloud_crowd_secret?(params[:secret])
     cloud_crowd_job = JSON.parse(params[:job])
     if processing_job = ProcessingJob.lookup_by_remote(cloud_crowd_job)
-      processing_job.resolve(cloud_crowd_job) do |pj| 
-        # TODO: Can we remove this block now that we're not expiring the cache?
-      end
+      processing_job.resolve(cloud_crowd_job)
     end
     
     #render :plain => '201 Created', :status => 201
@@ -98,9 +96,7 @@ class ImportController < ApplicationController
     return forbidden unless correct_cloud_crowd_secret?(params[:secret])
     cloud_crowd_job = JSON.parse(params[:job])
     if processing_job = ProcessingJob.lookup_by_remote(cloud_crowd_job)
-      processing_job.resolve(cloud_crowd_job) do |pj| 
-        # TODO: Can we remove this block now that we're not expiring the cache?
-      end
+      processing_job.resolve(cloud_crowd_job)
     end
 
     render :plain => '201 Created', :status => 201
