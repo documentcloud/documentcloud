@@ -18,8 +18,8 @@ class AnnotationTest < ActiveSupport::TestCase
     assert Annotation.accessible( louis ).include?( annotations(:private) )
   end
 
-  it "returns document counts" do
-    assert_equal 2, Annotation.counts_for_documents( louis, [doc] )[ doc.id ]
+  it "returns note counts" do
+    assert_equal 3, Annotation.counts_for_documents( louis, [doc] )[ doc.id ]
   end
 
   it "populates author info" do
@@ -29,7 +29,7 @@ class AnnotationTest < ActiveSupport::TestCase
   end
 
   it "counts public notes by organization" do
-    assert_equal 1, Annotation.public_note_counts_by_organization[ tribune.id ]
+    assert_equal 2, Annotation.public_note_counts_by_organization[ tribune.id ]
   end
 
   it "finds it's page" do

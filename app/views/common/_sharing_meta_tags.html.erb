@@ -1,0 +1,20 @@
+<% if @sharing_meta_tags.present? %>
+<meta name="author" content="<%= @sharing_meta_tags[:author] %>">
+<!-- Shared by Facebook and Twitter -->
+<meta property="og:title" content="<%= @sharing_meta_tags[:title] %>">
+<meta property="og:url" content="<%= @sharing_meta_tags[:url] %>">
+<meta property="og:description" content="<%= @sharing_meta_tags[:description] %>">
+<meta property="og:image" content="<%= @sharing_meta_tags[:image] %>">
+<!-- Relevant to Facebook only -->
+<meta property="og:image:type" content="<%= @sharing_meta_tags[:og][:image_type] %>">
+<meta property="og:image:width" content="<%= @sharing_meta_tags[:og][:image_width] %>">
+<!-- Relevant to Twitter only -->
+<meta name="twitter:card" content="<%= @sharing_meta_tags[:twitter][:card] %>">
+<meta name="twitter:image:alt" content="<%= @sharing_meta_tags[:image_alt] %>">
+<meta name="twitter:site" content="<%= @sharing_meta_tags[:twitter][:site] %>">
+<meta name="twitter:domain" content="<%= @sharing_meta_tags[:twitter][:domain] %>">
+<% @sharing_meta_tags[:twitter][:metadata].each_with_index do |metadata, i| %>
+<meta name="twitter:label<%= i+1 %>" content="<%= metadata[:label] %>">
+<meta name="twitter:data<%= i+1 %>" content="<%= metadata[:data] %>">
+<% end if @sharing_meta_tags[:twitter][:metadata].present? %>
+<% end %>

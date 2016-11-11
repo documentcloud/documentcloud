@@ -118,6 +118,13 @@ class Annotation < ActiveRecord::Base
       .count
   end
 
+  # The interface prefills the note title with "Untitled Note", so that gets 
+  # saved to the database as the note's title. In certain interfaces (e.g., 
+  # Twitter cards) we only want to surface titles that a user actually provided.
+  def user_provided_title
+    (title.blank? || title == 'Untitled Note') ? '' : title
+  end
+
   def page
     document.pages.find_by_page_number(page_number)
   end
@@ -126,8 +133,20 @@ class Annotation < ActiveRecord::Base
     ACCESS_NAMES[access]
   end
 
+  def public?
+    PUBLIC_LEVELS.include?(access)
+  end
+
+  def private?
+    access == PRIVATE
+  end
+
+  def draft?
+    access == EXCLUSIVE
+  end
+
   def cacheable?
-    PUBLIC_LEVELS.include?(access) && document.cacheable?
+    public? && document.cacheable?
   end
 
   def coordinates
@@ -146,13 +165,21 @@ class Annotation < ActiveRecord::Base
     return nil unless coords = coordinates
     page_width = Page::IMAGE_SIZES['normal'].gsub(/x$/, '').to_i
     {
-      aspect_ratio:        100.0 * coords[:height] / coords[:width],
-      height_pixel:        coords[:height],
-      width_pixel:         coords[:width],
-      width_percent:       100.0 * page_width / coords[:width],
-      offset_top_percent:  -100.0 * coords[:top] / coords[:height],
-      offset_left_percent: -100.0 * coords[:left] / coords[:width],
+      aspect_ratio:          1.0 * coords[:width]  / coords[:height],
+      inverted_aspect_ratio: 1.0 * coords[:height] / coords[:width],
+      height_pixel:          coords[:height],
+      width_pixel:           coords[:width],
+      width_percent:         100.0 * page_width / coords[:width],
+      offset_top_percent:    -100.0 * coords[:top] / coords[:height],
+      offset_left_percent:   -100.0 * coords[:left] / coords[:width],
     }
+  end
+
+  def embed_classes
+    classes = []
+    classes.push 'draft'   if draft?
+    classes.push 'private' if private?
+    classes.map{ |cls| "DC-note-#{cls}" }.join(' ')
   end
 
   # `contextual` means "show this thing in the context of its document parent",
@@ -173,6 +200,11 @@ class Annotation < ActiveRecord::Base
     "/documents/#{document.canonical_id}/annotations/#{id}.#{format}"
   end
 
+  def iframe_embed_src_url(options={})
+    options.merge!(embed: true)
+    "#{canonical_url(:html)}?#{options.to_query}"
+  end
+  
   def oembed_url
     "#{DC.server_root}/api/oembed.json?url=#{CGI.escape(self.canonical_url(:html))}"
   end
@@ -192,6 +224,10 @@ class Annotation < ActiveRecord::Base
 
   def anchored_published_url
     "#{document.published_url}\#document/p#{page_number}/a#{id}"
+  end
+
+  def page_image_url(size: 'normal')
+    document.page_image_url_template.gsub('{page}', page_number.to_s).gsub('{size}', size)
   end
 
   def canonical(opts={})

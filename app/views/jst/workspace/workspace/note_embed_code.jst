@@ -3,7 +3,7 @@
 </div>
 
 <textarea id="note_embed_html_snippet" class="snippet">
-&lt;div id="DC-note-<%= note.get('id') %>" class="DC-note-container"&gt;&lt;/div&gt;
+&lt;div id="DC-note-<%= note.get('id') %>" class="DC-embed DC-embed-note DC-note-container"&gt;&lt;/div&gt;
 &lt;script src="<%= window.ASSET_ROOT %>/notes/loader.js"&gt;&lt;/script&gt;
 &lt;script&gt;
   dc.embed.loadNote('<%= note.resourceUrl({agnostic: true}) %>'<% if (options) { %>, {

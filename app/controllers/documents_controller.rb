@@ -27,9 +27,12 @@ class DocumentsController < ApplicationController
     #fresh_when last_modified: (current_document.updated_at || Time.now).utc, etag: current_document
     respond_to do |format|
       format.html do
-        @sidebar    = !(params[:sidebar] || '').match(/no|false/)
-        @responsive = (params[:responsive] || '').match /yes|true/
-        populate_editor_data if logged_in?
+        @embed_options = {
+          container: '#viewer',
+          sidebar:   !(params[:sidebar] || '').match(/no|false/) # For Overview
+        }
+        merge_embed_config if params[:embed] == 'true'
+        populate_editor_data if current_account && current_organization
         return if date_requested?
         return if entity_requested?
         make_oembeddable(doc)
@@ -241,7 +244,6 @@ class DocumentsController < ApplicationController
     @options = params[:options]
   end
 
-
   private
 
   def populate_editor_data
@@ -286,4 +288,11 @@ class DocumentsController < ApplicationController
     paths = current_document.cache_paths + current_document.annotations.map(&:cache_paths)
     expire_pages paths
   end
+
+  def merge_embed_config
+    (@embed_options ||= {}).merge!(DC::Embed::Document::Config.new(
+      data: pick(params, *DC::Embed::Document.config_keys)
+    ).dump)
+  end
+
 end

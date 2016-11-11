@@ -279,7 +279,7 @@ Generate an embed code for a resource (a document or a note) using our [oEmbed](
 <a name="oembed-documents"></a>
 ### Example document request
 
-    /api/oembed.json?url=https%3A%2F%2Fwww.documentcloud.org%2Fdocuments%2Fdoc-name.html&responsive=true
+    /api/oembed.json?url=https%3A%2F%2Fwww.documentcloud.org%2Fdocuments%2Fdoc-name.html
 
 ### Parameters for documents
 
@@ -297,8 +297,8 @@ sidebar          | (optional) Show the sidebar    | true (default)
 pdf              | (optional) Include a link to the original PDF    | true (default)
 responsive       | (optional) Make the viewer responsive    | false (default)
 responsive_offset| (optional) Specify header height (pixels)    | 4
-default_note     | (optional) Open the document to a specific note. An integer representing the note ID | 214279
-default_page     | (optional) Open the document to a specific page   | 3
+note             | (optional) Open the document to a specific note. An integer representing the note ID | 214279
+page             | (optional) Open the document to a specific page   | 3
 
 <a name="oembed-pages"></a>
 ### Example pages request

@@ -6,7 +6,6 @@
   - backup_database
   - api_document_import
   - reindex_everything
-  - calculate_aspect_ratios
 
 # The following settings allow you to control the number of workers that can run
 # on a given node, to prevent the node from becoming overloaded. 'max_workers'

@@ -158,7 +158,7 @@ class DocumentsControllerTest < ActionController::TestCase
     login_account!
     get :per_page_note_counts, :id=>doc.id
     assert_response :success
-    assert_equal( { "2"=>1, "1"=>1 }, json_body )
+    assert_equal( { "2"=>2, "1"=>1 }, json_body )
   end
 
   def test_queue_length

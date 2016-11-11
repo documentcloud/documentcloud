@@ -1,0 +1,17 @@
+<div class="DC-embed DC-embed-page" data-version="2.0">
+  <div>
+    Page <%= options[:page].page_number %> of
+    <%= link_to options[:document].title, options[:page].contextual_url, { class: 'DC-embed-resource', title: "View entire #{options[:document].title} on DocumentCloud in new window or tab", target: '_blank' } %>
+  </div>
+  <div style="position:relative;padding-bottom:<%= options[:page].inverted_aspect_ratio * 100 %>%;height:0;overflow:hidden;max-width:100%;margin:0.5em 0;border:1px solid #ccc;-webkit-box-sizing:border-box;clear:both">
+    <%= content_tag :iframe, nil, { src: options[:page].iframe_embed_src_url(data), title: "Page #{options[:page].page_number} of #{options[:document].title}", sandbox: ['allow-scripts', 'allow-same-origin', 'allow-popups'], frameborder: '0', style: 'position:absolute;top:0;left:0;width:100%;height:100%' } %>
+  </div>
+  <div style="font-size:0.85em;text-align:center">
+    Contributed to
+    <%= link_to 'DocumentCloud', DC.server_root, { title: 'Go to DocumentCloud in new window or tab', target: '_blank', style: 'font-weight:700;font-family:Gotham,inherit,sans-serif;color:inherit;text-decoration:none' } %> by
+    <%= link_to options[:document].account_name, options[:document].account_documents_url, { title: "View documents contributed to DocumentCloud by #{options[:document].account_name} in new window or tab", target: '_blank' } %> of
+    <%= link_to options[:document].organization_name, options[:document].organization_documents_url, { title: "View documents contributed to DocumentCloud by #{options[:document].organization_name} in new window or tab", target: '_blank' } %> &bull;
+    <%= link_to 'View document', options[:page].contextual_url, { title: "View entire #{options[:document].title} on DocumentCloud in new window or tab", target: '_blank' } %> or
+    <%= link_to 'read text', options[:page].text_url, { title: "Read the text of page #{options[:page].page_number} of #{options[:document].title} on DocumentCloud in new window or tab", target: '_blank' } %>
+  </div>
+</div>

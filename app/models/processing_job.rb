@@ -2,6 +2,11 @@
 # initiating and checking on CloudCrowd::Jobs.
 class ProcessingJob < ActiveRecord::Base
   #include DC::Status
+  
+  CALLBACK_ENDPOINTS = {
+    update: "#{DC.server_root(:ssl => false)}/import/update_access?secret=#{DC::SECRETS['cloud_crowd_secret']}",
+    cloud_crowd: "#{DC.server_root(:ssl => false)}/import/cloud_crowd?secret=#{DC::SECRETS['cloud_crowd_secret']}"
+  }
 
   belongs_to :account
   belongs_to :document

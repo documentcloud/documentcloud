@@ -41,9 +41,9 @@ class ProjectTest < ActiveSupport::TestCase
   end
 
   it "can add collaborators" do
-    refute subject.collaborations.where( :account_id=> joe ).exists?
+    refute subject.collaborations.where( account_id:  joe ).exists?
     assert subject.add_collaborator( joe )
-    assert subject.collaborations.where( :account_id=> joe ).exists?
+    assert subject.collaborations.where( account_id:  joe ).exists?
   end
 
   it "can remove collaborations" do
@@ -55,7 +55,7 @@ class ProjectTest < ActiveSupport::TestCase
     # if it's hidden, it deletes itself once the last collaborator
     # is removed
     subject.add_collaborator( louis )
-    subject.update_attributes :hidden=>true
+    subject.update_attributes( hidden: true )
     subject.remove_collaborator( louis )
     refute Project.exists?( subject.id )
   end
@@ -66,7 +66,7 @@ class ProjectTest < ActiveSupport::TestCase
     assert_equal 1, subject.collaborations.count
     # not hidden, no update performed
     assert_equal 0, subject.document.reviewer_count
-    subject.update_attributes :hidden=>true
+    subject.update_attributes hidden: true
     subject.update_reviewer_counts
     assert_equal 1, subject.document.reviewer_count
   end
@@ -105,12 +105,12 @@ class ProjectTest < ActiveSupport::TestCase
 
   it "generates canonical representation" do
     assert subject.canonical['document_ids']
-    assert_equal ['id','title','description','document_ids'], subject.canonical.keys
-    assert_equal ['id','title','description', 'document_count'], subject.canonical(:include_document_ids=>false).keys
+    assert_equal ['id','title','description', 'public_url', 'document_ids'], subject.canonical.keys
+    assert_equal ['id','title','description', 'public_url', 'document_count'], subject.canonical(include_document_ids: false).keys
   end
 
   it "generates json" do
-    data = ActiveSupport::JSON.decode(subject.to_json(:include_collaborators=>true))
+    data = ActiveSupport::JSON.decode(subject.to_json(include_collaborators: true))
     assert data.has_key?('collaborators')
   end
 

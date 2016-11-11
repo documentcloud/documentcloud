@@ -3,7 +3,20 @@ require 'pry'
 
 describe DC::Embed::Document do
   
-  let(:resource) { Struct.new(:id, :resource_url, :type).new("123", "https://dev.dcloud.org/documents/123-foo.html", :document) }
+  let(:resource) do
+    doc_url = doc.canonical_url(:html)
+    Struct.new(:id, :resource_url, :type).new(doc.id, doc_url, :document)
+  end
+  let(:config_data) do
+    {
+      :sidebar           => false,
+      :pdf               => true,
+      :maxwidth          => 400,
+      :maxheight         => 500,
+      :responsive_offset => 12,
+      :container         => ".hi"
+    }
+  end
   
   it "should require a resource" do
     Proc.new{ DC::Embed::Document.new(nil, {}) }.must_raise ArgumentError
@@ -12,7 +25,17 @@ describe DC::Embed::Document do
     DC::Embed::Document.new(resource, {}).must_be_kind_of DC::Embed::Document
   end
   
-  it "should output HTML markup" do
+  it "should output HTML markup for iframe based embedding" do
+    embed_code = Nokogiri::HTML(DC::Embed::Document.new(resource, {}).code)
+    iframe = embed_code.css("iframe")
+    iframe.wont_be_empty
+    iframe = iframe.first
+    
+    iframe.attribute("src").value.must_match /^#{resource.resource_url}/
+  end
+
+  it "should output HTML for JS based embedding" do
+    skip # until embed dom mechanism is configurable
     embed_code = Nokogiri::HTML(DC::Embed::Document.new(resource, {}).code)
     embed_code.css("#DV-viewer-#{resource.id}").wont_be_empty
     
@@ -25,7 +48,8 @@ describe DC::Embed::Document do
     code_scripts.count.must_equal 1
   end
 
-  it "should output an oembed response as json" do
+  it "should output an oembed response for a JS Embed as json" do
+    skip # until embed dom mechanism is configurable
     oembed_data = DC::Embed::Document.new(resource, {:sidebar=>false}, {:strategy=>:oembed}).as_json
     html = Nokogiri::HTML(oembed_data[:html])
     
@@ -49,20 +73,12 @@ describe DC::Embed::Document do
   end
   
   it "should convert string values to their literal values" do
-    input_config = {
-      :sidebar           => false,
-      :pdf               => true,
-      :maxwidth          => 400,
-      :maxheight         => 500,
-      :responsive_offset => 12,
-      :container         => ".hi"
-    }
-    string_config_values = Hash[input_config.map{ |k,v| [k, v.to_s] }]
+    string_config_values = Hash[config_data.map{ |k,v| [k, v.to_s] }]
     embed = DC::Embed::Document.new(resource, string_config_values)
     
     config = embed.embed_config
-    input_config.keys.each do |key|
-      config[key].must_equal input_config[key]
+    config_data.keys.each do |key|
+      config[key].must_equal config_data[key]
     end
   end
   
