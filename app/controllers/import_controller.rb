@@ -86,8 +86,8 @@ class ImportController < ApplicationController
       processing_job.resolve(cloud_crowd_job)
     end
     
-    #render :plain => '201 Created', :status => 201
-    render :plain => "Created but don't clean up the job right now."
+    #render plain: '201 Created', status: 201
+    render plain: "Created but don't clean up the job right now."
   end
   
   # CloudCrowd is done changing the document's asset access levels.
@@ -99,7 +99,7 @@ class ImportController < ApplicationController
       processing_job.resolve(cloud_crowd_job)
     end
 
-    render :plain => '201 Created', :status => 201
+    render plain: '201 Created', status: 201
   end
   
   private
