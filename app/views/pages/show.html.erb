@@ -4,7 +4,7 @@
     author:      "#{@current_document.account_name} (#{@current_document.organization_name})",
     title:       truncate("Page #{@current_page.page_number} of #{@current_document.title}", length: 70, separator: ' '),
     url:         @current_document.published_url || @current_page.canonical_url(:html),
-    description: truncate(@current_document.description || "Source document hosted on #{DC::CONFIG['platform_name']}.", length: 200, separator: ' '),
+    description: truncate(@current_document.description || "Source document contributed to #{DC::CONFIG['platform_name']} by #{@current_document.account_name} (#{@current_document.organization_name}).", length: 200, separator: ' '),
     image:       @current_page.image_url,
     image_alt:   "Page #{@current_page.page_number} of #{@current_document.title}",
     twitter: {
