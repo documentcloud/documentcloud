@@ -11,10 +11,10 @@
       card:   "summary_large_image",
       site:   DC::CONFIG['twitter_username'],
       domain: DC::CONFIG['platform_domain'],
-      label1: "Contributor",
-      data1:  @current_document.account_name,
-      label2: "Organization",
-      data2:  @current_document.organization_name,
+      metadata: [
+        {label: 'Contributor', data: @current_document.account_name},
+        {label: 'Organization', data: @current_document.organization_name},
+      ],
     },
     og: {
       image_type:  "image/gif",

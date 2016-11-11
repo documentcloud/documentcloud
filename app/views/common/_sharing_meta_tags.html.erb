@@ -13,8 +13,8 @@
 <meta name="twitter:image:alt" content="<%= @sharing_meta_tags[:image_alt] %>">
 <meta name="twitter:site" content="<%= @sharing_meta_tags[:twitter][:site] %>">
 <meta name="twitter:domain" content="<%= @sharing_meta_tags[:twitter][:domain] %>">
-<meta name="twitter:label1" content="<%= @sharing_meta_tags[:twitter][:label1] %>">
-<meta name="twitter:data1" content="<%= @sharing_meta_tags[:twitter][:data1] %>">
-<meta name="twitter:label2" content="<%= @sharing_meta_tags[:twitter][:label2] %>">
-<meta name="twitter:data2" content="<%= @sharing_meta_tags[:twitter][:data2] %>">
+<% @sharing_meta_tags[:twitter][:metadata].each_with_index do |metadata, i| %>
+<meta name="twitter:label<%= i+1 %>" content="<%= metadata[:label] %>">
+<meta name="twitter:data<%= i+1 %>" content="<%= metadata[:data] %>">
+<% end if @sharing_meta_tags[:twitter][:metadata].present? %>
 <% end %>
