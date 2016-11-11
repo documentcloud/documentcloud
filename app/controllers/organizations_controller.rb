@@ -13,12 +13,6 @@ class OrganizationsController < ApplicationController
         :organization_id => params[:id] }).first
     return forbidden unless membership
 
-    if membership.organization.language != params[:language]
-      Document.where({ :organization_id=>membership.organization_id }).each do | doc |
-        # TODO: Can we remove this block now that we're not expiring the cache?
-      end
-    end
-
     membership.organization.update_attributes pick(params, :language, :document_language)
 
     json membership.organization.canonical
