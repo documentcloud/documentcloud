@@ -1,14 +1,14 @@
 <% if @sharing_meta_tags.present? %>
 <meta name="author" content="<%= @sharing_meta_tags[:author] %>">
-<!-- Facebook and Twitter -->
-<meta name="twitter:title" property="og:title" content="<%= @sharing_meta_tags[:title] %>">
-<meta name="twitter:url" property="og:url" content="<%= @sharing_meta_tags[:url] %>">
-<meta name="twitter:description" property="og:description" content="<%= @sharing_meta_tags[:description] %>">
-<meta name="twitter:image" property="og:image" content="<%= @sharing_meta_tags[:image] %>">
-<!-- Facebook only -->
+<!-- Shared by Facebook and Twitter -->
+<meta property="og:title" content="<%= @sharing_meta_tags[:title] %>">
+<meta property="og:url" content="<%= @sharing_meta_tags[:url] %>">
+<meta property="og:description" content="<%= @sharing_meta_tags[:description] %>">
+<meta property="og:image" content="<%= @sharing_meta_tags[:image] %>">
+<!-- Relevant to Facebook only -->
 <meta property="og:image:type" content="<%= @sharing_meta_tags[:og][:image_type] %>">
 <meta property="og:image:width" content="<%= @sharing_meta_tags[:og][:image_width] %>">
-<!-- Twitter only -->
+<!-- Relevant to Twitter only -->
 <meta name="twitter:card" content="<%= @sharing_meta_tags[:twitter][:card] %>">
 <meta name="twitter:image:alt" content="<%= @sharing_meta_tags[:image_alt] %>">
 <meta name="twitter:site" content="<%= @sharing_meta_tags[:twitter][:site] %>">
