@@ -118,6 +118,13 @@ class Annotation < ActiveRecord::Base
       .count
   end
 
+  # The interface prefills the note title with "Untitled Note", so that gets 
+  # saved to the database as the note's title. In certain interfaces (e.g., 
+  # Twitter cards) we only want to surface titles that a user actually provided.
+  def user_provided_title
+    (title.blank? || title == 'Untitled Note') ? '' : title
+  end
+
   def page
     document.pages.find_by_page_number(page_number)
   end

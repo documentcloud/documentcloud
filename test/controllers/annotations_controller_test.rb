@@ -58,6 +58,13 @@ class AnnotationsControllerTest < ActionController::TestCase
     end
   end
 
+  it "should be able to recognize notes with default titles" do
+    note = doc.annotations[1]
+    assert_equal 'Untitled Note', note.title
+    assert_equal '', note.user_provided_title
+  end
+    
+
   # Tests that don't matter in read-only mode
   unless Rails.application.config.read_only
 

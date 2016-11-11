@@ -62,13 +62,13 @@ class DocumentTest < ActiveSupport::TestCase
   end
 
   def test_sets_annotation_counts
-    assert_equal 2, doc.annotations.count
+    assert_equal 3, doc.annotations.count
     Document.populate_annotation_counts( louis, [doc] )
-    assert_equal 2, doc.annotation_count
+    assert_equal 3, doc.annotation_count
 
     assert_equal 102, doc.public_note_count # from fixture, is wildly inaccurate
     doc.reset_public_note_count
-    assert_equal 1, doc.public_note_count # much better
+    assert_equal 2, doc.public_note_count # much better
   end
 
   def test_strips_whitespace_from_title
@@ -84,7 +84,7 @@ class DocumentTest < ActiveSupport::TestCase
   end
 
   def test_calculates_annotations_per_page
-    assert_equal( { 2=>1, 1=>1 }, doc.per_page_annotation_counts )
+    assert_equal( { 2=>2, 1=>1 }, doc.per_page_annotation_counts )
   end
 
   def test_calculates_ordered_sections
@@ -92,7 +92,7 @@ class DocumentTest < ActiveSupport::TestCase
   end
 
   def test_calculates_ordered_annotations
-    assert_equal [annotations(:private),annotations(:public)], doc.ordered_annotations( louis )
+    assert_equal [annotations(:private),annotations(:public),annotations(:default_title)], doc.ordered_annotations( louis )
   end
 
   def test_populates_author_information_on_annotations

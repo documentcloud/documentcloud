@@ -87,7 +87,7 @@ class StatisticsTest < ActiveSupport::TestCase
     assert_equal( {:total=>0,   :day=>0, :week=>0, :month=>0,  :half_year=>0}   , nums["Reviewers"] )
     assert_equal( {:total=>2,   :day=>0, :week=>0, :month=>1,  :half_year=>2}   , nums["Documents"] )
     assert_equal( {:total=>136, :day=>0, :week=>0, :month=>68, :half_year=>136} , nums["Pages"] )
-    assert_equal( {:total=>2,   :day=>2, :week=>2, :month=>2,  :half_year=>2}   , nums["Notes"] )
+    assert_equal( {:total=>3,   :day=>3, :week=>3, :month=>3,  :half_year=>3}   , nums["Notes"] )
   end
 
   def test_pages_per_minute
