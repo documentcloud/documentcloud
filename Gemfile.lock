@@ -378,6 +378,7 @@ PLATFORMS
 DEPENDENCIES
   actionpack-page_caching
   active_model_serializers (~> 0.9.0)
+  addressable (~> 2.4.0)
   aws-sdk (~> 1.30)
   bcrypt (~> 3.1.1)
   bootstrap_form!

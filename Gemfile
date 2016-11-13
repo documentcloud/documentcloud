@@ -39,6 +39,7 @@ gem 'jammit',                 github: 'documentcloud/jammit', branch: 'master'
 gem 'nokogiri',               '~> 1.6.0'
 gem 'net-ssh-shell'
 gem 'country_select',         '~> 2.2.0'
+gem 'addressable',            '~> 2.4.0'
 gem 'bootstrap_form',         github: 'documentcloud/rails-bootstrap-forms',
                               branch: 'bootstrap-v4'
 

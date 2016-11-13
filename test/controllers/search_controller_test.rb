@@ -7,7 +7,7 @@ class SearchControllerTest < ActionController::TestCase
     login_account!
     get :documents, :format=>:json, :per_page=>10, :order=>'score', :mentions=>3, :q=>''
     assert_response :success
-    assert_equal [ secret_doc.id, doc.id ], json_body['documents'].map{|d|d['id']}.sort
+    assert_equal [ secret_doc.id, unicode_doc.id, doc.id ], json_body['documents'].map{|d|d['id']}.sort
   end
 
   def test_solr_searching

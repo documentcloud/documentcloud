@@ -171,7 +171,7 @@ class ApiController < ApplicationController
 
   def oembed
     # get the target url and turn it into a manipulable object.
-    url = URI.parse(CGI.unescape(params[:url])) rescue nil
+    url = Addressable::URI.parse(CGI.unescape(params[:url])) rescue nil
     return bad_request if params[:url].blank? or !url
 
     # Use the rails router to identify whether a URL is an embeddable resource
@@ -241,12 +241,12 @@ class ApiController < ApplicationController
     (
       (
         %w[documents pages].include?(resource_params[:controller]) and
-        resource_params[:id] =~ DC::Validators::SLUG # and
-        # Document.accessible(nil, nil).exists?(resource_params[:id])
+        resource_params[:id].force_encoding('utf-8') =~ DC::Validators::SLUG # and
+        # Document.accessible(nil, nil).exists?(resource_params[:id].to_i) 
       ) or
       (
         resource_params[:controller] == "annotations" and
-        resource_params[:document_id] =~ DC::Validators::SLUG # and
+        resource_params[:document_id].force_encoding('utf-8') =~ DC::Validators::SLUG
         # Annotation.accessible(nil).exists?(resource_params[:id])
       )
     )

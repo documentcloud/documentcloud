@@ -76,6 +76,7 @@ class ActiveSupport::TestCase
   fixtures :all
 
   let (:doc) { documents(:tv_manual) }
+  let (:unicode_doc){ documents(:unicode)}
   let (:secret_doc){ documents(:top_secret)}
   let (:louis){ accounts(:louis) }
   let (:tribune){ organizations(:tribune) }
