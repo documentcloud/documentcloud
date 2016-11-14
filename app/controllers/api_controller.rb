@@ -235,19 +235,20 @@ class ApiController < ApplicationController
   private
 
   def resource_embeddable?(resource_params)
-    resource_params and
+    resource_params.present? and
     resource_params[:format] == 'html' and
     resource_params[:id] and
     (
       (
-        %w[documents pages].include?(resource_params[:controller]) and
-        resource_params[:id] =~ DC::Validators::SLUG # and
-        # Document.accessible(nil, nil).exists?(resource_params[:id])
+        %w[documents pages].include?(resource_params[:controller]) 
+        and resource_params[:id] =~ DC::Validators::SLUG 
+        and Document.unrestricted.exists?(resource_params[:id])
       ) or
       (
-        resource_params[:controller] == "annotations" and
-        resource_params[:document_id] =~ DC::Validators::SLUG # and
-        # Annotation.accessible(nil).exists?(resource_params[:id])
+        resource_params[:controller] == "annotations" 
+        and resource_params[:document_id] =~ DC::Validators::SLUG 
+        and Document.unrestricted.exists?(resource_params[:document_id])
+        and Annotation.accessible(nil).exists?(resource_params[:id])
       )
     )
   end
