@@ -35,7 +35,7 @@ class OrganizationTest < ActiveSupport::TestCase
   end
 
   it "counts documents" do
-    assert_equal 2, tribune.document_count
+    assert_equal 3, tribune.document_count
   end
 
   it "returns an accounts role" do
