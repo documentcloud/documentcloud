@@ -52,3 +52,30 @@ top_secret:
   account: louis
   created_at: <%= Time.now - 1.week - 2.days%>
   updated_at: <%= Time.now - 1.week - 1.days%>
+
+error_document:
+  publication_date:
+  text_changed: f
+  title: Clinton Presidential Transition Plan
+  original_extension: pdf
+  description: ""
+  hit_count: "0"
+  slug: tv
+  reviewer_count: "0"
+  source: ""
+  page_count: 1
+  organization: tribune
+  calais_id:
+  public_note_count: "102"
+  publish_at:
+  access: <%= DC::Access::ERROR %>
+  char_count: "146055"
+  related_article:
+  language: en
+  file_hash: nil
+  file_size: 0
+  remote_url:
+  detected_remote_url:
+  account: louis
+  created_at: <%= Time.now - 1.week - 2.days%>
+  updated_at: <%= Time.now - 1.week - 1.days%>
