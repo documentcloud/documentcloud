@@ -1,4 +1,4 @@
-require 'test_helper'
+require File.join(__dir__, '..', 'test_helper')
 
 class ImportControllerTest < ActionController::TestCase
 
@@ -20,7 +20,8 @@ class ImportControllerTest < ActionController::TestCase
     ProcessingJob.create!(document: doc, account: louis, cloud_crowd_id: 42,
       title: 'import', remote_job: 'document_import')
     assert_difference(-> { ProcessingJob.incomplete.count }, -1) do
-      get :cloud_crowd, {job: {id: 42, status: 'succeeded'}.to_json}
+      post :cloud_crowd, {job: {id: 42, status: 'succeeded'}.to_json, secret: DC::SECRETS['cloud_crowd_secret']}
+      assert_response :success
     end
   end
 
@@ -29,7 +30,8 @@ class ImportControllerTest < ActionController::TestCase
     ProcessingJob.create!(document: doc, account: louis, cloud_crowd_id: 42,
       title: 'import', remote_job: 'document_import')
     assert_difference( ->{ ProcessingJob.incomplete.count }, -1 ) do
-      get :cloud_crowd, {job: {id: 42, status: 'failed'}.to_json}
+      post :cloud_crowd, {job: {id: 42, status: 'failed'}.to_json, secret: DC::SECRETS['cloud_crowd_secret']}
+      assert_response :success
     end
     assert_equal Document::ERROR, doc.reload.access
   end
@@ -39,7 +41,7 @@ class ImportControllerTest < ActionController::TestCase
     get :update_access, {job: {id: 1234}.to_json}
     assert_response :forbidden
 
-    get :update_access, {job: {id: 1234}.to_json, secret: 'foobar'}
+    get :update_access, {job: {id: 1234}.to_json, secret: DC::SECRETS['cloud_crowd_secret']}
     assert_response :created
   end
 
