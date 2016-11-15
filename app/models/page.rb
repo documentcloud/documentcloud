@@ -155,7 +155,7 @@ class Page < ActiveRecord::Base
   # up a document process action to calculate the ratios and temporarily return 
   # the most common size, 8.5x11.
   def safe_aspect_ratio
-    aspect_ratio || (document.calculate_aspect_ratios && 8.5/11)
+    (aspect_ratio.to_f > 0 && aspect_ratio) || (document.calculate_aspect_ratios && 8.5/11)
   end
 
   # Normal aspect ratio is `width / height`, but for the purposes of the 
