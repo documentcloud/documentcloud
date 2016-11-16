@@ -1,4 +1,23 @@
-<% (@stylesheets_header ||= []).push File.join(DC.asset_root(:agnostic => true), "/note_embed/note_embed.css") %>
+<%
+  (@stylesheets_header ||= []).push File.join(DC.asset_root(:agnostic => true), "/note_embed/note_embed.css")
+  @sharing_meta_tags = {
+    author:      "#{@current_document.account_name} (#{@current_document.organization_name})",
+    title:       truncate((@current_annotation.user_provided_title.present? && @current_annotation.user_provided_title) || "Note on #{@current_document.title}", length: 70, separator: ' '),
+    url:         @current_annotation.contextual_url,
+    description: truncate((@current_annotation.content.present? && @current_annotation.content) || @current_document.description || "Source document contributed to #{DC::CONFIG['platform_name']} by #{@current_document.account_name} (#{@current_document.organization_name}).", length: 200, separator: ' '),
+    image:       @current_annotation.page.image_url,
+    image_alt:   "Page #{@current_annotation.page.page_number} of #{@current_document.title}",
+    twitter: {
+      card:   "summary_large_image",
+      site:   DC::CONFIG['twitter_username'],
+      domain: DC::CONFIG['platform_domain'],
+    },
+    og: {
+      image_type:  "image/gif",
+      image_width: Page::IMAGE_SIZES['normal'].gsub(/x$/, ''),
+    }
+  }
+%>
 
 <div class="container">
   <div class="DC-note <%= @current_annotation.embed_classes %>" data-version="1.1" style="background-image:url('<%= @current_annotation.page.image_url %>')">
@@ -10,14 +29,14 @@
     </div>
     <% if (@current_annotation_dimensions) %>
     <div class="DC-note-image-max-bounds" style="max-height:<%= @current_annotation_dimensions[:height_pixel] %>px;max-width:<%= @current_annotation_dimensions[:width_pixel] %>px">
-      <div class="DC-note-image-aspect-ratio" style="padding-bottom:<%= @current_annotation_dimensions[:aspect_ratio] %>%">
+      <div class="DC-note-image-aspect-ratio" style="padding-bottom:<%= @current_annotation_dimensions[:inverted_aspect_ratio] * 100 %>%">
         <a class="DC-note-image-link DC-note-image-space-filler" href="<%= @current_annotation.contextual_path %>" title="View the note '<%= @current_annotation.title %>' in its original document context">
           <img class="DC-note-image" width="<%= @current_annotation_dimensions[:width_pixel] %>" height="<%= @current_annotation_dimensions[:height_pixel] %>" src="<%= @current_annotation.page.image_url %>" alt="Selected portion of a source document hosted by DocumentCloud" style="top:<%= @current_annotation_dimensions[:offset_top_percent] %>%;left:<%= @current_annotation_dimensions[:offset_left_percent] %>%;width:<%= @current_annotation_dimensions[:width_percent] %>%;">
         </a>
       </div>
     </div>
     <% end %>
-    <div class="DC-note-body"><%= @current_annotation.content.html_safe unless @current_annotation.content.nil? %></div>
+    <div class="DC-note-body"><%= @current_annotation.content.html_safe if @current_annotation.content.present? %></div>
     <div class="DC-note-background-fader"></div>
   </div>
 </div>

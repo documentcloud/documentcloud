@@ -9,6 +9,10 @@ module DC
         end
       end
 
+      def self.config_keys
+        Config.keys
+      end
+
       def initialize(resource, embed_config={}, options={})
         # resource should be a wrapper object around a model
         # which plucks out relevant metadata
@@ -70,15 +74,15 @@ module DC
       end
 
       def bootstrap_markup
+        # TODO: Investigate if we actually need to make this distinction [JR]
         @strategy == :oembed ? inline_loader : static_loader
       end
 
       def inline_loader
         <<-SCRIPT
         <script>
-          #{ERB.new(File.read("#{Rails.root}/app/views/annotations/oembed_loader.js.erb")).result(binding)}
+          #{ERB.new(File.read("#{Rails.root}/app/views/annotations/embed_loader.js.erb")).result(binding)}
         </script>
-        <script type="text/javascript" src="#{DC.asset_root(agnostic: true)}/note_embed/note_embed.js"></script>
         SCRIPT
       end
 
@@ -94,20 +98,32 @@ module DC
 
       def as_json
         if @strategy == :oembed
+          calculate_dimensions
           {
             type:          "rich",
             version:       "1.0",
             provider_name: "DocumentCloud",
             provider_url:  DC.server_root(force_ssl: true),
             cache_age:     300,
-            height:        @embed_config[:maxheight],
-            width:         @embed_config[:maxwidth],
+            height:        @dimensions[:height],
+            width:         @dimensions[:width],
             html:          code,
           }
         else
           @resource.as_json.merge(html: code)
         end
       end
+
+      # These won't be accurate, since this is the note image area only. Still, 
+      # gives the oEmbed response *some* sense of the scale and aspect ratio.
+      def calculate_dimensions
+        embed_dimensions = @note.embed_dimensions
+        @dimensions = {
+          height: @embed_config[:maxheight] || (@embed_config[:maxwidth]  ? (@embed_config[:maxwidth]  / embed_dimensions[:aspect_ratio]).round : embed_dimensions[:height_pixel]),
+          width:  @embed_config[:maxwidth]  || (@embed_config[:maxheight] ? (@embed_config[:maxheight] * embed_dimensions[:aspect_ratio]).round : embed_dimensions[:width_pixel])
+        }
+      end
+
     end
   end
 end

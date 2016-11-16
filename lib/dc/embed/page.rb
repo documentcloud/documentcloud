@@ -98,20 +98,30 @@ module DC
 
       def as_json
         if @strategy == :oembed
+          calculate_dimensions
           {
             type:          "rich",
             version:       "1.0",
             provider_name: "DocumentCloud",
             provider_url:  DC.server_root(force_ssl: true),
             cache_age:     300,
-            height:        @embed_config[:maxheight],
-            width:         @embed_config[:maxwidth],
+            height:        @dimensions[:height],
+            width:         @dimensions[:width],
             html:          code,
           }
         else
           @resource.as_json.merge(html: code)
         end
       end
+
+      def calculate_dimensions
+        default_width = ::Page::IMAGE_SIZES['normal'].gsub(/x$/, '').to_i
+        @dimensions = {
+          height: @embed_config[:maxheight] || ((@embed_config[:maxwidth] || default_width) / @page.safe_aspect_ratio).round,
+          width:  @embed_config[:maxwidth]  || (@embed_config[:maxheight] ? (@embed_config[:maxheight] * @page.safe_aspect_ratio).round : default_width)
+        }
+      end
+
     end
   end
 end

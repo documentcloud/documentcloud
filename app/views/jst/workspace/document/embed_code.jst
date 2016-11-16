@@ -4,7 +4,7 @@
 </div>
 
 <textarea id="document_embed_html_snippet" class="snippet">
-&lt;div id="DV-viewer-<%= doc.canonicalId() %>" class="DV-container"&gt;&lt;/div&gt;
+&lt;div id="DV-viewer-<%= doc.canonicalId() %>" class="DC-embed DC-embed-document DV-container"&gt;&lt;/div&gt;
 &lt;script src="<%= window.ASSET_ROOT %>/viewer/loader.js"&gt;&lt;/script&gt;
 &lt;script&gt;
   DV.load("<%= doc.get("document_viewer_js") %>", {

@@ -70,26 +70,29 @@ module DC
 
       def content_markup
         template_options = {
-          # default_container_id: "DV-viewer-#{@resource.id}",
           resource_url: @resource.resource_url,
           document:     @document
         }
-        # template_options[:generate_default_container] = @embed_config[:container].nil? || @embed_config[:container].empty? || @embed_config[:container] == '#' + template_options[:default_container_id]
-        # @embed_config[:container] ||= '#' + template_options[:default_container_id]
+
+        if @dom_mechanism == :direct
+          template_options[:default_container_id] = "DV-viewer-#{@resource.id}"
+          template_options[:generate_default_container] = !@embed_config[:container].present? || @embed_config[:container] == '#' + template_options[:default_container_id]
+          @embed_config[:container] ||= '#' + template_options[:default_container_id]
+        end
 
         render(@embed_config.dump, template_options)
       end
 
       def bootstrap_markup
+        # TODO: Investigate if we actually need to make this distinction [JR]
         @strategy == :oembed ? inline_loader : static_loader
       end
 
       def inline_loader
         <<-SCRIPT
         <script>
-        #{ERB.new(File.read("#{Rails.root}/app/views/documents/oembed_loader.js.erb")).result(binding)}
+          #{ERB.new(File.read("#{Rails.root}/app/views/documents/embed_loader.js.erb")).result(binding)}
         </script>
-        <script type="text/javascript" src="#{DC.asset_root(agnostic: true)}/viewer/viewer.js"></script>
         SCRIPT
       end
 
@@ -105,20 +108,30 @@ module DC
 
       def as_json
         if @strategy == :oembed
+          calculate_dimensions
           {
             type:          "rich",
             version:       "1.0",
             provider_name: "DocumentCloud",
             provider_url:  DC.server_root(force_ssl: true),
             cache_age:     300,
-            height:        @embed_config[:maxheight],
-            width:         @embed_config[:maxwidth],
+            height:        @dimensions[:height],
+            width:         @dimensions[:width],
             html:          code,
           }
         else
           @resource.as_json.merge(html: code)
         end
       end
+
+      def calculate_dimensions
+        default_width = ::Page::IMAGE_SIZES['normal'].gsub(/x$/, '').to_i
+        @dimensions = {
+          height: @embed_config[:maxheight] || ((@embed_config[:maxwidth] || default_width) / @document.safe_aspect_ratio).round,
+          width:  @embed_config[:maxwidth]  || (@embed_config[:maxheight] ? (@embed_config[:maxheight] * @document.safe_aspect_ratio).round : default_width)
+        }
+      end
+
     end
   end
 end

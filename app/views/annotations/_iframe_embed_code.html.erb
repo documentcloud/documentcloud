@@ -1,19 +1,21 @@
-<link rel="stylesheet" href="<%= DC.asset_root(:agnostic => true) %>/note_embed/note_embed.css" type="text/css">
-<div class="DC-note" data-version="2.0" style="background-image:url('<%= options[:note].page_image_url %>')">
-  <div class="DC-note-header">
-    <% title    = content_tag :span, options[:note].title, { class: 'DC-note-title' } %>
-    <% page_num = content_tag :span, "(p. #{options[:note].page_number})", { class: 'DC-note-page-number' } %>
-    <%= link_to "#{title} #{page_num}".html_safe, options[:note].contextual_url, { class: 'DC-note-embed-resource', title: "View the note “#{options[:note].title}” in its original document context on DocumentCloud in a new window or tab", target: '_blank' } %>
-  </div>
-  <% dimensions = options[:note].embed_dimensions %>
-  <div class="DC-note-image-max-bounds" style="max-height:<%= dimensions[:height_pixel] %>px;max-width:<%= dimensions[:width_pixel] %>px;">
-    <div class="DC-note-image-aspect-ratio" style="padding-bottom:<%= dimensions[:aspect_ratio] %>%;">
-      <%= content_tag :iframe, nil, { class: 'DC-note-image-space-filler', src: options[:note].iframe_embed_src_url(data), title: "Note “#{options[:note].title}” on document “#{options[:note].document.title}”", sandbox: ['allow-scripts', 'allow-same-origin', 'allow-popups'], frameborder: '0' } %>
+<link rel="stylesheet" href="<%= DC.asset_root(agnostic: true) %>/note_embed/note_embed.css" type="text/css">
+<div class="DC-embed DC-embed-note DC-note-container">
+  <div class="DC-note" style="background-image:url('<%= options[:note].page_image_url %>')">
+    <div class="DC-note-header">
+      <% title    = content_tag :span, options[:note].title, { class: 'DC-note-title' } %>
+      <% page_num = content_tag :span, "(p. #{options[:note].page_number})", { class: 'DC-note-page-number' } %>
+      <%= link_to "#{title} #{page_num}".html_safe, options[:note].contextual_url, { class: 'DC-note-embed-resource', title: "View the note “#{options[:note].title}” in its original document context on DocumentCloud in a new window or tab", target: '_blank' } %>
     </div>
+    <% dimensions = options[:note].embed_dimensions %>
+    <div class="DC-note-image-max-bounds" style="max-height:<%= dimensions[:height_pixel] %>px;max-width:<%= dimensions[:width_pixel] %>px;">
+      <div class="DC-note-image-aspect-ratio" style="padding-bottom:<%= dimensions[:inverted_aspect_ratio] * 100 %>%;">
+        <%= content_tag :iframe, nil, { class: 'DC-note-image-space-filler', src: options[:note].iframe_embed_src_url(data), title: "Note “#{options[:note].title}” on document “#{options[:note].document.title}”", sandbox: ['allow-scripts', 'allow-same-origin', 'allow-popups'], frameborder: '0' } %>
+      </div>
+    </div>
+    <div class="DC-note-body"><%= options[:note].content %></div>
+    <div class="DC-note-credit">
+      <%= link_to "View entire document on <span class='DC-note-logotype-link'>DocumentCloud</span>".html_safe, options[:note].contextual_url, { title: "View the note “#{options[:note].title}” in its original document context on DocumentCloud in a new window or tab", target: '_blank' } %>
+    </div>
+    <div class="DC-note-background-fader"></div>
   </div>
-  <div class="DC-note-body"><%= options[:note].content %></div>
-  <div class="DC-note-credit">
-    <%= link_to "View entire document on <span class='DC-note-logotype-link'>DocumentCloud</span>".html_safe, options[:note].contextual_url, { title: "View the note “#{options[:note].title}” in its original document context on DocumentCloud in a new window or tab", target: '_blank' } %>
-  </div>
-  <div class="DC-note-background-fader"></div>
 </div>

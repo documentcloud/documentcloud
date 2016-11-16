@@ -6,23 +6,23 @@ class ReviewersController < ApplicationController
   READONLY_ACTIONS = [
     :index, :preview_email, :send_email
   ]
-  before_action :read_only_error, :except => READONLY_ACTIONS if read_only?
+  before_action :read_only_error, except: READONLY_ACTIONS if read_only?
 
   def index
     reviewers = {}
     @documents.each {|doc| reviewers[doc.id] = doc.reviewers }
-    json :reviewers => reviewers
+    json reviewers: reviewers
   end
 
   def create
     account = Account.lookup(params[:email])
     if account
       return conflict if account.id == current_account.id
-      return bad_request(:error => 'The account associated with that email address has been disabled.') if account.disabled?( current_organization )
+      return bad_request(error: 'The account associated with that email address has been disabled.') if account.disabled?(current_organization)
     else
-      account = Account.create( pick(params, :first_name, :last_name, :email) )
+      account = Account.create(pick(params, :first_name, :last_name, :email))
       unless account.new_record?
-        current_organization.memberships.create({ :role=> Account::REVIEWER, :account=> account, :default=>true })
+        current_organization.memberships.create({role: Account::REVIEWER, account: account, default:true})
       end
     end
 
@@ -33,7 +33,7 @@ class ReviewersController < ApplicationController
       doc.reload
     end
 
-    json :account => account, :documents => @documents
+    json account: account, documents: @documents
   end
 
   def destroy
@@ -46,8 +46,8 @@ class ReviewersController < ApplicationController
   end
 
   def preview_email
-    @email = sanitize LifecycleMailer.create_reviewer_instructions(@documents, current_account, nil, params[:message]).body
-    render :layout => nil
+    @email = LifecycleMailer.reviewer_instructions(@documents, current_account, nil, params[:message]).body
+    render layout: nil
   end
 
   def send_email
@@ -56,7 +56,6 @@ class ReviewersController < ApplicationController
     end
     json nil
   end
-
 
   private
 

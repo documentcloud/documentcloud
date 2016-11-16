@@ -10,6 +10,9 @@ defaults: &defaults
   aws_zone:             us-east-1c
   preconfigured_ami_id: <%= secrets['ami'] %>
   google_analytics_id:  <%= secrets['google_analytics_id'] %>
+  platform_name:        <%= secrets['platform_name'] %>
+  platform_domain:      <%= secrets['platform_domain'] %>
+  twitter_username:     '<%= secrets['twitter_username'] %>'
 
 development:
   <<: *defaults

@@ -1,36 +1,55 @@
 <%
-  asset_root = DC.asset_root(:agnostic => true)
+  server_root = DC.server_root(agnostic: true)
+  asset_root  = DC.asset_root(agnostic: true)
 %>
-
 (function() {
-  /* If the viewer is already loaded, don't repeat the process. */
-  if (window.DV) { if (window.DV.loaded) { return; } }
-
-  window.DV = window.DV || {};
-  window.DV.recordHit = "<%= DC.server_root(:agnostic=>true) %>/pixel.gif";
-
-  var loadCSS = function(url, media) {
-    var link   = document.createElement('link');
-    link.rel   = 'stylesheet';
-    link.type  = 'text/css';
-    link.media = media || 'screen';
-    link.href  = url;
-    var head   = document.getElementsByTagName('head')[0];
-    head.appendChild(link);
-  };
-
-  /*@cc_on
-  /*@if (@_jscript_version < 5.8)
-    loadCSS("<%= asset_root %>/viewer/viewer.css");
-  @else @*/
-    loadCSS("<%= asset_root %>/viewer/viewer-datauri.css");
-  /*@end
-  @*/
-  loadCSS("<%= asset_root %>/viewer/printviewer.css", 'print');
-
-  /* Record the fact that the viewer is loaded. */
-  DV.loaded = true;
-
-  /* Request the viewer JavaScript. */
-  document.write('<script type="text/javascript" src="<%= asset_root %>/viewer/viewer.js"></scr' + 'ipt>');
+  var DV = window.DV = window.DV || {};
+  DV.documentQueue   = DV.documentQueue || [];
+  DV.recordHit       = "<%= server_root %>/pixel.gif";
+  DV.load            = function(url, options) {
+    var insertStylesheet = function(href, media) {
+      if (!document.querySelector('link[href$="' + href + '"]')) {
+        media = media || 'screen';
+        var stylesheet       = document.createElement('link');
+            stylesheet.rel   = 'stylesheet';
+            stylesheet.type  = 'text/css';
+            stylesheet.media = media;
+            stylesheet.href  = href;
+        document.getElementsByTagName('head')[0].appendChild(stylesheet);
+      }
+    };
+    var insertJavaScript = function(src, onLoadCallback) {
+      var script = document.querySelector('script[src$="' + src + '"]');
+      if (!script) {
+        script       = document.createElement('script');
+        script.src   = src;
+        script.async = true;
+        document.getElementsByTagName('head')[0].appendChild(script);
+      }
+      if (script.addEventListener && !script.getAttribute('data-listening')) {
+        script.setAttribute('data-listening', true);
+        script.addEventListener('load', onLoadCallback);
+      }
+    };
+    var loadQueuedDocuments = function() {
+      var loadDocument = DV.immediatelyLoadDocument || (DV.viewers && DV.load ? DV.load : false);
+      if (loadDocument) {
+        var q = DV.documentQueue;
+        for (var i = 0, qLength = q.length; i < qLength; i++) {
+          loadDocument(q[i].url, q[i].options);
+        }
+        DV.documentQueue = [];
+      } else if (window.console) {
+        console.error("DocumentCloud embed can't load because of missing components.");
+      }
+    };
+    insertStylesheet('<%= asset_root %>/viewer/viewer-datauri.css');
+    insertStylesheet('<%= asset_root %>/viewer/printviewer.css', 'print');
+    if (DV.immediatelyLoadDocument) {
+      DV.immediatelyLoadDocument(url, options);
+    } else {
+      DV.documentQueue.push({url: url, options: options});
+      insertJavaScript('<%= asset_root %>/viewer/viewer.js', loadQueuedDocuments);
+    }
+  }
 })();

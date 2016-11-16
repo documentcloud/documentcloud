@@ -1,4 +1,3 @@
-
 public:
   document: tv_manual
   access: <%= DC::Access::PUBLIC %>
@@ -7,6 +6,15 @@ public:
   account: louis
   organization: tribune
   content: I have greatly enjoyed reading this document
+
+default_title:
+  document: tv_manual
+  access: <%= DC::Access::PUBLIC %>
+  title: Untitled Note
+  page_number: 2
+  account: louis
+  organization: tribune
+  content:
 
 private:
   document: tv_manual
@@ -17,3 +25,11 @@ private:
   organization: tribune
   content: the contents of this note are so unbelievable that I cannot in good conscience include them
 
+error_parent:
+  document: error_document
+  access: <%= DC::Access::PUBLIC %>
+  title: Public only if parent is public
+  page_number: 1
+  account: louis
+  organization: tribune
+  content: This is a note on an error document and really shouldn't exist, but whatever

@@ -7,7 +7,7 @@
   var $ = dc.jQuery   = window.jQuery.noConflict(true);
   dc.Backbone         = Backbone.noConflict();
 
-  dc.embed.load = function(searchUrl, opts) {
+  dc.embed.immediatelyLoadSearch = function(searchUrl, opts) {
     var secure = (/^https/).test(searchUrl);
     var id = dc.inflector.sluggify(opts.original_query || opts.q);
 
@@ -41,6 +41,13 @@
     $.getScript(searchUrl + params);
     dc.embed.pingRemoteUrl('search', encodeURIComponent(opts.original_query || opts.q));
   };
+
+  // For backwards-compatibility with the old loader (and for use by people who 
+  // don't use our loader), alias `dc.embed.load` to the immediate fn when 
+  // undefined.
+  if (_.isUndefined(dc.embed.load)) {
+    dc.embed.load = dc.embed.immediatelyLoadSearch;
+  }
 
   dc.embed.callback = function(json) {
     var searchQuery = dc.inflector.sluggify(json.query);
@@ -159,7 +166,7 @@
         to            : Math.min(options.page * options.per_page, options.total),
         title         : options.title,
         dcUrl         : options.dc_url,
-        workspaceUrl  : options.dc_url + (options.secure ? "/#search/" : "/public/search/") +
+        workspaceUrl  : options.dc_url + (options.secure ? "/search/" : "/public/search/") +
                         encodeURIComponent(options.q)
       }));
     },
@@ -220,7 +227,7 @@
         this.embed.options.q = this.embed.options.original_query + (query && (' ' + query));
         this.showSpinner();
         this.$('.DC-document-list').empty();
-        dc.embed.load(this.embed.options.searchUrl, this.embed.options);
+        dc.embed.immediatelyLoadSearch(this.embed.options.searchUrl, this.embed.options);
       }
 
       this.showSearchCancel();

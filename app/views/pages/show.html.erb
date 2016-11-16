@@ -1,4 +1,27 @@
-<% (@stylesheets_header ||= []).push File.join(DC.asset_root(:agnostic => true), "/embed/page/page_embed.css") %>
+<%
+  (@stylesheets_header ||= []).push File.join(DC.asset_root(:agnostic => true), "/embed/page/page_embed.css")
+  @sharing_meta_tags = {
+    author:      "#{@current_document.account_name} (#{@current_document.organization_name})",
+    title:       truncate("Page #{@current_page.page_number} of #{@current_document.title}", length: 70, separator: ' '),
+    url:         @current_document.published_url || @current_page.canonical_url(:html),
+    description: truncate(@current_document.description || "Source document contributed to #{DC::CONFIG['platform_name']} by #{@current_document.account_name} (#{@current_document.organization_name}).", length: 200, separator: ' '),
+    image:       @current_page.image_url,
+    image_alt:   "Page #{@current_page.page_number} of #{@current_document.title}",
+    twitter: {
+      card:   "summary_large_image",
+      site:   DC::CONFIG['twitter_username'],
+      domain: DC::CONFIG['platform_domain'],
+      metadata: [
+        {label: 'Contributor', data: @current_document.account_name},
+        {label: 'Organization', data: @current_document.organization_name},
+      ],
+    },
+    og: {
+      image_type:  "image/gif",
+      image_width: Page::IMAGE_SIZES['normal'].gsub(/x$/, ''),
+    }
+  }
+%>
 
 <div class="container-lg content paper">
   <div id="DC-embed-container" data-version="1.1">
@@ -17,8 +40,8 @@
   </div>
 </div>
 
-<% (@javascripts_footer ||= []).push File.join(DC.asset_root(:agnostic => true), "/embed/page/page_embed.js") %>
 <%
+  (@javascripts_footer ||= []).push File.join(DC.asset_root(:agnostic => true), "/embed/page/page_embed.js")
   @javascript_footer_inline = <<-EOS
     DocumentCloud.embed.load('#{@current_page.canonical_url}', #{@embed_options.to_json});
   EOS

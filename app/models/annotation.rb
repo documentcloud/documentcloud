@@ -118,6 +118,13 @@ class Annotation < ActiveRecord::Base
       .count
   end
 
+  # The interface prefills the note title with "Untitled Note", so that gets 
+  # saved to the database as the note's title. In certain interfaces (e.g., 
+  # Twitter cards) we only want to surface titles that a user actually provided.
+  def user_provided_title
+    (title.blank? || title == 'Untitled Note') ? '' : title
+  end
+
   def page
     document.pages.find_by_page_number(page_number)
   end
@@ -158,12 +165,13 @@ class Annotation < ActiveRecord::Base
     return nil unless coords = coordinates
     page_width = Page::IMAGE_SIZES['normal'].gsub(/x$/, '').to_i
     {
-      aspect_ratio:        100.0 * coords[:height] / coords[:width],
-      height_pixel:        coords[:height],
-      width_pixel:         coords[:width],
-      width_percent:       100.0 * page_width / coords[:width],
-      offset_top_percent:  -100.0 * coords[:top] / coords[:height],
-      offset_left_percent: -100.0 * coords[:left] / coords[:width],
+      aspect_ratio:          1.0 * coords[:width]  / coords[:height],
+      inverted_aspect_ratio: 1.0 * coords[:height] / coords[:width],
+      height_pixel:          coords[:height],
+      width_pixel:           coords[:width],
+      width_percent:         100.0 * page_width / coords[:width],
+      offset_top_percent:    -100.0 * coords[:top] / coords[:height],
+      offset_left_percent:   -100.0 * coords[:left] / coords[:width],
     }
   end
 
