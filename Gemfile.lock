@@ -30,14 +30,14 @@ GIT
 
 GIT
   remote: git@github.com:documentcloud/bull_proof_china_shop
-  revision: 0460788877a7a0b6c8ba3eea9eace96f2083e4ad
+  revision: fea3ad8d8269eea3d67c44803be4dbca34053233
   branch: master
   specs:
     bull_proof_china_shop (0.0.1)
       country_select (~> 2.2.0)
       has_secure_token (~> 1.0.0)
       rails (~> 4.2.3)
-      stripe (~> 1.24.0)
+      stripe (~> 1.56.2)
 
 GEM
   remote: https://rubygems.org/
@@ -119,7 +119,7 @@ GEM
     currencies (0.4.2)
     daemons (1.2.3)
     docsplit (0.8.0.alpha1)
-    domain_name (0.5.20160826)
+    domain_name (0.5.20161021)
       unf (>= 0.0.5, < 1.0.0)
     erubis (2.7.0)
     eventmachine (1.0.9.1)
@@ -185,7 +185,7 @@ GEM
     hashdiff (0.3.0)
     hashie (3.4.3)
     highline (1.7.8)
-    http-cookie (1.0.2)
+    http-cookie (1.0.3)
       domain_name (~> 0.5)
     i18n (0.7.0)
     i18n_data (0.7.0)
@@ -211,7 +211,7 @@ GEM
     method_source (0.8.2)
     mime-types (2.99.3)
     mini_portile2 (2.1.0)
-    minitest (5.9.0)
+    minitest (5.9.1)
     minitest-spec-rails (5.3.0)
       minitest (~> 5.0)
       rails (>= 4.1)
@@ -223,9 +223,8 @@ GEM
     net-ssh-shell (0.2.0)
       net-ssh (~> 2.1.0)
     netrc (0.11.0)
-    nokogiri (1.6.8)
+    nokogiri (1.6.8.1)
       mini_portile2 (~> 2.1.0)
-      pkg-config (~> 1.1.7)
     notiffany (0.0.8)
       nenv (~> 0.1)
       shellany (~> 0.0)
@@ -263,7 +262,6 @@ GEM
     pdfshaver (0.0.3)
     pdftailor (0.0.5)
     pg (0.18.4)
-    pkg-config (1.1.7)
     pr_geohash (1.0.0)
     progress_bar (1.0.5)
       highline (~> 1.6)
@@ -272,7 +270,7 @@ GEM
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
       slop (~> 3.4)
-    rack (1.6.4)
+    rack (1.6.5)
     rack-protection (1.5.3)
       rack
     rack-test (0.6.3)
@@ -301,7 +299,7 @@ GEM
       activesupport (= 4.2.7.1)
       rake (>= 0.8.7)
       thor (>= 0.18.1, < 2.0)
-    rake (11.2.2)
+    rake (11.3.0)
     rb-fsevent (0.9.7)
     rb-inotify (0.9.7)
       ffi (>= 0.5.0)
@@ -339,9 +337,8 @@ GEM
       actionpack (>= 4.0)
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
-    stripe (1.24.0)
-      json (~> 1.8.1)
-      rest-client (~> 1.4)
+    stripe (1.56.2)
+      rest-client (>= 1.4, < 4.0)
     sunspot (2.2.0)
       pr_geohash (~> 1.0)
       rsolr (~> 1.0.7)
@@ -419,6 +416,7 @@ DEPENDENCIES
   rubyzip (~> 1.1.0)
   sanitize (~> 2.0.6)
   spring
+  stripe (~> 1.56.2)
   sunspot-rails-tester
   sunspot_rails (= 2.2.0)
   sunspot_solr (= 2.2.0)

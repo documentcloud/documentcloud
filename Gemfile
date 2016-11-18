@@ -41,6 +41,7 @@ gem 'net-ssh-shell'
 gem 'country_select',         '~> 2.2.0'
 gem 'bootstrap_form',         github: 'documentcloud/rails-bootstrap-forms',
                               branch: 'bootstrap-v4'
+gem 'stripe',                 '~> 1.56.2'
 
 gem 'active_model_serializers', '~>0.9.0'
 gem 'passenger'
