@@ -84,28 +84,56 @@
     <div class="section_title">
       Donate to DocumentCloud
     </div>
-    <form action="/your-server-side-code" method="POST" style="margin-top:22px">
-      <div style="text-align:center;margin-bottom:1em">
+    <%= form_tag donate_charge_path, {id: 'donation_form', style: 'margin-top:22px'} do %>
+      <%= hidden_field_tag(:stripe_token) %>
+      <p style="text-align:center">
         Help newsrooms research and publish source documents by donating to DocumentCloud c/o IRE.<br>
-        (<a href="/donate">What's that mean?</a>)
-      </div>
-      <div class="text_input first light" style="margin-bottom:1em;">
+        (<%= link_to "What's that mean?", donate_path %>)
+      </p>
+      <div id="error_explanation"></div>
+      <div class="text_input first light">
         <div class="inner">
-          <input type="tel" placeholder="Amount ($)" name="amount" id="stripe-amount" />
+          <input type="tel" placeholder="Amount ($)" name="amount" id="donation_amount" />
         </div>
       </div>
-      <script
-        src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-        data-key="pk_test_u5sgFOrfSyQ1HmDQBmkgUGC2"
-        data-label="Donate $10 with Stripe"
-        data-name="DocumentCloud"
-        data-description="c/o Investigative Reporters & Editors"
-        data-image="https://pbs.twimg.com/profile_images/999648164/Screen_shot_2010-06-17_at_3.35.01_PM.png"
-        data-locale="auto"
-        data-zip-code="true">
-      </script>
-    </form>
+      <button type="submit" class="minibutton default">Donate</button>
+    <% end %>
   </div>
+  <script src="https://checkout.stripe.com/checkout.js"></script>
+  <script>
+    var handler = StripeCheckout.configure({
+      key:         '<%= DC::SECRETS['stripe']['publish'] %>',
+      locale:      'auto',
+      name:        'DocumentCloud',
+      description: 'c/o Invesigative Reporters & Editors',
+      token: function(token) {
+        $('#stripe_token').val(token.id);
+        $('#donation_form').get(0).submit();
+      }
+    });
+    $('#donation_form').on('submit', function(e) {
+      e.preventDefault();
+      $('#error_explanation').html('');
+      var amount = $('#donation_amount').val();
+      amount = amount.replace(/\$/g, '').replace(/\,/g, '')
+      amount = parseFloat(amount);
+      if (isNaN(amount)) {
+        $('#error_explanation').html('<p style="color:red">Please enter a valid amount in USD ($).</p>');
+      }
+      else if (amount < 5.00) {
+        $('#error_explanation').html('<p style="color:red">Donation amount must be at least $5.</p>');
+      }
+      else {
+        amount = amount * 100; // Cents
+        handler.open({
+          amount: Math.round(amount)
+        })
+      }
+    });
+    $(window).on('popstate', function() {
+      handler.close();
+    });
+  </script>
 
   <div id="about" class="sidebar_section">
     <div class="section_title">
