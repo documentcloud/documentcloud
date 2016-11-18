@@ -11,7 +11,7 @@ class EmbedController < ApplicationController
   def enhance
     return not_implemented unless request.format.js?
 
-    render :enhance, :content_type => js_mime_type
+    render :enhance, content_type: js_mime_type
   end
 
   # The loaders live in their respective view folders and are deployed to S3,
@@ -20,14 +20,13 @@ class EmbedController < ApplicationController
     return not_implemented unless request.format.js?
 
     object_controller_map = {
-      'viewer'    => 'documents',
-      'notes'     => 'annotations',
-      'embed'     => 'search'
+      viewer: 'documents',
+      notes:  'annotations',
+      embed:  'search'
     }
+    return not_found unless matching_controller = object_controller_map[params[:object].to_sym]
 
-    return not_found unless matching_controller = object_controller_map[params[:object]]
-
-    render "#{matching_controller}/embed_loader", :content_type => js_mime_type
+    render "#{matching_controller}/embed_loader", content_type: js_mime_type
   end
 
   private
