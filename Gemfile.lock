@@ -272,6 +272,9 @@ GEM
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
       slop (~> 3.4)
+    pry-remote (0.1.8)
+      pry (~> 0.9)
+      slop (~> 3.0)
     rack (1.6.4)
     rack-protection (1.5.3)
       rack
@@ -411,6 +414,7 @@ DEPENDENCIES
   pg
   progress_bar
   pry
+  pry-remote
   rails (~> 4.2.0)
   rake
   rdiscount (~> 2.1.6)
@@ -426,4 +430,4 @@ DEPENDENCIES
   webmock
 
 BUNDLED WITH
-   1.12.5
+   1.13.6

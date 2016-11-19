@@ -52,6 +52,7 @@ group :development, :test do
   #gem 'sunspot_matchers'
   gem 'spring'
   gem 'pry'
+  gem 'pry-remote'
   gem 'byebug' # Debugger
   gem 'factory_girl_rails' # Mocking out objects
   gem 'ruby-debug-passenger'
