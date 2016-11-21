@@ -30,7 +30,10 @@ class DonateController < ApplicationController
         amount:      @amount,
         currency:    'usd',
         source:      params[:stripe_token],
-        description: 'DocumentCloud donation'
+        description: 'DocumentCloud Donation',
+        metadata: {
+          type: 'donation',
+        },
       )
     rescue Stripe::CardError => e
       flash[:error] = e.message
