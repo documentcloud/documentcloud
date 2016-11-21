@@ -77,28 +77,6 @@ namespace :app do
     Document.publish_due_documents
   end
 
-  namespace :clearcache do
-
-    desc "Clears out cached document JS files."
-    task :documents do
-      print `find ./public/documents/ -maxdepth 1 -name "*.js" -delete`
-      print `find ./public/documents/ -maxdepth 1 -name "*.js.gz" -delete`
-      invoke 'app:clearcache:notes'
-    end
-
-    desc "Clears out cached annotation JS files."
-    task :notes do
-      print `find ./public/documents/*/annotations/ -maxdepth 1 -name "*.js" -delete`
-      print `find ./public/documents/*/annotations/ -maxdepth 1 -name "*.js.gz" -delete`
-    end
-
-    desc "Purges cached search embeds."
-    task :search do
-      print `rm -rf ./public/search/embed/*`
-    end
-
-  end
-
 end
 
 # def nginx_pid
