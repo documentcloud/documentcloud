@@ -83,13 +83,11 @@ class ImportController < ApplicationController
     return forbidden unless correct_cloud_crowd_secret?(params[:secret])
     cloud_crowd_job = JSON.parse(params[:job])
     if processing_job = ProcessingJob.lookup_by_remote(cloud_crowd_job)
-      processing_job.resolve(cloud_crowd_job) do |pj| 
-        expire_document_cache pj.document
-      end
+      processing_job.resolve(cloud_crowd_job)
     end
     
-    #render :plain => '201 Created', :status => 201
-    render :plain => "Created but don't clean up the job right now."
+    #render plain: '201 Created', status: 201
+    render plain: "Created but don't clean up the job right now."
   end
   
   # CloudCrowd is done changing the document's asset access levels.
@@ -98,12 +96,10 @@ class ImportController < ApplicationController
     return forbidden unless correct_cloud_crowd_secret?(params[:secret])
     cloud_crowd_job = JSON.parse(params[:job])
     if processing_job = ProcessingJob.lookup_by_remote(cloud_crowd_job)
-      processing_job.resolve(cloud_crowd_job) do |pj| 
-        expire_document_cache pj.document
-      end
+      processing_job.resolve(cloud_crowd_job)
     end
 
-    render :plain => '201 Created', :status => 201
+    render plain: '201 Created', status: 201
   end
   
   private
@@ -116,10 +112,4 @@ class ImportController < ApplicationController
     secret.kind_of? String and secret == DC::SECRETS['cloud_crowd_secret']
   end
 
-  def expire_document_cache(document)
-    if document
-      paths = document.cache_paths + document.annotations.map(&:cache_paths)
-      expire_pages paths
-    end
-  end
 end

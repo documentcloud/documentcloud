@@ -521,19 +521,6 @@ class Document < ActiveRecord::Base
     "/documents/#{canonical_id}.#{format}"
   end
 
-  def canonical_js_cache_path
-    canonical_path(:js)
-  end
-
-  # Effective duplicate of `canonical_path()` for explicitness
-  def canonical_json_cache_path
-    canonical_path(:json)
-  end
-
-  def cache_paths
-    [canonical_js_cache_path, canonical_json_cache_path]
-  end
-
   def project_ids
     self.project_memberships.map {|m| m.project_id }
   end

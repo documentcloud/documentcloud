@@ -209,19 +209,6 @@ class Annotation < ActiveRecord::Base
     "#{DC.server_root}/api/oembed.json?url=#{CGI.escape(self.canonical_url(:html))}"
   end
   
-  def canonical_js_cache_path
-    canonical_path(:js)
-  end
-  
-  # Effective duplicate of `canonical_path()` for explicitness
-  def canonical_json_cache_path
-    canonical_path(:json)
-  end
-  
-  def cache_paths
-    [canonical_js_cache_path, canonical_json_cache_path]
-  end
-
   def anchored_published_url
     "#{document.published_url}\#document/p#{page_number}/a#{id}"
   end

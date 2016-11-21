@@ -43,9 +43,7 @@ class PagesController < ApplicationController
       end
       
       format.js do
-        js = "DV.loadJSON(#{current_document_json});"
-        cache_page js if current_document.cacheable?
-        render :js => js
+        render :js => "DV.loadJSON(#{current_document_json});"
       end
 
       #format.txt { send_page_text }
