@@ -2,18 +2,13 @@ namespace :deploy do
   DEPLOYABLE_ENV = %w(production staging)
 
   desc "Deploy Rails app"
-  task :minimal do
+  task :rails do
     remote ["app:update", "app:restart", "app:warm"], app_servers
   end
 
-  desc "Deploy Rails app and clear the JSON object cache"
-  task :rails do
-    remote ["app:update", "app:clearcache:documents", "app:clearcache:search", "app:restart", "app:warm"], app_servers
-  end
-
-  desc "Deploy Rails app, update and compile static assets, and clear the JSON object cache"
+  desc "Deploy Rails app, update and compile static assets"
   task :app do
-    remote ["app:update", "app:bower", "app:jammit", "app:clearcache:documents", "app:clearcache:search", "app:restart", "app:warm"], app_servers
+    remote ["app:update", "app:bower", "app:jammit", "app:restart", "app:warm"], app_servers
   end
 
   desc "Deploy and migrate the database, then restart CloudCrowd"

@@ -148,10 +148,6 @@ class ApplicationController < ActionController::Base
     response.headers.except! 'X-Frame-Options'
   end
   
-  def expire_pages(paths)
-    [paths].flatten.each { |path| expire_page path }
-  end
-
   # Select only a sub-set of passed parameters. Useful for whitelisting
   # attributes from the params hash before performing a mass-assignment.
   def pick(hash, *keys)
