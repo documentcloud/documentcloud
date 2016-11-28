@@ -32,7 +32,8 @@ class DonateController < ApplicationController
         source:      params[:stripe_token],
         description: 'DocumentCloud Donation',
         metadata: {
-          type: 'donation',
+          type:  'donation',
+          email: params[:stripe_email],
         },
       )
     rescue Stripe::CardError => e

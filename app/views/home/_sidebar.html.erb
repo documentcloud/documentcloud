@@ -86,6 +86,7 @@
     </div>
     <%= form_tag donate_charge_path, {id: 'donation_form', style: 'margin-top:22px'} do %>
       <%= hidden_field_tag(:stripe_token) %>
+      <%= hidden_field_tag(:stripe_email) %>
       <p style="text-align:center">
         Help newsrooms research and publish source documents by donating to DocumentCloud c/o IRE.<br>
         (<%= link_to "What's that mean?", donate_path %>)
@@ -110,6 +111,7 @@
       billingAddress: true,
       token: function(token) {
         $('#stripe_token').val(token.id);
+        $('#stripe_email').val(token.email);
         $('#donation_form').get(0).submit();
       }
     });
