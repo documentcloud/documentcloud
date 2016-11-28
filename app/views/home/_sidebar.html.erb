@@ -102,41 +102,7 @@
   </div>
   <script src="https://checkout.stripe.com/checkout.js"></script>
   <script>
-    var handler = StripeCheckout.configure({
-      key:         '<%= DC::SECRETS['stripe']['publish'] %>',
-      locale:      'auto',
-      name:        'DocumentCloud',
-      description: 'c/o Invesigative Reporters & Editors',
-      image:       'https://pbs.twimg.com/profile_images/999648164/Screen_shot_2010-06-17_at_3.35.01_PM.png',
-      billingAddress: true,
-      token: function(token) {
-        $('#stripe_token').val(token.id);
-        $('#stripe_email').val(token.email);
-        $('#donation_form').get(0).submit();
-      }
-    });
-    $('#donation_form').on('submit', function(e) {
-      e.preventDefault();
-      $('#error_explanation').html('');
-      var amount = $('#donation_amount').val();
-      amount = amount.replace(/\$/g, '').replace(/\,/g, '')
-      amount = parseFloat(amount);
-      if (isNaN(amount)) {
-        $('#error_explanation').html('<p style="color:red">Please enter a valid amount in USD ($).</p>');
-      }
-      else if (amount < 5.00) {
-        $('#error_explanation').html('<p style="color:red">Donation amount must be at least $5.</p>');
-      }
-      else {
-        amount = amount * 100; // Cents
-        handler.open({
-          amount: Math.round(amount)
-        })
-      }
-    });
-    $(window).on('popstate', function() {
-      handler.close();
-    });
+    <%= render partial: 'common/donate_widget_js' %>
   </script>
 
   <div id="about" class="sidebar_section">
