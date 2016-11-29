@@ -33,7 +33,8 @@ when 'development' || 'staging'
 
   Membership.create(organization: Organization.find_by_slug('documentcloud'),
                     account: Account.find_by_email('siteadmin.test@documentcloud.org'),
-                    role: 1)
+                    role: 1,
+                    default: true)
 
   # Administrator
   Account.create(first_name: 'Administrator',
@@ -45,7 +46,8 @@ when 'development' || 'staging'
 
   Membership.create(organization: Organization.find_by_slug('documentcloud'),
                     account: Account.find_by_email('administrator.test@documentcloud.org'),
-                    role: 1)
+                    role: 1,
+                    default: true)
 
   # Contributor
   Account.create(first_name: 'Contributor',
@@ -57,7 +59,8 @@ when 'development' || 'staging'
 
   Membership.create(organization: Organization.find_by_slug('documentcloud'),
                     account: Account.find_by_email('contributor.test@documentcloud.org'),
-                    role: 2)
+                    role: 2,
+                    default: true)
 
   # Reviewer
   Account.create(first_name: 'Reviewer',
@@ -69,7 +72,8 @@ when 'development' || 'staging'
 
   Membership.create(organization: Organization.find_by_slug('documentcloud'),
                     account: Account.find_by_email('reviewer.test@documentcloud.org'),
-                    role: 3)
+                    role: 3,
+                    default: true)
 
   # Freelancer
   Account.create(first_name: 'Freelancer',
@@ -81,7 +85,8 @@ when 'development' || 'staging'
 
   Membership.create(organization: Organization.find_by_slug('documentcloud'),
                     account: Account.find_by_email('freelancer.test@documentcloud.org'),
-                    role: 4)
+                    role: 4,
+                    default: true)
 
   # Disabled
   Account.create(first_name: 'Disabled',
@@ -93,7 +98,8 @@ when 'development' || 'staging'
 
   Membership.create(organization: Organization.find_by_slug('documentcloud'),
                     account: Account.find_by_email('disabled.test@documentcloud.org'),
-                    role: 0)
+                    role: 0,
+                    default: true)
 
   # News XYZ
   Organization.create(name: 'News XYZ',
@@ -110,7 +116,8 @@ when 'development' || 'staging'
 
   Membership.create(organization: Organization.find_by_slug('documentcloud'),
                     account: Account.find_by_email('administrator.test@news-xyz.org'),
-                    role: 1)
+                    role: 1,
+                    default: true)
 
   # Contributor
   Account.create(first_name: 'Contributor',
@@ -122,7 +129,8 @@ when 'development' || 'staging'
 
   Membership.create(organization: Organization.find_by_slug('news-xyz'),
                     account: Account.find_by_email('contributor.test@news-xyz.org'),
-                    role: 2)
+                    role: 2,
+                    default: true)
 
   # Freelancer
   Membership.create(organization: Organization.find_by_slug('news-xyz'),
@@ -146,7 +154,8 @@ when 'development' || 'staging'
 
   Membership.create(organization: Organization.find_by_slug('legacy-newsroom-efg'),
                     account: Account.find_by_email('admin.test@legacy-newsroom-efg.org'),
-                    role: 1)
+                    role: 1,
+                    default: true)
 
   # Contributor
   Account.create(first_name: 'LegacyContributor',
@@ -158,11 +167,13 @@ when 'development' || 'staging'
 
   Membership.create(organization: Organization.find_by_slug('legacy-newsroom-efg'),
                     account: Account.find_by_email('legacycontributor.test@legacy-newsroom-efg.org'),
-                    role: 2)
+                    role: 2,
+                    default: true)
 
   Membership.create(organization: Organization.find_by_slug('legacy-newsroom-efg'),
                     account: Account.find_by_email('legacycontributor.test@legacy-newsroom-efg.org'),
-                    role: 2)
+                    role: 2,
+                    default: true)
 
   # Freelancer
   Account.create(first_name: 'LegacyFreelancer',
