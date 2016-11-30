@@ -1,1 +1,1 @@
-DC::Application.config.you_are_documentcloud = File.exist? File.join(File.dirname(__FILE__), 'secrets', 'documentcloud.yep')
+DC::Application.config.you_are_documentcloud = File.exist? File.join(Rails.root, 'secrets', 'documentcloud.yep')
