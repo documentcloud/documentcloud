@@ -1,4 +1,8 @@
 DC::Application.routes.draw do
+  def you_are_documentcloud?
+    File.exist? File.join(Rails.root, 'secrets', 'documentcloud.yep')
+    # DC::Application.config.you_are_documentcloud is always returning false in here
+  end
 
   # Homepage
   get '/', to: 'home#index', as: 'homepage'
@@ -27,13 +31,16 @@ DC::Application.routes.draw do
   get '/results',                  to: 'workspace#index', as: 'results'
 
   # Authentication with DocumentCloud Accounts service
-  # if DC::Application.config.you_are_documentcloud
+  if you_are_documentcloud?
     get 'auth/documentcloud', to: 'sessions#new', as: :accounts_login
     get 'auth/logout', to: 'sessions#destroy', as: :accounts_logout
     get 'auth/:provider/callback', to: 'sessions#create', as: :accounts_callback
     get 'auth/failure', to: 'sessions#failure', as: :accounts_failure
     get 'auth/forgot' => redirect("#{DC::SECRETS['omniauth']['documentcloud']['site']}/login/forgot"), as: :accounts_forgot_password
-  # else
+    # Override current routes
+    match '/login', to: 'sessions#new', via: [:get, :post], as: 'login'
+    get '/logout', to: 'sessions#destroy', as: 'logout'
+  else
     # Legacy Authentication
     scope(controller: 'authentication') do
       match '/login', action: 'login', via: [:get, :post], as: 'login'
@@ -46,7 +53,7 @@ DC::Application.routes.draw do
       # get '/auth/:provider',          action: 'blank'
       # get '/auth/:provider/callback', action: 'callback'
     end
-  # end
+  end
 
   # Public search
   get '/public/search(/:query)(/:page)', to: 'public#index', as: 'public_search'
@@ -158,8 +165,18 @@ DC::Application.routes.draw do
       post 'resend_welcome'
     end
   end
+
   match '/accounts/enable/:key', to: 'accounts#enable', via: [:get, :post], as: 'enable_account'
-  match '/reset_password',       to: 'accounts#reset',  via: [:get, :post], as: 'reset_password'
+
+  if you_are_documentcloud?
+    get '/reset_password' => redirect("#{DC::SECRETS['omniauth']['documentcloud']['site']}/login/forgot"), as: :reset_password
+  else
+    match '/reset_password',       to: 'accounts#reset',  via: [:get, :post], as: 'reset_password'
+  end
+
+  if you_are_documentcloud?
+    get '/accounts' => redirect("#{DC::SECRETS['omniauth']['documentcloud']['site']}/settings"), as: :account_settings
+  end
 
   # Account requests
   get '/signup', to: 'redirect#index', url: '/plans/apply', as: 'signup'
@@ -223,7 +240,7 @@ DC::Application.routes.draw do
   match '/:controller(/:action(/:id))', via: [:get, :post]
   get ':controller/:action.:format'
 
-  root to: "home#index"
+  root to: 'home#index'
 end
 
 # Magic invocation to ask engines to add their routes

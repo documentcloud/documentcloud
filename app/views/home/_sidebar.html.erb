@@ -17,7 +17,7 @@
       If you're reporting on or publishing primary source documents, we can help.
       <a href="/apply"><span class="minibutton default">Join DocumentCloud</span></a>
     </div>
-    <% if %>
+    <% if DC::Application.config.you_are_documentcloud %>
       <div class="sidebar_section login_section">
       <% if flash[:error] %>
         <div class="error">

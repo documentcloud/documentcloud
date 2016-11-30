@@ -5,12 +5,19 @@ class HomeController < ApplicationController
   MARKDOWN_LINK_REPLACER = /\[([^\]]*?)\]\[\]/i
 
   before_action :secure_only
-  before_action :current_account
+  # TODO: review me! this before action, halts when user is not logged in
+  # which actions need a current account on this controller?
+  # before_action :current_account
+  
   before_action :bouncer if exclusive_access?
 
   def index
     @canonical_url = homepage_url
-    redirect_to search_url if logged_in? and env["PATH_INFO"].slice(0,5) != "/home"
+
+    if logged_in? && env["PATH_INFO"].slice(0,5) != "/home"
+      redirect_to search_url
+    end
+
     @document = Rails.cache.fetch( "homepage/featured_document" ) do
       time = Rails.env.production? ? 2.weeks.ago : nil
       Document.unrestricted.published.popular.random.since(time).first
