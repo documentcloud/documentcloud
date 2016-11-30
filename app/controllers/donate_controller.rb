@@ -4,7 +4,6 @@ class DonateController < ApplicationController
   before_action :secure_only
 
   def index
-    
   end
 
   def charge
@@ -17,17 +16,17 @@ class DonateController < ApplicationController
       redirect_to donate_path
       return
     end
-    @amount = (@amount * 100).to_i # Cents
+    @cents = (@amount * 100).to_i
 
-    if @amount < 500
-      flash[:error] = 'Charge not completed. Donation amount must be at least $5.'
+    if @cents < 500
+      flash[:error] = "Charge not completed. Donation amount must be at least $5."
       redirect_to donate_path
       return
     end
       
     begin
       Stripe::Charge.create(
-        amount:      @amount,
+        amount:      @cents,
         currency:    'usd',
         source:      params[:stripe_token],
         description: 'DocumentCloud Donation',
@@ -42,20 +41,9 @@ class DonateController < ApplicationController
     end
 
     redirect_to donate_thanks_path
-
-    # request.xhr?
-
-    # respond_to do |format|
-    #   format.json do
-    #   end
-    #   format.all do
-    #   end
-    # end
-
   end
 
   def thanks
-    
   end
 
 end
