@@ -1,6 +1,20 @@
+<style type="text/css" media="screen">
+.letter {
+  background: #ffffed;
+  color: rgb(51, 51, 51);
+  background: rgb(239, 239, 236);
+  box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.15);
+  font-family: Georgia, serif;
+  padding: 2rem;
+  margin: 2rem 0;
+  line-height: 24px;
+  font-size: 16px;
+}
+</style>
+
 <div class="content">
-  <div class="container-md">
-    <h1>Donate!</h1>
+  <div class="container-lg">
+    <h1>Show your support for great journalism with a donation to DocumentCloud</h1>
     <div class="row">
       <div class="col-xs-12 col-sm-3 offset-sm-1 push-sm-8">
         <%= bootstrap_form_tag url: donate_charge_path, html: {id: 'donation_form'} do |f| %>
@@ -10,12 +24,20 @@
           <%= f.submit 'Donate', class: 'btn btn-block btn-success' %>
           <div id="error_explanation" style="margin-top:1rem"></div>
         <% end %>
+          <p class="note">You’re making a tax-deductible donation to <%= link_to 'Investigative Reporters & Editors', 'https://www.ire.org/' %>, the nonprofit 501(c)(3) that hosts DocumentCloud.</p>
       </div>
       <div class="col-xs-12 col-sm-8 pull-sm-4">
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+        <p>From St. Louis Public Radio's <%= link_to 'Ferguson Project', 'http://apps.stlpublicradio.org/ferguson-project/evidence.html' %> to ProPublica and The Marshall Project’s <%= link_to 'expose on rape investigations', 'https://www.propublica.org/article/false-rape-accusations-an-unbelievable-story' %>, DocumentCloud has played a part in some of the most powerful reporting of the past few years.</p>
+        <p>We’ve proven the value of giving journalists better tools for analyzing piles of documents and helping the public view the evidence themselves. We hope you'll consider using the donation widget to help us continue to improve the state of evidence-based journalism.</p>
+        <p>We can't say it better than Rich Harris of the Guardian US:</p>
+        <section class="letter">
+          <p>DocumentCloud is an essential part of the news ecosystem. It is a well-designed, easy-to-use tool that journalists around the world depend on for publishing documents that are in the public interest. In an industry built on deadlines, having a reliable go-to service like DocumentCloud is the difference between information being open, and being locked up in screenshots in proprietary CMSes.</p>
+          <p>At the Guardian, we’ve used DocumentCloud on countless articles. On my team, the Guardian US interactive team, it’s been a crucial feature of many of our most important stories. Most recently, a trove of 1,500 documents – firmly in the public interest, but ordered destroyed by the Wisconsin Supreme Court – were put in the public domain following our <%= link_to 'investigation', 'https://www.theguardian.com/us-news/ng-interactive/2016/sep/14/john-doe-files-scott-walker-corporate-cash-american-politics' %> into the questionable campaign finance arrangements used by 2016 presidential candidate Scott Walker during his 2012 recall election.</p>
+          <p>Thanks to DocumentCloud we were able to highlight and link to specific parts of the Walker documents, including a photocopy of a check with the damning handwritten phrase “<%= link_to 'Because Scott Walker Asked', 'http://www.documentcloud.org/documents/3105984-2012-08-14-Exhibits-01-100-PT1.html#document/p52/a317493' %>”. As a direct result of having the entire document set online in a linkable, searchable form, local reporters in Wisconsin who had been following the story for a long time were very quickly able to follow up our reporting with fresh angles. Powerful public officials were held to account by an empowered fourth estate.</p>
+          <p>Part of DocumentCloud’s success is that they keenly understand the needs of journalists, with an advisory group that includes some of the best-known names in digital media. The staff are fully part of the journalism community, and are familiar faces at media conferences.</p>
+          <p>I can think of few open source projects more deserving of financial support.</p>
+          <cite class="h5">— <%= link_to 'Rich Harris', 'https://www.theguardian.com/profile/rich-harris' %> (Guardian US)</cite>
+        </section>
       </div>
     </div>
   </div>
