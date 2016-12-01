@@ -6,31 +6,83 @@
   box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.15);
   font-family: Georgia, serif;
   padding: 2rem;
-  margin: 2rem 0;
+  line-height: 24px;
+  font-size: 16px;
+}
+.letter.guardian {
+  background: #ffffed;
+  color: rgb(51, 51, 51);
+  background: rgb(239, 239, 236);
+  box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.15);
+  font-family: Georgia, serif;
+  padding: 2rem;
+  line-height: 24px;
+  font-size: 16px;
+}
+.letter.propublica {
+  background: #ffffed;
+  color: rgb(51, 51, 51);
+  background: rgb(239, 239, 236);
+  box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.15);
+  font-family: Georgia, serif;
+  padding: 2rem;
   line-height: 24px;
   font-size: 16px;
 }
 </style>
 
 <div class="content">
-  <div class="container-lg">
+  <div class="container-md text-xs-center">
     <h1>Show your support for great journalism with a donation to DocumentCloud</h1>
-    <div class="row">
-      <div class="col-xs-12 col-sm-3 offset-sm-1 push-sm-8">
-        <%= bootstrap_form_tag url: donate_charge_path, html: {id: 'donation_form'} do |f| %>
-          <%= hidden_field_tag(:stripe_token) %>
-          <%= hidden_field_tag(:stripe_email) %>
-          <%= f.telephone_field :amount, id: 'donation_amount', label: 'Amount (USD)' %>
+  </div>
+
+  <div class="container-sm">
+      <%= bootstrap_form_tag url: donate_charge_path, html: {id: 'donation_form', class: 'form-inline'} do |f| %>
+        <%= hidden_field_tag(:stripe_token) %>
+        <%= hidden_field_tag(:stripe_email) %>
+
+        <div class="row">
+          <div class="col-sm-4">
+            <button class="btn btn-lg btn-block btn-secondary">$25</button>
+          </div>
+          <div class="col-sm-4">
+            <button class="btn btn-lg btn-block btn-secondary">$50</button>
+          </div>
+          <div class="col-sm-4">
+            <button class="btn btn-lg btn-block btn-secondary">$100</button>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-4">
+            <button class="btn btn-lg btn-block btn-secondary">$250</button>
+          </div>
+          <div class="col-sm-4">
+            <button class="btn btn-lg btn-block btn-secondary">$500</button>
+          </div>
+          <div class="col-sm-4">
+            <div class="form-group">
+              <label class="sr-only" for="donation_amount">Amount (USD)</label>
+              <input id="donation_amount" class="form-control" name="amount" type="tel" placeholder="Other amount">
+            </div>
+          </div>
+        </div>
+
+        
+        <p style="margin-top:1rem">
           <%= f.submit 'Donate', class: 'btn btn-block btn-success' %>
-          <div id="error_explanation" style="margin-top:1rem"></div>
-        <% end %>
-          <p class="note">You’re making a tax-deductible donation to <%= link_to 'Investigative Reporters & Editors', 'https://www.ire.org/' %>, the nonprofit 501(c)(3) that hosts DocumentCloud.</p>
-      </div>
-      <div class="col-xs-12 col-sm-8 pull-sm-4">
-        <p>From St. Louis Public Radio's <%= link_to 'Ferguson Project', 'http://apps.stlpublicradio.org/ferguson-project/evidence.html' %> to ProPublica and The Marshall Project’s <%= link_to 'expose on rape investigations', 'https://www.propublica.org/article/false-rape-accusations-an-unbelievable-story' %>, DocumentCloud has played a part in some of the most powerful reporting of the past few years.</p>
-        <p>We’ve proven the value of giving journalists better tools for analyzing piles of documents and helping the public view the evidence themselves. We hope you'll consider using the donation widget to help us continue to improve the state of evidence-based journalism.</p>
-        <p>We can't say it better than Rich Harris of the Guardian US:</p>
-        <section class="letter">
+        </p>
+        <div id="error_explanation" style="margin-top:1rem"></div>
+      <% end %>
+      <p class="note">You’re making a tax-deductible donation to <%= link_to 'Investigative Reporters & Editors', 'https://www.ire.org/' %>, the nonprofit 501(c)(3) that hosts DocumentCloud.</p>
+    <p>From St. Louis Public Radio's <%= link_to 'Ferguson Project', 'http://apps.stlpublicradio.org/ferguson-project/evidence.html' %> to ProPublica and The Marshall Project’s <%= link_to 'expose on rape investigations', 'https://www.propublica.org/article/false-rape-accusations-an-unbelievable-story' %>, DocumentCloud has played a part in some of the most powerful reporting of the past few years.</p>
+    <p>We’ve proven the value of giving journalists better tools for analyzing piles of documents and helping the public view the evidence themselves. We hope you'll consider using the donation widget to help us continue to improve the state of evidence-based journalism.</p>
+  </div>
+
+  <div class="container-lg" style="margin-top:4rem">
+    <h1>{hear from a few avid users}</h1>
+    <div class="row">
+      <div class="col-xs-12 col-md-6">
+        <section class="letter guardian">
           <p>DocumentCloud is an essential part of the news ecosystem. It is a well-designed, easy-to-use tool that journalists around the world depend on for publishing documents that are in the public interest. In an industry built on deadlines, having a reliable go-to service like DocumentCloud is the difference between information being open, and being locked up in screenshots in proprietary CMSes.</p>
           <p>At the Guardian, we’ve used DocumentCloud on countless articles. On my team, the Guardian US interactive team, it’s been a crucial feature of many of our most important stories. Most recently, a trove of 1,500 documents – firmly in the public interest, but ordered destroyed by the Wisconsin Supreme Court – were put in the public domain following our <%= link_to 'investigation', 'https://www.theguardian.com/us-news/ng-interactive/2016/sep/14/john-doe-files-scott-walker-corporate-cash-american-politics' %> into the questionable campaign finance arrangements used by 2016 presidential candidate Scott Walker during his 2012 recall election.</p>
           <p>Thanks to DocumentCloud we were able to highlight and link to specific parts of the Walker documents, including a photocopy of a check with the damning handwritten phrase “<%= link_to 'Because Scott Walker Asked', 'http://www.documentcloud.org/documents/3105984-2012-08-14-Exhibits-01-100-PT1.html#document/p52/a317493' %>”. As a direct result of having the entire document set online in a linkable, searchable form, local reporters in Wisconsin who had been following the story for a long time were very quickly able to follow up our reporting with fresh angles. Powerful public officials were held to account by an empowered fourth estate.</p>
@@ -39,8 +91,15 @@
           <cite class="h5">— <%= link_to 'Rich Harris', 'https://www.theguardian.com/profile/rich-harris' %> (Guardian US)</cite>
         </section>
       </div>
+      <div class="col-xs-12 col-md-6">
+        <section class="letter propublica">
+          <p>Here's how I used document cloud. "An Unbelievable Story of Rape," published by ProPublica and The Marshall Project, could not have happened without DocumentCloud. In order to tell the story, Ken Armstrong, my co-author, and I gathered thousands of pages of police department reports, court transcripts, academic studies and other documents. We stored them in DocumentCloud for many reasons. DocumentCloud's OCR system, which scans documents to convert them into searchable text, allowed us to quickly locate information. The notes feature allowed us to highlight important sections or themes, becoming a sort of outline on the fly. With two organizations working together, DocumentCloud made collaboration easier, too.</p>
+          <cite class="h5">— <%= link_to 'T. Christian Miller', 'https://www.propublica.org/site/author/t_christian_miller' %> (ProPublica)</cite>
+        </section>
+      </div>
     </div>
   </div>
+
 </div>
 <%
   (@javascripts_footer ||= []).push 'https://checkout.stripe.com/checkout.js'
