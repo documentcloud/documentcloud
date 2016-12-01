@@ -5,6 +5,7 @@ var handler = StripeCheckout.configure({
   description: 'c/o Investigative Reporters & Editors',
   image:       '/images/common/dc_logomark_social_square.png',
   billingAddress: true,
+  amount:      5000,
   token: function(token) {
     $('#stripe_token').val(token.id);
     $('#stripe_email').val(token.email);
@@ -13,8 +14,14 @@ var handler = StripeCheckout.configure({
 });
 $('#donation_form').on('submit', function(e) {
   e.preventDefault();
-  $('#error_explanation').html('');
-  var amount = $('#donation_amount').val();
+
+  var $error = $('#error_explanation').html('');
+  var $form = $('#donation_form');
+
+  var amount = $('#donation-amount-other').val();
+  if (amount == '') {
+    amount = $('#donation-amount-other');
+  }
   amount = amount.replace(/\$/g, '').replace(/\,/g, '')
   amount = parseFloat(amount);
   if (isNaN(amount)) {
@@ -28,6 +35,12 @@ $('#donation_form').on('submit', function(e) {
     handler.open({
       amount: Math.round(amount)
     })
+  }
+});
+$('#donation-amount-other').on('keyup', function(){
+  if ($(this).val() !== '') {
+    var $checked = $('#donation_form input[name="donation_amount"]:checked');
+    $checked.prop('checked', false).trigger('change').closest('.active').removeClass('active');
   }
 });
 $(window).on('popstate', function() {
