@@ -66,7 +66,8 @@ class ImportController < ApplicationController
       attributes = {
         # Assume that CloudCrowd will get to the email before 24 hours are through.
         url:      bucket.objects[file_path].url_for(:read, {secure: Thread.current[:ssl], expires: 24.hours}).to_s,
-        email_me: names.size
+        email_me: names.size,
+        data: {uploaded: 'email'}
       }
       Document.upload(attributes, account, organization)
       # this is really inefficient. fix this.
