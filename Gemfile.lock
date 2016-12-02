@@ -30,14 +30,14 @@ GIT
 
 GIT
   remote: git@github.com:documentcloud/bull_proof_china_shop
-  revision: 0460788877a7a0b6c8ba3eea9eace96f2083e4ad
+  revision: fea3ad8d8269eea3d67c44803be4dbca34053233
   branch: master
   specs:
     bull_proof_china_shop (0.0.1)
       country_select (~> 2.2.0)
       has_secure_token (~> 1.0.0)
       rails (~> 4.2.3)
-      stripe (~> 1.24.0)
+      stripe (~> 1.56.2)
 
 GEM
   remote: https://rubygems.org/
@@ -342,9 +342,8 @@ GEM
       actionpack (>= 4.0)
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
-    stripe (1.24.0)
-      json (~> 1.8.1)
-      rest-client (~> 1.4)
+    stripe (1.56.2)
+      rest-client (>= 1.4, < 4.0)
     sunspot (2.2.0)
       pr_geohash (~> 1.0)
       rsolr (~> 1.0.7)
