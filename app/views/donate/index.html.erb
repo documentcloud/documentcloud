@@ -40,6 +40,10 @@
 #donation_form .form-group {
   margin-bottom: 0;
 }
+.btn-group .btn.active {
+  background-color: #5cb85c;
+  color: white;
+}
 </style>
 
 <div class="content">
@@ -54,14 +58,14 @@
         <p class="lead text-xs-center text-md-left mb-3">More than <b>one million</b> documents comprised of more than <b>20 million</b> pages have been released to the public through DocumentCloud.</p>
       </div>
       <div class="col-xs-12 col-md-6">
-        <%= bootstrap_form_tag url: donate_charge_path, html: {id: 'donation_form', class: 'form-inline'} do |f| %>
+        <%= bootstrap_form_tag url: donate_charge_path, html: {id: 'donation_form', class: 'form-inline donation-form-with-buttons'} do |f| %>
           <%= hidden_field_tag(:stripe_token) %>
           <%= hidden_field_tag(:stripe_email) %>
 
           <div class="row">
             <div class="col-xs-12 col-sm-6 col-md-12">
               <div class="btn-toolbar" role="toolbar" aria-label="Donation amount for DocumentCloud">
-                <div class="btn-group mb-2" data-toggle="buttons">
+                <div id="donation_amounts" class="btn-group mb-2" data-toggle="buttons">
                 <% %w[25 50 100 250].each do |amount| %>
                   <label class="btn btn-secondary">
                     <input name="donation_amount" id="donation-amount-<%= amount %>" value="<%= amount %>" type="radio" autocomplete="off"> $<%= amount %>
@@ -77,8 +81,8 @@
               </div>
             </div>
             <div class="col-xs-12 col-sm-6 col-md-12">
-              <p><%= f.submit 'Donate', class: 'btn btn-block btn-success ' %></p>
-              <div id="error_explanation" style="margin-top:1rem"></div>
+              <p><%= f.submit 'Donate', class: 'btn btn-block btn-success' %></p>
+              <div id="error_explanation"></div>
             </div>
           </div>
           <p class="note" style="font-size:0.75rem">You’re making a tax-deductible donation to <%= link_to 'Investigative Reporters & Editors', 'https://www.ire.org/' %>, the <nobr>501(c)(3)</nobr> that hosts DocumentCloud.</p>
@@ -91,7 +95,7 @@
 
   <div class="container-sm my-5">
     <p>From St. Louis Public Radio's <%= link_to 'Ferguson Project', 'http://apps.stlpublicradio.org/ferguson-project/evidence.html' %> to ProPublica and The Marshall Project’s Pulitzer-winning <%= link_to 'expose on rape investigations', 'https://www.propublica.org/article/false-rape-accusations-an-unbelievable-story' %>, DocumentCloud has played a part in some of the most powerful reporting of the past few years.</p>
-    <p>We’ve proven the value of giving journalists better tools for analyzing piles of documents and helping the public view the evidence themselves. We hope you'll consider using the donation widget to help us continue to improve the state of evidence-based journalism.</p>
+    <p>We’ve proven the value of giving journalists better tools for analyzing piles of documents and helping the public view the evidence themselves. We hope you'll consider helping us continue to improve the state of evidence-based journalism.</p>
   </div>
 
   <div class="container-lg" style="margin-top:4rem">

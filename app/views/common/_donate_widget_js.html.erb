@@ -12,23 +12,37 @@ var handler = StripeCheckout.configure({
     $('#donation_form').get(0).submit();
   }
 });
+$(window).on('popstate', function() {
+  handler.close();
+});
+
 $('#donation_form').on('submit', function(e) {
   e.preventDefault();
 
-  var $error = $('#error_explanation').html('');
-  var $form = $('#donation_form');
+  var $form    = $('#donation_form');
+  var $error   = $('#error_explanation').html('');
 
-  var amount = $('#donation-amount-other').val();
-  if (amount == '') {
-    amount = $('#donation-amount-other');
+  if (_.isFunction($form.serializeObject)) {
+    var formData = $form.serializeObject();
+  } else {
+    var formData = {
+      donation_amount_other: $('#donation-amount-other').val(),
+      donation_amount: 0
+    };
+  }
+
+  var amount = formData.donation_amount_other || formData.donation_amount;
+  if (_.isUndefined(amount)) {
+    $error.html('<p class="my-2 text-danger">Please enter a valid amount in USD ($).</p>');
+    return false;
   }
   amount = amount.replace(/\$/g, '').replace(/\,/g, '')
   amount = parseFloat(amount);
-  if (isNaN(amount)) {
-    $('#error_explanation').html('<p style="color:red">Please enter a valid amount in USD ($).</p>');
+  if (_.isNaN(amount)) {
+    $error.html('<p class="my-2 text-danger">Please enter a valid amount in USD ($).</p>');
   }
   else if (amount < 5.00) {
-    $('#error_explanation').html('<p style="color:red">Donation amount must be at least $5.</p>');
+    $error.html('<p class="my-2 text-danger">Donation amount must be at least $5.</p>');
   }
   else {
     amount = amount * 100; // Cents
@@ -37,12 +51,14 @@ $('#donation_form').on('submit', function(e) {
     })
   }
 });
-$('#donation-amount-other').on('keyup', function(){
-  if ($(this).val() !== '') {
-    var $checked = $('#donation_form input[name="donation_amount"]:checked');
-    $checked.prop('checked', false).trigger('change').closest('.active').removeClass('active');
+$('.donation-form-with-buttons #donation-amount-other').on('keyup', function(){
+  var $form    = $('#donation_form');
+  var formData = $form.serializeObject();
+  if (formData.donation_amount_other) {
+    var $checked = $('#donation_form').find('[name="donation_amount"]:checked');
+    $checked.prop('checked', false).closest('.active').removeClass('active');
   }
 });
-$(window).on('popstate', function() {
-  handler.close();
+$('#donation_amounts .btn').on('click', function(){
+  $('#donation-amount-other').val('');
 });

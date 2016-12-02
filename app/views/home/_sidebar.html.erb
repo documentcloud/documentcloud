@@ -91,13 +91,13 @@
         Show your support for great journalism with a donation to DocumentCloud.<br>
         <%= link_to "Read more about donating", donate_path %>
       </p>
-      <div id="error_explanation"></div>
       <div class="text_input first light">
         <div class="inner">
           <input type="tel" placeholder="Amount ($)" name="amount" id="donation-amount-other" />
         </div>
       </div>
-      <button type="submit" class="minibutton default">Donate</button>
+      <p><button type="submit" class="minibutton default">Donate</button></p>
+      <div id="error_explanation" style="color:red"></div>
     <% end %>
   </div>
   <script src="https://checkout.stripe.com/checkout.js"></script>
