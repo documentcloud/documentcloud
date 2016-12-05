@@ -18,6 +18,7 @@ module ApplicationHelper
     {
       success: 'alert-success',
       error:   'alert-danger',
+      warning: 'alert-warning',
       alert:   'alert-warning',
       notice:  'alert-info',
     }[flash_type.to_sym] || flash_type.to_s
