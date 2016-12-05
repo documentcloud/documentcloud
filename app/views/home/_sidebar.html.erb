@@ -80,6 +80,7 @@
 
   <% end %>
 
+  <% if DC::CONFIG['accept_donations'] && DC::CONFIG['show_donation_widget'] %>
   <div id="donate" class="sidebar_section">
     <div class="section_title">
       Donate to DocumentCloud
@@ -104,6 +105,7 @@
   <script>
     <%= render partial: 'common/donate_widget_js' %>
   </script>
+  <% end %>
 
   <div id="about" class="sidebar_section">
     <div class="section_title">

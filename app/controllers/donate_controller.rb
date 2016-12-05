@@ -2,6 +2,7 @@ class DonateController < ApplicationController
   layout 'new'
 
   before_action :secure_only
+  before_action { not_found } unless DC::CONFIG['accept_donations']
 
   def index
   end
