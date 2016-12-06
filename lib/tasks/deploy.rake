@@ -3,12 +3,12 @@ namespace :deploy do
 
   desc "Deploy Rails app"
   task :rails do
-    remote ["app:update", "app:restart", "app:warm"], app_servers
+    remote %w[app:update app:restart app:warm], app_servers
   end
 
   desc "Deploy Rails app, update and compile static assets"
   task :app do
-    remote ["app:update", "app:bower", "app:jammit", "app:restart", "app:warm"], app_servers
+    remote %w[app:update app:bower app:jammit app:restart app:warm], app_servers
   end
 
   desc "Deploy and migrate the database, then restart CloudCrowd"
@@ -21,17 +21,17 @@ namespace :deploy do
 
   desc "Deploy Rails app to CloudCrowd server, migrate database, and restart CloudCrowd"
   task :cluster do
-    remote ["app:update", "db:migrate", "crowd:server:restart"], central_servers
+    remote %w[app:update db:migrate crowd:server:restart], central_servers
   end
 
   desc "Deploy Rails app to workers and restart CloudCrowd nodes"
   task :workers do
-    remote ["app:update", "crowd:node:restart"], worker_servers
+    remote %w[app:update crowd:node:restart], worker_servers
   end
 
   desc "Deploy Rails app to search server and restart Solr"
   task :search do
-    remote ["app:update", "app:restart_solr"], search_servers
+    remote %w[app:update app:restart_solr], search_servers
   end
 
   desc "Deploy Cloud.Typography assets to production"
