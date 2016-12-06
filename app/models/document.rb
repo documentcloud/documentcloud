@@ -601,7 +601,9 @@ class Document < ActiveRecord::Base
     # when iframed
     forced_options = {embed: true, sidebar: false, responsive: false}
     options.merge!(forced_options).except!(:maxheight, :maxwidth)
-    "#{canonical_url(:html)}?#{options.to_query}"
+    # TODO: Replace with reference to `canonical_url` once it's safe to (#423)
+    agnostic_url = File.join(DC.server_root(agnostic: true), canonical_path(:html))
+    "#{agnostic_url}?#{options.to_query}"
   end
   
   def oembed_url

@@ -31,7 +31,7 @@ describe DC::Embed::Document do
     iframe.wont_be_empty
     iframe = iframe.first
     
-    iframe.attribute("src").value.must_match /^#{resource.resource_url}/
+    iframe.attribute("src").value.must_match doc.iframe_embed_src_url
   end
 
   it "should output HTML for JS based embedding" do

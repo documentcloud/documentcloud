@@ -135,7 +135,9 @@ class Page < ActiveRecord::Base
 
   def iframe_embed_src_url(options={})
     options.merge!(embed: true)
-    "#{canonical_url(:html)}?#{options.to_query}"
+    # TODO: Replace with reference to `canonical_url` once it's safe to (#423)
+    agnostic_url = File.join(DC.server_root(agnostic: true), canonical_path(:html))
+    "#{agnostic_url}?#{options.to_query}"
   end
   
   def oembed_url
