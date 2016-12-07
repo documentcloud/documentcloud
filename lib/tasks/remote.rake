@@ -19,7 +19,6 @@ namespace :remote do
 
   desc "Start all resources, on all servers"
   task :start_all do
-    remote "db:start", central_servers
     remote "sunspot:solr:start", search_servers
     remote "crowd:server:start", central_servers
     remote "crowd:node:start", worker_servers
