@@ -2,7 +2,7 @@
   <div class="container-sm">
 
     <h1>Thank you!</h1>
-    <p>Your donation will help us support and promote great journalism like <%= link_to 'these featured projects', featured_index_url %>. You should receive a receipt at the email address you provided. If you don’t, please <%= link_to 'get in touch', contact_url %>.</p>
+    <p>Your donation for <%= number_to_currency(@amount) %> will help us support and promote great journalism like <%= link_to 'these featured projects', featured_index_url %>. You should receive a receipt at the email address you provided. If you don’t, please <%= link_to 'get in touch', contact_url %>.</p>
     <p class="lead">Would you mind helping us get the word out with a tweet?</p>
     <p>
       <a href="https://twitter.com/share" class="twitter-share-button" data-size="large" data-text="I just donated to @documentcloud, a service for journalists and their readers. You should donate, too!" data-url="https://www.documentcloud.org/donate" data-dnt="true" data-show-count="false">Tweet</a>

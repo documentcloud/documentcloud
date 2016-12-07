@@ -40,10 +40,12 @@ class DonateController < ApplicationController
       redirect_to donate_path
     end
 
+    session[:last_donation_amount] = Float(@amount) / 100
     redirect_to donate_thanks_path
   end
 
   def thanks
+    @amount = session[:last_donation_amount]
   end
 
 end
