@@ -9,18 +9,16 @@ class DonateController < ApplicationController
   end
 
   def charge
-    @amount = params[:amount]
-    @amount = @amount.gsub('$', '').gsub(',', '')
+    @amount = params[:final_donation_amount]
     begin
-      @amount = Float(@amount).round(2)
+      @amount = @amount.gsub('$', '').gsub(',', '').to_i
     rescue
       flash[:error] = 'Charge not completed. Please enter a valid amount in USD ($).'
       redirect_to donate_path
       return
     end
-    @cents = (@amount * 100).to_i
 
-    if @cents < 500
+    if @amount < 500
       flash[:error] = "Charge not completed. Donation amount must be at least $5."
       redirect_to donate_path
       return
@@ -28,7 +26,7 @@ class DonateController < ApplicationController
       
     begin
       Stripe::Charge.create(
-        amount:      @cents,
+        amount:      @amount,
         currency:    'usd',
         source:      params[:stripe_token],
         description: 'DocumentCloud Donation',

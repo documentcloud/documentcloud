@@ -5,7 +5,6 @@ var handler = StripeCheckout.configure({
   description: 'c/o Investigative Reporters & Editors',
   image:       '/images/common/dc_logomark_social_square.png',
   billingAddress: true,
-  amount:      5000,
   token: function(token) {
     $('#stripe_token').val(token.id);
     $('#stripe_email').val(token.email);
@@ -45,9 +44,10 @@ $('#donation_form').on('submit', function(e) {
     $error.html('<p class="my-2 text-danger">Donation amount must be at least $5.</p>');
   }
   else {
-    amount = amount * 100; // Cents
+    amount = Math.floor(amount * 100);
+    $('#final_donation_amount').val(amount);
     handler.open({
-      amount: Math.round(amount)
+      amount: amount
     })
   }
 });
