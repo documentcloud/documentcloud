@@ -2,8 +2,8 @@ namespace :build do
 
   namespace :embed do
 
-    task :viewer do
-      puts "Building viewer..."
+    task :document do
+      puts "Building document viewer..."
 
       # Navigate up and over to the `document-viewer` repo
       # TODO: Stop doing this!
@@ -39,7 +39,7 @@ namespace :build do
 
       Dir.chdir '../documentcloud'
 
-      puts "Done building viewer"
+      puts "Done building document viewer"
     end
 
     task :page  do
@@ -102,16 +102,17 @@ namespace :build do
     end
 
     task :all do
-      invoke "build:embed:viewer"
+      invoke "build:embed:document"
       invoke "build:embed:page"
       invoke "build:embed:note"
       invoke "build:embed:search"
     end
 
+    task :viewer do puts "REMOVED: Use `build:embed:document` instead." end
   end
 
   # Notices for old task names
-  task :viewer do puts       "REMOVED: Use `build:embed:viewer` instead." end
+  task :viewer do puts       "REMOVED: Use `build:embed:document` instead." end
   task :note_embed do puts   "REMOVED: Use `build:embed:note` instead." end
   task :search_embed do puts "REMOVED: Use `build:embed:search` instead." end
 

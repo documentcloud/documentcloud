@@ -3,12 +3,12 @@ namespace :deploy do
 
   desc "Deploy Rails app"
   task :rails do
-    remote ["app:update", "app:restart", "app:warm"], app_servers
+    remote %w[app:update app:restart app:warm], app_servers
   end
 
   desc "Deploy Rails app, update and compile static assets"
   task :app do
-    remote ["app:update", "app:bower", "app:jammit", "app:restart", "app:warm"], app_servers
+    remote %w[app:update app:bower app:jammit app:restart app:warm], app_servers
   end
 
   desc "Deploy and migrate the database, then restart CloudCrowd"
@@ -21,17 +21,17 @@ namespace :deploy do
 
   desc "Deploy Rails app to CloudCrowd server, migrate database, and restart CloudCrowd"
   task :cluster do
-    remote ["app:update", "db:migrate", "crowd:server:restart"], central_servers
+    remote %w[app:update db:migrate crowd:server:restart], central_servers
   end
 
   desc "Deploy Rails app to workers and restart CloudCrowd nodes"
   task :workers do
-    remote ["app:update", "crowd:node:restart"], worker_servers
+    remote %w[app:update crowd:node:restart], worker_servers
   end
 
   desc "Deploy Rails app to search server and restart Solr"
   task :search do
-    remote ["app:update", "app:restart_solr"], search_servers
+    remote %w[app:update app:restart_solr], search_servers
   end
 
   desc "Deploy Cloud.Typography assets to production"
@@ -49,22 +49,21 @@ namespace :deploy do
   namespace :embed do
 
     embeds = [
-      { :name        => :viewer,
-        :embed_name  => :document,
-        :loader_dest => 'viewer/loader.js',
-        :asset_dir   => 'viewer'
+      { name:         :document,
+        loader_dest:  'viewer/loader.js',
+        asset_dir:    'viewer'
       },
-      { :name        => :page,
-        :loader_dest => 'embed/loader/enhance.js',
-        :asset_dir   => 'embed/page'
+      { name:         :page,
+        loader_dest:  'embed/loader/enhance.js',
+        asset_dir:    'embed/page'
       },
-      { :name        => :note,
-        :loader_dest => 'notes/loader.js',
-        :asset_dir   => 'note_embed'
+      { name:         :note,
+        loader_dest:  'notes/loader.js',
+        asset_dir:    'note_embed'
       },
-      { :name        => :search,
-        :loader_dest => 'embed/loader.js',
-        :asset_dir   => 'search_embed'
+      { name:         :search,
+        loader_dest:  'embed/loader.js',
+        asset_dir:    'search_embed'
       }
     ]
 
@@ -90,6 +89,7 @@ namespace :deploy do
       end
     end
 
+    task :viewer do puts "REMOVED: Use `deploy:embed:document` instead." end
   end
 
   # Notices for old task names
@@ -114,7 +114,7 @@ namespace :deploy do
     file_extension = destination_path.split('.').last
     mime_type      = Mime::Type.lookup_by_extension(file_extension)
 
-    upload_attributes = { :acl => :public_read }
+    upload_attributes = { acl: :public_read }
     upload_attributes[:content_type] = mime_type.to_s if mime_type
 
     puts "Uploading #{destination_path}"
@@ -123,15 +123,12 @@ namespace :deploy do
   end
 
   def generate_loader(embed)
-    # For historical reasons, we call the document embed "viewer" in some 
-    # contexts but refer to it more sensibly as "document" in the DC::Embed 
-    # context. If we've defined a separate embed name, use it.
-    embed_name = embed[:embed_name] ? embed[:embed_name] : embed[:name]
-    DC::Embed.embed_klass(embed_name).static_loader
+    DC::Embed.embed_klass(embed[:name]).static_loader
   end
 
-  # NB: `:secure => true` may be a placebo, as I can't find documentation about     what it does and flipping it doesn't seem to affect the bucket's `url`.
-  def bucket; ::AWS::S3.new({ :secure => true }).buckets[DC::SECRETS['bucket']]; end
+  # NB: `secure: true` may be a placebo, as I can't find documentation about
+  #     what it does and flipping it doesn't seem to affect the bucket's `url`.
+  def bucket; ::AWS::S3.new({ secure: true }).buckets[DC::SECRETS['bucket']]; end
   def deployable_environment?; DEPLOYABLE_ENV.include?(Rails.env); end
   def compressed?(file); File.extname(file).remove(/^\./) == 'gz'; end
 end
