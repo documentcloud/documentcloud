@@ -116,9 +116,9 @@ mark,
         </div>
       </div>
       <div class="col-xs-12 pull-md-5 col-md-7">
-        <p class="lead">Journalism starts with the facts: what happened and can you prove it. Getting to the truth can be hard, and convincing others even harder.</p>
-        <p>Investigative journalists use DocumentCloud to sort through piles of primary source documents, find the story, and then publish the evidence for the public. It's been used in some of the most important reporting of the decade, like St. Louis Public Radio's <%= external_link_to 'Ferguson Project', 'http://apps.stlpublicradio.org/ferguson-project/evidence.html' %> and the Pulitzer-winning <%= external_link_to 'An Unbelievable Story of Rape', 'https://www.propublica.org/article/false-rape-accusations-an-unbelievable-story' %>.</p>
-        <p>More than <strong>one million documents</strong> comprised of more than <strong>20 million pages</strong> have been released to the public through DocumentCloud.</p>
+        <p class="lead">Journalism starts with the facts: what happened and what can be proven. Getting to the truth can be hard, and convincing others even harder.</p>
+        <p>Investigative journalists use DocumentCloud to sort through piles of primary source documents, find the story, and then publish that evidence for the public. It's been used in some of the most important reporting of the decade, like St. Louis Public Radio's <%= external_link_to 'Ferguson Project', 'http://apps.stlpublicradio.org/ferguson-project/evidence.html' %> and the <%= external_link_to 'Pulitzer-winning \'An Unbelievable Story of Rape\'', 'http://www.pulitzer.org/winners/t-christian-miller-propublica-and-ken-armstrong-marshall-project' %>.</p>
+        <p>More than <strong><%= link_to "#{ActiveSupport::NumberHelper.number_to_human Document.unrestricted.count, precision: 2} documents", public_search_url, target: '_blank' %></strong> constituting <strong><%= "#{ActiveSupport::NumberHelper.number_to_human Document.unrestricted.sum(:page_count) } pages" %></strong> have been released to the public through DocumentCloud.</p>
         <p>If you want to support us in our mission to make good, evidence-backed reporting better and easier, please donate to DocumentCloud. We run lean on grants and donations, and every dollar helps.</p>
 
         <div class="my-5 hidden-sm-up">
@@ -126,7 +126,7 @@ mark,
           <%= external_link_to image_tag('/images/rare/unbelievable.png', size: '706x937', alt: 'Illustrative screenshot of the article "An Unbelievable Story of Rape"', class: 'img-fluid img-thumbnail'), 'https://www.propublica.org/article/false-rape-accusations-an-unbelievable-story' %>
         </div>
 
-        <h2 class="mt-5">Hear from our users:</h2>
+        <h2 class="mt-5">What Journalists Say:</h2>
 
         <section class="letter guardian">
           <img src="https://pbs.twimg.com/profile_images/557940120184041473/bFyXy8Pu.jpeg" width="150" height="150" class="testimonial-photo img-thumbnail float-sm-right">
@@ -137,11 +137,11 @@ mark,
           </p>
             
           <div id="read-more-rich-harris" class="read-more-detail hidden-xs-up">
-            <p>At the Guardian, we’ve used DocumentCloud on countless articles. On my team, the Guardian US interactive team, it’s been a crucial feature of many of our most important stories. Most recently, a trove of 1,500 documents – firmly in the public interest, but ordered destroyed by the Wisconsin Supreme Court – were put in the public domain following our <%= link_to 'investigation', 'https://www.theguardian.com/us-news/ng-interactive/2016/sep/14/john-doe-files-scott-walker-corporate-cash-american-politics' %> into the questionable campaign finance arrangements used by 2016 presidential candidate Scott Walker during his 2012 recall election.</p>
+            <p>At <strong>the Guardian</strong>, we’ve used DocumentCloud on countless articles. On my team, <strong>the Guardian US</strong> interactive team, it’s been a crucial feature of many of our most important stories. Most recently, a trove of 1,500 documents – firmly in the public interest, but ordered destroyed by the Wisconsin Supreme Court – were put in the public domain following our <%= link_to 'investigation', 'https://www.theguardian.com/us-news/ng-interactive/2016/sep/14/john-doe-files-scott-walker-corporate-cash-american-politics' %> into the questionable campaign finance arrangements used by 2016 presidential candidate Scott Walker during his 2012 recall election.</p>
             <p>Thanks to DocumentCloud we were able to highlight and link to specific parts of the Walker documents, including a photocopy of a check with the damning handwritten phrase “<%= link_to 'Because Scott Walker Asked', 'http://www.documentcloud.org/documents/3105984-2012-08-14-Exhibits-01-100-PT1.html#document/p52/a317493' %>”:</p>
             <link rel="stylesheet" href="//assets.documentcloud.org/note_embed/note_embed.css" type="text/css"> <div class="DC-embed DC-embed-note DC-note-container"> <div class="DC-note" style="background-image:url('https://assets.documentcloud.org/documents/3105984/pages/2012-08-14-Exhibits-01-100-PT1-p52-normal.gif')"> <div class="DC-note-header"> <a class="DC-note-embed-resource" title="View the note “G Frederick Kasten Jr. check” in its original document context on DocumentCloud in a new window or tab" target="_blank" href="https://www.documentcloud.org/documents/3105984-2012-08-14-Exhibits-01-100-PT1.html#document/p52/a317493"><span class="DC-note-title">G Frederick Kasten Jr. check</span> <span class="DC-note-page-number">(p. 52)</span></a> </div> <div class="DC-note-image-max-bounds" style="max-height:155px;max-width:307px;"> <div class="DC-note-image-aspect-ratio" style="padding-bottom:50.4885993485342%;"> <iframe class="DC-note-image-space-filler" src="//www.documentcloud.org/documents/3105984-2012-08-14-Exhibits-01-100-PT1/annotations/317493.html?embed=true" title="Note “G Frederick Kasten Jr. check” on document “2012-08-14-Exhibits-01-100-PT1”" sandbox="allow-scripts allow-same-origin allow-popups" frameborder="0"></iframe> </div> </div> <div class="DC-note-body"></div> <div class="DC-note-credit"> <a title="View the note “G Frederick Kasten Jr. check” in its original document context on DocumentCloud in a new window or tab" target="_blank" href="//www.documentcloud.org/documents/3105984-2012-08-14-Exhibits-01-100-PT1.html#document/p52/a317493">View entire document on <span class='DC-note-logotype-link'>DocumentCloud</span></a> </div> <div class="DC-note-background-fader"></div> </div> </div>
             <p>As a direct result of having the entire document set online in a linkable, searchable form, local reporters in Wisconsin who had been following the story for a long time were very quickly able to follow up our reporting with fresh angles. Powerful public officials were held to account by an empowered fourth estate.</p>
-            <p>Part of DocumentCloud’s success is that they keenly understand the needs of journalists, with an advisory group that includes some of the best-known names in digital media. The staff are fully part of the journalism community, and are familiar faces at media conferences.</p>
+            <p>Part of <strong>DocumentCloud’s</strong> success is that they keenly understand the needs of journalists, with an advisory group that includes some of the best-known names in digital media. The staff are fully part of the journalism community, and are familiar faces at media conferences.</p>
             <p>I can think of few open source projects more deserving of financial support.</p>
           </div>
         </section>
@@ -150,7 +150,7 @@ mark,
           <img src="https://pbs.twimg.com/profile_images/545792431778590720/bdEY0hf7.jpeg" width="150" height="150" class="testimonial-photo img-thumbnail float-sm-right">
           <h1 class="h5 mb-3"><%= link_to 'T. Christian Miller', 'https://www.propublica.org/site/author/t_christian_miller' %> (ProPublica):</h1>
           <p class="read-more-summary mb-0">
-            Here's how I used DocumentCloud. “<%= link_to 'An Unbelievable Story of Rape', 'https://www.propublica.org/article/false-rape-accusations-an-unbelievable-story' %>”, published by ProPublica and The Marshall Project, could not have happened without DocumentCloud.
+            Here's how I used DocumentCloud. “<%= link_to 'An Unbelievable Story of Rape', 'https://www.propublica.org/article/false-rape-accusations-an-unbelievable-story' %>”, published by <strong>ProPublica</strong> and <strong>The Marshall Project</strong>, could not have happened without DocumentCloud.
             <a href="#read-more-t-miller" class="read-more-link">Read more…</a>
           </p>
           <div id="read-more-t-miller" class="read-more-detail hidden-xs-up">
