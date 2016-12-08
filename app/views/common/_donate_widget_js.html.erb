@@ -57,8 +57,11 @@ $('.donation-form-with-buttons #donation-amount-other').on('keyup', function(){
   if (formData.donation_amount_other) {
     var $checked = $('#donation_form').find('[name="donation_amount"]:checked');
     $checked.prop('checked', false).closest('.active').removeClass('active');
+    $(this).addClass('bg-success text-white');
+  } else {
+    $(this).removeClass('bg-success text-white');
   }
 });
 $('#donation_amounts .btn').on('click', function(){
-  $('#donation-amount-other').val('');
+  $('#donation-amount-other').val('').removeClass('bg-success text-white');
 });

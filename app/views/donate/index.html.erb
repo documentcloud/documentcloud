@@ -30,11 +30,15 @@
   font-size: 16px;
 }
 #donation-amount-other {
-  width: 70px;
-  padding: 0.44rem;
   font-weight: bold;
-  text-transform: lowercase;
-  font-variant: small-caps;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  max-width: 25%;
+  padding: 0;
+  font-size: 0.85rem;
+  -webkit-font-smoothing: antialiased;
+  margin-left: -1px;
+  position: relative;
 }
 
 #donation_form .form-group {
@@ -44,41 +48,61 @@
   background-color: #5cb85c;
   color: white;
 }
+
+h1 mark {
+  padding: 0;
+}
+
+mark,
+.highlight {
+  background-color: #FAFC3E;
+}
+
+.btn-group {
+  display: flex;
+  flex-wrap: nowrap;
+  width: 100%;
+}
+
+.btn-group .btn,
+.btn-group .form-control {
+  flex-grow: 1;
+
+  float: none;
+  display: inline-block;
+  width: auto;
+  padding-left: 0;
+  padding-right: 0;
+  text-align: center;
+}
+
 </style>
 
 <div class="content">
   <div class="container-md text-xs-center my-5">
-    <h1>Show your support for great journalism with a donation to DocumentCloud</h1>
+    <h1>Support <mark>open and truthful journalism</mark> with a donation to DocumentCloud</h1>
   </div>
 
-  <div class="container-md">
+  <div class="container-lg">
     
     <div class="row">
-      <div class="col-xs-12 col-md-6">
-        <p class="lead text-xs-center text-md-left mb-3">More than <b>one million</b> documents comprised of more than <b>20 million</b> pages have been released to the public through DocumentCloud.</p>
-      </div>
-      <div class="col-xs-12 col-md-6">
+      <div class="col-xs-12 push-md-7 col-md-4 offset-md-1">
         <%= bootstrap_form_tag url: donate_charge_path, html: {id: 'donation_form', class: 'form-inline donation-form-with-buttons'} do |f| %>
           <%= hidden_field_tag(:stripe_token) %>
           <%= hidden_field_tag(:stripe_email) %>
           <%= hidden_field_tag(:final_donation_amount) %>
 
+          <legend class="h5 text-xs-center"><mark>Choose a donation amount:</mark></legend>
           <div class="row">
             <div class="col-xs-12 col-sm-6 col-md-12">
-              <div class="btn-toolbar" role="toolbar" aria-label="Donation amount for DocumentCloud">
-                <div id="donation_amounts" class="btn-group mb-2" data-toggle="buttons">
-                <% %w[25 50 100 250].each do |amount| %>
-                  <label class="btn btn-secondary">
-                    <input name="donation_amount" id="donation-amount-<%= amount %>" value="<%= amount %>" type="radio" autocomplete="off"> $<%= amount %>
-                  </label>
-                <% end %>
-                </div>
-                <div class="btn-group mb-2" data-toggle="buttons">
-                  <div class="form-group">
-                    <label class="sr-only" for="donation_amount">Amount (USD)</label>
-                    <input name="donation_amount_other" id="donation-amount-other" type="tel" class="form-control" placeholder="Other">
-                  </div>
-                </div>
+              <div id="donation_amounts" class="btn-group mb-2" data-toggle="buttons">
+              <% %w[25 50 100 250].each do |amount| %>
+                <label class="btn btn-secondary">
+                  <input name="donation_amount" id="donation-amount-<%= amount %>" value="<%= amount %>" type="radio" autocomplete="off"> $<%= amount %>
+                </label>
+              <% end %>
+                <label class="sr-only" for="donation_amount">Amount (USD)</label>
+                <input name="donation_amount_other" id="donation-amount-other" type="tel" class="form-control" placeholder="Other">
               </div>
             </div>
             <div class="col-xs-12 col-sm-6 col-md-12">
@@ -87,20 +111,28 @@
             </div>
           </div>
           <p class="note" style="font-size:0.75rem">You’re making a tax-deductible donation to <%= link_to 'Investigative Reporters & Editors', 'https://www.ire.org/' %>, the <nobr>501(c)(3)</nobr> that hosts DocumentCloud.</p>
-
         <% end %>
+
+        <div class="hidden-sm-down">
+          <h2 class="h4 text-xs-center">Your donation will make stories like this possible:</h2>
+          <%= external_link_to image_tag('/images/rare/unbelievable.png', size: '706x937', alt: 'Illustrative screenshot of the article "An Unbelievable Story of Rape"', class: 'img-fluid img-thumbnail'), 'https://www.propublica.org/article/false-rape-accusations-an-unbelievable-story' %>
+        </div>
+      </div>
+      <div class="col-xs-12 pull-md-5 col-md-7">
+        <p class="lead">Journalism starts with the facts: what happened and can you prove it. Getting to the truth can be hard, and convincing others even harder.</p>
+        <p>Investigative journalists use DocumentCloud to sort through piles of primary source documents, find the story, and then publish the evidence for the public. It's been used in some of the most important reporting of the decade, like St. Louis Public Radio's <%= external_link_to 'Ferguson Project', 'http://apps.stlpublicradio.org/ferguson-project/evidence.html' %> and the Pulitzer-winning <%= external_link_to 'An Unbelievable Story of Rape', 'https://www.propublica.org/article/false-rape-accusations-an-unbelievable-story' %>.</p>
+        <p>More than <strong>one million documents</strong> comprised of more than <strong>20 million pages</strong> have been released to the public through DocumentCloud.</p>
+        <p>If you want to support us in our mission to make good, evidence-backed reporting better and easier, please donate to DocumentCloud. We run lean on grants and donations, and every dollar helps.</p>
+
+        <div class="my-5 hidden-md-up">
+          <h2 class="h4 text-xs-center">Your donation will make stories like this possible:</h2>
+          <%= external_link_to image_tag('/images/rare/unbelievable.png', size: '706x937', alt: 'Illustrative screenshot of the article "An Unbelievable Story of Rape"', class: 'img-fluid img-thumbnail'), 'https://www.propublica.org/article/false-rape-accusations-an-unbelievable-story' %>
+        </div>
       </div>
     </div>
-    
   </div>
 
-  <div class="container-sm my-5">
-    <p>From St. Louis Public Radio's <%= link_to 'Ferguson Project', 'http://apps.stlpublicradio.org/ferguson-project/evidence.html' %> to ProPublica and The Marshall Project’s Pulitzer-winning <%= link_to 'expose on rape investigations', 'https://www.propublica.org/article/false-rape-accusations-an-unbelievable-story' %>, DocumentCloud has played a part in some of the most powerful reporting of the past few years.</p>
-    <p>We’ve proven the value of giving journalists better tools for analyzing piles of documents and helping the public view the evidence themselves. We hope you'll consider helping us continue to improve the state of evidence-based journalism.</p>
-  </div>
-
-  <div class="container-lg" style="margin-top:4rem">
-    <h1>{hear from a few avid users}</h1>
+  <div class="container-lg mt-5">
     <div class="row">
       <div class="col-xs-12 col-md-6">
         <section class="letter guardian">

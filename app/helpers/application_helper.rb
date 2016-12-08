@@ -23,5 +23,9 @@ module ApplicationHelper
       notice:  'alert-info',
     }[flash_type.to_sym] || flash_type.to_s
   end
+  
+  def external_link_to(text, url, options = {})
+    link_to text, url, options.merge({ target: '_blank', rel: 'noopener' })
+  end
 
 end
