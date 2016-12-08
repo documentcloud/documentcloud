@@ -5,7 +5,7 @@ class DonateController < ApplicationController
   before_action { not_found } unless DC::CONFIG['accept_donations']
 
   def index
-    flash.now[:warning] = 'Welcome! This donation page is currently in test mode so <b>donations will not be processed</b>. Use the credit card number <code>4242424242424242</code> to test.'
+    flash.now[:warning] = 'Welcome! This donation page is currently in test mode so <b>donations will not be processed</b>. Use the credit card number <code>4242424242424242</code> to test.' unless Rails.env.development?
   end
 
   def charge
