@@ -4,31 +4,27 @@
   color: rgb(51, 51, 51);
   background: rgb(239, 239, 236);
   box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.15);
-  font-family: Georgia, serif;
   padding: 2rem;
-  line-height: 24px;
-  font-size: 16px;
 }
-.letter.guardian {
-  background: #ffffed;
-  color: rgb(51, 51, 51);
-  background: rgb(239, 239, 236);
-  box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.15);
+
+.letter p {
   font-family: Georgia, serif;
-  padding: 2rem;
-  line-height: 24px;
   font-size: 16px;
-}
-.letter.propublica {
-  background: #ffffed;
-  color: rgb(51, 51, 51);
-  background: rgb(239, 239, 236);
-  box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.15);
-  font-family: Georgia, serif;
-  padding: 2rem;
   line-height: 24px;
-  font-size: 16px;
 }
+
+.letter .testimonial-photo {
+  display: block;
+  margin: 0 auto 1rem auto;
+}
+
+@media (min-width: 576px) {
+  .letter .testimonial-photo {
+    margin: -1rem -1rem 1rem 1rem;
+  }
+}
+
+
 #donation-amount-other {
   font-weight: bold;
   border-top-left-radius: 0;
@@ -55,7 +51,8 @@ h1 mark {
 
 mark,
 .highlight {
-  background-color: #FAFC3E;
+/*  background-color: #FAFC3E;*/
+  background-color: #FFB;
 }
 
 .btn-group {
@@ -83,7 +80,7 @@ mark,
     <h1>Support <mark>open and truthful journalism</mark> with a donation to DocumentCloud</h1>
   </div>
 
-  <div class="container-lg">
+  <div class="container">
     
     <div class="row">
       <div class="col-xs-12 push-md-7 col-md-4 offset-md-1">
@@ -114,7 +111,7 @@ mark,
         <% end %>
 
         <div class="hidden-sm-down">
-          <h2 class="h4 text-xs-center">Your donation will make stories like this possible:</h2>
+          <h2 class="h4 text-xs-center">Your donation makes stories like this possible:</h2>
           <%= external_link_to image_tag('/images/rare/unbelievable.png', size: '706x937', alt: 'Illustrative screenshot of the article "An Unbelievable Story of Rape"', class: 'img-fluid img-thumbnail'), 'https://www.propublica.org/article/false-rape-accusations-an-unbelievable-story' %>
         </div>
       </div>
@@ -124,41 +121,57 @@ mark,
         <p>More than <strong>one million documents</strong> comprised of more than <strong>20 million pages</strong> have been released to the public through DocumentCloud.</p>
         <p>If you want to support us in our mission to make good, evidence-backed reporting better and easier, please donate to DocumentCloud. We run lean on grants and donations, and every dollar helps.</p>
 
-        <div class="my-5 hidden-md-up">
-          <h2 class="h4 text-xs-center">Your donation will make stories like this possible:</h2>
+        <div class="my-5 hidden-sm-up">
+          <h2 class="h4 text-xs-center">Your donation makes stories like this possible:</h2>
           <%= external_link_to image_tag('/images/rare/unbelievable.png', size: '706x937', alt: 'Illustrative screenshot of the article "An Unbelievable Story of Rape"', class: 'img-fluid img-thumbnail'), 'https://www.propublica.org/article/false-rape-accusations-an-unbelievable-story' %>
         </div>
-      </div>
-    </div>
-  </div>
 
-  <div class="container-lg mt-5">
-    <div class="row">
-      <div class="col-xs-12 col-md-6">
+        <h2 class="mt-5">Hear from our users:</h2>
+
         <section class="letter guardian">
+          <img src="https://pbs.twimg.com/profile_images/557940120184041473/bFyXy8Pu.jpeg" width="150" height="150" class="testimonial-photo img-thumbnail float-sm-right">
           <h1 class="h5 mb-3"><%= link_to 'Rich Harris', 'https://www.theguardian.com/profile/rich-harris' %> (Guardian US):</h1>
-          <p>DocumentCloud is an essential part of the news ecosystem. It is a well-designed, easy-to-use tool that journalists around the world depend on for publishing documents that are in the public interest. In an industry built on deadlines, having a reliable go-to service like DocumentCloud is the difference between information being open, and being locked up in screenshots in proprietary CMSes.</p>
-          <p>At the Guardian, we’ve used DocumentCloud on countless articles. On my team, the Guardian US interactive team, it’s been a crucial feature of many of our most important stories. Most recently, a trove of 1,500 documents – firmly in the public interest, but ordered destroyed by the Wisconsin Supreme Court – were put in the public domain following our <%= link_to 'investigation', 'https://www.theguardian.com/us-news/ng-interactive/2016/sep/14/john-doe-files-scott-walker-corporate-cash-american-politics' %> into the questionable campaign finance arrangements used by 2016 presidential candidate Scott Walker during his 2012 recall election.</p>
-          <p>Thanks to DocumentCloud we were able to highlight and link to specific parts of the Walker documents, including a photocopy of a check with the damning handwritten phrase “<%= link_to 'Because Scott Walker Asked', 'http://www.documentcloud.org/documents/3105984-2012-08-14-Exhibits-01-100-PT1.html#document/p52/a317493' %>”:</p>
-          <link rel="stylesheet" href="//assets.documentcloud.org/note_embed/note_embed.css" type="text/css"> <div class="DC-embed DC-embed-note DC-note-container"> <div class="DC-note" style="background-image:url('https://assets.documentcloud.org/documents/3105984/pages/2012-08-14-Exhibits-01-100-PT1-p52-normal.gif')"> <div class="DC-note-header"> <a class="DC-note-embed-resource" title="View the note “G Frederick Kasten Jr. check” in its original document context on DocumentCloud in a new window or tab" target="_blank" href="https://www.documentcloud.org/documents/3105984-2012-08-14-Exhibits-01-100-PT1.html#document/p52/a317493"><span class="DC-note-title">G Frederick Kasten Jr. check</span> <span class="DC-note-page-number">(p. 52)</span></a> </div> <div class="DC-note-image-max-bounds" style="max-height:155px;max-width:307px;"> <div class="DC-note-image-aspect-ratio" style="padding-bottom:50.4885993485342%;"> <iframe class="DC-note-image-space-filler" src="//www.documentcloud.org/documents/3105984-2012-08-14-Exhibits-01-100-PT1/annotations/317493.html?embed=true" title="Note “G Frederick Kasten Jr. check” on document “2012-08-14-Exhibits-01-100-PT1”" sandbox="allow-scripts allow-same-origin allow-popups" frameborder="0"></iframe> </div> </div> <div class="DC-note-body"></div> <div class="DC-note-credit"> <a title="View the note “G Frederick Kasten Jr. check” in its original document context on DocumentCloud in a new window or tab" target="_blank" href="//www.documentcloud.org/documents/3105984-2012-08-14-Exhibits-01-100-PT1.html#document/p52/a317493">View entire document on <span class='DC-note-logotype-link'>DocumentCloud</span></a> </div> <div class="DC-note-background-fader"></div> </div> </div>
-          <p>As a direct result of having the entire document set online in a linkable, searchable form, local reporters in Wisconsin who had been following the story for a long time were very quickly able to follow up our reporting with fresh angles. Powerful public officials were held to account by an empowered fourth estate.</p>
-          <p>Part of DocumentCloud’s success is that they keenly understand the needs of journalists, with an advisory group that includes some of the best-known names in digital media. The staff are fully part of the journalism community, and are familiar faces at media conferences.</p>
-          <p>I can think of few open source projects more deserving of financial support.</p>
+          <p class="read-more-summary mb-0">
+            DocumentCloud is an essential part of the news ecosystem. It is a well-designed, easy-to-use tool that journalists around the world depend on for publishing documents that are in the public interest. In an industry built on deadlines, having a reliable go-to service like DocumentCloud is the difference between information being open, and being locked up in screenshots in proprietary CMSes.
+            <a href="#read-more-rich-harris" class="read-more-link">Read more…</a>
+          </p>
+            
+          <div id="read-more-rich-harris" class="read-more-detail hidden-xs-up">
+            <p>At the Guardian, we’ve used DocumentCloud on countless articles. On my team, the Guardian US interactive team, it’s been a crucial feature of many of our most important stories. Most recently, a trove of 1,500 documents – firmly in the public interest, but ordered destroyed by the Wisconsin Supreme Court – were put in the public domain following our <%= link_to 'investigation', 'https://www.theguardian.com/us-news/ng-interactive/2016/sep/14/john-doe-files-scott-walker-corporate-cash-american-politics' %> into the questionable campaign finance arrangements used by 2016 presidential candidate Scott Walker during his 2012 recall election.</p>
+            <p>Thanks to DocumentCloud we were able to highlight and link to specific parts of the Walker documents, including a photocopy of a check with the damning handwritten phrase “<%= link_to 'Because Scott Walker Asked', 'http://www.documentcloud.org/documents/3105984-2012-08-14-Exhibits-01-100-PT1.html#document/p52/a317493' %>”:</p>
+            <link rel="stylesheet" href="//assets.documentcloud.org/note_embed/note_embed.css" type="text/css"> <div class="DC-embed DC-embed-note DC-note-container"> <div class="DC-note" style="background-image:url('https://assets.documentcloud.org/documents/3105984/pages/2012-08-14-Exhibits-01-100-PT1-p52-normal.gif')"> <div class="DC-note-header"> <a class="DC-note-embed-resource" title="View the note “G Frederick Kasten Jr. check” in its original document context on DocumentCloud in a new window or tab" target="_blank" href="https://www.documentcloud.org/documents/3105984-2012-08-14-Exhibits-01-100-PT1.html#document/p52/a317493"><span class="DC-note-title">G Frederick Kasten Jr. check</span> <span class="DC-note-page-number">(p. 52)</span></a> </div> <div class="DC-note-image-max-bounds" style="max-height:155px;max-width:307px;"> <div class="DC-note-image-aspect-ratio" style="padding-bottom:50.4885993485342%;"> <iframe class="DC-note-image-space-filler" src="//www.documentcloud.org/documents/3105984-2012-08-14-Exhibits-01-100-PT1/annotations/317493.html?embed=true" title="Note “G Frederick Kasten Jr. check” on document “2012-08-14-Exhibits-01-100-PT1”" sandbox="allow-scripts allow-same-origin allow-popups" frameborder="0"></iframe> </div> </div> <div class="DC-note-body"></div> <div class="DC-note-credit"> <a title="View the note “G Frederick Kasten Jr. check” in its original document context on DocumentCloud in a new window or tab" target="_blank" href="//www.documentcloud.org/documents/3105984-2012-08-14-Exhibits-01-100-PT1.html#document/p52/a317493">View entire document on <span class='DC-note-logotype-link'>DocumentCloud</span></a> </div> <div class="DC-note-background-fader"></div> </div> </div>
+            <p>As a direct result of having the entire document set online in a linkable, searchable form, local reporters in Wisconsin who had been following the story for a long time were very quickly able to follow up our reporting with fresh angles. Powerful public officials were held to account by an empowered fourth estate.</p>
+            <p>Part of DocumentCloud’s success is that they keenly understand the needs of journalists, with an advisory group that includes some of the best-known names in digital media. The staff are fully part of the journalism community, and are familiar faces at media conferences.</p>
+            <p>I can think of few open source projects more deserving of financial support.</p>
+          </div>
         </section>
-      </div>
-      <div class="col-xs-12 col-md-6">
+
         <section class="letter propublica">
+          <img src="https://pbs.twimg.com/profile_images/545792431778590720/bdEY0hf7.jpeg" width="150" height="150" class="testimonial-photo img-thumbnail float-sm-right">
           <h1 class="h5 mb-3"><%= link_to 'T. Christian Miller', 'https://www.propublica.org/site/author/t_christian_miller' %> (ProPublica):</h1>
-          <p>Here's how I used DocumentCloud. “<%= link_to 'An Unbelievable Story of Rape', 'https://www.propublica.org/article/false-rape-accusations-an-unbelievable-story' %>”, published by ProPublica and The Marshall Project, could not have happened without DocumentCloud.</p>
-          <p><a href="https://www.propublica.org/article/false-rape-accusations-an-unbelievable-story"><img src="/images/rare/unbelievable.png" width="706" height="937" class="img-fluid img-thumbnail" alt=""></a></p>
-          <p>In order to tell the story, Ken Armstrong, my co-author, and I gathered thousands of pages of police department reports, court transcripts, academic studies and other documents. We stored them in DocumentCloud for many reasons. DocumentCloud’s OCR system, which scans documents to convert them into searchable text, allowed us to quickly locate information. The notes feature allowed us to highlight important sections or themes, becoming a sort of outline on the fly. With two organizations working together, DocumentCloud made collaboration easier, too.</p>
+          <p class="read-more-summary mb-0">
+            Here's how I used DocumentCloud. “<%= link_to 'An Unbelievable Story of Rape', 'https://www.propublica.org/article/false-rape-accusations-an-unbelievable-story' %>”, published by ProPublica and The Marshall Project, could not have happened without DocumentCloud.
+            <a href="#read-more-t-miller" class="read-more-link">Read more…</a>
+          </p>
+          <div id="read-more-t-miller" class="read-more-detail hidden-xs-up">
+            <p><a href="https://www.propublica.org/article/false-rape-accusations-an-unbelievable-story"><img src="/images/rare/unbelievable.png" width="706" height="937" class="img-fluid img-thumbnail" alt=""></a></p>
+            <p>In order to tell the story, Ken Armstrong, my co-author, and I gathered thousands of pages of police department reports, court transcripts, academic studies and other documents. We stored them in DocumentCloud for many reasons. DocumentCloud’s OCR system, which scans documents to convert them into searchable text, allowed us to quickly locate information. The notes feature allowed us to highlight important sections or themes, becoming a sort of outline on the fly. With two organizations working together, DocumentCloud made collaboration easier, too.</p>
+          </div>
         </section>
+
       </div>
     </div>
   </div>
 
 </div>
-<%
-  (@javascripts_footer ||= []).push 'https://checkout.stripe.com/checkout.js'
-  @javascript_footer_inline = render partial: 'common/donate_widget_js'
-%>
+<% (@javascripts_footer ||= []).push 'https://checkout.stripe.com/checkout.js' %>
+<% content_for :javascript_footer_inline do %>
+  <%= render partial: 'common/donate_widget_js' %>
+  $('.read-more-link').on('click', function(e){
+    e.preventDefault();
+    var $link = $(this);
+    var $target = $($link.attr('href'));
+    $target.removeClass('hidden-xs-up');
+    $link.hide().closest('.read-more-summary').removeClass('mb-0');
+  });
+<% end %>
