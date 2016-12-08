@@ -8,17 +8,17 @@ var handler = StripeCheckout.configure({
   token: function(token) {
     $('#stripe_token').val(token.id);
     $('#stripe_email').val(token.email);
-    $('#donation_form').get(0).submit();
+    $('#donation-form').get(0).submit();
   }
 });
 $(window).on('popstate', function() {
   handler.close();
 });
 
-$('#donation_form').on('submit', function(e) {
+$('#donation-form').on('submit', function(e) {
   e.preventDefault();
 
-  var $form    = $('#donation_form');
+  var $form    = $('#donation-form');
   var $error   = $('#error_explanation').html('');
 
   if (_.isFunction($form.serializeObject)) {
@@ -52,16 +52,16 @@ $('#donation_form').on('submit', function(e) {
   }
 });
 $('.donation-form-with-buttons #donation-amount-other').on('keyup', function(){
-  var $form    = $('#donation_form');
+  var $form    = $('#donation-form');
   var formData = $form.serializeObject();
   if (formData.donation_amount_other) {
-    var $checked = $('#donation_form').find('[name="donation_amount"]:checked');
+    var $checked = $('#donation-form').find('[name="donation_amount"]:checked');
     $checked.prop('checked', false).closest('.active').removeClass('active');
-    $(this).addClass('bg-success text-white');
+    $(this).addClass('active');
   } else {
-    $(this).removeClass('bg-success text-white');
+    $(this).removeClass('active');
   }
 });
 $('#donation_amounts .btn').on('click', function(){
-  $('#donation-amount-other').val('').removeClass('bg-success text-white');
+  $('#donation-amount-other').val('').removeClass('active');
 });
