@@ -2,8 +2,8 @@
 
   <header id="donation-page-header" class="container-md">
     <h1>
-      <mark>Donate to DocumentCloud.</mark><br>
       Support open and truthful journalism.
+      <mark>Donate to DocumentCloud.</mark>
     </h1>
   </header>
 
@@ -11,14 +11,13 @@
     
     <div class="row">
       <div class="col-xs-12 push-md-7 col-md-5 col-lg-4 offset-lg-1">
-        <%= bootstrap_form_tag url: donate_charge_path, html: {id: 'donation-form', class: 'form-inline donation-form-with-buttons'} do |f| %>
-          <legend class="h5 text-xs-center"><mark>Choose a donation amount:</mark></legend>
+        <%= bootstrap_form_tag url: donate_charge_path, html: {id: 'donation-form', class: 'form-inline'} do |f| %>
           <%= hidden_field_tag(:stripe_token) %>
           <%= hidden_field_tag(:stripe_email) %>
           <%= hidden_field_tag(:final_donation_amount) %>
           <div class="row">
             <div class="col-xs-12 col-sm-6 col-md-12">
-              <div id="donation_amounts" class="btn-group mb-2" data-toggle="buttons">
+              <div id="donation_amounts" class="btn-group" data-toggle="buttons">
               <% %w[25 50 100 250].each do |amount| %>
                 <label class="btn btn-secondary">
                   <input name="donation_amount" id="donation-amount-<%= amount %>" value="<%= amount %>" type="radio" autocomplete="off"> $<%= amount %>
@@ -33,19 +32,19 @@
               <div id="error_explanation"></div>
             </div>
           </div>
-          <p class="note" style="font-size:0.75rem">You’re making a tax-deductible donation on behalf of DocumentCloud to our parent non-profit <%= link_to 'Investigative Reporters & Editors', 'https://www.ire.org/' %>, a <nobr>501(c)(3)</nobr> organization.</p>
+          <p class="note">You’re making a tax-deductible donation on behalf of DocumentCloud to our parent non-profit <%= link_to 'Investigative Reporters & Editors', 'https://www.ire.org/' %>, a <nobr>501(c)(3)</nobr> organization.</p>
         <% end %>
       </div>
-      <div class="col-xs-12 pull-md-5 col-md-7">
-        <p class="lead">Journalism starts with the facts: what happened? Can you prove it? Getting to the truth can be hard, and convincing others even harder.</p>
+      <div id="donation-pitch" class="col-xs-12 pull-md-5 col-md-7">
+        <p class="lead">Journalism starts with the facts. What happened? Can you prove it? Getting to the truth can be hard, and convincing others even harder.</p>
         <p>Investigative journalists use DocumentCloud to sort through piles of primary source documents, find the story, and then publish that evidence for the public. It's been used in some of the most important reporting of the decade, like St. Louis Public Radio's <%= external_link_to 'Ferguson Project', 'http://apps.stlpublicradio.org/ferguson-project/evidence.html' %> and the <%= external_link_to 'Pulitzer-winning “An Unbelievable Story of Rape”', 'http://www.pulitzer.org/winners/t-christian-miller-propublica-and-ken-armstrong-marshall-project' %>.</p>
         <p>More than <strong><%= link_to "#{ActiveSupport::NumberHelper.number_to_human Document.unrestricted.count, precision: 2} documents", public_search_url, target: '_blank' %></strong> constituting <strong><%= "#{ActiveSupport::NumberHelper.number_to_human Document.unrestricted.sum(:page_count) } pages" %></strong> have been released to the public through DocumentCloud.</p>
-        <p>If you want to support us in our mission to make good, evidence-backed reporting better and easier, please donate to DocumentCloud. We run lean on grants and donations, and every dollar helps.</p>
+        <p>If you want to support us in our mission to make good, evidence-backed reporting better and easier, <a class="cast-spotlight-link" href="#donation-page-header">please donate</a>! We run lean on grants and donations, and every dollar helps.</p>
       </div>
     </div>
 
     <div class="row">
-      <div id="suggestions" class="col-xs-12 col-sm-6 push-sm-6 my-5">
+      <div id="donation-suggestions" class="col-xs-12 col-md-6 push-md-6">
         <h2 class="h4 text-xs-center">Your donation helps make stories like these possible:</h2>
         <div class="card-columns">
           <div class="card">
@@ -62,13 +61,13 @@
           </div>
         </div>
       </div>
-      <div class="col-xs-12 col-sm-6 pull-sm-6 my-5">
+      <div id="donation-testimonials" class="col-xs-12 col-md-6 pull-md-6">
         <h2 class="h4 text-xs-center">What journalists say:</h2>
         <section class="letter guardian">
-          <img src="https://i.guim.co.uk/img/static/sys-images/Guardian/Pix/contributor/2014/10/16/1413469782521/Rich-Harris.jpg" width="150" height="150" class="testimonial-photo img-thumbnail float-sm-right">
-          <h3 class="h5 mb-3"><%= link_to 'Rich Harris', 'https://www.theguardian.com/profile/rich-harris' %> (Guardian US):</h3>
-          <p class="read-more-summary mb-0">
-            DocumentCloud is an essential part of the news ecosystem. It is a well-designed, easy-to-use tool that journalists around the world depend on for publishing documents that are in the public interest. In an industry built on deadlines, having a reliable go-to service like DocumentCloud is the difference between information being open, and being locked up in screenshots in proprietary CMSes.
+          <img src="https://i.guim.co.uk/img/static/sys-images/Guardian/Pix/contributor/2014/10/16/1413469782521/Rich-Harris.jpg" width="150" height="150" class="testimonial-photo img-thumbnail float-right">
+          <h3 class="h5"><%= link_to 'Rich Harris', 'https://www.theguardian.com/profile/rich-harris' %> (Guardian US):</h3>
+          <p class="read-more-summary">
+            DocumentCloud is an <mark>essential part of the news ecosystem</mark>. It is a well-designed, easy-to-use tool that journalists around the world depend on for publishing documents that are <mark>in the public interest</mark>. In an industry built on deadlines, having a reliable go-to service like DocumentCloud is the difference between information being open, and being locked up in screenshots in proprietary CMSes.
             <a href="#read-more-rich-harris" class="read-more-link">Read more…</a>
           </p>
           
@@ -82,10 +81,10 @@
           </div>
         </section>
         <section class="letter propublica">
-          <img src="https://pbs.twimg.com/profile_images/545792431778590720/bdEY0hf7.jpeg" width="150" height="150" class="testimonial-photo img-thumbnail float-sm-right">
-          <h3 class="h5 mb-3"><%= link_to 'T. Christian Miller', 'https://www.propublica.org/site/author/t_christian_miller' %> (ProPublica):</h3>
-          <p class="read-more-summary mb-0">
-            Here's how I used DocumentCloud. “<%= link_to 'An Unbelievable Story of Rape', 'https://www.propublica.org/article/false-rape-accusations-an-unbelievable-story' %>”, published by ProPublica and The Marshall Project, could not have happened without DocumentCloud.
+          <img src="https://pbs.twimg.com/profile_images/545792431778590720/bdEY0hf7.jpeg" width="150" height="150" class="testimonial-photo img-thumbnail float-right">
+          <h3 class="h5"><%= link_to 'T. Christian Miller', 'https://www.propublica.org/site/author/t_christian_miller' %> (ProPublica):</h3>
+          <p class="read-more-summary">
+            Here's how I used DocumentCloud. “<%= link_to 'An Unbelievable Story of Rape', 'https://www.propublica.org/article/false-rape-accusations-an-unbelievable-story' %>”, published by ProPublica and The Marshall Project, <mark>could not have happened without DocumentCloud</mark>.
             <a href="#read-more-t-miller" class="read-more-link">Read more…</a>
           </p>
           <div id="read-more-t-miller" class="read-more-detail hidden-xs-up">
@@ -96,9 +95,14 @@
       </div>
     </div>
 
+    <div class="text-xs-center">
+      <a class="cast-spotlight-link btn btn-success" href="#donation-page-header">&uarr; Donate to DocumentCloud!</a>
+    </div>
+
   </div>
 
 </div>
+
 <% (@javascripts_footer ||= []).push 'https://checkout.stripe.com/checkout.js' %>
 <% content_for :javascript_footer_inline do %>
   <%= render partial: 'common/donate_widget_js' %>
@@ -108,6 +112,15 @@
     var $link = $(this);
     var $target = $($link.attr('href'));
     $target.removeClass('hidden-xs-up');
-    $link.hide().closest('.read-more-summary').removeClass('mb-0');
+    $link.closest('.read-more-summary').removeClass('read-more-summary');
+  });
+  $('.cast-spotlight-link').on('click', function(e){
+    e.preventDefault();
+    var $link = $(this);
+    var $target = $($link.attr('href'));
+    $target.scrollIntoView();
+//    $('#donation-form').removeClass('swing animated').addClass('swing animated').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
+//      $(this).removeClass('swing animated');
+//    });
   });
 <% end %>
