@@ -1,4 +1,5 @@
-<div id="donation-page" class="content">
+<% (@html_classes ||= []).push('donation-page') %>
+<div class="content">
 
   <header id="donation-page-header" class="container-md">
     <h1>
@@ -48,7 +49,7 @@
     </div>
 
     <div class="row">
-      <div id="donation-suggestions" class="col-xs-12 col-md-6 push-md-6">
+      <div id="donation-featured" class="col-xs-12 col-md-6 push-md-6">
         <h2 class="h4 text-center">Your donation helps make stories like these possible:</h2>
         <div class="card-columns">
           <div class="card">

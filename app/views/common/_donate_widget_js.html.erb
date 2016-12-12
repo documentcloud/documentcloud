@@ -51,7 +51,7 @@ $('#donation-form').on('submit', function(e) {
     })
   }
 });
-$('#donation-page #donation-amount-other').on('keyup', function(){
+$('.donation-page #donation-amount-other').on('keyup', function(){
   var $form    = $('#donation-form');
   var formData = $form.serializeObject();
   if (formData.donation_amount_other) {
