@@ -32,6 +32,7 @@ class WorkspaceController < ApplicationController
     @help_content   = RDiscount.new(contents+links).to_html.gsub MARKDOWN_LINK_REPLACER, '<tt>\1</tt>'
     @help_pages     = HELP_PAGES - ['tour']
     @help_titles    = HELP_TITLES
+
     if !logged_in? || current_account.reviewer?
       render :template => 'home/help', :layout => 'home'
     else
