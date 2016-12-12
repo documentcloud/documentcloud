@@ -22,7 +22,7 @@
         <%= hidden_field_tag(:stripe_email) %>
         <%= hidden_field_tag(:final_donation_amount) %>
         <div id="donation_amounts" class="btn-group" data-toggle="buttons">
-        <% %w[25 50 100 250].each do |amount| %>
+        <% @donation_levels.each do |amount| %>
           <label class="btn btn-secondary">
             <input name="donation_amount" id="donation-amount-<%= amount %>" value="<%= amount %>" type="radio" autocomplete="off"> $<%= amount %>
           </label>
@@ -106,7 +106,9 @@
 <% (@javascripts_footer ||= []).push 'https://checkout.stripe.com/checkout.js' %>
 <% content_for :javascript_footer_inline do %>
   <%= render partial: 'common/donate_widget_js' %>
-  $('#donation-amount-50').closest('.btn').trigger('click');
+  <% if @suggested_donation %>
+  $('#donation-amount-<%= @suggested_donation %>').closest('.btn').trigger('click');
+  <% end %>
   $('.read-more-link').on('click', function(e){
     e.preventDefault();
     var $link = $(this);
