@@ -80,6 +80,34 @@
 
   <% end %>
 
+  <% if DC::CONFIG['accept_donations'] && DC::CONFIG['show_donation_widget'] %>
+  <div id="donate" class="sidebar_section">
+    <div class="section_title">
+      Donate to DocumentCloud
+    </div>
+    <%= form_tag donate_charge_path, {id: 'donation-form', style: 'margin-top:22px'} do %>
+      <%= hidden_field_tag(:stripe_token) %>
+      <%= hidden_field_tag(:stripe_email) %>
+      <%= hidden_field_tag(:donation_amount_cents) %>
+      <p style="text-align:center">
+        Show your support for great journalism with a donation to DocumentCloud.<br>
+        <%= link_to "Read more about donating", donate_path %>
+      </p>
+      <div class="text_input first light">
+        <div class="inner">
+          <input type="tel" placeholder="Amount ($)" name="amount" id="donation-amount-other" />
+        </div>
+      </div>
+      <p><button type="submit" class="minibutton default">Donate</button></p>
+      <div id="error_explanation" style="color:red"></div>
+    <% end %>
+  </div>
+  <script src="https://checkout.stripe.com/checkout.js"></script>
+  <script>
+    <%= render partial: 'common/donate_widget_js' %>
+  </script>
+  <% end %>
+
   <div id="about" class="sidebar_section">
     <div class="section_title">
       About DocumentCloud

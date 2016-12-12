@@ -1,0 +1,67 @@
+var handler = StripeCheckout.configure({
+  key:         '<%= DC::SECRETS['stripe']['publish'] %>',
+  locale:      'auto',
+  name:        'DocumentCloud',
+  description: 'c/o Investigative Reporters & Editors',
+  image:       '/images/common/dc_logomark_social_square.png',
+  billingAddress: true,
+  token: function(token) {
+    $('#stripe_token').val(token.id);
+    $('#stripe_email').val(token.email);
+    $('#donation-form').get(0).submit();
+  }
+});
+$(window).on('popstate', function() {
+  handler.close();
+});
+
+$('#donation-form').on('submit', function(e) {
+  e.preventDefault();
+
+  var $form    = $('#donation-form');
+  var $error   = $('#error_explanation').html('');
+
+  if (_.isFunction($form.serializeObject)) {
+    var formData = $form.serializeObject();
+  } else {
+    var formData = {
+      donation_amount_other: $('#donation-amount-other').val(),
+      donation_amount: 0
+    };
+  }
+
+  var amount = formData.donation_amount_other || formData.donation_amount;
+  if (_.isUndefined(amount)) {
+    $error.html('<p class="my-2 text-danger">Please enter a valid amount in USD ($).</p>');
+    return false;
+  }
+  amount = amount.replace(/\$/g, '').replace(/\,/g, '')
+  amount = parseFloat(amount);
+  if (_.isNaN(amount)) {
+    $error.html('<p class="my-2 text-danger">Please enter a valid amount in USD ($).</p>');
+  }
+  else if (amount < 5.00) {
+    $error.html('<p class="my-2 text-danger">Donation amount must be at least $5.</p>');
+  }
+  else {
+    amount = Math.floor(amount * 100);
+    $('#donation_amount_cents').val(amount);
+    handler.open({
+      amount: amount
+    })
+  }
+});
+$('.donation-page #donation-amount-other').on('keyup', function(){
+  var $form    = $('#donation-form');
+  var formData = $form.serializeObject();
+  if (formData.donation_amount_other) {
+    var $checked = $('#donation-form').find('[name="donation_amount"]:checked');
+    $checked.prop('checked', false).closest('.active').removeClass('active');
+    $(this).addClass('active');
+  } else {
+    $(this).removeClass('active');
+  }
+});
+$('#donation_amounts .btn').on('click', function(){
+  $('#donation-amount-other').val('').removeClass('active');
+});

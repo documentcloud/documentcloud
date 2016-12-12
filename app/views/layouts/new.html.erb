@@ -23,6 +23,7 @@
   </main>
 
   <%= render 'common/new/footer' %>
+  <%= render partial: 'common/google' %>
 
   <%# TODO: stop the `@exclude_platformjs` by fixing platform.js and dc-pages %>
   <% javascripts_footer = @exclude_platformjs ? [] : [File.join(DC.workspace_asset_root, "/js/shared-templates.js"), File.join(DC.workspace_asset_root, "/js/platform.js")] %>
@@ -39,6 +40,16 @@
     }
   </script>
   <% end %>
-  <%= render partial: 'common/google' %>
+
+  <% if :javascript_footer_inline %>
+  <script>
+    var $ = window.$ || (window.DocumentCloud && window.DocumentCloud.$) || (window.Backbone && window.Backbone.$);
+    if ($ !== void 0) {
+      $(document).ready(function() {
+        <%= content_for :javascript_footer_inline %>
+      });
+    }
+  </script>
+  <% end %>
 </body>
 </html>

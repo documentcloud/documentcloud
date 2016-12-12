@@ -16,11 +16,16 @@ module ApplicationHelper
 
   def bootstrap_alert_class_for(flash_type)
     {
-      :success => 'alert-success',
-      :error   => 'alert-danger',
-      :alert   => 'alert-warning',
-      :notice  => 'alert-info'
+      success: 'alert-success',
+      error:   'alert-danger',
+      warning: 'alert-warning',
+      alert:   'alert-warning',
+      notice:  'alert-info',
     }[flash_type.to_sym] || flash_type.to_s
+  end
+  
+  def external_link_to(text, url, options = {})
+    link_to text, url, options.merge({ target: '_blank', rel: 'noopener' })
   end
 
 end

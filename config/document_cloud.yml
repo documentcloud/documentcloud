@@ -9,13 +9,16 @@ defaults: &defaults
   aws_region:           us-east-1
   aws_zone:             us-east-1c
   preconfigured_ami_id: <%= secrets['ami'] %>
-  google_analytics_id:  <%= secrets['google_analytics_id'] %>
+  google_analytics_id:  <%= secrets['google']['analytics'] || secrets['google_analytics_id'] %>
   platform_name:        <%= secrets['platform_name'] %>
   platform_domain:      <%= secrets['platform_domain'] %>
   twitter_username:     '<%= secrets['twitter_username'] %>'
+  accept_donations:     true
+  show_donation_widget: false
 
 development:
   <<: *defaults
+  show_donation_widget: true
 
 staging:
   <<: *defaults
@@ -32,6 +35,7 @@ production:
   server_root:          www.documentcloud.org
   asset_root:           assets.documentcloud.org
   workspace_asset_root: assets.documentcloud.org
+  show_donation_widget: false
 
 test:
   <<: *defaults

@@ -194,6 +194,11 @@ DC::Application.routes.draw do
   get '/news',                  to: 'redirect#index', as: 'news',         url: 'https://blog.documentcloud.org/'
   get '/blog',                  to: 'redirect#index',                     url: 'https://blog.documentcloud.org/'
 
+  # Donations
+  get  '/donate',        to: 'donate#index',  as: 'donate'
+  post '/donate',        to: 'donate#charge', as: 'donate_charge'
+  get  '/donate/thanks', to: 'donate#thanks', as: 'donate_thanks'
+
   # Admin section
   get '/admin', to: 'admin#index'
   get '/admin/health_check/:subject/:env', to: 'admin#health_check', subject: /page_embed/, env: /production|staging/

@@ -1,0 +1,2 @@
+module DonateHelper
+end
