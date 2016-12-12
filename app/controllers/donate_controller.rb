@@ -43,13 +43,16 @@ class DonateController < ApplicationController
     end
 
     session[:last_donation_amount] = Float(@amount) / 100
+    session[:suggested_donation]   = params[:suggested_donation] || 'none'
     redirect_to donate_thanks_path
   end
 
   def thanks
     # Don't let people hit this page twice, so we don't track GA twice
     redirect_to donate_path and return unless @donation_amount = session[:last_donation_amount]
+    @suggested_donation = session[:suggested_donation]
     session[:last_donation_amount] = nil
+    session[:suggested_donation] = nil
   end
 
 end
