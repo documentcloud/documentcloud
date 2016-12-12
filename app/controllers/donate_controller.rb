@@ -47,7 +47,9 @@ class DonateController < ApplicationController
   end
 
   def thanks
-    @amount = session[:last_donation_amount]
+    # Don't let people hit this page twice, so we don't track GA twice
+    redirect_to donate_path and return unless @donation_amount = session[:last_donation_amount]
+    session[:last_donation_amount] = nil
   end
 
 end
