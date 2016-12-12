@@ -17,16 +17,6 @@ namespace :remote do
     remote "app:restart", app_servers
   end
 
-  desc "Start all resources, on all servers"
-  task :start_all do
-    remote "db:start", central_servers
-    remote "sunspot:solr:start", search_servers
-    remote "crowd:server:start", central_servers
-    remote "crowd:node:start", worker_servers
-    remote "openoffice:start", app_servers
-    remote "app:start", app_servers
-  end
-
   desc "Check the current branch on the app server."
   task :branch do
     remote "branch", app_servers
