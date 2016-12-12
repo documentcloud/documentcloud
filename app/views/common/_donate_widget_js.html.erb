@@ -45,7 +45,7 @@ $('#donation-form').on('submit', function(e) {
   }
   else {
     amount = Math.floor(amount * 100);
-    $('#final_donation_amount').val(amount);
+    $('#donation_amount_cents').val(amount);
     handler.open({
       amount: amount
     })

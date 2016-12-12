@@ -11,7 +11,7 @@ class DonateController < ApplicationController
   end
 
   def charge
-    @amount = params[:final_donation_amount]
+    @amount = params[:donation_amount_cents]
     begin
       @amount = @amount.gsub('$', '').gsub(',', '').to_i
     rescue
