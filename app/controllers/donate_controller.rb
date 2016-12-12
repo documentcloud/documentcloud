@@ -27,10 +27,11 @@ class DonateController < ApplicationController
       
     begin
       Stripe::Charge.create(
-        amount:      @amount,
-        currency:    'usd',
-        source:      params[:stripe_token],
-        description: 'DocumentCloud Donation',
+        amount:        @amount,
+        currency:      'usd',
+        source:        params[:stripe_token],
+        description:   'DocumentCloud Donation',
+        receipt_email: params[:stripe_email],
         metadata: {
           type:  'donation',
           email: params[:stripe_email],
