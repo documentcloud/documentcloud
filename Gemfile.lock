@@ -1,5 +1,5 @@
 GIT
-  remote: https://github.com/documentcloud/bull_proof_china_shop.git
+  remote: git@github.com:documentcloud/bull_proof_china_shop
   revision: 64abcde27387c080fa58e79289f4a2632660f54d
   branch: master
   specs:
