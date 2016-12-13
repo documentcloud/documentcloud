@@ -45,8 +45,6 @@
 
 </div>
 
-<%
-  @javascript_footer_inline = <<-EOS
-    $('#create_new_upload_mailbox_form').blockMultipleSubmits();
-  EOS
-%>
+<% content_for :javascript_footer_inline do %>
+  $('#create_new_upload_mailbox_form').blockMultipleSubmits();
+<% end %>

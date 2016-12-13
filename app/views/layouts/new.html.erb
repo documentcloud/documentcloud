@@ -30,18 +30,7 @@
   <% javascripts_footer += (@javascripts_footer || []) %>
   <%= javascript_include_tag *javascripts_footer %>
 
-  <% if @javascript_footer_inline %>
-  <script>
-    var $ = window.$ || (window.DocumentCloud && window.DocumentCloud.$) || (window.Backbone && window.Backbone.$);
-    if ($ !== void 0) {
-      $(document).ready(function() {
-        <%= raw @javascript_footer_inline %>
-      });
-    }
-  </script>
-  <% end %>
-
-  <% if :javascript_footer_inline %>
+  <% if content_for? :javascript_footer_inline %>
   <script>
     var $ = window.$ || (window.DocumentCloud && window.DocumentCloud.$) || (window.Backbone && window.Backbone.$);
     if ($ !== void 0) {
