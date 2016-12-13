@@ -5,6 +5,7 @@ class DonateController < ApplicationController
   before_action { not_found } unless DC::CONFIG['accept_donations']
 
   def index
+    @canonical_url      = donate_url
     @donation_levels    = [25, 50, 100, 250]
     @suggested_donation = 50;
   end

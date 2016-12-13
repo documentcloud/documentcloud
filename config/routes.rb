@@ -196,6 +196,7 @@ DC::Application.routes.draw do
 
   # Donations
   get  '/donate',                to: 'donate#index',  as: 'donate'
+  get  '/donate/prolix',         to: 'donate#index',  as: 'donate_prolix', prolix: true
   post '/donate',                to: 'donate#charge', as: 'donate_charge'
   get  '/donate/thanks',         to: 'donate#thanks', as: 'donate_thanks'
   get  '/donate/thanks/preview', to: 'donate#thanks', as: 'donate_thanks_preview', preview: true

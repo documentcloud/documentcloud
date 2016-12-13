@@ -11,7 +11,7 @@
 
   <div class="container">
     
-  <% if params[:desc].to_i == 1 %>
+  <% if params[:prolix] %>
     <div class="row">
       <div class="col-xs-12 push-md-7 col-md-5 col-lg-4 offset-lg-1">
   <% else %>
@@ -37,7 +37,7 @@
         <p class="note">You’re making a tax-deductible donation on behalf of DocumentCloud to our parent non-profit <%= external_link_to 'Investigative Reporters & Editors', 'https://www.ire.org/' %>, a <nobr>501(c)(3)</nobr> organization.</p>
       <% end %>
 
-  <% if params[:desc].to_i == 1 %>
+  <% if params[:prolix] %>
       </div>
       <div id="donation-pitch" class="col-xs-12 pull-md-5 col-md-7">
         <p class="lead">Journalism starts with the facts. What happened? Can you prove it? Getting to the truth can be hard, and convincing others even harder.</p>
