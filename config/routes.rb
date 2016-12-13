@@ -195,9 +195,10 @@ DC::Application.routes.draw do
   get '/blog',                  to: 'redirect#index',                     url: 'https://blog.documentcloud.org/'
 
   # Donations
-  get  '/donate',        to: 'donate#index',  as: 'donate'
-  post '/donate',        to: 'donate#charge', as: 'donate_charge'
-  get  '/donate/thanks', to: 'donate#thanks', as: 'donate_thanks'
+  get  '/donate',                to: 'donate#index',  as: 'donate'
+  post '/donate',                to: 'donate#charge', as: 'donate_charge'
+  get  '/donate/thanks',         to: 'donate#thanks', as: 'donate_thanks'
+  get  '/donate/thanks/preview', to: 'donate#thanks', as: 'donate_thanks_preview', preview: true
 
   # Admin section
   get '/admin', to: 'admin#index'
