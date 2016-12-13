@@ -15,14 +15,14 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-  <%= render 'common/new/header' %>
+  <%= render partial: 'common/new/header' %>
   <%= render partial: 'common/new/flash_messages', flash: flash %>
 
   <main>
     <%= yield %>
   </main>
 
-  <%= render 'common/new/footer' %>
+  <%= render partial: 'common/new/footer' %>
   <%= render partial: 'common/google' %>
 
   <%# TODO: stop the `@exclude_platformjs` by fixing platform.js and dc-pages %>
