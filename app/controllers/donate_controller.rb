@@ -49,11 +49,15 @@ class DonateController < ApplicationController
   end
 
   def thanks
-    # Don't let people hit this page twice, so we don't track GA twice
-    redirect_to donate_path and return unless (@donation_amount = session[:last_donation_amount]) || params[:preview]
-    @suggested_donation = session[:suggested_donation]
-    session[:last_donation_amount] = nil
-    session[:suggested_donation] = nil
+    if params[:preview]
+      @donation_amount = 1000000
+    else
+      redirect_to donate_path and return unless @donation_amount = session[:last_donation_amount]
+      @suggested_donation = session[:suggested_donation]
+      # Kill the sessions vars so we don't hit this page twice
+      session[:last_donation_amount] = nil
+      session[:suggested_donation]   = nil
+    end
   end
 
 end

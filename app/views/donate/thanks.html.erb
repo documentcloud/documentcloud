@@ -24,4 +24,4 @@
 
 <% content_for :javascript_footer_inline do %>
   ga('send', 'event', 'Donations', 'Donate', 'suggested_donation:<%= @suggested_donation %>', <%= @donation_amount.to_i %>);
-<% end %>
+<% end unless params[:preview] %>
