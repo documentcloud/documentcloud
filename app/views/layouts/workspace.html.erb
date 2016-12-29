@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <%= render :partial => 'common/meta_tags' %>
+  <%= render partial: 'common/meta_tags' %>
   <title><%= compose_title(@title) %></title>
-  <%= render :partial => 'accounts/language_settings' %>
+  <%= render partial: 'accounts/language_settings' %>
 
-  <% css = [:ui, :workspace] + (@stylesheets || []) + [{:media => 'all'}] %>
+  <% css = [:ui, :workspace] + (@stylesheets || []) + [{media: 'all'}] %>
   <% js  = [:core] + (@javascripts || []) %>
   <%= include_stylesheets *css %>
   <%= include_javascripts *js %>
@@ -13,7 +13,7 @@
     <script>window.location = '/workspace/upgrade';</script>
   <![endif]-->
   <!--[if lt IE 9]>
-    <%= include_stylesheets :lt_ie_9, :embed_assets => false %>
+    <%= include_stylesheets :lt_ie_9, embed_assets: false %>
     <%= include_javascripts :lt_ie_9 %>
   <![endif]-->
   <% if Rails.env.development? %>
@@ -52,9 +52,20 @@
   <div class="selection" style="display:none;"></div>
   <div id="spinner" style="display:none;"></div>
 
-  <%= render :partial => 'common/bootstrap', :locals => {:workspace => true} %>
+  <script type="text/javascript">
+    <%= render partial: 'common/globals.js' %>
+    Organizations.reset(<%=raw @organizations.to_json(include_document_count: true, include_note_count: true) %>);
+    <% if @current_account && @current_account.memberships.any? %>
+      <%= render partial: 'accounts/current_account.js', type: :js %>
+      Projects.reset(<%=raw @projects.to_json({account: @current_account, include_collaborators: true}) %>);
+      dc.searchPrefixes = <%=raw DC::ALL_SEARCHES.to_json %>;
+    <% end %>
+    $(document).ready(function() {
+      dc.app.workspace = new dc.controllers.Workspace;
+    });
+  </script>
 
-  <%= render :partial => 'common/google' if @include_analytics %>
+  <%= render partial: 'common/google' if @include_analytics %>
 
 </body>
 </html>
