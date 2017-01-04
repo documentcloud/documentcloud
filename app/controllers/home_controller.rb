@@ -1,9 +1,6 @@
 class HomeController < ApplicationController
   include DC::Access
 
-  # Regex that matches missed markdown links in `[title][]` format.
-  MARKDOWN_LINK_REPLACER = /\[([^\]]*?)\]\[\]/i
-
   before_action :secure_only
   # TODO: review me! this before action, halts when user is not logged in
   # which actions need a current account on this controller?
