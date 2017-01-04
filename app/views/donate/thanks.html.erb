@@ -1,0 +1,27 @@
+<% (@html_classes ||= []).push('donation-page') %>
+<div class="content">
+
+  <div class="container-sm">
+    <header id="donation-page-header">
+      <h1>
+        <mark>Thank you!</mark>
+      </h1>
+    </header>
+
+    <p>Your donation of <%= number_to_currency(@donation_amount) %> to IRE on behalf of DocumentCloud will help us build better newsroom tools and promote evidence-based journalism. You should <%= external_link_to 'follow us on Twitter', 'https://twitter.com/documentcloud' %>, consider contributing to our <%= external_link_to 'open source projects on GitHub', 'https://github.com/documentcloud' %>, and <%= link_to 'sign up for our newsletter', home_path %>.</p>
+    <p class="note">Looking for a receipt? Check the inbox of the email address you provided. If you don’t receive one in the next few minutes, <%= link_to 'get in touch', contact_url %>.</p>
+  </div>
+
+  <section class="container-md text-center mt-5">
+    <p class="lead">You should encourage others to donate to DocumentCloud!</p>
+    <p>
+      <a href="https://twitter.com/share" class="twitter-share-button" data-size="large" data-text="Support open and truthful journalism. Donate to @documentcloud. I just did!" data-url="https://www.documentcloud.org/donate" data-dnt="true" data-show-count="false">Tweet</a>
+      <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+    </p>
+  </section>
+
+</div>
+
+<% content_for :javascript_footer_inline do %>
+  ga('send', 'event', 'Donations', 'Donate', 'suggested_donation:<%= @suggested_donation %>', <%= @donation_amount.to_i %>);
+<% end unless params[:preview] %>

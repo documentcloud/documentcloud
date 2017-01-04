@@ -40,9 +40,7 @@
   </div>
 </div>
 
-<%
-  (@javascripts_footer ||= []).push File.join(DC.asset_root(:agnostic => true), "/embed/page/page_embed.js")
-  @javascript_footer_inline = <<-EOS
-    DocumentCloud.embed.load('#{@current_page.canonical_url}', #{@embed_options.to_json});
-  EOS
-%>
+<% (@javascripts_footer ||= []).push File.join(DC.asset_root(:agnostic => true), "/embed/page/page_embed.js") %>
+<% content_for :javascript_footer_inline do %>
+  DocumentCloud.embed.load('<%= @current_page.canonical_url %>', <%= raw @embed_options.to_json %>);
+<% end %>

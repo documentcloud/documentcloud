@@ -15,26 +15,27 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-  <%= render 'common/new/header' %>
+  <%= render partial: 'common/new/header' %>
   <%= render partial: 'common/new/flash_messages', flash: flash %>
 
   <main>
     <%= yield %>
   </main>
 
-  <%= render 'common/new/footer' %>
+  <%= render partial: 'common/new/footer' %>
+  <%= render partial: 'common/google' %>
 
   <%# TODO: stop the `@exclude_platformjs` by fixing platform.js and dc-pages %>
   <% javascripts_footer = @exclude_platformjs ? [] : [File.join(DC.workspace_asset_root, "/js/shared-templates.js"), File.join(DC.workspace_asset_root, "/js/platform.js")] %>
   <% javascripts_footer += (@javascripts_footer || []) %>
   <%= javascript_include_tag *javascripts_footer %>
 
-  <% if @javascript_footer_inline %>
+  <% if content_for? :javascript_footer_inline %>
   <script>
     var $ = window.$ || (window.DocumentCloud && window.DocumentCloud.$) || (window.Backbone && window.Backbone.$);
     if ($ !== void 0) {
       $(document).ready(function() {
-        <%= raw @javascript_footer_inline %>
+        <%= content_for :javascript_footer_inline %>
       });
     }
   </script>

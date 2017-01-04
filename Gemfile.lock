@@ -1,5 +1,16 @@
 GIT
-  remote: git://github.com/documentcloud/jammit.git
+  remote: git@github.com:documentcloud/bull_proof_china_shop
+  revision: 64abcde27387c080fa58e79289f4a2632660f54d
+  branch: master
+  specs:
+    bull_proof_china_shop (0.0.1)
+      country_select (~> 2.2.0)
+      has_secure_token (~> 1.0.0)
+      rails (~> 4.2.3)
+      stripe (~> 1.56.2)
+
+GIT
+  remote: https://github.com/documentcloud/jammit.git
   revision: 5ddcf9c415b2e3985628c35e2ea5bdf94a383284
   branch: master
   specs:
@@ -8,7 +19,7 @@ GIT
       jsmin (~> 1.0)
 
 GIT
-  remote: git://github.com/documentcloud/open_calais.git
+  remote: https://github.com/documentcloud/open_calais.git
   revision: e29a75f1793e0a24f5f3a5af1d46b28f4a37b3f3
   branch: fuzziness
   specs:
@@ -22,22 +33,11 @@ GIT
       multi_xml
 
 GIT
-  remote: git://github.com/documentcloud/rails-bootstrap-forms.git
+  remote: https://github.com/documentcloud/rails-bootstrap-forms.git
   revision: 3e1d9727b452595433cac0618a6660b4b1318e89
   branch: bootstrap-v4
   specs:
     bootstrap_form (2.4.0)
-
-GIT
-  remote: git@github.com:documentcloud/bull_proof_china_shop
-  revision: 64abcde27387c080fa58e79289f4a2632660f54d
-  branch: master
-  specs:
-    bull_proof_china_shop (0.0.1)
-      country_select (~> 2.2.0)
-      has_secure_token (~> 1.0.0)
-      rails (~> 4.2.3)
-      stripe (~> 1.56.2)
 
 GEM
   remote: https://rubygems.org/
@@ -139,8 +139,8 @@ GEM
       railties (>= 3.0.0)
     faraday (0.9.2)
       multipart-post (>= 1.2, < 3)
-    faraday_middleware (0.10.0)
-      faraday (>= 0.7.4, < 0.10)
+    faraday_middleware (0.10.1)
+      faraday (>= 0.7.4, < 1.0)
     ffi (1.9.14)
     formatador (0.2.5)
     globalid (0.3.7)
@@ -417,6 +417,7 @@ DEPENDENCIES
   rubyzip (~> 1.1.0)
   sanitize (~> 2.0.6)
   spring
+  stripe (~> 1.56.2)
   sunspot-rails-tester
   sunspot_rails (= 2.2.0)
   sunspot_solr (= 2.2.0)

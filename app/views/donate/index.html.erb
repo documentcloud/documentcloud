@@ -1,0 +1,127 @@
+<% (@html_classes ||= []).push('donation-page') %>
+<div class="content">
+
+  <header id="donation-page-header" class="container-md">
+    <h1>
+      Support open and truthful journalism.
+      <mark>Donate to DocumentCloud.</mark>
+    </h1>
+  </header>
+
+
+  <div class="container">
+    
+  <% if params[:prolix] %>
+    <div class="row">
+      <div class="col-xs-12 push-md-7 col-md-5 col-lg-4 offset-lg-1">
+  <% else %>
+    <div class="container-sm">
+  <% end %>
+
+      <%= bootstrap_form_tag url: donate_charge_path, html: {id: 'donation-form', class: 'form-inline'} do |f| %>
+        <%= hidden_field_tag(:stripe_token) %>
+        <%= hidden_field_tag(:stripe_email) %>
+        <%= hidden_field_tag(:donation_amount_cents) %>
+        <%= hidden_field_tag(:suggested_donation, @suggested_donation) %>
+        <div id="donation_amounts" class="btn-group" data-toggle="buttons">
+        <% @donation_levels.each do |amount| %>
+          <label class="btn btn-secondary">
+            <input name="donation_amount" id="donation-amount-<%= amount %>" value="<%= amount %>" type="radio" autocomplete="off"> $<%= amount %>
+          </label>
+        <% end %>
+          <label class="sr-only" for="donation_amount">Amount (USD)</label>
+          <input name="donation_amount_other" id="donation-amount-other" type="tel" class="form-control" placeholder="Other">
+        </div>
+        <p><%= f.submit 'Donate!', class: 'btn btn-block btn-success' %></p>
+        <div id="error_explanation"></div>
+        <p class="note">You’re making a tax-deductible donation on behalf of DocumentCloud to our parent non-profit <%= external_link_to 'Investigative Reporters & Editors', 'https://www.ire.org/' %>, a <nobr>501(c)(3)</nobr> organization.</p>
+      <% end %>
+
+  <% if params[:prolix] %>
+      </div>
+      <div id="donation-pitch" class="col-xs-12 pull-md-5 col-md-7">
+        <p class="lead">Journalism starts with the facts. What happened? Can you prove it? Getting to the truth can be hard, and convincing others even harder.</p>
+        <p>Investigative journalists use DocumentCloud to sort through piles of primary source documents, find the story, and then publish that evidence for the public. It's been used in some of the most important reporting of the decade, like St. Louis Public Radio's <%= external_link_to 'Ferguson Project', 'http://apps.stlpublicradio.org/ferguson-project/evidence.html' %> and the <%= external_link_to 'Pulitzer-winning “An Unbelievable Story of Rape”', 'http://www.pulitzer.org/winners/t-christian-miller-propublica-and-ken-armstrong-marshall-project' %>.</p>
+        <p>More than <strong><%= link_to "#{ActiveSupport::NumberHelper.number_to_human Document.unrestricted.count, precision: 2} documents", public_search_url, target: '_blank' %></strong> constituting <strong><%= "#{ActiveSupport::NumberHelper.number_to_human Document.unrestricted.sum(:page_count) } pages" %></strong> have been released to the public through DocumentCloud.</p>
+        <p>If you want to support us in our mission to make good, evidence-backed reporting better and easier, <a class="cast-spotlight-link" href="#donation-page-header">please donate</a>! We run lean on grants and donations, and every dollar helps.</p>
+      </div>
+  <% end %>
+    </div>
+
+    <div class="row">
+      <div id="donation-featured" class="col-xs-12 col-md-6 push-md-6">
+        <h2 class="h4 text-center">Your donation helps make stories like these possible:</h2>
+        <div class="card-columns">
+          <div class="card">
+            <%= external_link_to image_tag('/images/donations/dmn-ken-starr.jpg', size: '600x426', alt: 'Dallas Morning News: The silence of Ken Starr', class: 'card-img img-fluid'), 'http://interactives.dallasnews.com/2016/the-silence-of-ken-starr/' %>
+          </div>
+          <div class="card">
+            <%= external_link_to image_tag('/images/donations/guardian-nsa.jpg', size: '600x360', alt: 'The Guardian: NSA Files Decoded', class: 'card-img img-fluid'), 'https://www.theguardian.com/us-news/the-nsa-files' %>
+          </div>
+          <div class="card">
+            <%= external_link_to image_tag('/images/donations/panama-papers.jpg', size: '600x390', alt: 'The Panama Papers: Politicians, Criminals and the Rogue Industry That Hides Their Cash', class: 'card-img img-fluid'), 'https://panamapapers.icij.org/' %>
+          </div>
+          <div class="card">
+            <%= external_link_to image_tag('/images/donations/lat-notorious-big.jpg', size: '600x550', alt: 'Los Angeles Times: FBI releases files on Notorious B.I.G. slaying', class: 'card-img img-fluid'), 'http://latimesblogs.latimes.com/lanow/2011/04/fbi-released-notorious-big-slaying-investigative-files.html' %>
+          </div>
+        </div>
+      </div>
+      <div id="donation-testimonials" class="col-xs-12 col-md-6 pull-md-6">
+        <h2 class="h4 text-center">What journalists say:</h2>
+        <section class="letter guardian">
+          <%= image_tag('/images/donations/rich-harris.jpg', size: '150x150', alt: 'Rich Harris', class: 'testimonial-photo img-thumbnail float-right') %>
+          <h3 class="h5"><%= external_link_to 'Rich Harris', 'https://www.theguardian.com/profile/rich-harris' %> (Guardian US):</h3>
+          <p>DocumentCloud is an <mark>essential part of the news ecosystem</mark>. It is a well-designed, easy-to-use tool that journalists around the world depend on for publishing documents that are <mark>in the public interest</mark>. In an industry built on deadlines, having a reliable go-to service like DocumentCloud is the difference between information being open, and being locked up in screenshots in proprietary CMSes.</p>
+          <div id="read-more-rich-harris" class="read-more-detail">
+            <p>At the Guardian, we’ve used DocumentCloud on countless articles. On my team, the Guardian US interactive team, it’s been a crucial feature of many of our most important stories. Most recently, a trove of 1,500 documents – firmly in the public interest, but ordered destroyed by the Wisconsin Supreme Court – were put in the public domain following our <%= external_link_to 'investigation', 'https://www.theguardian.com/us-news/ng-interactive/2016/sep/14/john-doe-files-scott-walker-corporate-cash-american-politics' %> into the questionable campaign finance arrangements used by 2016 presidential candidate Scott Walker during his 2012 recall election.</p>
+            <p>Thanks to DocumentCloud we were able to highlight and link to specific parts of the Walker documents, including a photocopy of a check with the damning handwritten phrase “<%= external_link_to 'Because Scott Walker Asked', 'http://www.documentcloud.org/documents/3105984-2012-08-14-Exhibits-01-100-PT1.html#document/p52/a317493' %>”:</p>
+            <link rel="stylesheet" href="//assets.documentcloud.org/note_embed/note_embed.css" type="text/css"> <div class="DC-embed DC-embed-note DC-note-container"> <div class="DC-note" style="background-image:url('https://assets.documentcloud.org/documents/3105984/pages/2012-08-14-Exhibits-01-100-PT1-p52-normal.gif')"> <div class="DC-note-header"> <a class="DC-note-embed-resource" title="View the note “G Frederick Kasten Jr. check” in its original document context on DocumentCloud in a new window or tab" target="_blank" href="https://www.documentcloud.org/documents/3105984-2012-08-14-Exhibits-01-100-PT1.html#document/p52/a317493"><span class="DC-note-title">G Frederick Kasten Jr. check</span> <span class="DC-note-page-number">(p. 52)</span></a> </div> <div class="DC-note-image-max-bounds" style="max-height:155px;max-width:307px;"> <div class="DC-note-image-aspect-ratio" style="padding-bottom:50.4885993485342%;"> <iframe class="DC-note-image-space-filler" src="//www.documentcloud.org/documents/3105984-2012-08-14-Exhibits-01-100-PT1/annotations/317493.html?embed=true" title="Note “G Frederick Kasten Jr. check” on document “2012-08-14-Exhibits-01-100-PT1”" sandbox="allow-scripts allow-same-origin allow-popups" frameborder="0"></iframe> </div> </div> <div class="DC-note-body"></div> <div class="DC-note-credit"> <a title="View the note “G Frederick Kasten Jr. check” in its original document context on DocumentCloud in a new window or tab" target="_blank" href="//www.documentcloud.org/documents/3105984-2012-08-14-Exhibits-01-100-PT1.html#document/p52/a317493">View entire document on <span class='DC-note-logotype-link'>DocumentCloud</span></a> </div> <div class="DC-note-background-fader"></div> </div> </div>
+            <p>As a direct result of having the entire document set online in a linkable, searchable form, local reporters in Wisconsin who had been following the story for a long time were very quickly able to follow up our reporting with fresh angles. Powerful public officials were held to account by an empowered fourth estate.</p>
+            <p>Part of DocumentCloud’s success is that they keenly understand the needs of journalists, with an advisory group that includes some of the best-known names in digital media. The staff are fully part of the journalism community, and are familiar faces at media conferences.</p>
+            <p>I can think of few open source projects more deserving of financial support.</p>
+          </div>
+          <a href="#read-more-rich-harris" class="read-more-link" data-toggle-contents="Close expanded">Read more…</a>
+        </section>
+        <section class="letter propublica">
+          <%= image_tag('/images/donations/t-miller.jpg', size: '150x150', alt: 'T. Christian Miller', class: 'testimonial-photo img-thumbnail float-right') %>
+          <h3 class="h5"><%= external_link_to 'T. Christian Miller', 'https://www.propublica.org/site/author/t_christian_miller' %> (ProPublica):</h3>
+          <p class="read-more-summary">
+            Here's how I used DocumentCloud. “<%= external_link_to 'An Unbelievable Story of Rape', 'https://www.propublica.org/article/false-rape-accusations-an-unbelievable-story' %>”, published by ProPublica and The Marshall Project, <mark>could not have happened without DocumentCloud</mark>.
+          </p>
+          <div id="read-more-t-miller" class="read-more-detail">
+            <p><%= external_link_to image_tag('/images/donations/unbelievable.png', size: '706x937', alt: 'ProPublica and The Marshall Project: An Unbelievable Story of Rape', class: 'card-img img-fluid'), 'https://www.propublica.org/article/false-rape-accusations-an-unbelievable-story' %></p>
+            <p>In order to tell the story, Ken Armstrong, my co-author, and I gathered thousands of pages of police department reports, court transcripts, academic studies and other documents. We stored them in DocumentCloud for many reasons. DocumentCloud’s OCR system, which scans documents to convert them into searchable text, allowed us to quickly locate information. The notes feature allowed us to highlight important sections or themes, becoming a sort of outline on the fly. With two organizations working together, DocumentCloud made collaboration easier, too.</p>
+          </div>
+          <a href="#read-more-t-miller" class="read-more-link" data-toggle-contents="Close expanded">Read more…</a>
+        </section>
+      </div>
+    </div>
+
+    <div class="text-center">
+      <a class="cast-spotlight-link btn btn-success btn-link" href="#donation-page-header">&uarr; Donate to DocumentCloud!</a>
+    </div>
+
+  </div>
+
+</div>
+
+<% (@javascripts_footer ||= []).push 'https://checkout.stripe.com/checkout.js' %>
+<% content_for :javascript_footer_inline do %>
+  <%= render partial: 'common/donate_widget_js' %>
+  <% if @suggested_donation %>
+  $('#donation-amount-<%= @suggested_donation %>').closest('.btn').trigger('click');
+  <% end %>
+  $('.read-more-link').on('click', function(e){
+    e.preventDefault();
+    var $link = $(this);
+    var $target = $($link.attr('href'));
+    $link.toggleContent().toggleClass('text-danger');
+    $target.toggle('slide');
+  });
+  $('.cast-spotlight-link').on('click', function(e){
+    e.preventDefault();
+    var $link = $(this);
+    var $target = $($link.attr('href'));
+    $target.scrollIntoView();
+  });
+<% end %>
