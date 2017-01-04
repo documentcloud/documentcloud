@@ -39,9 +39,4 @@ class WorkspaceController < ApplicationController
     end
   end
 
-  # Page for unsupported browsers, to request an upgrade.
-  def upgrade
-    render :layout => nil
-  end
-
 end
