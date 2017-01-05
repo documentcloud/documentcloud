@@ -106,6 +106,12 @@ when 'development' || 'staging'
                       slug: 'news-xyz',
                       demo: false, language: 'eng',
                       document_language: 'eng')
+
+  Membership.create(organization: Organization.find_by_slug('news-xyz'),
+                    account: Account.find_by_email('siteadmin.test@documentcloud.org'),
+                    role: 1,
+                    default: false)
+
   # Administrator
   Account.create(first_name: 'Administrator',
                  last_name: 'Vagrant',
