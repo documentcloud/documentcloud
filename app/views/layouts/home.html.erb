@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <%= render :partial => 'common/meta_tags' %>
+  <%= render partial: 'common/meta_tags' %>
   <title><%= compose_title(@title) %></title>
   <link rel="canonical" href="<%= compose_canonical_url(@canonical_url) %>">
   <%= include_stylesheets :ui, :home %>
   <!--[if lt IE 9]>
-    <%= include_stylesheets :lt_ie_9, :embed_assets => false %>
+    <%= include_stylesheets :lt_ie_9, embed_assets: false %>
   <![endif]-->
   <%= include_javascripts :core, :home %>
   <%= csrf_meta_tag %> 
@@ -16,7 +16,7 @@
   <div id="grid"></div>
   <div id="overlay"></div>
 
-  <%= render :partial => 'home/nav' %>
+  <%= render partial: 'home/nav' %>
 
   <div id="sky"></div>
 
@@ -37,16 +37,18 @@
   <% end %>
 
   <div id="container">
-    <%= render :partial => 'home/sidebar' %>
+    <%= render partial: 'home/sidebar' %>
     <%= yield %>
     <br class="clear" />
   </div>
 
-  <%= render :partial => 'home/footer' %>
+  <%= render partial: 'home/footer' %>
 
-  <%= render :partial => 'common/bootstrap', :locals => {:workspace => false} %>
+  <script type="text/javascript">
+    <%= render partial: 'common/globals.js' %>
+  </script>
 
-  <%= render :partial => 'common/google' %>
+  <%= render partial: 'common/google' %>
 
 </body>
 </html>

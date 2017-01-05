@@ -4,12 +4,15 @@ class Organization < ActiveRecord::Base
   include ActionView::Helpers::DateHelper
   include DC::Access
   include DC::Roles
+  include DC::Organizations
 
   attr_accessor :document_count, :note_count, :members
 
   has_many :memberships, :dependent => :destroy
   has_many :accounts, :through => :memberships
   has_many :documents
+  has_many :projects, through: :organization_projects
+
   validates :name, :slug, :presence=>true
   validates :name, :slug, :uniqueness=>true
   validates :slug, :format => { :with => DC::Validators::SLUG_TEXT }
@@ -33,7 +36,8 @@ class Organization < ActiveRecord::Base
   def self.names_for_documents(docs)
     ids = docs.map(&:organization_id).uniq
     self.where( :id=>ids ).pluck(:id, :name).inject({}) do |hash, org|
-      hash[org.first] = org.last; hash
+      hash[org.first] = org.last
+      hash
     end
   end
 
@@ -99,18 +103,33 @@ class Organization < ActiveRecord::Base
     @document_count ||= self.documents.count
   end
 
-  def role_of(account)
-    self.memberships.where({:account_id=>account.id}).first
-  end
+  # moved to DC::Organizations
+  # def role_of(account)
+  #   memberships.where(account_id: account.id).first
+  # end
 
-  def add_member(account, role, concealed=false)
-    options = {:account_id => account.id, :role => role, :concealed => concealed}
-    options[:default] = true unless account.memberships.exists?(:default=>true) # TODO: transition account#real? for this verification
-    self.memberships.create(options)
-  end
+  # moved to DC::Organizations
+  # def add_member(account, role, concealed = false)
+  #   options = { account_id: account.id, role: role, concealed: concealed }
+  #   # TODO: transition account#real? for this verification
+  #   options[:default] = true unless account.memberships.exists?(default: true)
+  #   memberships.create(options)
+  # end
 
-  def remove_member(account)
-    self.memberships.where({:account_id=>account.id}).destroy_all
+  # moved to DC::Organizations
+  # def remove_member(account)
+  #   memberships.where(account_id: account.id).destroy_all
+  # end
+  
+  
+  # TODO: change me for org switcher
+  # Add ability to pass and organization slug (from params)
+  def self.find_first_organization_for_auth(account, *slug)
+    if slug
+      account.organizations.find_by_slug(slug)
+    else
+      account.organizations.first
+    end
   end
 
   # The list of all administrator emails in the organization.
@@ -141,11 +160,5 @@ class Organization < ActiveRecord::Base
       attrs['members'] = self.members
     end
     attrs
-  end
-
-  # TODO: add ability to pass and organization slug (from params)
-  # TODO: add ability to create organization if it does not exist
-  def self.find_first_organization_for_auth(account)
-    account.organizations.first
   end
 end

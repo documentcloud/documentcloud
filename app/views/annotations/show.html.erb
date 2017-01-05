@@ -74,5 +74,7 @@
     var image     = '<img src="' + pingUrl + '?key=' + key + '" width="1" height="1" class="DC-embed-pixel-ping" alt="Anonymous hit counter for DocumentCloud">';
     var container = document.querySelector('.DC-note');
     container.insertAdjacentHTML('afterend', image);
+    // Add `DC-embed-iframed` class to HTML tag
+    document.getElementsByTagName('head')[0].className += ' DC-embed-iframed';
   }
 <% end %>
