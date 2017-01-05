@@ -114,7 +114,7 @@ when 'development' || 'staging'
                  document_language: 'eng',
                  password: password)
 
-  Membership.create(organization: Organization.find_by_slug('documentcloud'),
+  Membership.create(organization: Organization.find_by_slug('news-xyz'),
                     account: Account.find_by_email('administrator.test@news-xyz.org'),
                     role: 1,
                     default: true)
