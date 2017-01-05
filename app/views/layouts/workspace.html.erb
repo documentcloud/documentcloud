@@ -23,6 +23,11 @@
 </head>
 <body class="<%= @bodyclass %> <%= @current_account ? 'logged_in' : '' %>">
   <div class="dc-design-firewalled">
+    <!--[if lt IE 11]>
+      <div class="alert alert-banner alert-danger alert-center">
+        You seem to be running an older, unsupported version of Internet Explorer. We can’t guarantee all features will work properly unless you <%= link_to 'upgrade your browser', 'http://browsehappy.com/' %>.
+      </div>
+    <![endif]-->
 
     <%= render partial: 'common/new/header' %>
     <%= render partial: 'workspace/workspace_header' if @current_organization %>
