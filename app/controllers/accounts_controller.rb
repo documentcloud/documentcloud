@@ -54,7 +54,7 @@ class AccountsController < ApplicationController
           @current_organization = current_organization
           @organizations = Organization.all_slugs
           @has_documents = Document.owned_by(current_account).exists?
-          return render template: 'workspace/index', layout: 'workspace'
+          render template: 'workspace/index', layout: 'workspace' and return
         end
         redirect_to public_search_url(query: params[:query])
       end
