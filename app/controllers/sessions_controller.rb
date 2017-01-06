@@ -13,7 +13,7 @@ class SessionsController < ApplicationController
 
     reset_session
 
-    session[:account_id] = account.id
+    session[:account_id]      = account.id
     session[:organization_id] = organization.id
 
     # current_account
