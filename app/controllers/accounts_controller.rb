@@ -51,7 +51,7 @@ class AccountsController < ApplicationController
       format.html do
         if logged_in? and current_account.real?
           @projects = Project.load_for(current_account)
-          @current_organization = current_account.organization
+          @current_organization = current_organization
           @organizations = Organization.all_slugs
           @has_documents = Document.owned_by(current_account).exists?
           return render template: 'workspace/index', layout: 'workspace'
