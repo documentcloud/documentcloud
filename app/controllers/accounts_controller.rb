@@ -49,6 +49,7 @@ class AccountsController < ApplicationController
   def index
     respond_to do |format|
       format.html do
+        # Keep in sync with WorkspaceController#index
         if logged_in? and current_account.real?
           @projects = Project.load_for(current_account)
           @current_organization = current_organization

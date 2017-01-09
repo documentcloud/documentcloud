@@ -12,12 +12,13 @@ class WorkspaceController < ApplicationController
   # Main documentcloud.org page. Renders the workspace if logged in or
   # searching, the home page otherwise.
   def index
+    # Keep in sync with AccountsController#index
     if logged_in? and current_account.real?
       @projects             = Project.load_for(current_account)
       @current_organization = current_organization
       @organizations        = Organization.all_slugs
       @has_documents        = Document.owned_by(current_account).exists?
-      render template: 'workspace/index' and return
+      render template: 'workspace/index', layout: 'workspace' and return
     end
     redirect_to public_search_url(query: params[:query])
   end
