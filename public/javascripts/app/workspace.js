@@ -42,8 +42,6 @@ dc.controllers.Workspace = Backbone.Router.extend({
     this.entityList       = new dc.ui.EntityList();
 
     if (!dc.account) return;
-    dc.app.accountSearch          = new VS.VisualSearch(this.accountSearchOptions());
-    dc.app.accountSearchBox       = dc.app.accountSearch.searchBox;
     dc.app.accounts               = new dc.ui.AccountManager();
     dc.app.accounts.organizations = new dc.ui.OrganizationList();
 
@@ -71,7 +69,6 @@ dc.controllers.Workspace = Backbone.Router.extend({
     if (!dc.account) return;
     dc.app.accounts.setElement($("#accounts_manager_container"));
     dc.app.accounts.render();
-    this.panel.add('account_search_box', dc.app.accountSearchBox.render().el);
     this.sidebar.add('organization_list', dc.app.accounts.organizations.render().el);
     this.sidebar.add('account_badge', this.accountBadge.render().el);
   },
@@ -197,10 +194,4 @@ dc.controllers.Workspace = Backbone.Router.extend({
     };
   },
   
-  accountSearchOptions: function() {
-    return {
-      
-    };
-  }
-
 });
