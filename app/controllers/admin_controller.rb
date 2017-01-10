@@ -82,7 +82,7 @@ class AdminController < ApplicationController
       'public_per_account'  => DC::Statistics.public_documents_per_account,
       'private_per_account' => DC::Statistics.private_documents_per_account,
       'pages_per_account'   => DC::Statistics.pages_per_account,
-      'accounts'            => Account.all.map {|a| a.canonical(:include_organization => true) }
+      'accounts'            => Account.all.map {|a| a.canonical(include_organizations: true) }
     })
   end
 

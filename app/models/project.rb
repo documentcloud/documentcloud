@@ -171,7 +171,7 @@ class Project < ActiveRecord::Base
       :public_url         => public_url
     )
     if opts[:include_collaborators]
-      attrs[:collaborators] = other_collaborators(acc).map {|c| c.canonical(:include_organization => true) }
+      attrs[:collaborators] = other_collaborators(acc).map {|c| c.canonical(include_organizations: true) }
     end
     attrs['title'] ||= "[Untitled Project]"
     attrs

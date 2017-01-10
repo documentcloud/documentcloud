@@ -427,7 +427,8 @@ class Account < ActiveRecord::Base
       attrs['organization_id'] = membership.organization_id
       attrs['role']            = membership.role
     end
-    if options[:include_organization]
+    # Singular and plural `organizations` for backwards-compatibility
+    if options[:include_organizations] || options[:include_organization]
       # TODO: Don't pass organization_name [JR]
       attrs['organization_name'] = membership.organization.name if membership
       attrs['organizations']     = organizations.map(&:canonical)

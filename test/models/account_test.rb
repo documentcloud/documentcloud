@@ -119,7 +119,7 @@ class AccountTest < ActiveSupport::TestCase
   end
 
   it "has a canonical representation" do
-    assert louis.canonical( :include_organization=>true, :include_document_counts=>true)
+    assert louis.canonical(include_organization: true, include_document_counts: true)
   end
 
   it "disallows leading/trailing spaces in email address" do
