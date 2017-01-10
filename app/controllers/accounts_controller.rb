@@ -44,20 +44,10 @@ class AccountsController < ApplicationController
     end
   end
 
-  # Requesting /accounts returns the list of accounts in your logged-in organization.
-  # consider extracting the HTML info into a single method in common w/ workspace
   def index
     respond_to do |format|
       format.html do
-        # Keep in sync with WorkspaceController#index
-        if logged_in? and current_account.real?
-          @projects = Project.load_for(current_account)
-          @current_organization = current_organization
-          @organizations = Organization.all_slugs
-          @has_documents = Document.owned_by(current_account).exists?
-          render template: 'workspace/index', layout: 'workspace' and return
-        end
-        redirect_to public_search_url(query: params[:query])
+        redirect_to File.join(DC::SECRETS['omniauth']['documentcloud']['site'], '/organizations/')
       end
       format.json do
         json current_organization.accounts.active
