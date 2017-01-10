@@ -1,33 +1,27 @@
 <header id="dc-workspace-secondary-navbar" class="navbar navbar-full dc-navbar dc-navbar-secondary dc-navbar-dark">
   <nav class="nav navbar-nav">
     <div id="org-switcher-menu" class="nav-item dropdown">
-      <%= link_to @current_organization.name, '#', class: 'nav-link dropdown-toggle', role: 'button', data: {toggle: 'dropdown'} %>
+      <%= link_to @current_organization.name, '#', class: 'nav-link dropdown-toggle org-switcher-toggle', role: 'button', data: {toggle: 'dropdown'} %>
       <div class="dropdown-menu">
         <div class="dropdown-header">Switch to…</div>
-        <%= link_to 'My personal DocumentCloud', '#', class: 'dropdown-item', data: {toggle: 'tooltip', placement: 'right', title: 'Switches the context to the solo org. Always on the top of the org list.'} %>
-        <div data-toggle="tooltip" data-placement="right" title="Switches the context org. Alphabetical for now.">
-        <%= link_to 'Buzzfeed', '#', class: 'dropdown-item' %>
-        <%= link_to 'Canton Herald', '#', class: 'dropdown-item' %>
-        <%= link_to 'New York Times', '#', class: 'dropdown-item active' %>
-        </div>
-        <div data-toggle="tooltip" data-placement="right" title="Org settings are owned by the platform (not Circlet) and only appear if the user is admin/owner.">
-        <div class="dropdown-divider"></div>
-        <div class="dropdown-header">Organization Settings</div>
-        <div class="dropdown-content">
-          <ul class="list-unstyled">
-            <li>Display interface in <span class="inline-select" data-toggle="tooltip" data-placement="right" data-html="true" title="Spawns a select menu. Changes the org's <code>language</code>.">English</span></li>
-            <li>Process documents as <span class="inline-select" data-toggle="tooltip" data-placement="right" data-html="true" title="Spawns a select menu. Changes the org's <code>document_language</code>.">English</span></li>
-            <li class="text-muted">Members can override language settings on their individual accounts.</li>
-          </ul>
-          <p>You are an <b>administrator</b> of the New York Times account.</p>
-          <div class="btn-group-set">
-            <a href="#" class="btn btn-primary btn-block" data-toggle="tooltip" data-placement="right" data-html="true" title="Links to org management page on Circlet.">Manage Organization</a>
+        <%#= link_to 'My personal DocumentCloud', "/search/Account:#{@current_account.slug}", class: 'dropdown-item org-switcher-link' %>
+        <% @current_account.memberships.each do |membership| %>
+          <%= link_to membership.organization.name, "/search/Group:#{membership.organization.slug}", class: 'dropdown-item org-switcher-link', data: {organization_id: membership.organization.id} %>
+        <% end %>
+        <div id="org-switcher-settings">
+          <div class="dropdown-divider"></div>
+          <div class="dropdown-header">Organization Settings</div>
+          <div class="dropdown-content">
+            <ul class="list-unstyled">
+              <li>Display interface in <span class="inline-select" disabled title="Inline language editing hasn't been implemented yet."><%= DC::Language::NAMES[@current_organization.language] %></span></li>
+              <li>Process documents as <span class="inline-select" disabled title="Inline language editing hasn't been implemented yet."><%= DC::Language::NAMES[@current_organization.document_language] %></span></li>
+              <li class="text-muted">Members can override language settings on their individual accounts.</li>
+            </ul>
+            <p>You are an <b>administrator</b> of the <%= @current_organization.name %> account.</p>
+            <div class="btn-group-set">
+              <%= link_to 'Manage Organization', "https://accounts.dcloud.org/organizations/#{@current_organization.slug}", class: 'btn btn-primary btn-block org-manage-link' %>
+            </div>
           </div>
-        </div>
-        </div>
-        <div class="dropdown-divider hidden"></div>
-        <div class="text-center hidden">
-          <%= link_to 'Leave this organization', '#', class: 'btn btn-link btn-danger' %>
         </div>
       </div>
     </div>

@@ -26,6 +26,9 @@ dc.controllers.Workspace = Backbone.Router.extend({
     dc.app.navigation     = new dc.ui.Navigation();
     dc.app.toolbar        = new dc.ui.Toolbar();
     dc.app.organizer      = new dc.ui.Organizer();
+    dc.app.orgSwitcher    = new dc.ui.OrgSwitcher({
+      el: $('#org-switcher-menu')
+    });
     dc.ui.notifier        = new dc.ui.Notifier();
     dc.ui.tooltip         = new dc.ui.Tooltip();
     dc.app.visualSearch   = new VS.VisualSearch(this.searchOptions());
