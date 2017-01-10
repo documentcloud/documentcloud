@@ -38,7 +38,7 @@ dc.ui.AnnotationEditor = Backbone.View.extend({
 
     // Start drawing region when user mousesdown
     this.page.bind('mousedown', this.drawAnnotation);
-    $(document).bind('keydown', this.close);
+    $(document).on('keydown', this.close);
 
     $(document.body).setMode(kind, 'editing');
     this._buttons[kind].addClass('open');

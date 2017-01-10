@@ -33,7 +33,7 @@ dc.ui.Tooltip = Backbone.View.extend({
     options.left += options.left < limit ? this.OFFSET : -(outerWidth + 2);
     $(this.el).css({top : options.top, left : options.left});
     if (!this._open) this.fadeIn();
-    if (!options.leaveOpen) $(document).bind('mouseover', this.hide);
+    if (!options.leaveOpen) $(document).on('mouseover', this.hide);
     this._open = true;
   },
 

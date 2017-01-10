@@ -179,7 +179,7 @@ dc.ui.ViewerControlPanel = Backbone.View.extend({
       $(dialog.el).remove();
       _.defer(dc.ui.Dialog.alert, closeMessage, {onClose: function(){ window.close(); }});
     }, {width: 450});
-    var forceEl = $(dialog.make('span', {'class':'force_ocr minibutton dark center_button'}, _.t('force_ocr'))).bind('click', function() {
+    var forceEl = $(dialog.make('span', {'class':'force_ocr minibutton dark center_button'}, _.t('force_ocr'))).on('click', function() {
       var doc = self._getDocumentModel();
       doc.reprocessText(true);
       self.setOnParent(doc, {access: dc.access.PENDING});

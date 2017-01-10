@@ -162,8 +162,8 @@
           if (options.onHide && !options.onHide(e)) return;
           me.forceHide(e);
         };
-        $(document).bind('click', this._autohider);
-        $(document).bind('keypress', this._autohider);
+        $(document).on('click', this._autohider);
+        $(document).on('keypress', this._autohider);
       }
     },
 
@@ -225,12 +225,12 @@
             x    : e.pageX,
             y    : e.pageY
           };
-          $(document.body).bind('selectstart', stopEvent);
-          $(document.body).bind('mouseup', dragEnd);
-          $(document.body).bind('mousemove', drag);
+          $(document.body).on('selectstart', stopEvent);
+          $(document.body).on('mouseup', dragEnd);
+          $(document.body).on('mousemove', drag);
         }, el);
 
-        $(el).bind(options.ghost ? 'dragstart' : 'mousedown', dragStart);
+        $(el).on(options.ghost ? 'dragstart' : 'mousedown', dragStart);
       });
     },
 
@@ -243,7 +243,7 @@
       var edge = 17;
       var selection = $('.selection');
 
-      $(this).bind('mousedown', _.bind(function(e) {
+      $(this).on('mousedown', _.bind(function(e) {
         if (e.which > 1) return;
         if (options.ignore && $(e.target).closest(options.ignore).length) return;
         var off = this.offset();
@@ -291,7 +291,7 @@
           selectTargets(e);
           selection.hide();
         }, this);
-        doc.bind('mouseup', dragEnd).bind('mousemove', drag);
+        doc.bind('mouseup', dragEnd).on('mousemove', drag);
       }, this));
     },
 

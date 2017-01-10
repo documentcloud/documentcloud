@@ -198,7 +198,7 @@ dc.ui.AccountView = Backbone.View.extend({
       description : _.t('explain_disable_account', this.model.fullName(), '<span class="contact_support text_link">','</span>' ),
       saveText    : 'Disable'
     });
-    $('.contact_support', dialog.el).bind('click', function() {
+    $('.contact_support', dialog.el).on('click', function() {
       dialog.close();
       dc.ui.Dialog.contact();
     });

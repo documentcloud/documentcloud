@@ -98,7 +98,7 @@ dc.ui.Menu = Backbone.View.extend({
       _.extend(attrs, {'class' : 'menu_item ' + (attrs['class'] || '')});
       var el = this.make('div', attrs, item.title);
       item.menuEl = $(el);
-      if (item.onClick) $(el).bind('click', function(e) {
+      if (item.onClick) $(el).on('click', function(e) {
         if ($(el).hasClass('disabled')) return false;
         item.onClick(e);
       });

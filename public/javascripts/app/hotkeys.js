@@ -28,9 +28,9 @@ dc.app.hotkeys = {
   // Binds global keydown and keyup events to listen for keys that match `this.KEYS`.
   initialize : function() {
     _.bindAll(this, 'down', 'up', 'blur');
-    $(document).bind('keydown', this.down);
-    $(document).bind('keyup', this.up);
-    $(window).bind('blur', this.blur);
+    $(document).on('keydown', this.down);
+    $(document).on('keyup', this.up);
+    $(window).on('blur', this.blur);
   },
   
   // On `keydown`, turn on all keys that match.
