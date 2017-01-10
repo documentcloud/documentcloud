@@ -327,6 +327,7 @@ class Account < ActiveRecord::Base
     self.hashed_password = @password
   end
 
+
   # Set the default membership.  Will mark the given membership as the default
   # and the other memberships (if any) as non-default
   def set_default_membership(default_membership)
@@ -334,29 +335,6 @@ class Account < ActiveRecord::Base
     self.memberships.each do | membership |
       membership.update_attributes({ :default => (membership.id == default_membership.id) })
     end
-  end
-
-  def record_identity_attributes( identity )
-    current_identities = ( self.identities ||= {} )
-    current_identities[ identity['provider'] ] = identity['uid']
-    write_attribute( :identities, DC::Hstore.to_sql(  current_identities ) )
-
-    info = identity['info']
-
-    # only overwrite account's email if it is blank no-one else is using it
-    self.email = info['email'] if info['email'] && self.email.blank? && Account.lookup( info['email'] ).nil?
-
-    %w{ first_name last_name }.each do | attr |
-      write_attribute( attr, info[attr] ) if read_attribute(attr).blank? && info[attr]
-    end
-    if self.first_name.blank? && ! info['name'].blank?
-      self.first_name = info['name'].split(' ').first
-    end
-    if self.last_name.blank? && ! info['name'].blank?
-      self.last_name = info['name'].split(' ').last
-    end
-
-    self
   end
 
   # Create default organization to preserve backwards compatability.

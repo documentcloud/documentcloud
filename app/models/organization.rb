@@ -72,17 +72,17 @@ class Organization < ActiveRecord::Base
     if except_account
       sql << "and memberships.account_id not in (#{except_account.id})"
     end
-    rows = self.connection.select_all( sql )
-    hidden_fields=%w{ organization_id hashed_password }
-    accounts_map = rows.group_by{|row| row['organization_id'].to_i }
-    organizations.each do | organization |
+    rows          = self.connection.select_all(sql)
+    hidden_fields = %w{organization_id hashed_password}
+    accounts_map  = rows.group_by { |row| row['organization_id'].to_i }
+    organizations.each do |organization|
       account_details = accounts_map[organization.id]
       if account_details # if except_account is set, this could be nil
         organization.members = account_details.map do |account|
           account['slug'] = Account.make_slug( account )
           account['pending'] = account['hashed_password'].blank? && # algorithm from Account#pending?
-                               Membership::REVIEWER != account['role'].to_i
-          account['hashed_email']=Digest::MD5.hexdigest( account['email'].downcase.gsub(/\s/, '') ) if account['email']
+                              Membership::REVIEWER != account['role'].to_i
+          account['hashed_email'] = Digest::MD5.hexdigest(account['email'].downcase.gsub(/\s/, '')) if account['email']
 
           account.delete_if{|field,value| hidden_fields.include?(field) }
           account
