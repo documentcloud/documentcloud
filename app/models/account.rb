@@ -45,10 +45,6 @@ class Account < ActiveRecord::Base
   scope :active,  -> { with_memberships.where( ["memberships.role is NULL or memberships.role != ?", DISABLED] ) }
   scope :real,    -> { with_memberships.where( ["memberships.role in (?)", REAL_ROLES] ) }
   scope :reviewer,-> { with_memberships.where( ["memberships.role = ?",    REVIEWER] ) }
-  # TODO - omniauth remove me
-  # scope :with_identity, lambda { | provider, id |
-  #    where("identities @> hstore(:provider, :id)", :provider=>provider.to_s,:id=>id.to_s )
-  # }
 
   # Populates the organization#members accessor with all the organizaton's accounts
   def organizations_with_accounts
@@ -339,7 +335,7 @@ class Account < ActiveRecord::Base
 
   # Has this account been assigned, but never logged into, with no password set?
   def pending?
-    !hashed_password && !reviewer? && identities.blank?
+    !hashed_password && !reviewer?
   end
 
   # It's slo-o-o-w to compare passwords. Which is a mixed bag, but mostly good.
@@ -354,17 +350,6 @@ class Account < ActiveRecord::Base
     self.hashed_password = @password
   end
 
-  # TODO - omniauth cleanup remove me
-  # def validate_identity_is_unique
-  #   return if self.identities.blank?
-  #   condition = self.identities.map{ | provider, id | "identities @> hstore(?,?)" }.join(' or ')
-  #   condition << " and id<>#{self.id}" unless new_record?
-  #   values = self.identities.map{|k,v| [k.to_s,v.to_s] }.flatten
-  #   if account = Account.where( [ condition, *values ] ).first
-  #     duplicated = account.identities.to_set.intersection( self.identities ).map{|k,v| k}.join(',')
-  #     errors.add(:identities, "An account exists with the same id for #{account.id} #{account.identities.to_json} #{duplicated}")
-  #   end
-  # end
 
   # Set the default membership.  Will mark the given membership as the default
   # and the other memberships (if any) as non-default
@@ -374,30 +359,6 @@ class Account < ActiveRecord::Base
       membership.update_attributes({ :default => (membership.id == default_membership.id) })
     end
   end
-
-  # TODO - omniauth cleanup remove me
-  # def record_identity_attributes( identity )
-  #   current_identities = ( self.identities ||= {} )
-  #   current_identities[ identity['provider'] ] = identity['uid']
-  #   write_attribute( :identities, DC::Hstore.to_sql(  current_identities ) )
-
-  #   info = identity['info']
-
-  #   # only overwrite account's email if it is blank no-one else is using it
-  #   self.email = info['email'] if info['email'] && self.email.blank? && Account.lookup( info['email'] ).nil?
-
-  #   %w{ first_name last_name }.each do | attr |
-  #     write_attribute( attr, info[attr] ) if read_attribute(attr).blank? && info[attr]
-  #   end
-  #   if self.first_name.blank? && ! info['name'].blank?
-  #     self.first_name = info['name'].split(' ').first
-  #   end
-  #   if self.last_name.blank? && ! info['name'].blank?
-  #     self.last_name = info['name'].split(' ').last
-  #   end
-
-  #   self
-  # end
 
   # Create default organization to preserve backwards compatability.
   def canonical(options = {})

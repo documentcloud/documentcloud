@@ -1,67 +1,12 @@
 class AuthenticationController < ApplicationController
 
-  before_action :bouncer if exclusive_access?
-
+  before_action      :bouncer if exclusive_access?
   skip_before_action :verify_authenticity_token, only: [:login]
-  
-  # after_action :allow_iframe, only: [:iframe,
-  #                                    :inner_iframe,
-  #                                    :iframe_success,
-  #                                    :iframe_logout]
-
-  before_action :secure_only, only: [:login, :logout]
-  before_action :authenticate_user!, except: [:login, :logout]
-
+  before_action      :secure_only, only: [:login, :logout]
+  before_action      :authenticate_user!, except: [:login, :logout]
+  before_action      :set_p3p_header
   READONLY_ACTIONS = [:login, :logout, :remote_data]
-
-  before_action :read_only_error, except: READONLY_ACTIONS if read_only?
-
-# TODO: omniauth cleanup remove me  - begin
-# This controller deals with the concept of identities which are provided/verified
-# by either a documentcloud account or third party service
-# such as Twiter, Facebook, or Google Account
-#
-# It supports logging in via either the normal documentcloud login methods
-# or by using an iframe embedded inside an external website
-#
-# Logging in via an iframe is a complicated affair.
-#
-# The flow is:
-#
-#  An initial iframe is requested at /auth/iframe.
-#  This iframe loads up the easyXDM JS library (http://easyxdm.net/wp/) and
-#  establishes an RPC socket and stores the reference into the window scope.
-#
-#  The first hurdle is that XDM requires that the url of the iframe not change
-#  Therefore it's not possible to prerform a normal login inside the iframe.
-#
-#  To get around this restriction a second iframe is nested inside the parent (xdm'ed) iframe.
-#  The child iframe can:
-#    * Navigate to different urls, allowing it to perform a login process
-#    * It can also communicate back to the parent via the DOM window.parent object, and from there
-#      access the RPC socket at window.parent.socket
-#
-#  An additional hurdle is that third party identity services disallow loading inside an iframe
-#  by using the X-Frame-Options http header.
-#
-#  To overcome this restriction clicks on the third-party login links are intercepted and:
-#    * A pop-up window is opened with the initial url of /auth/omniauth_start_popup
-#    * The method associated with that url flags the session and issues a redirect to the appropriate service
-#    * Once the omniauth flow is complete, the popup notifies the iframe is notified using the DOM window.opener
-#
-  # layout 'embedded_login', only: [:inner_iframe,
-  #                                 :iframe_success,
-  #                                 :iframe_failure,
-  #                                 :popup_completion,
-  #                                 :iframe_logout,
-  #                                 :request_additional_information]
-
-  # before_action :login_required, only: [:iframe_success,
-  #                                       :record_user_information]
-  # TODO: omniauth cleanup remove me -end
-
-  before_action :login_required, only: [:record_user_information]
-  before_action :set_p3p_header
+  before_action      :read_only_error, except: READONLY_ACTIONS if read_only?
 
   # /login handles both the login form and the login request.
   def login
@@ -104,80 +49,7 @@ class AuthenticationController < ApplicationController
     render json: build_remote_data(params[:document_id])
   end
 
-  # Closes the popup window and loads the appropriate page
-  # into the inner iframe that opened them
-  def popup_completion
-    session.delete(:omniauth_popup_next)
-  end
-
-  # Renders a very minimialist page with only
-  # an iframe inside it, and establishes a XDM RPC socket
-  # which acts as a provider to the cross-site requestor
-  #
-  # The iframe loads content from the inner_iframe action below
-  # def iframe
-  # end
-
-  # def iframe_logout
-  #   clear_login_state
-  #   flash[:notice] = 'You have logged out successfully'
-  #   @remote_data = build_remote_data( params[:document_id] )
-  #   @status = false
-  #   render :action=>'iframe_login_status'
-  # end
-
-  # Displays the login page inside an iframe.
-  #
-  # if they are already logged in, display a success message,
-  # otherwise renders the standard login page template inside our
-  # own minimalistic layout using custom css to compact it.
-  # def inner_iframe
-  #   if logged_in?
-  #     @account = current_account
-  #     flash[:notice] = 'You have successfully logged in'
-  #     @remote_data = build_remote_data( params[:document_id] )
-  #     @status = true
-  #     render :action=>'iframe_login_status'
-  #   else
-  #     @next_url = '/auth/iframe_success'
-  #     session[:dv_document_id]=params[:document_id]
-  #     render :template=>'authentication/social_login'
-  #   end
-  # end
-
-  # Set the iframe session flag before loading the service from omniauth
-  # This way we can know where the request originated and can close the popup
-  # after the authentication completes
-  # def omniauth_start_popup
-  #   session[:omniauth_popup_next] = '/auth/popup_completion'
-  #   redirect_to params[:service]
-  # end
-
-  # renders the message and communicates the success back to the outer
-  # iframe and across the xdm socket to the viewer
-  # def iframe_success
-  #   @remote_data = session.key?(:dv_document_id) ? build_remote_data(session.delete(:dv_document_id)) : {}
-  #   flash[:notice] = 'Successfully logged in'
-  #   @status = true
-  #   render action: 'iframe_login_status'
-  # end
-
-  def record_user_information
-    account = current_account
-    account.update_attributes(pick(params, :first_name, :last_name))
-    if account.errors.empty?
-      redirect_to params[:next_url]
-    else
-      flash[:error] = account.errors.full_messages.to_sentence
-      render action: :request_additional_information
-    end
-  end
-
   private
-
-  def allow_iframe
-    response.headers.except! 'X-Frame-Options'
-  end
 
   def build_remote_data(document_id)
     data = { document: {} }
