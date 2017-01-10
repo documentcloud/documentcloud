@@ -26,14 +26,14 @@ class ReviewersController < ApplicationController
       end
     end
 
-    return json account if account.errors.any?
+    return json account.canonical(include_memberships: true) if account.errors.any?
 
     @documents.each do |doc|
       doc.add_reviewer(account, current_account)
       doc.reload
     end
 
-    json account: account, documents: @documents
+    json account: account.canonical(include_memberships: true), documents: @documents
   end
 
   def destroy

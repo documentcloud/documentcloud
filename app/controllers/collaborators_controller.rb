@@ -11,7 +11,7 @@ class CollaboratorsController < ApplicationController
     # TODO: If we're not using `account.errors`, can be reduced to 
     # `bad_request` [JR]
     return json(account, 400) unless current_project.add_collaborator account
-    json account.canonical(include_organizations: true)
+    json account.canonical(include_organizations: true, include_memberships: true)
   end
 
   def destroy
