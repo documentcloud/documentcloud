@@ -65,11 +65,11 @@ dc.ui.AccountView = Backbone.View.extend({
     }, options);
     if (this.isRow()) this.setMode(viewMode, 'view_mode');
     $(this.el).html(this.template(attrs));
-    if (viewMode == 'edit') this.$('option.role_' + this.model.get('role')).attr({selected : 'selected'});
+    if (viewMode == 'edit') this.$('option.role_' + this.model.role()).attr({selected : 'selected'});
     if (this.model.isPending()) $(this.el).addClass('pending');
     this._loadAvatar();
     this._setPlaceholders();
-    this.setMode(this.model.ROLE_NAMES[this.model.get('role')], 'role');
+    this.setMode(dc.model.Membership.prototype.ROLE_NAMES[this.model.role()], 'role');
     return this;
   },
 
@@ -92,7 +92,7 @@ dc.ui.AccountView = Backbone.View.extend({
   },
 
   showEdit : function() {
-    this.$('option.role_' + this.model.get('role')).attr({selected : 'selected'});
+    this.$('option.role_' + this.model.role()).attr({selected : 'selected'});
     this.setMode('edit', 'view_mode');
   },
 
@@ -185,7 +185,7 @@ dc.ui.AccountView = Backbone.View.extend({
     var dialog = dc.ui.Dialog.confirm(null, _.bind(function() {
       this.setMode('display', 'view_mode');
       this.$el.next('tr.editing').remove();
-      this.model.save({'role': this.model.DISABLED});
+      this.model.save({'role': dc.model.Membership.prototype.DISABLED});
       dc.ui.notifier.show({
         text      : _.t('account_is_disabled',this.model.fullName() ),
         duration  : 5000,
@@ -207,7 +207,7 @@ dc.ui.AccountView = Backbone.View.extend({
   _enableAccount : function() {
     this.setMode('display', 'view_mode');
     this.$el.next('tr.editing').remove();
-    this.model.save({'role': this.model.CONTRIBUTOR});
+    this.model.save({'role': dc.model.Membership.prototype.CONTRIBUTOR});
   },
 
   _loginAsAccount : function() {

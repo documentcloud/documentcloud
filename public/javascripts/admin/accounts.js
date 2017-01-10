@@ -1,12 +1,5 @@
 dc.ui.AdminAccounts = Backbone.View.extend({
 
-  // Keep in sync with account.rb and accounts.js
-  DISABLED      : 0,
-  ADMINISTRATOR : 1,
-  CONTRIBUTOR   : 2,
-  REVIEWER      : 3,
-  FREELANCER    : 4,
-
   render : function() {
     $(this.el).html(JST['admin_accounts']({}));
     var rows = Accounts.map(function(account) {
@@ -17,7 +10,7 @@ dc.ui.AdminAccounts = Backbone.View.extend({
   },
 
   isAdmin : function() {
-    return this.get('role') == this.ADMINISTRATOR;
+    return this.get('role') == dc.model.Membership.prototype.ADMINISTRATOR;
   }
 
 });

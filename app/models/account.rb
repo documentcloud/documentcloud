@@ -421,12 +421,14 @@ class Account < ActiveRecord::Base
       attrs['private_documents'] = Document.restricted.where(:account_id => id).count
     end
 
+    # TODO: Don't pass organization_id or role [JR]
     # all of the below should be rendered obsolete and removed.
     if ( membership = options[:membership] || memberships.default.first )
       attrs['organization_id'] = membership.organization_id
       attrs['role']            = membership.role
     end
     if options[:include_organization]
+      # TODO: Don't pass organization_name [JR]
       attrs['organization_name'] = membership.organization.name if membership
       attrs['organizations']     = organizations.map(&:canonical)
     end

@@ -28,7 +28,7 @@ dc.ui.OrganizationManager = Backbone.View.extend({
   },
 
   describeMembership: function(membership){
-    return _.t( 'role_' + dc.model.Account.prototype.ROLE_NAMES[membership.get('role')] + '_for_x', this.model.get('name') );
+    return _.t( 'role_' + dc.model.Membership.prototype.ROLE_NAMES[membership.get('role')] + '_for_x', this.model.get('name') );
   },
 
   newAccount : function() {

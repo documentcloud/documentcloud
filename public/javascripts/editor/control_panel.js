@@ -40,10 +40,7 @@ dc.ui.ViewerControlPanel = Backbone.View.extend({
   },
 
   render : function() {
-    var accountProto    = dc.model.Account.prototype;
-    var accessWorkspace = dc.account.get('role') == accountProto.ADMINISTRATOR ||
-                          dc.account.get('role') == accountProto.CONTRIBUTOR   ||
-                          dc.account.get('role') == accountProto.FREELANCER;
+    var accessWorkspace = dc.account.isReal();
     this.viewer         = currentDocument;
     this._page          = this.viewer.$('.DV-textContents');
     var doc             = this._getDocumentModel();
@@ -61,7 +58,7 @@ dc.ui.ViewerControlPanel = Backbone.View.extend({
 
   showReviewerWelcome : function() {
     var inviter = dc.app.editor.options.reviewerInviter;
-    if (!(dc.account.get('role') == dc.model.Account.prototype.REVIEWER && inviter)) return;
+    if (!(dc.account.isReviewer() && inviter)) return;
     var title = _.t('x_invited_to_review_x', inviter.fullName, dc.inflector.truncate(currentDocument.api.getTitle(), 50) );
     var description = JST['reviewer_welcome'](inviter);
     var dialog = dc.ui.Dialog.alert("", {description: description, title: title});
