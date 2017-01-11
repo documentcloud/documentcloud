@@ -14,11 +14,10 @@ defaults: &defaults
   platform_domain:      <%= secrets['platform_domain'] %>
   twitter_username:     '<%= secrets['twitter_username'] %>'
   accept_donations:     true
-  show_donation_widget: false
+  show_donation_widget: true
 
 development:
   <<: *defaults
-  show_donation_widget: true
 
 staging:
   <<: *defaults
@@ -35,7 +34,6 @@ production:
   server_root:          www.documentcloud.org
   asset_root:           assets.documentcloud.org
   workspace_asset_root: assets.documentcloud.org
-  show_donation_widget: false
 
 test:
   <<: *defaults
