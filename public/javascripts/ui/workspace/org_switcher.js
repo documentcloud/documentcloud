@@ -6,10 +6,10 @@ dc.ui.OrgSwitcher = Backbone.View.extend({
   
   initialize: function(options) {
     // Cache element references
-    this.$toggle            = this.$el.find('.org-switcher-toggle');
+    this.$toggle            = this.$el.find('.org-header-menu-opener');
     this.$organizationLinks = this.$el.find('.org-switcher-link');
     this.$manage            = this.$el.find('.org-manage-link');
-    this.$settings          = this.$el.find('#org-switcher-settings');
+    this.$settings          = this.$el.find('#org-header-menu-settings');
 
     // In case of backend/front-end sync problem
     this._markActiveOrganization();

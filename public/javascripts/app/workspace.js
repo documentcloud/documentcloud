@@ -27,7 +27,7 @@ dc.controllers.Workspace = Backbone.Router.extend({
     dc.app.toolbar        = new dc.ui.Toolbar();
     dc.app.organizer      = new dc.ui.Organizer();
     dc.app.orgSwitcher    = new dc.ui.OrgSwitcher({
-      el: $('#org-switcher-menu')
+      el: $('#org-header-menu')
     });
     dc.ui.notifier        = new dc.ui.Notifier();
     dc.ui.tooltip         = new dc.ui.Tooltip();

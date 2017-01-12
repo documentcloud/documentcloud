@@ -15,9 +15,15 @@ class WorkspaceController < ApplicationController
     # Keep in sync with AccountsController#index
     if logged_in? and current_account.real?
       @projects             = Project.load_for(current_account)
-      @current_organization = current_organization
       @organizations        = Organization.all_slugs
       @has_documents        = Document.owned_by(current_account).exists?
+
+      @current_organization = current_organization
+      @memberships          = current_account.memberships.real
+      @show_org_switcher    = @memberships.count > 1
+      # TODO: Pull this from `session[:current_membership_id]`
+      @current_membership   = current_account.memberships.find { |m| m.organization == @current_organization }
+
       render template: 'workspace/index', layout: 'workspace' and return
     end
     redirect_to public_search_url(query: params[:query])
