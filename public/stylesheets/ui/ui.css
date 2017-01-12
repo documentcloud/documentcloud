@@ -293,7 +293,9 @@ textarea.text_area {
   -webkit-border-radius: 3px; -moz-border-radius: 3px; border-radius: 3px;
   box-shadow: 0 1px 2px #bababa; -webkit-box-shadow: 0 1px 2px #bababa; -moz-box-shadow: 0 1px 2px #bababa;
   border: 1px solid #a7a7a7; border-top-color: #b7b7b7; border-bottom-color: #959595;
-  background: url(/images/embed/ui/button_bg.png) repeat-x left top;
+  background-color: #9d9d9d;
+  background-image: linear-gradient(to bottom, #ccc 0%, #9d9d9d 100%);
+  background-repeat: repeat-x;
 }
   .minibutton:active {
     border-color: #aaa;
@@ -314,12 +316,14 @@ textarea.text_area {
   }
   .minibutton.ok,
   .minibutton.default {
-    background-image: url(/images/embed/ui/button_bg_green.gif);
+    background-color: #2a955c;
+    background-image: linear-gradient(to bottom, #3ec37c 0%, #2a955c 100%);
     border-color: #4ba47c; border-top-color: #53b388; border-bottom-color: #459671;
     text-shadow: #4ba47c 0 -1px 0;
   }
   .minibutton.dark {
-    background-image: url(/images/embed/ui/button_bg_dark.gif);
+    background-color: #565656;
+    background-image: linear-gradient(to bottom, #7e7e7e 0%, #565656 100%);
     text-shadow: #777 0 -1px 0;
   }
   .minibutton.plus {
@@ -331,7 +335,8 @@ textarea.text_area {
       top: 6px; left: 7px;
     }
   .minibutton.warn {
-    background-image: url(/images/embed/ui/button_bg_red.gif);
+    background-color: #a92237;
+    background-image: linear-gradient(to bottom, #ff3c55 0%, #a92237 100%);
     border-color: #e5364c; border-bottom-color: #9c1f32;
     text-shadow: none;
   }
