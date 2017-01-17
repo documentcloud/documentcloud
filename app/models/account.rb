@@ -151,6 +151,9 @@ class Account < ActiveRecord::Base
     self.organization.id
   end
 
+  # TODO: This should proxy through to `current_membership` once that's a 
+  # thing, but only until we can migrate away from thinking about role in 
+  # account terms anyway. Role is wholly depending on the context membership.
   def role
     default = memberships.where({:default=>true}).first
     default.nil? ? nil : default.role
