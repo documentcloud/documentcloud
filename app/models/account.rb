@@ -113,8 +113,9 @@ class Account < ActiveRecord::Base
 
   # Save this account as the current account in the session. Logs a visitor in.
   def authenticate(session, cookies)
-    session['account_id']      = id
-    session['organization_id'] = organization_id
+    session[:account_id]      = id
+    session[:membership_id]   = default_membership.id
+    session[:organization_id] = organization_id
     refresh_credentials(cookies)
     self
   end

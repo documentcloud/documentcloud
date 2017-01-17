@@ -234,6 +234,12 @@ class ApplicationController < ActionController::Base
       session['organization_id'] ? Organization.find_by_id(session['organization_id']) : nil
   end
 
+  def current_membership
+    return nil unless request.ssl?
+    @current_membership ||=
+      session['membership_id'] ? Membership.find(session['membership_id']) : nil
+  end
+
   def handle_unverified_request
     error = RuntimeError.new "CSRF Verification Failed"
     LifecycleMailer.exception_notification(error, params).deliver_now
