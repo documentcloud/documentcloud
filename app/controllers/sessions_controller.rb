@@ -48,14 +48,18 @@ class SessionsController < ApplicationController
     redirect_to home_path
   end
 
-  def switch_organization
-    return forbidden unless current_account.member_of?(params[:organization_id])
-    session[:organization_id] = params[:organization_id]
+  def switch_membership
+    return forbidden unless membership = current_account.memberships.find(params[:membership_id])
+    session[:membership_id]   = membership.id
+    session[:organization_id] = membership.organization_id
   end
 
-  def switch_membership
-    return forbidden unless current_account.memberships.exists?(params[:membership_id])
-    session[:membership_id] = params[:membership_id]
+  # NB: This should only be used temporarily or sparingly; `switch_membership` 
+  # is preferred
+  def switch_membership_by_organization
+    return forbidden unless membership = current_account.memberships.where(organization_id: params[:organization_id]).last
+    session[:membership_id]   = membership.id
+    session[:organization_id] = membership.organization_id
   end
 
   def destroy
