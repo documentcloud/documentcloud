@@ -159,8 +159,9 @@ class Account < ActiveRecord::Base
     default.nil? ? nil : default.role
   end
 
+  # `org` can be either an ID or an Organization model
   def member_of?(org)
-    self.memberships.exists?(:organization_id => org.id)
+    self.memberships.exists?(organization_id: (org.is_a?(Organization) ? org.id : org))
   end
 
   def has_memberships? # should be reworked as Account#real?
