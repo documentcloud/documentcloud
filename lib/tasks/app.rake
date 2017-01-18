@@ -22,6 +22,12 @@ namespace :app do
     invoke 'crowd:node:start'
   end
 
+  task :devstop do
+    invoke 'crowd:node:stop'
+    invoke 'crowd:server:stop'
+    invoke 'sunspot:solr:stop'
+  end
+
   task :devrestart do
     invoke 'app:restart'
     invoke 'crowd:node:restart'
