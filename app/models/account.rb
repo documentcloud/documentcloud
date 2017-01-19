@@ -159,21 +159,11 @@ class Account < ActiveRecord::Base
     default_membership.nil? ? nil : default_membership.role
   end
 
-<<<<<<< Updated upstream
   # TODO: Set a default membership if there isn't one
   def default_membership
     memberships.where(default: true).first || memberships.first
   end
 
-  # `org` can be either an ID or an Organization model
-  def member_of?(org)
-    self.memberships.exists?(organization_id: (org.is_a?(Organization) ? org.id : org))
-  end
-=======
-  # def member_of?(org)
-  #   self.memberships.exists?(:organization_id => org.id)
-  # end
->>>>>>> Stashed changes
 
   def has_memberships? # should be reworked as Account#real?
     self.memberships.any?

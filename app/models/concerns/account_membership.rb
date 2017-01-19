@@ -4,8 +4,9 @@ module AccountMembership
   extend ActiveSupport::Concern
 
   included do
+    # `org` can be either an ID or an Organization model
     def member_of?(org)
-      self.memberships.exists?(organization_id: org.id)
+      self.memberships.exists?(organization_id: (org.is_a?(Organization) ? org.id : org))
     end
 
     def can_switch_to_organization?(organization_id)
