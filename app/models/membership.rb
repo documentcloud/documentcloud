@@ -26,8 +26,14 @@ class Membership < ActiveRecord::Base
     attrs[:organization]      = organization.canonical(options) if (options[:include_organizations] || options[:include_organization])
     attrs
   end
-  
+
   def as_json(options={})
     canonical(options)
+  end
+
+  def member?(account_id, organization_id)
+    account = Account.find(account_id)
+    organization = organization.find(organization_id)
+    where(account: account, organization: organization).none? ? false : true
   end
 end

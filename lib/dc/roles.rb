@@ -17,7 +17,7 @@ module DC
     }
     ROLE_NAMES = ROLE_MAP.invert
     ROLES      = ROLE_NAMES.keys
-    REAL_ROLES = [ADMINISTRATOR, CONTRIBUTOR, FREELANCER, DISABLED]
-    ROLE_TITLES = Hash[ ROLE_MAP.map{ |name,id| [id, name.to_s.titleize] } ]
+    REAL_ROLES = [ADMINISTRATOR, CONTRIBUTOR, FREELANCER, DISABLED].freeze
+    ROLE_TITLES = Hash[ROLE_MAP.map { |name, id| [id, name.to_s.titleize] }]
   end
 end

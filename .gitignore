@@ -32,3 +32,4 @@ public/javascripts/vendor/*/
 Vagrantfile
 *.sublime-*
 .byebug_history
+doc
