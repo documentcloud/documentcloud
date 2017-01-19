@@ -106,15 +106,13 @@ when 'development' || 'staging'
                       slug: 'news-xyz',
                       demo: false, language: 'eng',
                       document_language: 'eng')
-<<<<<<< HEAD
-=======
+
 
   Membership.create(organization: Organization.find_by_slug('news-xyz'),
                     account: Account.find_by_email('siteadmin.test@documentcloud.org'),
                     role: 1,
                     default: false)
 
->>>>>>> 7a2e074002088b072121d98079230ced2c1c9968
   # Administrator
   Account.create(first_name: 'Administrator',
                  last_name: 'Vagrant',
@@ -123,11 +121,8 @@ when 'development' || 'staging'
                  document_language: 'eng',
                  password: password)
 
-<<<<<<< HEAD
-  Membership.create(organization: Organization.find_by_slug('documentcloud'),
-=======
+
   Membership.create(organization: Organization.find_by_slug('news-xyz'),
->>>>>>> 7a2e074002088b072121d98079230ced2c1c9968
                     account: Account.find_by_email('administrator.test@news-xyz.org'),
                     role: 1,
                     default: true)

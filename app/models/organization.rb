@@ -32,14 +32,10 @@ class Organization < ActiveRecord::Base
   # Retrieve the names of the organizations for the result set of documents.
   def self.names_for_documents(docs)
     ids = docs.map(&:organization_id).uniq
-<<<<<<< HEAD
-    self.where(id: ids).pluck(:id, :name).inject({}) do |hash, org|
-      hash[org.first] = org.last; hash
-=======
     self.where( :id=>ids ).pluck(:id, :name).inject({}) do |hash, org|
       hash[org.first] = org.last
       hash
->>>>>>> dc_omniauth_after_switcher
+
     end
   end
 
@@ -104,20 +100,7 @@ class Organization < ActiveRecord::Base
     @document_count ||= self.documents.count
   end
 
-<<<<<<< HEAD
-  def role_of(account)
-    self.memberships.where(account_id: account.id).first
-  end
 
-  def add_member(account, role, concealed=false)
-    options = {account_id: account.id, role: role, concealed: concealed}
-    options[:default] = true unless account.memberships.exists?(default: true) # TODO: transition account#real? for this verification
-    self.memberships.create(options)
-  end
-
-  def remove_member(account)
-    self.memberships.where(account_id: account.id).destroy_all
-=======
   # moved to DC::Organizations
   # def role_of(account)
   #   memberships.where(account_id: account.id).first
@@ -145,7 +128,7 @@ class Organization < ActiveRecord::Base
     else
       account.organizations.first
     end
->>>>>>> dc_omniauth_after_switcher
+
   end
 
   # The list of all administrator emails in the organization.
