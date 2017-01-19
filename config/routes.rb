@@ -1,3 +1,4 @@
+
 DC::Application.routes.draw do
   def you_are_documentcloud?
     File.exist? File.join(Rails.root, 'secrets', 'documentcloud.yep')

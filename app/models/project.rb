@@ -7,6 +7,7 @@ class Project < ActiveRecord::Base
   include DC::Access
 
   belongs_to :account
+  belongs_to :organization
   has_many :project_memberships, :dependent => :destroy
   has_many :collaborations,      :dependent => :destroy
   has_many :documents,           :through => :project_memberships
@@ -23,11 +24,11 @@ class Project < ActiveRecord::Base
   text_attr :title
   styleable_attr :description
 
-  scope :alphabetical,-> { order( :title ) }
+  scope :alphabetical,-> { order(:title) }
   scope :visible,     -> { where(:hidden => false) }
-  scope :hidden,      -> { where(:hidden => true ) }
+  scope :hidden,      -> { where(:hidden => true) }
   scope :accessible,  ->(account) {
-    where( ['account_id = ? or id in (select project_id from collaborations where account_id = ?)', account.id, account.id] )
+    where(['account_id = ? or id in (select project_id from collaborations where account_id = ?)', account.id, account.id])
   }
 
   delegate :full_name, :to => :account, :prefix => true, :allow_nil => true
