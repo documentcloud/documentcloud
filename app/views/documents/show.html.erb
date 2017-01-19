@@ -8,11 +8,16 @@
   <%= render partial: 'accounts/language_settings' if @edits_enabled %>
   <%= render partial: 'common/oembed' if @oembeddable_resource %>
   <%
+    description = unless @current_document.description.blank?
+      @current_document.description
+    else
+      "Source document contributed to #{DC::CONFIG['platform_name']} by #{@current_document.account_name} (#{@current_document.organization_name})."
+    end
     @sharing_meta_tags = {
       author:      "#{@current_document.account_name} (#{@current_document.organization_name})",
       title:       truncate(@current_document.title, length: 70, separator: ' '),
       url:         @current_document.published_url || @current_document.canonical_url(:html),
-      description: truncate(@current_document.description || "Source document contributed to #{DC::CONFIG['platform_name']} by #{@current_document.account_name} (#{@current_document.organization_name}).", length: 200, separator: ' '),
+      description: truncate(description, length: 200, separator: ' '),
       image:       @current_document.page_image_url(1, 'normal'),
       image_alt:   "The first page of #{@current_document.title}",
       twitter: {
