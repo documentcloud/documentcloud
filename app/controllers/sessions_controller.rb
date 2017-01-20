@@ -15,7 +15,7 @@ class SessionsController < ApplicationController
 
     session[:account_id]      = account.id
     session[:membership_id]   = account.default_membership.id
-    session[:organization_id] = organization.id
+    session[:organization_id] = organization ? organization.id : account.default_membership.organization
 
     # current_account
     # # render nothing: true
