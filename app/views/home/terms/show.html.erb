@@ -2,7 +2,7 @@
 
 <div class="container">
   <div class="row">
-    <div id="terms-content" class="col-xs-12 col-sm-8 content paper">
+    <div id="terms-content" class="col-12 col-sm-8 content paper">
       <h1>Terms of Service</h1>
       <div id="terms-alert" class="alert alert-info alert-sm">
         <% if @viewing_terms['current'] %>
@@ -16,7 +16,7 @@
       </div>
       <%= render partial: "home/terms/v#{@viewing_terms['version']}" %>
     </div>
-    <div id="terms-changelog" class="col-xs-12 col-sm-4 sidebar beside-paper">
+    <div id="terms-changelog" class="col-12 col-sm-4 sidebar beside-paper">
       <h1 class="h5">Changelog</h1>
       <%= render partial: "home/terms/changelog_entry", collection: @versions, locals: { viewing: @viewing_terms } %>
     </div>

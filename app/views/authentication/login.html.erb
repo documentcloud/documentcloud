@@ -8,10 +8,10 @@
     <input type="hidden" name="next" value="<%= defined?( @next_url ) ? @next_url : params[:next] %>">
     <h1 class="h3">Log in to DocumentCloud</h1>
     <div class="row">
-      <div class="col-xs-12 col-sm-6">
+      <div class="col-12 col-sm-6">
         <%= f.email_field :email, autofocus: true %>
       </div>
-      <div class="col-xs-12 col-sm-6">
+      <div class="col-12 col-sm-6">
         <%= f.password_field :password, autocomplete: 'off' %>
       </div>
     </div>
