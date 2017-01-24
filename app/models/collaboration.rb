@@ -29,7 +29,7 @@ class Collaboration < ActiveRecord::Base
   def accept_collaboration(membership_id)
     membership = self.account.memberships.find(membership_id)
     if membership
-      self.update(project: project, membership: membership)
+      self.update(membership: membership)
     else
       false
     end
