@@ -21,10 +21,9 @@ class WorkspaceController < ApplicationController
       @has_documents        = Document.owned_by(current_account).exists?
 
       @current_organization = current_organization
+      @current_membership   = current_membership
       @memberships          = current_account.memberships.real
       @show_org_switcher    = @memberships.count > 1
-      # TODO: Pull this from `session[:current_membership_id]`
-      @current_membership   = current_account.memberships.find { |m| m.organization == @current_organization }
 
       render template: 'workspace/index', layout: 'workspace' and return
     end

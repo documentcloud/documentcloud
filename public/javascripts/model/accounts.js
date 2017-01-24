@@ -25,17 +25,23 @@ dc.model.Account = Backbone.Model.extend({
     return !!this.memberships.findWhere({organization_id: parseInt(organizationId, 10)});
   },
 
+  currentMembership: function() {
+    this._currentMembership = this._currentMembership || this.memberships.current();
+    return this._currentMembership;
+  },
+
   currentOrganization: function() {
-    return Organizations.get(this.memberships.current().get('organization_id'));
+    this._currentOrganization = this._currentOrganization || Organizations.get(this.currentMembership().get('organization_id'));
+    return this._currentOrganization;
   },
 
-  changeCurrentOrganization: function(organizationId) {
-    if (this.isMemberOf(organizationId)) {
-      this.memberships.findWhere({organization_id: organizationId}).setCurrent();
-    }
-  },
+  // changeCurrentOrganization: function(organizationId) {
+  //   if (this.isMemberOf(organizationId)) {
+  //     this.memberships.findWhere({organization_id: organizationId}).setCurrent();
+  //   }
+  // },
 
-  organization : function() {
+  organization: function() {
     return this.currentOrganization();
   },
   
@@ -99,19 +105,19 @@ dc.model.Account = Backbone.Model.extend({
   },
 
   isAdmin : function() {
-    return this.memberships.current().isAdmin();
+    return this.currentMembership().isAdmin();
   },
 
   isContributor : function() {
-    return this.memberships.current().isContributor();
+    return this.currentMembership().isContributor();
   },
 
   isReviewer : function() {
-    return this.memberships.current().isReviewer();
+    return this.currentMembership().isReviewer();
   },
 
   isReal : function() {
-    return this.memberships.current().isReal();
+    return this.currentMembership().isReal();
   },
 
   isPending : function() {
