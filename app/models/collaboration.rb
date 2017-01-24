@@ -2,6 +2,8 @@ class Collaboration < ActiveRecord::Base
 
   belongs_to :project
   belongs_to :account
+  belongs_to :membership
+
   belongs_to :creator, :class_name => "Account"
 
   scope :owned_by, lambda { |account|
@@ -16,4 +18,20 @@ class Collaboration < ActiveRecord::Base
 
   has_many :project_memberships, :through => :project
 
+  def self.invite_collaborator(creator_id, invitee_id, project_id)
+    project = Project.find(project_id)
+    creator = Account.find(creator_id)
+    invitee = Account.find(invitee_id)
+
+    self.create!(project: project, creator: creator, account: invitee)
+  end
+
+  def accept_collaboration(membership_id)
+    membership = self.account.memberships.find(membership_id)
+    if membership
+      self.update(project: project, membership: membership)
+    else
+      false
+    end
+  end
 end
