@@ -27,8 +27,12 @@ class Project < ActiveRecord::Base
   scope :alphabetical,-> { order(:title) }
   scope :visible,     -> { where(:hidden => false) }
   scope :hidden,      -> { where(:hidden => true) }
-  scope :accessible,  ->(account) {
-    where(['account_id = ? or id in (select project_id from collaborations where account_id = ?)', account.id, account.id])
+  scope :accessible,  -> (target) {
+    if target.is_a? Account
+      where(['account_id = ? or id in (select project_id from collaborations where account_id = ?)', target.id, target.id])
+    elsif target.is_a? Membership
+      where(['id in (select project_id from collaborations where membership_id = ?)', target.id])
+    end
   }
 
   delegate :full_name, :to => :account, :prefix => true, :allow_nil => true
@@ -47,9 +51,14 @@ class Project < ActiveRecord::Base
     File.join(DC.server_root, public_path)
   end
 
-  # Load all of the projects belonging to an account in one fell swoop.
-  def self.load_for(account)
+  # Load all of the projects belonging to an account
+  def self.load_for_account(account)
     self.visible.accessible(account).includes( :account, :collaborations )
+  end
+
+  # Load all of the projects belonging to a membership
+  def self.load_for_membership(membership)
+    self.visible.accessible(membership).includes( :account, :collaborations )
   end
 
   def document_id
