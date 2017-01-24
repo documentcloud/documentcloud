@@ -7,7 +7,7 @@
         <div class="dropdown-header">Switch to…</div>
         <% @memberships.each do |membership| %>
           <% org = membership.organization %>
-          <%= link_to org.name, switch_organization_path(organization_id: org.id, organization_slug: org.slug), class: 'dropdown-item' %>
+          <%= link_to org.name, switch_organization_path(organization_id: org.id, organization_slug: org.slug), class: "dropdown-item #{'active' if membership == @current_membership}" %>
         <% end %>
       <% end %>
         <div id="org-header-menu-settings">
