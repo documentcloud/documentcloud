@@ -32,7 +32,6 @@
     <%= render partial: 'common/new/header' %>
     <%= render partial: 'workspace/workspace_header' if @current_organization %>
     <%= render partial: 'common/new/flash_messages', flash: flash %>
-
   </div>
 
   <div id="container">
@@ -54,6 +53,13 @@
       dc.searchPrefixes = <%=raw DC::ALL_SEARCHES.to_json %>;
     <% end %>
     $(document).ready(function() {
+      // If anonymous, we come out of this with:
+      //   `window.Organizations`: collection of all orgs that have public docs
+      // If logged in, we come out of this with:
+      //   `window.Organizations`: name/slug pair of all orgs, plus full models 
+      //     of orgs related to the current account
+      //   `window.Accounts`: accounts that have memberships at the orgs above
+      //   `window.Projects`: projects accessible to the current account
       dc.app.workspace = new dc.controllers.Workspace;
     });
   </script>
