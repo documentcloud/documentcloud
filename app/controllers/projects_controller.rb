@@ -12,7 +12,9 @@ class ProjectsController < ApplicationController
   end
 
   def create
-    json current_account.projects.create(pick(params, :title, :description, :document_ids))
+    project = current_account.projects.create(pick(params, :title, :description, :document_ids))
+    project.collaborations.first.accept_collaboration(current_membership)
+    json project
   end
 
   def update
