@@ -159,7 +159,6 @@ class Account < ActiveRecord::Base
     default_membership.nil? ? nil : default_membership.role
   end
 
-  # TODO: Set a default membership if there isn't one
   def default_membership
     memberships.where(default: true).first || memberships.first
   end

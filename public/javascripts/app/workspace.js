@@ -38,10 +38,7 @@ dc.controllers.Workspace = Backbone.Router.extend({
 
     if (!dc.account) return;
     dc.app.uploader        = new dc.ui.UploadDialog();
-    dc.app.orgSwitcher    = new dc.ui.OrgSwitcher({
-      el: $('#org-header-menu')
-    });
-    // TODO: init/bind org switcher and account menu
+    // TODO: init/bind org switcher and account menu settings
   },
 
   // Render all of the existing subviews and place them in the DOM.
@@ -61,7 +58,7 @@ dc.controllers.Workspace = Backbone.Router.extend({
     this.sidebar.add('organizer', dc.app.organizer.render().el);
 
     if (!dc.account) return;
-    // TODO: render org switcher and account menu
+    // TODO: render org switcher and account menu settings
   },
 
   // Translated Search keys

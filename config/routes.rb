@@ -24,9 +24,9 @@ DC::Application.routes.draw do
 
   # Journalist workspace and surrounding HTML
   get '/search',                   to: 'workspace#index', as: 'search'
-  get '/search/preview',           to: 'search#preview', as: 'preview'
+  get '/search/preview',           to: 'search#preview',  as: 'preview'
   get '/search/restricted_count',  to: 'search#restricted_count'
-  get '/search(/:query)(/p:page)', to: 'workspace#index'
+  get '/search(/:query)(/p:page)', to: 'workspace#index', as: 'workspace'
   get '/help',                     to: 'workspace#help'
   get '/help/:page',               to: 'workspace#help'
   get '/results',                  to: 'workspace#index', as: 'results'
@@ -49,6 +49,12 @@ DC::Application.routes.draw do
       get '/auth/remote_data/:document_id', action: 'remote_data'
     end
   end
+
+  # Switch membership/organization
+  get '/sessions/switch_to/:organization_id-:organization_slug',
+      to: 'sessions#switch_membership_by_organization',
+      as: 'switch_organization',
+      organization_id: /\d+/, organization_slug: /[\p{Letter}\p{Number}\-]+/
 
   # Public search
   get '/public/search(/:query)(/:page)', to: 'public#index', as: 'public_search'

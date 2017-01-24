@@ -5,9 +5,9 @@
       <div class="dropdown-menu">
       <% if @show_org_switcher %>
         <div class="dropdown-header">Switch to…</div>
-        <%#= link_to 'My personal DocumentCloud', "/search/Account:#{@current_account.slug}", class: 'dropdown-item org-switcher-link' %>
         <% @memberships.each do |membership| %>
-          <%= link_to membership.organization.name, "/search/Group:#{membership.organization.slug}", class: 'dropdown-item org-switcher-link', data: {organization_id: membership.organization.id} %>
+          <% org = membership.organization %>
+          <%= link_to org.name, switch_organization_path(organization_id: org.id, organization_slug: org.slug), class: 'dropdown-item' %>
         <% end %>
       <% end %>
         <div id="org-header-menu-settings">

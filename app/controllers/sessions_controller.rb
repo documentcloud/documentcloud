@@ -48,18 +48,17 @@ class SessionsController < ApplicationController
     redirect_to home_path
   end
 
-  def switch_membership
-    return forbidden unless membership = current_account.memberships.find(params[:membership_id])
-    session[:membership_id]   = membership.id
-    session[:organization_id] = membership.organization_id
-  end
-
-  # NB: This should only be used temporarily or sparingly; `switch_membership` 
-  # is preferred
   def switch_membership_by_organization
-    return forbidden unless membership = current_account.memberships.where(organization_id: params[:organization_id]).last
+    membership = current_account.memberships.where(organization_id: params[:organization_id]).last
+    unless membership
+      flash[:error] = 'You don’t seem to be a member of that organization.'
+      redirect_to workspace_url and return
+    end
+    current_account.set_default_membership(membership)
     session[:membership_id]   = membership.id
     session[:organization_id] = membership.organization_id
+    # Slug format has been de facto validated by route constraint
+    redirect_to workspace_url(query: "Group:#{params[:organization_slug]}")
   end
 
   def destroy
