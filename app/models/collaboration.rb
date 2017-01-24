@@ -18,13 +18,13 @@ class Collaboration < ActiveRecord::Base
 
   has_many :project_memberships, :through => :project
 
-  def self.invite_collaborator(creator_id, invitee_id, project_id)
-    project = Project.find(project_id)
-    creator = Account.find(creator_id)
-    invitee = Account.find(invitee_id)
+  # def self.invite_collaborator(creator_id, invitee_id, project_id)
+  #   project = Project.find(project_id)
+  #   creator = Account.find(creator_id)
+  #   invitee = Account.find(invitee_id)
 
-    self.create!(project: project, creator: creator, account: invitee)
-  end
+  #   self.create!(project: project, creator: creator, account: invitee)
+  # end
 
   def accept_collaboration(membership_id)
     membership = self.account.memberships.find(membership_id)

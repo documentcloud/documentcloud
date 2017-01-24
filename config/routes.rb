@@ -193,7 +193,7 @@ DC::Application.routes.draw do
       post 'remove_documents'
       get  'documents'
     end
-    resources :collaborators, only: [:create, :destroy]
+    resources :collaborators, only: [:create, :destroy, :accept]
   end
 
   # Home pages

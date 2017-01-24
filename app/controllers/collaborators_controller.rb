@@ -14,6 +14,17 @@ class CollaboratorsController < ApplicationController
     json account.canonical(include_organizations: true, include_memberships: true)
   end
 
+  def accept
+    collaboration = Collaboration.find(params[:id])
+    membership = current_account.memberships.find(params[:membership_id])
+    if collaboration && membership
+      collaboration.accept_collaboration(membership.id)
+    else
+      return bad_request(error: 'That membership cannot be used to accept your collaboration')
+    end
+    json collaboration
+  end
+
   def destroy
     account = Account.find(params[:id])
     current_project.remove_collaborator account
@@ -25,5 +36,4 @@ class CollaboratorsController < ApplicationController
   def current_project
     Project.accessible(current_account).find(params[:project_id])
   end
-
 end
