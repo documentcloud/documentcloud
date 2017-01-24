@@ -16,12 +16,12 @@
       <% end %>
           <div class="dropdown-header">Organization Settings</div>
           <div class="dropdown-content">
+            <p>You are one of the <b><%= @current_membership.role_name.pluralize %></b> of the <%= @current_organization.name %> account.</p>
             <ul class="list-unstyled">
               <li>Display interface in <span class="inline-select" disabled title="Inline language editing hasn't been implemented yet."><%= DC::Language::NAMES[@current_organization.language] %></span></li>
               <li>Process documents as <span class="inline-select" disabled title="Inline language editing hasn't been implemented yet."><%= DC::Language::NAMES[@current_organization.document_language] %></span></li>
               <li class="text-muted">Members can override language settings on their individual accounts.</li>
             </ul>
-            <p>You are one of the <b><%= @current_membership.role_name.pluralize %></b> of the <%= @current_organization.name %> account.</p>
             <div class="btn-group-set">
               <%= link_to 'Manage Organization', "https://accounts.dcloud.org/organizations/#{@current_organization.slug}", class: 'btn btn-primary btn-block org-manage-link' %>
             </div>
