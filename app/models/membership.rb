@@ -21,9 +21,9 @@ class Membership < ActiveRecord::Base
 
   def canonical(options={})
     attrs = self.attributes
-    attrs[:account]           = account.canonical(options)      if options[:include_account]
+    attrs[:account]      = account.canonical(options)      if options[:include_account]
     # Singular and plural `organizations` for backwards-compatibility
-    attrs[:organization]      = organization.canonical(options) if (options[:include_organizations] || options[:include_organization])
+    attrs[:organization] = organization.canonical(options) if (options[:include_organizations] || options[:include_organization])
     attrs
   end
 
