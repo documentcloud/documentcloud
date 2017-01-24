@@ -32,7 +32,7 @@ dc.ui.PageEmbedDialog = dc.ui.Dialog.extend({
   },
 
   render : function() {
-    if (dc.account.organization().get('demo')) return dc.ui.Dialog.alert(this.DEMO_ERROR);
+    if (dc.account.currentOrganization().get('demo')) return dc.ui.Dialog.alert(this.DEMO_ERROR);
     dc.ui.Dialog.prototype.render.call(this);
     this.preselectPage();
     this.$('.custom').html(JST['workspace/page_embed_dialog']({

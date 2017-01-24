@@ -16,9 +16,9 @@ dc.ui.AccountDialog = dc.ui.Dialog.extend({
     dc.ui.Dialog.call(this, {
       mode          : 'custom',
       title         : ( Accounts.current().isAdmin() ?
-                                    _.t('manage_organization', dc.account.organization().get('name') ) :
+                                    _.t('manage_organization', dc.account.currentOrganization().get('name') ) :
                                     _.t('manage_account' ) ),
-      information   : 'group: ' + dc.account.organization().get('slug')
+      information   : 'group: ' + dc.account.currentOrganization().get('slug')
     });
     Accounts.bind('reset', _.bind(this._renderAccounts, this));
     this._rendered = false;
@@ -74,8 +74,8 @@ dc.ui.AccountDialog = dc.ui.Dialog.extend({
     target.closest('table').find('td').removeClass('active');
     target.addClass('active');
     if ( target.closest('.organization_language').length ){
-      dc.account.organization().set({ language: language });
-      dc.account.organization().save();
+      dc.account.currentOrganization().set({ language: language });
+      dc.account.currentOrganization().save();
     } else {
       target.closest('tr.editing').prev().trigger('chosen', language );
     }
