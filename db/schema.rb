@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161215174011) do
+ActiveRecord::Schema.define(version: 20170124201757) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -112,10 +112,14 @@ ActiveRecord::Schema.define(version: 20161215174011) do
   end
 
   create_table "collaborations", force: :cascade do |t|
-    t.integer "project_id", null: false
-    t.integer "account_id", null: false
+    t.integer "project_id",                    null: false
+    t.integer "account_id",                    null: false
     t.integer "creator_id"
+    t.integer "membership_id"
+    t.boolean "hidden",        default: false
   end
+
+  add_index "collaborations", ["membership_id"], name: "index_collaborations_on_membership_id", using: :btree
 
   create_table "docdata", force: :cascade do |t|
     t.integer "document_id", null: false
