@@ -6,9 +6,9 @@
     # FREELANCER    = 4
 # Organizations
 
-case Rails.env
+case 
 
-when 'development' || 'staging'
+when %w[development staging].include?(Rails.env)
 
   def password
     'test1234'
