@@ -14,8 +14,6 @@ class WorkspaceController < ApplicationController
   def index
     # Keep in sync with AccountsController#index
     if logged_in? and current_account.real?
-      # TODO: Replace `load_for_account` with `load_for_membership` when 
-      #       Projects and Memberships are stitched together
       @projects             = Project.load_for_membership(current_membership)
       @organizations        = Organization.all_slugs
       @has_documents        = Document.owned_by(current_account).exists?
