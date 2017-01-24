@@ -1,5 +1,5 @@
 <div id="organizer_projects" class="project_list_container">
-
+    
   <div class="project_list_wrap">
 
     <div class="top_level_search">
@@ -9,7 +9,7 @@
         </div>
       <% }); %>
       <% if( dc.account ){ %>
-        <% dc.account.organizations().each( function( organization ){ %>
+        <% var organization = dc.account.currentOrganization(); %>
           <div class="organization">
             <% if ( organization && organization.members && organization.members.length ) { %>
               <div class="icon toggle toggle_account_links"></div>
@@ -19,7 +19,6 @@
             </span>
             <div class="account_links" data-cid="<%= organization.cid %>"></div>
           </div>
-        <% } ) %>
       <% } %>
     </div>
 
