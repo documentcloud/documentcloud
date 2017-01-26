@@ -8,7 +8,7 @@ DC::Application.routes.draw do
   get '/:object/loader',       to: 'embed#loader',  as: 'embed_loader', object: /viewer|notes|embed/
 
   # Internal search API
-  get '/search/documents.json', to: 'search#documents'
+  get '/search/documents.:format', to: 'search#documents'
 
   # Search embeds
   get '/search/embed/:q/:options.:format', to: 'search#embed', q: /[^\/;,?]*/, options: /p-(\d+)-per-(\d+)-order-(\w+)-org-(\d+)(-secure)?/
