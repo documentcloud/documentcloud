@@ -139,6 +139,8 @@
   - by_title: by title
   - calais_credit: Entities provided by OpenCalais
   - cancel: Cancel
+  - cancel_redacting_warning: Are you sure you want to stop redacting? Your redactions
+      will not be saved.
   - cannot_remove_all: You can't remove all the pages from this document.
   - change_page_arrows: Change pages with the arrows on the right.
   - change_password: Change Password
