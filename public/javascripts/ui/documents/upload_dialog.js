@@ -234,7 +234,7 @@ dc.ui.UploadDialog = dc.ui.Dialog.extend({
   // Called when a file is added or removed from the pending queue
   _countDocuments : function() {
     var num = this.collection.length;
-    this.title( _.t('uploaded_x_documents',num) );
+    this.title( _.t('upload_documents_into_org', dc.account.currentOrganization().get('name')) );
 
     this.$('.upload_public_count').text( _.t('make_documents_public', num ) );
     this.$('.upload_email_count').text( _.t('uploaded_x_document_has', num ) );
