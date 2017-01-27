@@ -48,7 +48,7 @@ dc.ui.NoteEmbedDialog = dc.ui.Dialog.extend({
   render : function() {
     if (dc.account.organization().get('demo')) return dc.ui.Dialog.alert(this.DEMO_ERROR);
     
-    var notes = this.doc.notes.select(function(note) { return note.get('access') == 'public'; });
+    var notes = this.doc.notes.select(function(note) { return note.embeddable(); });
     if (notes.length < 1) { return dc.ui.Dialog.alert(this.NO_NOTES_ERROR); }
 
     dc.ui.Dialog.prototype.render.call(this);

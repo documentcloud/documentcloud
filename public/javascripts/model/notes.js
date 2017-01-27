@@ -43,7 +43,11 @@ dc.model.Note = Backbone.Model.extend({
       height: css[2] - css[0],
       width:  css[1] - css[3]
     };
-  }
+  },
+
+  embeddable: function() {
+    return this.get('access') == 'public' && !!this.get('location');
+  },
 
 });
 
