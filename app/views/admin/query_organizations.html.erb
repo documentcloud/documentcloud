@@ -1,0 +1,35 @@
+<%
+  @title = "Admin Dashboard :: Membership Maintenance"
+  @stylesheets = [:admin]
+  @javascripts = [:admin]
+  @bodyclass   = 'admin_memberships'
+%>
+<div id="full_screen_form" class="full_page_background">
+  <form action="/admin/manage_organization" method="POST">
+    <%= token_tag %>
+    <h1>Modify Organization</h1>
+    <% if flash[:error] %>
+      <div class="form_error login_error">
+        <span>
+          <%= flash[:error] %>
+        </span>
+      </div>
+    <% end %>
+    <div class="line">
+      <div class="text_input">
+        <div class="background">
+          <div class="inner">
+            <input type="text" name="slug" id="slug" />
+          </div>
+        </div>
+      </div>
+      <label for="slug">
+        Organization slug or name:<br/>
+        <span class="example">ex: daily-tribune, is case insensitive</span>
+      </label>
+    </div>
+    <div class="line">
+        <div class="minibutton" id="submitbtn" onclick="$('#full_screen_form form').submit();">Find Organization</div>
+    </div>
+  </form>
+</div>

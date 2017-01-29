@@ -205,6 +205,7 @@ DC::Application.routes.draw do
   get '/admin', to: 'admin#index'
   get '/admin/health_check/:subject/:env', to: 'admin#health_check', subject: /page_embed/, env: /production|staging/
   get '/admin/signup', to: 'admin#signup', as: 'admin_signup'
+  get '/admin/organizations/:slug', as: 'admin_organization', to: 'admin#organizations'
   
   # Standard fallback routes
   match '/:controller(/:action(/:id))', via: [:get, :post]
