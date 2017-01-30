@@ -1,21 +1,42 @@
-<header id="page-header" class="navbar navbar-full dc-navbar-primary dc-navbar" role="banner">
+<header id="page-header" class="navbar navbar-light dc-navbar dc-navbar-primary" role="navigation">
   <% if @use_minimal_nav %>
-    <nav class="nav navbar-nav float-right">
+  <div class="d-flex justify-content-between">
+    <nav class="navbar-nav flex-last">
       <%= link_to 'DocumentCloud', '/', class: 'nav-item nav-link dc-logo' %>
     </nav>
-    <nav class="nav navbar-nav float-left">
+    <nav class="navbar-nav flex-first">
       <%= link_to "&larr; #{@minimal_back_text}".html_safe, @minimal_back_link, class: 'nav-item nav-link' %>
     </nav>
+  </div>
   <% else %>
-    <nav class="nav navbar-nav">
+  <div class="d-flex flex-row">
+    <nav class="navbar-nav">
       <%= link_to 'DocumentCloud', '/', class: 'nav-item nav-link dc-logo' %>
     </nav>
-    <button id="dc-main-nav-toggler" class="navbar-toggler hidden-md-up float-right" type="button" data-toggle="collapse" data-target="#dc-main-nav">☰</button>
-    <div class="hidden-md-up clearfix"></div>
-    <div id="dc-main-nav" class="collapse navbar-toggleable-sm float-left float-md-right">
-      <nav class="nav navbar-nav">
-        <%= render "common/new/nav_#{'un' unless @current_account}authenticated" %>
+    <nav class="navbar-nav navbar-toggleable-md ml-auto">
+      <button class="navbar-toggler align-self-end" type="button" data-toggle="collapse" data-target="#dc-main-nav" aria-controls="dc-main-nav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="dc-main-nav">
+        <nav class="navbar-nav">
+          <%= link_to 'Documents', search_path, class: 'nav-item nav-link' %>
+          <div class="nav-item dropdown">
+            <%= link_to 'About', about_path, class: 'nav-link dropdown-toggle', role: 'button', data: {toggle: 'dropdown'} %>
+            <div class="dropdown-menu">
+              <%= link_to 'Who We Are', about_path, class: 'dropdown-item' %>
+              <%= link_to 'FAQ', faq_path, class: 'dropdown-item' %>
+              <%= link_to 'Open Source', opensource_path, class: 'dropdown-item' %>
+              <%= link_to 'Contributors', contributors_path, class: 'dropdown-item' %>
+              <%= link_to 'Featured Reporting', featured_index_path, class: 'dropdown-item' %>
+            </div>
+          </div>
+          <%= link_to 'Donate', donate_path, class: 'nav-item nav-link' %>
+          <%= link_to 'Help', '/help', class: 'nav-item nav-link' %>
+          <%= link_to 'Contact', contact_path, class: 'nav-item nav-link' %>
+          <%= link_to 'Log out', logout_path, class: 'nav-item nav-link text-danger' if @current_account %>
+        </nav>
       </nav>
     </nav>
+  </div>
   <% end %>
 </header>

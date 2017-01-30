@@ -2,11 +2,11 @@
 
 <div class="container">
   <div class="row">
-    <div id="terms-content" class="col-xs-12 col-sm-8 content paper">
+    <div id="terms-content" class="col-12 col-sm-8 content paper">
       <h1>API Guidelines and Terms of Service</h1>
       <%= render partial: "home/api_terms/v#{@viewing_terms['version']}" %>
     </div>
-    <div id="terms-changelog" class="col-xs-12 col-sm-4 sidebar beside-paper">
+    <div id="terms-changelog" class="col-12 col-sm-4 sidebar beside-paper">
       <h1 class="h5">Changelog</h1>
       <%= render partial: "home/api_terms/changelog_entry", collection: @versions, locals: { viewing: @viewing_terms } %>
     </div>
