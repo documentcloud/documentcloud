@@ -13,7 +13,7 @@
     
   <% if params[:prolix] %>
     <div class="row">
-      <div class="col-xs-12 push-md-7 col-md-5 col-lg-4 offset-lg-1">
+      <div class="col-12 push-md-7 col-md-5 col-lg-4 offset-lg-1">
   <% else %>
     <div class="container-sm">
   <% end %>
@@ -39,7 +39,7 @@
 
   <% if params[:prolix] %>
       </div>
-      <div id="donation-pitch" class="col-xs-12 pull-md-5 col-md-7">
+      <div id="donation-pitch" class="col-12 pull-md-5 col-md-7">
         <p class="lead">Journalism starts with the facts. What happened? Can you prove it? Getting to the truth can be hard, and convincing others even harder.</p>
         <p>Investigative journalists use DocumentCloud to sort through piles of primary source documents, find the story, and then publish that evidence for the public. It's been used in some of the most important reporting of the decade, like St. Louis Public Radio's <%= external_link_to 'Ferguson Project', 'http://apps.stlpublicradio.org/ferguson-project/evidence.html' %> and the <%= external_link_to 'Pulitzer-winning “An Unbelievable Story of Rape”', 'http://www.pulitzer.org/winners/t-christian-miller-propublica-and-ken-armstrong-marshall-project' %>.</p>
         <p>More than <strong><%= link_to "#{ActiveSupport::NumberHelper.number_to_human Document.unrestricted.count, precision: 2} documents", public_search_url, target: '_blank' %></strong> constituting <strong><%= "#{ActiveSupport::NumberHelper.number_to_human Document.unrestricted.sum(:page_count) } pages" %></strong> have been released to the public through DocumentCloud.</p>
@@ -49,7 +49,7 @@
     </div>
 
     <div class="row">
-      <div id="donation-featured" class="col-xs-12 col-md-6 push-md-6">
+      <div id="donation-featured" class="col-12 col-md-6 push-md-6">
         <h2 class="h4 text-center">Your donation helps make stories like these possible:</h2>
         <div class="card-columns">
           <div class="card">
@@ -66,7 +66,7 @@
           </div>
         </div>
       </div>
-      <div id="donation-testimonials" class="col-xs-12 col-md-6 pull-md-6">
+      <div id="donation-testimonials" class="col-12 col-md-6 pull-md-6">
         <h2 class="h4 text-center">What journalists say:</h2>
         <section class="letter guardian">
           <%= image_tag('/images/donations/rich-harris.jpg', size: '150x150', alt: 'Rich Harris', class: 'testimonial-photo img-thumbnail float-right') %>
