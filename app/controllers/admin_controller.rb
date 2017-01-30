@@ -206,25 +206,29 @@ class AdminController < ApplicationController
     @organization = Organization.where(slug: params[:slug].downcase).first
     return not_found unless @organization
     @since = if params[:since]
-      begin 
-        Date.parse(params[:since]) 
-      rescue
-        @organization.created_at
+      if results = params[:since].match(/\A(?<val>\d+)(?<unit>months|days)\z/)
+        results[:val].to_i.send(results[:unit]).ago
+      else
+        begin 
+          Date.parse(params[:since]) 
+        rescue
+          @organization.created_at
+        end
       end
     else
       @organization.created_at
     end
-    @member_count = @organization.memberships.count
-    @admin_count = @organization.memberships.where(role:1).count
-    @documents = Document.where(organization_id: @organization.id)
-    @documents = @documents.where("created_at > ?", @since)
-    @document_count = @documents.count
-    @public_count = @documents.where(access: DC::Access::PUBLIC).count
-    @private_count = @documents.where(access: [DC::Access::PRIVATE, DC::Access::ORGANIZATION]).count
-    @hit_count = @documents.sum(:hit_count)
-    @top_count = params.fetch(:top_count, 20)
-    @top_uploaders = Hash[@documents.group(:account_id).count.sort_by{|k,v| -v}.first(@top_count).map{ |arr| [Account.find(arr.first), arr.last]}]
-    @administrators = @organization.accounts.admin.order("created_at asc")
+    @member_count        = @organization.memberships.count
+    @admin_count         = @organization.memberships.where(role:1).count
+    @documents           = Document.where(organization_id: @organization.id).where("created_at > ?", @since)
+    @document_count      = @documents.count
+    @documents_by_access = @documents.group(:access).count
+    @public_count        = @documents_by_access.fetch(DC::Access::PUBLIC, 0)
+    @private_count       = @documents_by_access.fetch(DC::Access::PRIVATE, 0) + @documents_by_access.fetch(DC::Access::ORGANIZATION, 0)
+    @hit_count           = @documents.sum(:hit_count)
+    @top_count           = params.fetch(:top_count, 20)
+    @top_uploaders       = Hash[@documents.group(:account_id).count.sort_by{|k,v| -v}.first(@top_count).map{ |arr| [Account.find(arr.first), arr.last]}]
+    @administrators      = @organization.accounts.admin.order("created_at desc")
     render layout: 'new'
   end
 
