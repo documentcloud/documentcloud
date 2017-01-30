@@ -27,8 +27,6 @@ class Account < ActiveRecord::Base
     :format     =>{ :with => DC::Validators::EMAIL },
     :if         => Proc.new{ |user| user.has_memberships? || user.email.present? }
 
-  # TODO: omniauth remove me
-  # validate :validate_identity_is_unique
   validates :language, :inclusion=>{ :in => DC::Language::USER,
             :message => "must be one of: (#{DC::Language::USER.join(', ')})" }
   validates :document_language,  :inclusion=>{ :in => DC::Language::SUPPORTED,

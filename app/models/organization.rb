@@ -64,8 +64,7 @@ class Organization < ActiveRecord::Base
       memberships.organization_id, memberships.role,
       accounts.id,                 accounts.email,
       accounts.first_name,         accounts.last_name,
-      accounts.hashed_password,
-      accounts.language
+      accounts.hashed_password,    accounts.language
     from memberships
       inner join accounts on accounts.id = memberships.account_id
     where
@@ -75,9 +74,11 @@ class Organization < ActiveRecord::Base
     if except_account
       sql << "and memberships.account_id not in (#{except_account.id})"
     end
+
     rows          = self.connection.select_all(sql)
     hidden_fields = %w{organization_id hashed_password}
     accounts_map  = rows.group_by { |row| row['organization_id'].to_i }
+
     organizations.each do |organization|
       account_details = accounts_map[organization.id]
       if account_details # if except_account is set, this could be nil
@@ -86,6 +87,7 @@ class Organization < ActiveRecord::Base
           account['pending'] = account['hashed_password'].blank? && # algorithm from Account#pending?
                               Membership::REVIEWER != account['role'].to_i
           account['hashed_email'] = Digest::MD5.hexdigest(account['email'].downcase.gsub(/\s/, '')) if account['email']
+
 
           account.delete_if { |field, value| hidden_fields.include?(field) }
           account
@@ -99,7 +101,6 @@ class Organization < ActiveRecord::Base
   def document_count
     @document_count ||= self.documents.count
   end
-
 
   # moved to DC::Organizations
   # def role_of(account)
@@ -118,8 +119,8 @@ class Organization < ActiveRecord::Base
   # def remove_member(account)
   #   memberships.where(account_id: account.id).destroy_all
   # end
-  
-  
+
+
   # TODO: change me for org switcher
   # Add ability to pass and organization slug (from params)
   def self.find_first_organization_for_auth(account, *slug)

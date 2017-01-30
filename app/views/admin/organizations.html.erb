@@ -1,28 +1,33 @@
 <div class="container-md content paper">
-  <h1><%= @organization.name %></h1>
-  <div class="col-12">
-    <div><em>joined <%= time_ago_in_words(@organization.created_at) %> ago (on <%= @organization.created_at.strftime("%B %d, %Y") %>)</em></div>
-    <div><%= "#{@member_count} member".pluralize(@member_count) %>, <%= "#{@admin_count} administrators".pluralize(@admin_count) %></div>
-    <div><%= "#{number_with_delimiter(@document_count)} document".pluralize(@document_count) %> uploaded, <%= number_with_delimiter(@public_count) %> public, and <%= number_with_delimiter(@private_count) %> private</div>
-    <div><%= number_with_delimiter(@hit_count) %> views since <%= @since.strftime("%B %d, %Y") %></div>
+  <div>
+    <h1><%= @organization.name %></h1>
+    <section>
+      <p><em>joined <%= time_ago_in_words(@organization.created_at) %> ago (on <%= @organization.created_at.strftime("%B %d, %Y") %>)</em></p>
+      <p><%= "#{@member_count} member".pluralize(@member_count) %>, <%= "#{@admin_count} administrators".pluralize(@admin_count) %></p>
+    </section>
   </div>
-</div>
-<hr/>
-<div class="container-md content paper">
-  <h3>Top <%= @top_count %> uploaders</h3>
-  <table>
-    <tr><th>Documents</th><th>Uploader</th></tr>
-    <% @top_uploaders.each do |account, count| %>
-    <tr><td><%= number_with_delimiter(count) %></td><td><%= account.full_name %> (<%= account.email %>)</td></tr>
-    <% end %>
-  </table>
-</div>
-<hr/>
-<div class="container-md content paper">
-  <h3>Administrators</h3>
-  <table>
-    <% @administrators.each do |account| %>
-    <tr><td><%= account.full_name %></td><td><%= account.email %></td><td><%= time_ago_in_words account.created_at%></td></tr>
-    <% end %>
-  </table>
+  <div>
+    <section>
+      <h5>since <%= @since.strftime("%B %d, %Y") %></h5>
+      <div><%= "#{number_with_delimiter(@document_count)} document".pluralize(@document_count) %> uploaded, <%= number_with_delimiter(@public_count) %> public, and <%= number_with_delimiter(@private_count) %> private</div>
+      <div><%= number_with_delimiter(@hit_count) %> views</div>
+    </section>
+    <section>
+      <h5>Top <%= @top_count %> uploaders</h5>
+      <table class="table table-striped">
+        <tr><th>Uploader</th><th>Documents</th></tr>
+        <% @top_uploaders.each do |account, count| %>
+        <tr><td><%= account.full_name %> (<%= account.email %>)</td><td><%= number_with_delimiter(count) %></td></tr>
+        <% end %>
+      </table>
+    </section>
+    <section>
+      <h3>Administrators</h3>
+      <table class="table table-striped">
+        <% @administrators.each do |account| %>
+        <tr><td><%= account.full_name %></td><td><%= account.email %></td><td><%= time_ago_in_words account.created_at%></td></tr>
+        <% end %>
+      </table>
+    </section>
+  </div>
 </div>
