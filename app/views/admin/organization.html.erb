@@ -24,7 +24,7 @@
         <tr>
           <td><%= account.full_name %></td>
           <td><%= mail_to account.email %></td>
-          <td><%= count %></td>
+          <td><%= link_to count, "/search/Account:#{account.slug}", class: 'btn btn-sm btn-primary', target: '_blank' %></td>
         </tr>
       <% end %>
       </tbody>
