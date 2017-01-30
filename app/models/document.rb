@@ -270,7 +270,7 @@ class Document < ActiveRecord::Base
     rows = self.connection.execute(query).map do |row|
       tuple_array = row.map do |key,string_value|
         # and coerce string values returned by ActiveRecord into dates or integers.
-        value = key == "month" ? DateTime.parse(string_value) : string_value.to_i
+        value = (key == "month" ? DateTime.parse(string_value) : string_value.to_i)
         [key, value]
       end
       Hash[tuple_array]
