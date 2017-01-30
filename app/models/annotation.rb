@@ -149,8 +149,12 @@ class Annotation < ActiveRecord::Base
     public? && document.cacheable?
   end
 
+  def section_note?
+    location.nil?
+  end
+
   def coordinates
-    return nil unless location
+    return nil if section_note?
     coords = location.split(',').map { |loc| loc.to_i }
     transform_coordinates_to_legacy({
       top:    coords[0],

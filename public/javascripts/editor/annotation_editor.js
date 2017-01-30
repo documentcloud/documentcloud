@@ -60,6 +60,14 @@ dc.ui.AnnotationEditor = Backbone.View.extend({
 
   toggle : function(kind) {
     if (this._open) {
+      if (this._kind === 'redact' && this.redactions.length) {
+        dc.ui.Dialog.confirm(_.t('cancel_redacting_warning'), _.bind(function() {
+          this.redactions = [];
+          this.toggle(kind);
+          return true;
+        }, this));
+        return;
+      }
       this.close();
       if (kind === this._kind) return;
     }

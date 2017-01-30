@@ -1,6 +1,6 @@
 # Bienvenido a DocumentCloud
 
-Si usted desea comenzar, pruebe nuestra [visita guiada](/help/tour), o eche un vistazo a [lo que otros periodistas están haciendo con DocumentCloud.](/help/tour)
+Si usted desea comenzar, pruebe nuestra [visita guiada](/help/tour), eche un vistazo a [lo que otros periodistas están haciendo con DocumentCloud](/featured), o lee nuestras [Preguntas Frecuentes](/faq).
 
 Descubra cómo:
 

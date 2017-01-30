@@ -14,7 +14,7 @@ DC::Application.routes.draw do
                                object: /viewer|notes|embed/
 
   # Internal search API
-  get '/search/documents.json', to: 'search#documents'
+  get '/search/documents.:format', to: 'search#documents'
 
   # Search embeds
   get '/search/embed/:q/:options.:format', to: 'search#embed', q: /[^\/;,?]*/,
@@ -234,7 +234,8 @@ DC::Application.routes.draw do
   get '/admin', to: 'admin#index'
   get '/admin/health_check/:subject/:env', to: 'admin#health_check', subject: /page_embed/, env: /production|staging/
   get '/admin/signup', to: 'admin#signup', as: 'admin_signup'
-
+  get '/admin/organizations/:slug', as: 'admin_organization', to: 'admin#organizations'
+  
   # Standard fallback routes
   match '/:controller(/:action(/:id))', via: [:get, :post]
   get ':controller/:action.:format'

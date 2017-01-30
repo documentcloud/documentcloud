@@ -1,35 +1,28 @@
-<%
-  @title = "Admin Dashboard :: Membership Maintenance"
-  @stylesheets = [:admin]
-  @javascripts = [:admin]
-  @bodyclass   = 'admin_memberships'
-%>
-<div id="full_screen_form" class="full_page_background">
-  <form action="/admin/manage_organization" method="POST">
-    <%= token_tag %>
-    <h1>Modify Organization</h1>
-    <% if flash[:error] %>
-      <div class="form_error login_error">
-        <span>
-          <%= flash[:error] %>
-        </span>
-      </div>
+<div class="container-md content paper">
+  <h1><%= @organization.name %></h1>
+  <div class="col-12">
+    <div><em>joined <%= time_ago_in_words(@organization.created_at) %> ago (on <%= @organization.created_at.strftime("%B %d, %Y") %>)</em></div>
+    <div><%= "#{@member_count} member".pluralize(@member_count) %>, <%= "#{@admin_count} administrators".pluralize(@admin_count) %></div>
+    <div><%= "#{number_with_delimiter(@document_count)} document".pluralize(@document_count) %> uploaded, <%= number_with_delimiter(@public_count) %> public, and <%= number_with_delimiter(@private_count) %> private</div>
+    <div><%= number_with_delimiter(@hit_count) %> views since <%= @since.strftime("%B %d, %Y") %></div>
+  </div>
+</div>
+<hr/>
+<div class="container-md content paper">
+  <h3>Top <%= @top_count %> uploaders</h3>
+  <table>
+    <tr><th>Documents</th><th>Uploader</th></tr>
+    <% @top_uploaders.each do |account, count| %>
+    <tr><td><%= number_with_delimiter(count) %></td><td><%= account.full_name %> (<%= account.email %>)</td></tr>
     <% end %>
-    <div class="line">
-      <div class="text_input">
-        <div class="background">
-          <div class="inner">
-            <input type="text" name="slug" id="slug" />
-          </div>
-        </div>
-      </div>
-      <label for="slug">
-        Organization slug or name:<br/>
-        <span class="example">ex: daily-tribune, is case insensitive</span>
-      </label>
-    </div>
-    <div class="line">
-        <div class="minibutton" id="submitbtn" onclick="$('#full_screen_form form').submit();">Find Organization</div>
-    </div>
-  </form>
+  </table>
+</div>
+<hr/>
+<div class="container-md content paper">
+  <h3>Administrators</h3>
+  <table>
+    <% @administrators.each do |account| %>
+    <tr><td><%= account.full_name %></td><td><%= account.email %></td><td><%= time_ago_in_words account.created_at%></td></tr>
+    <% end %>
+  </table>
 </div>

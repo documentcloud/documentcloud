@@ -201,6 +201,32 @@ class AdminController < ApplicationController
       format.any{ redirect_to :format => :html, :params => pick(params, :id, :slug) }
     end
   end
+  
+  def organizations
+    @organization = Organization.where(slug: params[:slug].downcase).first
+    return not_found unless @organization
+    @since = if params[:since]
+      begin 
+        Date.parse(params[:since]) 
+      rescue
+        @organization.created_at
+      end
+    else
+      @organization.created_at
+    end
+    @member_count = @organization.memberships.count
+    @admin_count = @organization.memberships.where(role:1).count
+    @documents = Document.where(organization_id: @organization.id)
+    @documents = @documents.where("created_at > ?", @since)
+    @document_count = @documents.count
+    @public_count = @documents.where(access: DC::Access::PUBLIC).count
+    @private_count = @documents.where(access: [DC::Access::PRIVATE, DC::Access::ORGANIZATION]).count
+    @hit_count = @documents.sum(:hit_count)
+    @top_count = params.fetch(:top_count, 20)
+    @top_uploaders = Hash[@documents.group(:account_id).count.sort_by{|k,v| -v}.first(@top_count).map{ |arr| [Account.find(arr.first), arr.last]}]
+    @administrators = @organization.accounts.admin.order("created_at asc")
+    render layout: 'new'
+  end
 
   def manage_organization
     query = if params[:slug]
@@ -211,7 +237,7 @@ class AdminController < ApplicationController
     @organization = Organization.where(query).includes(:memberships=>:account).first
     if @organization.nil?
       flash[:error] = "Organization for '#{params[:slug]}' was not found"
-      render :action=>:organizations
+      render :action=>:query_organizations
     end
   end
 
