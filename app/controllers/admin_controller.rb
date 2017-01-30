@@ -203,6 +203,9 @@ class AdminController < ApplicationController
   end
   
   def organizations
+  end
+  
+  def organization
     @organization = Organization.where(slug: params[:slug].downcase).first
     return not_found unless @organization
     @since = if params[:since]
