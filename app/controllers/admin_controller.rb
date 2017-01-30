@@ -203,7 +203,21 @@ class AdminController < ApplicationController
   end
   
   def organizations
-    @data = Document.group(:organization_id).pluck("organization_id, count(id), sum(page_count), sum(file_size), max(created_at)").sort_by{ |row| -row[1] }
+    @since = if params[:since]
+      if results = params[:since].match(/\A(?<val>\d+)(?<unit>months|days)\z/)
+        results[:val].to_i.send(results[:unit]).ago
+      else
+        begin 
+          Date.parse(params[:since]) 
+        rescue
+          Organization.first.created_at
+        end
+      end
+    else
+      Organization.first.created_at
+    end
+
+    @data = Document.where("created_at > ?", @since).group(:organization_id).pluck("organization_id, count(id), sum(page_count), sum(hit_count), sum(file_size), max(created_at)").sort_by{ |row| -row[1] }
     @organizations = Organization.all
     render layout: 'new'
   end
