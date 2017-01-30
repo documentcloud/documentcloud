@@ -25,7 +25,6 @@ class Account < ActiveRecord::Base
     :format     =>{ :with => DC::Validators::EMAIL },
     :if         => Proc.new{ |user| user.has_memberships? || user.email.present? }
 
-  validate :validate_identity_is_unique
   validates :language, :inclusion=>{ :in => DC::Language::USER,
             :message => "must be one of: (#{DC::Language::USER.join(', ')})" }
   validates :document_language,  :inclusion=>{ :in => DC::Language::SUPPORTED,
@@ -43,9 +42,6 @@ class Account < ActiveRecord::Base
   scope :active,  -> { with_memberships.where( ["memberships.role is NULL or memberships.role != ?", DISABLED] ) }
   scope :real,    -> { with_memberships.where( ["memberships.role in (?)", REAL_ROLES] ) }
   scope :reviewer,-> { with_memberships.where( ["memberships.role = ?",    REVIEWER] ) }
-  scope :with_identity, lambda { | provider, id |
-     where("identities @> hstore(:provider, :id)", :provider=>provider.to_s,:id=>id.to_s )
-  }
 
   # Populates the organization#members accessor with all the organizaton's accounts
   def organizations_with_accounts
@@ -316,7 +312,7 @@ class Account < ActiveRecord::Base
 
   # Has this account been assigned, but never logged into, with no password set?
   def pending?
-    !hashed_password && !reviewer? && identities.blank?
+    !hashed_password && !reviewer?
   end
 
   # It's slo-o-o-w to compare passwords. Which is a mixed bag, but mostly good.
@@ -329,17 +325,6 @@ class Account < ActiveRecord::Base
   def password=(new_password)
     @password = BCrypt::Password.create(new_password, :cost => 8)
     self.hashed_password = @password
-  end
-
-  def validate_identity_is_unique
-    return if self.identities.blank?
-    condition = self.identities.map{ | provider, id | "identities @> hstore(?,?)" }.join(' or ')
-    condition << " and id<>#{self.id}" unless new_record?
-    values = self.identities.map{|k,v| [k.to_s,v.to_s] }.flatten
-    if account = Account.where( [ condition, *values ] ).first
-      duplicated = account.identities.to_set.intersection( self.identities ).map{|k,v| k}.join(',')
-      errors.add(:identities, "An account exists with the same id for #{account.id} #{account.identities.to_json} #{duplicated}")
-    end
   end
 
   # Set the default membership.  Will mark the given membership as the default

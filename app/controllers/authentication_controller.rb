@@ -149,21 +149,7 @@ class AuthenticationController < ApplicationController
   # Where third-party logins come back to once they have
   # completed successfully.
   def callback
-    if logged_in?
-      # if logged in, then they are adding a new account identity
-      current_account.record_identity_attributes( identity_hash ).save!
-      @account = current_account
-    else
-      @account = Account.from_identity( identity_hash )
-    end
-    if @account.errors.empty?
-      @account.authenticate(session, cookies)
-      @next_url = session[ :omniauth_popup_next ] || request.env['omniauth.origin'] || '/'
-      render :action=>:request_additional_information
-    else
-      flash[:error] = @account.errors.full_messages.to_sentence
-      render :action=>:login
-    end
+    false
   end
 
   def record_user_information
