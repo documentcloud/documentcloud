@@ -1,39 +1,60 @@
+
 DC::Application.routes.draw do
+  def you_are_documentcloud?
+    File.exist? File.join(Rails.root, 'secrets', 'documentcloud.yep')
+    # DC::Application.config.you_are_documentcloud is always returning false in here
+  end
 
   # Homepage
   get '/', to: 'home#index', as: 'homepage'
 
   # Embed loaders
   get '/embed/loader/enhance', to: 'embed#enhance', as: 'embed_enhance'
-  get '/:object/loader',       to: 'embed#loader',  as: 'embed_loader', object: /viewer|notes|embed/
+  get '/:object/loader',       to: 'embed#loader',  as: 'embed_loader',
+                               object: /viewer|notes|embed/
 
   # Internal search API
   get '/search/documents.:format', to: 'search#documents'
 
   # Search embeds
-  get '/search/embed/:q/:options.:format', to: 'search#embed', q: /[^\/;,?]*/, options: /p-(\d+)-per-(\d+)-order-(\w+)-org-(\d+)(-secure)?/
-  get '/search/embed/:options.:format',    to: 'search#embed', q: /[^\/;,?]*/, options: /p-(\d+)-per-(\d+)-order-(\w+)-org-(\d+)(-secure)?/
+  get '/search/embed/:q/:options.:format', to: 'search#embed', q: /[^\/;,?]*/,
+                                           options: /p-(\d+)-per-(\d+)-order-(\w+)-org-(\d+)(-secure)?/
+  get '/search/embed/:options.:format',    to: 'search#embed', q: /[^\/;,?]*/,
+                                           options: /p-(\d+)-per-(\d+)-order-(\w+)-org-(\d+)(-secure)?/
 
   # Journalist workspace and surrounding HTML
   get '/search',                   to: 'workspace#index', as: 'search'
-  get '/search/preview',           to: 'search#preview', as: 'preview'
+  get '/search/preview',           to: 'search#preview',  as: 'preview'
   get '/search/restricted_count',  to: 'search#restricted_count'
-  get '/search(/:query)(/p:page)', to: 'workspace#index'
+  get '/search(/:query)(/p:page)', to: 'workspace#index', as: 'workspace'
   get '/help',                     to: 'workspace#help'
   get '/help/:page',               to: 'workspace#help'
   get '/results',                  to: 'workspace#index', as: 'results'
 
-  # Authentication
-  scope(controller: 'authentication') do
-    match '/login',                       action: 'login', via: [:get, :post], as: 'login'
-    get '/logout',                        action: 'logout', as: 'logout'
-    get '/auth/remote_data/:document_id', action: 'remote_data'
-
-    # Third party auth via OmniAuth
-    match '/auth/:action', via: [:get, :post]
-    get '/auth/:provider',          action: 'blank'
-    get '/auth/:provider/callback', action: 'callback'
+  # Authentication with DocumentCloud Accounts service
+  if you_are_documentcloud?
+    get 'auth/documentcloud', to: 'sessions#new', as: :accounts_login
+    get 'auth/logout', to: 'sessions#destroy', as: :accounts_logout
+    get 'auth/:provider/callback', to: 'sessions#create', as: :accounts_callback
+    get 'auth/failure', to: 'sessions#failure', as: :accounts_failure
+    get 'auth/forgot' => redirect("#{DC::SECRETS['omniauth']['documentcloud']['site']}/login/forgot"), as: :accounts_forgot_password
+    # Override current routes
+    match '/login', to: 'sessions#new', via: [:get, :post], as: 'login'
+    get '/logout', to: 'sessions#destroy', as: 'logout'
+  else
+    # Legacy Authentication
+    scope(controller: 'authentication') do
+      match '/login', action: 'login', via: [:get, :post], as: 'login'
+      get '/logout', action: 'logout', as: 'logout'
+      get '/auth/remote_data/:document_id', action: 'remote_data'
+    end
   end
+
+  # Switch membership/organization
+  get '/sessions/switch_to/:organization_id-:organization_slug',
+      to: 'sessions#switch_membership_by_organization',
+      as: 'switch_organization',
+      organization_id: /\d+/, organization_slug: /[\p{Letter}\p{Number}\-]+/
 
   # Public search
   get '/public/search(/:query)(/:page)', to: 'public#index', as: 'public_search'
@@ -79,15 +100,15 @@ DC::Application.routes.draw do
       end
     end
     resource :annotation do
-      match   '(*all)', action: 'cors_options', via: 'options', allowed_methods: [:get, :post]
+      match '(*all)', action: 'cors_options', via: 'options', allowed_methods: [:get, :post]
     end
-    
+
     # in order not to clobber existing routes
-    #resources :pages
-    # When we're using proper routes, we'll also need to update 
-    # `ApiController#resource_embeddable?` to make pages act like notes, and 
+    # resources :pages
+    # When we're using proper routes, we'll also need to update
+    # `ApiController#resource_embeddable?` to make pages act like notes, and
     # untangle `params[:page_number|:id|:document_id]` in `PagesController`
-    
+
     collection do
       get 'status'
       get 'queue_length'
@@ -145,8 +166,18 @@ DC::Application.routes.draw do
       post 'resend_welcome'
     end
   end
+
   match '/accounts/enable/:key', to: 'accounts#enable', via: [:get, :post], as: 'enable_account'
-  match '/reset_password',       to: 'accounts#reset',  via: [:get, :post], as: 'reset_password'
+
+  if you_are_documentcloud?
+    get '/reset_password' => redirect("#{DC::SECRETS['omniauth']['documentcloud']['site']}/login/forgot"), as: :reset_password
+  else
+    match '/reset_password',       to: 'accounts#reset',  via: [:get, :post], as: 'reset_password'
+  end
+
+  if you_are_documentcloud?
+    get '/accounts' => redirect("#{DC::SECRETS['omniauth']['documentcloud']['site']}/settings"), as: :account_settings
+  end
 
   # Account requests
   get '/signup', to: 'redirect#index', url: '/plans/apply', as: 'signup'
@@ -162,7 +193,7 @@ DC::Application.routes.draw do
       post 'remove_documents'
       get  'documents'
     end
-    resources :collaborators, only: [:create, :destroy]
+    resources :collaborators, only: [:create, :destroy, :accept]
   end
 
   # Home pages
@@ -176,8 +207,6 @@ DC::Application.routes.draw do
   get '/opensource',            to: 'home#opensource',    as: 'opensource'
   get '/about',                 to: 'home#about',         as: 'about'
   get '/contact',               to: 'home#contact',       as: 'contact'
-  get '/help',                  to: 'home#help'
-  get '/help/:page',            to: 'home#help'
   get '/multilanguage',         to: 'home#multilanguage', as: 'multilanguage'
 
   # Redirects
@@ -212,6 +241,7 @@ DC::Application.routes.draw do
   match '/:controller(/:action(/:id))', via: [:get, :post]
   get ':controller/:action.:format'
 
+  root to: 'home#index'
 end
 
 # Magic invocation to ask engines to add their routes

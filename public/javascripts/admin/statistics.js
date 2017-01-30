@@ -48,7 +48,7 @@ dc.ui.AdminStatistics = Backbone.View.extend({
   initialize : function(options) {
     _.bindAll(this, 'renderCharts', '_loadAllAccounts');
     this._tooltip = new dc.ui.Tooltip();
-    $(window).bind('resize', this.renderCharts);
+    $(window).on('resize', this.renderCharts);
   },
 
   render : function() {

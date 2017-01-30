@@ -37,7 +37,7 @@ dc.ui.SparkEntities = Backbone.View.extend({
 
   show : function() {
     this._open = true;
-    $(window).bind('resize.entities', this.rerenderLater);
+    $(window).on('resize.entities', this.rerenderLater);
     this.render();
   },
 

@@ -431,7 +431,7 @@ dc.model.DocumentSet = Backbone.Collection.extend({
         selected    : current == dc.access.PRIVATE
       },
       {
-        text        : _.t('private_to', dc.account.organization().get('name') ),
+        text        : _.t('private_to', dc.account.currentOrganization().get('name') ),
         description : _.t('private_to_organization_help'),
         value       : dc.access.ORGANIZATION,
         selected    : current == dc.access.ORGANIZATION

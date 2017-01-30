@@ -14,7 +14,7 @@ class PublicController < ApplicationController
     # logged in.
     #@current_account = current_account
     @include_analytics = true
-    render :template => 'workspace/index', :layout => 'workspace'
+    render template: 'workspace/index', layout: 'workspace'
   end
 
 end

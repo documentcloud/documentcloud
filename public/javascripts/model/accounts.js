@@ -2,13 +2,8 @@
 
 dc.model.Account = Backbone.Model.extend({
 
-  DISABLED           : 0,
-  ADMINISTRATOR      : 1,
-  CONTRIBUTOR        : 2,
-  REVIEWER           : 3,
-  FREELANCER         : 4,
-
-  ROLE_NAMES         : ['disabled', 'administrator', 'contributor', 'reviewer', 'freelancer'], // NB: Indexed by role number.
+  // TODO: Remove once JSTs aren't reliant [JR]
+  ROLE_NAMES         : ['disabled', 'administrator', 'contributor', 'reviewer', 'freelancer'],
 
   GRAVATAR_BASE      : location.protocol + (location.protocol == 'https:' ? '//secure.' : '//www.') + 'gravatar.com/avatar/',
 
@@ -17,20 +12,42 @@ dc.model.Account = Backbone.Model.extend({
   defaults           : { first_name : '', last_name : '', email : '', role : 2 },
   
   initialize: function(options) {
-    this.memberships = new Backbone.Collection();
+    this.memberships = new dc.model.MembershipSet();
     if (this.get('memberships')) { this.memberships.reset(this.get('memberships')); }
   },
-  
-  currentOrganization: function(){
-    return this.organization();
+
+  // TODO: Remove this shim, which is basically only here for the current AccountView that's going away with Circlet [JR]
+  role: function() {
+    return this.get('role');
   },
 
-  organization : function() {
-    var default_membership = this.memberships.find(function(m){ return m.get('default'); });
-    return Organizations.get(default_membership.get('organization_id'));
+  isMemberOf: function(organizationId) {
+    return !!this.memberships.findWhere({organization_id: parseInt(organizationId, 10)});
+  },
+
+  currentMembership: function() {
+    this._currentMembership = this._currentMembership || this.memberships.current();
+    return this._currentMembership;
+  },
+
+  currentOrganization: function() {
+    this._currentOrganization = this._currentOrganization || Organizations.get(this.currentMembership().get('organization_id'));
+    return this._currentOrganization;
+  },
+
+  // changeCurrentOrganization: function(organizationId) {
+  //   if (this.isMemberOf(organizationId)) {
+  //     this.memberships.findWhere({organization_id: organizationId}).setCurrent();
+  //   }
+  // },
+
+  organization: function() {
+    return this.currentOrganization();
   },
   
-  organization_ids: function() { return this.memberships.pluck('organization_id'); },
+  organization_ids: function() {
+    return this.memberships.pluck('organization_id');
+  },
   
   organizations: function() {
     var ids = this.organization_ids();
@@ -44,7 +61,7 @@ dc.model.Account = Backbone.Model.extend({
   },
 
   openOrganizationDocuments : function() {
-    dc.app.searcher.search( _.t('group') + ': ' + dc.account.organization().get('slug'));
+    dc.app.searcher.search( _.t('group') + ': ' + dc.account.currentOrganization().get('slug'));
   },
 
   allowedToEdit: function(model) {
@@ -53,7 +70,7 @@ dc.model.Account = Backbone.Model.extend({
 
   ownsOrOrganization: function(model) {
     return (model.get('account_id') == this.id) ||
-           (model.get('organization_id') == this.get('organization_id') &&
+           (this.isMemberOf(model.get('organization_id')) &&
             (this.isAdmin() || this.isContributor()) &&
             _.contains([
               dc.access.PUBLIC, dc.access.EXCLUSIVE, dc.access.ORGANIZATION,
@@ -88,20 +105,19 @@ dc.model.Account = Backbone.Model.extend({
   },
 
   isAdmin : function() {
-    return this.attributes.role == this.ADMINISTRATOR;
+    return this.currentMembership().isAdmin();
   },
 
   isContributor : function() {
-    return this.attributes.role == this.CONTRIBUTOR;
+    return this.currentMembership().isContributor();
   },
 
   isReviewer : function() {
-    return this.attributes.role == this.REVIEWER;
+    return this.currentMembership().isReviewer();
   },
 
   isReal : function() {
-    var role = this.attributes.role;
-    return role == this.ADMINISTRATOR || role == this.CONTRIBUTOR || role == this.FREELANCER;
+    return this.currentMembership().isReal();
   },
 
   isPending : function() {

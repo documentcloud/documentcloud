@@ -651,6 +651,7 @@
   - update_applied_all: Update applied to all files.
   - upload: Upload
   - upload_document: Upload Document
+  - upload_documents_into_org: Upload to %s
   - upload_failed: Upload Failed
   - upload_pages: Upload Pages
   - uploaded_x_document_has:

@@ -186,10 +186,10 @@ module DC
     end
 
     def self.accounts_csv(csv)
-      keys = Account.first.canonical(:include_document_counts => true, :include_organization => true).keys
+      keys = Account.first.canonical(include_document_counts: true, include_organizations: true).keys
       csv << keys.map{ |key| key.titleize }
       Account.find_each do | account |
-        record = account.canonical(:include_document_counts => true, :include_organization => true)
+        record = account.canonical(include_document_counts: true, include_organizations: true)
         csv << keys.map {|key| record[key] }
       end
     end

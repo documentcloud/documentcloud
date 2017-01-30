@@ -1,0 +1,15 @@
+<%= link_to 'Home', home_path, class: 'nav-item nav-link' %>
+<%= link_to 'Documents', search_path, class: 'nav-item nav-link' %>
+<div class="nav-item dropdown">
+  <%= link_to 'About', about_path, class: 'nav-link dropdown-toggle', role: 'button', data: {toggle: 'dropdown'} %>
+  <div class="dropdown-menu">
+    <%= link_to 'Who We Are', about_path, class: 'dropdown-item' %>
+    <%= link_to 'FAQ', faq_path, class: 'dropdown-item' %>
+    <%= link_to 'Open Source', opensource_path, class: 'dropdown-item' %>
+    <%= link_to 'Contributors', contributors_path, class: 'dropdown-item' %>
+    <%= link_to 'Featured Reporting', featured_index_path, class: 'dropdown-item' %>
+  </div>
+</div>
+<%= link_to 'Donate', donate_path, class: 'nav-item nav-link' %>
+<%= link_to 'Help', '/help', class: 'nav-item nav-link' %>
+<%= link_to 'Contact', contact_path, class: 'nav-item nav-link' %>

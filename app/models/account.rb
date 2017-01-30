@@ -5,6 +5,8 @@
 class Account < ActiveRecord::Base
   include DC::Access
   include DC::Roles
+  include AccountMembership
+  include FeatureFlags
 
   # Associations:
   has_many :memberships,     :dependent => :destroy
@@ -76,22 +78,43 @@ class Account < ActiveRecord::Base
     Account.where(['lower(email) = ?', email.downcase]).first
   end
 
-  #
-  def self.from_identity( identity )
+  # TODO - omniauth remove me 
+  # def self.from_identity( identity )
 
-    unless account = Account.with_identity( identity['provider'],  identity['uid'] ).first
-      account = Account.new({ :document_language=>'eng', :language=>'eng' })
+  #   unless account = Account.with_identity( identity['provider'],  identity['uid'] ).first
+  #     account = Account.new({ :document_language=>'eng', :language=>'eng' })
+  #   end
+
+  #   account.record_identity_attributes( identity )
+  #   account.save! if account.changed?
+  #   account
+  # end
+
+  def self.create_with_omniauth(auth_hash)
+    account = Account.find_or_initialize_by(email: auth_hash['info']['email'])
+
+    account.provider = auth_hash['provider']
+    account.uid = auth_hash['uid']
+
+    if auth_hash['info']
+      account.first_name = auth_hash['info']['first_name'] || ''
+      account.last_name = auth_hash['info']['first_name'] || ''
     end
-
-    account.record_identity_attributes( identity )
-    account.save! if account.changed?
+    account.save!
     account
+  end
+
+  def self.find_or_create_from_auth_hash(auth_hash)
+    where(provider:  auth_hash['provider'],
+          uid: auth_hash['uid'].to_s,
+          email: auth_hash['info']['email]']).first || Account.create_with_omniauth(auth_hash)
   end
 
   # Save this account as the current account in the session. Logs a visitor in.
   def authenticate(session, cookies)
-    session['account_id']      = id
-    session['organization_id'] = organization_id
+    session[:account_id]      = id
+    session[:membership_id]   = default_membership.id
+    session[:organization_id] = organization_id
     refresh_credentials(cookies)
     self
   end
@@ -128,14 +151,16 @@ class Account < ActiveRecord::Base
     self.organization.id
   end
 
+  # TODO: Migrate away from thinking about role in account terms. Role is 
+  # wholly dependent on the context membership.
   def role
-    default = memberships.where({:default=>true}).first
-    default.nil? ? nil : default.role
+    default_membership.nil? ? nil : default_membership.role
   end
 
-  def member_of?(org)
-    self.memberships.exists?(:organization_id => org.id)
+  def default_membership
+    memberships.where(default: true).first || memberships.first
   end
+
 
   def has_memberships? # should be reworked as Account#real?
     self.memberships.any?
@@ -327,6 +352,7 @@ class Account < ActiveRecord::Base
     self.hashed_password = @password
   end
 
+
   # Set the default membership.  Will mark the given membership as the default
   # and the other memberships (if any) as non-default
   def set_default_membership(default_membership)
@@ -334,29 +360,6 @@ class Account < ActiveRecord::Base
     self.memberships.each do | membership |
       membership.update_attributes({ :default => (membership.id == default_membership.id) })
     end
-  end
-
-  def record_identity_attributes( identity )
-    current_identities = ( self.identities ||= {} )
-    current_identities[ identity['provider'] ] = identity['uid']
-    write_attribute( :identities, DC::Hstore.to_sql(  current_identities ) )
-
-    info = identity['info']
-
-    # only overwrite account's email if it is blank no-one else is using it
-    self.email = info['email'] if info['email'] && self.email.blank? && Account.lookup( info['email'] ).nil?
-
-    %w{ first_name last_name }.each do | attr |
-      write_attribute( attr, info[attr] ) if read_attribute(attr).blank? && info[attr]
-    end
-    if self.first_name.blank? && ! info['name'].blank?
-      self.first_name = info['name'].split(' ').first
-    end
-    if self.last_name.blank? && ! info['name'].blank?
-      self.last_name = info['name'].split(' ').last
-    end
-
-    self
   end
 
   # Create default organization to preserve backwards compatability.
@@ -381,12 +384,15 @@ class Account < ActiveRecord::Base
       attrs['private_documents'] = Document.restricted.where(:account_id => id).count
     end
 
+    # TODO: Don't pass organization_id or role [JR]
     # all of the below should be rendered obsolete and removed.
     if ( membership = options[:membership] || memberships.default.first )
       attrs['organization_id'] = membership.organization_id
       attrs['role']            = membership.role
     end
-    if options[:include_organization]
+    # Singular and plural `organizations` for backwards-compatibility
+    if options[:include_organizations] || options[:include_organization]
+      # TODO: Don't pass organization_name [JR]
       attrs['organization_name'] = membership.organization.name if membership
       attrs['organizations']     = organizations.map(&:canonical)
     end

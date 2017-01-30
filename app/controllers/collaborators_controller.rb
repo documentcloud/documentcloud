@@ -11,7 +11,18 @@ class CollaboratorsController < ApplicationController
     # TODO: If we're not using `account.errors`, can be reduced to 
     # `bad_request` [JR]
     return json(account, 400) unless current_project.add_collaborator account
-    json account.to_json(:include_organization => true)
+    json account.canonical(include_organizations: true, include_memberships: true)
+  end
+
+  def accept
+    collaboration = Collaboration.find(params[:id])
+    membership = current_account.memberships.find(params[:membership_id])
+    if collaboration && membership
+      collaboration.accept_collaboration(membership.id)
+    else
+      return bad_request(error: 'That membership cannot be used to accept your collaboration')
+    end
+    json collaboration
   end
 
   def destroy
@@ -25,5 +36,4 @@ class CollaboratorsController < ApplicationController
   def current_project
     Project.accessible(current_account).find(params[:project_id])
   end
-
 end

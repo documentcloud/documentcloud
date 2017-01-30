@@ -17,7 +17,20 @@
       If you're reporting on or publishing primary source documents, we can help.
       <a href="/apply"><span class="minibutton default">Join DocumentCloud</span></a>
     </div>
+    <% if DC::Application.config.you_are_documentcloud %>
+      <div class="sidebar_section login_section">
+      <% if flash[:error] %>
+        <div class="error">
+          <%= flash[:error] %>
+        </div>
+      <% end %>
+        <%= link_to 'Login', accounts_login_path, class: 'minibutton', id: 'login_button' %>
+        <%= link_to 'Forgot your password?', accounts_forgot_password_path, class: 'reset_password', target: '_blank' %>
 
+    </div>
+
+    <% else %>
+    
     <div class="sidebar_section login_section">
       <% if flash[:error] %>
         <div class="error">
@@ -41,6 +54,8 @@
         <input type="submit" class="hidden_submit" />
       </form>
     </div>
+    <% end %>
+    
 
   <% end %>
 

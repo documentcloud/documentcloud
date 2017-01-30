@@ -99,27 +99,8 @@ class AccountTest < ActiveSupport::TestCase
     assert_equal Account::ADMINISTRATOR, membership.role
   end
 
-  it "can have multiple identities" do
-    ids = { 'facebook'=>'12' }
-    louis.identities = ids
-    assert louis.save
-    louis.reload
-    assert_kind_of Hash, louis.identities
-    assert_equal ids, louis.identities
-    assert_equal louis, Account.with_identity( 'facebook', 12 ).first
-  end
-
-  it "ensures only one account has identity" do
-    ids = { 'facebook'=>'12' }
-    louis.identities = ids
-    assert louis.save
-    acct = Account.new({ :identities=> ids })
-    refute acct.save
-    assert acct.errors.include?(:identities)
-  end
-
   it "has a canonical representation" do
-    assert louis.canonical( :include_organization=>true, :include_document_counts=>true)
+    assert louis.canonical(include_organization: true, include_document_counts: true)
   end
 
   it "disallows leading/trailing spaces in email address" do

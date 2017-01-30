@@ -5,6 +5,7 @@ defaults: &defaults
   server_root:          dev.dcloud.org
   asset_root:           dev.dcloud.org
   workspace_asset_root: assets.dcloud.org
+  accounts_root:        accounts.dcloud.org
   large_file_storage:   /mnt/large_files
   aws_region:           us-east-1
   aws_zone:             us-east-1c
@@ -26,6 +27,7 @@ staging:
   server_root:          staging.documentcloud.org
   asset_root:           s3.amazonaws.com/dcloud_staging
   workspace_asset_root: s3.amazonaws.com/dcloud_staging
+  accounts_root:        accounts-staging.documentcloud.org
 
 production:
   <<: *defaults
@@ -34,6 +36,8 @@ production:
   server_root:          www.documentcloud.org
   asset_root:           assets.documentcloud.org
   workspace_asset_root: assets.documentcloud.org
+  accounts_root:        accounts.documentcloud.org
+  show_donation_widget: true
 
 test:
   <<: *defaults

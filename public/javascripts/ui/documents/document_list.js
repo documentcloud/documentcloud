@@ -18,7 +18,7 @@ dc.ui.DocumentList = Backbone.View.extend({
   initialize: function(options) {
     _.bindAll(this, 'reset', '_removeDocument', '_addDocument', '_onSelect',
               '_maybeSelectOrDelete');
-    $(document).bind('keydown', this._maybeSelectOrDelete);
+    $(document).on('keydown', this._maybeSelectOrDelete);
     Documents.bind('reset',   this.reset);
     Documents.bind('remove',  this._removeDocument);
     Documents.bind('add',     this._addDocument);

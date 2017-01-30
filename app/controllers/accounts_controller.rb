@@ -7,9 +7,8 @@ class AccountsController < ApplicationController
   before_action :login_required, except: [:enable, :reset, :logged_in]
   before_action :bouncer,        only: [:enable, :reset] if exclusive_access?
 
-  READONLY_ACTIONS = [
-    :index, :logged_in, :resend_welcome
-  ]
+  READONLY_ACTIONS = [:index, :logged_in, :resend_welcome].freeze
+
   before_action :read_only_error, except: READONLY_ACTIONS if read_only?
 
   # Enabling an account continues the second half of the signup process,
@@ -44,19 +43,10 @@ class AccountsController < ApplicationController
     end
   end
 
-  # Requesting /accounts returns the list of accounts in your logged-in organization.
-  # consider extracting the HTML info into a single method in common w/ workspace
   def index
     respond_to do |format|
       format.html do
-        if logged_in? and current_account.real?
-          @projects = Project.load_for(current_account)
-          @current_organization = current_account.organization
-          @organizations = Organization.all_slugs
-          @has_documents = Document.owned_by(current_account).exists?
-          return render template: 'workspace/index', layout: 'workspace'
-        end
-        redirect_to public_search_url(query: params[:query])
+        redirect_to File.join(DC::SECRETS['omniauth']['documentcloud']['site'], '/organizations/')
       end
       format.json do
         json current_organization.accounts.active
@@ -140,7 +130,7 @@ class AccountsController < ApplicationController
     LifecycleMailer.login_instructions(account, current_organization, current_account).deliver_now
     json nil
   end
-  
+
   def mailboxes
     # TODO: Filter by status, once that exists
     @mailboxes = UploadMailbox.where(membership_id: current_account.memberships.pluck(:id))
@@ -148,7 +138,7 @@ class AccountsController < ApplicationController
                     xs_text: 'Workspace',
                     link:    '/search/'
   end
-  
+
   def create_mailbox
     @mailbox = UploadMailbox.create(membership: current_account.memberships.default.first, sender: params[:email])
     if @mailbox.valid?
@@ -158,7 +148,7 @@ class AccountsController < ApplicationController
     end
     redirect_to :mailboxes
   end
-  
+
   def revoke_mailbox
     @mailbox = UploadMailbox.find(params[:id])
     return forbidden unless @mailbox.membership.account == current_account

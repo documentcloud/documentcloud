@@ -78,8 +78,8 @@ dc.ui.SectionEditor = Backbone.View.extend({
     options = _.extend({pageCount : currentDocument.api.numberOfPages(), title : '', page_number : ''}, options);
     var row = $(JST['section_row'](options));
     $('.section_title', row).val(options.title).placeholder();
-    $('.minus', row).bind('click', function(){ row.remove(); });
-    $('.plus', row).bind('click', _.bind(function(){ this.addRow({after : row}); }, this));
+    $('.minus', row).on('click', function(){ row.remove(); });
+    $('.plus', row).on('click', _.bind(function(){ this.addRow({after : row}); }, this));
     if (options.after) return options.after.after(row);
     this.sectionsEl.append(row);
   }

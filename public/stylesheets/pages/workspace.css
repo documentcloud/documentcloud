@@ -141,7 +141,7 @@ label {
 }
 
 body.workspace #content {
-  margin: 50px 20px 20px;
+  margin: 0;
   position: relative;
 }
 
@@ -154,7 +154,6 @@ body.workspace #content {
   #sidebar_background {
     position: absolute;
     top: 0; left: 0; right: 2px; bottom: 0;
-    border-radius: 4px; -webkit-border-radius: 4px; -moz-border-radius: 4px;
     background: #fff;
   }
 
@@ -162,7 +161,6 @@ body.workspace #content {
   margin-left: 310px;
   padding: 15px 0 15px 0;
   position: relative;
-  border-radius: 4px; -moz-border-radius: 4px; -webkit-border-radius: 4px;
   background: #fff;
 }
 

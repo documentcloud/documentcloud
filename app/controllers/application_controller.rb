@@ -41,7 +41,7 @@ class ApplicationController < ActionController::Base
   def cachable?
     request.get? and not logged_in?
   end
-  
+
   def make_oembeddable(resource)
     # Resource should have both an `oembed_url` and a `title`
     @oembeddable_resource = resource
@@ -170,6 +170,7 @@ class ApplicationController < ActionController::Base
 
   def logged_in?
     !!current_account
+    # return true if current_account
   end
 
   def clear_login_state
@@ -231,6 +232,12 @@ class ApplicationController < ActionController::Base
     return nil unless request.ssl?
     @current_organization ||=
       session['organization_id'] ? Organization.find_by_id(session['organization_id']) : nil
+  end
+
+  def current_membership
+    return nil unless request.ssl?
+    @current_membership ||=
+      session['membership_id'] ? Membership.find(session['membership_id']) : nil
   end
 
   def handle_unverified_request
@@ -346,8 +353,63 @@ class ApplicationController < ActionController::Base
     @minimal_back_link = link
   end
 
+  # helper_method :current_account
+  # helper_method :account_signed_in?
+  helper_method :correct_account?
+
+  ## Feature Flags
+  # Dynamically get a list of all implemented feature flags
+  feature_flags = FeatureFlags.public_instance_methods
+  # Delegate all feature flag methods to current_account
+  delegate *feature_flags, to: :current_account, allow_nil: true
+  # Make feature flag methods available in views
+  helper_method feature_flags
+
+  ## OAuth2 Client
+  def documentcloud_oauth_client
+    unless DC::Application.config.you_are_documentcloud
+      @client ||= OAuth2::Client.new(DC::SECRETS['omniauth']['documentcloud']['key'],
+                                     DC::SECRETS['omniauth']['documentcloud']['secret'],
+                                     site: DC::SECRETS['omniauth']['documentcloud']['site'],
+                                     callback_url: DC::SECRETS['omniauth']['documentcloud']['callback_url'],
+                                     client_options: { ssl: { verify: !Rails.env.development? } })
+    end
+  end
+
+  def documentcloud_access_token
+    unless DC::Application.config.you_are_documentcloud
+      @token ||= OAuth2::AccessToken.new(documentcloud_oauth_client,
+                                         current_account.access_token) if current_account
+    end
+  end
+
   private
-  
+
+  # def current_account use current_account
+  #   begin
+  #     @current_account ||= Account.find(session[:account_id]) if session[:account_id]
+  #   rescue Exception => e
+  #     nil
+  #   end
+  # end
+
+  # def account_signed_in?   use logged_in?
+  #   return true if current_account
+  # end
+
+  def correct_account?
+    @account = Account.find(params[:id])
+    unless current_account == @account
+      redirect_to root_url, alert: 'Access denied'
+    end
+  end
+
+  def authenticate_user!
+    unless current_account
+      redirect_to root_url, alert: 'Please log in or sign up for access to this page.'
+    end
+  end
+
   # Generic error response helper. Defaults to 200 because never called directly
   def error_response(status=200, options={})
     options = {
@@ -366,5 +428,4 @@ class ApplicationController < ActionController::Base
 
     false
   end
-
 end

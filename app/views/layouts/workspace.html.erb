@@ -1,48 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <%= render :partial => 'common/meta_tags' %>
+  <%= render partial: 'common/meta_tags' %>
   <title><%= compose_title(@title) %></title>
-  <%= render :partial => 'accounts/language_settings' %>
+  <%= render partial: 'accounts/language_settings' %>
 
-  <% css = [:ui, :workspace] + (@stylesheets || []) + [{:media => 'all'}] %>
+  <% css = [:ui, :workspace] + (@stylesheets || []) + [{media: 'all'}] %>
   <% js  = [:core] + (@javascripts || []) %>
   <%= include_stylesheets *css %>
   <%= include_javascripts *js %>
-  <!--[if lte IE 6]>
-    <script>window.location = '/workspace/upgrade';</script>
-  <![endif]-->
   <!--[if lt IE 9]>
-    <%= include_stylesheets :lt_ie_9, :embed_assets => false %>
+    <%= include_stylesheets :lt_ie_9, embed_assets: false %>
     <%= include_javascripts :lt_ie_9 %>
   <![endif]-->
   <% if Rails.env.development? %>
     <%= include_javascripts :dev_only %>
   <% end %>
   <%= csrf_meta_tag %> 
+
+  <%= stylesheet_link_tag File.join(DC.workspace_asset_root, "css/platform_firewalled.css") %>
+  <%= javascript_include_tag File.join(DC.workspace_asset_root, "js/platform_firewalled.js") %>
 </head>
 <body class="<%= @bodyclass %> <%= @current_account ? 'logged_in' : '' %>">
+  <div class="dc-design-firewalled">
+    <!--[if lt IE 11]>
+      <div class="alert alert-banner alert-danger alert-center">
+        You seem to be running an older, unsupported version of Internet Explorer. We can’t guarantee all features will work properly unless you <%= link_to 'upgrade your browser', 'http://browsehappy.com/' %>.
+      </div>
+    <![endif]-->
+
+    <%= render partial: 'common/new/header' %>
+    <%= render partial: 'workspace/workspace_header' if @current_organization %>
+    <%= render partial: 'common/new/flash_messages', flash: flash %>
+  </div>
 
   <div id="container">
-    <div id="topbar" class="header gradient_mid">
-      <div id="logo">
-        <a href="/home"><div id="cloud_edge"></div></a>
-        <div id="wordmark" class="logo_words"><a href="/">DocumentCloud</a></div>
-        <h1 id="title" class="logo_words"><%= @title %></h1>
-      </div>
-    </div>
-    <a id="workspace_logo" href="/home"></a>
-    <div id="toplinks" class="interface">
-      <a href="/home" class="text_link"><%= DC.t( @current_account, 'home') %></a>
-      &nbsp;/&nbsp;
-      <% if @current_account %>
-        <a href="/logout" class="text_link"><%= DC.t( @current_account, 'log_out') %></a>
-      <% else %>
-        <a href="/apply" class="text_link">Join</a>
-        &nbsp;/&nbsp;
-        <a href="<%= DC.server_root(:force_ssl => true) %>/login" class="text_link">Log In</a>
-      <% end %>
-    </div>
     <div id="content">
       <%= yield %>
     </div>
@@ -52,9 +44,27 @@
   <div class="selection" style="display:none;"></div>
   <div id="spinner" style="display:none;"></div>
 
-  <%= render :partial => 'common/bootstrap', :locals => {:workspace => true} %>
+  <script type="text/javascript">
+    <%= render partial: 'common/globals.js' %>
+    Organizations.reset(<%=raw @organizations.to_json(include_document_count: true, include_note_count: true) %>);
+    <% if @current_account && @current_account.memberships.any? %>
+      <%= render partial: 'accounts/current_account.js' %>
+      Projects.reset(<%=raw @projects.to_json({account: @current_account, include_collaborators: true}) %>);
+      dc.searchPrefixes = <%=raw DC::ALL_SEARCHES.to_json %>;
+    <% end %>
+    $(document).ready(function() {
+      // If anonymous, we come out of this with:
+      //   `window.Organizations`: collection of all orgs that have public docs
+      // If logged in, we come out of this with:
+      //   `window.Organizations`: name/slug pair of all orgs, plus full models 
+      //     of orgs related to the current account
+      //   `window.Accounts`: accounts that have memberships at the orgs above
+      //   `window.Projects`: projects accessible to the current account
+      dc.app.workspace = new dc.controllers.Workspace;
+    });
+  </script>
 
-  <%= render :partial => 'common/google' if @include_analytics %>
+  <%= render partial: 'common/google' if @include_analytics %>
 
 </body>
 </html>

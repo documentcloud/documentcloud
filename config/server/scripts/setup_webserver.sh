@@ -34,6 +34,7 @@ gpg --armor --export 561F9B9CAC40B2F7 | sudo apt-key add -
 apt update
 
 # and install it.
+apt-get install libstdc++6 -y
 apt install nginx-extras passenger -y
 
 # also, install node and coffeescript, so that we can install pixel-ping and bower.

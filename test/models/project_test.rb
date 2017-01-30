@@ -15,7 +15,7 @@ class ProjectTest < ActiveSupport::TestCase
   end
 
   it "loads for an account" do
-    assert Project.load_for( louis )
+    assert Project.load_for_account( louis )
   end
 
   it "can set documents from ids" do

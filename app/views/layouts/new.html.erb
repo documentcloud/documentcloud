@@ -1,9 +1,7 @@
 <!DOCTYPE html>
-<html lang="en" class="<%= compose_html_classes(@html_classes) %> dc-design-transition">
+<html lang="en" class="<%= compose_html_classes(@html_classes) %>">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <%= render partial: 'common/meta_tags' %>
   <title><%= compose_title(@title) %></title>
   <link rel="canonical" href="<%= compose_canonical_url(@canonical_url) %>">
   <%= render partial: 'common/oembed' if @oembeddable_resource %>

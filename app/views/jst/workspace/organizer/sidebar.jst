@@ -1,5 +1,5 @@
 <div id="organizer_projects" class="project_list_container">
-
+    
   <div class="project_list_wrap">
 
     <div class="top_level_search">
@@ -9,7 +9,7 @@
         </div>
       <% }); %>
       <% if( dc.account ){ %>
-        <% dc.account.organizations().each( function( organization ){ %>
+        <% var organization = dc.account.currentOrganization(); %>
           <div class="organization">
             <% if ( organization && organization.members && organization.members.length ) { %>
               <div class="icon toggle toggle_account_links"></div>
@@ -19,13 +19,12 @@
             </span>
             <div class="account_links" data-cid="<%= organization.cid %>"></div>
           </div>
-        <% } ) %>
       <% } %>
     </div>
 
     <% if (dc.account) { %>
 
-      <div id="project_controls" class="block">
+      <div id="project_controls" class="block" style="display:none">
         <form id="new_document_form" class="float_left" action="/import/upload_document" method="POST" enctype="multipart/form-data" target="upload_iframe">
           <div class="minibutton float_left plus" id="new_document"><div class="icon white_plus"></div><%= _.t('new_documents') %></div>
           <button type="submit"><%= _.t('new_documents') %></button>
@@ -51,7 +50,7 @@
     <% } else { %>
 
       <div class="organization_list">
-        <!-- Render target for organizations -->
+        <!-- Render target for public search organization list -->
       </div>
 
       <div class="block explanation first_explanation">

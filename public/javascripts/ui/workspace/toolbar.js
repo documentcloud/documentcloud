@@ -200,7 +200,7 @@ dc.ui.Toolbar = Backbone.View.extend({
   },
 
   requestDownloadViewers : function() {
-    if (dc.account.organization().get('demo')) return dc.ui.Dialog.alert( _.t('demo_no_viewer', '<a href="/contact">' + _.t('contact_documentcloud') + '</a>' ) );
+    if (dc.account.currentOrganization().get('demo')) return dc.ui.Dialog.alert( _.t('demo_no_viewer', '<a href="/contact">' + _.t('contact_documentcloud') + '</a>' ) );
     var docs = Documents.chosen();
     if (docs.length) Documents.downloadViewers(docs);
   },

@@ -374,7 +374,7 @@ dc.ui.Document = Backbone.View.extend({
         return {'class' : base + 'alert_gray', title : _.t('broken_document') };
       case dc.access.ORGANIZATION:
         return {'class' : base + 'lock',       title : _.t('private_to', (dc.account ?
-                                                       dc.account.organization().get('name') :
+                                                       dc.account.currentOrganization().get('name') :
                                                        'your organization') )};
       case dc.access.PRIVATE:
         return {'class' : base + 'lock',       title : _.t('private')};

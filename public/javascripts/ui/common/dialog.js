@@ -42,8 +42,8 @@ dc.ui.Dialog = Backbone.View.extend({
     this.delegateEvents();
     this.center();
     if (this.options.draggable) $(this.el).draggable();
-    if (this._returnCloses()) $(document.body).bind('keypress', this._maybeConfirm);
-    $(document.body).bind('keydown', this._maybeClose);
+    if (this._returnCloses()) $(document.body).on('keypress', this._maybeConfirm);
+    $(document.body).on('keydown', this._maybeClose);
     if (cel[0]) _.defer(function(){ cel.focus(); });
     if (!opts.noOverlay && dc.app.workspace) $(document.body).addClass('overlay');
     return this;

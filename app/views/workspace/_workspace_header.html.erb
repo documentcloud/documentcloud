@@ -1,0 +1,35 @@
+<header id="dc-workspace-secondary-navbar" class="navbar navbar-inverse dc-navbar dc-navbar-secondary" role="navigation">
+  <nav class="navbar-nav flex-row">
+    <div id="org-header-menu" class="nav-item dropdown">
+      <%= link_to @current_organization.name, '#', class: 'nav-link dropdown-toggle org-header-menu-opener', role: 'button', data: {toggle: 'dropdown'} %>
+      <div class="dropdown-menu">
+      <% if @show_org_switcher %>
+        <div class="dropdown-header">Switch to…</div>
+        <% @memberships.each do |membership| %>
+          <% org = membership.organization %>
+          <%= link_to org.name, switch_organization_path(organization_id: org.id, organization_slug: org.slug), class: "dropdown-item #{'active' if membership == @current_membership}" %>
+        <% end %>
+      <% end %>
+        <div id="org-header-menu-settings">
+      <% if @show_org_switcher %>
+          <div class="dropdown-divider"></div>
+      <% end %>
+          <div class="dropdown-header">Organization Settings</div>
+          <div class="dropdown-content">
+            <p>You are one of the <b><%= @current_membership.role_name.pluralize %></b> of the <%= @current_organization.name %> account.</p>
+            <ul class="list-unstyled">
+              <li>Display interface in <span class="inline-select" disabled title="Inline language editing hasn't been implemented yet."><%= DC::Language::NAMES[@current_organization.language] %></span></li>
+              <li>Process documents as <span class="inline-select" disabled title="Inline language editing hasn't been implemented yet."><%= DC::Language::NAMES[@current_organization.document_language] %></span></li>
+              <li class="text-muted">Members can override language settings on their individual accounts.</li>
+            </ul>
+            <div class="btn-group-set">
+              <%= link_to 'Manage Organization', "https://accounts.dcloud.org/organizations/#{@current_organization.slug}", class: 'btn btn-primary btn-block org-manage-link' %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <a href="#" class="nav-item nav-link" onclick="$('#new_document_input').trigger('click');return false;">Upload Documents</a>
+    <a href="#" class="nav-item nav-link" onclick="$('#new_project').trigger('click');return false;">Create Project</a>
+  </nav>
+</header>

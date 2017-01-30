@@ -4,7 +4,6 @@ dc.controllers.Workspace = Backbone.Router.extend({
   routes : {
     'help/:page': 'help',
     'help':       'help',
-    'accounts':   'accounts'
   },
 
   // Initializes the workspace, binding it to <body>.
@@ -15,10 +14,6 @@ dc.controllers.Workspace = Backbone.Router.extend({
     if (!Backbone.history.start({pushState : true, root : dc.account ? '/' : '/public/'})) {
       dc.app.searcher.loadDefault({showHelp: true});
     }
-  },
-
-  accounts: function() {
-    dc.app.accounts.open();
   },
 
   help : function(page) {
@@ -42,14 +37,8 @@ dc.controllers.Workspace = Backbone.Router.extend({
     this.entityList       = new dc.ui.EntityList();
 
     if (!dc.account) return;
-    dc.app.accountSearch          = new VS.VisualSearch(this.accountSearchOptions());
-    dc.app.accountSearchBox       = dc.app.accountSearch.searchBox;
-    dc.app.accounts               = new dc.ui.AccountManager();
-    dc.app.accounts.organizations = new dc.ui.OrganizationList();
-
     dc.app.uploader        = new dc.ui.UploadDialog();
-    dc.app.accounts.dialog = new dc.ui.AccountDialog();
-    this.accountBadge      = new dc.ui.AccountView({model : Accounts.current(), kind : 'badge'});
+    // TODO: init/bind org switcher and account menu settings
   },
 
   // Render all of the existing subviews and place them in the DOM.
@@ -69,11 +58,7 @@ dc.controllers.Workspace = Backbone.Router.extend({
     this.sidebar.add('organizer', dc.app.organizer.render().el);
 
     if (!dc.account) return;
-    dc.app.accounts.setElement($("#accounts_manager_container"));
-    dc.app.accounts.render();
-    this.panel.add('account_search_box', dc.app.accountSearchBox.render().el);
-    this.sidebar.add('organization_list', dc.app.accounts.organizations.render().el);
-    this.sidebar.add('account_badge', this.accountBadge.render().el);
+    // TODO: render org switcher and account menu settings
   },
 
   // Translated Search keys
@@ -197,10 +182,4 @@ dc.controllers.Workspace = Backbone.Router.extend({
     };
   },
   
-  accountSearchOptions: function() {
-    return {
-      
-    };
-  }
-
 });

@@ -19,6 +19,10 @@ module DC
     url_for('workspace_asset_root', options)
   end
 
+  def self.accounts_root
+    url_for('accounts_root', force_ssl: true)
+  end
+
   # Lookup the appropriate host from config/document_cloud.yml
   def self.url_for(config, options)
     root = case
