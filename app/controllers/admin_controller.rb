@@ -203,6 +203,9 @@ class AdminController < ApplicationController
   end
   
   def organizations
+    @data = Document.group(:organization_id).pluck("organization_id, count(id), sum(page_count), sum(file_size), max(created_at)").sort_by{ |row| -row[1] }
+    @organizations = Organization.all
+    render layout: 'new'
   end
   
   def organization

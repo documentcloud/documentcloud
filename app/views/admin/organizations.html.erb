@@ -1,0 +1,37 @@
+<style type="text/css">
+  .stat {
+    font-weight: bold;
+    white-space: nowrap;
+  }
+</style>
+
+<div class="container-lg content paper">
+  <section>
+    <table class="table table-striped sortable">
+      <thead>
+        <tr>
+          <th data-sort="string-ins">Organization</th>
+          <th data-sort="int">Documents</th>
+          <th data-sort="int">Pages</th>
+          <th data-sort="int">Data uploaded</th>
+          <th data-sort="int">Last uploaded</th>
+        </tr>
+      </thead>
+      <tbody>
+      <% @data.each do |row| %>
+        <tr>
+          <td><%= @organizations.find(row.first).name %></td>
+          <td data-sort-value="<%= row[1] %>"><%= number_with_delimiter(row[1]) %></td>
+          <td data-sort-value="<%= row[2] %>"><%= number_with_delimiter(row[2]) %></td>
+          <td data-sort-value="<%= row[3] %>"><%= number_to_human_size(row[3]) %></td>
+          <td data-sort-value="<%= row.last.to_i %>"><%= time_ago_in_words row.last %> ago</td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </section>
+</div>
+
+<% content_for :javascript_footer_inline do %>
+  $('.sortable').stupidtable();
+<% end %>
