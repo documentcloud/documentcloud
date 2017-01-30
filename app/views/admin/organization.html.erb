@@ -1,33 +1,56 @@
+<style type="text/css">
+  .stat {
+    font-weight: bold;
+    white-space: nowrap;
+  }
+</style>
+
 <div class="container-md content paper">
-  <div>
-    <h1><%= @organization.name %></h1>
-    <section>
-      <p><em>joined <%= time_ago_in_words(@organization.created_at) %> ago (on <%= @organization.created_at.strftime("%B %d, %Y") %>)</em></p>
-      <p><%= "#{@member_count} member".pluralize(@member_count) %>, <%= "#{@admin_count} administrators".pluralize(@admin_count) %></p>
-    </section>
-  </div>
-  <div>
-    <section>
-      <h5>since <%= @since.strftime("%B %d, %Y") %></h5>
-      <div><%= "#{number_with_delimiter(@document_count)} document".pluralize(@document_count) %> uploaded, <%= number_with_delimiter(@public_count) %> public, and <%= number_with_delimiter(@private_count) %> private</div>
-      <div><%= number_with_delimiter(@hit_count) %> views</div>
-    </section>
-    <section>
-      <h5>Top <%= @top_count %> uploaders</h5>
-      <table class="table table-striped">
-        <tr><th>Uploader</th><th>Documents</th></tr>
-        <% @top_uploaders.each do |account, count| %>
-        <tr><td><%= account.full_name %> (<%= account.email %>)</td><td><%= number_with_delimiter(count) %></td></tr>
-        <% end %>
-      </table>
-    </section>
-    <section>
-      <h3>Administrators</h3>
-      <table class="table table-striped">
-        <% @administrators.each do |account| %>
-        <tr><td><%= account.full_name %></td><td><%= account.email %></td><td><%= time_ago_in_words account.created_at%></td></tr>
-        <% end %>
-      </table>
-    </section>
-  </div>
+  <section class="mt-4 mb-5">
+    <p><b><%= @organization.name %></b> joined <%= time_ago_in_words(@organization.created_at) %> ago on <%= @organization.created_at.strftime("%B %d, %Y") %>. It has <span class="stat"><%= "#{@member_count} member".pluralize(@member_count) %></span> and <span class="stat"><%= "#{@admin_count} administrators".pluralize(@admin_count) %></span>. Since then, <span class="stat"><%= "#{number_with_delimiter(@document_count)} document".pluralize(@document_count) %></span> have been uploaded (<%= number_with_delimiter(@public_count) %> public, <%= number_with_delimiter(@private_count) %> private), which have received <span class="stat"><%= number_with_delimiter(@hit_count) %> views</span>.</p>
+  </section>
+  <section class="mb-5">
+    <table class="table table-striped sortable">
+      <thead>
+        <tr>
+          <th data-sort="string-ins">Top <%= @top_count %> Uploaders</th>
+          <th data-sort="string-ins">Email</th>
+          <th data-sort="int">Documents</th>
+        </tr>
+      </thead>
+      <tbody>
+      <% @top_uploaders.each do |account, count| %>
+        <tr>
+          <td><%= account.full_name %></td>
+          <td><%= mail_to account.email %></td>
+          <td><%= count %></td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </section>
+  <section>
+    <table class="table table-striped sortable">
+      <thead>
+        <tr>
+          <th data-sort="string-ins">Administrators</th>
+          <th data-sort="string-ins">Email</th>
+          <th data-sort="int">Age</th>
+        </tr>
+      </thead>
+      <tbody>
+      <% @administrators.each do |account| %>
+        <tr>
+          <td><%= account.full_name %></td>
+          <td><%= mail_to account.email %></td>
+          <td data-sort-value="<%= account.created_at.to_i %>"><%= time_ago_in_words account.created_at %></td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </section>
 </div>
+
+<% content_for :javascript_footer_inline do %>
+  $('.sortable').stupidtable();
+<% end %>
