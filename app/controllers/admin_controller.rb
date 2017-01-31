@@ -2,10 +2,10 @@ require 'dc/aws'
 
 class AdminController < ApplicationController
 
-  skip_before_action :verify_authenticity_token, :only => [:save_analytics, :queue_length]
+  skip_before_action :verify_authenticity_token, only: [:save_analytics, :queue_length]
 
-  before_action :secure_only,    :only   => [:index, :signup, :login_as]
-  before_action :admin_required, :except => [:save_analytics, :queue_length, :test_embedded_search, :test_embedded_note, :test_embedded_page, :test_embedded_viewer, :health_check]
+  before_action :secure_only,    only:   [:index, :signup, :login_as]
+  before_action :admin_required, except: [:save_analytics, :queue_length, :test_embedded_search, :test_embedded_note, :test_embedded_page, :test_embedded_viewer, :health_check]
   
   READONLY_ACTIONS = [
     :index, :expire_stats, :hits_on_documents, :all_accounts, :top_documents_csv, :accounts_csv,
@@ -13,7 +13,7 @@ class AdminController < ApplicationController
     :launch_worker, :terminate_instance, :login_as, :test_exception_notifier, :test_embedded_viewer,
     :test_embedded_page, :test_embedded_note, :test_embedded_search, :health_check
   ]
-  before_action :read_only_error, :except => READONLY_ACTIONS if read_only?
+  before_action :read_only_error, except: READONLY_ACTIONS if read_only?
 
   # The Admin Dashboard
   def index
@@ -60,7 +60,7 @@ class AdminController < ApplicationController
         render_cross_origin_json
       end
       
-      format.html{ render }
+      format.html { render }
     end
   end
   
@@ -68,7 +68,7 @@ class AdminController < ApplicationController
     respond_to do |format|
       format.any do
         expire_page "/admin/index.json"
-        redirect_to :action => :index
+        redirect_to action: 'index'
       end
     end
   end
@@ -79,22 +79,22 @@ class AdminController < ApplicationController
 
   def all_accounts
     json({
-      'public_per_account'  => DC::Statistics.public_documents_per_account,
-      'private_per_account' => DC::Statistics.private_documents_per_account,
-      'pages_per_account'   => DC::Statistics.pages_per_account,
-      'accounts'            => Account.all.map {|a| a.canonical(:include_organization => true) }
+      public_per_account:  DC::Statistics.public_documents_per_account,
+      private_per_account: DC::Statistics.private_documents_per_account,
+      pages_per_account:   DC::Statistics.pages_per_account,
+      accounts:            Account.all.map {|a| a.canonical(include_organization: true) }
     })
   end
 
   def top_documents_csv
     return not_found unless request.format.csv?
     csv = DC::Statistics.top_documents_csv
-    send_data csv, :type => :csv, :filename => 'documents.csv'
+    send_data csv, type: 'csv', filename: 'documents.csv'
   end
 
   def accounts_csv
     return not_found unless request.format.csv?
-    deliver_csv("#{Date.today}-accounts") do | csv |
+    deliver_csv("#{Date.today}-accounts") do |csv|
       DC::Statistics.accounts_csv(csv)
     end
   end
@@ -103,8 +103,11 @@ class AdminController < ApplicationController
   # its first account. If everything's kosher, the journalist is logged in.
   # NB: This needs to stay access controlled by the bouncer throughout the beta.
   DEFAULT_SIGNUP_PARAMS = {
-    :account => {},
-    :organization => { :language=>DC::Language::DEFAULT,:document_language=>DC::Language::DEFAULT }
+    account:      {},
+    organization: {
+      language: DC::Language::DEFAULT,
+      document_language: DC::Language::DEFAULT
+    }
   }
   def signup
     unless request.post?
@@ -113,30 +116,29 @@ class AdminController < ApplicationController
     end
     @params = params
 
-    user_params = params.require(:account).permit(:first_name,:last_name,:email,:slug,:language,:document_language)
+    user_params = params.require(:account).permit(:first_name, :last_name, :email, :slug, :language, :document_language)
 
     # First see if an account already exists for the email
     @account = Account.lookup(user_params[:email])
     if @account # Check if the account should be moved
       if "t" != params[:move_account]
-        fail( "#{user_params[:email]} already exists!" ) and return
+        fail("#{user_params[:email]} already exists!") and return
       end
     else
-      @account = Account.create( user_params
-        .merge( :language=>DC::Language::DEFAULT, :document_language=>DC::Language::DEFAULT ) )
+      @account = Account.create(user_params.merge(DEFAULT_SIGNUP_PARAMS[:organization]))
       if @account.errors.any?
-        fail( @account.errors.full_messages.join(', ') ) and return
+        fail(@account.errors.full_messages.join(', ')) and return
       end
     end
 
     # create the organization
-    organization_params = params.require(:organization).permit(:name,:slug,:language,:document_language)
-    organization = Organization.create( organization_params )
+    organization_params = params.require(:organization).permit(:name, :slug, :language, :document_language)
+    organization = Organization.create(organization_params)
     return fail(organization.errors.full_messages.join(', ')) if organization.errors.any?
 
     # link the account to the organization
     membership = @account.memberships.create({
-        :role => Account::ADMINISTRATOR, :default => true, :organization=>organization
+      role: Account::ADMINISTRATOR, default: true, organization: organization
     })
     @account.set_default_membership(membership)
 
@@ -150,17 +152,17 @@ class AdminController < ApplicationController
   def download_document_hits
     organization=Organization.find_by_slug(params[:slug])
     if !organization
-      flash[:error]="Organization for #{params[:slug]} was not found"
-      render :action=>:document_hits and return
+      flash[:error] = "Organization for #{params[:slug]} was not found"
+      render action: 'document_hits' and return
     end
     deliver_csv("#{organization.slug}-hits") do |csv|
-      csv << [ "Day","Hits","Document" ]
-      urls=RemoteUrl
-        .where(:document_id=>organization.documents.published.ids)
-        .group(:date_recorded,:document_id)
-        .select('date_recorded','document_id','sum(hits) as hits')
-      urls.each do | hit |
-        csv << [ hit.date_recorded.strftime("%Y-%m-%d"), hit.hits, hit.document.canonical_url(:html) ]
+      csv << ["Day","Hits","Document"]
+      urls = RemoteUrl
+        .where(document_id: organization.documents.published.ids)
+        .group(:date_recorded, :document_id)
+        .select('date_recorded', 'document_id', 'sum(hits) as hits')
+      urls.each do |hit|
+        csv << [hit.date_recorded.strftime("%Y-%m-%d"), hit.hits, hit.document.canonical_url(:html)]
       end
     end
   end
@@ -179,8 +181,8 @@ class AdminController < ApplicationController
         @response = Document.upload_statistics(:organization, org.id)
         render_cross_origin_json
       end
-      format.html{ render }
-      format.any{ redirect_to :format => :html, :params => pick(params, :id, :slug) }
+      format.html { render }
+      format.any  { redirect_to format: 'html', params: pick(params, :id, :slug) }
     end
   end
   
@@ -197,8 +199,8 @@ class AdminController < ApplicationController
         @response = Document.upload_statistics(:account, account.id)
         render_cross_origin_json
       end
-      format.html{ render }
-      format.any{ redirect_to :format => :html, :params => pick(params, :id, :slug) }
+      format.html { render }
+      format.any  { redirect_to format: 'html', params: pick(params, :id, :slug) }
     end
   end
   
@@ -254,33 +256,33 @@ class AdminController < ApplicationController
 
   def manage_organization
     query = if params[:slug]
-              ["lower(slug)=:slug or lower(name)=:slug",{:slug=>params[:slug].downcase}]
+              ["lower(slug)=:slug or lower(name)=:slug", {slug: params[:slug].downcase}]
             elsif params[:id]
-              {:id=>params[:id]}
+              {id: params[:id]}
             end
-    @organization = Organization.where(query).includes(:memberships=>:account).first
+    @organization = Organization.where(query).includes(memberships: :account).first
     if @organization.nil?
       flash[:error] = "Organization for '#{params[:slug]}' was not found"
-      render :action=>:query_organizations
+      render action: 'query_organizations'
     end
   end
 
   def update_organization
     @organization = Organization.find(params[:id])
-    if @organization.update_attributes( {demo: false}.merge(pick(params,:name,:slug,:demo)) )
-      redirect_to :action=>'organizations' and return
+    if @organization.update_attributes({demo: false}.merge(pick(params, :name, :slug, :demo)))
+      redirect_to action: 'organizations' and return
     end
     flash[:error] = @organization.errors.full_messages.join("; ")
-    render :action=>:manage_organization
+    render action: 'manage_organization'
   end
 
   def update_memberships
     @account = Account.find(params[:id])
     @account.set_default_membership(@account.memberships.find(params[:default_membership]))
-    params[:role].each do | membership_id, role|
+    params[:role].each do |membership_id, role|
       @account.memberships.find(membership_id).update_attributes({ role: role })
     end
-    redirect_to :action=>'memberships'
+    redirect_to action: 'memberships'
   end
 
   def manage_memberships
@@ -290,8 +292,8 @@ class AdminController < ApplicationController
                  Account.find(params[:id])
                end
     if !@account
-      flash[:error]="Account for #{params[:email]} was not found"
-      render :action=>:memberships and return
+      flash[:error] = "Account for #{params[:email]} was not found"
+      render action: 'memberships' and return
     end
   end
 
@@ -299,8 +301,8 @@ class AdminController < ApplicationController
   # so often -- delegate to a cloudcrowd job.
   def save_analytics
     return forbidden unless params[:secret] == DC::SECRETS['pixel_ping']
-    RestClient.post(DC::CONFIG['cloud_crowd_server'] + '/jobs', {:job => {
-      :action => 'save_analytics', :inputs => [params[:json]]
+    RestClient.post(DC::CONFIG['cloud_crowd_server'] + '/jobs', {job: {
+      action: 'save_analytics', inputs: [params[:json]]
     }.to_json})
     json nil
   end
@@ -308,7 +310,7 @@ class AdminController < ApplicationController
   # Ensure that the length of the pending document queue is ok.
   def queue_length
     ok = Document.pending.count <= Document::WARN_QUEUE_LENGTH
-    render :plain => ok ? 'OK' : 'OVERLOADED'
+    render plain: ok ? 'OK' : 'OVERLOADED'
   end
 
   # Spin up a new CloudCrowd medium worker, for processing. It takes a while
@@ -317,8 +319,8 @@ class AdminController < ApplicationController
     return bad_request unless request.post?
     Thread.new do
       DC::AWS.new.boot_instance({
-        :type => 'c1.medium',
-        :scripts => [DC::AWS::SCRIPTS[:update], DC::AWS::SCRIPTS[:node]]
+        type:    'c1.medium',
+        scripts: [DC::AWS::SCRIPTS[:update], DC::AWS::SCRIPTS[:node]]
       })
     end
     json nil
@@ -348,7 +350,7 @@ class AdminController < ApplicationController
 
   def reprocess_failed_document
     doc = Document.failed.last
-    doc.queue_import :access => DC::Access::PRIVATE
+    doc.queue_import access: DC::Access::PRIVATE
     json nil
   end
 
@@ -365,35 +367,35 @@ class AdminController < ApplicationController
   end
 
   def test_embedded_viewer
-    render :layout => nil
+    render layout: nil
   end
 
   def test_embedded_page
-    render :layout => nil
+    render layout: nil
   end
 
   def test_embedded_note
-    render :layout => nil
+    render layout: nil
   end
 
   def test_embedded_search
-    render :layout => nil
+    render layout: nil
   end
 
   def health_check
-    render :template => "admin/health_check/#{params[:subject]}_#{params[:env]}", :layout => nil
+    render template: "admin/health_check/#{params[:subject]}_#{params[:env]}", layout: nil
   end
 
   private
 
   def fail(message)
-    @failure = message
+    @failure      = message
     flash[:error] = message
   end
 
   # Pass in the seconds since the epoch, for JavaScript.
   def keys_to_timestamps(hash)
-    result = {}
+    result  = {}
     strings = hash.keys.first.is_a? String
     hash.each do |key, value|
       time = (strings ? Date.parse(key) : key ).to_time
@@ -404,7 +406,7 @@ class AdminController < ApplicationController
   end
 
   # Streams a CSV download to the browser
-  def deliver_csv( filename )
+  def deliver_csv(filename)
     response.headers["Content-Type"] ||= 'text/csv'
     response.headers["Content-Disposition"] = "attachment; filename=#{filename}.csv"
     response.headers['Last-Modified'] = Time.now.ctime.to_s
