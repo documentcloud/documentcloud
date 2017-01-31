@@ -38,8 +38,8 @@
             <div class="nav-item dropdown">
               <%= link_to 'Admin', admin_path, class: 'nav-link dropdown-toggle', role: 'button', data: {toggle: 'dropdown'} %>
               <div class="dropdown-menu dropdown-menu-right">
-                <%= link_to "Dashboard", "/admin/", class: 'dropdown-item' %>
-                <%= link_to "Tools", "/admin/tools", class: 'dropdown-item' %>
+                <%= link_to "Dashboard", admin_path, class: 'dropdown-item' %>
+                <%= link_to "Tools", admin_tools_path, class: 'dropdown-item' %>
                 <%= link_to "Add Organization", "/admin/signup", class: 'dropdown-item' %>
                 <%= link_to "Modify Organization", "/admin/organizations", class: 'dropdown-item' %>
                 <%= link_to "Modify Memberships", "/admin/memberships", class: 'dropdown-item' %>

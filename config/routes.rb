@@ -202,11 +202,12 @@ DC::Application.routes.draw do
   get  '/donate/thanks/preview', to: 'donate#thanks', as: 'donate_thanks_preview', preview: true
 
   # Admin section
-  get '/admin', to: 'admin#index'
+  get '/admin',                     to: 'admin#index',         as: 'admin'
+  get '/admin/tools',               to: 'admin#tools',         as: 'admin_tools'
+  get '/admin/signup',              to: 'admin#signup',        as: 'admin_signup'
+  get '/admin/organizations/:slug', to: 'admin#organization',  as: 'admin_organization'
+  get '/admin/organizations/?',     to: 'admin#organizations', as: 'admin_organizations'
   get '/admin/health_check/:subject/:env', to: 'admin#health_check', subject: /page_embed/, env: /production|staging/
-  get '/admin/signup', to: 'admin#signup', as: 'admin_signup'
-  get '/admin/organizations/:slug', as: 'admin_organization', to: 'admin#organization'
-  get '/admin/organizations/?',      as: 'admin_organizations', to: 'admin#organizations'
   
   # Standard fallback routes
   match '/:controller(/:action(/:id))', via: [:get, :post]
