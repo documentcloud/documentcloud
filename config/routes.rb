@@ -202,17 +202,17 @@ DC::Application.routes.draw do
   get  '/donate/thanks/preview', to: 'donate#thanks', as: 'donate_thanks_preview', preview: true
 
   # Admin section
-  get '/admin',                     to: 'admin#index',         as: 'admin'
-  get '/admin/tools',               to: 'admin#tools',         as: 'admin_tools'
-  get '/admin/signup',              to: 'admin#signup',        as: 'admin_signup'
-  get '/admin/organizations/:slug', to: 'admin#organization',  as: 'admin_organization'
-  get '/admin/organizations/?',     to: 'admin#organizations', as: 'admin_organizations'
+  get '/admin',                     to: 'admin#index',            as: 'admin'
+  get '/admin/tools',               to: 'admin#tools',            as: 'admin_tools'
+  get '/admin/organizations/:slug', to: 'admin#organization',     as: 'admin_organization'
+  get '/admin/organizations/',      to: 'admin#organizations',    as: 'admin_organizations'
   get '/admin/organizations/:slug/download_document_hits',
       to: 'admin#download_document_hits', as: 'admin_download_document_hits'
   get '/admin/organizations/:slug/edit',
       to: 'admin#edit_organization',      as: 'admin_edit_organization'
   match '/admin/organizations/:id/update', to: 'admin#update_organization',
         as: 'admin_update_organization', via: [:post, :put, :patch]
+  match '/admin/add_organization', to: 'admin#add_organization', as: 'admin_add_organization', via: [:get, :post]
   get '/admin/health_check/:subject/:env', to: 'admin#health_check', subject: /page_embed/, env: /production|staging/
   
   # Standard fallback routes

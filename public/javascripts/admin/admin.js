@@ -55,7 +55,7 @@ dc.ui.Admin = Backbone.View.extend({
       items   : [
         {title : 'Dashboard',                 onClick : function(){ window.location = '/admin/'; }},
         {title : 'Tools',                     onClick : function(){ window.location = '/admin/tools'; }},
-        {title : 'Add Organization',          onClick : function(){ window.location = '/admin/signup'; }},
+        {title : 'Add Organization',          onClick : function(){ window.location = '/admin/add_organization'; }},
         {title : 'Manage Organizations',      onClick : function(){ window.location = '/admin/organizations'; }},
         {title : 'Manage Memberships',        onClick : function(){ window.location = '/admin/memberships'; }},
         {title : 'Manage Featured Reporting', onClick : function(){ window.location = '/admin/featured'; }},

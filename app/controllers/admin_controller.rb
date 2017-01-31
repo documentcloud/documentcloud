@@ -4,7 +4,7 @@ class AdminController < ApplicationController
 
   skip_before_action :verify_authenticity_token, only: [:save_analytics, :queue_length]
 
-  before_action :secure_only,    only:   [:index, :signup, :login_as]
+  before_action :secure_only,    only:   [:index, :add_organization, :login_as]
   before_action :admin_required, except: [:save_analytics, :queue_length, :test_embedded_search, :test_embedded_note, :test_embedded_page, :test_embedded_viewer, :health_check]
   
   READONLY_ACTIONS = [
@@ -113,10 +113,10 @@ class AdminController < ApplicationController
       document_language: DC::Language::DEFAULT
     }
   }
-  def signup
+  def add_organization
     unless request.post?
       @params = DEFAULT_SIGNUP_PARAMS.dup.merge(pick(params, :organization, :account))
-      return render
+      return render layout: 'new'
     end
     @params = params
 
@@ -126,12 +126,12 @@ class AdminController < ApplicationController
     @account = Account.lookup(user_params[:email])
     if @account # Check if the account should be moved
       if "t" != params[:move_account]
-        fail("#{user_params[:email]} already exists!") and return
+        fail("#{user_params[:email]} already exists!") and render layout: 'new' and return
       end
     else
       @account = Account.create(user_params.merge(DEFAULT_SIGNUP_PARAMS[:organization]))
       if @account.errors.any?
-        fail(@account.errors.full_messages.join(', ')) and return
+        fail(@account.errors.full_messages.join(', ')) and render layout: 'new' and return
       end
     end
 
@@ -151,6 +151,7 @@ class AdminController < ApplicationController
     # clear variables so the form displays fresh
     @account = nil
     @params  = DEFAULT_SIGNUP_PARAMS.dup
+    render layout: 'new'
   end
 
   def download_document_hits
