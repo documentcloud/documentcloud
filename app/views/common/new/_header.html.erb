@@ -41,10 +41,10 @@
                 <%= link_to "Dashboard", admin_path, class: 'dropdown-item' %>
                 <%= link_to "Tools", admin_tools_path, class: 'dropdown-item' %>
                 <%= link_to "Add Organization", "/admin/signup", class: 'dropdown-item' %>
-                <%= link_to "Modify Organization", "/admin/organizations", class: 'dropdown-item' %>
-                <%= link_to "Modify Memberships", "/admin/memberships", class: 'dropdown-item' %>
+                <%= link_to "Manage Organizations", admin_organizations_path, class: 'dropdown-item' %>
+                <%= link_to "Manage Memberships", "/admin/memberships", class: 'dropdown-item' %>
+                <%= link_to "Manage Featured Reporting", "/admin/featured", class: 'dropdown-item' %>
                 <%= external_link_to "View CloudCrowd Console", DC::CONFIG['cloud_crowd_console'], class: 'dropdown-item' %>
-                <%= link_to "Edit Featured Reporting", "/admin/featured", class: 'dropdown-item' %>
               </div>
             </div>
           <% end %>
