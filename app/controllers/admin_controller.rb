@@ -154,10 +154,10 @@ class AdminController < ApplicationController
   end
 
   def download_document_hits
-    organization=Organization.find_by_slug(params[:slug])
+    organization = Organization.find_by_slug(params[:slug])
     if !organization
-      flash[:error] = "Organization for #{params[:slug]} was not found"
-      render action: 'document_hits' and return
+      flash[:error] = "Sorry, we weren't able to find that organization for some reason."
+      redirect_to :back and return
     end
     deliver_csv("#{organization.slug}-hits") do |csv|
       csv << ["Day","Hits","Document"]

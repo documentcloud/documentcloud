@@ -58,7 +58,6 @@ dc.ui.Admin = Backbone.View.extend({
         {title : 'Add Organization',          onClick : function(){ window.location = '/admin/signup'; }},
         {title : 'Modify Organization',       onClick : function(){ window.location = '/admin/organizations'; }},
         {title : 'Modify Memberships',        onClick : function(){ window.location = '/admin/memberships'; }},
-        {title : 'Download Document Hits',    onClick : function(){ window.location = '/admin/document_hits'; }},
         {title : 'View CloudCrowd Console',   onClick : function(){ window.location = CLOUD_CROWD_SERVER; }},
         {title : 'Reprocess Last Failed Doc', onClick : this.reprocessFailedDocument},
         {title : 'Force a DB Backup to S3',   onClick : this.forceBackup},
