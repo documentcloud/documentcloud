@@ -33,7 +33,24 @@
           <%= link_to 'Donate', donate_path, class: 'nav-item nav-link' %>
           <%= link_to 'Help', '/help', class: 'nav-item nav-link' %>
           <%= link_to 'Contact', contact_path, class: 'nav-item nav-link' %>
-          <%= link_to 'Log out', logout_path, class: 'nav-item nav-link text-danger' if @current_account %>
+        <% if @current_account %>
+          <% if @current_account.dcloud_admin? %>
+            <div class="nav-item dropdown">
+              <%= link_to 'Admin', admin_path, class: 'nav-link dropdown-toggle', role: 'button', data: {toggle: 'dropdown'} %>
+              <div class="dropdown-menu dropdown-menu-right">
+                <%= link_to "Dashboard", "/admin/", class: 'dropdown-item' %>
+                <%= link_to "Tools", "/admin/tools", class: 'dropdown-item' %>
+                <%= link_to "Add Organization", "/admin/signup", class: 'dropdown-item' %>
+                <%= link_to "Modify Organization", "/admin/organizations", class: 'dropdown-item' %>
+                <%= link_to "Modify Memberships", "/admin/memberships", class: 'dropdown-item' %>
+                <%= link_to "Download Document Hits", "/admin/document_hits", class: 'dropdown-item' %>
+                <%= external_link_to "View CloudCrowd Console", DC::CONFIG['cloud_crowd_console'], class: 'dropdown-item' %>
+                <%= link_to "Edit Featured Reporting", "/admin/featured", class: 'dropdown-item' %>
+              </div>
+            </div>
+          <% end %>
+          <%= link_to 'Log out', logout_path, class: 'nav-item nav-link text-danger' %>
+        <% end %>
         </nav>
       </nav>
     </nav>
