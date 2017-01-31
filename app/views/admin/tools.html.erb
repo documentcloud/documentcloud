@@ -1,11 +1,22 @@
+<%
+  @platformer = 'javascript:(function(){var pattern=/^https?:\/\/(s3\.amazonaws\.com\/s3|s3|assets)\.documentcloud\.org\/documents\/([0-9]+)\/(pages\/)?(.+)(\-p([0-9]+)(\-([a-z]+))?)?\.([a-z]{3})$/,current=window.location.href,platformed=current.replace(pattern,"https://www.documentcloud.org/documents/$2-$4.html");current==platformed?alert("Hmm, we weren’t able to transform this URL. Please send it to the dev team for inspection."):window.location=platformed;})();'
+  @petrify    = 'javascript:!function(){var t=window.location.href,o=t.match("^https://github.com/([^/]{1,})/([^/]{1,})/(blob|tree)/([^/]{1,})?/?(.*)$");if(o){var e=document.querySelector("a.commit-tease-sha");if(e&&e.href){var a=e.href,i=a.substr(a.lastIndexOf("/")+1),r=["https://github.com",o[1],o[2],o[3],i];o[5]&&r.push(o[5]);var h=r.join("/");h!=t&&(window.location=h)}}}();'
+%>
 <div class="content">
   <div class="container-sm">
     
     <p class="lead text-center"><b>Tools</b> are a collection of bookmarklets and utilities useful for administrating DocumentCloud.</p>
 
     <div class="note-block">
-      <p class="font-weight-bold"><a href="javascript:(function(){var pattern=/^https?:\/\/(s3\.amazonaws\.com\/s3|s3|assets)\.documentcloud\.org\/documents\/([0-9]+)\/(pages\/)?(.+)(\-p([0-9]+)(\-([a-z]+))?)?\.([a-z]{3})$/,current=window.location.href,platformed=current.replace(pattern,"https://www.documentcloud.org/documents/$2-$4.html");current==platformed?alert("Hmm, we weren’t able to transform this URL. Please send it to the dev team for inspection."):window.location=platformed;})();">→ Platformer</a>: Redirect document assets to the full viewer</p>
+      <p class="font-weight-bold"><a href="<%= @platformer %>">→ Platformer</a>: Redirect document assets to the full viewer</p>
       <p class="note">Sometimes you get linked directly to a DocumentCloud PDF (or text file, or GIF) and want the workspace version of the document. Drag the link above to your Bookmarks Bar and click it next time you have a DocumentCloud-hosted PDF open to redirect straight to the corresponding document in the workspace.</p>
     </div>
+
+    <div class="note-block">
+      <p class="font-weight-bold"><a href="<%= @petrify %>">→ Petrify</a>: Canonize a GitHub blob or tree URL</p>
+      <p class="note">Say you're looking at <%= external_link_to 'a GitHub file', 'https://github.com/documentcloud/documentcloud/blob/master/public/javascripts/embed/search_embed.js#L315-L317' %> and you want to link to it in an email or GitHub comment. You realize that, when people follow the link years or even days later, it's likely the file will have changed so much that those line references won't be the same, and people won't know what you were talking about.</p>
+      <p class="note">So you click your Petrify bookmarklet. It recognizes the last time that blob or tree were changed and redirects you to <%= external_link_to 'the permanent version of that URL', 'https://github.com/documentcloud/documentcloud/blob/bb009c6875baedc7d58ed699e0b0ef02fc078ccd/public/javascripts/embed/search_embed.js#L315-L317' %>. You can safely share or link to this URL, knowing that years from now, your snoopy descendents can still know what you were talking about.</p>
+    </div>
+
   </div>
 </div>
