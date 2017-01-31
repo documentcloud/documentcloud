@@ -43,7 +43,7 @@
                     </select>
                 </td>
                 <td>
-                  <%= link_to ">>", :action=>:manage_organization, :id=>membership.organization_id %>
+                  <%= link_to ">>", admin_organization_path(slug: membership.organization.slug) %>
                 </td>
             </tr>
 

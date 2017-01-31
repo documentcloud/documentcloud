@@ -1,0 +1,14 @@
+<div class="container-md content paper">
+  <%= bootstrap_form_for @organization, url: admin_update_organization_url(id: @organization), html: {class: 'mt-4'} do |f| %>
+    <div class="form-header">
+      <%= link_to 'Cancel', admin_organization_path(slug: @organization.slug), class: 'btn btn-sm btn-link btn-danger float-right ml-1 mb-1' %>
+      <h1>Editing <%= @organization.name %></h1>
+    </div>
+    <%= f.text_field :name %>
+    <%= f.text_field :slug %>
+    <%= f.check_box :demo, label: 'This is a <b>demo account</b>'.html_safe %>
+    <p class="mt-4">
+      <%= f.submit class: 'btn btn-success' %>
+    </p>
+  <% end %>
+</div>

@@ -257,27 +257,22 @@ class AdminController < ApplicationController
     @administrators      = @organization.accounts.admin.order("created_at desc")
     render layout: 'new'
   end
-
-  def manage_organization
-    query = if params[:slug]
-              ["lower(slug)=:slug or lower(name)=:slug", {slug: params[:slug].downcase}]
-            elsif params[:id]
-              {id: params[:id]}
-            end
-    @organization = Organization.where(query).includes(memberships: :account).first
-    if @organization.nil?
-      flash[:error] = "Organization for '#{params[:slug]}' was not found"
-      render action: 'query_organizations'
-    end
+  
+  def edit_organization
+    @organization = Organization.where(slug: params[:slug].downcase).first
+    return not_found unless @organization
+    render layout: 'new'
   end
 
   def update_organization
     @organization = Organization.find(params[:id])
-    if @organization.update_attributes({demo: false}.merge(pick(params, :name, :slug, :demo)))
-      redirect_to action: 'organizations' and return
+    return not_found unless @organization
+    if @organization.update_attributes({demo: false}.merge(pick(params[:organization], :name, :slug, :demo)))
+      flash[:success] = "Updated #{@organization.name}!"
+    else
+      flash[:error] = @organization.errors.full_messages.join("; ")
     end
-    flash[:error] = @organization.errors.full_messages.join("; ")
-    render action: 'manage_organization'
+    redirect_to action: 'edit_organization', slug: @organization.slug
   end
 
   def update_memberships

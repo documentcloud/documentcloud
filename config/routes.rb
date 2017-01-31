@@ -209,6 +209,10 @@ DC::Application.routes.draw do
   get '/admin/organizations/?',     to: 'admin#organizations', as: 'admin_organizations'
   get '/admin/organizations/:slug/download_document_hits',
       to: 'admin#download_document_hits', as: 'admin_download_document_hits'
+  get '/admin/organizations/:slug/edit',
+      to: 'admin#edit_organization',      as: 'admin_edit_organization'
+  match '/admin/organizations/:id/update', to: 'admin#update_organization',
+        as: 'admin_update_organization', via: [:post, :put, :patch]
   get '/admin/health_check/:subject/:env', to: 'admin#health_check', subject: /page_embed/, env: /production|staging/
   
   # Standard fallback routes
