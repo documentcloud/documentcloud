@@ -64,6 +64,10 @@ class AdminController < ApplicationController
     end
   end
   
+  def tools
+    render layout: 'new'
+  end
+
   def expire_stats
     respond_to do |format|
       format.any do
