@@ -253,7 +253,7 @@ class AdminController < ApplicationController
     @hit_count           = @documents.sum(:hit_count)
     @top_count           = params.fetch(:top_count, 20)
     @top_uploaders       = Hash[@documents.group(:account_id).count.sort_by{|k,v| -v}.first(@top_count).map{ |arr| [Account.find(arr.first), arr.last]}]
-    @memberships         = @organization.memberships.real.order('id desc')
+    @memberships         = @organization.memberships.real.with_account.order('id desc')
     @member_count        = @memberships.count
     @admin_count         = @memberships.where(role:1).count
     render layout: 'new'
