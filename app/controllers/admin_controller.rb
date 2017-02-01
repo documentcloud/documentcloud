@@ -245,8 +245,6 @@ class AdminController < ApplicationController
     else
       @organization.created_at
     end
-    @member_count        = @organization.memberships.count
-    @admin_count         = @organization.memberships.where(role:1).count
     @documents           = Document.where(organization_id: @organization.id).where("created_at > ?", @since)
     @document_count      = @documents.count
     @documents_by_access = @documents.group(:access).count
@@ -255,7 +253,9 @@ class AdminController < ApplicationController
     @hit_count           = @documents.sum(:hit_count)
     @top_count           = params.fetch(:top_count, 20)
     @top_uploaders       = Hash[@documents.group(:account_id).count.sort_by{|k,v| -v}.first(@top_count).map{ |arr| [Account.find(arr.first), arr.last]}]
-    @administrators      = @organization.accounts.admin.order("created_at desc")
+    @memberships         = @organization.memberships.real.order('id desc')
+    @member_count        = @memberships.count
+    @admin_count         = @memberships.where(role:1).count
     render layout: 'new'
   end
   

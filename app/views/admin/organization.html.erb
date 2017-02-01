@@ -5,7 +5,7 @@
   }
 </style>
 
-<div class="container-md content paper">
+<div class="container-lg content paper">
   <section class="mt-4 mb-5">
     <%= link_to 'Edit', admin_edit_organization_path(slug: @organization.slug), class: 'btn btn-sm btn-primary float-right ml-1 mb-1' %>
     <p>
@@ -14,7 +14,7 @@
     </p>
   </section>
   <section class="mb-5">
-    <table class="table table-striped sortable">
+    <table class="table table-striped table-sortable">
       <thead>
         <tr>
           <th data-sort="string-ins">Top <%= @top_count %> Uploaders</th>
@@ -34,27 +34,40 @@
     </table>
   </section>
   <section>
-    <table class="table table-striped sortable">
+    <table class="table table-striped table-disablable table-sortable table-filterable">
       <thead>
         <tr>
-          <th data-sort="string-ins">Administrators</th>
+          <th data-sort="string-ins">Members</th>
           <th data-sort="string-ins">Email</th>
+          <th data-sort="string-ins">Role</th>
           <th data-sort="int">Age</th>
+        </tr>
+        <tr>
+          <th colspan="4">
+            <input type="text" class="form-control filterable-filter" placeholder="Quick filter…">
+          </th>
         </tr>
       </thead>
       <tbody>
-      <% @administrators.each do |account| %>
-        <tr>
-          <td><%= account.full_name %></td>
-          <td><%= mail_to account.email %></td>
-          <td data-sort-value="<%= account.created_at.to_i %>"><%= time_ago_in_words account.created_at %></td>
+      <% @memberships.each do |membership| %>
+        <tr <%= 'class=row-disabled' unless membership.active? %>>
+          <td><%= membership.account.full_name %></td>
+          <td><%= mail_to membership.account.email %></td>
+          <td><%= membership.role_name.titleize %></td>
+          <td data-sort-value="<%= membership.account.created_at.to_i %>"><%= time_ago_in_words membership.account.created_at %></td>
         </tr>
       <% end %>
       </tbody>
+      <tfoot>
+        <tr class="table-empty-notice">
+          <td colspan="4">Nothing matches that filter.</td>
+        </tr>
+      </tfoot>
     </table>
   </section>
 </div>
 
 <% content_for :javascript_footer_inline do %>
-  $('.sortable').stupidtable();
+  $('.table-sortable').stupidtable();
+  $('.table-filterable').quickFilterTable();
 <% end %>

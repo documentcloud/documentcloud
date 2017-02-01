@@ -15,6 +15,14 @@ class Membership < ActiveRecord::Base
     REAL_ROLES.include?(role)
   end
 
+  def active?
+    role && role != DISABLED
+  end
+
+  def role_name
+    ROLE_NAMES[role].to_s
+  end
+
   def canonical( options = {} )
     attrs = self.attributes
     attrs['account']           = account.canonical(options)      if options[:include_account]
