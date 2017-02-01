@@ -213,7 +213,6 @@ DC::Application.routes.draw do
   match '/admin/organizations/:id/update', to: 'admin#update_organization',
         as: 'admin_update_organization', via: [:post, :put, :patch]
   match '/admin/add_organization', to: 'admin#add_organization', as: 'admin_add_organization', via: [:get, :post]
-  get 'admin/memberships', to: 'admin#find_membership', as: 'admin_find_membership'
   get '/admin/health_check/:subject/:env', to: 'admin#health_check', subject: /page_embed/, env: /production|staging/
   get '/admin/signup', to: redirect('/admin/add_organization')
 
