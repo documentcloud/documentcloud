@@ -34,7 +34,7 @@
             <option value="<%= lang %>" <%= 'selected' if lang == @params[:organization][:document_language] %>><%= DC::Language::NAMES[lang] %></option>
             <% end %>
           </select>
-          <div class="form-text small text-muted">What language documents will default to for processing when uploaded</div>
+          <div class="form-text small text-muted">What language documents will default to for processing when uploaded.</div>
         </div>
       </div>
       <% if @account && !@account.errors.any? %>
