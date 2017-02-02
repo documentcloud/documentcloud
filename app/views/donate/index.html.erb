@@ -18,7 +18,7 @@
     <div class="container-sm">
   <% end %>
 
-      <%= bootstrap_form_tag url: donate_charge_path, html: {id: 'donation-form', class: 'form-inline'} do |f| %>
+      <%= bootstrap_form_tag url: donate_charge_path, html: {id: 'donation-form'} do |f| %>
         <%= hidden_field_tag(:stripe_token) %>
         <%= hidden_field_tag(:stripe_email) %>
         <%= hidden_field_tag(:donation_amount_cents) %>
