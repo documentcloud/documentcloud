@@ -204,6 +204,7 @@ DC::Application.routes.draw do
   # Admin section
   get '/admin',                     to: 'admin#index',            as: 'admin'
   get '/admin/tools',               to: 'admin#tools',            as: 'admin_tools'
+  get 'admin/memberships',          to: 'admin#memberships',      as: 'admin_memberships'
   get '/admin/organizations/:slug', to: 'admin#organization',     as: 'admin_organization'
   get '/admin/organizations/',      to: 'admin#organizations',    as: 'admin_organizations'
   get '/admin/organizations/:slug/download_document_hits',

@@ -276,13 +276,8 @@ class AdminController < ApplicationController
     redirect_to action: 'edit_organization', slug: @organization.slug
   end
 
-  def update_memberships
-    @account = Account.find(params[:id])
-    @account.set_default_membership(@account.memberships.find(params[:default_membership]))
-    params[:role].each do |membership_id, role|
-      @account.memberships.find(membership_id).update_attributes({ role: role })
-    end
-    redirect_to action: 'memberships'
+  def memberships
+    render layout: 'new'
   end
 
   def manage_memberships
@@ -292,9 +287,18 @@ class AdminController < ApplicationController
                  Account.find(params[:id])
                end
     if !@account
-      flash[:error] = "Account for #{params[:email]} was not found"
-      render action: 'memberships' and return
+      flash[:error] = "Account for <b>#{params[:email]}</b> was not found"
+      redirect_to action: 'memberships' and return
     end
+  end
+
+  def update_memberships
+    @account = Account.find(params[:id])
+    @account.set_default_membership(@account.memberships.find(params[:default_membership]))
+    params[:role].each do |membership_id, role|
+      @account.memberships.find(membership_id).update_attributes({ role: role })
+    end
+    redirect_to action: 'memberships'
   end
 
   # Endpoint for our pixel-ping application, to save our analytic data every
