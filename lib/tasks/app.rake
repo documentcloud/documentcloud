@@ -7,7 +7,7 @@ namespace :app do
       source = args[:src_file]
       source_name = File.basename(source)
       target_name = source_name.sub(/\.1(\.gz)?$/, ($1||""))
-      target_path = "#{args[:type]}/#{Date.today}.#{`hostname`.chomp}.#{source_name}"
+      target_path = "#{args[:type]}/#{Date.today}.#{`hostname`.chomp}.#{target_name}"
       DC::Store::AssetStore.new.save_backup(args[:src_file], target_path)
     end
 
