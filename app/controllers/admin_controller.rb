@@ -190,8 +190,7 @@ class AdminController < ApplicationController
         @response = Document.upload_statistics(:organization, org.id)
         render_cross_origin_json
       end
-      format.html { render }
-      format.any  { redirect_to format: 'html', params: pick(params, :id, :slug) }
+      format.any  { return not_implemented }
     end
   end
   
@@ -208,8 +207,7 @@ class AdminController < ApplicationController
         @response = Document.upload_statistics(:account, account.id)
         render_cross_origin_json
       end
-      format.html { render }
-      format.any  { redirect_to format: 'html', params: pick(params, :id, :slug) }
+      format.any  { return not_implemented }
     end
   end
   
