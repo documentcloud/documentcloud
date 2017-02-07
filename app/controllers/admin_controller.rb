@@ -198,10 +198,11 @@ class AdminController < ApplicationController
     account = case
     when params[:email]
       Account.lookup(params[:email])
-    when
+    when params[:id]
       Account.find(params[:id])
     end
     return not_found unless account
+
     respond_to do |format|
       format.json do
         @response = Document.upload_statistics(:account, account.id)
