@@ -126,19 +126,24 @@ class AdminController < ApplicationController
     @account = Account.lookup(user_params[:email])
     if @account # Check if the account should be moved
       if "t" != params[:move_account]
-        fail("#{user_params[:email]} already exists!") and render layout: 'new' and return
+        flash[:error] = "#{user_params[:email]} already exists!"
+        return render layout: 'new'
       end
     else
       @account = Account.create(user_params.merge(DEFAULT_SIGNUP_PARAMS[:organization]))
       if @account.errors.any?
-        fail(@account.errors.full_messages.join(', ')) and render layout: 'new' and return
+        flash[:error] = @account.errors.full_messages.join(', ')
+        return render layout: 'new'
       end
     end
 
     # create the organization
     organization_params = params.require(:organization).permit(:name, :slug, :language, :document_language)
     organization = Organization.create(organization_params)
-    return fail(organization.errors.full_messages.join(', ')) if organization.errors.any?
+    if organization.errors.any?
+      flash[:error] = organization.errors.full_messages.join(', ')
+      return render layout: 'new'
+    end
 
     # link the account to the organization
     membership = @account.memberships.create({
@@ -147,8 +152,7 @@ class AdminController < ApplicationController
     @account.set_default_membership(membership)
 
     @account.send_login_instructions
-    @success = "Account Created. Welcome email sent to #{@account.email}."
-    # clear variables so the form displays fresh
+    flash[:success] = "<b>#{organization.name}</b> created and welcome email sent to <b>#{@account.email}</b>."
     @account = nil
     @params  = DEFAULT_SIGNUP_PARAMS.dup
     render layout: 'new'
