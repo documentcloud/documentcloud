@@ -749,10 +749,6 @@ iframe.hidden_iframe {
 
 /*--------------------------- Notification Bar -------------------------------*/
     
-    /*#container {
-      position: relative;
-    }*/
-
     .notification_bar {
       background-color: #ffc;
       font-size: 11pt;

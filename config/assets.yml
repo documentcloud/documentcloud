@@ -63,8 +63,6 @@ stylesheets:
     - public/stylesheets/pages/workspace.css
   workspace:
     - public/stylesheets/pages/workspace.css
-  empty:
-    - public/stylesheets/pages/empty.css
   admin:
     - public/stylesheets/pages/admin.css
     - public/stylesheets/pages/admin_featured_reports.css
