@@ -23,7 +23,6 @@ DC::Application.routes.draw do
                                            options: /p-(\d+)-per-(\d+)-order-(\w+)-org-(\d+)(-secure)?/
 
   # Journalist workspace and surrounding HTML
-  get '/search',                   to: 'workspace#index', as: 'search'
   get '/search/preview',           to: 'search#preview',  as: 'preview'
   get '/search/restricted_count',  to: 'search#restricted_count'
   get '/search(/:query)(/p:page)', to: 'workspace#index', as: 'workspace'

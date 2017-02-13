@@ -12,7 +12,7 @@ class HomeController < ApplicationController
     @canonical_url = homepage_url
 
     if logged_in? && env["PATH_INFO"].slice(0,5) != "/home"
-      redirect_to search_url
+      redirect_to workspace_url
     end
 
     @document = Rails.cache.fetch( "homepage/featured_document" ) do
