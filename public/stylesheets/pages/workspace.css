@@ -148,7 +148,6 @@ body.workspace #content {
 #sidebar {
   width: 310px;
   position: absolute;
-  padding-top: 15px;
   top: 0; bottom: 0; left: 0;
 }
   #sidebar_background {
