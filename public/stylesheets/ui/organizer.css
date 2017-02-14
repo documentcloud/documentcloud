@@ -102,6 +102,11 @@ body.search_panel_tab #organizer { display:block; }
     border-bottom: 1px solid #e0e0e0;
   }
 
+#organizer .project_invitations .actions {
+  position: absolute;
+  top: 10px; right: 5px;
+}
+
 #organizer .account_links {
   display: none;
   color: #808080;
@@ -138,6 +143,12 @@ body.search_panel_tab #organizer { display:block; }
   }
     #organizer .box:hover, #organization_list .box:hover {
       background: #fff;
+    }
+    #organizer .project_invitations .box:hover {
+      background: #f4f3f1;
+      background-image: url(/images/embed/ui/box_back.png);
+      background-repeat: repeat-y;
+      background-position: right top;
     }
   body.search_panel_tab #organizer .box.is_selected,
   body.search_panel_tab #organizer .box.is_selected:hover {
