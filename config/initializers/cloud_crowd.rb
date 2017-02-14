@@ -1,6 +1,6 @@
 # Running in the console? 
 # Here's direct access to the CloudCrowd database.
-if defined? Rails::Console
+if not(Rails.env.test?) and defined? Rails::Console
   ENV['RAILS_ENV'] ||= (Rails.env || 'development')
 
   CloudCrowd.configure("./config/cloud_crowd/#{Rails.env}/config.yml")
