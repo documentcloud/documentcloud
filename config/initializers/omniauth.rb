@@ -1,6 +1,6 @@
 secrets = DC::SECRETS['omniauth']
 
-if secrets.blank?
+if secrets.blank? or Rails.env.test?
   STDERR.puts "OmniAuth secrets are not available.  Not performing initialization"
 else
 
