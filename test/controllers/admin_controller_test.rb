@@ -8,7 +8,7 @@ class AdminControllerTest < ActionController::TestCase
     get :index
     assert_response 403
     login_account! :admin
-    get :signup
+    get :add_organization
     assert_response read_only? ? 503 : :success
   end
 
@@ -19,47 +19,62 @@ class AdminControllerTest < ActionController::TestCase
       login_account! :admin
       assert accounts(:admin).dcloud_admin?
       params = {
-        "organization"=>{"name"=>"nathan",
-                         "slug"=>"testing",
-                         "language"=>"eng",
-                         "document_language"=>"eng"},
-        "account"=>{"email"=>"foo+nathan@documentcloud.org",
-                    "first_name"=>"test",
-                    "last_name"=>"bob"}}
-      post :signup, params
+        organization: {
+          name:              'Testing',
+          slug:              'testing',
+          language:          'eng',
+          document_language: 'eng',
+        },
+        account: {
+          email:      'testing@dcloud.org',
+          first_name: 'Test',
+          last_name:  'Tester'
+        }
+      }
+      post :add_organization, params
       assert_response :success
-      assert Organization.where( :slug=>'testing' ).first
-      assert Account.where( "email"=>"foo+nathan@documentcloud.org" ).first
+      assert Organization.where(slug: 'testing').first
+      assert Account.where(email: 'testing@dcloud.org').first
     end
 
     it "checks for existing accounts" do
       login_account! :admin
       params = {
-        "organization"=>{"name"=>"nathan",
-                         "slug"=>"testing",
-                         "language"=>"eng",
-                         "document_language"=>"eng"},
-        "account"=>{"email"=>louis.email,
-                    "first_name"=>"test",
-                    "last_name"=>"bob"}}
-      post :signup, params
+        organization: {
+          name:              'Testing',
+          slug:              'testing',
+          language:          'eng',
+          document_language: 'eng',
+        },
+        account: {
+          email:      louis.email,
+          first_name: 'Test',
+          last_name:  'Tester'
+        }
+      }
+      post :add_organization, params
       assert_match louis.email, flash[:error]
-      assert_nil Organization.where( :slug=>'testing' ).first
+      assert_nil Organization.where(slug: 'testing').first
     end
 
     it "moves accounts" do
       login_account! :admin
       params = {
-        "move_account"=>"t",
-        "organization"=>{"name"=>"nathan",
-                         "slug"=>"testing",
-                         "language"=>"eng",
-                         "document_language"=>"eng"},
-        "account"=>{"email"=>louis.email,
-                    "first_name"=>"test",
-                    "last_name"=>"bob"}}
+        move_account: 't',
+        organization: {
+          name:              'Testing',
+          slug:              'testing',
+          language:          'eng',
+          document_language: 'eng',
+        },
+        account: {
+          email:      louis.email,
+          first_name: 'Test',
+          last_name:  'Tester'
+        }
+      }
       assert_difference ->{ Organization.count }, 1 do
-        post :signup, params
+        post :add_organization, params
       end
       assert_nil flash[:error]
       org = Organization.find_by_slug('testing')
