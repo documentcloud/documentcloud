@@ -28,6 +28,28 @@
 #organizer { display: none; }
 body.search_panel_tab #organizer { display:block; }
 
+  #organizer .section_title {
+    position: relative;
+    font-weight: bold;
+    color: #000;
+    padding: 7px 7px 7px 30px;
+    text-shadow: 0 1px 0 #fff;
+    border-bottom: 1px solid #ccc;
+    border-right: 2px solid #ccc;
+    font-size: 10px;
+    text-transform: uppercase;
+    zoom: 1;
+  }
+
+  #organizer .section_title_action {
+    position: absolute;
+    right: 7px;
+    text-decoration: underline;
+    font-weight: normal;
+    color: #888;
+    text-shadow: none;
+  }
+
 #organizer_projects,
 #entities {
   position: relative;
@@ -296,10 +318,10 @@ body.search_panel_tab #organizer { display:block; }
 /*------------------------------- Scrolling ----------------------------------*/
 .scroll {
   position: absolute;
-  top: 5px; bottom: 5px; left: 0; right: 0;
+  top: 3px; bottom: 5px; left: 0; right: 0;
 }
   .scroll.not_active {
-    top: 5px; bottom: 15px;
+    top: 3px; bottom: 15px;
   }
   .scroll_content {
     position: absolute;
