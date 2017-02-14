@@ -49,6 +49,7 @@
     Organizations.reset(<%=raw @organizations.to_json(include_document_count: true, include_note_count: true) %>);
     <% if @current_account && @current_account.memberships.any? %>
       <%= render partial: 'accounts/current_account.js' %>
+      ProjectInvitations.reset(<%=raw @projects.to_json({account: @current_account, include_collaborators: true}) %>);
       Projects.reset(<%=raw @projects.to_json({account: @current_account, include_collaborators: true}) %>);
       dc.searchPrefixes = <%=raw DC::ALL_SEARCHES.to_json %>;
     <% end %>
