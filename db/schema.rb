@@ -11,69 +11,72 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160929174005) do
+ActiveRecord::Schema.define(version: 20170124201757) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+  enable_extension "hstore"
 
   create_table "accounts", force: :cascade do |t|
     t.string   "first_name",        limit: 40
     t.string   "last_name",         limit: 40
     t.string   "email",             limit: 100
-    t.string   "hashed_password",   limit: 255
+    t.string   "hashed_password"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.hstore   "identities"
     t.string   "language",          limit: 3,   default: "eng"
     t.string   "document_language", limit: 3,   default: "eng"
+    t.string   "provider"
+    t.string   "access_token"
+    t.integer  "uid"
   end
 
   add_index "accounts", ["email"], name: "index_accounts_on_email", unique: true, using: :btree
-  add_index "accounts", ["identities"], name: "index_accounts_on_identites", using: :gin
 
   create_table "annotations", force: :cascade do |t|
-    t.integer  "organization_id",            null: false
-    t.integer  "account_id",                 null: false
-    t.integer  "document_id",                null: false
-    t.integer  "page_number",                null: false
-    t.integer  "access",                     null: false
-    t.text     "title",                      null: false
+    t.integer  "organization_id",                null: false
+    t.integer  "account_id",                     null: false
+    t.integer  "document_id",                    null: false
+    t.integer  "page_number",                    null: false
+    t.integer  "access",                         null: false
+    t.text     "title",                          null: false
     t.text     "content"
-    t.string   "location",        limit: 40
+    t.string   "location",            limit: 40
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "moderation_approval"
   end
 
   add_index "annotations", ["document_id"], name: "index_annotations_on_document_id", using: :btree
 
   create_table "app_constants", force: :cascade do |t|
-    t.string "key",   limit: 255
-    t.string "value", limit: 255
+    t.string "key"
+    t.string "value"
   end
 
   create_table "bull_proof_china_shop_account_requests", force: :cascade do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "requester_email",      limit: 255
-    t.string   "requester_first_name", limit: 255
-    t.string   "requester_last_name",  limit: 255
+    t.string   "requester_email"
+    t.string   "requester_first_name"
+    t.string   "requester_last_name"
     t.text     "requester_notes"
-    t.string   "organization_name",    limit: 255
-    t.string   "organization_url",     limit: 255
-    t.string   "approver_email",       limit: 255
-    t.string   "approver_first_name",  limit: 255
-    t.string   "approver_last_name",   limit: 255
-    t.string   "country",              limit: 255,                 null: false
+    t.string   "organization_name"
+    t.string   "organization_url"
+    t.string   "approver_email"
+    t.string   "approver_first_name"
+    t.string   "approver_last_name"
+    t.string   "country",                              null: false
     t.text     "verification_notes"
-    t.integer  "status",                           default: 1
-    t.boolean  "agreed_to_terms",                  default: false
-    t.boolean  "authorized_posting",               default: false
-    t.string   "token",                limit: 255
-    t.string   "industry",             limit: 255
+    t.integer  "status",               default: 1
+    t.boolean  "agreed_to_terms",      default: false
+    t.boolean  "authorized_posting",   default: false
+    t.string   "token"
+    t.string   "industry"
     t.text     "use_case"
     t.text     "reference_links"
-    t.boolean  "marketing_optin",                  default: false
-    t.boolean  "in_market",                        default: false
+    t.boolean  "marketing_optin",      default: false
+    t.boolean  "in_market",            default: false
     t.string   "requester_position"
   end
 
@@ -109,10 +112,14 @@ ActiveRecord::Schema.define(version: 20160929174005) do
   end
 
   create_table "collaborations", force: :cascade do |t|
-    t.integer "project_id", null: false
-    t.integer "account_id", null: false
+    t.integer "project_id",                    null: false
+    t.integer "account_id",                    null: false
     t.integer "creator_id"
+    t.integer "membership_id"
+    t.boolean "hidden",        default: false
   end
+
+  add_index "collaborations", ["membership_id"], name: "index_collaborations_on_membership_id", using: :btree
 
   create_table "docdata", force: :cascade do |t|
     t.integer "document_id", null: false
@@ -120,7 +127,6 @@ ActiveRecord::Schema.define(version: 20160929174005) do
   end
 
   add_index "docdata", ["data"], name: "index_docdata_on_data", using: :gin
-  add_index "docdata", ["document_id"], name: "index_docdata_on_document_id", using: :btree
 
   create_table "document_reviewers", force: :cascade do |t|
     t.integer  "account_id",  null: false
@@ -135,7 +141,7 @@ ActiveRecord::Schema.define(version: 20160929174005) do
     t.integer  "access",                                           null: false
     t.integer  "page_count",                       default: 0,     null: false
     t.string   "title",               limit: 1000,                 null: false
-    t.string   "slug",                limit: 255,                  null: false
+    t.string   "slug",                                             null: false
     t.string   "source",              limit: 1000
     t.string   "language",            limit: 3
     t.text     "description"
@@ -150,15 +156,13 @@ ActiveRecord::Schema.define(version: 20160929174005) do
     t.boolean  "text_changed",                     default: false, null: false
     t.integer  "hit_count",                        default: 0,     null: false
     t.integer  "public_note_count",                default: 0,     null: false
-    t.integer  "file_size",                        default: 0,     null: false
     t.integer  "reviewer_count",                   default: 0,     null: false
+    t.integer  "file_size",                        default: 0,     null: false
     t.integer  "char_count",                       default: 0,     null: false
-    t.string   "original_extension",  limit: 255
+    t.string   "original_extension"
     t.text     "file_hash"
   end
 
-  add_index "documents", ["access", "id"], name: "index_documents_on_access_id", using: :btree
-  add_index "documents", ["access", "organization_id"], name: "index_documents_on_access_orgnaization_id", using: :btree
   add_index "documents", ["access"], name: "index_documents_on_access", using: :btree
   add_index "documents", ["account_id"], name: "index_documents_on_account_id", using: :btree
   add_index "documents", ["file_hash"], name: "index_documents_on_file_hash", using: :btree
@@ -166,13 +170,13 @@ ActiveRecord::Schema.define(version: 20160929174005) do
   add_index "documents", ["public_note_count"], name: "index_documents_on_public_note_count", using: :btree
 
   create_table "entities", force: :cascade do |t|
-    t.integer "organization_id",                           null: false
-    t.integer "account_id",                                null: false
-    t.integer "document_id",                               null: false
-    t.integer "access",                                    null: false
-    t.string  "kind",            limit: 40,                null: false
-    t.string  "value",           limit: 255,               null: false
-    t.float   "relevance",                   default: 0.0, null: false
+    t.integer "organization_id",                          null: false
+    t.integer "account_id",                               null: false
+    t.integer "document_id",                              null: false
+    t.integer "access",                                   null: false
+    t.string  "kind",            limit: 40,               null: false
+    t.string  "value",                                    null: false
+    t.float   "relevance",                  default: 0.0, null: false
     t.string  "calais_id",       limit: 40
     t.text    "occurrences"
   end
@@ -192,12 +196,12 @@ ActiveRecord::Schema.define(version: 20160929174005) do
   add_index "entity_dates", ["document_id", "date"], name: "index_metadata_dates_on_document_id_and_date", unique: true, using: :btree
 
   create_table "featured_reports", force: :cascade do |t|
-    t.string   "url",           limit: 255,             null: false
-    t.string   "title",         limit: 255,             null: false
-    t.string   "organization",  limit: 255,             null: false
-    t.date     "article_date",                          null: false
-    t.text     "writeup",                               null: false
-    t.integer  "present_order",             default: 0, null: false
+    t.string   "url",                       null: false
+    t.string   "title",                     null: false
+    t.string   "organization",              null: false
+    t.date     "article_date",              null: false
+    t.text     "writeup",                   null: false
+    t.integer  "present_order", default: 0
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -219,17 +223,12 @@ ActiveRecord::Schema.define(version: 20160929174005) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "demo",                          default: false, null: false
-    t.string   "language",          limit: 3,   default: "eng"
-    t.string   "document_language", limit: 3,   default: "eng"
+    t.string   "language",          limit: 3
+    t.string   "document_language", limit: 3
   end
 
   add_index "organizations", ["name"], name: "index_organizations_on_name", unique: true, using: :btree
   add_index "organizations", ["slug"], name: "index_organizations_on_slug", unique: true, using: :btree
-
-  create_table "page_count", id: false, force: :cascade do |t|
-    t.integer "document_id"
-    t.integer "count",       limit: 8
-  end
 
   create_table "pages", force: :cascade do |t|
     t.integer "organization_id", null: false
@@ -247,14 +246,30 @@ ActiveRecord::Schema.define(version: 20160929174005) do
   add_index "pages", ["page_number"], name: "index_pages_on_page_number", using: :btree
   add_index "pages", ["start_offset", "end_offset"], name: "index_pages_on_start_offset_and_end_offset", using: :btree
 
+  create_table "pending_memberships", force: :cascade do |t|
+    t.string   "first_name",                        null: false
+    t.string   "last_name",                         null: false
+    t.string   "email",                             null: false
+    t.string   "organization_name",                 null: false
+    t.string   "usage",                             null: false
+    t.string   "editor"
+    t.string   "website"
+    t.boolean  "validated",         default: false, null: false
+    t.text     "notes"
+    t.integer  "organization_id"
+    t.hstore   "fields"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "processing_jobs", force: :cascade do |t|
-    t.integer "account_id",                                  null: false
-    t.integer "cloud_crowd_id",                              null: false
-    t.string  "title",          limit: 1000,                 null: false
+    t.integer "account_id",                     null: false
+    t.integer "cloud_crowd_id",                 null: false
+    t.string  "title",                          null: false
     t.integer "document_id"
     t.string  "action"
     t.string  "options"
-    t.boolean "complete",                    default: false
+    t.boolean "complete",       default: false
   end
 
   add_index "processing_jobs", ["account_id"], name: "index_processing_jobs_on_account_id", using: :btree
@@ -270,22 +285,38 @@ ActiveRecord::Schema.define(version: 20160929174005) do
   add_index "project_memberships", ["document_id"], name: "index_project_memberships_on_document_id", using: :btree
   add_index "project_memberships", ["project_id"], name: "index_project_memberships_on_project_id", using: :btree
 
+  create_table "project_organizations", force: :cascade do |t|
+    t.integer  "organization_id"
+    t.integer  "project_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "project_organizations", ["organization_id"], name: "index_project_organizations_on_organization_id", using: :btree
+  add_index "project_organizations", ["project_id"], name: "index_project_organizations_on_project_id", using: :btree
+
   create_table "projects", force: :cascade do |t|
     t.integer "account_id"
-    t.string  "title",       limit: 255
+    t.string  "title"
     t.text    "description"
-    t.boolean "hidden",                  default: false, null: false
+    t.boolean "hidden",      default: false, null: false
   end
 
   add_index "projects", ["account_id"], name: "index_labels_on_account_id", using: :btree
+
+  create_table "remote_urls", force: :cascade do |t|
+    t.integer "document_id",             null: false
+    t.string  "url",                     null: false
+    t.integer "hits",        default: 0, null: false
+  end
 
   create_table "sections", force: :cascade do |t|
     t.integer "organization_id", null: false
     t.integer "account_id",      null: false
     t.integer "document_id",     null: false
-    t.integer "access",          null: false
     t.text    "title",           null: false
     t.integer "page_number",     null: false
+    t.integer "access",          null: false
   end
 
   add_index "sections", ["document_id"], name: "index_sections_on_document_id", using: :btree
@@ -305,4 +336,6 @@ ActiveRecord::Schema.define(version: 20160929174005) do
     t.datetime "updated_at",                            null: false
   end
 
+  add_foreign_key "project_organizations", "organizations"
+  add_foreign_key "project_organizations", "projects"
 end

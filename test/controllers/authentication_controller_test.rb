@@ -35,27 +35,4 @@ class AuthenticationControllerTest < ActionController::TestCase
     get :logout
     assert_nil session['account_id']
   end
-
-  # Tests that don't matter in read-only mode
-  unless Rails.application.config.read_only
-
-    def test_logs_in_from_omniauth_callback
-      request.env['omniauth.auth'] = {
-        'provider' => 'twitter',
-        'uid' => '424',
-        'info' =>{
-          'email' => 'test@test.com',
-          'name'  => 'Testing Tester'
-        }
-      }
-      assert_empty Account.with_identity( 'twitter', '424' )
-      assert_difference( 'Account.count' ) do
-        get :callback
-      end
-      account = Account.where( email: 'test@test.com' ).first
-      assert_equal 'Testing', account.first_name
-    end
-
-  end
-
 end

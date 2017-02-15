@@ -20,5 +20,4 @@ class HomeControllerTest < ActionController::TestCase
     yaml = YAML.load_file("#{Rails.root}/app/views/home/contributors.yml")
     assert_equal yaml['contributors'], assigns(:contributors)
   end
-
 end
