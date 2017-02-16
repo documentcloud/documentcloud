@@ -14,7 +14,8 @@ class WorkspaceController < ApplicationController
   # searching, the home page otherwise.
   def index
     if logged_in? and current_account.real?
-      @projects = Project.load_for(current_account)
+      @projects = Project.load_for(current_account) # TODO: Filter out invitations
+      @project_invitations = [] # TODO: Fill this is in with invitations
       @current_organization = current_account.organization
       @organizations = Organization.all_slugs
       @has_documents = Document.owned_by(current_account).exists?
