@@ -1,3 +1,4 @@
+
 # encoding: UTF-8
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
@@ -15,6 +16,7 @@ ActiveRecord::Schema.define(version: 20170124201757) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+  enable_extension "dblink"
   enable_extension "hstore"
 
   create_table "accounts", force: :cascade do |t|
@@ -217,6 +219,16 @@ ActiveRecord::Schema.define(version: 20170124201757) do
   add_index "memberships", ["account_id"], name: "index_memberships_on_account_id", using: :btree
   add_index "memberships", ["organization_id"], name: "index_memberships_on_organization_id", using: :btree
 
+  create_table "organization_projects", force: :cascade do |t|
+    t.integer  "organization_id"
+    t.integer  "project_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "organization_projects", ["organization_id"], name: "index_organization_projects_on_organization_id", using: :btree
+  add_index "organization_projects", ["project_id"], name: "index_organization_projects_on_project_id", using: :btree
+
   create_table "organizations", force: :cascade do |t|
     t.string   "name",              limit: 100,                 null: false
     t.string   "slug",              limit: 100,                 null: false
@@ -285,16 +297,6 @@ ActiveRecord::Schema.define(version: 20170124201757) do
   add_index "project_memberships", ["document_id"], name: "index_project_memberships_on_document_id", using: :btree
   add_index "project_memberships", ["project_id"], name: "index_project_memberships_on_project_id", using: :btree
 
-  create_table "project_organizations", force: :cascade do |t|
-    t.integer  "organization_id"
-    t.integer  "project_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "project_organizations", ["organization_id"], name: "index_project_organizations_on_organization_id", using: :btree
-  add_index "project_organizations", ["project_id"], name: "index_project_organizations_on_project_id", using: :btree
-
   create_table "projects", force: :cascade do |t|
     t.integer "account_id"
     t.string  "title"
@@ -336,6 +338,7 @@ ActiveRecord::Schema.define(version: 20170124201757) do
     t.datetime "updated_at",                            null: false
   end
 
-  add_foreign_key "project_organizations", "organizations"
-  add_foreign_key "project_organizations", "projects"
+  add_foreign_key "organization_projects", "organizations"
+  add_foreign_key "organization_projects", "projects"
+
 end
