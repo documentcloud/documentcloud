@@ -33,9 +33,10 @@ dc.ui.Organizer = Backbone.View.extend({
   render : function() {
     var searches = dc.account ? this.PRIVATE_SEARCHES : this.PUBLIC_SEARCHES;
     $(this.el).append(JST['organizer/sidebar']({searches : searches}));
-    this.projectInputEl = this.$('#project_input');
-    this.projectList    = this.$('.project_list');
-    this.sidebar        = $('#sidebar');
+    this.projectInputEl      = this.$('#project_input');
+    this.projectList         = this.$('.project_list');
+    this.$projectInvitations = this.$('#project_invitations');
+    this.sidebar             = $('#sidebar');
     this.renderAccounts();
     this.renderAll();
     return this;
@@ -47,6 +48,14 @@ dc.ui.Organizer = Backbone.View.extend({
         this.setMode('no', 'projects');
       } else {
         Projects.each(this._addProject);
+      }
+      if (ProjectInvitations.isEmpty()) {
+        this.setMode('no', 'project_invitations')
+      } else {
+        this.projectInvitationList = new dc.ui.ProjectInvitationList({
+          el:         this.$projectInvitations,
+          collection: ProjectInvitations
+        });
       }
     } else {
       this.$('.organization_list').html(JST['organizer/organizations']({organizations: Organizations}));

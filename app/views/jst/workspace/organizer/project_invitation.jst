@@ -1,0 +1,12 @@
+<div class="title interface">
+  <%= title %>
+</div>
+<div class="meta interface">
+  Invited by <%= account_full_name %>
+</div>
+<div class="actions">
+  <% if (!hidden) { %>
+    <span class="minibutton cancel dark dismiss" title="Dismiss invitation">×</span>
+  <% } %>
+  <span class="minibutton ok default accept" title="Accept invitation and join project">✔︎</span>
+</div>

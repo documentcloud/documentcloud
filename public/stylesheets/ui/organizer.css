@@ -102,9 +102,24 @@ body.search_panel_tab #organizer { display:block; }
     border-bottom: 1px solid #e0e0e0;
   }
 
-#organizer .project_invitations .actions {
+#organizer #project_invitations .actions {
   position: absolute;
   top: 10px; right: 5px;
+}
+
+#organizer #project_invitations .hidden_invitation {
+  display: none;
+}
+  #organizer #project_invitations .hidden_invitation .title,
+  #organizer #project_invitations .hidden_invitation .meta {
+    color: #999;
+  }
+  #organizer #project_invitations.show_hidden_project_invitations .hidden_invitation {
+    display: block;
+  }
+
+#organizer.no_project_invitations #project_invitations {
+  display: none;
 }
 
 #organizer .account_links {
@@ -144,7 +159,8 @@ body.search_panel_tab #organizer { display:block; }
     #organizer .box:hover, #organization_list .box:hover {
       background: #fff;
     }
-    #organizer .project_invitations .box:hover {
+    #organizer #project_invitations .box:hover {
+      cursor: default;
       background: #f4f3f1;
       background-image: url(/images/embed/ui/box_back.png);
       background-repeat: repeat-y;
@@ -187,6 +203,9 @@ body.search_panel_tab #organizer { display:block; }
     #organization_list .box .last_word {
       white-space: nowrap;
     }
+    #organizer #project_invitations .box .title {
+      padding-right: 60px;
+    }
   #organizer .box .description,
   #organization_list .box .description {
     font-size: 11px;
@@ -194,6 +213,7 @@ body.search_panel_tab #organizer { display:block; }
     margin: 5px 0;
     color: #333;
   }
+  #organizer .box .meta,
   #organizer .box .counts,
   #organizer .top_level_search .text_link,
   #organization_list .box .counts {
@@ -202,6 +222,7 @@ body.search_panel_tab #organizer { display:block; }
     color: #808080;
   }
     #organizer .box .counts,
+    #organizer .box .meta,
     #organization_list .box .counts {
       line-height: 14px; margin: 2px 0 1px 0;
     }
