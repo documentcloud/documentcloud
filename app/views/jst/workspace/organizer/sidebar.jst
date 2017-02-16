@@ -24,48 +24,48 @@
       <% } %>
     </div>
 
-    <% if (dc.account) { %>
+  <% if (dc.account) { %>
 
-      <div id="project_controls" class="block">
-        <form id="new_document_form" class="float_left" action="/import/upload_document" method="POST" enctype="multipart/form-data" target="upload_iframe">
-          <div class="minibutton float_left plus" id="new_document"><div class="icon white_plus"></div><%= _.t('new_documents') %></div>
-          <button type="submit"><%= _.t('new_documents') %></button>
-          <input id="new_document_project" name="project_id" type="text" style="display:none;" value="" />
-          <input id="new_document_input" name="file" type="file" multiple />
-          <iframe id="upload_iframe" name="upload_iframe" src="about:blank" class="hidden_iframe">
-          </iframe>
-        </form>
-        <div class="minibutton float_right plus" id="new_project"><div class="icon white_plus"></div><%= _.t('new_project') %></div>
-        <div class="clear"></div>
-      </div>
+    <div id="project_controls" class="block">
+      <form id="new_document_form" class="float_left" action="/import/upload_document" method="POST" enctype="multipart/form-data" target="upload_iframe">
+        <div class="minibutton float_left plus" id="new_document"><div class="icon white_plus"></div><%= _.t('new_documents') %></div>
+        <button type="submit"><%= _.t('new_documents') %></button>
+        <input id="new_document_project" name="project_id" type="text" style="display:none;" value="" />
+        <input id="new_document_input" name="file" type="file" multiple />
+        <iframe id="upload_iframe" name="upload_iframe" src="about:blank" class="hidden_iframe">
+        </iframe>
+      </form>
+      <div class="minibutton float_right plus" id="new_project"><div class="icon white_plus"></div><%= _.t('new_project') %></div>
+      <div class="clear"></div>
+    </div>
 
-      <div id="project_invitations">
-        <!-- Render target for project invitations. -->
-      </div>
+    <div id="project_invitations">
+      <!-- Render target for project invitations. -->
+    </div>
 
-      <div class="section_title gradient_light">Projects</div>
-      <div class="project_list">
-        <!-- Render target for projects. -->
-      </div>
+    <div class="section_title gradient_light">Projects</div>
+    <div class="project_list">
+      <!-- Render target for projects. -->
+    </div>
 
-      <div class="project_help help_text">
-        <p>
-          <%= _.t('no_projects_help') %>
-        </p>
-      </div>
+    <div class="project_help help_text">
+      <p>
+        <%= _.t('no_projects_help') %>
+      </p>
+    </div>
 
-    <% } else { %>
+  <% } else { %>
 
     <div class="section_title gradient_light">Organizations</div>
-      <div class="organization_list">
-        <!-- Render target for organizations -->
-      </div>
+    <div class="organization_list">
+      <!-- Render target for organizations -->
+    </div>
 
-      <div class="block explanation first_explanation">
-        <%= _.t('public_documents_help') %>
-      </div>
+    <div class="block explanation first_explanation">
+      <%= _.t('public_documents_help') %>
+    </div>
 
-    <% } %>
+  <% } %>
 
   </div>
 
