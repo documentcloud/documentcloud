@@ -116,8 +116,8 @@ class AdminController < ApplicationController
   def add_organization
     unless request.post?
       @params                = DEFAULT_SIGNUP_PARAMS.dup
-      @params[:organization] = @params[:organization].merge(params[:organization])
-      @params[:account]      = @params[:account].merge(params[:account])
+      @params[:organization] = @params[:organization].merge(params[:organization] || {})
+      @params[:account]      = @params[:account].merge(params[:account] || {})
       return render layout: 'new'
     end
     @params = params
