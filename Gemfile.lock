@@ -1,6 +1,6 @@
 GIT
   remote: git@github.com:documentcloud/bull_proof_china_shop
-  revision: 64abcde27387c080fa58e79289f4a2632660f54d
+  revision: 648729a16dd568d286ae0343429632fe20f68537
   branch: master
   specs:
     bull_proof_china_shop (0.0.1)
@@ -433,4 +433,4 @@ DEPENDENCIES
   webmock
 
 BUNDLED WITH
-   1.12.5
+   1.14.4
