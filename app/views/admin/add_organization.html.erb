@@ -37,40 +37,30 @@
           <div class="form-text small text-muted">What language documents will default to for processing when uploaded.</div>
         </div>
       </div>
-      <% if @account && !@account.errors.any? %>
-        <div class="form-group has-danger row">
-          <label for="account_email" class="col-sm-4 col-form-label">Admin Email Address</label>
-          <div class="col-sm-8">
-            <input type="email" class="form-control" name="account[email]" id="account_email" value="<%= @params[:account][:email] %>" readonly>
-            <% if @account.organization %>
-              <p class="form-control-feedback">That account already exists with the name <b><%= @account.full_name %></b>, and is currently linked to <b><%= @account.organization.name %></b>.</p>
-              <label class="custom-control custom-checkbox">
-                <input type="checkbox" class="custom-control-input" name="move_account" value="t">
-                <span class="custom-control-indicator"></span>
-                <span class="custom-control-description">Click here to move the account to this new organization</span>
-              </label>
-            <% else %>
-              <p class="form-control-feedback">Account already exists but is currently linked to no organization. Weird.</p>
-            <% end %>
-          </div>
+      <div class="form-group row">
+        <label for="account_email" class="col-sm-4 col-form-label">Admin Email Address</label>
+        <div class="col-sm-8">
+          <input type="email" class="form-control" name="account[email]" id="account_email" value="<%= @params[:account][:email] %>" placeholder="c.kent@dailyplanet.foo">
         </div>
-      <% else %>
-        <div class="form-group row">
-          <label for="account_email" class="col-sm-4 col-form-label">Admin Email Address</label>
-          <div class="col-sm-8">
-            <input type="email" class="form-control" name="account[email]" id="account_email" value="<%= @params[:account][:email] %>" placeholder="c.kent@dailyplanet.foo" <%= 'readonly' if @account && !@account.errors.any? %>>
-          </div>
+      </div>
+      <div class="form-group row">
+        <label for="account_first_name" class="col-sm-4 col-form-label">Admin Name</label>
+        <div class="col-sm-4">
+          <input type="text" class="form-control" name="account[first_name]" id="account_first_name" placeholder="Clark" value="<%= @params[:account][:first_name] %>">
         </div>
-        <div class="form-group row">
-          <label for="account_first_name" class="col-sm-4 col-form-label">Admin Name</label>
-          <div class="col-sm-4">
-            <input type="text" class="form-control" name="account[first_name]" id="account_first_name" placeholder="Clark" value="<%= @params[:account][:first_name] %>">
-          </div>
-          <div class="col-sm-4">
-            <input type="text" class="form-control" name="account[last_name]" id="account_last_name" placeholder="Kent" value="<%= @params[:account][:last_name] %>">
-          </div>
+        <div class="col-sm-4">
+          <input type="text" class="form-control" name="account[last_name]" id="account_last_name" placeholder="Kent" value="<%= @params[:account][:last_name] %>">
         </div>
-      <% end %>
+      </div>
+      <div class="row">
+        <div class="col-sm-8 offset-sm-4">
+          <label class="custom-control custom-checkbox">
+            <input type="checkbox" class="custom-control-input" name="authorize" value="y" <%= 'checked' if @params[:authorize] == 'y' %>>
+            <span class="custom-control-indicator"></span>
+            <span class="custom-control-description small">If the admin already exists, should we make this organization its <b>default membership</b>?</span>
+          </label>
+        </div>
+      </div>
       <p class="my-5"><button type="submit" class="btn btn-success">Add organization</button></p>
     <% end %>
     <p class="text-center note mb-0">This form is intended as an admin tool. All users, especially those who plan to upload documents to DocumentCloud, should review our <%= link_to 'terms of service', terms_path %>.</p>

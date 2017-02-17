@@ -107,54 +107,52 @@ class AdminController < ApplicationController
   # its first account. If everything's kosher, the journalist is logged in.
   # NB: This needs to stay access controlled by the bouncer throughout the beta.
   DEFAULT_SIGNUP_PARAMS = HashWithIndifferentAccess.new({
-    account:      {},
+    account: {
+      language: DC::Language::DEFAULT,
+      document_language: DC::Language::DEFAULT
+    },
     organization: {
       language: DC::Language::DEFAULT,
       document_language: DC::Language::DEFAULT
     }
   })
   def add_organization
-    unless request.post?
-      @params                = DEFAULT_SIGNUP_PARAMS.dup
-      @params[:organization] = @params[:organization].merge(params[:organization] || {})
-      @params[:account]      = @params[:account].merge(params[:account] || {})
-      return render layout: 'new'
-    end
-    @params = params
+    @params                = DEFAULT_SIGNUP_PARAMS.dup
+    @params[:organization] = @params[:organization].merge(params[:organization] || {})
+    @params[:account]      = @params[:account].merge(params[:account] || {})
+    return render layout: 'new' unless request.post?
 
-    user_params = params.require(:account).permit(:first_name, :last_name, :email, :slug, :language, :document_language)
+    user_params = params.require(:account).permit(:first_name, :last_name, :email)
 
     # First see if an account already exists for the email
-    @account = Account.lookup(user_params[:email])
-    if @account # Check if the account should be moved
-      if "t" != params[:move_account]
-        flash[:error] = "#{user_params[:email]} already exists!"
-        return render layout: 'new'
-      end
-    else
-      @account = Account.create(user_params.merge(DEFAULT_SIGNUP_PARAMS[:organization]))
+    is_new_account = false
+    unless @account = Account.lookup(user_params[:email])
+      @account = Account.create(user_params.merge(DEFAULT_SIGNUP_PARAMS[:account]))
       if @account.errors.any?
-        flash[:error] = @account.errors.full_messages.join(', ')
+        flash.now[:error] = @account.errors.full_messages.join(', ')
         return render layout: 'new'
       end
+      is_new_account = true
     end
 
     # create the organization
     organization_params = params.require(:organization).permit(:name, :slug, :language, :document_language)
     organization = Organization.create(organization_params)
     if organization.errors.any?
-      flash[:error] = organization.errors.full_messages.join(', ')
+      flash.now[:error] = organization.errors.full_messages.join(', ')
+      @account.destroy if is_new_account
       return render layout: 'new'
     end
 
     # link the account to the organization
     membership = @account.memberships.create({
-      role: Account::ADMINISTRATOR, default: true, organization: organization
+      organization: organization,
+      role: Account::ADMINISTRATOR
     })
-    @account.set_default_membership(membership)
+    @account.set_default_membership(membership) if is_new_account || params[:authorize] == 'y'
 
-    @account.send_login_instructions
-    flash[:success] = "<b>#{organization.name}</b> created and welcome email sent to <b>#{@account.email}</b>."
+    @account.send_login_instructions(organization)
+    flash.now[:success] = "<b>#{organization.name}</b> created and welcome email sent to <b>#{@account.email}</b>."
     @account = nil
     @params  = DEFAULT_SIGNUP_PARAMS.dup
     render layout: 'new'
