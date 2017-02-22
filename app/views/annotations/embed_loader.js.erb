@@ -7,7 +7,7 @@
   dc.noteQueue       = dc.noteQueue || [];
   dc.recordHit       = "<%= server_root %>/pixel.gif";
   dc.embed           = dc.embed || {};
-  dc.embed.loadNote  = function(url, options) {
+  dc.embed.loadNote  = function(note, options) {
     var insertStylesheet = function(href, media) {
       if (!document.querySelector('link[href$="' + href + '"]')) {
         media = media || 'screen';
@@ -37,7 +37,7 @@
       if (loadNote) {
         var q = dc.noteQueue;
         for (var i = 0, qLength = q.length; i < qLength; i++) {
-          loadNote(q[i].url, q[i].options);
+          loadNote(q[i].note, q[i].options);
         }
         dc.noteQueue = [];
       } else if (window.console) {
@@ -46,9 +46,9 @@
     };
     insertStylesheet('<%= asset_root %>/note_embed/note_embed-datauri.css');
     if (dc.embed.immediatelyLoadNote) {
-      dc.embed.immediatelyLoadNote(url, options);
+      dc.embed.immediatelyLoadNote(note, options);
     } else {
-      dc.noteQueue.push({url: url, options: options});
+      dc.noteQueue.push({note: note, options: options});
       insertJavaScript('<%= asset_root %>/note_embed/note_embed.js', loadQueuedNotes);
     }
   }
