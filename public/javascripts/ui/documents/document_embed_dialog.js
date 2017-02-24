@@ -31,10 +31,11 @@ dc.ui.DocumentEmbedDialog = dc.ui.Dialog.extend({
   DEMO_ERROR : _.t('demo_embed_error', '<a href="/contact">','</a>', '<a href="/help/publishing">','</a>'),
 
   DEFAULT_OPTIONS : {
-    width   : null,
-    height  : null,
-    sidebar : true,
-    text    : true
+    width      : null,
+    height     : null,
+    responsive : true,
+    sidebar    : true,
+    text       : true
   },
 
   // Can't have an embed dialog without a document.
@@ -93,11 +94,21 @@ dc.ui.DocumentEmbedDialog = dc.ui.Dialog.extend({
     var options = {};
     var openToPage = this.$('.page_select').val();
     var openToNote = this.$('.note_select').val();
-    if (this._viewerSizeEl.val() == 'fixed') {
-      var width   = parseInt(this._widthEl.val(), 10);
-      var height  = parseInt(this._heightEl.val(), 10);
-      if (width)  options.width  = width;
-      if (height) options.height = height;
+    switch (this._viewerSizeEl.val()) {
+      case 'responsive':
+        options.responsive = true;
+        var height  = parseInt(this._heightEl.val(), 10);
+        if (height) options.height = height;
+        break;
+      case 'fixed':
+        delete options.responsive;
+        var width   = parseInt(this._widthEl.val(), 10);
+        var height  = parseInt(this._heightEl.val(), 10);
+        if (width)  options.width  = width;
+        if (height) options.height = height;
+        break;
+      default:
+        delete options.responsive;
     }
     if (!this._sidebarEl.is(':checked'))  options.sidebar = false;
     if (!this._showTextEl.is(':checked')) options.text    = false;
@@ -138,7 +149,8 @@ dc.ui.DocumentEmbedDialog = dc.ui.Dialog.extend({
   // between embeds. *Nifty.*
   _loadPreferences : function() {
     var options = JSON.parse(dc.app.preferences.get('document_embed_options')) || this.DEFAULT_OPTIONS;
-    if (options.width || options.height) this._viewerSizeEl.val('fixed');
+    if (options.responsive) this._viewerSizeEl.val('responsive');
+    else if (options.width || options.height) this._viewerSizeEl.val('fixed');
     this._widthEl.val(options.width);
     this._heightEl.val(options.height);
     this._showPDFEl.attr('checked', options.pdf );
@@ -179,7 +191,10 @@ dc.ui.DocumentEmbedDialog = dc.ui.Dialog.extend({
 
   // After every keystroke or input change, check if the viewer size has been set.
   _toggleDimensions : function() {
-    this.$('.dimensions').toggle(this._viewerSizeEl.val() == 'fixed');
+    // Hide both dimensions for full page selection
+    this.$('.dimensions').toggle(this._viewerSizeEl.val() != 'full');
+    // Hide width for everything but fixed
+    this.$('.dimensions_width').toggle(this._viewerSizeEl.val() == 'fixed')
   },
 
   // On step 1, if a user changes any document attributes, save them and only

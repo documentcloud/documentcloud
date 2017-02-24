@@ -38,16 +38,16 @@
   <div class="publish_section">
     <label><%= _.t('document_viewer_size') %>:</label>
     <select name="viewer_size">
-      <option value="full" selected="selected"><%= _.t('full_page') %></option>
+      <option value="responsive">Responsive (Beta)</option>
       <option value="fixed"><%= _.t('fixed_size') %></option>
+      <option value="full"><%= _.t('full_page') %></option>
     </select>
     <span class="dimensions">
-      <label for="publish_option_width">
+      <label class="dimensions_width" for="publish_option_width">
         <%= _.t('width') %>:
         <input id="publish_option_width" type="text" name="width" value="" />px
       </label>
-      &nbsp;&nbsp;
-      <label for="publish_option_height">
+      <label class="dimensions_height" for="publish_option_height">
         <%= _.t('height') %>:
         <input id="publish_option_height" type="text" name="height" value="" />px
       </label>
