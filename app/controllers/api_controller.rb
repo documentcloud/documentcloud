@@ -5,8 +5,6 @@ class ApiController < ApplicationController
 
   layout nil
 
-  before_action :s3_outage_error, only: [:upload, :update, :destroy]
-
   READONLY_ACTIONS = [
     :index, :search, :documents, :pending, :notes, :entities, :project, :projects, :oembed,
     :cors_options, :logger
