@@ -8,7 +8,7 @@
 
 .form_v2 button {
   display: inline-block;
-  font: 700 1em/1.2em 'Gotham SSm A', 'Gotham SSm B', 'Gotham A', 'Gotham B', Gotham, 'Proxima Nova', 'Avenir Next', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font: 700 1em/1.2em -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   height: 3em;
   padding: 0 0.8em;
   vertical-align: middle;
@@ -126,7 +126,7 @@
           box-sizing: border-box;
   width: 1.7em;
   height: 1.7em;
-  line-height: 1.5em;
+  line-height: 1.25em;
 
 	-webkit-transition: background-color 0.25s, border-color 0.25s, color 0.25s;
           transition: background-color 0.25s, border-color 0.25s, color 0.25s;
@@ -274,7 +274,7 @@
 	border-radius: 5px;
 	border: none;
 	border-bottom: 2px solid rgb(125, 127, 127);
-	font: 300 1em/1.2em 'Gotham SSm A', 'Gotham SSm B', 'Gotham A', 'Gotham B', Gotham, 'Proxima Nova', 'Avenir Next', 'Helvetica Neue', Helvetica, Arial, sans-serif !important;
+	font: 300 1em/1.2em -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
 	-webkit-appearance: none; /* for box shadows to show on iOS */
 	-webkit-transition: border-color 0.25s;
         	transition: border-color 0.25s;
