@@ -56,13 +56,5 @@
 
   <%= render :partial => 'common/google' if @include_analytics %>
 
-  <script type="text/javascript">
-    $(document).ready(function(){
-      if (dc.account) {
-        $('.upload-disabled-warning').removeClass('hidden');
-      }
-    });
-  </script>
-
 </body>
 </html>
