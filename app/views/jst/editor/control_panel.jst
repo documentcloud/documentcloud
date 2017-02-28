@@ -32,7 +32,7 @@
   <span class="warn"><%= _.t('add_private_note_warn') %></span>
 </div>
 <% if (isOwner || isReviewer) { %>
-  <!-- <div class="redact_annotation button">
+  <div class="redact_annotation button">
     <div class="icon mini_redaction"></div>
     <div class="icon cancel_search"></div>
     <span><%= _.t('redact_document') %></span>
@@ -45,8 +45,8 @@
     <br /><br />
     <div class="minibutton cancel_redactions"><%= _.t('cancel') %></div>
     <div class="minibutton default save_redactions"><%= _.t('save_redactions') %></div>
-  </div> -->
-<% } %>
+  </div> 
+<% } %> 
 <% if (isOwner) { %>
   <div class="set_sections button"><span><%= _.t('edit_sections') %></span></div>
   <div class="document_fields_container">
@@ -79,7 +79,7 @@
     <span><%= _.t('embed_note')%></span>
   </div>
   
-  <!-- <div class="control_panel_title gradient_light">
+  <div class="control_panel_title gradient_light">
     <span class=""><%= _.t('page_tools') %></span>
   </div>
   <div class="edit_replace_pages button">
@@ -108,9 +108,9 @@
     <%= _.t('reorder_pages_instructions') %>
     <br /><br />
     <%= _.t('reorder_pages_done') %>
-  </div> -->
+  </div>
   
-  <!-- <div class="control_panel_title gradient_light">
+  <div class="control_panel_title gradient_light">
     <span class=""><%= _.t('text_tools') %></span>
   </div>
   <div class="edit_page_text button">
@@ -124,7 +124,7 @@
   </div>
   <div class="reprocess_text button">
     <span><%= _.t('reprocess_text') %></span>
-  </div> -->
+  </div>
 <% } %>
 
 <div class="control_panel_help">
