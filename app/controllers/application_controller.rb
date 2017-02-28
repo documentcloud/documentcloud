@@ -29,6 +29,10 @@ class ApplicationController < ActionController::Base
     service_unavailable(:error => 'Sorry, actions that write to the database are currently disabled for maintenance.')
   end
 
+  def s3_outage_error
+    service_unavailable(error: 'Sorry, that action is disabled during the S3 outage. See twitter.com/documentcloud for more.')
+  end
+
   def embeddable?
     request.format.json? or 
     request.format.jsonp? or 
