@@ -34,18 +34,6 @@ namespace :deploy do
     remote %w[app:update app:restart_solr], search_servers
   end
 
-  desc "Deploy Cloud.Typography assets to production"
-  task :webfonts do
-    if Rails.env.production?
-      FileUtils.cp_r("secrets/cloud_typography", "tmp/fonts")
-      FileUtils.rm(['tmp/fonts/about_this_directory.txt'])
-      upload_filetree("tmp/fonts/**/*.css", 'fonts', /^tmp\/fonts/)
-      FileUtils.rm_r(['tmp/fonts'])
-    else
-      puts "Cloud.Typography only knows about our production CDN (assets.documentcloud.org)"
-    end
-  end
-
   namespace :embed do
 
     embeds = [
