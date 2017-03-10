@@ -29,7 +29,9 @@ class DocumentsController < ApplicationController
       format.html do
         @embed_options = {
           container: '#viewer',
-          sidebar:   !(params[:sidebar] || '').match(/no|false/) # For Overview
+          sidebar:   !(params[:sidebar] || '').match(/no|false/), # For Overview
+          responsive: !(params[:responsive] || '').match(/no|false/),
+          responsiveOffset: 0
         }
         merge_embed_config if params[:embed] == 'true'
         populate_editor_data if current_account && current_organization
