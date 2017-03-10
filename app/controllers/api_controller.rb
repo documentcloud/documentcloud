@@ -155,7 +155,7 @@ class ApiController < ApplicationController
 
   def update_project
     data = pick(params, :title, :description, :document_ids)
-    ids  = (data.delete(:document_ids) || []).map(&:to_i)
+    ids = [(data.delete(:document_ids) || [])].flatten.map(&:to_i)
     doc_ids = Document.accessible(current_account, current_organization).where({ :id => ids }).pluck( 'id' )
     current_project.set_documents( doc_ids )
     current_project.update_attributes data
