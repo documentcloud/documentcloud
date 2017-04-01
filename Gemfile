@@ -46,6 +46,8 @@ gem 'stripe',                 '~> 1.56.2'
 
 gem 'active_model_serializers', '~>0.9.0'
 gem 'passenger'
+gem 'descriptive_statistics'
+gem 'user_agent_parser'
 
 group :development, :test do
   gem 'guard-bundler'

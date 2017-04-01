@@ -1,6 +1,6 @@
 GIT
   remote: git@github.com:documentcloud/bull_proof_china_shop
-  revision: 64abcde27387c080fa58e79289f4a2632660f54d
+  revision: 648729a16dd568d286ae0343429632fe20f68537
   branch: master
   specs:
     bull_proof_china_shop (0.0.1)
@@ -119,6 +119,7 @@ GEM
     curb (0.8.8)
     currencies (0.4.2)
     daemons (1.2.4)
+    descriptive_statistics (2.5.1)
     docsplit (0.8.0.alpha1)
     domain_name (0.5.20161129)
       unf (>= 0.0.5, < 1.0.0)
@@ -371,6 +372,7 @@ GEM
       unf_ext
     unf_ext (0.0.7.2)
     unicode_utils (1.4.0)
+    user_agent_parser (2.3.0)
     vcr (3.0.3)
     webmock (2.3.1)
       addressable (>= 2.3.6)
@@ -392,6 +394,7 @@ DEPENDENCIES
   cloud-crowd (~> 0.7.6)
   country_select (~> 2.2.0)
   curb (~> 0.8.4)
+  descriptive_statistics
   docsplit (= 0.8.0.alpha1)
   factory_girl_rails
   google_drive (~> 1.0.0)
@@ -429,8 +432,9 @@ DEPENDENCIES
   sunspot-rails-tester
   sunspot_rails (= 2.2.0)
   sunspot_solr (= 2.2.0)
+  user_agent_parser
   vcr
   webmock
 
 BUNDLED WITH
-   1.12.5
+   1.14.4
