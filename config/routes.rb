@@ -18,7 +18,7 @@ DC::Application.routes.draw do
   get '/search',                   to: 'workspace#index', as: 'search'
   get '/search/preview',           to: 'search#preview', as: 'preview'
   get '/search/restricted_count',  to: 'search#restricted_count'
-  get '/search(/:query)(/p:page)', to: 'workspace#index'
+  get '/search(/:query)(/p:page)', to: 'workspace#index', query: /[^\/]+/
   get '/help',                     to: 'workspace#help'
   get '/help/:page',               to: 'workspace#help'
   get '/results',                  to: 'workspace#index', as: 'results'
