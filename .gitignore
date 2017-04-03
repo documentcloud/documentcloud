@@ -29,3 +29,6 @@ public/javascripts/vendor/*/
 .vagrant
 .tm_properties
 Vagrantfile
+*.sublime-*
+.byebug_history
+doc

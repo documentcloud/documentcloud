@@ -2,14 +2,14 @@ require 'test_helper'
 
 class AdminControllerTest < ActionController::TestCase
 
-  let(:read_only?) { Rails.application.config.read_only }
+  # let(:read_only?) { Rails.application.config.read_only }
 
-  it "responds to read-only mode" do
+  it 'responds to read-only mode' do
     get :index
     assert_response 403
     login_account! :admin
     get :add_organization
-    assert_response read_only? ? 503 : :success
+    assert_response Rails.application.config.read_only ? 503 : :success
   end
 
   # Tests that don't matter in read-only mode
