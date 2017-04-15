@@ -19,6 +19,8 @@ sudo mount $DEVICE /mnt/ami/
 
 # 3) Set up the application.
 #    For DocumentCloud the process goes like this (after you've scp'd up the scripts dir & github key)
+vim .ssh/id_rsa # now copypasta the private key which has access to your github repos in.
+chmod 600 .ssh/id_rsa
 sudo ./scripts/setup_common_dependencies.sh
 source /etc/profile.d/chruby.sh
 gem install bundler
@@ -30,6 +32,12 @@ bundle install
 rails runner -e production "puts Organization.count" # check for human eyeballs
 sudo mkdir /mnt/cloud_crowd
 sudo chown ubuntu:ubuntu /mnt/cloud_crowd
+
+sudo mkdir /mnt/log
+sudo mount /dev/xvdc /mnt/log
+sudo chown ubuntu:ubuntu /mnt/log
+rm -r log
+ln -s /mnt/log log
 
 # 4) Install the AWS command line tools:
 
@@ -49,7 +57,8 @@ ec2-bundle-vol \
   --cert /home/ubuntu/documentcloud/secrets/keys/ami_signing.pem                                        \
   --user $(egrep "aws_account_id"  /home/ubuntu/documentcloud/secrets/secrets.yml | awk '{print $NF}')  \
   --arch x86_64 --destination /mnt/ami                                                                  \
-  --include /mnt/cloud_crowd --no-filter
+  --exclude /home/ubuntu/.ssh                                                                           \
+  --include /mnt/cloud_crowd,/mnt/log --no-filter
 exit
 
 AMI_NAME=dc-worker-ephemeral-$(date +'%Y-%m-%d')
