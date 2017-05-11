@@ -1,13 +1,13 @@
-require 'test_helper'
+require File.join(__dir__, '..', 'test_helper')
 
 class ApiControllerTest < ActionController::TestCase
 
   let(:read_only?) { Rails.application.config.read_only }
 
   it "responds to read-only mode" do
-    get :documents, :id => doc.id, :format => :json
+    get :documents, params: { :id => doc.id, :format => :json }
     assert_response 200
-    get :update, :id => doc.id, :format => :json
+    get :update, params: { :id => doc.id, :format => :json }
     assert_response read_only? ? 503 : 401
   end
 
@@ -46,11 +46,11 @@ class ApiControllerTest < ActionController::TestCase
   it "test_it_sets_cors_options" do
     get :cors_options
     assert_response 400
-    get :cors_options, :allowed_methods=>['GET']
+    get :cors_options, params: { :allowed_methods=>['GET'] }
     assert_response :success
     refute response.headers['Access-Control-Allow-Origin'], "Access Control was set, when request didn't require it"
     @request.headers['Origin'] = 'test.test.com'
-    get :cors_options, { :allowed_methods=>['GET'] }
+    get :cors_options, params: { :allowed_methods=>['GET'] }
     %w{ OPTIONS GET POST PUT DELETE }.each do | method |
       assert_includes cors_allowed_methods, method
     end
@@ -58,12 +58,12 @@ class ApiControllerTest < ActionController::TestCase
   end
 
   it "test_empty_search_results" do
-    get :search, q: 'ponies', :format => :json
+    get :search, params: { q: 'ponies', :format => :json }
     assert_equal 0, json_body['total']
   end
 
   it "test_search" do
-    get :search, q: "document:#{doc.id}", :format=>:json
+    get :search, params: { q: "document:#{doc.id}", :format=>:json }
     assert_equal 1, json_body['total']
     assert_equal doc.canonical_id, json_body['documents'].first['id']
   end
@@ -77,7 +77,7 @@ class ApiControllerTest < ActionController::TestCase
     # authentication is optional, but it can get you more docs
     account = accounts(:louis)
     request.headers['HTTP_AUTHORIZATION'] = ActionController::HttpAuthentication::Basic.encode_credentials(account.email, 'password')
-    get(:search, q: "document:#{doc.id}", format: :json)
+    get :search, params: { q: "document:#{doc.id}", format: :json }
     assert_response 200
     assert_equal 1, json_body['total']
     assert_equal doc.canonical_id, json_body['documents'].first['id']
@@ -88,7 +88,7 @@ class ApiControllerTest < ActionController::TestCase
     # https://github.com/documentcloud/documentcloud/issues/89
     request.headers['HTTP_AUTHORIZATION'] = ActionController::HttpAuthentication::Basic.encode_credentials("WRONG-email@example.org", "WRONG-password")
     refute request.authorization.blank?
-    get(:search, q: "document:#{doc.id}", format: :json)
+    get :search, params: { q: "document:#{doc.id}", format: :json }
     assert_response 403
   end
 
@@ -96,9 +96,9 @@ class ApiControllerTest < ActionController::TestCase
     login_account!
     get :documents
     assert_response :bad_request
-    get :documents, :id=>1234, :format=>:json # non existant
+    get :documents, params: { :id=>1234, :format=>:json } # non existant
     assert_response :not_found
-    get :documents, :id=>doc.id, :format=>:json # non existant
+    get :documents, params: { :id=>doc.id, :format=>:json } # non existant
     assert_equal doc.canonical_id, json_body['document']['id']
   end
 
@@ -115,24 +115,24 @@ class ApiControllerTest < ActionController::TestCase
 
   it "test_notes" do
     note = annotations(:public)
-    get :notes, :note_id=>note.id, :format=>:json
+    get :notes, params: { :note_id=>note.id, :format=>:json }
     assert_response :success
     assert_equal note.canonical, json_body['annotation']
   end
 
   it "test_it_doesnt_return_private_notes_unless_authorized" do
     note = annotations(:private)
-    get :notes, :note_id=>note.id, :format=>:json
+    get :notes, params: { :note_id=>note.id, :format=>:json }
     assert_response :not_found
 
     login_account!
-    get :notes, :note_id=>note.id, :format=>:json
+    get :notes, params: { :note_id=>note.id, :format=>:json }
     assert_response :success
     assert_equal note.canonical, json_body['annotation']
   end
 
   it "test_entities" do
-    get :entities, :id=>doc.id, :format=>:json
+    get :entities, params: { :id=>doc.id, :format=>:json }
     assert_response :success
     assert_equal doc.ordered_entity_hash.as_json, json_body['entities']
   end
@@ -140,14 +140,14 @@ class ApiControllerTest < ActionController::TestCase
   it "test_project" do
     login_account!
     project = projects(:collab)
-    get :project, :id=>project.id, :format=>:json, :include_document_ids=>true
+    get :project, params: { :id=>project.id, :format=>:json, :include_document_ids=>true }
     assert_response :success
     assert_equal project.canonical(:include_document_ids=>true), json_body['project']
   end
 
   it "test_projects" do
     login_account!
-    get :projects, :format=>:json, :include_document_ids=>true
+    get :projects, params: { :format=>:json, :include_document_ids=>true }
     assert_response :success
     assert_equal [ projects(:collab).canonical(:include_document_ids=>true) ], json_body['projects']
   end
@@ -166,30 +166,30 @@ class ApiControllerTest < ActionController::TestCase
       login_account!
       get :upload
       assert_response 400
-      get :upload, :title=>'a test', :file=>'http://test.com/file.pdf'
+      get :upload, params: { :title=>'a test', :file=>'http://test.com/file.pdf' }
       assert_response 200
       assert_job_action 'document_import'
     end
 
     it "test_update" do
-      post :update, :id=>doc.id, :format=>:json
+      post :update, params: { :id=>doc.id, :format=>:json }
       assert_response 401
       login_account!
-      post :update, :id=>doc.id, :format=>:json, :title=>'A New Title'
+      post :update, params: { :id=>doc.id, :format=>:json, :title=>'A New Title' }
       assert_response :success
       assert_equal 'A New Title', doc.reload.title
     end
 
     it "test_destroy" do
       login_account!
-      delete :destroy, :id=>doc.id
+      delete :destroy, params: { :id=>doc.id }
       assert_response :success
       refute Document.where( :id=>doc.id ).first
     end
 
     it "test_create_projects" do
       login_account!
-      put :create_project, :document_ids=>[doc.id],:title=>'new project',:description=>'no desc'
+      put :create_project, params: { :document_ids=>[doc.id],:title=>'new project',:description=>'no desc' }
       assert_response :success
       assert_equal 'new project', json_body['project']['title']
       refute_empty doc.projects.where( :title=>'new project' )
@@ -198,7 +198,7 @@ class ApiControllerTest < ActionController::TestCase
     it "test_update_project" do
       login_account!
       project = projects(:collab)
-      post :update_project, :id=>project.id, :document_ids=>[secret_doc.id]
+      post :update_project, params: { :id=>project.id, :document_ids=>[secret_doc.id] }
       assert_response :success
       assert_equal [secret_doc.id], project.reload.document_ids
     end
@@ -206,7 +206,7 @@ class ApiControllerTest < ActionController::TestCase
     it "test_destroy_project" do
       login_account!
       project = projects(:collab)
-      delete :destroy_project, :id=>project.id
+      delete :destroy_project, params: { :id=>project.id }
       assert_response :success
       assert_raises( ActiveRecord::RecordNotFound ){ Project.find( project.id ) }
     end
