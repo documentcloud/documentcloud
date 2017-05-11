@@ -62,7 +62,7 @@ class Project < ActiveRecord::Base
   def set_documents(new_ids)
     new_ids = new_ids.to_set
     old_ids = self.document_ids.to_set
-    ProjectMembership.destroy_all(:project_id => id, :document_id => (old_ids - new_ids).to_a)
+    ProjectMembership.where(:project_id => id, :document_id => (old_ids - new_ids).to_a).destroy_all
     (new_ids - old_ids).each {|doc_id| self.project_memberships.create(:document_id => doc_id) }
     @document_ids = nil
     reindex_documents new_ids ^ old_ids
