@@ -33,7 +33,7 @@ gem 'rake'
 gem 'actionpack-page_caching'
 gem 'jammit',                 git: 'https://github.com/documentcloud/jammit.git',
                               branch: 'master'
-gem 'nokogiri',               '~> 1.6.0'
+gem 'nokogiri'
 gem 'net-ssh-shell'
 gem 'country_select',         '~> 2.2.0'
 gem 'bootstrap_form',         git:    'https://github.com/documentcloud/rails-bootstrap-forms.git',
