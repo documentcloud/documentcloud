@@ -12,7 +12,7 @@ if you_are_documentcloud?
 end
 
 gem 'iconv'
-gem 'rails',                  '~>4.2.0'
+gem 'rails',                  '~>5.1.0'
 gem 'curb',                   '~>0.8.4'
 gem 'open_calais',            git:    'https://github.com/documentcloud/open_calais.git',
                               branch: 'fuzziness' # Supports Open Calais v2
@@ -23,14 +23,10 @@ gem 'aws-sdk',                '~> 1.30',  require: 'aws'
 gem 'pg'
 
 gem 'closure-compiler'
-gem 'sunspot_rails',          '2.2.0'
-gem 'sunspot_solr',           '2.2.0'
+gem 'sunspot_rails',          '~>2.2.0'
+gem 'sunspot_solr',           '~>2.2.0'
 gem 'progress_bar' # Optional, used by sunspot to show progress while re-indexing
 
-gem 'omniauth',               '~> 1.2.1'
-gem 'omniauth-twitter',       '~> 1.0'
-gem 'omniauth-facebook',      '~> 1.6'
-gem 'omniauth-google-oauth2', '~> 0.2'
 gem 'sanitize',               '~> 2.0.6'
 gem 'rdiscount',              '~> 2.1.6'
 gem 'rake'
@@ -66,7 +62,7 @@ group :development do
   # `google_drive` and `highline` are development-only because we use them to
   # access/compile the translations spreadsheet, and this should only be done
   # by a developer on their local machine before committing the compiled strings
-  gem 'google_drive',         '~> 1.0.0'
+  gem 'google_drive',         '~> 2.1.0'
   gem 'highline'
 end
 
