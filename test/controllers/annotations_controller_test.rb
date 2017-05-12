@@ -1,4 +1,4 @@
-require 'test_helper'
+require File.join(__dir__, '..', 'test_helper')
 
 class AnnotationsControllerTest < ActionController::TestCase
 
@@ -7,7 +7,7 @@ class AnnotationsControllerTest < ActionController::TestCase
   let(:read_only?) { Rails.application.config.read_only }
 
   it "responds to read-only mode" do
-    get :index, :document_id => doc.id
+    get :index, params: { :document_id => doc.id }
     assert_response :success
     create_account
     assert_response read_only? ? 503 : :success
@@ -24,20 +24,20 @@ class AnnotationsControllerTest < ActionController::TestCase
   end
 
   it "index" do
-    get :index, :document_id => doc.id
+    get :index, params: { :document_id => doc.id }
     assert_response 200
     assert_equal  doc.annotation_ids.sort, json_body.map{|note| note['id'] }.sort
   end
 
   it "show" do
     note = doc.annotations.first
-    get :show, :id=>note.id, :document_id => doc.id, :format=>:js
+    get :show, params: { :id=>note.id, :document_id => doc.id, :format=>:js }
     assert_response 200
     assert_match( /\"id\":#{note.id}/, @response.body )
   end
 
   it "print" do
-    get :print, :docs=>[doc.id,secret_doc.id]
+    get :print, params: { :docs=>[doc.id,secret_doc.id] }
     doc.annotations.each do | note |
       assert_match( /#{note.content}/, @response.body )
     end
@@ -47,7 +47,7 @@ class AnnotationsControllerTest < ActionController::TestCase
     get :cors_options
     assert_response 400
     request.headers['Origin']='http://test.com/'
-    get :cors_options, :allowed_methods=>['GET']
+    get :cors_options, params: { :allowed_methods=>['GET'] }
     assert_response :success
     assert_equal 'http://test.com/', response.headers['Access-Control-Allow-Origin']
     %w{ OPTIONS GET POST PUT DELETE}.each do | method |
@@ -74,8 +74,8 @@ class AnnotationsControllerTest < ActionController::TestCase
 
     it "update" do
       note = doc.annotations.first
-      post :update, :document_id=>doc.id, :id=>note.id, :title=>'New Title',
-           :content=>'I have become death the destroyer of worlds', :access=>'private'
+      post :update, params: { :document_id=>doc.id, :id=>note.id, :title=>'New Title', 
+           :content=>'I have become death the destroyer of worlds', :access=>'private' }
       assert_response :success
       note.reload
       assert_equal 'New Title', note.title
@@ -85,7 +85,7 @@ class AnnotationsControllerTest < ActionController::TestCase
 
     it "destroy" do
       note = doc.annotations.first
-      delete :destroy, :document_id=>doc.id, :id=>note.id
+      delete :destroy, params: { :document_id=>doc.id, :id=>note.id }
       assert_raises(ActiveRecord::RecordNotFound){
         doc.annotations.find( note.id )
       }
@@ -96,8 +96,8 @@ class AnnotationsControllerTest < ActionController::TestCase
   protected
 
   def create_account
-    put :create, :document_id=>doc.id, :page_number=>2, :title=>'Test Note',
-        :content=>'this is a note', :location=>23, :access=>Document::PUBLIC
+    put :create, params: { :document_id=>doc.id, :page_number=>2, :title=>'Test Note', 
+        :content=>'this is a note', :location=>23, :access=>Document::PUBLIC }
   end
 
 end

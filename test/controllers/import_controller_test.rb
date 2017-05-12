@@ -8,8 +8,7 @@ class ImportControllerTest < ActionController::TestCase
 
     login_account!
     assert_difference 'Document.count' do
-      get :upload_document, { url: 'http://test.com/file.pdf', file: 'on',
-                              title: "Test Doc" }
+      get :upload_document, params: { url: 'http://test.com/file.pdf', file: 'on', title: "Test Doc" }
     end
     assert_response :success
     assert_job_action 'document_import'
@@ -20,7 +19,7 @@ class ImportControllerTest < ActionController::TestCase
     ProcessingJob.create!(document: doc, account: louis, cloud_crowd_id: 42,
       title: 'import', remote_job: 'document_import')
     assert_difference(-> { ProcessingJob.incomplete.count }, -1) do
-      post :cloud_crowd, {job: {id: 42, status: 'succeeded'}.to_json, secret: DC::SECRETS['cloud_crowd_secret']}
+      post :cloud_crowd, params: {job: {id: 42, status: 'succeeded'}.to_json, secret: DC::SECRETS['cloud_crowd_secret']}
       assert_response :success
     end
   end
@@ -30,7 +29,7 @@ class ImportControllerTest < ActionController::TestCase
     ProcessingJob.create!(document: doc, account: louis, cloud_crowd_id: 42,
       title: 'import', remote_job: 'document_import')
     assert_difference( ->{ ProcessingJob.incomplete.count }, -1 ) do
-      post :cloud_crowd, {job: {id: 42, status: 'failed'}.to_json, secret: DC::SECRETS['cloud_crowd_secret']}
+      post :cloud_crowd, params: {job: {id: 42, status: 'failed'}.to_json, secret: DC::SECRETS['cloud_crowd_secret']}
       assert_response :success
     end
     assert_equal Document::ERROR, doc.reload.access
@@ -38,10 +37,10 @@ class ImportControllerTest < ActionController::TestCase
 
   # TODO: Fix this test! (Need to pass a working secret to the second `get`)
   it "allows updating access with a secret" do
-    get :update_access, {job: {id: 1234}.to_json}
+    get :update_access, params: {job: {id: 1234}.to_json}
     assert_response :forbidden
 
-    get :update_access, {job: {id: 1234}.to_json, secret: DC::SECRETS['cloud_crowd_secret']}
+    get :update_access, params: {job: {id: 1234}.to_json, secret: DC::SECRETS['cloud_crowd_secret']}
     assert_response :created
   end
 

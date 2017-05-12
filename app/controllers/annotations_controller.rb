@@ -100,7 +100,7 @@ class AnnotationsController < ApplicationController
   def cors_options
     return bad_request unless params[:allowed_methods]
     maybe_set_cors_headers
-    render :nothing => true
+    head :no_content
   end
 
   private

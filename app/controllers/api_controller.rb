@@ -223,7 +223,7 @@ class ApiController < ApplicationController
   def cors_options
     return bad_request unless params[:allowed_methods]
     maybe_set_cors_headers
-    render :nothing => true
+    head :no_content
   end
 
   # Allow logging of all actions, apart from secure uploads.
