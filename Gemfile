@@ -56,6 +56,7 @@ group :development, :test do
   gem 'byebug' # Debugger
   gem 'factory_girl_rails' # Mocking out objects
   gem 'ruby-debug-passenger'
+  gem 'rails-controller-testing'
 end
 
 group :development do
