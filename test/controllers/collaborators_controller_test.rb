@@ -1,4 +1,4 @@
-require 'test_helper'
+require File.join(__dir__, '..', 'test_helper')
 
 class CollaboratorsControllerTest < ActionController::TestCase
 
@@ -15,7 +15,7 @@ class CollaboratorsControllerTest < ActionController::TestCase
     login_account!
     project = projects(:collab)
     refute_empty project.collaborations
-    post :create, :project_id=>project.id, :email=>accounts(:freelancer_bob).email
+    post :create, params: { :project_id=>project.id, :email=>accounts(:freelancer_bob).email }
     assert_equal 2, project.collaborations.count
   end
 
@@ -26,7 +26,7 @@ class CollaboratorsControllerTest < ActionController::TestCase
     assert project.add_collaborator( user )
     refute_empty project.collaborations
     assert_difference ->{ project.collaborations.count }, -1 do
-      delete :destroy, :project_id=>project.id, :id=>user.id
+      delete :destroy, params: { :project_id=>project.id, :id=>user.id }
     end
   end
 

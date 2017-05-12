@@ -1,4 +1,4 @@
-require 'test_helper'
+require File.join(__dir__, '..', 'test_helper')
 
 class AdminControllerTest < ActionController::TestCase
 
@@ -30,7 +30,7 @@ class AdminControllerTest < ActionController::TestCase
           last_name:  'Tester',
         }
       }
-      post :add_organization, params
+      post :add_organization, params: params
       assert_response :success
       account      = Account.where(email: 'testing@dcloud.org').first
       organization = Organization.where(slug: 'testing').first
@@ -56,7 +56,7 @@ class AdminControllerTest < ActionController::TestCase
           last_name:  'Tester',
         }
       }
-      post :add_organization, params
+      post :add_organization, params: params
       assert_response :success
       account = Account.where(email: 'testing@dcloud.org').first
       assert_not account
@@ -79,7 +79,7 @@ class AdminControllerTest < ActionController::TestCase
           last_name:  louis.last_name,
         }
       }
-      post :add_organization, params
+      post :add_organization, params: params
       assert_response :success
       organization = Organization.where(slug: 'testing').first
       membership   = louis.memberships.where(organization: organization).first
@@ -106,7 +106,7 @@ class AdminControllerTest < ActionController::TestCase
         },
         authorize: 'y'
       }
-      post :add_organization, params
+      post :add_organization, params: params
       assert_response :success
       organization = Organization.where(slug: 'testing').first
       membership   = louis.memberships.where(organization: organization)

@@ -1,4 +1,4 @@
-require 'test_helper'
+require File.join(__dir__, '..', 'test_helper')
 
 class RedirectControllerTest < ActionController::TestCase
 
@@ -8,7 +8,7 @@ class RedirectControllerTest < ActionController::TestCase
   end
 
   def test_with_url
-    get :index,:url=>'/foo'
+    get :index, params: {:url=>'/foo' }
     assert_redirected_to '/foo'
     assert_response 301
   end

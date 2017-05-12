@@ -1,4 +1,4 @@
-require 'test_helper'
+require File.join(__dir__, '..', 'test_helper')
 
 class AuthenticationControllerTest < ActionController::TestCase
 
@@ -18,15 +18,15 @@ class AuthenticationControllerTest < ActionController::TestCase
   end
 
   def test_logins_a_user
-    post :login, :email=>louis.email, :password=>'password', :next=>'/foo'
+    post :login, params: { :email=>louis.email, :password=>'password', :next=>'/foo' }
     assert_redirected_to '/foo'
   end
 
   def test_displays_error_on_bad_login
-    post :login, :email=>louis.email, :password=>'badpass', :next=>'/foo'
+    post :login, params: { :email=>louis.email, :password=>'badpass', :next=>'/foo' }
     assert_match( /invalid/i, flash[:error] )
     louis.memberships.first.update_attributes :role=>Account::DISABLED
-    post :login, :email=>louis.email, :password=>'password', :next=>'/foo'
+    post :login, params: { :email=>louis.email, :password=>'password', :next=>'/foo' }
     assert_match( /disabled/i, flash[:error] )
   end
 
