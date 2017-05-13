@@ -1,4 +1,4 @@
-require 'test_helper'
+require File.join(__dir__, '..', 'test_helper')
 
 class DownloadControllerTest < ActionController::TestCase
 
@@ -19,7 +19,7 @@ class DownloadControllerTest < ActionController::TestCase
   end
 
   it "downloads text" do
-    get :bulk_download, :args=>"#{doc.id}/document_text"
+    get :bulk_download, params: { :args=>"#{doc.id}/document_text" }
     assert_response :success
 
     zip_from_response( response ) do | zf |
@@ -28,7 +28,7 @@ class DownloadControllerTest < ActionController::TestCase
   end
 
   it "sends the viewer" do
-    get :bulk_download, :args=>"#{doc.id}/document_viewer"
+    get :bulk_download, params: { :args=>"#{doc.id}/document_viewer" }
     assert_response :success
     zip_from_response( response ) do | zf |
       assert_match "<title>#{doc.title}</title>", zf.read( "#{doc.slug}.html" )
