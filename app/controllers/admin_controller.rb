@@ -118,16 +118,16 @@ class AdminController < ApplicationController
   })
   def add_organization
     @params                = DEFAULT_SIGNUP_PARAMS.dup
-    @params[:organization] = @params[:organization].merge(params[:organization] || {})
-    @params[:account]      = @params[:account].merge(params[:account] || {})
+    organization_params    = params.require(:organization).permit(:name, :slug, :language, :document_language)
+    @params[:organization] = @params[:organization].merge(organization_params || {})
+    user_params            = params.require(:account).permit(:first_name, :last_name, :email)
+    @params[:account]      = @params[:account].merge(user_params || {})
     return render layout: 'new' unless request.post?
-
-    user_params = params.require(:account).permit(:first_name, :last_name, :email)
-
+    
     # First see if an account already exists for the email
     is_new_account = false
-    unless @account = Account.lookup(user_params[:email])
-      @account = Account.create(user_params.merge(DEFAULT_SIGNUP_PARAMS[:account]))
+    unless @account = Account.lookup(@params[:account][:email])
+      @account = Account.create(@params[:account])
       if @account.errors.any?
         flash.now[:error] = @account.errors.full_messages.join(', ')
         return render layout: 'new'
@@ -136,8 +136,7 @@ class AdminController < ApplicationController
     end
 
     # create the organization
-    organization_params = params.require(:organization).permit(:name, :slug, :language, :document_language)
-    organization = Organization.create(organization_params)
+    organization = Organization.create(@params[:organization])
     if organization.errors.any?
       flash.now[:error] = organization.errors.full_messages.join(', ')
       @account.destroy if is_new_account
