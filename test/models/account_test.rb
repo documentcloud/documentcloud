@@ -94,7 +94,7 @@ class AccountTest < ActiveSupport::TestCase
     assert account.reviewer?
     # Perhaps they're going back into business?
     account.upgrade_reviewer_to_real( organizations(:bankrupt), Account::ADMINISTRATOR )
-    membership = account.memberships(true).first
+    membership = account.memberships.first
     assert_equal organizations(:bankrupt), membership.organization
     assert_equal Account::ADMINISTRATOR, membership.role
   end
