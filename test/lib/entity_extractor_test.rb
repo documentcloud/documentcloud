@@ -1,4 +1,4 @@
-require 'test_helper'
+require File.join(__dir__, '..', 'test_helper')
 require 'dc/import/entity_extractor'
 
 class EntityExtractorTest < ActiveSupport::TestCase

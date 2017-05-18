@@ -1,5 +1,5 @@
 # coding: utf-8
-require 'test_helper'
+require File.join(__dir__, '..', 'test_helper')
 
 class TextScannerTest < ActiveSupport::TestCase
 
