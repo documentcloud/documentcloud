@@ -87,14 +87,12 @@ class Project < ActiveRecord::Base
       return false
     end
     self.collaborations.create(:account => account, :creator => creator)
-    @collaborator_ids = nil
     update_reviewer_counts
     true
   end
 
   def remove_collaborator(account)
     self.collaborations.owned_by(account).first.destroy
-    @collaborator_ids = nil
     update_reviewer_counts
     if hidden? && self.collaborations.count == 0
       self.destroy
