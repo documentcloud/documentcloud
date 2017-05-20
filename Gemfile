@@ -8,7 +8,7 @@ if you_are_documentcloud?
   # Must include branch explicitly for bundler's local config override
   gem 'bull_proof_china_shop',
       git:    'git@github.com:documentcloud/bull_proof_china_shop',
-      branch: 'master'
+      branch: 'rails5'
 end
 
 gem 'iconv'
@@ -75,7 +75,7 @@ group :test do
   gem 'webmock'
 end
 
-gem 'cloud-crowd',            '~>0.7.6'
+gem 'cloud-crowd',            '~>0.7.7'
 #group :pdf_processing do
   gem 'docsplit',               '0.8.0.alpha1'
   gem 'pdftailor'
