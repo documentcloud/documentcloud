@@ -56,6 +56,7 @@ namespace :deploy do
     ]
 
     embeds.each do |embed|
+      desc "Deploy javascript and css for #{embed[:name].to_s.pluralize}"
       task embed[:name] => :environment do
         if deployable_environment?
           # Upload assets (scripts, styles, and images)
