@@ -1,7 +1,8 @@
 namespace :build do
 
   namespace :embed do
-
+    
+    desc "build embeddable DocumentViewer assets."
     task :document do
       puts "Building document viewer..."
 
@@ -42,6 +43,7 @@ namespace :build do
       puts "Done building document viewer"
     end
 
+    desc "build embeddable Page Viewer assets"
     task :page  do
       puts "Building page embed..."
 
@@ -59,6 +61,7 @@ namespace :build do
       puts "Done building page embed"
     end
 
+    desc "build embeddable note assets"
     task :note do
       puts "Building note embed..."
 
@@ -72,6 +75,7 @@ namespace :build do
       puts "Done building note embed"
     end
 
+    desc "build embeddable search assets"
     task :search do
       puts "Building search embed..."
 
