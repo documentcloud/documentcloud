@@ -14,7 +14,7 @@ class ReindexEverything < CloudCrowd::Action
         ids << document.id
       rescue Exception => e
         counter += 1
-        (sleep(0.25) and retry) if counter < 5
+        (sleep(0.25 * counter) and retry) if counter < 5
         LifecycleMailer.exception_notification(e,options).deliver_now
         outcomes[:failed].push(:id=>doc.id)
       end
