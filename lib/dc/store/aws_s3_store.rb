@@ -124,6 +124,10 @@ module DC
         bucket.objects["backups/#{dest}"].write(File.open(src))
       end
       
+      def cache_json(object, dest, access=DEFAULT_ACCESS)
+        save_file(object.to_json, File.join("cache", dest), access)
+      end
+      
       # This is going to be *extremely* expensive. We can thread it, but
       # there must be a better way somehow. (running in the background for now)
       def set_access(document, access)

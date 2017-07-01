@@ -3,6 +3,10 @@ module DC
 
     # An implementation of an AssetStore.
     module FileSystemStore
+      
+      DEFAULT_ACCESS  = DC::Access::PUBLIC
+      ACCESS_TO_ACL   = Hash.new(:private)
+      DC::Access::PUBLIC_LEVELS.each{ |level| ACCESS_TO_ACL[level] = :public_read }
 
       module ClassMethods
         def asset_root
@@ -26,7 +30,7 @@ module DC
       end
 
       def authorized_url(path, opts={})
-        File.join(self.class.web_root, path)
+        File.join(self.class.web_root, path, "?authorized=true")
       end
 
       def list(path)
@@ -105,6 +109,12 @@ module DC
       def save_backup(src, dest)
         ensure_directory("backups/#{File.dirname(dest)}")
         FileUtils.cp(src, local("backups/#{dest}"))
+      end
+
+      def cache_json(object, dest, access=DEFAULT_ACCESS)
+        write_path = File.join("cache", dest)
+        ensure_directory(File.dirname(write_path))
+        File.open(local(write_path), 'w+'){ |f| f.write(object.to_json) }
       end
 
       def set_access(document, access)

@@ -60,7 +60,10 @@ class AdminController < ApplicationController
         render_cross_origin_json
       end
       
-      format.html { render }
+      format.html do
+        @data_cache_path = DC::Store::AssetStore.new.authorized_url('cache/admin/index.json')
+        render
+      end
     end
   end
   
