@@ -1,5 +1,5 @@
 require File.dirname(__FILE__) + '/support/setup'
-require './lib/dc/aws'
+require File.join(File.dirname(__FILE__), "..", "..", "lib", "dc", "aws")
 
 class UpdateAdminDashboardData < CloudCrowd::Action
 
@@ -29,6 +29,7 @@ class UpdateAdminDashboardData < CloudCrowd::Action
           count_total_collaborators:     DC::Statistics.count_total_collaborators,
           numbers:                       DC::Statistics.by_the_numbers,
         },
+        updated_at:       Time.now,
         documents:        Document.finished.chronological.limit(5).map {|d| d.admin_attributes },
         failed_documents: Document.failed.chronological.limit(3).map {|d| d.admin_attributes },
         top_documents:    RemoteUrl.top_documents(7, 5),
