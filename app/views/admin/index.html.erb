@@ -14,7 +14,7 @@
     window.dcAdmin = new dc.ui.Admin;
 
     $.ajax({
-      url: "<%= h @data_cache_path %>", 
+      url: "<%= raw @data_cache_path %>", 
       success: function(data, status, xhr) {
         window.stats = data.stats;
         Accounts.reset(data.accounts);
