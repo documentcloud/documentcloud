@@ -1,5 +1,4 @@
 require File.dirname(__FILE__) + '/support/setup'
-require 'dc/aws'
 
 class UpdateAdminDashboardData < CloudCrowd::Action
 
@@ -22,7 +21,7 @@ class UpdateAdminDashboardData < CloudCrowd::Action
           weekly_hits_on_searches:       keys_to_timestamps(DC::Statistics.weekly_hits_on_searches),
           total_pages:                   DC::Statistics.total_pages,
 
-          instances:                     DC::AWS.new.describe_instances,
+          instances:                     [],
           remote_url_hits_last_week:     DC::Statistics.remote_url_hits_last_week,
           remote_url_hits_all_time:      DC::Statistics.remote_url_hits_all_time,
           count_organizations_embedding: DC::Statistics.count_organizations_embedding,
