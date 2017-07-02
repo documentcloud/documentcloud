@@ -77,6 +77,11 @@ namespace :app do
   task :publish => :environment do
     Document.publish_due_documents
   end
+  
+  desc "Queue job to update admin analytics dashboard"
+  task :update_analytics_dashboard => :environment do
+    RestClient.post("#{DC::CONFIG['cloud_crowd_server']}/jobs", {job: {action: "update_admin_dashboard_data", inputs: [1]}.to_json })
+  end
 
 end
 
