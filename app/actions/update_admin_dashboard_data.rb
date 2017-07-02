@@ -1,5 +1,5 @@
 require File.dirname(__FILE__) + '/support/setup'
-require File.join(File.dirname(__FILE__), "..", "..", "lib", "dc", "aws")
+require 'dc/aws'
 
 class UpdateAdminDashboardData < CloudCrowd::Action
 
