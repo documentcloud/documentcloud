@@ -35,7 +35,7 @@ class UpdateAdminDashboardData < CloudCrowd::Action
         top_searches:     RemoteUrl.top_searches(7,  5),
         top_notes:        RemoteUrl.top_notes(7, 5),
         accounts:         [],
-      }.to_json
+      }
       
       asset_store = DC::Store::AssetStore.new
       asset_store.cache_json(@data, "admin/index.json")
