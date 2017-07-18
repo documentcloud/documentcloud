@@ -16,12 +16,19 @@ module CloudCrowd
     def execute_on_hosts(script, hosts)
       hosts.each do |host|
         @threads.push(Thread.new{
-          puts "SSHing to #{host}:\n" + `ssh #{ssh_options} #{host} "bash -ls" <<SCRIPT\n#{script}\nSCRIPT`
+          command =  "ssh #{ssh_options} #{host} \"bash -ls\" <<SCRIPT\n#{script}\nSCRIPT"
+          puts "SSHing to #{host}:\n" + `#{command}`
         })
       end
       @threads.each{ |t| t.join }
       return hosts
     end
+    
+=begin
+require './lib/dc/cloud_crowd'
+wrangler = CloudCrowd::NodeWrangler.new
+wrangler.run_on_workers("pwd")
+=end
 
     # this method should be abstracted or generalized to take a block, or both.
     # For DocumentCloud's purposes, we're running on Amazon & name extra nodes "workers"
