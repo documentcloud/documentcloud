@@ -4,6 +4,12 @@ namespace :db do
   task :backup => :environment do
     DC::Store::BackgroundJobs.backup_database
   end
+  
+  task :dump_structure do
+    `pg_dump -U documentcloud -s -O dcloud_production > platform_structure.sql`
+    `pg_dump -U documentcloud -a -t schema_migrations dcloud_production > schema_migrations.sql`
+    `pg_dump -U documentcloud -s -O dcloud_analytics_production > platform_analytics_structure.sql`
+  end
 
   desc "VACUUM ANALYZE the Postgres DB"
   task :vacuum_analyze => :environment do
