@@ -236,7 +236,7 @@ class AdminController < ApplicationController
   end
   
   def organization
-    @organization = Organization.where("slug ~* ?",params[:slug].downcase).first
+    @organization = Organization.where("lower(slug) = lower(?)", params[:slug]).first
     return not_found unless @organization
     @since = if params[:since]
       if results = params[:since].match(/\A(?<val>\d+)(?<unit>months|days)\z/)
