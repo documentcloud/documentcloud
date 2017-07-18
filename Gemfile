@@ -6,6 +6,7 @@ end
 
 if you_are_documentcloud?
   # Must include branch explicitly for bundler's local config override
+  # ToDo: if in dev, look for local copy of china shop
   gem 'bull_proof_china_shop',
       git:    'git@github.com:documentcloud/bull_proof_china_shop',
       branch: 'master'
