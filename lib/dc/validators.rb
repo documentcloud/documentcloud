@@ -11,7 +11,7 @@ module DC
     SUBDOMAIN = /\A[0-9a-z\-_]+\Z/i
 
     # Proper slugs are alphanumeric, lowercased, with dashes.
-    SLUG_TEXT = /\A[\p{Letter}\p{Number}\-]+\Z/
+    SLUG_TEXT = /\A[\p{Lower}\p{Number}\-]+\Z/
 
     # Full document ID slugs must start with the numeric ID and contain
     # the alphanumeric slug
