@@ -261,7 +261,13 @@ class AdminController < ApplicationController
     @private_count       = @documents_by_access.fetch(DC::Access::PRIVATE, 0) + @documents_by_access.fetch(DC::Access::ORGANIZATION, 0)
     @hit_count           = @documents.sum(:hit_count)
     @top_count           = params.fetch(:top_count, 20)
-    @top_uploaders       = Hash[@documents.group(:account_id).count.sort_by{|k,v| -v}.first(@top_count).map{ |arr| m=@memberships.where(account_id: arr.first).first; [m.blank? ? Account.find(arr.first) : m.account, arr.last]}]
+    top_data = @documents.group(:account_id).count.sort_by{|k,v| -v}.first(@top_count).map do |arr|
+      m = @memberships.where(account_id: arr.first).first
+      fake_account = Struct.new(:full_name, :email, :slug)
+      accountish = m.blank? ? fake_account.new("Deleted User", nil, nil) : m.account
+      [accountish, arr.last]
+    end
+    @top_uploaders       = Hash[top_data]
     render layout: 'new'
   end
   

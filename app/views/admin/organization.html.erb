@@ -26,7 +26,7 @@
       <% @top_uploaders.each do |account, count| %>
         <tr>
           <td><%= account.full_name %></td>
-          <td><%= mail_to account.email %></td>
+          <td><%= account.email.blank? ? "deleted" : mail_to(account.email) %></td>
           <td><%= link_to count, "/search/Account:#{account.slug}", class: 'btn btn-sm btn-primary', target: '_blank' %></td>
         </tr>
       <% end %>
