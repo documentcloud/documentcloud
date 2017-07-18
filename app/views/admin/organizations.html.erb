@@ -10,7 +10,7 @@
     <table class="table table-striped table-sortable table-filterable">
       <thead>
         <tr>
-          <th data-sort="string-ins">Organizations – <span class="filterable-count"><%= @data.count %></span></th>
+          <th data-sort="string-ins">Organizations – <span class="filterable-count"><%= @organizations.count %></span></th>
           <th data-sort="int">Documents</th>
           <th data-sort="int">Pages</th>
           <th data-sort="int">Views</th>
@@ -24,15 +24,21 @@
         </tr>
       </thead>
       <tbody>
-      <% @data.each do |row| %>
+      <%# invert these two loops. %>
+      <% @organizations.each do |organization| %>
         <tr>
-          <% organization = @organizations.find(row.first)%>
+          <% row = @data.find{ |arr| arr.first == organization.id } %>
+          <% row ||= [organization.id, 0, 0, 0, 0, nil] %>
           <td><%= link_to organization.name, admin_organization_url(organization.slug, since:params[:since]), target:"_blank" %></td>
           <td data-sort-value="<%= row[1] %>"><%= number_with_delimiter(row[1]) %></td>
           <td data-sort-value="<%= row[2] %>"><%= number_with_delimiter(row[2]) %></td>
           <td data-sort-value="<%= row[3] %>"><%= number_with_delimiter(row[3]) %></td>
           <td data-sort-value="<%= row[4] %>"><%= number_to_human_size(row[4]) %></td>
-          <td data-sort-value="<%= row.last.to_i %>"><%= time_ago_in_words row.last %> ago</td>
+          <% if row.last.nil? %>
+            <td data-sort-value="<%= DateTime.parse("2008-01-01").to_i %>">never</td>
+          <% else %>
+            <td data-sort-value="<%= row.last.to_i %>"><%= time_ago_in_words row.last %> ago</td>
+          <% end %>
         </tr>
       <% end %>
       </tbody>
