@@ -22,7 +22,7 @@
   <%= csrf_meta_tag %> 
 </head>
 <body class="<%= @bodyclass %> <%= @current_account ? 'logged_in' : '' %>">
-
+  <%= render :partial => 'common/announcement' %>
   <div id="container">
     <div id="topbar" class="header gradient_mid">
       <div id="logo">
