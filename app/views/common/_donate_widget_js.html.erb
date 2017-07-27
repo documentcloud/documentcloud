@@ -2,7 +2,7 @@ var handler = StripeCheckout.configure({
   key:         '<%= DC::SECRETS['stripe']['publish'] %>',
   locale:      'auto',
   name:        'DocumentCloud',
-  description: 'c/o Investigative Reporters & Editors',
+  description: 'Donation to DocumentCloud.org',
   image:       '/images/common/dc_logomark_social_square.png',
   billingAddress: true,
   token: function(token) {
