@@ -16,12 +16,11 @@
 <DATA ref="#business.contact-info.online.email">support@documentcloud.org</DATA>
 <DATA ref="#business.contact-info.online.uri">https://www.documentcloud.org/</DATA>
 <DATA ref="#business.contact-info.postal.organization">DocumentCloud</DATA>
-<DATA ref="#business.contact-info.postal.street">Investigative Reporters and Editors
-141 Neff Annex
-University of Missouri</DATA>
-<DATA ref="#business.contact-info.postal.city">Columbia</DATA>
-<DATA ref="#business.contact-info.postal.stateprov">Missouri</DATA>
-<DATA ref="#business.contact-info.postal.postalcode">65211</DATA>
+<DATA ref="#business.contact-info.postal.street">PO Box 29401
+1602 Frankford Ave</DATA>
+<DATA ref="#business.contact-info.postal.city">Philadelphia</DATA>
+<DATA ref="#business.contact-info.postal.stateprov">Pennsylvania</DATA>
+<DATA ref="#business.contact-info.postal.postalcode">19125-9998</DATA>
 <DATA ref="#business.contact-info.postal.country">United States of America</DATA>
 <DATA ref="#business.name">DocumentCloud</DATA>
     </DATA-GROUP>
