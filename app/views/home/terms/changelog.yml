@@ -3,6 +3,9 @@
   start:       '2010-03-01'
   end:         '2016-05-24'
 - version:     2.0
-  current:     true
   description: 'See <a href="https://blog.documentcloud.org/blog/2016/04/updating-documentcloud-terms-of-service/">blog post</a> for details on changes.'
   start:       '2016-05-25'
+- version:     2.1
+  current:     true
+  description: 'DocumentCloud moves to its own independent non-profit'
+  start:       '2017-08-01'
