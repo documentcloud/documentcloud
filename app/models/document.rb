@@ -414,7 +414,7 @@ class Document < ActiveRecord::Base
   end
 
   def published_url
-    remote_url || detected_remote_url
+    remote_url # || detected_remote_url
   end
 
   def commentable?(account)
