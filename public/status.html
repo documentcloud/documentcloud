@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" class="dc-design-transition dc-error-status-page">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>We're planning an upgrade Sunday</title>
+  <link rel="stylesheet" href="https://assets.documentcloud.org/css/platform.css" type="text/css">
+</head>
+<body>
+
+  <header id="page-header" class="navbar navbar-light dc-navbar-primary dc-navbar" role="navigation">
+    <nav class="navbar-nav">
+      <a href="/" class="nav-item nav-link dc-logo">DocumentCloud</a>
+    </nav>
+  </header>
+
+<!--
+  <div id="return_to_v1">
+    <a id="return_to_v1_text" href="https://twitter.com/DocumentCloud">Follow us on Twitter</a>
+    <a id="return_to_v1_logo" href="/home"><img src="/images/common/document_cloud_logo_white@2x.png" width="150" height="32"></a>
+  </div>
+-->
+  <div class="content">
+    <div class="container-sm">
+
+      <h1>DocumentCloud is planning an upgrade on Sunday Night.</h1>
+      <p>
+        We're upgrading our database to improve performance and capacity starting at <span style="text-decoration: underline dotted">10pm EDT on Sunday, August 27th</span> (<b id="maintenance-estimate"></b> your time).
+        <a href="https://twitter.com/DocumentCloud">Follow us on Twitter for updates</a>, or <a href="mailto:support@documentcloud.org">shoot us an email</a> if you need something.
+      </p>
+
+      <h2>Don't worry, embeds will still load as normal:</h2>
+      <div class="DC-embed" data-version="1.0" style="font-size:10pt">
+        <p><a class="DC-embed-resource" href="http://www.documentcloud.org/documents/1659580-economic-analysis-of-the-south-pole-traverse.html#document/p4" title="View page 4 of Economic Analysis of the South Pole Traverse on DocumentCloud in new window or tab" target="_blank">Page 4 of Economic Analysis of the South Pole Traverse</a></p>
+        <img src="https://assets.documentcloud.org/documents/1659580/pages/economic-analysis-of-the-south-pole-traverse-p4-normal.gif?1449249890" alt="Page 4 of Economic Analysis of the South Pole Traverse" style="border:1px solid #ccc;-webkit-box-sizing:border-box;box-sizing:border-box;width:100%;max-width:700px;">
+        <p>Contributed to DocumentCloud by Ted Han of DocumentCloud &bull; <a href="https://www.documentcloud.org/documents/1659580/pages/economic-analysis-of-the-south-pole-traverse-p4.txt" title="View text of page 4 of Economic Analysis of the South Pole Traverse in a new window or tab" target="_blank">View page as text</a></p>
+      </div>
+      <script src="//assets.documentcloud.org/embed/loader/enhance.js"></script>
+
+    </div>
+  </div>
+
+<script type="text/javascript">
+  var maintenanceTime = new Date('08/28/2017 2:00:00 AM UTC');
+
+  var hour = maintenanceTime.getHours();
+  var ampm;
+  if (hour >= 12) {
+    ampm = 'pm';
+    if (hour > 12) {
+      hour = hour - 12;
+    }
+  } else {
+    ampm = 'am';
+    if (hour == 0) {
+      hour = 12;
+    }
+  }
+
+  var minutes = maintenanceTime.getMinutes();
+  if (minutes < 10) {
+    minutes = '0' + minutes;
+  }
+
+  var tzOffset = maintenanceTime.getTimezoneOffset() / 60;
+  var offsetSuffix = '';
+  if (tzOffset > 0) {
+    offsetSuffix = '-' + tzOffset;
+  } else if (tzOffset < 0) {
+    offsetSuffix = '+' + tzOffset;
+  }
+
+  var localTime = hour + ':' + minutes + ampm + ' (UTC' + offsetSuffix + ')';
+  document.getElementById('maintenance-estimate').innerText = localTime;
+</script>
+</body>
+</html>

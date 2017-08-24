@@ -752,14 +752,21 @@ iframe.hidden_iframe {
       background-color: #ffc;
       font-size: 11pt;
       text-align: center;
-      padding: 10px;
+      vertical-align: middle;
+      padding: 10px 170px;
+      min-height: 38px;
       font-family: sans-serif;
     }
     .notification_bar .notification_action {
       display: inline-block;
+      margin: 4px;
       padding: 8px;
       background-color: rgb(90, 118, 160);
       color: white;
       text-decoration: none;
       -webkit-font-smoothing: antialiased;
+    }
+    
+    .notification_bar span.date {
+      text-decoration: underline dotted;
     }
