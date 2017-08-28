@@ -176,6 +176,7 @@ DC::Application.routes.draw do
   get '/opensource',            to: 'home#opensource',    as: 'opensource'
   get '/about',                 to: 'home#about',         as: 'about'
   get '/contact',               to: 'home#contact',       as: 'contact'
+  get '/status',                to: 'home#status',        as: 'status'
   get '/help',                  to: 'home#help'
   get '/help/:page',            to: 'home#help'
   get '/multilanguage',         to: 'home#multilanguage', as: 'multilanguage'

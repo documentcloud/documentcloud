@@ -47,6 +47,10 @@ class HomeController < ApplicationController
     @canonical_url = api_terms_url if @version == @current_terms['version']
     render layout: 'new', template: "home/api_terms/show"
   end
+  
+  def status
+    not_found
+  end
 
   def privacy
     render layout: 'new'
