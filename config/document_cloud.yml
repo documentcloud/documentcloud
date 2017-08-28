@@ -21,7 +21,7 @@ development:
 
 staging:
   <<: *defaults
-  cloud_crowd_server:   <%= secrets['central_server'] %>:8080
+  cloud_crowd_server:   <%= secrets['central_server'] %>
   cloud_crowd_console:  staging.documentcloud.org:8080
   server_root:          staging.documentcloud.org
   asset_root:           s3.amazonaws.com/dcloud_staging
@@ -29,7 +29,7 @@ staging:
 
 production:
   <<: *defaults
-  cloud_crowd_server:   <%= secrets['central_server'] %>:8080
+  cloud_crowd_server:   <%= secrets['central_server'] %>
   cloud_crowd_console:  db01.documentcloud.org:8080
   server_root:          www.documentcloud.org
   asset_root:           assets.documentcloud.org
