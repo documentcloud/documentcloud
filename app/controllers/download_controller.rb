@@ -55,6 +55,7 @@ class DownloadController < ApplicationController
         @current_document = doc
         @local = true
         @embed_options = {container: '#viewer'}
+        @asset_root = "."
         html = ERB.new(File.read("#{Rails.root}/app/views/documents/show.html.erb")).result(binding)
         html.gsub!(/\="\/viewer\//, '="viewer/')
         zip.get_output_stream("#{doc.slug}.html") {|f| f.write(html) }

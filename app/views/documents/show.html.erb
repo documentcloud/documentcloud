@@ -38,13 +38,13 @@
   %>
   <%= render partial: 'common/sharing_meta_tags' if @sharing_meta_tags.present? %>
   <!--[if (!IE)|(gte IE 8)]><!-->
-    <link href="<%= DC.asset_root(agnostic: true) %>/viewer/viewer-datauri.css" media="screen" rel="stylesheet" type="text/css" />
+    <link href="<%= @asset_root || DC.asset_root(agnostic: true) %>/viewer/viewer-datauri.css" media="screen" rel="stylesheet" type="text/css" />
   <!--<![endif]-->
   <!--[if lte IE 7]>
     <link href="<%= DC.asset_root(agnostic: true) %>/viewer/viewer.css" media="screen" rel="stylesheet" type="text/css" />
   <![endif]-->
-  <link href="<%= DC.asset_root(agnostic: true) %>/viewer/printviewer.css" media="print" rel="stylesheet" type="text/css" />
-  <script src="<%= DC.asset_root(agnostic: true) %>/viewer/viewer.js"></script>
+  <link href="<%= @asset_root || DC.asset_root(agnostic: true) %>/viewer/printviewer.css" media="print" rel="stylesheet" type="text/css" />
+  <script src="<%= @asset_root || DC.asset_root(agnostic: true) %>/viewer/viewer.js"></script>
   <% if Rails.env.production? %>
     <script>
       window.DV.recordHit = "<%= DC.server_root(agnostic: true).html_safe %>/pixel.gif";
