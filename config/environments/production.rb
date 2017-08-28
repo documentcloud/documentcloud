@@ -83,5 +83,5 @@ DC::Application.configure do
   config.log_formatter = ::Logger::Formatter.new
 
   # Put the site into a read-only mode for database updates
-  config.read_only = true
+  config.read_only = false
 end
