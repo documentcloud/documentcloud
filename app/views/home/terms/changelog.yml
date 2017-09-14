@@ -5,7 +5,8 @@
 - version:     2.0
   description: 'See <a href="https://blog.documentcloud.org/blog/2016/04/updating-documentcloud-terms-of-service/">blog post</a> for details on changes.'
   start:       '2016-05-25'
+  end:         '2017-07-31'
 - version:     2.1
   current:     true
-  description: 'DocumentCloud moves to its own independent non-profit'
+  description: 'DocumentCloud moves to its own independent non-profit.'
   start:       '2017-08-01'
