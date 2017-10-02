@@ -33,6 +33,7 @@ rails runner -e production "puts Organization.count" # check for human eyeballs
 sudo mkdir /mnt/cloud_crowd
 sudo chown ubuntu:ubuntu /mnt/cloud_crowd
 
+# Set up the Rails Log directory to point to it's own device (so it doesn't chew up the main file system)
 sudo mkdir /mnt/log
 sudo mount /dev/xvdc /mnt/log
 sudo chown ubuntu:ubuntu /mnt/log
