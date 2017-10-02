@@ -12,7 +12,6 @@
     <!-- Description of the entity making this policy statement. -->
     <ENTITY>
     <DATA-GROUP>
-<DATA ref="#business.contact-info.telecom.telephone.number">(202) 505-1010</DATA>
 <DATA ref="#business.contact-info.online.email">support@documentcloud.org</DATA>
 <DATA ref="#business.contact-info.online.uri">https://www.documentcloud.org/</DATA>
 <DATA ref="#business.contact-info.postal.organization">DocumentCloud</DATA>
