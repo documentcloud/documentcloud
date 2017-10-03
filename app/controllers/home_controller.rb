@@ -59,6 +59,10 @@ class HomeController < ApplicationController
   def faq
     render layout: 'new'
   end
+  
+  def quackbot
+    render layout: 'new'
+  end
 
   private
 

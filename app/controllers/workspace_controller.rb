@@ -43,5 +43,4 @@ class WorkspaceController < ApplicationController
   def upgrade
     render :layout => nil
   end
-
 end

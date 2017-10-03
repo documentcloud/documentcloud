@@ -180,6 +180,7 @@ DC::Application.routes.draw do
   get '/help',                  to: 'home#help'
   get '/help/:page',            to: 'home#help'
   get '/multilanguage',         to: 'home#multilanguage', as: 'multilanguage'
+  get '/quackbot',              to: 'home#quackbot',      as: 'quackbot'
 
   # Redirects
   get '/index.php',             to: 'redirect#index',                     url: '/'
