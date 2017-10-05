@@ -10,8 +10,8 @@
     <p>
     <a href="<%= @slack_url %>"><img alt="Add to Slack" height="40" width="139" src="https://platform.slack-edge.com/img/add_to_slack.png" srcset="https://platform.slack-edge.com/img/add_to_slack.png 1x, https://platform.slack-edge.com/img/add_to_slack@2x.png 2x" /></a>
     </p>
-    <p>Quackbot was built to help journalists like you!  Ask <span style="background:#eef7fd;color:#0576b9;">@quackbot</span> how it can help you for more details.</p>
-    <p>And, if <span style="background:#eef7fd;color:#0576b9;">@quackbot</span> does anything weird (or you encounter any bugs), <%= mail_to "support@documentcloud.org", "please let us know!" %></p>
+    <p>We built <span style="background:#eef7fd;color:#0576b9;">@quackbot</span> to help journalists like you!  Ask <span style="background:#eef7fd;color:#0576b9;">@quackbot</span> how it can help you for more details.</p>
+    <p><span style="background:#eef7fd;color:#0576b9;">@quackbot</span> is young and we're still teaching it new things, so if <span style="background:#eef7fd;color:#0576b9;">@quackbot</span> does anything weird (or you encounter any bugs), <%= mail_to "support@documentcloud.org", "please let us know!" %></p>
     <% else %>
     <p>
       <%= image_tag('/images/home/quackbot-icon_128.png', size: '128x128', alt: 'quackbot logo', class: 'img-thumbnail') %>
