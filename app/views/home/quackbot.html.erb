@@ -1,11 +1,13 @@
 <% @title = 'Hi Quackbot' %>
-<div class="content paper container-lg">
+<div class="content paper container-md">
   <h1>Say Hi to Quackbot</h1>
   <section>
     <% if @current_account %>
     <p>Hey <%= @current_account.full_name %>, let us introduce you to <span style="background:#eef7fd;color:#0576b9;">@quackbot</span>!</p>
-    <p></p>
-    <a href="https://slack.com/oauth/authorize?&client_id=2309601577.242920041892&scope=bot,chat:write:bot,emoji:read,files:read,links:write,im:read,im:write,incoming-webhook,commands"><img alt="Add to Slack" height="40" width="139" src="https://platform.slack-edge.com/img/add_to_slack.png" srcset="https://platform.slack-edge.com/img/add_to_slack.png 1x, https://platform.slack-edge.com/img/add_to_slack@2x.png 2x" /></a>
+    <p>
+      <%= image_tag('/images/home/quackbot-icon_128.png', size: '128x128', alt: 'quackbot logo', class: 'img-thumbnail') %>
+    </p>
+    <a href="<%= @slack_url %>"><img alt="Add to Slack" height="40" width="139" src="https://platform.slack-edge.com/img/add_to_slack.png" srcset="https://platform.slack-edge.com/img/add_to_slack.png 1x, https://platform.slack-edge.com/img/add_to_slack@2x.png 2x" /></a>
     <% else %>
     <p>Want to add Quackbot to your slack?</p>
     <p>Get started by <%= link_to "logging into DocumentCloud", login_path(next: quackbot_path) %> or <%= link_to "find your organization", "#"%></p>
