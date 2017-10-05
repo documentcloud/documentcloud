@@ -69,19 +69,25 @@ class HomeController < ApplicationController
       # user_data = {email: 'ted@knowtheory.net', slug: 'biffud'}
       cipher = OpenSSL::Cipher::AES.new(256, :CBC)
       cipher.encrypt
+      
       key = Base64.decode64(DC::SECRETS["quackbot_cipher_key"])
       iv  = cipher.random_iv
       
+      cipher.key = key
+      cipher.iv = iv
+      
       encrypted = cipher.update(user_data.to_json) + cipher.final
       
-      state_data = "#{Base64.encode64(encrypted).chomp}--#{Base64.encode64(iv).chomp}"
+      state_data = "#{Base64.encode64(encrypted)}--#{Base64.encode64(iv).chomp}"
       
-      decipher = OpenSSL::Cipher::AES.new(256, :CBC)
-      decipher.decrypt
-      decipher.key = key
-      decipher.iv = iv
-      
-      #plain = decipher.update(encrypted) + decipher.final
+      #msg, ivStr = state_data.split("--").map{|str| Base64.decode64(str)}
+      #
+      #decipher = OpenSSL::Cipher::AES.new(256, :CBC)
+      #decipher.decrypt
+      #decipher.key = key
+      #decipher.iv = ivStr
+      #
+      #plain = decipher.update(msg) + decipher.final
       
       @slack_url = Addressable::URI.parse("https://slack.com/oauth/authorize")
       @slack_url.query_values = {
