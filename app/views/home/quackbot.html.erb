@@ -3,7 +3,7 @@
   <h1>Say Hi to Quackbot</h1>
   <section>
     <% if @current_account %>
-    <p>Hey <%= @current_account.full_name %>, let us introduce you to <span style="background:#eef7fd;color:#0576b9;">@quackbot</span>!</p>
+    <p>Hey <%= @current_account.full_name %>, let us introduce you and <b><%= @current_organization.name %></b> to <span style="background:#eef7fd;color:#0576b9;">@quackbot</span>!</p>
     <p>
       <%= image_tag('/images/home/quackbot-icon_128.png', size: '128x128', alt: 'quackbot logo', class: 'img-thumbnail') %>
     </p>
