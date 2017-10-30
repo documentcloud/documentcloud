@@ -3,7 +3,7 @@
     <%= content_tag :iframe, nil, {
           src: options[:document].iframe_embed_src_url(data),
           title: "#{options[:document].title} (Hosted by DocumentCloud)",
-          sandbox: ['allow-scripts', 'allow-same-origin', 'allow-popups'],
+          sandbox: ['allow-scripts', 'allow-same-origin', 'allow-popups', 'allow-forms'],
           frameborder: '0',
           style: 'position:absolute;top:0;left:0;width:100%;height:100%;border:1px solid #aaa;border-bottom:0;box-sizing:border-box;' } %>
   </div>
