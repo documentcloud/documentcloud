@@ -14,8 +14,8 @@ When you upload a document, you can decide whether or not you're ready to make i
 
 1. Right-click the document icon.
 2. Select **“Set Access Level”**.
-![alt text](../images/collaboration/collaboration1.gif)
 
+![alt text](../images/collaboration/collaboration1.gif)
 
 * **Public Access** - Anyone, even those without DocumentCloud accounts, may access the document.
 * **Private Access** - The default. Only you can access the document.
