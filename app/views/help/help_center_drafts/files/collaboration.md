@@ -30,7 +30,7 @@ When you upload a document, you can decide whether or not you're ready to make i
 1. **Select the document you would like to share.** A blue line should appear around the document icon.
 2. Select **“Analyze”**.
 3. Select **“Share this Document”**.
-  ![alt text](../images/collaboration/collaboration2.gif)
+ ![alt text](../images/collaboration/collaboration2.gif)
 4. Input the email address and name of the person you would like to share the document with. Click **“next”**.
   ![alt text](../images/collaboration/collaboration3.png)
 5. You will be prompted to include an optional short message.
