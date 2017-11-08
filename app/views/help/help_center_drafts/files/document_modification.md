@@ -14,7 +14,7 @@ Not everything is appropriate for publication. Reports from a state foster care 
 
 #### To Redact a Portion of a Document:
 
-1. Select **“Redact Document”** from the sidebar under **“Document Tools”**.
+1. Select **“Redact Document”** from the sidebar under **“Document Tools”**.    
     ![alt text](../images/document_modification/redact.png)
 2. Click and drag a black rectangle over the text you would like to remove.
     ![alt text](../images/document_modification/document_modification1.gif)
@@ -32,7 +32,7 @@ Depending on the size of the document and the number of other jobs DocumentCloud
 #### To Insert/Replace a Page:
 
 1. Navigate to the **“Pages”** tab in the document workspace.
-2. Select **“Insert/Replace Pages”** under **“Page Tools”**.
+2. Select **“Insert/Replace Pages”** under **“Page Tools”**.    
     ![alt text](../images/document_modification/insertpage.png)
     * **To replace a page**, select any single page.
     * **To replace an entire section of the document**, hold down the shift key and select multiple pages.
@@ -66,7 +66,7 @@ Need to clean up OCR gibberish? Edit the text that appears in DocumentCloud's te
 
 #### To Manually Edit OCR Text:
 
-1. Select **“Edit Page Text”** from the sidebar under **“Text Tools”**.
+1. Select **“Edit Page Text”** from the sidebar under **“Text Tools”**.             
     ![alt text](../images/document_modification/editpage.png)
 2. You can freely edit, delete, or add text. 
 3. Use the back and forward arrows at the top of the sidebar to page through your document. (If you do not see the back and forward arrows, try scrolling up the sidebar.)
@@ -83,7 +83,7 @@ Need to clean up OCR gibberish? Edit the text that appears in DocumentCloud's te
 
 As we work, DocumentCloud is continually improving the tools we provide to users. If we improve the quality of our OCR [LINK] tools, you can try processing an old document anew for better results. 
 
-1. Select “Reprocess Text from the sidebar under **“Text Tools”**. 
+1. Select “Reprocess Text from the sidebar under **“Text Tools”**.           
     ![alt text](../images/document_modification/reprocess.png)
 2. Click **“Reprocess”**.
 
