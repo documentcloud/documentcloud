@@ -21,7 +21,7 @@ Not everything is appropriate for publication. Reports from a state foster care 
 3. Select **“Save Redaction”** and then **“Okay”**. 
 4. You will be forwarded back to the **“Your Documents”** page. Once your document is finished processing, the text you selected has been blacked out.
 
-NOTE:**Redactions are permanent, and cannot be undone.** When you redact a portion of a document, all of the text touching the black box will additionally be removed from the OCR text in the **"text"** tab. No trace of it will be left in the document file.
+NOTE: **Redactions are permanent, and cannot be undone.** When you redact a portion of a document, all of the text touching the black box will additionally be removed from the OCR text in the **"text"** tab. No trace of it will be left in the document file.
 
 ## Page Tools
 
