@@ -23,13 +23,13 @@ When you upload a document, you can decide whether or not you're ready to make i
 
  
 ## Sharing Documents with Reviewers
-**You can share specific documents for review with anyone with an email address, no DocumentCloud account required.** This is useful for crowdsourcing your document annotations among experts, or quickly sharing a document on deadline.
+**You can share documents for review with individuals who do not have DocumentCloud accounts.** This can be used to crowdsource document annotations from field experts, or for have a non-journalist read over your documents before they are published.
 
 #### To share a document with a reviewer:
 
 1. **Select the document you would like to share.** A blue line should appear around the document icon.
 2. Select **“Analyze”**.
-3. Select **“Share this Document”**.
+3. Select **“Share this Document”**.   
  ![alt text](../images/collaboration/collaboration2.gif)
 4. Input the email address and name of the person you would like to share the document with. Click **“next”**.
   ![alt text](../images/collaboration/collaboration3.png)
@@ -38,7 +38,7 @@ When you upload a document, you can decide whether or not you're ready to make i
 6. Click **“send”**. DocumentCloud will email a link to your document and reviewing instructions to that person’s email.
 
 ## Adding collaborators to a project
-**Adding a collaborator to a project gives them access to view and edit all of the documents in that project and all the public notes on those documents.** Your private notes will still be private. Once you add a collaborator a project, the project will appear in their account sidebar for easy access.
+**Adding a collaborator to a project gives them ability to view and edit all of the documents in that project and all the public notes on those documents.** Your private notes will still be private. Once you add a collaborator to a project, the project will appear in their account sidebar for easy access.
 
 #### To to add a collaborator to a project:
 
