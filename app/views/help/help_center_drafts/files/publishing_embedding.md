@@ -8,7 +8,7 @@ Before you publish a document, page, note or document set, you'll want to make s
 #### To Change a Document's Access Level:
 
 1. Navigate to **"Your Documents"** and right click on the thumbnail of the document you would like to make public.
-2. Select **"Set Access Level"** and switch the setting to **"Public Access"**.
+2. Select **"Set Access Level"** and switch the setting to **"Public Access"**.         
 
 ![alt text](../images/publishing_embedding/publishing_embedding1.gif)
 
@@ -16,12 +16,12 @@ Before you publish a document, page, note or document set, you'll want to make s
 
 1. Navigate to **"Your Documents"** and select the document you want to make public.
 2. Click **"Publish"**.
-3. Click **"Set Publication Date"**.
+3. Click **"Set Publication Date"**.            
     ![alt text](../images/publishing_embedding/publishing_embedding2.gif)
 4. Select the date you'd like the document to be made public in the dialog box and click **"Save"**. 
 5. Your document will now automatically be made public on that date and time.
 
-[NOTE]DocumentCloud syncs to the local time on your computer. For example, if your computer is set in Eastern Standard Time, whatever publication date and time you select will also by default be in Eastern Standard Time.[/NOTE]
+NOTE: DocumentCloud syncs to the local time on your computer. For example, if your computer is set in Eastern Standard Time, whatever publication date and time you select will also by default be in Eastern Standard Time.
 
 ## Linking to a Document, Page, or Note
 
@@ -46,48 +46,35 @@ Click here [LINK] for more information on how to share a url linking to a specif
 ## Embed options
 You have a few different options when it comes to embedding your DocumentCloud documents on a website.
 
-###Full Document Embed
-`[IMAGE/GIF]`
-##### Good for:
-Allowing your readers to browse a multi-page document. You can use annotations to guide your reader through the document and point out sections and statements crucial to your story. (If you have annotated the document, readers can click through your annotations in an interactive format just as you can in the DocumentCloud workspace).
-##### Use Cases:
-* https://www.nytimes.com/interactive/2017/09/13/nyregion/14weiner-letters-dc.html
-* http://www.npr.org/2017/09/27/553860929/republicans-outline-biggest-tax-code-overhaul-in-a-generation
-* https://www.buzzfeed.com/kenbensinger/these-reports-allege-trump-has-deep-ties-to-russia?utm_term=.klJp3NgBm#.hkv0D7R12
-* http://www.npr.org/sections/thetwo-way/2017/07/08/536169691/g19-nations-affirm-climate-plan-acknowledging-u-s-
+### Full Document Embed
+
+**Good for:** Allowing your readers to browse a multi-page document. If you have annotated the document, readers can click through your annotations in an interactive format just as you can in the DocumentCloud workspace.
+
+![alt text](../images/publishing_embedding/fullembed.png)
 
 *** 
 
 ### Single Page Embed 
-`[IMAGE/GIF]`
-##### Good for:
-You can use-single page embeds as a more stripped-down display as click-through thumbnails to a larger document, as in [LINK].
-##### Use Cases:
-* http://apps.chicagotribune.com/news/local/chicago-speed-camera-tickets/cameras/10318-s-indianapolis/
-* http://documents.latimes.com/ruben-salazar/
+
+**Good for:** Sharing single-page documents to readers.
+
+![alt text](../images/publishing_embedding/pageembed.png)
 
 *** 
 
 ### Note Embed
-`[IMAGE/GIF]`
-##### Good for:
-With note embeds, you can folding small sections of primary source documents into your story. If you quote from a primary source, show your readers where exactly you pulled the quote from by embedding a snapshot of the source in the body of your story.
 
-##### Use Cases:
-* http://www.chicagotribune.com/news/local/politics/ct-rahm-emanuel-laquan-mcdonald-shooting-met-20160113-story.html
-* http://www.washingtonpost.com/sf/national/2014/08/03/fresh-doubts-over-a-texas-execution/?utm_term=.a31fffd5ee4e
-* https://www.propublica.org/article/heres-how-trump-transferred-wealth-to-his-son-while-avoiding-usual-taxes
-* http://www.npr.org/sections/thetwo-way/2017/03/03/518353019/trump-nominees-financial-reports-slow-to-arrive-for-ethics-review-document-shows
+**Good for:** Folding small sections of primary source documents into your story. 
+
+![alt text](../images/publishing_embedding/noteembed.png)
 
 *** 
 
 ### Document List Embed
-`[IMAGE/GIF]`
-##### Good for:
-Share an entire collection of documents pertinent to a story or investigation with your readers. Readers will be able to freely browse all documents and view any public annotations you've added to give context to your sources.
-##### Use Cases: 
-* http://apps.stlpublicradio.org/ferguson-project/evidence.html
-* http://specialbranchfiles.uk/npoiu-formation/
+
+![alt text](../images/publishing_embedding/listembed.png)
+
+**Good for:**Sharing an entire collection of documents pertinent to a story or investigation with readers. 
 
 *** 
 
@@ -202,7 +189,7 @@ You also can pass additional parameters to control the size and attributes of th
 * **For a note, use any note-specific URL:**
     * `~/documents/282753-lefler-thesis.html#document/p1/a53674"]`
 
-[NOTE] If you don't indicate a width (or manually disable responsive widths with `responsive="false"`), then the document will automatically narrow and widen to fill available width.[/NOTE]
+NOTE: If you don't indicate a width (or manually disable responsive widths with `responsive="false"`), then the document will automatically narrow and widen to fill available width.
 
 ## oEmbed Service
 
@@ -218,7 +205,7 @@ You also can pass additional parameters to control the size and attributes of th
     * `https://www.documentcloud.org/documents/1234-document-name/annotations/220666.html`
 
 
-[NOTE]Check with your organization's systems administrator about whether your CMS supports oEmbed.[/NOTE]
+NOTE: Check with your organization's systems administrator about whether your CMS supports oEmbed.
 
 ## Adding Organization Branding to Embeds
 
