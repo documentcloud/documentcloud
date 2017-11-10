@@ -74,7 +74,7 @@ You have a few different options when it comes to embedding your DocumentCloud d
 
 ![alt text](../images/publishing_embedding/listembed.png)
 
-**Good for:**Sharing an entire collection of documents pertinent to a story or investigation with readers. 
+**Good for:** Sharing an entire collection of documents pertinent to a story or investigation with readers. 
 
 *** 
 
