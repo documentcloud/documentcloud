@@ -41,7 +41,7 @@ The most simple way to share your work in DocumentCloud with readers is to **pub
 
 Click here [LINK] for more information on how to share a url linking to a specific note.
 
-## Embedding Documents
+# Embedding Documents
 
 ## Embed options
 You have a few different options when it comes to embedding your DocumentCloud documents on a website.
