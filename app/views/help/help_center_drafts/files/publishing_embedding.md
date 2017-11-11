@@ -3,7 +3,7 @@
 
 ## Making Documents Public
 
-Before you publish a document, page, note or document set, you'll want to make sure that the document or documents are public. You either **change the access level of the document** to make it available to the public immediately, or **set an automatic publication date**.
+Before you publish a document, page, note or document set, you'll want to make sure that the document or documents are public. You can either **change the access level of the document** to make it available to the public immediately, or **set an automatic publication date**.
 
 #### To Change a Document's Access Level:
 
@@ -19,7 +19,7 @@ Before you publish a document, page, note or document set, you'll want to make s
 3. Click **"Set Publication Date"**.            
     ![alt text](../images/publishing_embedding/publishing_embedding2.gif)
 4. Select the date you'd like the document to be made public in the dialog box and click **"Save"**. 
-5. Your document will now automatically be made public on that date and time.
+5. Your document will now automatically have its display setting changed to "public" at that date and time.
 
 NOTE: DocumentCloud syncs to the local time on your computer. For example, if your computer is set in Eastern Standard Time, whatever publication date and time you select will also by default be in Eastern Standard Time.
 
@@ -77,7 +77,7 @@ You have a few different options when it comes to embedding your DocumentCloud d
 
 ## Document List Embed
 
-**Good for:**Sharing an entire collection of documents pertinent to a story or investigation with readers. 
+**Good for:** Sharing an entire collection of documents pertinent to a story or investigation with readers. 
 
 ![alt text](../images/publishing_embedding/listembed.png)
 
@@ -104,14 +104,14 @@ To access embed options, select the document you want to embed and click on **"P
 ##### 2) Review Document
 ![alt text](../images/publishing_embedding/publishing_embedding5.gif)
 
-* First, you may provide the link to the article referencing the document to enable a **"Related Article"** link within the document viewer. (This guides readers who stumble across the document from a web search to the article's original context.)
+* First, you may provide the link to the article referencing the document to enable a **"Related Article"** link within the document viewer. (This guides readers who stumble across the document from a web search to the article's original context, a.k.a your published piece.)
 
 * You will be alerted if your document needs to be made public.
 
 ##### 3) Configure the Document Viewer
 ![alt text](../images/publishing_embedding/publishing_embedding4.gif)
 
-You can control all of the below to customize how your document viewer embed appears:
+You can control all of the below settings to customize the particular display of your document viewer embed:
 * The size of the document viewer (full page layout, fixed size box)
 * Which page the document opens to by default
 * Show/hide the sidebar
