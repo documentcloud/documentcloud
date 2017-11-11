@@ -1,7 +1,7 @@
 # Document Modification
-**We don't tend to think of modifying source documents as something a responsible journalist would do, but there are absolutely times when you need to.**
+**We don't tend to think of modifying source documents as something a responsible journalist would do, but there are absolutely times when it is necessary.**
 
-Whether you're trying to protect the privacy of a minor by redacting personally identifying information from a foster care incident report, reorganizing a collection of letters or inserting a page that wasn't properly scanned, journalists sometimes need to rework source documents to ready them for publication. 
+Whether you're trying to protect the privacy of a minor by redacting personally identifying information from a foster care incident report, reorganizing a collection of letters, or inserting a page that wasn't properly scanned, journalists sometimes need to rework source documents to ready them for publication. 
 
 **In this article:**
 * Redact portions of documents
@@ -10,7 +10,7 @@ Whether you're trying to protect the privacy of a minor by redacting personally 
 
 
 ## Redacting Documents
-Not everything is appropriate for publication. Reports from a state foster care agency might illustrate a story well, but such documents are also usually full of sensitive information like the full names of minors or other personally identifying information. We expect newsrooms to use their own policies and judgement in determining what is and is not suitable for publication.
+Not everything is appropriate for publication. [Reports from a state foster care agency](http://media.apps.chicagotribune.com/docs/ct-met-dcfs-letters.html) might illustrate a story well, but such documents are also usually full of sensitive information like the full names of minors or other personally identifying information. We expect newsrooms to use their own policies and judgement in determining what is and is not suitable for publication.
 
 #### To Redact a Portion of a Document:
 
@@ -38,7 +38,7 @@ Depending on the size of the document and the number of other jobs DocumentCloud
     * **To replace an entire section of the document**, hold down the shift key and select multiple pages.
     * **To insert new pages into the document**, select the space between the two pages where you’d like to insert your new pages.
 ![alt text](../images/document_modification/document_modification2.gif)
-6. When you’re ready to proceed, click the **“Upload Pages”** button to choose a file from your computer to replace the chosen pages or insert a new page into your document.
+6. When you’re ready to proceed, click the **“Upload Pages”** button to choose a file from your computer to replace your selected pages or insert a new page into your document.
 
 #### To Remove a Page:
 
@@ -56,13 +56,13 @@ Depending on the size of the document and the number of other jobs DocumentCloud
 2. Select **“Reorder Pages”** under **“Page Tools”**.
 
     ![alt text](../images/document_modification/reorderpage.png)
-3. Select all the pages you want to remove.
-3. Drag and drop pages to change their position in the document.
+3. Select the page(s) you want to move.
+3. Drag and drop the selected page(s) to a new location.
     ![alt text](../images/document_modification/document_modification4.gif)
 
 ## Cleaning up OCR Text
 
-Need to clean up OCR gibberish? Edit the text that appears in DocumentCloud's text tab with the Edit Page Text option. 
+Need to clean up OCR gibberish? Edit the text that appears in DocumentCloud's text tab with the **Edit Page Text** option. 
 
 #### To Manually Edit OCR Text:
 
@@ -77,11 +77,11 @@ Need to clean up OCR gibberish? Edit the text that appears in DocumentCloud's te
 
 NOTE: To undo edits you’ve made to a page, hover over the page preview in the top activity tray and click the **(x)** icon in the bottom left corner.
 
-NOTE: Changes made with Edit Page Text will NOT alter the original PDF.
+NOTE: Changes made with Edit Page Text will NOT alter the original PDF. If you want to remove a portion of text from both the text tab and the PDF, you can use the redaction tool.
 
 #### To Reprocess OCR Text:
 
-As we work, DocumentCloud is continually improving the tools we provide to users. If we improve the quality of our OCR [LINK] tools, you can try processing an old document anew for better results. 
+As we work, DocumentCloud is continually improving the tools we provide to users. If we improve the quality of our OCR tools, you can try processing an old document anew for better results. 
 
 1. Select “Reprocess Text from the sidebar under **“Text Tools”**.           
     ![alt text](../images/document_modification/reprocess.png)
