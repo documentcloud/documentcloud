@@ -33,13 +33,13 @@ The most simple way to share your work in DocumentCloud with readers is to **pub
 
 **Document open to a specific page:**
 
-`https://www.documentcloud.org/documents/282753-lefler-thesis.html#document/p22`
+`https://www.documentcloud.org/documents/282753-lefler-thesis.html#document/p22)`
 
 **Document open to a specific note:**
 
 `https://www.documentcloud.org/documents/282753-lefler-thesis.html#document/p57/a42283`
 
-Click here [LINK] for more information on how to share a url linking to a specific note.
+Click [here](annotate_documents.md/#linking-to-notes) for more information on how to share a url linking to a specific note.
 
 # Embedding Documents
 
@@ -77,7 +77,7 @@ You have a few different options when it comes to embedding your DocumentCloud d
 
 ## Document List Embed
 
-**Good for:** Sharing an entire collection of documents pertinent to a story or investigation with readers. 
+**Good for:**Sharing an entire collection of documents pertinent to a story or investigation with readers. 
 
 ![alt text](../images/publishing_embedding/listembed.png)
 
@@ -122,7 +122,7 @@ You can control all of the below to customize how your document viewer embed app
 ![alt text](../images/publishing_embedding/publishing_embedding7.gif)
 
 * DocumentCloud will generate two pieces of code: an **HTML embed code**, and a **Wordpress shortcode**. 
-* Simply **copy and paste** the HTML code to a page on your site. If you have the DocumentCloud Wordpress plugin[LINK] installed, paste it into the body of your article.
+* Simply **copy and paste** the HTML code to a page on your site. If you have the [DocumentCloud Wordpress plugin](https://wordpress.org/plugins/documentcloud) installed, paste it into the body of your article.
 
 
 ### Embed a Single Page from a Document
@@ -136,7 +136,7 @@ You can control all of the below to customize how your document viewer embed app
 ![alt text](../images/publishing_embedding/publishing_embedding7.gif)
 
 * DocumentCloud will generate two pieces of code: an **HTML embed code**, and a **Wordpress shortcode**. 
-* Simply **copy and paste** the HTML code to a page on your site. If you have the DocumentCloud Wordpress plugin[LINK] installed, paste it into the body of your article.
+* Simply **copy and paste** the HTML code to a page on your site. If you have the [DocumentCloud Wordpress plugin](https://wordpress.org/plugins/documentcloud) installed, paste it into the body of your article.
 
 
 ### Embed a Note from a Document
@@ -148,7 +148,7 @@ You can control all of the below to customize how your document viewer embed app
 ![alt text](../images/publishing_embedding/publishing_embedding7.gif)
 
 * DocumentCloud will generate two pieces of code: an **HTML embed code**, and a **Wordpress shortcode**. 
-* Simply **copy and paste** the HTML code to a page on your site. If you have the DocumentCloud Wordpress plugin[LINK] installed, paste it into the body of your article.
+* Simply **copy and paste** the HTML code to a page on your site. If you have the [DocumentCloud Wordpress plugin](https://wordpress.org/plugins/documentcloud) installed, paste it into the body of your article.
 
 ### Embed a List of Documents
 ##### 1) Select "Embed Document List" from the "Publish" dropdown
@@ -166,14 +166,14 @@ You can control all of the below to customize how your document list embed appea
 ![alt text](../images/publishing_embedding/publishing_embedding7.gif)
 
 * DocumentCloud will generate two pieces of code: an **HTML embed code**, and a **Wordpress shortcode**. 
-* Simply **copy and paste** the HTML code to a page on your site. If you have the DocumentCloud Wordpress plugin[LINK] installed, paste it into the body of your article.
+* Simply **copy and paste** the HTML code to a page on your site. If you have the [DocumentCloud Wordpress plugin](https://wordpress.org/plugins/documentcloud) installed, paste it into the body of your article.
 
 
 ## Wordpress Shortcodes
 Users who publish via WordPress can install a **Wordpress plugin** that lets you embed DocumentCloud resources using shortcodes.
 
 #### How to embed documents using Wordpress shortcodes
-1. **Download** the DocumentCloud plugin at its WordPress plugin page[LINK].
+1. **Download** the [DocumentCloud Wordpress plugin](https://wordpress.org/plugins/documentcloud).
     ![alt text](../images/publishing_embedding/wordpress.png)
 2. **Install and activate** it according to the directions.
 3. During the last step of the embed preparation process on DocumentCloud, you will be given both a regular embed code and a Wordpress embed code.
@@ -201,7 +201,7 @@ NOTE: If you don't indicate a width (or manually disable responsive widths with 
 
 ## oEmbed Service
 
-**oEmbed** is a Web standard for providing embedded content on a site via a request to the URL of the resource. If a content management system supports oEmbed, you can **simply paste in the URL to a DocumentCloud resource**, and the CMS will fetch it via our oEmbed API and embed it.
+[**oEmbed**](https://oembed.com) is a Web standard for providing embedded content on a site via a request to the URL of the resource. If a content management system supports oEmbed, you can **simply paste in the URL to a DocumentCloud resource**, and the CMS will fetch it via our oEmbed API and embed it.
 
 * **Example document URL for oEmbed**
     * `https://www.documentcloud.org/documents/1234-document-name.html`
@@ -217,6 +217,5 @@ NOTE: Check with your organization's systems administrator about whether your CM
 
 ## Adding Organization Branding to Embeds
 
-While DocumentCloud does not support adding branding to embeds, a DocumentCloud user built an open-source custom viewer for news organizations to use to display their DocumentCloud embeds. Check it out here.
+While DocumentCloud does not support adding branding to embeds, a DocumentCloud user built an open-source custom viewer for news organizations to use to display their DocumentCloud embeds. Check it out [**here**](http://johnkeefe.net/a-customized-viewer-for-documentcloud).
 
-http://johnkeefe.net/a-customized-viewer-for-documentcloud
