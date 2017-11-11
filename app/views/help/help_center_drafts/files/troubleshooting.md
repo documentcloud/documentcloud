@@ -3,7 +3,7 @@ We're always (with your help) discovering new and different ways to break our do
 
 
 
-##Optimizing PDFs
+## Optimizing PDFs
 In some cases, resolving a document import issue is as simple as opening the document in Adobe Acrobat or Apple Preview, optimizing it for web use and re-saving it.
 
 **In Adobe Acrobat**
