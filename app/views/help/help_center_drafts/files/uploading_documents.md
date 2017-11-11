@@ -1,6 +1,7 @@
 
+
 # Uploading Documents
-As a DocumentCloud user, you'll want to build a collection of files to research, analyze, annotate and publish with our embeds. Fortunately, uploading files -- whether you have a handful or several thousand -- is easy.
+As a DocumentCloud user, you'll want to build a collection of files to research, analyze, annotate and publish with our embeds. Fortunately, uploading files—whether you have a handful or several thousand—is easy.
 
 ## Upload via the Workspace
 There are two ways to upload in the workspace:
@@ -13,14 +14,14 @@ There are two ways to upload in the workspace:
 
 To select more than one document, hold down the ctrl key in Windows or the command key in OSX.
 
-[NOTE]Multiple document upload is not supported in older versions of Internet Explorer.[/NOTE]
+NOTE: Multiple document upload is not supported in older versions of Internet Explorer.
 
 
 1. **The uploader will suggest a title for your document based on its file name.** You can edit the title before you continue, or you can edit the title plus other metadata after the document is uploaded. 
 
     ![alt text](../images/uploading_documents/upload.png)
 
-2. Click the **pencil icon** to add a description and source for each document and set the **access level**. (default is private).
+2. Click the **pencil icon** to add a description and source for each document and set the **access level**. (default is private).      
     ![alt text](../images/uploading_documents/uploading_documents.gif)
     * **Public Access** - Anyone, even those without DocumentCloud accounts, may access the document.
     * **Private Access** - The default. Only you can access the document.
@@ -34,9 +35,9 @@ To select more than one document, hold down the ctrl key in Windows or the comma
 
 To view all the documents you've uploaded, click on the **"Your Documents"** link at the top left.
 
-[NOTE]If you're uploading a very large file, it might be a good idea to check the "email me when the uploaded document has finished processing" box. **If you plan to upload many large documents at once, let us know so we can ensure there's enough computing resources available.**[/NOTE]
+NOTE: If you're uploading a very large file, it might be a good idea to check the "email me when the uploaded document has finished processing" box. **If you plan to upload many large documents at once, let us know so we can ensure there's enough computing resources available.**
 
-[NOTE]Running into trouble uploading documents? Check out our troubleshooting page.[/NOTE]
+NOTE: Running into trouble uploading documents? Check out our troubleshooting page.
 ## Upload via the API
 **Users who want to upload many hundreds or thousands of documents or automate document uploads may want to consider using the DocumentCloud API[LINK].** The `upload.json` method provides for passing in file name, project id and numerous other parameters with the file itself. It also allows for uploads directly from a URL.
 
