@@ -51,7 +51,7 @@ When sharing a document with others, you can **link directly to specific notes y
  * The good stuff comes after the # symbol — in our example the URL of the embedded document ends with #document/p173/a8646, so we know that the annotation is on page 173.
 4. **Copy the url** and share. 
 
-NOTE: You also can embed a note directly. See our publishing and embedding documentation [LINK] for details.
+NOTE: You also can embed a note directly. See our [publishing and embedding documentation](publishing_embedding.md) for details.
 
 ## Printing Notes
 It's easy to print out all the notes on a particular document or collection of documents. 
