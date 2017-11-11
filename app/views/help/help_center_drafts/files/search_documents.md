@@ -71,11 +71,11 @@ To get started with document data, you can use the API [LINK] to add data to you
 To edit data for individual documents in the workspace, select the documents you wish to update, and choose Edit Document Data from the Edit menu ... or right-click on a document, and choose Edit Document Data from the context menu.
 
 1. **Right-click** on the documents to which you want to add custom data.
-2. Select **"Edit Document Data"**.
+2. Select **"Edit Document Data"**.         
     ![alt text](../images/search_documents/search_documents4.gif)
-3. Input **key/value pairs** to describe your document. You can add or delete fields by clicking the plus and minus buttons to the right of the input fields.
+3. Input **key/value pairs** to describe your document. You can add or delete fields by clicking the plus and minus buttons to the right of the input fields.           
     ![alt text](../images/search_documents/search_documents5.gif)
-4. Select **"Save"**.
+4. Select **"Save"**.           
 5. Your custom key/value pair will now show up boxed underneath the document title, as shown below:
 ![alt text](../images/search_documents/search_documents2.png)
 
@@ -84,18 +84,23 @@ To edit data for individual documents in the workspace, select the documents you
 After you add custom data fields to your documents, you will be able to search and filter your documents according to the custom key/value pairs you just created.
 
 * **To filter all your documents by a key/value pair**, you can **select** the boxed key/value pair under any document. 
-![alt text](../images/search_documents/search_documents3.png)
+
+![alt text](../images/search_documents/search_documents3.png)    
+
 * You can also input the key/value pair in the regular search bar along with any other search terms, custom or not.
-![alt text](../images/search_documents/search_documents4.png)
 
+![alt text](../images/search_documents/search_documents4.png)           
 
-* You can enter the same key multiple times with different values for an "or" search. 
-![alt text](../images/search_documents/customboth.png)
+* You can enter the same key multiple times with different values for an "or" search.
+
+![alt text](../images/search_documents/customboth.png)          
 
 * If you'd like to filter all documents with a citizen key, but you don't care about the value, you can use: `citizen: *`
-![alt text](../images/search_documents/customall.png)
+
+![alt text](../images/search_documents/customall.png)        
 
 * To find all the documents that don't have a citizen key yet, use: `citizen: !`
+
 ![alt text](../images/search_documents/customnone.png)
 
 
