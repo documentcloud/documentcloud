@@ -55,7 +55,7 @@ You have a few different options when it comes to embedding your DocumentCloud d
 
 ## Single Page Embed 
 
-**Good for:** Sharing single-page documents to readers.
+**Good for:** Sharing single-page documents with readers.
 
 ![alt text](../images/publishing_embedding/pageembed.png)
 
@@ -63,7 +63,7 @@ You have a few different options when it comes to embedding your DocumentCloud d
 
 ## Note Embed
 
-**Good for:** Folding small sections of primary source documents into your story. 
+**Good for:** Folding small sections of primary source documents into your published story. 
 
 ![alt text](../images/publishing_embedding/noteembed.png)
 
