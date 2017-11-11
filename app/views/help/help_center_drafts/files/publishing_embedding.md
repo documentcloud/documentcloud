@@ -41,12 +41,11 @@ The most simple way to share your work in DocumentCloud with readers is to **pub
 
 Click here [LINK] for more information on how to share a url linking to a specific note.
 
-# Embedding Documents
+## Embedding Documents
 
-## Embed options
 You have a few different options when it comes to embedding your DocumentCloud documents on a website.
 
-## Full Document Embed
+### Full Document Embed
 
 **Good for:** Allowing your readers to browse a multi-page document. If you have annotated the document, readers can click through your annotations in an interactive format just as you can in the DocumentCloud workspace.
 
@@ -54,15 +53,15 @@ You have a few different options when it comes to embedding your DocumentCloud d
 
 *** 
 
-## Single Page Embed 
+### Single Page Embed 
 
-**Good for:** Sharing single-page documents with readers.
+**Good for:** Sharing single-page documents to readers.
 
 ![alt text](../images/publishing_embedding/pageembed.png)
 
 *** 
 
-## Note Embed
+### Note Embed
 
 **Good for:** Folding small sections of primary source documents into your story. 
 
@@ -70,11 +69,11 @@ You have a few different options when it comes to embedding your DocumentCloud d
 
 *** 
 
-## Document List Embed
+### Document List Embed
 
 ![alt text](../images/publishing_embedding/listembed.png)
 
-**Good for:** Sharing an entire collection of documents pertinent to a story or investigation with readers. 
+**Good for:**Sharing an entire collection of documents pertinent to a story or investigation with readers. 
 
 *** 
 
