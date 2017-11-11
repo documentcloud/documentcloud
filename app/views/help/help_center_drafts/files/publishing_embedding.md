@@ -51,6 +51,9 @@ You have a few different options when it comes to embedding your DocumentCloud d
 
 ![alt text](../images/publishing_embedding/fullembed.png)
 
+![alt text](../images/publishing_embedding/fullembed2.png)
+
+
 *** 
 
 ## Single Page Embed 
@@ -67,13 +70,19 @@ You have a few different options when it comes to embedding your DocumentCloud d
 
 ![alt text](../images/publishing_embedding/noteembed.png)
 
+![alt text](../images/publishing_embedding/noteembed2.png)
+
+
 *** 
 
 ## Document List Embed
 
+**Good for:**Sharing an entire collection of documents pertinent to a story or investigation with readers. 
+
 ![alt text](../images/publishing_embedding/listembed.png)
 
-**Good for:**Sharing an entire collection of documents pertinent to a story or investigation with readers. 
+![alt text](../images/publishing_embedding/listembed2.png)
+
 
 *** 
 
