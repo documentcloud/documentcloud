@@ -1,0 +1,2 @@
+module QuackbotHelper
+end

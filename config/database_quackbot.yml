@@ -1,0 +1,26 @@
+defaults: &defaults
+  adapter: postgresql
+  encoding: unicode
+  schema_search_path: public
+  pool: 5
+  username: <%= DC::SECRETS['username'] %>
+  password: <%= DC::SECRETS['db_password'] %>
+  allow_concurrency: true
+
+development:
+  <<: *defaults
+  database: quackbot_development
+
+staging:
+  <<: *defaults
+  host: <%= DC::SECRETS['db_host'] %>
+  database: quackbot_staging
+
+production:
+  <<: *defaults
+  host: <%= DC::SECRETS['db_host'] %>
+  database: quackbot_production
+
+test:
+  <<: *defaults
+  database: quackbot_test

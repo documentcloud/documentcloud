@@ -40,6 +40,10 @@ module DC
 
     ::DC::ANALYTICS_DB = YAML.load(ERB.new(File.read("#{Rails.root}/config/database_analytics.yml")).result(binding))[Rails.env]
     ::DC::MAIN_DB      = YAML.load(ERB.new(File.read("#{Rails.root}/config/database.yml")).result(binding))[Rails.env]
+    
+    if File.exist?(File.join(Rails.root,'config','database_quackbot.yml'))
+      ::DC::QUACKBOT_DB = YAML.load(ERB.new(File.read(File.join(Rails.root,'config','database_quackbot.yml'))).result(binding))[Rails.env]
+    end
 
     config.filter_parameters += [:password]
 
