@@ -40,7 +40,7 @@ NOTE: Running into trouble uploading documents? Check out our troubleshooting pa
 ## Upload via the API
 **Users who want to upload many hundreds or thousands of documents or automate document uploads may want to consider using the [DocumentCloud API](api.md).** The `upload.json` method provides for passing in file name, project id and numerous other parameters with the file itself. It also allows for uploads directly from a URL.
 
-**If your file has text embedded, DocumentCloud extracts and saves it.** If not (as with an image file or a PDF of a scanned document), DocumentCloud uses optical character recognition [(OCR)](https://en.wikipedia.org/wiki/Optical_character_recognition)software to attempt to identify the text. For this, our platform relies upon the open-source [Tesseract library](https://github.com/tesseract-ocr/tesseract).
+**If your file has text embedded, DocumentCloud extracts and saves it.** If not (as with an image file or a PDF of a scanned document), DocumentCloud uses optical character recognition [(OCR)](https://en.wikipedia.org/wiki/Optical_character_recognition) software to attempt to identify the text. For this, our platform relies upon the open-source [Tesseract library](https://github.com/tesseract-ocr/tesseract).
 
 **Through Tesseract, DocumentCloud currently supports more than 20 languages for OCR, including Arabic, Spanish and Russian.** You can select a default language under the "Accounts" tab in the workspace. Choose a language under the "New Documents" drop-down menu.
 
