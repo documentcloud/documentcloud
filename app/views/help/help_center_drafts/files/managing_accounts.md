@@ -25,11 +25,11 @@ Click **"Save"** to store any changes.
 ## Types of Accounts
 
 DocumentCloud supports three categories of users in any organization: **administrators**, **contributors**, and **freelancers**.
-#### Administrators
+* ####  Administrators
 Administrators can create new DocumentCloud accounts and disable old ones. Assign administrative privileges to as many users as appropriate.
-#### Contributors
+* #### Contributors
 Contributors can upload, annotate and edit documents, and they can access documents shared across the organization.
-#### Freelancers
+* #### Freelancers
 Freelancers can upload, annotate, and edit their own documents and any documents that have been explicitly shared with them. Freelancers do not have access to the rest of your organization's documents.
 
 You may also wish to learn more about [reviewers and other collaboration tools](collaboration.md) or read up on [DocumentCloud privacy](privacy.md).
@@ -48,11 +48,11 @@ If you are an administrator of your organization's DocumentCloud account, you ca
     ![Adding accounts 2](../images/managing_accounts/managing_accounts3.png)
 5. Using the dropdown, designate them as a **contributor**, **administrator**, or **freelancer**.
 6. Select **“Ok”**. 
-7. Select **“Save”**. A welcome email will be sent to that person’s email address letting them know how log in and get started.
+7. Select **“Save”**. A welcome email will be sent to that person’s email address letting them know how to log in and get started.
 
 ## Disabling Accounts
 
-DocumentCloud accounts cannot be deleted, but they can be disabled. Administrators will typically do this when a person has left their organization. **It's a good idea to review your accounts from time to time to set their status as appropriate.**
+DocumentCloud accounts cannot be deleted, but they can be disabled. Administrators will typically do this when a person has left their organization. **It's a good idea to review your organization's user accounts from time to time to make sure their statuses are appropriate.**
 
 #### To Disable an Account:
 
