@@ -30,7 +30,7 @@ Sometimes, though, documents give out mixed signals. **If you've got a document 
 ## Encrypted or Secured Documents
 It is not unheard of for government agencies to release public documents that make use of usage restriction or monitoring capacities of PDFs. **DocumentCloud can process some locked or password protected PDFs, but if we can't unlock a document for you, you may still be able to get around such restrictions.**
 
-You may be able to unlock a document yourself with **qpdf**. If qpdf isn't working for you, see if your operating system or print dialog includes a "Print to file" or "Print to PDF" option. You should be able to "print" a new document which DocumentCloud will be able to work with.
+You may be able to unlock a document yourself with [**qpdf**](http://qpdf.sourceforge.net). If qpdf isn't working for you, see if your operating system or print dialog includes a "Print to file" or "Print to PDF" option. You should be able to "print" a new document which DocumentCloud will be able to work with.
 
 ## More Tools
 
@@ -41,3 +41,4 @@ Don't have access to Acrobat or Preview? There's a world of great PDF editors ou
 * [**qpdf**](http://qpdf.sourceforge.net) - Another excellent command line tool, qpdf will, among other things, decrypt locked PDFs and optimize them for the web (using linearization).
 
 * [**PDFill**](https://www.pdfill.com) - If you're on Windows and don't have Acrobat already (or just have Acrobat Reader), you might get some mileage out of PDFill's PDF Tools (via Lifehacker). You'll need to cough up $19.99 to get rid of the ads, but even in the free version you'll be able to rotate, merge, split and watermark documents. Their install process is a bit confusing: you have to install their full suite, which includes three different programs. To rotate a document, use PDF Tools, not PDF Editor.
+
