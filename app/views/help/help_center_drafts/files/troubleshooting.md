@@ -36,9 +36,8 @@ You may be able to unlock a document yourself with **qpdf**. If qpdf isn't worki
 
 Don't have access to Acrobat or Preview? There's a world of great PDF editors out there (and no shortage of not so great ones) but here are some we've tested:
 
-* **pdftk** [LINK] - If you're comfortable (or would like to get comfortable) working with command line tools, pdftk is a great resource. You can burst one document into many, merge many into one, rotate pages, and more.
+* [**pdftk**](https://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/) - If you're comfortable (or would like to get comfortable) working with command line tools, pdftk is a great resource. You can burst one document into many, merge many into one, rotate pages, and more.
 
-* **qpdf** [LINK] - Another excellent command line tool, qpdf will, among other things, decrypt locked PDFs and optimize them for the web (using linearization).
+* [**qpdf**](http://qpdf.sourceforge.net) - Another excellent command line tool, qpdf will, among other things, decrypt locked PDFs and optimize them for the web (using linearization).
 
-* **PDFill** [LINK] - If you're on Windows and don't have Acrobat already (or just have Acrobat Reader), you might get some mileage out of PDFill's PDF Tools (via Lifehacker). You'll need to cough up $19.99 to get rid of the ads, but even in the free version you'll be able to rotate, merge, split and watermark documents. Their install process is a bit confusing: you have to install their full suite, which includes three different programs. To rotate a document, use PDF Tools, not PDF Editor.
-
+* [**PDFill**](https://www.pdfill.com) - If you're on Windows and don't have Acrobat already (or just have Acrobat Reader), you might get some mileage out of PDFill's PDF Tools (via Lifehacker). You'll need to cough up $19.99 to get rid of the ads, but even in the free version you'll be able to rotate, merge, split and watermark documents. Their install process is a bit confusing: you have to install their full suite, which includes three different programs. To rotate a document, use PDF Tools, not PDF Editor.
