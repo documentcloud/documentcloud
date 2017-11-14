@@ -15,7 +15,7 @@ When you upload a document, you can decide whether or not you're ready to make i
 1. Right-click the document icon.
 2. Select **“Set Access Level”**.
 
-![alt text](../images/collaboration/collaboration1.gif)
+![Set access level](../images/collaboration/collaboration1.gif)
 
 * **Public Access** - Anyone, even those without DocumentCloud accounts, may access the document.
 * **Private Access** - The default. Only you can access the document.
@@ -30,11 +30,11 @@ When you upload a document, you can decide whether or not you're ready to make i
 1. **Select the document you would like to share.** A blue line should appear around the document icon.
 2. Select **“Analyze”**.
 3. Select **“Share this Document”**.   
- ![alt text](../images/collaboration/collaboration2.gif)
+ ![Sharing documents 1](../images/collaboration/collaboration2.gif)
 4. Input the email address and name of the person you would like to share the document with. Click **“next”**.
-  ![alt text](../images/collaboration/collaboration3.png)
+  ![Sharing documents 2](../images/collaboration/collaboration3.png)
 5. You will be prompted to include an optional short message.
-  ![alt text](../images/collaboration/collaboration5.png)
+  ![Sharing documents 3](../images/collaboration/collaboration5.png)
 6. Click **“send”**. DocumentCloud will email a link to your document and reviewing instructions to that person’s email.
 
 ## Adding collaborators to a project
@@ -45,7 +45,7 @@ When you upload a document, you can decide whether or not you're ready to make i
 1. **Hover** over a project.
 2. Select the **pencil icon** beside the project name.
 3. Click **“Add a collaborator to this project”**.
-![alt text](../images/collaboration/collaboration4.gif)
+![Adding collaborators](../images/collaboration/collaboration4.gif)
 4. Input the email address of the person you're adding as a collaborator. Click **"Add"**.
 5. The project will appear in the **account sidebar** of your collaborator; they may access it from there.
 
