@@ -8,7 +8,7 @@ Enclose terms in quotes.
 ![search quotes](../images/search_documents/robert.png)
 
 #### To group searches (search for two keywords at once)
-Use `**and**` and `**or**` and enclose your search in parentheses.
+Use `and` and `or` and enclose your search in parentheses.
 
 ![search parentheses](../images/search_documents/geithner.png)
 
