@@ -2,23 +2,23 @@
 
 #### DocumentCloud is...
 * A tool for organizing and working with large documents and document collections
-* A collaboration tool, alowing journalists to share documents with professionals inside and outside their newsroom
+* A collaboration tool, allowing journalists to share documents with professionals inside and outside their newsroom
 * A document viewer that makes it easier for reporters to share source material with readers
-* A publicly accessible repository of primary source documents that were used in journalists' investigations
+* A publicly accessible repository of primary source documents 
 
-If you're new to DocumentCloud, here's a walkthrough to help you get your bearings.
+**If you're new to DocumentCloud, here's a walkthrough to help you get your bearings.**
 ***
 
 ### 1) Log in.
 
-Once you've been added to your organization's DocumentCloud account, you should receive an email weloming you to the site. Click through the email and log into your personal account.
+Once you've been added to your organization's DocumentCloud account, you should receive an email welcoming you to the site. Click through the email and log into your personal account.
 
 ### 2) Create your first project.
 
 ![Creating Projects](../images/guide/guide1.gif)
 
 
-Use the **"New Project"** button to the left of the homepage to create a project called **"Demo Documents."** Projects keep documents organized, allow you to restrict your searches to a limited group of documents and make it possible to collaborate on documents with other journalists.
+Use the **"New Project"** button on the left of the homepage to create a project called **"Demo Documents."** Projects keep documents organized, allow you to restrict your searches to a limited group of documents and make it possible to collaborate on documents with other journalists.
 
 ### 3) Try a search of public documents.
 ![Searching Public Documents](../images/guide/guide2.gif)
@@ -79,10 +79,10 @@ Select one of the documents you've just uploaded. Then, select **"Publish"** fro
 
 ![Generating Embeds](../images/guide/guide7.gif)
 
-Click through the dialogue. You'll be given a bunch of **different options to customize your document viewer**, including the height you'd like to set it to and whether or not you want the sidebar to show up. You can **preview the document viewer** as well to see how it would look when published.
+Click through the dialogue. You'll be given a bunch of **different options to customize your document viewer**, including the height you'd like to set it to and whether or not you want the sidebar to show up. You can **preview the document viewer** as well to see how it will look when published.
 
 ![Embed Code](../images/publishing_embedding/publishing_embedding7.gif)
 
 
-Once you're done, simply **copy and paste** the embed code into the body of your article. If you use Wordpress, you can download our [Wordpress plugin](https://wordpress.org/plugins/documentcloud/). This will let you embed DocumentCloud documents with a brief Wordpress shortcode.
+Once you're done, simply **copy and paste** the embed code into the body of your article. If you use Wordpress, you can download our [Wordpress plugin](https://wordpress.org/plugins/documentcloud/). This will let you embed DocumentCloud documents into content with Wordpress shortcode instead.
 
