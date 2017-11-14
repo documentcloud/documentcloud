@@ -1,5 +1,5 @@
 # Searching for Documents
-By default, a search looks for **all of the words you enter within the title and full text of the document itself**. For example: John Yoo detainee. You can, however, ask DocumentCloud to search the contents of specific fields.
+By default, a search looks for **all of the words you enter within the title and full text of the document itself**. For example: `John Yoo detainee`. You can, however, ask DocumentCloud to search the contents of specific fields.
 ## Advanced Queries
 
 #### To search for a specific, multi-word phrase
