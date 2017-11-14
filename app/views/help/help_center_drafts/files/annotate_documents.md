@@ -1,4 +1,4 @@
-# Annotate Documents: Public, Private, and Draft Notes
+# Annotate Documents: Public, Private, and Draft Notes 
 
 
 DocumentCloud supports both private and public notes. **Public notes** are visible to anyone who has access to the document. **Private notes** are only ever visible to their author. 
