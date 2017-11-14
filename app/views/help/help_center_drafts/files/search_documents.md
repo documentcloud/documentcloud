@@ -8,7 +8,7 @@ Enclose terms in quotes.
 ![search quotes](../images/search_documents/robert.png)
 
 #### To group searches (search for two keywords at once)
-Use **and** and **or** and enclose your search in parentheses.
+Use `**and**` and `**or**` and enclose your search in parentheses.
 
 ![search parentheses](../images/search_documents/geithner.png)
 
@@ -25,7 +25,7 @@ Wildcard searches enable you to query for incomplete keywords. For example, a se
 
 **In addition to the above, you can use a whole host of filters to further refine your document searches.** You can filter documents by title, source, access, description, and more. 
 
-You may also use **multiple filters** as once, as seen below:
+You may also use **multiple filters** at once, as seen below:
 ![search filters](../images/search_documents/search_documents1.png)
 
 #### Metadata Filters
@@ -46,14 +46,14 @@ filter|Filter documents by interesting criteria (one of "published," "unpublishe
 ## Viewing Entities
 
 #### What Are Entities?
-**Entities** are the people, places, organizations, terms, e.t.c. present in your documents. Whenever you upload a document to DocumentCloud we send the contents to [**OpenCalais**](http://www.opencalais.com), a service that discovers the entities present in plain text. 
+**Entities** are the people, places, organizations, terms, e.t.c. present in your documents. Whenever you upload a document to DocumentCloud we send its contents to [**OpenCalais**](http://www.opencalais.com), a service that discovers the entities present in plain text. 
 
 **OpenCalais** can tell us that "Barack Obama" is the same person as "President Obama," "Senator Obama," "Mr. President" ... and even "he" or "his" in clauses such as "his policy proposals."
 
 #### To View All the Entities in a Document
 1. **Right-click** on the document thumbnail.
 2. Select **"View Entities"**.
-3. Below your document will appear a list of the most frequent entities in the document. The **grey tick marks** show where in the document each entity was mentioned.
+3. Below your document will appear a list of the most frequent entities in the document. The **grey tick marks** show where in the document each entity is mentioned.
     ![viewing entities 1](../images/search_documents/search_documents2.gif)
 4. **Mouse over** each tick mark to view a snippet of text from that entity mention.
     ![viewing entities 2](../images/search_documents/search_documents3.gif)
@@ -71,12 +71,12 @@ To get started with document data, you can use the [API](api.md) to add data to 
 To edit data for individual documents in the workspace, select the documents you wish to update, and choose Edit Document Data from the Edit menu ... or right-click on a document, and choose Edit Document Data from the context menu.
 
 1. **Right-click** on the documents to which you want to add custom data.
-2. Select **"Edit Document Data"**.
+2. Select **"Edit Document Data"**.         
     ![document data 1](../images/search_documents/search_documents4.gif)
-3. Input **key/value pairs** to describe your document. You can add or delete fields by clicking the plus and minus buttons to the right of the input fields.
+3. Input **key/value pairs** to describe your document. You can add or delete fields by clicking the plus and minus buttons to the right of the input fields.           
     ![document data 2](../images/search_documents/search_documents5.gif)
 4. Select **"Save"**.
-5. Your custom key/value pair will now show up boxed underneath the document title, as shown below:
+5. Your custom key/value pair will now show up boxed underneath the document title, as shown below:         
 ![document data 3](../images/search_documents/search_documents2.png)
 
 #### To search/filter using custom data:
@@ -89,11 +89,11 @@ After you add custom data fields to your documents, you will be able to search a
 ![custom data 2](../images/search_documents/search_documents4.png)
 
 
-* You can enter the same key multiple times with different values for an "or" search. 
+* You can enter the same key multiple times with different values for an `"or"` search. 
 ![custom data 3](../images/search_documents/customboth.png)
 
-* If you'd like to filter all documents with a citizen key, but you don't care about the value, you can use: `citizen: *`
+* If you'd like to filter all documents with a `citizen` key, but you don't care about the value, you can use: `citizen: *`
 ![custom data 4](../images/search_documents/customall.png)
 
-* To find all the documents that don't have a citizen key yet, use: `citizen: !`
+* To find all the documents that don't have a `citizen` key yet, use: `citizen: !`
 ![custom data 5](../images/search_documents/customnone.png)
