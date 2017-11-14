@@ -3,7 +3,7 @@ namespace :cron do
   # Only run on db01
   task :nightly do
     invoke 'crowd:cluster:free_calais_blacklist'
-    invoke 'db:backup'
+    invoke 'db:backup' unless you_are_documentcloud?
     invoke 'db:vacuum_analyze'
     invoke 'mail:csv'
   end
@@ -25,4 +25,8 @@ private
 
 def invoke(name)
   Rake::Task[name].invoke
+end
+
+def you_are_documentcloud?
+  File.exists? File.join(Rails.root, 'secrets', 'documentcloud.yep')
 end
