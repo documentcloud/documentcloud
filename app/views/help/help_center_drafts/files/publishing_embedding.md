@@ -90,25 +90,25 @@ You have a few different options when it comes to embedding your DocumentCloud d
 
 #### Preparing to Embed a Document
 
-Before you embed a document on your site, we encourage you to fill in a couple of additional pieces of information about the document. Open the document to take one more look over the document's **title**, **description**, **source**, and **public notes**. If everything is as you like it, you're ready to continue.
+Before you embed a document on your site, we encourage you to fill out a couple of additional pieces of information about the document. Open the document to take one more look over the document's **title**, **description**, **source**, and **public notes**. If everything is as you like it, you're ready to continue.
 
 To access embed options, select the document you want to embed and click on **"Publish"** in the toolbar.
 
 ![Embedding preparation 1](../images/publishing_embedding/publishing_embedding3.gif)
 
 ### Embed Full Document Viewer
-##### 1) Select "Embed Document Viewer" from the "Publish" dropdown
+#### 1) Select "Embed Document Viewer" from the "Publish" dropdown
 
 ![Embedding full document viewer 1](../images/publishing_embedding/embeddocviewer.png)
 
-##### 2) Review Document
+#### 2) Review Document
 ![Embedding full document viewer 2](../images/publishing_embedding/publishing_embedding5.gif)
 
 * First, you may provide the link to the article referencing the document to enable a **"Related Article"** link within the document viewer. (This guides readers who stumble across the document from a web search to the article's original context, a.k.a your published piece.)
 
 * You will be alerted if your document needs to be made public.
 
-##### 3) Configure the Document Viewer
+#### 3) Configure the Document Viewer
 ![Embedding full document viewer 3](../images/publishing_embedding/publishing_embedding4.gif)
 
 You can control all of the below settings to customize the particular display of your document viewer embed:
@@ -118,7 +118,7 @@ You can control all of the below settings to customize the particular display of
 * Show/hide the text tab
 * Whether or not to link to the original PDF (allowing your readers to download the document)
 
-##### 4) Copy and Paste the Embed Code
+#### 4) Copy and Paste the Embed Code
 ![Embedding full document viewer 4](../images/publishing_embedding/publishing_embedding7.gif)
 
 * DocumentCloud will generate two pieces of code: an **HTML embed code**, and a **Wordpress shortcode**. 
@@ -126,13 +126,13 @@ You can control all of the below settings to customize the particular display of
 
 
 ### Embed a Single Page from a Document
-##### 1) Select "Embed a Page" from the "Publish" dropdown
+#### 1) Select "Embed a Page" from the "Publish" dropdown
 
 ![Embedding single page 1](../images/publishing_embedding/embedpage.png)
 
-##### 2) Select a Page to Embed
+#### 2) Select a Page to Embed
 ![Embedding single page 2](../images/publishing_embedding/publishing_embedding8.gif)
-##### 3) Copy and Paste the Embed Code
+#### 3) Copy and Paste the Embed Code
 ![Embedding single page 3](../images/publishing_embedding/publishing_embedding7.gif)
 
 * DocumentCloud will generate two pieces of code: an **HTML embed code**, and a **Wordpress shortcode**. 
@@ -140,20 +140,20 @@ You can control all of the below settings to customize the particular display of
 
 
 ### Embed a Note from a Document
-##### 1) Select "Embed a Note" from the "Publish" dropdown
+#### 1) Select "Embed a Note" from the "Publish" dropdown
 ![Embedding notes 1](../images/publishing_embedding/embednote.png)
-##### 2) Select a Note to Embed
+#### 2) Select a Note to Embed
 ![Embedding notes 2](../images/publishing_embedding/publishing_embedding9.gif)
-##### 3) Copy and Paste the Embed Code
+#### 3) Copy and Paste the Embed Code
 ![Embedding notes 3](../images/publishing_embedding/publishing_embedding7.gif)
 
 * DocumentCloud will generate two pieces of code: an **HTML embed code**, and a **Wordpress shortcode**. 
 * Simply **copy and paste** the HTML code to a page on your site. If you have the [DocumentCloud Wordpress plugin](https://wordpress.org/plugins/documentcloud) installed, paste it into the body of your article.
 
 ### Embed a List of Documents
-##### 1) Select "Embed Document List" from the "Publish" dropdown
+#### 1) Select "Embed Document List" from the "Publish" dropdown
 ![Embedding lists 1](../images/publishing_embedding/embeddoclist.png)
-##### 2) Configure the Embedded Documents
+#### 2) Configure the Embedded Documents
 ![Embedding lists 2](../images/publishing_embedding/publishing_embedding10.gif)
 
 You can control all of the below to customize how your document list embed appears:
@@ -162,7 +162,7 @@ You can control all of the below to customize how your document list embed appea
 * How many documents thumbnails are shown per page
 * Enable/disable the search bar
 
-##### 3) Copy and Paste the Embed Code
+#### 3) Copy and Paste the Embed Code
 ![Embedding lists 3](../images/publishing_embedding/publishing_embedding7.gif)
 
 * DocumentCloud will generate two pieces of code: an **HTML embed code**, and a **Wordpress shortcode**. 
@@ -170,7 +170,7 @@ You can control all of the below to customize how your document list embed appea
 
 
 ## Wordpress Shortcodes
-Users who publish via WordPress can install a **Wordpress plugin** that lets you embed DocumentCloud resources using shortcodes.
+Users who publish via Wordpress can install a **Wordpress plugin** that lets you embed DocumentCloud resources using shortcodes.
 
 #### How to embed documents using Wordpress shortcodes
 1. **Download** the [DocumentCloud Wordpress plugin](https://wordpress.org/plugins/documentcloud).
@@ -181,7 +181,7 @@ Users who publish via WordPress can install a **Wordpress plugin** that lets you
 4. **Copy and paste** the Wordpress embed code into the body of your Wordpress article.
 
 #### Customizing Wordpress embeds
-You also can pass additional parameters to control the size and attributes of the embed.
+You also can pass additional parameters to control the size and attributes of the Wordpress embed.
 
 * **To set the embed to a particular width**, add [ `width=____px` ] to the end of the embed code.
 
@@ -214,8 +214,4 @@ NOTE: If you don't indicate a width (or manually disable responsive widths with 
 
 
 NOTE: Check with your organization's systems administrator about whether your CMS supports oEmbed.
-
-## Adding Organization Branding to Embeds
-
-While DocumentCloud does not support adding branding to embeds, a DocumentCloud user built an open-source custom viewer for news organizations to use to display their DocumentCloud embeds. Check it out [**here**](http://johnkeefe.net/a-customized-viewer-for-documentcloud).
 
