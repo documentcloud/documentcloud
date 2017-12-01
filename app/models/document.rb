@@ -912,9 +912,8 @@ class Document < ActiveRecord::Base
 
       # Clone the docdata.
       if docdata and options['include_docdata']
-        Docdata.create! docdata.attributes.merge newattrs
+        Docdata.create! document_id: copy_id, data: docdata.data
       end
-      
 
       # Clone the associations.
       associations = [entities, entity_dates, pages]
