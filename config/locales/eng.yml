@@ -319,8 +319,6 @@
       released&rdquo;'
   - force_ocr: Force OCR
   - form_contact_instructions: Use this form (or email to %s) to contact us for assistance.
-      If you need to speak to someone immediately, you can call us at (202) 505-1010.
-      See %s for more ways to get in touch.
   - freelancer: Freelancer
   - full_page: Full Page
   - future_documents_w_appear: Future documents %s will appear in your embed.
