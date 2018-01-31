@@ -1,0 +1,22 @@
+version: '2'
+services:
+  documentcloud:
+    build: .
+    ports: '3000:3000'
+    volumes:
+      - .:/documentcloud
+      - dclogvolume01:/var/log
+    depends_on:
+      - dc_dev_db
+      - cloud_crowd_server
+      - cloud_crowd_node01
+    environment:
+      RAILS_ENV: development
+    tty: true
+    stdin_open: true
+  dc_dev_db:
+    image: postgres:9.6
+    environment:
+      POSTGRES_PASSWORD: documentcloud
+      POSTGRES_USER: documentcloud
+      POSTGRES_DB: dcloud_development

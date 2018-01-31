@@ -1,0 +1,21 @@
+FROM ruby:2.3.5
+
+MAINTAINER Ted Han <ted@documentcloud.org>
+
+# This is here to skip confusing partly hidden shit in the Gemfile.
+ENV CLOUD_CROWD yes
+
+RUN apt-get update
+ADD ./config/server/scripts /setup
+RUN /bin/bash -c ./setup/setup_apt_dependencies.sh
+
+ADD Gemfile /documentcloud/Gemfile
+ADD Gemfile.lock /documentcloud/Gemfile.lock
+
+WORKDIR /documentcloud
+
+RUN bundle install
+
+ADD . /documentcloud
+
+CMD bundle exec rake crowd server run
