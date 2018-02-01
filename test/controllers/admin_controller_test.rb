@@ -3,12 +3,34 @@ require File.join(__dir__, '..', 'test_helper')
 class AdminControllerTest < ActionController::TestCase
 
   let(:read_only?) { Rails.application.config.read_only }
+  let(:dummy_org) {
+    {
+      name:              'Testing',
+      slug:              'testing',
+      language:          'eng',
+      document_language: 'eng',
+    }
+  }
+  let(:dummy_account) {
+    {
+      email:      'testing@dcloud.org',
+      first_name: 'Test',
+      last_name:  'Tester',
+    }
+  }
+  let(:dummy_params) {
+    {
+      organization: dummy_org,
+      account: dummy_account
+    }
+  }
 
+  # This test is super weird.
   it "responds to read-only mode" do
     get :index
     assert_response 403
     login_account! :admin
-    get :add_organization
+    get :add_organization, params: dummy_params
     assert_response read_only? ? 503 : :success
   end
 
@@ -17,23 +39,10 @@ class AdminControllerTest < ActionController::TestCase
 
     it "creates new account and organization" do
       login_account! :admin
-      params = {
-        organization: {
-          name:              'Testing',
-          slug:              'testing',
-          language:          'eng',
-          document_language: 'eng',
-        },
-        account: {
-          email:      'testing@dcloud.org',
-          first_name: 'Test',
-          last_name:  'Tester',
-        }
-      }
-      post :add_organization, params: params
+      post :add_organization, params: dummy_params
       assert_response :success
-      account      = Account.where(email: 'testing@dcloud.org').first
-      organization = Organization.where(slug: 'testing').first
+      account      = Account.where(email: dummy_account[:email]).first
+      organization = Organization.where(slug: dummy_org[:slug]).first
       membership   = account.memberships.where(organization_id: organization.id)
       assert organization
       assert account
@@ -50,15 +59,11 @@ class AdminControllerTest < ActionController::TestCase
           language:          'eng',
           document_language: 'eng',
         },
-        account: {
-          email:      'testing@dcloud.org',
-          first_name: 'Test',
-          last_name:  'Tester',
-        }
+        account: dummy_account
       }
       post :add_organization, params: params
       assert_response :success
-      account = Account.where(email: 'testing@dcloud.org').first
+      account = Account.where(email: dummy_account[:email]).first
       assert_not account
       assert flash[:error]
     end
@@ -67,12 +72,7 @@ class AdminControllerTest < ActionController::TestCase
       login_account! :admin
       assert_equal 1, louis.memberships.count
       params = {
-        organization: {
-          name:              'Testing',
-          slug:              'testing',
-          language:          'eng',
-          document_language: 'eng',
-        },
+        organization: dummy_org,
         account: {
           email:      louis.email,
           first_name: louis.first_name,
@@ -81,7 +81,7 @@ class AdminControllerTest < ActionController::TestCase
       }
       post :add_organization, params: params
       assert_response :success
-      organization = Organization.where(slug: 'testing').first
+      organization = Organization.where(slug: dummy_org[:slug]).first
       membership   = louis.memberships.where(organization: organization).first
       assert organization
       assert membership
@@ -93,12 +93,7 @@ class AdminControllerTest < ActionController::TestCase
       login_account! :admin
       assert_equal 1, louis.memberships.count
       params = {
-        organization: {
-          name:              'Testing',
-          slug:              'testing',
-          language:          'eng',
-          document_language: 'eng',
-        },
+        organization: dummy_org,
         account: {
           email:      louis.email,
           first_name: louis.first_name,
@@ -108,7 +103,7 @@ class AdminControllerTest < ActionController::TestCase
       }
       post :add_organization, params: params
       assert_response :success
-      organization = Organization.where(slug: 'testing').first
+      organization = Organization.where(slug: dummy_org[:slug]).first
       membership   = louis.memberships.where(organization: organization)
       assert organization
       assert membership
