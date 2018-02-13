@@ -68,7 +68,7 @@ class LifecycleMailerTest < ActionMailer::TestCase
                                       :document_id => secret_doc.id
                                     }).deliver_now
     assert_match(/lifecycle_mailer_test.rb/, email.body.to_s )
-    assert_match(/document_id: 190792297 \(Fixnum\)/, email.body.to_s )
+    assert_match(/document_id: 190792297 \(Integer\)/, email.body.to_s )
   end
 
   # Email the owner of a document which is having difficulty processing
