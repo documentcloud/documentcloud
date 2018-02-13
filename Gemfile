@@ -20,7 +20,7 @@ gem 'rest-client',            '~> 1.8.0'
 gem 'bcrypt',                 '~> 3.1.1', require: 'bcrypt'
 gem 'rubyzip',                '~> 1.1.0'
 gem 'aws-sdk',                '~> 1.30',  require: 'aws'
-gem 'pg'
+gem 'pg',                     '~>0.18'
 
 gem 'closure-compiler'
 gem 'sunspot_rails',          '~>2.2.0'
