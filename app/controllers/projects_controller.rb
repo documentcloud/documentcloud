@@ -22,10 +22,10 @@ class ProjectsController < ApplicationController
         render(layout: 'new')
       end
       format.json do
-        documents = project.documents.accessible(current_account, current_organization).select(:id,:slug)
+        documents = @project.documents.accessible(current_account, current_organization).select(:id,:slug)
         json({
-          id: project.id,
-          title: project.title,
+          id: @project.id,
+          title: @project.title,
           documents: documents.first(10000).map{ |document| document.canonical_url(:html) }
         }.as_json)
       end
