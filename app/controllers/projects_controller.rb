@@ -17,7 +17,10 @@ class ProjectsController < ApplicationController
     return not_found unless @project
     
     respond_to do |format|
-      format.html{ render(layout: 'new') }
+      format.html do
+        @organization_id = @project.account.organization_id
+        render(layout: 'new')
+      end
       format.json do
         documents = project.documents.accessible(current_account, current_organization).select(:id,:slug)
         json({
