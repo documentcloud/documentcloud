@@ -13,6 +13,6 @@
     order: "title",
     per_page: 12,
     search_bar: true,
-    organization: 1
+    organization: <%= @project.account.organization_id %>
   });
 <% end %>
