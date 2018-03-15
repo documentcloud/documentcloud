@@ -241,7 +241,7 @@ dc.ui.Toolbar = Backbone.View.extend({
   
   _crowdsourceInMuckRock: function() {
     var project = Projects.firstSelected();
-    var projectUrl = 'https://www.documentcloud.org/project/' + project.slug() + '.html';
+    var projectUrl = 'https://www.documentcloud.org/projects/' + project.slug() + '.html';
     var muckrockUrl = 'https://www.muckrock.com/assignment/create/?initial_data=' + projectUrl;
     dc.ui.Dialog.confirm(
       _.t('explain_crowdsource_with_muckrock'),
