@@ -300,9 +300,7 @@
       : diffusé&rdquo;'
   - force_ocr: Lancer ROC
   - form_contact_instructions: Utilisez ce formulaire (ou envoyez nous un email à
-      %s) pour obtenir de l'aide. Si vous devez parler à quelqu'un immédiatement,
-      vous pouvez nous appeler au +1 202-505-1010. Voyez aussi %s pour d'autres moyens
-      de communication.
+      %s) pour obtenir de l'aide.
   - freelancer: Indépendant
   - full_page: Pleine page
   - future_documents_w_appear: Les nouveaux documents %s apparaîtront dans votre intégration.

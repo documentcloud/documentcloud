@@ -327,8 +327,7 @@
       released&rdquo;'
   - force_ocr: Forzar OCR
   - form_contact_instructions: Utiliza este formulario (o mándanos un email a %s)
-      para solicitar asistencia. Si necesitas hablar con alguien inmediatamente, llama
-      al (202) 505-1010. Visita %s para otras formas de ponerte en contacto con nosotros.
+      para solicitar asistencia.
   - freelancer: Freelancer
   - full_page: Página Completa
   - future_documents_w_appear: Documentos en el futuro %s aparecerán en tu incrustado.

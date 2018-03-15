@@ -319,9 +319,7 @@
   - for_example_data: 'For eksempel: "fødsel: 1935-01-08" eller "status: frigivet"'
   - force_ocr: Start OCR
   - form_contact_instructions: Brug denne formular (eller email til %s) til at kontakte
-      os for at få hjælp. Hvis du har brug for at tale med nogen med det samme, kan
-      du ringe til os på +1 202 505 1010. Se %s for flere måder at komme i kontakt
-      med os på.
+      os for at få hjælp.
   - freelancer: Freelancer
   - full_page: Fuld side
   - future_documents_w_appear: Fremtidige dokumenter %s vises i din embed.
