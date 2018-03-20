@@ -11,5 +11,9 @@ class Authorization < ActiveRecord::Base
     RestClient.post(self.webhook, { text: message }.to_json, { content_type: :json })
   end
   
+  def name
+    details["team_name"]
+  end
+  
   belongs_to :team
 end
