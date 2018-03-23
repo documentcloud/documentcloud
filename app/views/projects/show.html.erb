@@ -1,0 +1,18 @@
+<% @container = "DC-search-projectid-#{@project.slug}" %>
+
+<div class="container-lg content paper">
+  <div id="<%= @container %>" class="DC-embed DC-embed-search DC-search-container"></div>
+</div>
+
+<% (@javascripts_footer ||= []).push File.join(DC.asset_root(:agnostic => true), "/embed/loader.js") %>
+<% content_for :javascript_footer_inline do %>
+  dc.embed.load('<%= DC.server_root(force_ssl: true) %>/search/embed/', {
+    q: "projectid: <%= @project.slug %> ",
+    container: "#<%= @container %>",
+    title: "<%= @project.title %>",
+    order: "title",
+    per_page: 12,
+    search_bar: true,
+    organization: <%= @organization_id %>
+  });
+<% end %>

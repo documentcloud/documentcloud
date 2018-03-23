@@ -1,11 +1,36 @@
 class ProjectsController < ApplicationController
 
-  before_action :login_required
+  before_action :login_required, except: :show
 
   READONLY_ACTIONS = [
-    :index, :documents
+    :index, :documents, :show
   ]
   before_action :read_only_error, :except => READONLY_ACTIONS if read_only?
+
+  def show
+    # PLEASE BE CAREFUL WITH THIS ACTION
+    #
+    # It was intentionally authored in spite of ProjectsController#current_project
+    # in order to hack around the notion that projects can be public objects
+    # and not merely objects viewable if you have edit permissions for them.
+    @project = Project.where(hidden:false).find(params[:id])
+    return not_found unless @project
+    
+    respond_to do |format|
+      format.html do
+        @organization_id = @project.account.organization_id
+        render(layout: 'new')
+      end
+      format.json do
+        documents = @project.documents.accessible(current_account, current_organization).select(:id,:slug)
+        json({
+          id: @project.slug,
+          title: @project.title,
+          documents: documents.first(10000).map{ |document| document.canonical_url(:html) }
+        }.as_json)
+      end
+    end
+  end
 
   def index
     json Project.visible.accessible(current_account)
@@ -45,11 +70,27 @@ class ProjectsController < ApplicationController
   end
 
   private
-
+=begin
+  Okay i want to add a notion of publicness.
+  The notions that a project has are:
+    - projects you own
+    - projects shared with you
+  
+  The current project is a project you can edit (which you own or have had shared w/ you)
+  
+  There should be public projects.
+  
+  Having a list of public projects and integer ids means that folks can enumerate projects
+  (they already can via search tho) and find groupings of public documents which may reveal
+  investigations underway.
+  
+  Need a mechanism to indicate the privacy/publicness of a project.
+  Really need to overhaul the search index.
+=end
   def current_project(only_owner=false)
     return @current_project if @current_project
     base = only_owner ? current_account.projects : Project.accessible(current_account)
     @current_project = base.find(params[:id])
   end
-
+  
 end

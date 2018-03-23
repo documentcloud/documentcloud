@@ -161,6 +161,7 @@
   - contributor: Contributor
   - country: Countries
   - create_new_project: Create a New Project
+  - crowdsource_in_muckrock: Crowdsource this Project with MuckRock
   - date: Dates
   - date_uploaded: Date Uploaded
   - default_document_language: Default Document Language
@@ -295,6 +296,8 @@
       that match your search. Select an entity to filter your search results.
   - entities_unavailable: Entities are temporarily unavailable.
   - error: Error
+  - explain_crowdsource_with_muckrock: Share the public documents in this project
+      to MuckRock's Assignment tool for crowdsourcing
   - explain_disable_account: "%1$s will not be able to log in to DocumentCloud. Public
       documents and annotations provided by %1$s will remain available. %2$sContact
       support%3$s to completely purge %1$s's account."
@@ -649,6 +652,7 @@
   - update_applied_all: Update applied to all files.
   - upload: Upload
   - upload_document: Upload Document
+  - upload_documents_into_org: Upload to %s
   - upload_failed: Upload Failed
   - upload_pages: Upload Pages
   - uploaded_x_document_has:

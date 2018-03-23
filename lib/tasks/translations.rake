@@ -35,7 +35,8 @@ namespace :translations do
 
     CLIENT_ID       = DC::SECRETS['google_drive']['key']
     CLIENT_SECRET   = DC::SECRETS['google_drive']['secret']
-    SPREADSHEET_KEY = '1niK_gv0wsFPF2l3WvXprb6JVs6fZzFSERhTtrk42Ys4'
+    # https://docs.google.com/spreadsheets/d/1g5uVkQn59UjrSU3YveOwuq9rPohScw_VITmOkYPnhq0/edit?usp=sharing
+    SPREADSHEET_KEY = '1g5uVkQn59UjrSU3YveOwuq9rPohScw_VITmOkYPnhq0'
 
     client = Google::APIClient.new(
       :application_name => 'DocumentCloud Translations',

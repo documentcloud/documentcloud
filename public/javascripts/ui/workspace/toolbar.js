@@ -238,6 +238,20 @@ dc.ui.Toolbar = Backbone.View.extend({
     if (docs.length <= 0) return dc.ui.Dialog.alert( _.t('timeline_must_select') );
     new dc.ui.TimelineDialog(docs);
   },
+  
+  _crowdsourceInMuckRock: function() {
+    var project = Projects.firstSelected();
+    var projectUrl = 'https://www.documentcloud.org/projects/' + project.slug() + '.html';
+    var muckrockUrl = 'https://www.muckrock.com/assignment/create/?initial_data=' + projectUrl;
+    dc.ui.Dialog.confirm(
+      _.t('explain_crowdsource_with_muckrock'),
+      function() {  window.open(muckrockUrl, '_blank'); return true; },
+      {
+        saveText: _.t('export'),
+        closeText: _.t('cancel')
+      }
+    );
+  },
 
   _analyzeInOverview : function() {
     var query;
@@ -252,7 +266,7 @@ dc.ui.Toolbar = Backbone.View.extend({
     if (/\S/.test(query)) {
       dc.ui.Dialog.confirm(
         _.t('export_to_overview_explain'),
-        function() { window.open("https://www.overviewdocs.com/imports/documentcloud/new/" + encodeURIComponent(query), '_blank'); },
+        function() { window.open("https://www.overviewdocs.com/imports/documentcloud/new/" + encodeURIComponent(query), '_blank'); return true; },
         {
           saveText: _.t('export'),
           closeText: _.t('cancel')
@@ -386,6 +400,7 @@ dc.ui.Toolbar = Backbone.View.extend({
     ];
     var accountItems = [
       {title: _.t('analyze_x_docs_in_overview',2), attrs: {'class' : 'always analyze_in_overview'}, onClick : this._analyzeInOverview },
+      {title: _.t('crowdsource_in_muckrock'), attrs: {'class' : 'share_project' },    onClick: this._crowdsourceInMuckRock },
       {title: _.t('share_documents'),     attrs: {'class' : 'multiple share_documents'},   onClick : this.openShareDialog },
       {title: _.t('share_project'),       attrs: {'class' : 'share_project'},              onClick : this.openCurrentProject }
     ];
