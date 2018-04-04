@@ -264,7 +264,7 @@ class AdminController < ApplicationController
     top_data = @documents.group(:account_id).count.sort_by{|k,v| -v}.first(@top_count).map do |arr|
       m = @memberships.where(account_id: arr.first).first
       fake_account = Struct.new(:full_name, :email, :slug)
-      accountish = m.blank? ? fake_account.new("Deleted User", nil, nil) : m.account
+      accountish = (m.blank? or m.account.nil?) ? fake_account.new("Deleted User", nil, nil) : m.account
       [accountish, arr.last]
     end
     @top_uploaders       = Hash[top_data]
