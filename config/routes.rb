@@ -27,12 +27,6 @@ DC::Application.routes.draw do
   scope(controller: 'authentication') do
     match '/login',                       action: 'login', via: [:get, :post], as: 'login'
     get '/logout',                        action: 'logout', as: 'logout'
-    get '/auth/remote_data/:document_id', action: 'remote_data'
-
-    # Third party auth via OmniAuth
-    match '/auth/:action', via: [:get, :post]
-    get '/auth/:provider',          action: 'blank'
-    get '/auth/:provider/callback', action: 'callback'
   end
 
   # Public search
