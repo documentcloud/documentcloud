@@ -5,11 +5,13 @@ def you_are_documentcloud?
 end
 
 if you_are_documentcloud?
-  # Must include branch explicitly for bundler's local config override
-  # ToDo: if in dev, look for local copy of china shop
-  gem 'bull_proof_china_shop',
-      git:    'git@github.com:documentcloud/bull_proof_china_shop',
-      branch: 'master'
+  group :internal do
+    # Must include branch explicitly for bundler's local config override
+    # ToDo: if in dev, look for local copy of china shop
+    gem 'bull_proof_china_shop',
+        git:    'git@github.com:documentcloud/bull_proof_china_shop',
+        branch: 'master'
+  end
 end
 
 gem 'iconv'
@@ -80,8 +82,9 @@ group :test do
 end
 
 gem 'cloud-crowd',            '~>0.7.6'
-#group :pdf_processing do
+
+group :pdf_processing do
   gem 'docsplit',               '0.8.0.alpha1'
   gem 'pdftailor'
   gem 'pdfshaver',              '>=0.0.2'
-#end
+end

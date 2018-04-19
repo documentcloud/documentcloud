@@ -5,17 +5,33 @@ MAINTAINER Ted Han <ted@documentcloud.org>
 # This is here to skip confusing partly hidden shit in the Gemfile.
 ENV CLOUD_CROWD yes
 
+# Install OS dependencies
 RUN apt-get update
 ADD ./config/server/scripts /setup
-RUN /bin/bash -c ./setup/setup_apt_dependencies.sh
+RUN /bin/bash -c /setup/setup_minimal_dependencies.sh
 
+# Install Ruby dependencies
 ADD Gemfile /documentcloud/Gemfile
 ADD Gemfile.lock /documentcloud/Gemfile.lock
 
 WORKDIR /documentcloud
 
-RUN bundle install
+RUN bundle install --without="pdf_processing internal"
+
+# If runtime config is not copied in, default to running in
+# Development mode (see config/cloud_crowd/* ).
+ENV RAILS_ENV development
+ENV CLOUD_CROWD_CONFIG /cloud_crowd
+ENV CLOUD_CROWD_SERVER_HOST dev.dcloud.org
+ENV CLOUD_CROWD_SERVER_PORT 8080
 
 ADD . /documentcloud
+ADD ./config/cloud_crowd/development /cloud_crowd
 
-CMD bundle exec rake crowd server run
+# To run in other environments, use Docker Volumes to
+# Copy configuration into path of your choosing and
+# pass that info in as an environmental variable.
+CMD bundle exec ./bin/crowd server start -c $CLOUD_CROWD_CONFIG -e $RAILS_ENV -p $CLOUD_CROWD_PORT
+
+# Goal of this is to be able to sayyyyyyyy
+# docker run -e RAILS_ENV=development -v path/to/secrets:/documentcloud/secrets:ro -v path/to/config/directory:/cloud_crowd:ro cloud_crowd_server
