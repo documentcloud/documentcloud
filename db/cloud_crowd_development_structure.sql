@@ -306,8 +306,6 @@ CREATE UNIQUE INDEX unique_schema_migrations ON schema_migrations USING btree (v
 --
 
 REVOKE ALL ON SCHEMA public FROM PUBLIC;
-REVOKE ALL ON SCHEMA public FROM ted;
-GRANT ALL ON SCHEMA public TO ted;
 GRANT ALL ON SCHEMA public TO PUBLIC;
 
 
@@ -329,7 +327,7 @@ SET client_min_messages = warning;
 SET search_path = public, pg_catalog;
 
 --
--- Data for Name: schema_migrations; Type: TABLE DATA; Schema: public; Owner: documentcloud
+-- Data for Name: schema_migrations; Type: TABLE DATA; Schema: public; Owner: -
 --
 
 COPY schema_migrations (version) FROM stdin;
