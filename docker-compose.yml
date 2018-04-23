@@ -1,22 +1,29 @@
-version: '2'
+version: '3'
 services:
-  documentcloud:
-    build: .
-    ports: '3000:3000'
-    volumes:
-      - .:/documentcloud
-      - dclogvolume01:/var/log
+  cloud_crowd_server:
+    build:
+      context: .
+      dockerfile: Dockerfile.cloud_crowd_server
     depends_on:
-      - dc_dev_db
-      - cloud_crowd_server
-      - cloud_crowd_node01
+      - db
+    ports:
+      - "8080:8080"
     environment:
       RAILS_ENV: development
-    tty: true
-    stdin_open: true
-  dc_dev_db:
+      CLOUD_CROWD_SERVER_HOST: cloud_crowd_server
+      CLOUD_CROWD_SERVER_PORT: 8080
+      CLOUD_CROWD_SERVER_HOST: db
+      CLOUD_CROWD_DB_USER:     documentcloud
+      CLOUD_CROWD_DB_PASSWORD: documentcloud
+      CLOUD_CROWD_DB_NAME:     dcloud_crowd_development
+    volumes:
+      - ./config/cloud_crowd/docker:/cloud_crowd
+  db:
     image: postgres:9.6
     environment:
       POSTGRES_PASSWORD: documentcloud
       POSTGRES_USER: documentcloud
-      POSTGRES_DB: dcloud_development
+    volumes:
+      - ./db/cloud_crowd_development_structure.sql:/docker-entrypoint-initdb.d/cloud_crowd_development_structure.sql
+      - ./db/development_structure.sql:/docker-entrypoint-initdb.d/development_structure.sql
+      - ./db/analytics_structure.sql:/docker-entrypoint-initdb.d/analytics_structure.sql

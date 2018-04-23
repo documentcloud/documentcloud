@@ -24,6 +24,7 @@ ENV RAILS_ENV development
 ENV CLOUD_CROWD_CONFIG /cloud_crowd
 ENV CLOUD_CROWD_SERVER_HOST dev.dcloud.org
 ENV CLOUD_CROWD_SERVER_PORT 8080
+EXPOSE 8080
 
 ADD . /documentcloud
 ADD ./config/cloud_crowd/development /cloud_crowd
@@ -31,7 +32,8 @@ ADD ./config/cloud_crowd/development /cloud_crowd
 # To run in other environments, use Docker Volumes to
 # Copy configuration into path of your choosing and
 # pass that info in as an environmental variable.
-CMD bundle exec ./bin/crowd server start -c $CLOUD_CROWD_CONFIG -e $RAILS_ENV -p $CLOUD_CROWD_PORT
+CMD bundle exec ./bin/crowd server start -e $RAILS_ENV -p $CLOUD_CROWD_SERVER_PORT -c $CLOUD_CROWD_CONFIG
 
 # Goal of this is to be able to sayyyyyyyy
-# docker run -e RAILS_ENV=development -v path/to/secrets:/documentcloud/secrets:ro -v path/to/config/directory:/cloud_crowd:ro cloud_crowd_server
+# docker run -e RAILS_ENV=development -v path/to/config/directory:/cloud_crowd:ro cloud_crowd_server
+# docker run -it -p 8080:8080 --env-file=$(pwd)/docker/cloud_crowd/env.list --network=dc -v $(pwd)/config/cloud_crowd/docker:/cloud_crowd:ro documentcloud_cloud_crowd_server /bin/bash
