@@ -225,5 +225,28 @@ module DC
       RestClient.post(hook_url, data)
     end
   end
+  
+  def self.weekly_call_numbers(date=Date.today)
+    start_date = date
+    end_date   = start_date.weeks_ago(1)
+    # 5,959 documents were uploaded
+    # which constituted 212,429 pages
+    # we recorded 3,136,834 views on documents (not including pdf downloads)
+    # 12 organizations were set up
+    # 60 new accounts were created
+    # 509 users were active by uploading a document or creating a note
+    orgs = Organization.where("created_at > ?", 1.week.ago)
+    accounts = Account.where("created_at > ?", 1.week.ago)
+    docs = Document.where("created_at > ?", 1.week.ago)
+    notes = Annotation.where("created_at > ?", 1.week.ago)
+    things = {
+      organizations: orgs.count,
+      accounts: accounts.count,
+      documents: docs.count,
+      total_views: self.remote_url_hits_last_week,
+      pages: docs.sum(:page_count),
+      notes: notes.count
+    }
+  end
 
 end

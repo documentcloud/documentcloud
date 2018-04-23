@@ -155,7 +155,6 @@ class DocumentImport < DocumentAction
     document.id
   end
 
-
   private
 
   def queue_page_text(text, page_number)
@@ -190,6 +189,10 @@ class DocumentImport < DocumentAction
   def save_page_aspect_ratios!
     ids = document.pages.order(:page_number).pluck(:id)
     
+    # This is a query which will take a list of pages and aspect ratios
+    # and update all of the pages in a single query.
+    #
+    # Note, the page objects need to all exist for this to work.
     query_template = <<-QUERY
     UPDATE pages 
       SET aspect_ratio = input.aspect_ratio
