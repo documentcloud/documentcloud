@@ -10,6 +10,7 @@ RUN apt-get update
 ADD ./config/server/scripts /setup
 RUN /bin/bash -c /setup/setup_minimal_dependencies.sh
 
+
 # Install Ruby dependencies
 ADD Gemfile /documentcloud/Gemfile
 ADD Gemfile.lock /documentcloud/Gemfile.lock
@@ -22,12 +23,14 @@ RUN bundle install --without="pdf_processing internal"
 # Development mode (see config/cloud_crowd/* ).
 ENV RAILS_ENV development
 ENV CLOUD_CROWD_CONFIG /cloud_crowd
-ENV CLOUD_CROWD_SERVER_HOST dev.dcloud.org
+ENV CLOUD_CROWD_SERVER_HOST cloud_crowd_server
 ENV CLOUD_CROWD_SERVER_PORT 8080
+
+
 EXPOSE 8080
 
 ADD . /documentcloud
-ADD ./config/cloud_crowd/development /cloud_crowd
+ADD ./config/cloud_crowd/docker /cloud_crowd
 
 # To run in other environments, use Docker Volumes to
 # Copy configuration into path of your choosing and
@@ -36,4 +39,4 @@ CMD bundle exec ./bin/crowd server start -e $RAILS_ENV -p $CLOUD_CROWD_SERVER_PO
 
 # Goal of this is to be able to sayyyyyyyy
 # docker run -e RAILS_ENV=development -v path/to/config/directory:/cloud_crowd:ro cloud_crowd_server
-# docker run -it -p 8080:8080 --env-file=$(pwd)/docker/cloud_crowd/env.list --network=dc -v $(pwd)/config/cloud_crowd/docker:/cloud_crowd:ro documentcloud_cloud_crowd_server /bin/bash
+# docker run -it -p 8080:8080 --env-file=$(pwd)/config/cloud_crowd/docker/env.list --network=documentcloud_default -v $(pwd)/config/cloud_crowd/docker:/cloud_crowd:ro documentcloud_cloud_crowd_server /bin/bash

@@ -1,5 +1,16 @@
 version: '3'
 services:
+  db:
+    image: postgres:9.6
+    ports:
+      - "6543:5432"
+    environment:
+      POSTGRES_PASSWORD: documentcloud
+      POSTGRES_USER: documentcloud
+    volumes:
+      - ./db/cloud_crowd_development_structure.sql:/docker-entrypoint-initdb.d/cloud_crowd_development_structure.sql
+      - ./db/development_structure.sql:/docker-entrypoint-initdb.d/development_structure.sql
+      - ./db/analytics_structure.sql:/docker-entrypoint-initdb.d/analytics_structure.sql
   cloud_crowd_server:
     build:
       context: .
@@ -12,18 +23,35 @@ services:
       RAILS_ENV: development
       CLOUD_CROWD_SERVER_HOST: cloud_crowd_server
       CLOUD_CROWD_SERVER_PORT: 8080
-      CLOUD_CROWD_SERVER_HOST: db
+      CLOUD_CROWD_DB_HOST:     db
       CLOUD_CROWD_DB_USER:     documentcloud
       CLOUD_CROWD_DB_PASSWORD: documentcloud
       CLOUD_CROWD_DB_NAME:     dcloud_crowd_development
     volumes:
       - ./config/cloud_crowd/docker:/cloud_crowd
-  db:
-    image: postgres:9.6
+  cloud_crowd_node:
+    build:
+      context: .
+      dockerfile: Dockerfile.cloud_crowd_node
+    depends_on:
+      - db
+      - cloud_crowd_server
+    ports:
+      - "9063:9063"
     environment:
-      POSTGRES_PASSWORD: documentcloud
-      POSTGRES_USER: documentcloud
+      RAILS_ENV: development
+      CLOUD_CROWD_SERVER_HOST: cloud_crowd_server
+      CLOUD_CROWD_SERVER_PORT: 8080
+      CLOUD_CROWD_DB_HOST:     db
+      CLOUD_CROWD_DB_USER:     documentcloud
+      CLOUD_CROWD_DB_PASSWORD: documentcloud
+      CLOUD_CROWD_DB_NAME:     dcloud_crowd_development
     volumes:
-      - ./db/cloud_crowd_development_structure.sql:/docker-entrypoint-initdb.d/cloud_crowd_development_structure.sql
-      - ./db/development_structure.sql:/docker-entrypoint-initdb.d/development_structure.sql
-      - ./db/analytics_structure.sql:/docker-entrypoint-initdb.d/analytics_structure.sql
+      - ./config/cloud_crowd/docker:/cloud_crowd
+#  app:
+#    build:
+#      context: .
+#      dockerfile: Dockerfile.app
+#    depends_on:
+#      - db
+#      - cloud_crowd_server

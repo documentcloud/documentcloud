@@ -1,0 +1,45 @@
+FROM ruby:2.3.5
+
+MAINTAINER Ted Han <ted@documentcloud.org>
+
+# This is here to skip confusing partly hidden shit in the Gemfile.
+ENV CLOUD_CROWD yes
+
+# Install OS dependencies
+RUN apt-get update
+ADD ./config/server/scripts /setup
+RUN /bin/bash -c /setup/setup_minimal_dependencies.sh
+RUN /bin/bash -c /setup/setup_worker_dependencies.sh
+
+# Install Ruby dependencies
+ADD Gemfile /documentcloud/Gemfile
+ADD Gemfile.lock /documentcloud/Gemfile.lock
+
+WORKDIR /documentcloud
+
+RUN bundle install --without="internal"
+
+# If runtime config is not copied in, default to running in
+# Development mode (see config/cloud_crowd/* ).
+ENV RAILS_ENV development
+ENV CLOUD_CROWD_CONFIG /cloud_crowd
+ENV CLOUD_CROWD_SERVER_HOST cloud_crowd_server
+ENV CLOUD_CROWD_SERVER_PORT 8080
+ENV CLOUD_CROWD_NODE_PORT 9063
+
+EXPOSE 9063
+
+ADD . /documentcloud
+ADD ./config/cloud_crowd/docker /cloud_crowd
+
+# To run in other environments, use Docker Volumes to
+# Copy configuration into path of your choosing and
+# pass that info in as an environmental variable.
+CMD bundle exec ./bin/crowd node start -e $RAILS_ENV -p $CLOUD_CROWD_NODE_PORT -c $CLOUD_CROWD_CONFIG 
+
+# Goal of this is to be able to sayyyyyyyy
+# docker run -e RAILS_ENV=development -v path/to/config/directory:/cloud_crowd:ro cloud_crowd_server
+# docker run -it -p 8080:8080 --env-file=$(pwd)/docker/cloud_crowd/env.list --network=dc -v $(pwd)/config/cloud_crowd/docker:/cloud_crowd:ro documentcloud_cloud_crowd_server /bin/bash
+
+# docker build -f Dockerfile.cloud_crowd_node -t cloud_crowd_node .
+# docker run -it -p 9173:9173 --env-file=$(pwd)/config/cloud_crowd/docker/env.list --network=documentcloud_default -v $(pwd)/config/cloud_crowd/docker:/cloud_crowd:ro cloud_crowd_node /bin/bash
