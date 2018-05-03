@@ -227,25 +227,31 @@ module DC
   end
   
   def self.weekly_call_numbers(date=Date.today)
-    start_date = date
-    end_date   = start_date.weeks_ago(1)
+    newest_date = date
+    oldest_date = newest_date.weeks_ago(1)
     # 5,959 documents were uploaded
     # which constituted 212,429 pages
     # we recorded 3,136,834 views on documents (not including pdf downloads)
     # 12 organizations were set up
     # 60 new accounts were created
     # 509 users were active by uploading a document or creating a note
-    orgs = Organization.where("created_at > ?", 1.week.ago)
-    accounts = Account.where("created_at > ?", 1.week.ago)
-    docs = Document.where("created_at > ?", 1.week.ago)
-    notes = Annotation.where("created_at > ?", 1.week.ago)
+    orgs         = Organization.where( "created_at > ? and created_at <= ?", oldest_date, newest_date )
+    accounts     = Account.where(      "created_at > ? and created_at <= ?", oldest_date, newest_date )
+    docs         = Document.where(     "created_at > ? and created_at <= ?", oldest_date, newest_date )
+    notes        = Annotation.where(   "created_at > ? and created_at <= ?", oldest_date, newest_date )
+    uploaders    = docs.group(:account_id).count
+    annotators   = notes.group(:account_id).count
+    active_users = (uploaders.keys + annotators.keys).uniq
     things = {
+      newest_date: newest_date,
+      oldest_date: oldest_date,
       organizations: orgs.count,
       accounts: accounts.count,
       documents: docs.count,
       total_views: self.remote_url_hits_last_week,
       pages: docs.sum(:page_count),
-      notes: notes.count
+      notes: notes.count,
+      active_users: active_users.count
     }
   end
 
