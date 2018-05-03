@@ -378,7 +378,7 @@ class AdminController < ApplicationController
     
     # notify when an Admin logs in as a user.
     hook_url = DC::SECRETS['slack_webhook']
-    text = "#{@current_account.full_name} has logged in as #{acc.full_name} (#{acc.email} on #{Rails.env})."
+    text = "#{@current_account.full_name} (#{@current_account.email}) has logged in as #{acc.full_name} (#{acc.email} on #{Rails.env})."
     data = {:payload => {:text => text, :username => "docbot", :icon_emoji => ":doccloud:"}.to_json}
     RestClient.post(hook_url, data)
     
