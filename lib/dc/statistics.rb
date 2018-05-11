@@ -226,8 +226,8 @@ module DC
     end
   end
   
-  def self.weekly_call_numbers(date=Date.today)
-    newest_date = date
+  def self.call_numbers(date=Date.today)
+    newest_date = date.to_date
     oldest_date = newest_date.weeks_ago(1)
     # 5,959 documents were uploaded
     # which constituted 212,429 pages
@@ -242,17 +242,37 @@ module DC
     uploaders    = docs.group(:account_id).count
     annotators   = notes.group(:account_id).count
     active_users = (uploaders.keys + annotators.keys).uniq
+    total_views  = RemoteUrl.where('date_recorded > ? and date_recorded <= ?', oldest_date, newest_date).sum(:hits)
     things = {
       newest_date: newest_date,
       oldest_date: oldest_date,
       organizations: orgs.count,
       accounts: accounts.count,
       documents: docs.count,
-      total_views: self.remote_url_hits_last_week,
+      total_views: total_views,
       pages: docs.sum(:page_count),
       notes: notes.count,
       active_users: active_users.count
     }
   end
+=begin
+  include ActionView::Helpers::NumberHelper
+  puts <<-TEMPLATE
+    *#{number_with_delimiter numbers[:documents] } documents* were uploaded
+    which constituted *#{number_with_delimiter numbers[:pages]} pages*
+    we recorded *#{number_with_delimiter numbers[:total_views]} views* on documents (not including pdf downloads)
+    *#{number_with_delimiter numbers[:organizations]} organizations* were set up
+    *#{number_with_delimiter numbers[:accounts]} new accounts* were created
+    *#{number_with_delimiter numbers[:active_users]} users were active* by uploading a document or creating a note
+  TEMPLATE
+=end
+=begin
+  numbers = (0..103).map{ |n| DC::Statistics.call_numbers(n.weeks.ago.to_date) };numbers.size
+  headers = numbers.first.keys
+  CSV.open('../call_numbers.csv', 'w', headers: headers) do |numbers_csv|
+    numbers_csv << headers
+    numbers.each{ |num| numbers_csv << num }; ''
+  end
+=end
 
 end
