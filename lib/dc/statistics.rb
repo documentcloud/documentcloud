@@ -224,37 +224,36 @@ module DC
       data = {:payload => {:text => text, :username => "docbot", :icon_emoji => ":doccloud:"}.to_json}
       RestClient.post(hook_url, data)
     end
-  end
   
-  def self.call_numbers(date=Date.today)
-    newest_date = date.to_date
-    oldest_date = newest_date.weeks_ago(1)
-    # 5,959 documents were uploaded
-    # which constituted 212,429 pages
-    # we recorded 3,136,834 views on documents (not including pdf downloads)
-    # 12 organizations were set up
-    # 60 new accounts were created
-    # 509 users were active by uploading a document or creating a note
-    orgs         = Organization.where( "created_at > ? and created_at <= ?", oldest_date, newest_date )
-    accounts     = Account.where(      "created_at > ? and created_at <= ?", oldest_date, newest_date )
-    docs         = Document.where(     "created_at > ? and created_at <= ?", oldest_date, newest_date )
-    notes        = Annotation.where(   "created_at > ? and created_at <= ?", oldest_date, newest_date )
-    uploaders    = docs.group(:account_id).count
-    annotators   = notes.group(:account_id).count
-    active_users = (uploaders.keys + annotators.keys).uniq
-    total_views  = RemoteUrl.where('date_recorded > ? and date_recorded <= ?', oldest_date, newest_date).sum(:hits)
-    things = {
-      newest_date: newest_date,
-      oldest_date: oldest_date,
-      organizations: orgs.count,
-      accounts: accounts.count,
-      documents: docs.count,
-      total_views: total_views,
-      pages: docs.sum(:page_count),
-      notes: notes.count,
-      active_users: active_users.count
-    }
-  end
+    def self.call_numbers(date=Date.today)
+      newest_date = date.to_date
+      oldest_date = newest_date.weeks_ago(1)
+      # 5,959 documents were uploaded
+      # which constituted 212,429 pages
+      # we recorded 3,136,834 views on documents (not including pdf downloads)
+      # 12 organizations were set up
+      # 60 new accounts were created
+      # 509 users were active by uploading a document or creating a note
+      orgs         = Organization.where( "created_at > ? and created_at <= ?", oldest_date, newest_date )
+      accounts     = Account.where(      "created_at > ? and created_at <= ?", oldest_date, newest_date )
+      docs         = Document.where(     "created_at > ? and created_at <= ?", oldest_date, newest_date )
+      notes        = Annotation.where(   "created_at > ? and created_at <= ?", oldest_date, newest_date )
+      uploaders    = docs.group(:account_id).count
+      annotators   = notes.group(:account_id).count
+      active_users = (uploaders.keys + annotators.keys).uniq
+      total_views  = RemoteUrl.where('date_recorded > ? and date_recorded <= ?', oldest_date, newest_date).sum(:hits)
+      things = {
+        newest_date: newest_date,
+        oldest_date: oldest_date,
+        organizations: orgs.count,
+        accounts: accounts.count,
+        documents: docs.count,
+        total_views: total_views,
+        pages: docs.sum(:page_count),
+        notes: notes.count,
+        active_users: active_users.count
+      }
+    end
 =begin
   include ActionView::Helpers::NumberHelper
   puts <<-TEMPLATE
@@ -274,5 +273,6 @@ module DC
     numbers.each{ |num| numbers_csv << num }; ''
   end
 =end
+  end
 
 end
