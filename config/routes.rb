@@ -25,8 +25,10 @@ DC::Application.routes.draw do
 
   # Authentication
   scope(controller: 'authentication') do
-    match '/login',                       action: 'login', via: [:get, :post], as: 'login'
-    get '/logout',                        action: 'logout', as: 'logout'
+    constraints( format: "html" ) do
+      match '/login',                       action: 'login', via: [:get, :post], as: 'login'
+      get '/logout',                        action: 'logout', as: 'logout'
+    end
   end
 
   # Public search
