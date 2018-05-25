@@ -14,4 +14,5 @@ if CloudCrowd.node?
   Rails.logger = log
   require 'active_record'
   require 'config/environment'
+  Bundler.require(:pdf_processing, Rails.env)
 end
