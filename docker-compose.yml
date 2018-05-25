@@ -1,3 +1,7 @@
+# some notes:
+# DocumentCloud's AssetStore operates as a local file system share.  We'll implement
+# this as a docker volume shared across CloudCrowd Server, Node and App containers.
+
 version: '3'
 services:
   db:
@@ -29,6 +33,7 @@ services:
       CLOUD_CROWD_DB_NAME:     dcloud_crowd_development
     volumes:
       - ./config/cloud_crowd/docker:/cloud_crowd
+      - asset_store:/documentcloud/public/asset_store
   cloud_crowd_node:
     build:
       context: .
@@ -48,6 +53,7 @@ services:
       CLOUD_CROWD_DB_NAME:     dcloud_crowd_development
     volumes:
       - ./config/cloud_crowd/docker:/cloud_crowd
+      - asset_store:/documentcloud/public/asset_store
   app:
     build:
       context: .
@@ -71,6 +77,8 @@ services:
       CLOUD_CROWD_DB_USER:     documentcloud
       CLOUD_CROWD_DB_PASSWORD: documentcloud
       CLOUD_CROWD_DB_NAME:     dcloud_crowd_development
+    volumes:
+      - asset_store:/documentcloud/public/asset_store
   solr:
     build:
       context: .
@@ -79,3 +87,6 @@ services:
       - "7377:7377"
     environment:
       RAILS_ENV: development
+
+volumes:
+  asset_store:
