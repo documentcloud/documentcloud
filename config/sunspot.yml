@@ -12,7 +12,7 @@ production:
 
 development:
   solr:
-    hostname: localhost
+    hostname: solr
     port: 7377
     log_level: ALL
     path: /solr/collection1

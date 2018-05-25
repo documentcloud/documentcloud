@@ -3,9 +3,10 @@ defaults: &defaults
   encoding: unicode
   schema_search_path: public
   pool: 5
-  username: <%= DC::SECRETS['username'] %>
-  password: <%= DC::SECRETS['db_password'] %>
+  username: <%= ENV['DB_USERNAME'] %>
+  password: <%= ENV['DB_PASSWORD'] %>
   allow_concurrency: true
+  host: <%= ENV['DB_HOST'] %>
 
 development:
   <<: *defaults
@@ -13,12 +14,12 @@ development:
 
 staging:
   <<: *defaults
-  host: <%= DC::SECRETS['db_host'] %>
+  host: <%= ENV['DB_HOST'] %>
   database: dcloud_analytics_staging
 
 production:
   <<: *defaults
-  host: <%= DC::SECRETS['db_host'] %>
+  host: <%= ENV['DB_HOST'] %>
   database: dcloud_analytics_production
 
 test:

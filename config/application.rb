@@ -45,5 +45,9 @@ module DC
 
     # Put the site into a read-only mode for database updates
     config.read_only = false
+    
+    if ENV["RAILS_LOG_TO_STDOUT"].present?
+      config.logger = ActiveSupport::TaggedLogging.new(Logger.new(STDOUT))
+    end
   end
 end
