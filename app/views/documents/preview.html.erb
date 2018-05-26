@@ -27,9 +27,5 @@
 
   <%= render(:partial => 'viewer_editing') if @edits_enabled %>
 
-<% if @current_document %>
-  <%= render partial: 'common/google', locals: { pageview_url: '/documents/show' } %>
-<% end %>
-
 </body>
 </html>

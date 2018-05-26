@@ -43,6 +43,7 @@ class AnnotationsController < ApplicationController
           @exclude_analytics = true
           render template: 'annotations/show_embedded', layout: 'new'
         else
+          @include_analytics = true
           make_oembeddable(current_annotation) unless current_annotation.section_note?
           set_minimal_nav text:    'Read the full document',
                           xs_text: 'Full document',

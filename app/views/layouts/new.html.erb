@@ -23,7 +23,7 @@
   </main>
 
   <%= render partial: 'common/new/footer' %>
-  <%= render partial: 'common/google' %>
+  <%= render partial: 'common/google' if @include_analytics %>
 
   <%# TODO: stop the `@exclude_platformjs` by fixing platform.js and dc-pages %>
   <% javascripts_footer = @exclude_platformjs ? [] : [File.join(DC.workspace_asset_root, "/js/shared-templates.js"), File.join(DC.workspace_asset_root, "/js/platform.js")] %>
