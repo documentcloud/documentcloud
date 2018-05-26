@@ -30,6 +30,7 @@ class PagesController < ApplicationController
           @exclude_analytics = true
           render template: 'pages/show_embedded'
         else
+          @include_analytics = true
           make_oembeddable(current_page)
           set_minimal_nav text:    'Read the full document',
                           xs_text: 'Full document',

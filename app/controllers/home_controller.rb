@@ -40,6 +40,7 @@ class HomeController < ApplicationController
     return not_found unless @version_numbers.include? @version
 
     @canonical_url = terms_url if @version == @current_terms['version']
+    @include_analytics = true
     render layout: 'new', template: "home/terms/show"
   end
 
@@ -48,18 +49,22 @@ class HomeController < ApplicationController
     return not_found unless @version_numbers.include? @version
 
     @canonical_url = api_terms_url if @version == @current_terms['version']
+    @include_analytics = true
     render layout: 'new', template: "home/api_terms/show"
   end
   
   def status
+    @include_analytics = true
     not_found
   end
 
   def privacy
+    @include_analytics = true
     render layout: 'new'
   end
 
   def faq
+    @include_analytics = true
     render layout: 'new'
   end
   
@@ -98,6 +103,7 @@ class HomeController < ApplicationController
 
     end
     
+    @include_analytics = true
     render layout: 'new'
   end
 
