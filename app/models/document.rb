@@ -899,7 +899,7 @@ class Document < ActiveRecord::Base
   def duplicate!(recipient=nil, options={})
     Document.transaction do
       # Clone the document.
-      newattrs = attributes.merge({
+      newattrs = attributes.dup.merge({
           :access     => PENDING,
           :created_at => Time.now,
           :updated_at => Time.now
@@ -912,7 +912,7 @@ class Document < ActiveRecord::Base
 
       # Clone the docdata.
       if docdata and options['include_docdata']
-        Docdata.create! document_id: copy_id, data: docdata.data
+        Docdata.create! document_id: copy_id, data: docdata.data.dup
       end
 
       # Clone the associations.
@@ -925,7 +925,7 @@ class Document < ActiveRecord::Base
       associations.push project_memberships if options['include_project']
       associations.each do |association|
         association.each do |model|
-          model_attrs = model.attributes.merge newattrs
+          model_attrs = model.attributes.dup.merge newattrs
           model_attrs.delete('id')
           model.class.create! model_attrs
         end
