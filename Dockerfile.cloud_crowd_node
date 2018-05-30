@@ -34,6 +34,7 @@ EXPOSE 9063
 
 ADD . /documentcloud
 
+
 # To run in other environments, use Docker Volumes to
 # Copy configuration into path of your choosing and
 # pass that info in as an environmental variable.

@@ -45,6 +45,9 @@ services:
       context: .
       dockerfile: Dockerfile.app
       args:
+        # docker-compose is extremely dumb and does not have a mechanism for 
+        # supplying a file for build arguments.  Instead, one has to use variables 
+        # as seen below and include a .env file in the project root.
         github_user:  ${GITHUB_USER:?err}
         github_token: ${GITHUB_TOKEN:?err}
     ports:
