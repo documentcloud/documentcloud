@@ -44,6 +44,11 @@ namespace :crowd do
       `ps aux | egrep "crowd|pdftk|pdftailor|tesseract|gm|soffice" | ruby -e 'STDIN.read.split("\n").each{ |line| puts line.split[1] unless line =~ /rake|grep/ }' | xargs kill`
       `if [ -e tmp/pids/node.pid ] ; then rm tmp/pids/node.pid ; fi`
     end
+    
+    task :exterminate do
+      `ps aux | egrep "crowd|pdftk|pdftailor|tesseract|gm|soffice" | ruby -e 'STDIN.read.split("\n").each{ |line| puts line.split[1] unless line =~ /rake|grep/ }' | xargs kill -9`
+      `if [ -e tmp/pids/node.pid ] ; then rm tmp/pids/node.pid ; fi`
+    end
 
     task :cleanup_tmp do
       `rm -rf /tmp/cloud_crowd_tmp/*; rm -rf /tmp/d#{Time.now.year}*`
