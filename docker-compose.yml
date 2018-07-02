@@ -25,6 +25,7 @@ services:
       - "8080:8080"
     env_file: ./docker/env.list
     volumes:
+      - .:/documentcloud
       - ./config/cloud_crowd/docker:/cloud_crowd
       - asset_store:/documentcloud/public/asset_store
   cloud_crowd_node:
@@ -38,6 +39,7 @@ services:
       - "9063:9063"
     env_file: ./docker/env.list
     volumes:
+      - .:/documentcloud
       - ./config/cloud_crowd/docker:/cloud_crowd
       - asset_store:/documentcloud/public/asset_store
   app:
@@ -62,6 +64,7 @@ services:
       PASSENGER_LOG_LEVEL: 3
       RAILS_LOG_TO_STDOUT: "yes"
     volumes:
+      - .:/documentcloud
       - asset_store:/documentcloud/public/asset_store
   solr:
     build:
@@ -70,6 +73,8 @@ services:
     ports:
       - "7377:7377"
     env_file: ./docker/env.list
+    volumes:
+      - .:/documentcloud
 
 volumes:
   asset_store:
