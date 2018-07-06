@@ -7,16 +7,17 @@ javascripts:
   core:
     - public/javascripts/application.js
     - public/javascripts/vendor/underscore/underscore.js
-    - public/javascripts/vendor/jquery/dist/jquery.js
-    - public/javascripts/vendor/jquery-ui/ui/core.js
+    - public/javascripts/legacy/jquery.js
+    - public/javascripts/vendor/jquery-ui/ui/version.js
+    - public/javascripts/vendor/jquery-ui/ui/unique-id.js
     - public/javascripts/vendor/jquery-ui/ui/widget.js
     - public/javascripts/vendor/jquery-ui/ui/position.js
-    - public/javascripts/vendor/jquery-ui/ui/mouse.js
-    - public/javascripts/vendor/jquery-ui/ui/sortable.js
-    - public/javascripts/vendor/jquery-ui/ui/autocomplete.js
-    - public/javascripts/vendor/jquery-ui/ui/menu.js
+    - public/javascripts/vendor/jquery-ui/ui/widgets/mouse.js
+    - public/javascripts/vendor/jquery-ui/ui/widgets/sortable.js
+    - public/javascripts/vendor/jquery-ui/ui/widgets/autocomplete.js
+    - public/javascripts/vendor/jquery-ui/ui/widgets/menu.js
     - public/javascripts/vendor/backbone/backbone.js
-    - public/javascripts/vendor/sprintf.js
+    - public/javascripts/legacy/sprintf.js
     - public/javascripts/vendor/visualsearch/build-min/visualsearch_templates.js
     - public/javascripts/vendor/visualsearch/build-min/visualsearch.js
     - public/javascripts/vendor/blueimp-file-upload/js/jquery.fileupload.js
@@ -49,7 +50,7 @@ javascripts:
   home:
     - public/javascripts/home/*.js
   embedded_login:
-    - public/javascripts/vendor/json2.js
+    - public/javascripts/legacy/json2.js
     - public/javascripts/vendor/jquery/dist/jquery.js
     - public/javascripts/embed/easy_xdm.js
     - public/javascripts/embed/embedded_login.js
