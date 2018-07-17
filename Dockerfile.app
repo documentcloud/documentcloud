@@ -37,20 +37,7 @@ ENV PASSENGER_POOL_SIZE 6
 
 EXPOSE 8765
 
-ADD . /documentcloud
-
-# Install Node/Yarn
-ADD https://dl.yarnpkg.com/debian/pubkey.gpg /tmp/yarn-pubkey.gpg
-RUN apt-key add /tmp/yarn-pubkey.gpg && rm /tmp/yarn-pubkey.gpg
-RUN echo 'deb http://dl.yarnpkg.com/debian/ stable main' > /etc/apt/sources.list.d/yarn.list
-RUN curl -sL https://deb.nodesource.com/setup_10.x | bash -
-RUN apt-get update && apt-get install -qq -y --no-install-recommends nodejs yarn
-# Install packages with yarn
-RUN yarn
-# Copy node_modules into javascript vendor dirs
-RUN rm -rf public/javascripts/vendor
-RUN ln -s /documentcloud/node_modules/ /documentcloud/public/javascripts/vendor
-# RUN cp -r node_modules public/javascripts/vendor
+COPY . /documentcloud/
 
 # To run in other environments, use Docker Volumes to
 # Copy configuration into path of your choosing and

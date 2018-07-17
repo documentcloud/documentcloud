@@ -25,7 +25,6 @@ services:
       - "8080:8080"
     env_file: ./docker/env.list
     volumes:
-      - .:/documentcloud
       - ./config/cloud_crowd/docker:/cloud_crowd
       - asset_store:/documentcloud/public/asset_store
   cloud_crowd_node:
@@ -39,7 +38,6 @@ services:
       - "9063:9063"
     env_file: ./docker/env.list
     volumes:
-      - .:/documentcloud
       - ./config/cloud_crowd/docker:/cloud_crowd
       - asset_store:/documentcloud/public/asset_store
   app:
@@ -58,14 +56,21 @@ services:
       - db
       - cloud_crowd_server
       - solr
+      - javascript
     env_file: ./docker/env.list
     environment:
       PASSENGER_LOG_FILE: /dev/stdout
       PASSENGER_LOG_LEVEL: 3
       RAILS_LOG_TO_STDOUT: "yes"
     volumes:
-      - .:/documentcloud
       - asset_store:/documentcloud/public/asset_store
+      - javascript:/documentcloud/public/javascripts/vendor
+  javascript:
+    build:
+      context: .
+      dockerfile: Dockerfile.javascript
+    volumes:
+      - javascript:/javascript
   solr:
     build:
       context: .
@@ -73,8 +78,7 @@ services:
     ports:
       - "7377:7377"
     env_file: ./docker/env.list
-    volumes:
-      - .:/documentcloud
 
 volumes:
   asset_store:
+  javascript:
