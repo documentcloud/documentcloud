@@ -1,0 +1,16 @@
+FROM nginx
+
+# Copy config files in
+
+COPY config/server/files/nginx /etc/nginx
+COPY config/server/files/nginx/sites-available /etc/nginx/sites-enabled
+
+COPY config/server/files/nginx/documentcloud/cache_env/development.conf /etc/nginx/documentcloud/cache_env.conf
+COPY config/server/files/nginx/documentcloud/env/development.conf /etc/nginx/documentcloud/env.conf
+
+COPY secrets /documentcloud/secrets/
+
+RUN rm /etc/nginx/sites-enabled/documentcloud.conf
+
+# This folder structure needs to exist for files to get placed in later
+RUN mkdir -p var/lib/nginx/proxy/data

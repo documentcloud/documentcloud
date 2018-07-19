@@ -54,11 +54,11 @@ ec2-describe-regions --aws-access-key $ACCESS_KEY --aws-secret-key $SECRET_KEY
 # use the --no-filter flag so that /etc/ssl/certs/*.pem don't get deleted.
 sudo -E su
 ec2-bundle-vol \
-  --privatekey /home/ubuntu/documentcloud/secrets/keys/ami_signing.key                                  \
-  --cert /home/ubuntu/documentcloud/secrets/keys/ami_signing.pem                                        \
-  --user $(egrep "aws_account_id"  /home/ubuntu/documentcloud/secrets/secrets.yml | awk '{print $NF}')  \
+  --privatekey /documentcloud/secrets/keys/ami_signing.key                                  \
+  --cert /documentcloud/secrets/keys/ami_signing.pem                                        \
+  --user $(egrep "aws_account_id"  /documentcloud/secrets/secrets.yml | awk '{print $NF}')  \
   --arch x86_64 --destination /mnt/ami                                                                  \
-  --exclude /home/ubuntu/.ssh                                                                           \
+  --exclude /.ssh                                                                           \
   --include /mnt/cloud_crowd,/mnt/log --no-filter
 exit
 

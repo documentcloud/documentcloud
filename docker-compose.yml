@@ -4,6 +4,22 @@
 
 version: '3.1'
 services:
+  nginx:
+    build:
+      context: .
+      dockerfile: Dockerfile.nginx
+    depends_on:
+      - app
+    restart:
+      always
+    ports:
+      - "80:80"
+      - "443:443"
+    extra_hosts:
+      - "dev.dcloud.org:127.0.0.1"
+      - "assets.dcloud.org:127.0.0.1"
+    volumes:
+      - public:/documentcloud/public
   db:
     image: postgres:9.6
     ports:
@@ -39,6 +55,7 @@ services:
     env_file: ./docker/env.list
     volumes:
       - ./config/cloud_crowd/docker:/cloud_crowd
+      - public:/documentcloud/public
       - asset_store:/documentcloud/public/asset_store
   app:
     build:
@@ -50,8 +67,6 @@ services:
         # as seen below and include a .env file in the project root.
         github_user:  ${GITHUB_USER:?err}
         github_token: ${GITHUB_TOKEN:?err}
-    ports:
-      - "8765:8765"
     depends_on:
       - db
       - cloud_crowd_server
@@ -62,6 +77,11 @@ services:
       PASSENGER_LOG_FILE: /dev/stdout
       PASSENGER_LOG_LEVEL: 3
       RAILS_LOG_TO_STDOUT: "yes"
+    expose:
+      - "8765"
+    extra_hosts:
+      - "dev.dcloud.org:127.0.0.1"
+      - "assets.dcloud.org:127.0.0.1"
     volumes:
       - asset_store:/documentcloud/public/asset_store
       - javascript:/documentcloud/public/javascripts/vendor
@@ -80,5 +100,6 @@ services:
     env_file: ./docker/env.list
 
 volumes:
+  public:
   asset_store:
   javascript:

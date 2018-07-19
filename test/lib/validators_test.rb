@@ -40,7 +40,7 @@ class ValidatorsTest < ActiveSupport::TestCase
       http://localhost/~ubuntu/.ssh/id_dsa
       http://2130706433/~ubuntu/.ssh/id_dsa
       http://localhost.fbi.gov/~ubuntu/.ssh/id_dsa
-      file:///home/ubuntu/.ssh/id_dsa
+      file:///.ssh/id_dsa
       ftp://127.0.0.1/~ubuntu/.ssh/id_dsa
       https://invalid.wtf/lol/?firsthash=#000000&secondhash=#
     ]
