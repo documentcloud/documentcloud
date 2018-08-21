@@ -45,6 +45,6 @@ end
 
 ids = Document.pluck(:id); ids.size
 blocks = ids.each_slice(100).to_a; blocks.size
-blocks.each_slice(10){ |block| RestClient.post ProcessingJob.endpoint, { job: { action: "reindex_everything", inputs: block  }.to_json } }; ""
+blocks.slice(0,100).each_slice(10){ |block| RestClient.post ProcessingJob.endpoint, { job: { action: "reindex_everything", inputs: block  }.to_json } }; ""
 
 =end
