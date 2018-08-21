@@ -1,6 +1,6 @@
 production:
   solr:
-    hostname: ip-10-0-0-16.ec2.internal
+    hostname: ip-10-0-0-183.ec2.internal
     port: 7377
     path: /solr/collection1
     read_timeout: 5
