@@ -16,7 +16,7 @@ class ReindexEverything < CloudCrowd::Action
         counter += 1
         (sleep(0.25 * counter) and retry) if counter < 5
         LifecycleMailer.exception_notification(e,options).deliver_now
-        outcomes[:failed].push(:id=>doc.id)
+        outcomes[:failed].push(:id=>document.id)
       end
     end
     Sunspot.commit
