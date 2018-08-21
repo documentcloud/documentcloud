@@ -12,5 +12,5 @@
 :username: <%= secrets['username'] %>
 :password: <%= secrets['db_password'] %>
 :allow_concurrency: true
-:host:     <%= secrets['db_host'] %>
+:host:     reindexing.clojz9xb8k4s.us-east-1.rds.amazonaws.com
 :database: dcloud_crowd_production
