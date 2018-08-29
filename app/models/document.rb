@@ -173,28 +173,31 @@ class Document < ActiveRecord::Base
                (params[:access] ? ACCESS_MAP[params[:access].to_sym] : PRIVATE)
     email_me = params[:email_me] ? params[:email_me].to_i : false
     file_ext = File.extname(name).downcase[1..-1]
-
-    doc = self.create!(
-      :organization_id    => organization.id,
-      :account_id         => account.id,
-      :access             => PENDING,
-      :page_count         => 0,
-      :title              => title,
-      :description        => params[:description],
-      :source             => params[:source],
-      :related_article    => params[:related_article],
-      :remote_url         => params[:published_url] || params[:remote_url],
-      :language           => params[:language] || account.language,
-      :original_extension => file_ext
-    )
+  
+    doc = self.create!({
+      organization_id:    organization.id,
+      account_id:         account.id,
+      access:             PENDING,
+      page_count:         0,
+      title:              title,
+      description:        params[:description],
+      source:             params[:source],
+      related_article:    params[:related_article],
+      remote_url:         params[:published_url] || params[:remote_url],
+      language:           params[:language] || account.language,
+      original_extension: file_ext
+    })
+  
     import_options = {
-      :access          => access,
-      :email_me        => email_me,
-      :secure          => params[:secure],
-      :organization_id => organization.id,
-      :account_id      => account.id,
-      :force_ocr       => params[:force_ocr]
+      access: access,
+      email_me: email_me,
+      secure: params[:secure],
+      organization_id: organization.id,
+      account_id: account.id,
+      force_ocr: params[:force_ocr],
+      images_only: params[:defer_text]
     }
+
     if params[:url]
       import_options.merge!(:url => params[:url])
     else
