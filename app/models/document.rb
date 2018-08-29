@@ -868,9 +868,16 @@ class Document < ActiveRecord::Base
     options[:id] = id
     self.update_attributes :access => PENDING
     #record_job(DC::Import::CloudCrowdImporter.new.import([id], options, self.low_priority?).body)
+    action = if options[:action] == 'api_document_import'
+      'api_document_import'
+    elsif self.low_priority?
+      'large_document_import'
+    else
+      'document_import'
+    end
     
     self.processing_jobs.new(
-      :action     => self.low_priority? ? 'large_document_import' : 'document_import',
+      :action     => action,
       :title      => title,
       :account_id => account_id,
       :options    => options
