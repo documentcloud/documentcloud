@@ -1,13 +1,13 @@
 production:
   solr:
-    hostname: ip-10-0-0-16.ec2.internal
+    hostname: ip-10-0-0-183.ec2.internal
     port: 7377
     path: /solr/collection1
     read_timeout: 5
     open_timeout: 1.5
     log_level: INFO
-    min_memory: 5G
-    max_memory: 6G
+    min_memory: 10G
+    max_memory: 22G
     pid_dir: tmp/pids
 
 development:
