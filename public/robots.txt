@@ -15,3 +15,6 @@ Disallow: /*{language}
 User-agent: *
 Disallow: /util/
 Noindex: /util/
+
+User-agent: *
+Disallow: /public/search/
