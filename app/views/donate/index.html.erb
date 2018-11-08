@@ -18,24 +18,7 @@
     <div class="container-sm">
   <% end %>
 
-      <%= bootstrap_form_tag url: donate_charge_path, html: {id: 'donation-form'} do |f| %>
-        <%= hidden_field_tag(:stripe_token) %>
-        <%= hidden_field_tag(:stripe_email) %>
-        <%= hidden_field_tag(:donation_amount_cents) %>
-        <%= hidden_field_tag(:suggested_donation, @suggested_donation) %>
-        <div id="donation_amounts" class="btn-group" data-toggle="buttons">
-        <% @donation_levels.each do |amount| %>
-          <label class="btn btn-secondary">
-            <input name="donation_amount" id="donation-amount-<%= amount %>" value="<%= amount %>" type="radio" autocomplete="off"> $<%= amount %>
-          </label>
-        <% end %>
-          <label class="sr-only" for="donation_amount">Amount (USD)</label>
-          <input name="donation_amount_other" id="donation-amount-other" type="tel" class="form-control" placeholder="Other">
-        </div>
-        <p><%= f.submit 'Donate!', class: 'btn btn-block btn-success' %></p>
-        <div id="error_explanation"></div>
-        <p class="note">You’re making a tax-deductible donation to DocumentCloud.org</p>
-      <% end %>
+  <iframe src="https://www.muckrock.com/crowdfund/185/embed/" width="100%" height="530px" style="border: none; box-shadow: 2px 2px 2px #00000024; margin: -1em 0 4em 0;"></iframe>
 
   <% if params[:prolix] %>
       </div>
