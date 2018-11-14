@@ -293,7 +293,8 @@ class Document < ActiveRecord::Base
 
   # Ensure that titles are stripped of trailing whitespace.
   def title=(title="Untitled Document")
-    self[:title] = self.strip title.strip
+    # Clean the stripped title
+    self[:title] = CGI.unescape_html(self.strip title.strip)
   end
 
   # Save all text assets, including the `combined_page_text`, and the text of
