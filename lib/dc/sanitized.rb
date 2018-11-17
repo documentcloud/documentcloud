@@ -34,7 +34,7 @@ module DC
       # Text attributes are stripped of HTML before they are saved.
       def text_attr(*attrs)
         attrs.each do |att|
-          class_eval "def #{att}=(val); self[:#{att}] = strip(val); end"
+          class_eval "def #{att}=(val); self[:#{att}] = CGI.unescape_html(strip(val)); end"
         end
       end
       
