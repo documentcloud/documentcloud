@@ -6,7 +6,6 @@ module DC
 
     # Unescape HTML in a safe fashion, allowing nil values to pass through
     def safe_unescape(s)
-      # return 'dog'
       unless s.nil?
         return CGI.unescape_html(s)
       end
