@@ -9,7 +9,7 @@
 - version:     2.1
   description: 'DocumentCloud moves to its own independent non-profit.'
   start:       '2017-08-01'
-  start:       '2018-05-24'
+  end:         '2018-05-24'
 - version:     2.2
   current:     true
   description: 'Terms updated for GDPR.'
