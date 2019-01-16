@@ -88,7 +88,6 @@
 
 </div>
 
-<% (@javascripts_footer ||= []).push 'https://checkout.stripe.com/checkout.js' %>
 <% content_for :javascript_footer_inline do %>
   <%= render partial: 'common/donate_widget_js' %>
   <% if @suggested_donation %>
