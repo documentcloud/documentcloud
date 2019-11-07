@@ -1,15 +1,4 @@
 GIT
-  remote: git@github.com:documentcloud/bull_proof_china_shop
-  revision: 9cd0d29b25feb42e5a501db00ba56e66b99e42e4
-  branch: master
-  specs:
-    bull_proof_china_shop (0.0.1)
-      country_select (~> 2.2.0)
-      has_secure_token (~> 1.0.0)
-      rails (~> 4.2.3)
-      stripe (~> 1.56.2)
-
-GIT
   remote: https://github.com/documentcloud/jammit.git
   revision: 5ddcf9c415b2e3985628c35e2ea5bdf94a383284
   branch: master
@@ -115,6 +104,7 @@ GEM
       sort_alphabetical (~> 1.0)
     crack (0.4.3)
       safe_yaml (~> 1.0.0)
+    crass (1.0.5)
     cssmin (1.0.3)
     curb (0.8.8)
     currencies (0.4.2)
@@ -182,8 +172,6 @@ GEM
     guard-minitest (2.4.6)
       guard-compat (~> 1.2)
       minitest (>= 3.0)
-    has_secure_token (1.0.0)
-      activerecord (>= 3.0)
     hashdiff (0.3.1)
     hashie (3.4.6)
     highline (1.7.8)
@@ -205,7 +193,8 @@ GEM
     logging (2.1.0)
       little-plugger (~> 1.1)
       multi_json (~> 1.10)
-    loofah (2.0.3)
+    loofah (2.3.1)
+      crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
     lumberjack (1.0.10)
     mail (2.6.4)
@@ -388,7 +377,6 @@ DEPENDENCIES
   aws-sdk (~> 1.30)
   bcrypt (~> 3.1.1)
   bootstrap_form!
-  bull_proof_china_shop!
   byebug
   closure-compiler
   cloud-crowd (~> 0.7.6)
