@@ -104,7 +104,7 @@ class Document < ActiveRecord::Base
     access = []
     access << "(documents.access in (#{PUBLIC_LEVELS.join(",")}))"
     access << "(documents.access in (#{PRIVATE}, #{PENDING}, #{ERROR}, #{ORGANIZATION}, #{EXCLUSIVE}) and documents.account_id = #{account.id})" if account
-    access << "(documents.access in (#{ORGANIZATION}, #{EXCLUSIVE}) and documents.organization_id = #{org.id})" if org && account && !account.freelancer?
+    access << "(documents.access in (#{ORGANIZATION}, #{EXCLUSIVE}) and documents.organization_id = #{org.id})" if org && account && !account.freelancer? && !account.reviewer?
     access << "(memberships.document_id = documents.id)" if has_shared
     query = where( access.join(' or ') )
     if has_shared
