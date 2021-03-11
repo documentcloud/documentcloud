@@ -1,3 +1,9 @@
+
+This is the repository for the legacy DocumentCloud site, please see the current repository here:
+
+https://github.com/muckrock/documentcloud
+
+
     ______                                      _   _____ _                 _
     |  _  \                                    | | /  __ \ |               | |
     | | | |___   ___ _   _ _ __ ___   ___ _ __ | |_| /  \/ | ___  _   _  __| |
