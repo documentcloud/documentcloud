@@ -51,7 +51,8 @@ dc.ui.ViewerControlPanel = Backbone.View.extend({
     $(this.el).html(JST['control_panel']({
       isReviewer      : dc.app.editor.options.isReviewer,
       isOwner         : dc.app.editor.options.isOwner,
-      workspacePrefix : accessWorkspace ? '#' : '',
+      // TODO: temporary hack for https://github.com/documentcloud/documentcloud/issues/450
+      workspacePrefix : '', //accessWorkspace ? '#' : '',
       docAccess       : docAccess,
       orgName         : this.viewer.api.getContributorOrganization()
     }));
