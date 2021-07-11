@@ -1,0 +1,59 @@
+From 64d021bdb3dc69fbf0b143362311bf04cbc00f6a Mon Sep 17 00:00:00 2001
+From: Nick Stenning <nick@whiteink.com>
+Date: Wed, 23 Jul 2014 19:49:33 +0200
+Subject: [PATCH] Remove dependence on protocol from all URLs
+
+---
+ app/controllers/application_controller.rb    | 2 +-
+ app/controllers/authentication_controller.rb | 2 +-
+ lib/dc/urls.rb                               | 8 +-------
+ 3 files changed, 3 insertions(+), 9 deletions(-)
+
+diff --git a/app/controllers/application_controller.rb b/app/controllers/application_controller.rb
+index 0c6c112..15b110d 100644
+--- a/app/controllers/application_controller.rb
++++ b/app/controllers/application_controller.rb
+@@ -152,7 +152,7 @@ class ApplicationController < ActionController::Base
+ 
+   # Return forbidden when the access is unauthorized.
+   def forbidden
+-    @next = CGI.escape(request.original_url)
++    @next = CGI.escape(request.original_fullpath)
+     render :file => "#{Rails.root}/public/403.html", :status => 403
+     false
+   end
+diff --git a/app/controllers/authentication_controller.rb b/app/controllers/authentication_controller.rb
+index 3292108..d352487 100644
+--- a/app/controllers/authentication_controller.rb
++++ b/app/controllers/authentication_controller.rb
+@@ -26,7 +26,7 @@ class AuthenticationController < ApplicationController
+     end
+     begin
+       if referrer = request.env["HTTP_REFERER"]
+-        redirect_to referrer.sub(/^http:/, 'https:')
++        redirect_to referrer
+       end
+     rescue RedirectBackError => e
+       # Render...
+diff --git a/lib/dc/urls.rb b/lib/dc/urls.rb
+index b95e019..070b753 100644
+--- a/lib/dc/urls.rb
++++ b/lib/dc/urls.rb
+@@ -10,13 +10,7 @@ module DC
+   end
+ 
+   def self.url_for(config, options)
+-    root = case
+-           when options[:force_ssl] || (options[:ssl] && Thread.current[:ssl]) then 'https://'
+-           when options[:agnostic] then '//'
+-           else
+-             'http://'
+-           end
+-    root + DC::CONFIG[config]
++    '//' + DC::CONFIG[config]
+   end
+ 
+ end
+-- 
+1.9.3
+

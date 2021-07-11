@@ -1,0 +1,6 @@
+#!/bin/sh
+
+set -eu
+
+cd /src/documentcloud
+bundle exec rake db:migrate

@@ -1,0 +1,25 @@
+From 96f4b361006990e637494dde7068e471243ba76f Mon Sep 17 00:00:00 2001
+From: Stefan Wehrmeyer <mail@stefanwehrmeyer.com>
+Date: Wed, 30 Jul 2014 20:59:51 +0200
+Subject: [PATCH] Enable FileSystemStore explicitly via env variable
+
+---
+ lib/dc/store/asset_store.rb | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/lib/dc/store/asset_store.rb b/lib/dc/store/asset_store.rb
+index 704dd6c..eaf255e 100644
+--- a/lib/dc/store/asset_store.rb
++++ b/lib/dc/store/asset_store.rb
+@@ -8,7 +8,7 @@ module DC
+     # The AssetStore is responsible for storing search-opaque document assets,
+     # either on S3 (or in development on the local filesystem in a tmp dir).
+     class AssetStore
+-      if Rails.env.development? || Rails.env.testing?
++      if Rails.env.development? || Rails.env.testing? || ENV['DOCUMENTCLOUD_FILESTORE']
+         include FileSystemStore
+         extend FileSystemStore::ClassMethods
+       else
+-- 
+2.0.3
+
