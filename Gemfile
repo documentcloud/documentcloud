@@ -28,7 +28,7 @@ gem 'sunspot_rails',          '2.2.0'
 gem 'sunspot_solr',           '2.2.0'
 gem 'progress_bar' # Optional, used by sunspot to show progress while re-indexing
 
-gem 'omniauth',               '~> 1.2.1'
+gem 'omniauth',               '~> 1.9.1'
 gem 'omniauth-twitter',       '~> 1.0'
 gem 'omniauth-facebook',      '~> 1.6'
 gem 'omniauth-google-oauth2', '~> 0.2'
