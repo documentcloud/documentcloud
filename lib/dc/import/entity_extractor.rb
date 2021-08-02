@@ -55,6 +55,7 @@ module DC
           kind = Entity.normalize_kind(entity[:type])
           value = entity[:name]
           next unless kind && value
+          next if value.length >= 255 # If value is over 255, this is not a valid entity.
           value = Entity.normalize_value(value)
           next if kind == :phone && Validators::PHONE !~ value
           next if kind == :email && Validators::EMAIL !~ value

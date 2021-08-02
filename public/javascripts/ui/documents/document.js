@@ -437,6 +437,8 @@ dc.ui.Document = Backbone.View.extend({
   _renderEntities : function() {
     if (this.model.entities.length) {
       this.entitiesView.show();
+    } else if (this.model.entities.errors != null) {
+      dc.ui.Dialog.alert( this.model.entities.errors );
     } else {
       dc.ui.Dialog.alert( _.t('has_no_entities', this.model.get('title') ) );
     }
